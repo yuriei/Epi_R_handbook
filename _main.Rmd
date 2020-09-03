@@ -1,3 +1,86 @@
+--- 
+title: "R4Epis Handbook"
+author: "Neale Batra"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+output: bookdown::gitbook
+documentclass: book
+link-citations: yes
+description: "This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook."
+---
+--- 
+title: "R4Epis Handbook"
+author: "Neale Batra"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+output: bookdown::gitbook
+documentclass: book
+link-citations: yes
+description: "This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook."
+---
+
+# Prerequisites
+
+This is a _sample_ book written in **Markdown**. You can use anything that Pandoc's Markdown supports, e.g., a math equation $a^2 + b^2 = c^2$.
+
+The **bookdown** package can be installed from CRAN or Github:
+
+```{r eval=FALSE}
+install.packages("bookdown")
+# or the development version
+# devtools::install_github("rstudio/bookdown")
+```
+
+Remember each Rmd file contains one and only one chapter, and a chapter is defined by the first-level heading `#`.
+
+To compile this example to PDF, you need XeLaTeX. You are recommended to install TinyTeX (which includes XeLaTeX): <https://yihui.name/tinytex/>.
+
+<!--chapter:end:index.Rmd-->
+
+# Introduction
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+<!--chapter:end:01-intro.Rmd-->
+
+
+# Epicurves
+
+Placeholder
+
+
+## Introduction {.tabset .tabset-fade .tabset-pills}
+### How to read this page
+## Task: Epidemic Curves {.tabset .tabset-fade .tabset-pills}
+## Preparation {.tabset .tabset-fade .tabset-pills}
+### Methods
+### Load packages
+### Load data
+
+<!--chapter:end:02-Epicurves.Rmd-->
+
 ---
 title: "R Handbook for Epidemiologists (unified)"
 author: "Neale Batra"
@@ -97,9 +180,7 @@ For RStudio to function you must also have R installed on the computer (see the 
 
 By default RStudio displays four rectangle panes. 
 
-```{r image_RStudio, out.width = "100%", fig.align = "center"}
-knitr::include_graphics(here::here("unified", "images", "RStudio_overview.png"))
-```
+![Introduction to R Studio interface](/images/RStudio_overview.PNG)
 
 
 {{% notice tip %}}
@@ -202,10 +283,7 @@ A quick note on naming of objects:
 
 Objects can be a single piece of data (e.g. `my_number <- 24`), or they can consist of structured data. The graphic below, sourced from [this online R tutorial](http://venus.ifca.unican.es/Rintro/dataStruct.html) shows some common data structures and their names. Not included in this image is spatial data, which is discussed in another page.  
 
-
-```{r image_objects, out.width = "100%", fig.align = "center"}
-knitr::include_graphics(here::here("unified", "images", "R_data_structures.png"))
-```  
+(/images/r_data_structures.png)  
 
 Using the templates, you will *most commonly* encounter data frames and vectors:  
 
@@ -294,10 +372,7 @@ On installation, R contains "base" functions that perform common tasks. Speciali
 Functions often ask for several inputs. **Each piece of information needed is called an argument**. Some arguments are required for the function to work correctly, some are optional. Arguments can take character, numeric, logical (TRUE/FALSE), and other inputs. Optional arguments have default settings if they are not specified. **Arguments are located within the parentheses of the function, usually separated by commas**.  
 
 
-
-```{r image_function, out.width = "75%", fig.align = "center"}
-knitr::include_graphics(here::here("unified", "images", "Function_Bread_Example.png"))
-```
+(/images/Function_Bread_Example.png)  
 
 
 >**For example**, this `plot_age_pyramid()` command in the templates produces an age pyramid graphic based on defined age groups and a binary split variable, such as `sex`. The function is given three arguments within the parentheses, separated by commas. The values supplied to the arguments establish `linelist_cleaned` as the data frame to use, `age_group` as the variable to count, and `sex` as the binary variable to use for splitting the pyramid.
@@ -2388,8 +2463,5 @@ plotly
 <!-- ======================================================= -->
 # Overwriting files with R {.tabset .tabset-fade .tabset-pills}
 
+<!--chapter:end:unified_handbook.Rmd-->
 
-<!-- ======================================================= -->
-<!-- ======================================================= -->
-<!-- ======================================================= -->
-# Common error messages {.tabset .tabset-fade .tabset-pills}
