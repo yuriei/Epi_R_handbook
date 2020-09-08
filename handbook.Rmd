@@ -4,7 +4,7 @@ author: "Neale Batra"
 date: "`r format(Sys.time(), '%A %d %B %Y')`"
 output:
   html_document:
-    code_folding: hide
+    code_folding: show
     highlight: zenburn
     number_sections: no
     theme: spacelab
@@ -58,6 +58,12 @@ knitr::opts_chunk$set(echo = TRUE,
 
 * *You can click "Code" tabs on the right to see and copy code.*  
 
+
+**Style**
+
+* In many cases, code in this handbook explicitly names the package for a function (e.g. `dplyr::mutate()`). Most times, the code will run without the package being called (without `dplyr::`), but we do this just to be clear to the reader which package is being used. 
+
+**Notes Style**
 
 ```
 FOR EXAMPLE: This is a boxed example
@@ -593,6 +599,69 @@ Look for clues:
 If all else fails, copy the error message into Google along with some key terms - chances are that someone else has worked through this already!
 
 
+<!-- ======================================================= -->
+<!-- ======================================================= -->
+<!-- ======================================================= -->
+## Recommended training {.tabset .tabset-fade .tabset-pills}
+
+Other resources and online training/courses for introductory R skills
+
+
+
+<!-- ======================================================= -->
+<!-- ======================================================= -->
+<!-- ======================================================= -->
+# Piping functions {.tabset .tabset-fade .tabset-pills}
+
+Two general ways of approaching coding are: 
+
+**Re-defining objects**
+as changes are made - 
+still handy to know
+
+Risks: creating new objects for each step - 
+naming can be confusing,
+errors not easily detectable
+
+either name each intermediate object, or overwrite the original, or combine all the functions together. all come with risks
+
+
+```{r piping_example_redefine, eval=F}
+batter_1 <- left_join(flour, eggs)
+batter_2 <- left_join(batter_1, oil)
+batter_3 <- left_join(batter_2, water)
+
+batter_4 <- mix_together(object = batter_3, utensil = spoon, minutes = 2)
+
+cake <- bake(batter_4, degrees = 350, system = "fahrenheit", minutes = 35)
+
+cake <- let_cool(cake)
+```
+
+Combine all functions together - difficult to read
+```{r piping_example_wide, eval=F}
+cake <- let_cool(bake(mix_together(batter_3, utensil = spoon, minutes = 2), degrees = 350, system = "fahrenheit", minutes = 35))
+```
+
+**Piping** 
+* from **magrittr**. Included in **dplyr** and **tidyverse**
+* Makes code more clean and easier to read, intuitive
+* express a sequence of operations  
+* the object is altered and then passed on to the next function  
+
+Example:
+
+```{r piping_example_pipe, eval=F}
+cake <- flour %>%       # start with an object
+  left_join(eggs) %>% 
+  left_join(oil) %>% 
+  left_join(water) %>% 
+  mix_together(utensil = spoon, minutes = 2) %>% 
+  bake(degrees = 350, system = "fahrenheit", minutes = 35) %>% 
+  let_cool()
+```
+
+https://cfss.uchicago.edu/notes/pipes/#:~:text=Pipes%20are%20an%20extremely%20useful,code%20and%20combine%20multiple%20operations.
 
 <!-- ======================================================= -->
 <!-- ======================================================= -->
@@ -780,8 +849,9 @@ x
 
 ## Converting date variables to the date class
 
-It is important to make R recognize when a variable contains dates. Dates are an object class and can be tricky to work with. The templates provides some code for converting variables to class date, but if your data are not standardized to a MSF data dictionary this process can require attention. **The templates often use the function `guess_dates()`, but this guide will also demonstrate converting a variable to class date using the function `as.Date()`.** 
-
+It is important to make R recognize when a variable contains dates.  
+Dates are an object class and can be tricky to work with.  
+Here we present several ways to convert date variables to Date class.
 
 <!-- ======================================================= -->
 ## Packages
@@ -789,15 +859,11 @@ It is important to make R recognize when a variable contains dates. Dates are an
 The following packages are recommended for working with dates:  
 
 ```{r dates_packages}
-# Create vector of names of required packages:
-packages_dates <- c("aweek",          
-                    "lubridate",
-                    "linelist",
-                    "ISOweek"
-                     )
-
 # Checks if package is installed, installs if necessary, and loads package for current session
-pacman::p_load(packages_dates, character.only=TRUE)
+pacman::p_load(aweek,
+               lubridate,
+               linelist,
+               ISOweek)
 ```
 
 
@@ -805,7 +871,11 @@ pacman::p_load(packages_dates, character.only=TRUE)
 <!-- ======================================================= -->
 ## `as.Date()`  
 
-If `guess_dates()` is not working for you, you can use the base function `as.Date()` to convert a variable to class Date. **`as.Date()` cannot guess dates, and therefore requires that all the date values be in the same format before converting.** [Read more about using `as.Date()` here](https://www.stat.berkeley.edu/~s133/dates.html).
+The standard, **base** R function to convert an object or variable to class Date is `as.Date()` (not capitalization).  
+
+`as.Date()` requires that the user specify the existing format so that it is able to convert and store each element correctly (day, month, year, etc.).  
+
+**If used on a variable, `as.Date()` therefore requires that all the character date values be in the same format before converting.** [Read more about using `as.Date()` here](https://www.stat.berkeley.edu/~s133/dates.html).
 
 It can be easiest to first convert the variable to character class, and then convert to date class:  
 
@@ -831,12 +901,24 @@ For example, if your character dates are in the format DD/MM/YYYY, like "24/04/1
 ```{r eval=F}
 linelist_cleaned$date_of_onset <- as.Date(linelist_cleaned$date_of_onset, format = "%d/%m/%Y")
 ```
+<span style="color: darkgreen;">**_TIP:_** **The `format=` argument is *not* telling R the format you want the dates to be, but rather how to identify the date parts as they are *before* you run the command.**</span>
 
-{{% notice tip %}}
-**The `format=` argument is *not* telling R the format you want the dates to be, but rather how to identify the date parts as they are *before* you run the command.**
+<span style="color: darkgreen;">**_TIP:_** Also, be sure that in the `format=` argument you use the *date-part separator* (e.g. /, -, or space) that is present in your dates.</span>
 
-Also, be sure that in the `format=` argument you use the *date-part separator* (e.g. /, -, or space) that is present in your dates.
-{{% /notice %}}
+
+The `as.character()` and `as.Date()` commands can be wrapped together such as:  
+
+```{r eval=F}
+linelist_cleaned$date_of_onset <- as.Date(as.character(linelist_cleaned$date_of_onset), format = "%d/%m/%Y")
+```
+
+or within piping (see REF): 
+
+```{r eval=F}
+linelist_cleaned %>% 
+  mutate(as.Date(as.character(date_of_onset), format = "%d/%m/%Y"))
+```
+
 
 
 
@@ -847,6 +929,7 @@ linelist_cleaned$date_of_onset <- as.Date(linelist_cleaned$date_of_onset, format
 # Check the class of the variable again
 class(linelist_cleaned$date_of_onset)  
 ```
+
 Once the values are in class Date, R will present them in it's standard format, which is YYYY-MM-DD.
 
 
@@ -1119,6 +1202,8 @@ stats::quantile(linelist$age, probs = c(.05, 0.5, 0.75, 0.98), na.rm=TRUE) # per
 
 <!-- ======================================================= -->
 # Visualization {.tabset .tabset-fade .tabset-pills}
+
+https://cfss.uchicago.edu/notes/grammar-of-graphics/
 
 ```{r out.width=c('50%', '50%'), fig.show='hold'}
 
