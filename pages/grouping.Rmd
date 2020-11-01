@@ -1,0 +1,20 @@
+
+<!-- ======================================================= -->
+<!-- ======================================================= -->
+<!-- ======================================================= -->
+# Grouping/aggregating data {#grouping .tabset .tabset-fade}
+
+
+<!-- ======================================================= -->
+## Overview {.tabset .tabset-fade .tabset-pills}
+Tidyverse - grouping by values
+
+.drop=F in `group_by()` command
+
+<!-- ======================================================= -->
+## `group_by()` {.tabset .tabset-fade .tabset-pills}
+
+
+<!-- ======================================================= -->
+## `aggregate()` {.tabset .tabset-fade .tabset-pills}
+

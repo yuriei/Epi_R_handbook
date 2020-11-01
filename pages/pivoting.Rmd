@@ -1,0 +1,53 @@
+
+<!-- ======================================================= -->
+<!-- ======================================================= -->
+<!-- ======================================================= -->
+# Pivoting {#pivot .color-tabs .tabset .tabset-fade}
+
+
+<!-- ======================================================= -->
+## Overview {#pivot_intro .emphasized .tabset .tabset-fade .tabset-pills}
+
+(pivoting/melting etc.)
+Transforming datasets from wide-to-long, or long-to-wide...  
+
+
+<!-- ======================================================= -->
+## Wide-to-long {#pivot_widetolong .color-tabs .tabset .tabset-fade .tabset-pills}
+
+Transforming a dataset from wide to long
+
+
+
+<!-- ======================================================= -->
+### Data
+
+We start with data that is in a wide format, e.g. our [linelist](#datasets).  
+
+```{r}
+DT::datatable(linelist, rownames = FALSE, filter="top", options = list(pageLength = 5, scrollX=T) )
+```
+
+<!-- ======================================================= -->
+### `pivot_longer()`
+
+```{r}
+#tidyr::pivot_longer(linelist, dplyr::vars(-age, -date_of_hospitalisation), names_to = "variable", values_to = "value" )
+```
+
+<!-- ======================================================= -->
+### Result
+
+
+
+<!-- ======================================================= -->
+## Long-to-wide {#pivot_longtowide .color-tabs .tabset .tabset-fade .tabset-pills}
+
+**dplyr**
+`pivot_wider()`
+
+### Data
+
+### Pivot wider  
+
+### Result

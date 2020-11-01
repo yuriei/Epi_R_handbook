@@ -1,0 +1,112 @@
+
+<!-- ======================================================= -->
+<!-- ======================================================= -->
+<!-- ======================================================= -->
+# Cleaning data {#cleaning .tabset .tabset-fade}
+
+<!-- ======================================================= -->
+## Overview {.tabset .tabset-fade .tabset-pills}  
+
+Text about cleaning data, approaches, etc.
+renaming
+replace missing with
+dealing with cases (all lower, etc)
+case_when()
+factors
+
+
+<!-- ======================================================= -->
+## Packages {.tabset .tabset-fade .tabset-pills}
+
+```{r, clean_packages}
+pacman::p_load(tidyverse, janitor, epitrix)
+```
+
+<!-- ======================================================= -->
+## Clean Variable Names {.tabset .tabset-fade .tabset-pills}
+
+Variable names are used so often, it is best to have them be "clean" (no spaces, no unusual characters, etc.)  
+
+The function `clean_names()` from the package **janitor** is very useful. 
+
+https://cran.r-project.org/web/packages/janitor/vignettes/janitor.html#cleaning
+
+
+```{r clean_names}
+linelist <- linelist_raw %>% 
+  janitor::clean_names()
+```
+
+<!-- ======================================================= -->
+## Classes {.tabset .tabset-fade .tabset-pills #Classes}
+
+See section on [object classes](#objectclasses)   
+
+```{r}
+linelist <- linelist_raw %>% 
+  mutate(age           = as.numeric(age),
+         outcome       = as.character(outcome),
+         date_of_onset = as.Date(date_of_onset, format = "%d/%m/%Y"),
+         outcome       = factor(outcome, levels = c("Recover", "Death"))
+         )
+```
+
+<!-- ======================================================= -->
+## Creating new variables {#newvars .tabset .tabset-fade .tabset-pills}
+
+**base R** method 
+```{r, eval=F}
+linelist$new_var <- "new value"
+```
+
+
+Using **dplyr**
+`mutate()`
+transmute()
+
+
+```{r, eval=F}
+linelist <- linelist %>% 
+  mutate(new_var_dup    = id,                  # new variable - replicate another variable
+         new_var_static = 7,                   # new variable - all values the same
+         new_var_static = new_var_static + 5   # you can modify a variable multiple times
+         new_var_calc   = (age / 12) + months  # new variable - calculation
+         new_var_paste  = paste0(district, "(", province, ")") # new variable - pasting together values
+```
+
+
+<!-- ======================================================= -->
+## Groups by condition (`case_when()`) {#casewhen}
+
+TODO tutorial on using case_when()
+
+<!-- ======================================================= -->
+### Numeric groups  
+
+For example, creating age groups
+`cut()`
+
+`case_when()`
+
+`age_categories()` (R4Epis package)
+
+by percentile
+
+
+<!-- ======================================================= -->
+## Modifying existing values {.tabset .tabset-fade .tabset-pills}
+
+Missing if... `na_if()`
+
+Replace
+
+
+<!-- ======================================================= -->
+### Highest in hierarchy
+
+Within a group, indicate/convert to the highest value in the group
+
+Santa Clara County example - COVID contact tracing data - classification of multiple phone call records from same person into the highest category. (classify all as the highest of the group)
+
+
+

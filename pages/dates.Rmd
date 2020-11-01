@@ -1,0 +1,207 @@
+
+<!-- ======================================================= -->
+<!-- ======================================================= -->
+<!-- ======================================================= -->
+# Working with Dates {#dates .tabset .tabset-fade}
+
+<!-- ======================================================= -->
+## Overview
+
+* It is important to make R recognize when a variable contains dates.  
+* Dates are an object class and can be tricky to work with.  
+* Here we present several ways to convert date variables to Date class.  
+
+
+<!-- ======================================================= -->
+## Packages
+
+The following packages are recommended for working with dates:  
+
+```{r dates_packages}
+# Checks if package is installed, installs if necessary, and loads package for current session
+
+pacman::p_load(aweek,      # flexibly converts dates to weeks, and vis-versa
+               lubridate,  # for conversions to months, years, etc.
+               linelist,   # function to guess messy dates
+               ISOweek)    # another option for creating weeks
+```
+
+
+
+<!-- ======================================================= -->
+## `as.Date()`  
+
+The standard, **base** R function to convert an object or variable to class Date is `as.Date()` (note capitalization).  
+
+`as.Date()` requires that the user *specify the ***existing*** format of the date*, so it can understand, convert, and store each element (day, month, year, etc.) correctly. [Read more online about `as.Date()`](https://www.stat.berkeley.edu/~s133/dates.html).  
+
+**If used on a variable, `as.Date()` therefore requires that all the character date values be in the same format before converting.** If your data are messy, try cleaning them or consider using `guess_dates()` from the **linelist** package.  
+
+It can be easiest to first convert the variable to character class, and then convert to date class:  
+
+  1. Turn the variable into character values using the function `as.character()`
+```{r eval=F}
+linelist_cleaned$date_of_onset <- as.character(linelist_cleaned$date_of_onset)
+```
+  2. Convert the variable from character values into date values, using the function `as.Date()`  
+  (note the capital "D")  
+  + Within the `as.Date()` function, you must use the `format=` argument to tell R the *current* format of the date components - which characters refer to the month, the day, and the year, and how they are separated. If your values are already in one of R's standard date formats (YYYY-MM-DD or YYYY/MM/DD) the `format=` argument is not necessary.  
+    
+    + The codes are:  
+         %d = Day # (of the month e.g. 16, 17, 18...)  
+         %a = abbreviated weekday (Mon, Tues, Wed, etc.)  
+         %A = full weekday (Monday, Tuesday, etc.)  
+         %m = # of month (e.g. 01, 02, 03, 04)  
+         %b = abbreviated month (Jan, Feb, etc.)  
+         %B = Full Month (January, February, etc.)  
+         %y = 2-digit year  (e.g. 89)  
+         %Y = 4-digit year  (e.g. 1989)  
+
+For example, if your character dates are in the format DD/MM/YYYY, like "24/04/1968", then your command to turn the values into dates will be as below. **Putting the format in quotation marks is necessary.**  
+```{r eval=F}
+linelist_cleaned$date_of_onset <- as.Date(linelist_cleaned$date_of_onset, format = "%d/%m/%Y")
+```
+<span style="color: darkgreen;">**_TIP:_** The `format=` argument is *not* telling R the format you want the dates to be, but rather how to identify the date parts as they are *before* you run the command.</span>  
+
+<span style="color: darkgreen;">**_TIP:_**Be sure that in the `format=` argument you use the *date-part separator* (e.g. /, -, or space) that is present in your dates.</span>  
+
+
+The `as.character()` and `as.Date()` commands can optionally be combined as:  
+
+```{r eval=F}
+linelist_cleaned$date_of_onset <- as.Date(as.character(linelist_cleaned$date_of_onset), format = "%d/%m/%Y")
+```
+
+If using [piping](#piping) and the tidyverse, the above command might look like this:  
+
+```{r, eval=F}
+linelist_cleaned <- linelist_cleaned %>%
+  mutate(date_of_onset = as.character(date_of_onset),
+         date_of_onset = as.Date(date_of_onset, format = "%d/%m/%Y"))
+```
+
+Once complete, you can run a command to verify the class of the variable
+```{r, eval=F}
+# Check the class of the variable
+class(linelist_cleaned$date_of_onset)  
+```
+
+Once the values are in class Date, R will by default display them in the standard format, which is YYYY-MM-DD.
+
+
+<!-- ======================================================= -->
+## lubridate  
+
+This is a section on using lubridate
+(Henry)
+
+
+<!-- ======================================================= -->
+## `guess_dates()` 
+
+**The function `guess_dates()` attempts to read a "messy" date variable containing dates in many different formats and convert the dates to a standard format.** You can [read more online about `guess_dates()`](https://www.repidemicsconsortium.org/linelist/reference/guess_dates.html), which is in the **linelist** package.
+
+>**For example:** `guess_dates` would see the following dates "03 Jan 2018", "07/03/1982", and "08/20/85" and convert them in the class Date to: 2018-01-03, 1982-03-07, and 1985-08-20.  
+
+```{r, eval=F}
+linelist::guess_dates(c("03 Jan 2018", "07/03/1982", "08/20/85")) # guess_dates() not yet available on CRAN for R 4.0.2
+                                                                  # try install via devtools::install_github("reconhub/linelist")
+```
+
+*Some optional arguments for `guess_dates()` that you might include are:*  
+
+* `error_tolerance` - The proportion of entries which cannot be identified as dates to be tolerated (defaults to 0.1 or 10%)
+* `last_date` - the last valid date (defaults to current date)  
+* `first_date` - the first valid date. Defaults to fifty years before the last_date.
+
+
+```{r eval=FALSE}
+# An example using guess_dates on the variable dtdeath
+data_cleaned <- data %>% 
+  mutate(dtdeath = linelist::guess_dates(dtdeath, error_tolerance = 0.1, first_date = "2016-01-01")
+```
+
+
+<!-- ======================================================= -->
+## Excel Dates
+
+Excel stores dates as the number of days since December 30, 1899. If the dataset you imported from Excel shows dates as numbers or characters like "41369"... use the `as.Date()` function to convert, but **instead of supplying a format as above, supply an origin date**.  
+
+<span style="color: black;">**_NOTE:_** You should provide the origin date in R's default date format (`"YYYY-MM-DD"`).</span>
+
+
+```{r, eval=FALSE}
+# An example of providing the Excel 'origin date' when converting Excel number dates
+data_cleaned <- data %>% 
+  mutate(date_of_onset = as.Date(date_of_onset, origin = "1899-12-30"))
+```
+
+
+<!-- ======================================================= -->
+## How dates are displayed  
+
+Once dates are the correct class, you often want them to display differently (e.g. in a plot, graph, or table). For example, to display as "Monday 05 Jan" instead of 2018-01-05. You can do this with the function `format()`, which works in a similar way as `as.Date()`. Read more [in this online tutorial](https://www.statmethods.net/input/dates.html)  
+
+%d = Day # (of the month e.g. 16, 17, 18...)
+%a = abbreviated weekday (Mon, Tues, Wed, etc.)  
+%A = full weekday (Monday, Tuesday, etc.)  
+%m = # of month (e.g. 01, 02, 03, 04)  
+%b = abbreviated month (Jan, Feb, etc.)  
+%B = Full Month (January, February, etc.)  
+%y = 2-digit year  (e.g. 89)  
+%Y = 4-digit year  (e.g. 1989)  
+%h = hours (24-hr clock)  
+%m = minutes  
+%s = seconds
+%z = offset from GMT  
+%Z = Time zone (character)
+
+An example of formatting today's date:  
+
+```{r}
+# today's date, with formatting
+format(Sys.Date(), format="%d %B %Y")
+
+# easy way to get full date and time (no formatting)
+date()
+
+# formatted date, time, and time zone (using paste0() function)
+paste0(format(Sys.Date(), format= "%A, %b %d '%y, %z  %Z, "), format(Sys.time(), format = "%H:%M:%S"))
+```
+
+<!-- ======================================================= -->
+## Calculating distance between dates
+
+The difference between dates can be calculated by:  
+  
+  
+1. Correctly formating *both* date variable as class date (see instructions above)  
+2. Creating a new variable that is defined as one date variable subtracted from the other
+3. Converting the result to numeric class (default is class "datediff"). This ensures that subsequent mathematical calculations can be performed.  
+
+
+<!-- ======================================================= -->
+## Converting dates/time zones
+
+TODO
+
+<!-- ======================================================= -->
+## Epidemiological weeks  
+
+The templates use the very flexible package **aweek** to set epidemiological weeks. You can read more about it [on the RECON website](https://www.repidemicsconsortium.org/aweek/)
+
+
+<!-- ======================================================= -->
+## Dates in Epicurves 
+
+See the section on [epicurves](#epicurves).
+
+<!-- ======================================================= -->
+## Dates miscellaneous  
+
+* `Sys.Date( )` returns the current date of your computer  
+* `Sys.Time()` returns the current time of your computer
+* `date()` returns the current date and time.  
+
+
+

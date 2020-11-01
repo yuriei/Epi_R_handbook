@@ -1,0 +1,47 @@
+
+
+<!-- ======================================================= -->
+<!-- ======================================================= -->
+<!-- ======================================================= -->
+# Missing Data {#transformation .tabset .tabset-fade}
+
+<!-- ======================================================= -->
+## Overview {.tabset .tabset-fade .tabset-pills}
+
+dealing with missing data
+percent missing over time
+etc.
+
+<!-- ======================================================= -->
+## Percent missing over time {.tabset .tabset-fade .tabset-pills}
+
+Or change in percent of anything (X) over time, really.  
+
+```{r}
+lines <- linelist %>%
+  mutate(date_of_onset = as.Date(date_of_onset, format = "%d/%m/%Y"),
+         week = aweek::week2date(aweek::date2week(date_of_onset))) %>% 
+  group_by(week) %>% 
+  summarize(n_obs = n(),
+            dt_hosp_missing = sum(date_of_hospitalisation == "" | is.na(date_of_hospitalisation)),
+            dt_hosp_p_miss = dt_hosp_missing / n_obs,
+            
+            outcome_missing = sum(outcome == "" | is.na(outcome)),
+            outcome_p_miss = outcome_missing / n_obs) %>%
+  reshape2::melt(id.vars = c("week")) %>%
+  filter(grepl("_p_", variable)) %>% 
+  
+  ggplot()+
+    geom_line(aes(x = week, y = value, group = variable, color = variable), size = 1, stat = "identity")+
+    labs(title = "Missingness in variables, as proportion of ",
+         #subtitle = str_glue("As of {format(report_date, '%d %b')}"), 
+         x = "Week",
+         y = "Proportion missing",
+         fill = "CalREDIE Variable") + 
+    scale_color_discrete(name = "Variable", labels = c("Date of Hospitalization Missing", "Outcome Missing"))+
+    scale_y_continuous(breaks = c(seq(0,1,0.1)))
+    #theme_cowplot()#+
+    #theme(legend.position = element_text("none"))
+
+lines
+```
