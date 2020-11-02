@@ -1,6 +1,6 @@
 **This is one page of the R Handbook for Epidemiologists, but is being printed as a stand-alone page.**  
 
-**You can find the complete handbook HERE.**  
+**You can find the complete handbook on [Github](https://github.com/nsbatra/Epi_R_handbook)**  
 
 
 ```{r include=FALSE}

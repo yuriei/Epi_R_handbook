@@ -1,7 +1,7 @@
 ---
 title:  |  
   ![](../images/R Handbook Logo.png)
-author: "Version 1.0.0 - Separate pages"
+author: ""
 date: "Produced `r format(Sys.time(), '%A %d %B %Y')`"
 output:
   html_document:
@@ -16,25 +16,17 @@ output:
     #css: !expr here::here('css', 'style.css')
 ---
 
-<style>
-.color-tabs>.nav-pills>li:nth-child(2){background:green;}
-</style>
-
-
-```{r include=FALSE}
-knitr::opts_chunk$set(echo = TRUE,
-                      collapse = TRUE,
-                      fig.width = 8,
-                      fig.height = 6,
-                      dpi = 150,
-                      warning = FALSE,
-                      message = FALSE)
+```{r, include=F}
+# this determines whether the page is being sources by another page (e.g. handbook_combined.Rmd) or run independently.
+# If run independently, the script page_setup.Rmd is sourced below to load datasets and core packages 
+if (sys.nframe() == 0L) {
+  PUBLISH_PAGE_ALONE <<- TRUE
+} else {
+  PUBLISH_PAGE_ALONE <<- FALSE
+}
 ```
 
-
-```{r echo=FALSE, include=TRUE}
-#Enables "copy to clipboard" icons   https://rlesur.github.io/klippy/articles/klippy.html
-klippy::klippy(position = c('top', 'right'))
+```{r, child=if (!PUBLISH_PAGE_ALONE) 'page_setup.Rmd', include = F}
 ```
 
 <!-- ======================================================= -->

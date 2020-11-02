@@ -1,0 +1,111 @@
+---
+title:  |  
+  ![](../images/R Handbook Logo.png)
+author: ""
+date: "Produced `r format(Sys.time(), '%A %d %B %Y')`"
+output:
+  html_document:
+    code_folding: show
+    highlight: zenburn
+    number_sections: no
+    theme: sandstone
+    toc: yes
+    toc_collapse: no
+    toc_depth: 3
+    toc_float: yes
+    #css: !expr here::here('css', 'style.css')
+---
+
+```{r, include=F}
+# this determines whether the page is being sources by another page (e.g. handbook_combined.Rmd) or run independently.
+# If run independently, the script page_setup.Rmd is sourced below to load datasets and core packages 
+if (sys.nframe() == 0L) {
+  PUBLISH_PAGE_ALONE <<- TRUE
+} else {
+  PUBLISH_PAGE_ALONE <<- FALSE
+}
+```
+
+```{r, child=if (!PUBLISH_PAGE_ALONE) 'page_setup.Rmd', include = F}
+```
+
+
+<!-- ======================================================= -->
+<!-- ======================================================= -->
+<!-- ======================================================= -->
+# Diagrams {#diagrams .tabset .tabset-fade}  
+
+The Page title should be succinct. Consider adding a tag with no spaces into the curly brackets, such as below. This can be used for internal links within the handbook. 
+`{#title_tag .tabset .tabset-fade}`
+
+<!-- ======================================================= -->
+## Overview {.tabset .tabset-fade .tabset-pills}
+
+Keep the title of this section as "Overview".  
+This tab should include:  
+
+* Textual overview of the purpose of this page  
+* Small image showing outputs   
+
+
+
+<!-- ======================================================= -->
+## Preparation {.tabset .tabset-fade .tabset-pills}
+
+Keep the title of this section as "Preparation".  
+Data preparation steps such as:  
+
+* Loading dataset  
+* Adding or changing variables  
+* melting, pivoting, grouping, etc.   
+
+<!-- ======================================================= -->
+### sub-tab 1 {.tabset .tabset-fade .tabset-pills}
+
+Can be used to separate major steps of data preparation. Re-name as needed
+
+
+<!-- ======================================================= -->
+### sub-tab 2 {.tabset .tabset-fade .tabset-pills}
+
+Can be used to separate major steps of data preparation. Re-name as needed.
+
+
+
+<!-- ======================================================= -->
+## Patient flow {.tabset .tabset-fade .tabset-pills}
+
+E.g. EVD patient "pathways" to outcome (via clinic or not, etc.)
+
+HIV care continuum datasets? PreP datasets?
+
+
+<!-- ======================================================= -->
+## Alluvial {.tabset .tabset-fade .tabset-pills}
+
+Sankey plots - show transitions among cohort over time, interrelatedness of groups
+Liza Coyer TODO
+
+
+<!-- ======================================================= -->
+## Clinical trials {.tabset .tabset-fade .tabset-pills}
+
+Or papers in meta-analysis
+
+
+<!-- ======================================================= -->
+## Event timelines {.tabset .tabset-fade .tabset-pills}
+E.g. border closures during COVID
+
+
+
+<!-- ======================================================= -->
+## Resources {.tabset .tabset-fade .tabset-pills}
+
+This tab should stay with the name "Resources".
+Links to other online tutorials or resources.
+
+
+
+
+

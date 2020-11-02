@@ -1,0 +1,120 @@
+---
+title:  |  
+  ![](../images/R Handbook Logo.png)
+author: ""
+date: "Produced `r format(Sys.time(), '%A %d %B %Y')`"
+output:
+  html_document:
+    code_folding: show
+    highlight: zenburn
+    number_sections: no
+    theme: sandstone
+    toc: yes
+    toc_collapse: no
+    toc_depth: 3
+    toc_float: yes
+    #css: !expr here::here('css', 'style.css')
+---
+
+```{r, include=F}
+# this determines whether the page is being sources by another page (e.g. handbook_combined.Rmd) or run independently.
+# If run independently, the script page_setup.Rmd is sourced below to load datasets and core packages 
+if (sys.nframe() == 0L) {
+  PUBLISH_PAGE_ALONE <<- TRUE
+} else {
+  PUBLISH_PAGE_ALONE <<- FALSE
+}
+```
+
+```{r, child=if (!PUBLISH_PAGE_ALONE) 'page_setup.Rmd', include = F}
+```
+
+
+
+<!-- ======================================================= -->
+<!-- ======================================================= -->
+<!-- ======================================================= -->
+# Transmission Chains {#transmissionchains .tabset .tabset-fade}
+
+
+<!-- ======================================================= -->
+## Overview {.tabset .tabset-fade .tabset-pills}
+
+The primary tool to visualize and analyze transmission chains is the package **epicontacts**, developed by the folks at RECON.  
+
+```{r out.width=c('50%', '50%'), fig.show='hold', echo=F}
+library(epicontacts)
+library(outbreaks)
+
+links <- epicontacts::make_epicontacts(linelist = mers_korea_2015$linelist,
+                                       contacts = mers_korea_2015$contacts, 
+                                       directed = TRUE)
+# plot without time
+plot(links,
+     selector = FALSE,
+     height = 700,
+     width = 700)
+
+# plot with date of onset as x-axis
+plot(sim,
+     x_axis = 'onset',
+     height = 700,
+     width = 700,
+)
+```
+
+
+
+<!-- ======================================================= -->
+## Preparation {.tabset .tabset-fade .tabset-pills}
+
+
+<!-- ======================================================= -->
+## Visualization {.tabset .tabset-fade .tabset-pills}
+
+```{r}
+
+links <- epicontacts::make_epicontacts(linelist = mers_korea_2015$linelist,
+                                       contacts = mers_korea_2015$contacts, 
+                                       directed = TRUE)
+# plot without time
+plot(links,
+     selector = FALSE,
+     height = 700,
+     width = 700)
+
+```
+
+And in a transmission tree, with *date of onset on the x-axis*:  
+
+Note: this currently requires installing a development version of **epicontacts** from github... @ttree 
+
+```{r}
+
+# plot with date of onset as x-axis
+plot(sim,
+     x_axis = 'onset',
+     height = 700,
+     width = 700,
+)
+
+```
+
+<!-- ======================================================= -->
+## Analysis {.tabset .tabset-fade .tabset-pills}
+
+```{r}
+summary(links)
+```
+
+
+<!-- ======================================================= -->
+## Resources {.tabset .tabset-fade .tabset-pills}
+
+This tab should stay with the name "Resources".
+Links to other online tutorials or resources.
+
+
+
+
+

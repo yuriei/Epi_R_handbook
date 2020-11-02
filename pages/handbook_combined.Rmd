@@ -70,4 +70,136 @@ klippy::klippy(position = c('top', 'right'))
 ```
 
 
+```{r child = 'writing_functions.Rmd'}
+```
+
+
+```{r child = 'r_projects.Rmd'}
+```
+
+
+```{r child = 'rstudio_advanced.Rmd'}
+```
+
+
+```{r child = 'epidemic_models.Rmd'}
+```
+
+
+```{r child = 'moving_average.Rmd'}
+```
+
+
+```{r child = 'deduplication.Rmd'}
+```
+
+
+```{r child = 'matching_joining.Rmd'}
+```
+
+
+```{r child = 'character_regex.Rmd'}
+```
+
+
+
+```{r child = 'gis.Rmd'}
+```
+
+
+```{r child = 'endemic_corridor.Rmd'}
+```
+
+
+```{r child = 'rmarkdown.Rmd'}
+```
+
+
+```{r child = 'time_series.Rmd'}
+```
+
+
+```{r child = 'survey_analysis.Rmd'}
+```
+
+
+```{r child = 'transmission_chains.Rmd'}
+```
+
+
+```{r child = 'tables.Rmd'}
+```
+
+
+```{r child = 'age_standardization.Rmd'}
+```
+
+
+```{r child = 'diagrams.Rmd'}
+```
+
+
+```{r child = 'age_pyramid.Rmd'}
+```
+
+
+
+
+
+
+```{r child = 'conditional_loops.Rmd'}
+```
+
+
+```{r child = 'modeling.Rmd'}
+```
+
+
+```{r child = 'ggplot_tips.Rmd'}
+```
+
+
+```{r child = 'interactive.Rmd'}
+```
+
+
+```{r child = 'apply_functions.Rmd'}
+```
+
+
+```{r child = 'shiny_basics.Rmd'}
+```
+
+
+```{r child = 'relational_databases.Rmd'}
+```
+
+
+```{r child = 'network_drives.Rmd'}
+```
+
+
+```{r child = 'reportfactory.Rmd'}
+```
+
+
+```{r child = 'github.Rmd'}
+```
+
+
+```{r child = 'plotly.Rmd'}
+```
+
+
+```{r child = 'directories.Rmd'}
+```
+
+
+```{r child = 'errors_warnings.Rmd'}
+```
+
+
+
+
+
 

@@ -17,6 +17,8 @@ output:
 ---
 
 ```{r, include=F}
+# this determines whether the page is being sources by another page (e.g. handbook_combined.Rmd) or run independently.
+# If run independently, the script page_setup.Rmd is sourced below to load datasets and core packages 
 if (sys.nframe() == 0L) {
   PUBLISH_PAGE_ALONE <<- TRUE
 } else {
