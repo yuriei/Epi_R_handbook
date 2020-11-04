@@ -13,22 +13,11 @@ output:
     toc_collapse: no
     toc_depth: 3
     toc_float: yes
-    #css: !expr here::here('css', 'style.css')
+params:
+  run_page_ind: TRUE
 ---
 
-```{r, include=F, eval=F}
-# this determines whether the page is being sources by another page (e.g. handbook_combined.Rmd) or run independently.
-# If run independently, the script page_setup.Rmd is sourced below to load datasets and core packages 
-
-if (exists("COMBINE_ALL_PAGES")){
-  RUN_PAGE_SETUP <<- FALSE
-} else {
-  RUN_PAGE_SETUP <<- TRUE
-}
-
-```
-
-```{r, child= 'page_setup.Rmd', eval = if(exists(!COMBINE_ALL_PAGES), include = F}
+```{r, child= 'page_setup.Rmd', eval = params$run_page_ind, include = F}
 ```
 
 <!-- ======================================================= -->

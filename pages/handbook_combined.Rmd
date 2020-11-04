@@ -13,7 +13,8 @@ output:
     toc_collapse: no
     toc_depth: 3
     toc_float: yes
-    #css: !expr here::here('css', 'style.css')
+params:
+  run_page_ind: FALSE
 ---
 
 <style>
@@ -144,7 +145,36 @@ klippy::klippy(position = c('top', 'right'))
 
 
 
+```{r child = 'heatmap.Rmd', eval=F}
+```
 
+
+```{r child = 'combination_analysis.Rmd'}
+```
+
+
+```{r child = 'epicurves.Rmd'}
+```
+
+
+```{r child = 'stat_tests.Rmd'}
+```
+
+
+```{r child = 'scatterplots.Rmd'}
+```
+
+
+```{r child = 'boxplots.Rmd', eval=FALSE}
+```
+
+
+```{r child = 'descriptive_statistics.Rmd', eval=FALSE}
+```
+
+
+```{r child = 'grouping_aggregating.Rmd'}
+```
 
 
 ```{r child = 'conditional_loops.Rmd'}
@@ -197,7 +227,6 @@ klippy::klippy(position = c('top', 'right'))
 
 ```{r child = 'errors_warnings.Rmd'}
 ```
-
 
 
 

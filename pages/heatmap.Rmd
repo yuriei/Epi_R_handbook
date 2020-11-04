@@ -1,0 +1,197 @@
+---
+title:  |  
+  ![](../images/R Handbook Logo.png)
+author: ""
+date: "Produced `r format(Sys.time(), '%A %d %B %Y')`"
+output:
+  html_document:
+    code_folding: show
+    highlight: zenburn
+    number_sections: no
+    theme: sandstone
+    toc: yes
+    toc_collapse: no
+    toc_depth: 3
+    toc_float: yes
+params:
+    run_page_ind: TRUE
+---
+
+
+```{r, child = 'page_setup.Rmd', eval = params$run_page_ind, include = F}
+```
+
+
+<!-- ======================================================= -->
+<!-- ======================================================= -->
+<!-- ======================================================= -->
+# Heatmaps {#heatmap .tabset .tabset-fade}  
+
+The Page title should be succinct. Consider adding a tag with no spaces into the curly brackets, such as below. This can be used for internal links within the handbook. 
+`{#title_tag .tabset .tabset-fade}`
+
+<!-- ======================================================= -->
+## Overview {.tabset .tabset-fade .tabset-pills}
+
+Nice to use when tracking metrics at many facilities/regions over time
+
+For example:  
+
+```{r echo=F}
+data_date <- as.Date("2013-07-27")
+
+agg_weeks <- count_data %>% 
+  mutate(week = as.Date(aweek::week2date(aweek::date2week(data_date, floor_day = T)))) %>% 
+  group_by(location_name, week) %>% 
+  summarize(n_days = 7,
+            n_reports = n(),
+            malaria_tot = sum(malaria_tot, na.rm = T),
+            n_days_reported = length(unique(data_date)),
+            p_days_reported = round(100*(n_days_reported / n_days))) %>% 
+  filter(week < as.Date("2019-06-10"))
+
+ggplot(agg_weeks, aes(x=week, y=location_name, fill= p_days_reported))+
+  geom_tile(colour="white",size=0.2)+
+  guides(fill=guide_legend(title="Reporting\nperformance (%)"))+
+  labs(x="Week (date of data)",
+       y="Facility name",
+       title="Percent of days per week that facility reported data",
+       subtitle = "52 health facilities, April-May 2019",
+       caption = "7-day weeks beginning on Mondays.")+
+  scale_fill_gradient(low = "yellow", high = "darkgreen", na.value = "grey80")+
+  theme_light()+
+  theme(legend.position="right",legend.direction="vertical",
+        legend.title=element_text(size=12, face="bold"),
+        legend.margin=margin(grid::unit(0,"cm")),
+        legend.text=element_text(size=10,face="bold"),
+        legend.key.height=grid::unit(0.8,"cm"),
+        legend.key.width=grid::unit(0.2,"cm"),
+        axis.text.x=element_text(size=12),
+        axis.text.y=element_text(vjust=0.2),
+        axis.ticks=element_line(size=0.4),
+        axis.title=element_text(size=12, face="bold"),
+        plot.background=element_blank(),
+        panel.border=element_blank(),
+        plot.margin=margin(0.7,0.4,0.1,0.2,"cm"),
+        plot.title=element_text(hjust=0,size=14,face="bold"))
+
+```
+
+
+
+<!-- ======================================================= -->
+## Preparation {.tabset .tabset-fade .tabset-pills}
+
+Keep the title of this section as "Preparation".  
+Data preparation steps such as:  
+
+* Loading dataset  
+* Adding or changing variables  
+* melting, pivoting, grouping, etc.   
+
+<!-- ======================================================= -->
+### sub-tab 1 {.tabset .tabset-fade .tabset-pills}
+
+Can be used to separate major steps of data preparation. Re-name as needed
+
+
+<!-- ======================================================= -->
+### sub-tab 2 {.tabset .tabset-fade .tabset-pills}
+
+Can be used to separate major steps of data preparation. Re-name as needed.
+
+
+
+<!-- ======================================================= -->
+## Tracking performance {.tabset .tabset-fade .tabset-pills}
+```{r}
+DT::datatable(count_data, rownames = FALSE, filter="top", options = list(pageLength = 5, scrollX=T))
+
+```
+
+Group the data by week and location, and then make summary calculations:  
+
+
+```{r}
+# Get number & percent of days data reported for, by week
+agg_weeks <- count_data %>% 
+  mutate(week = as.Date(aweek::week2date(aweek::date2week(data_date, floor_day = T)))) %>% 
+  group_by(location_name, week) %>% 
+  summarize(n_days = 7,
+            n_reports = n(),
+            malaria_tot = sum(malaria_tot, na.rm = T),
+            n_days_reported = length(unique(data_date)),
+            p_days_reported = round(100*(n_days_reported / n_days))) %>% 
+  filter(week < as.Date("2019-06-10"))
+
+### Days
+agg_days <- count_data %>% 
+  
+  filter(data_date < as.Date("2019-06-10"))
+  
+```
+
+Then we make the plot:  
+
+```{r}
+ggplot(agg_weeks, aes(x=week, y=location_name, fill= p_days_reported))+
+  geom_tile(colour="white",size=0.2)+
+  guides(fill=guide_legend(title="Reporting\nperformance (%)"))+
+  labs(x="Week (date of data)",
+       y="Facility name",
+       title="Percent of days per week that facility reported data",
+       subtitle = "52 health facilities, April-May 2019",
+       caption = "7-day weeks beginning on Mondays.")+
+  scale_fill_gradient(low = "yellow", high = "darkgreen", na.value = "grey80")+
+  theme_light()+
+  theme(legend.position="right",legend.direction="vertical",
+        legend.title=element_text(size=12, face="bold"),
+        legend.margin=margin(grid::unit(0,"cm")),
+        legend.text=element_text(size=10,face="bold"),
+        legend.key.height=grid::unit(0.8,"cm"),
+        legend.key.width=grid::unit(0.2,"cm"),
+        axis.text.x=element_text(size=12),
+        axis.text.y=element_text(vjust=0.2),
+        axis.ticks=element_line(size=0.4),
+        axis.title=element_text(size=12, face="bold"),
+        plot.background=element_blank(),
+        panel.border=element_blank(),
+        plot.margin=margin(0.7,0.4,0.1,0.2,"cm"),
+        plot.title=element_text(hjust=0,size=14,face="bold"))
+
+
+
+```
+
+
+<!-- ======================================================= -->
+### Option 1 sub-tab {.tabset .tabset-fade .tabset-pills}
+
+Sub-tabs if necessary. Re-name as needed.
+
+
+
+<!-- ======================================================= -->
+## Option 2 {.tabset .tabset-fade .tabset-pills}
+
+This tab can be re-named. 
+This tab should demonstrate execution of the task a more standard/core package (e.g. ggplot2, or base R) that allows for more flexibility in the output or more package stability. For example, showing how to create an epicurve using *ggplot2*. 
+
+
+<!-- ======================================================= -->
+### Option 2 sub-tab {.tabset .tabset-fade .tabset-pills}
+
+Sub-tabs if necessary. Re-name as needed.
+
+
+
+<!-- ======================================================= -->
+## Resources {.tabset .tabset-fade .tabset-pills}
+
+This tab should stay with the name "Resources".
+Links to other online tutorials or resources.
+
+
+
+
+

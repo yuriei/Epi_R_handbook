@@ -1,0 +1,161 @@
+---
+title:  |  
+  ![](../images/R Handbook Logo.png)
+author: ""
+date: "Produced `r format(Sys.time(), '%A %d %B %Y')`"
+output:
+  html_document:
+    code_folding: show
+    highlight: zenburn
+    number_sections: no
+    theme: sandstone
+    toc: yes
+    toc_collapse: no
+    toc_depth: 3
+    toc_float: yes
+params:
+    run_page_ind: TRUE
+---
+
+```{r, child= 'page_setup.Rmd', eval = params$run_page_ind, include = F}
+```
+
+
+<!-- ======================================================= -->
+<!-- ======================================================= -->
+<!-- ======================================================= -->
+# Descriptive analysis {.tabset .tabset-fade}  
+
+The Page title should be succinct. Consider adding a tag with no spaces into the curly brackets, such as below. This can be used for internal links within the handbook. 
+`{#title_tag .tabset .tabset-fade}`
+
+<!-- ======================================================= -->
+## Overview {.tabset .tabset-fade .tabset-pills}
+
+Keep the title of this section as "Overview".  
+This tab should include:  
+
+* Textual overview of the purpose of this page  
+* Small image showing outputs   
+
+
+
+<!-- ======================================================= -->
+## Preparation {.tabset .tabset-fade .tabset-pills}
+
+Keep the title of this section as "Preparation".  
+Data preparation steps such as:  
+
+* Loading dataset  
+* Adding or changing variables  
+* melting, pivoting, grouping, etc.   
+
+
+<!-- ======================================================= -->
+## Summary Statistics {#summarystats .tabset .tabset-fade .tabset-pills}
+
+### **Summary of *numeric* variable**
+```{r descriptive_summary}
+summary(linelist$age)
+```
+
+
+### **Mean**
+Note the argument na.rm=T, which removes missing values from the calculation.  
+If missing values are not excluded, the returned value will be NA (missing).
+```{r descriptive_mean}
+mean(linelist$age)
+mean(linelist$age, na.rm=TRUE)  # with the na.rm= argument set to TRUE
+```
+
+
+### **Median**
+Note the argument na.rm=T, which removes missing values from the calculation.  
+If missing values are not excluded, the returned value will be NA (missing).  
+
+```{r descriptive_median}
+median(linelist$age)
+median(linelist$age, na.rm=TRUE)  # with the na.rm= argument set to TRUE
+```
+
+
+### **Range**
+Note the argument na.rm=T, which removes missing values from the calculation.  
+If missing values are not excluded, the returned value will be NA (missing).  
+
+```{r descriptive_range}
+range(linelist$age)
+range(linelist$age, na.rm=TRUE)  # with the na.rm= argument set to TRUE
+```
+
+
+
+### **Standard Deviation**
+Note the argument na.rm=T, which removes missing values from the calculation.  
+If missing values are not excluded, the returned value will be NA (missing).
+```{r descriptive_std}
+sd(linelist$age)
+sd(linelist$age, na.rm=TRUE)  # with the na.rm= argument set to TRUE
+```
+
+
+### **Percentile**
+Note the argument na.rm=T, which removes missing values from the calculation.  
+If missing values are not excluded, the returned value will be NA (missing).
+```{r descriptive_pctile}
+stats::quantile(linelist$age, na.rm=TRUE)  # default %iles
+stats::quantile(linelist$age, probs = c(.05, 0.5, 0.75, 0.98), na.rm=TRUE) # percentiles specified
+```
+
+
+<!-- ======================================================= -->
+## Frequency/cross-tabs {.tabset .tabset-fade .tabset-pills}
+
+Frequency table of 1 and 2 categorical variables
+```{r}
+table(linelist$province)
+
+x <- table(linelist$province, linelist$gender)
+#janitor::adorn_totals(x)
+
+```
+
+A table with 3 variables
+```{r}
+table_3vars <- table(linelist$province, linelist$gender, linelist$outcome)
+
+ftable(table_3vars)
+```
+
+
+<!-- ======================================================= -->
+## Summary by group {.tabset .tabset-fade .tabset-pills}
+
+```{r eval=F}
+count_data %>% 
+  group_by(District) %>% 
+  summarise(n_obs = n(), # number of observations
+            range_date = max(Date, na.rm=T) - min(Date, na.rm=T)
+            )
+
+```
+
+
+<!-- ======================================================= -->
+## Correlations {.tabset .tabset-fade .tabset-pills}
+
+
+<!-- ======================================================= -->
+## T-tests {.tabset .tabset-fade .tabset-pills}
+
+
+<!-- ======================================================= -->
+## Resources {.tabset .tabset-fade .tabset-pills}
+
+This tab should stay with the name "Resources".
+Links to other online tutorials or resources.
+
+
+
+
+

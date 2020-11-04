@@ -1,0 +1,74 @@
+---
+title:  |  
+  ![](../images/R Handbook Logo.png)
+author: ""
+date: "Produced `r format(Sys.time(), '%A %d %B %Y')`"
+output:
+  html_document:
+    code_folding: show
+    highlight: zenburn
+    number_sections: no
+    theme: sandstone
+    toc: yes
+    toc_collapse: no
+    toc_depth: 3
+    toc_float: yes
+params:
+    run_page_ind: TRUE
+---
+
+```{r, child= 'page_setup.Rmd', eval = params$run_page_ind, include = F}
+```
+
+
+<!-- ======================================================= -->
+<!-- ======================================================= -->
+<!-- ======================================================= -->
+# Grouping/aggregating data {#grouping .tabset .tabset-fade}  
+
+The Page title should be succinct. Consider adding a tag with no spaces into the curly brackets, such as below. This can be used for internal links within the handbook. 
+`{#title_tag .tabset .tabset-fade}`
+
+<!-- ======================================================= -->
+## Overview {.tabset .tabset-fade .tabset-pills}
+
+Keep the title of this section as "Overview".  
+This tab should include:  
+
+* Textual overview of the purpose of this page  
+* Small image showing outputs   
+
+Tidyverse - grouping by values
+
+.drop=F in `group_by()` command
+
+
+<!-- ======================================================= -->
+## Preparation {.tabset .tabset-fade .tabset-pills}
+
+Keep the title of this section as "Preparation".  
+Data preparation steps such as:  
+
+* Loading dataset  
+* Adding or changing variables  
+* melting, pivoting, grouping, etc.   
+
+<!-- ======================================================= -->
+## `group_by()` {.tabset .tabset-fade .tabset-pills}
+
+
+<!-- ======================================================= -->
+## `aggregate()` {.tabset .tabset-fade .tabset-pills}
+
+
+
+<!-- ======================================================= -->
+## Resources {.tabset .tabset-fade .tabset-pills}
+
+This tab should stay with the name "Resources".
+Links to other online tutorials or resources.
+
+
+
+
+
