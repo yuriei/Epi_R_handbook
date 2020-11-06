@@ -65,3 +65,9 @@ lines <- linelist %>%
 
 lines
 ```
+
+
+
+
+```{r, child= 'page_closeout.Rmd', eval = params$run_page_ind == F, include = F}
+```

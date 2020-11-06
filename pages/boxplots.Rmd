@@ -37,7 +37,10 @@ Boxplots can be created with:
 * the `boxplot()` function from the **graphics** package (installed automatically with **base R**), or  
 * the `ggplot()` function from the **ggplot2** package  
 
-```{r out.width=c('50%', '50%'), fig.show='hold'}
+```{r out.width=c('50%', '50%'), fig.show='hold', echo=F}
+linelist <- linelist %>% 
+  mutate(age = as.numeric(age))
+
 # with the boxplot() function
 graphics::boxplot(age ~ outcome*gender,
                   data = linelist,
@@ -65,6 +68,10 @@ Data preparation steps such as:
 * Adding or changing variables  
 * melting, pivoting, grouping, etc.   
 
+```{r}
+linelist <- linelist %>% 
+  mutate(age = as.numeric(age))
+```
 
 
 <!-- ======================================================= -->
@@ -195,4 +202,7 @@ Links to other online tutorials or resources.
 
 
 
+
+```{r, child= 'page_closeout.Rmd', eval = params$run_page_ind == F, include = F}
+```
 

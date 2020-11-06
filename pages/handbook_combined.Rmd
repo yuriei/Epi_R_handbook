@@ -67,7 +67,7 @@ klippy::klippy(position = c('top', 'right'))
 ```
 
 
-```{r child = 'grouping.Rmd'}
+```{r child = 'grouping_aggregating.Rmd'}
 ```
 
 
@@ -145,7 +145,7 @@ klippy::klippy(position = c('top', 'right'))
 
 
 
-```{r child = 'heatmap.Rmd', eval=F}
+```{r child = 'heatmaps.Rmd'}
 ```
 
 
@@ -165,15 +165,11 @@ klippy::klippy(position = c('top', 'right'))
 ```
 
 
-```{r child = 'boxplots.Rmd', eval=FALSE}
+```{r child = 'boxplots.Rmd'}
 ```
 
 
-```{r child = 'descriptive_statistics.Rmd', eval=FALSE}
-```
-
-
-```{r child = 'grouping_aggregating.Rmd'}
+```{r child = 'descriptive_statistics.Rmd'}
 ```
 
 

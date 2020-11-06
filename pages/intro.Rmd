@@ -92,8 +92,8 @@ Here the datasets used in this handbook will be described and will be "downloada
 * modeling dataset? (...)
 
 ```{r handbook_packages_silent, echo = F}
-pacman::p_load(tidyverse, rio, here, apyramid, linelist)
 
+source(here::here("load_core_packages.R"))
 
 # remotes::install_github("rlesur/klippy")
 # remotes::install_github("reconhub/epicontacts@ttree")
@@ -105,18 +105,14 @@ pacman::p_load(tidyverse, rio, here, apyramid, linelist)
 
 ```{r datasets_import_silent, echo = F, cache=T}
 
-# import linelist
-linelist_raw <- import(here("data", "fluH7N9_China_2013.csv"))
-  
-  
-linelist <- linelist_raw %>% 
-  mutate(age = as.numeric(age))
+# linelist
+linelist <- rio::import(here::here("data", "fluH7N9_China_2013.csv"))
 
-# import aggregated case counts of disease X
-count_data <- rio::import(here::here("data", "aggregated_counts_diseaseX.xlsx"))  
+# district count data
+district_count_data <- rio::import(here::here("data", "district_count_data.xlsx"))  
 
-# import ...
-
+# facility count data
+facility_count_data <- rio::import(here::here("data", "facility_count_data.csv"))
 ```
 
 
@@ -124,19 +120,22 @@ count_data <- rio::import(here::here("data", "aggregated_counts_diseaseX.xlsx"))
 ## Contributors
 <h2> Contributors </h2>
 
-**Maintainer:** Neale Batra (neale.batra@gmail.com)
+**Editor-in-Chief:** Neale Batra (neale.batra@gmail.com)
 
-**Code contributors:** ...
+**Editorial core team:**  ...  
 
-**Data contributors:** *outbreaks* package
+**Authors:** ...
 
-Content provided by these people.... a...b...c...d...  
+**Reviewers:** ...  
 
-Review provided by these people...   
+**Advisors**  ...  
+
+**Data contributors:**  
+  *outbreaks* package
 
 Some of this material comes from the R4Epis website, which was also made by some of the same people...
 
-RECON
+RECON packages
 
 Photo credits (logo): CDC Public Image gallery; R Graph Gallery
 

@@ -55,7 +55,7 @@ https://cran.r-project.org/web/packages/janitor/vignettes/janitor.html#cleaning
 
 
 ```{r clean_names}
-linelist <- linelist_raw %>% 
+linelist <- linelist %>% 
   janitor::clean_names()
 ```
 
@@ -65,7 +65,7 @@ linelist <- linelist_raw %>%
 See section on [object classes](#objectclasses)   
 
 ```{r}
-linelist <- linelist_raw %>% 
+linelist <- linelist %>% 
   mutate(age           = as.numeric(age),
          outcome       = as.character(outcome),
          date_of_onset = as.Date(date_of_onset, format = "%d/%m/%Y"),
@@ -132,3 +132,6 @@ Santa Clara County example - COVID contact tracing data - classification of mult
 
 
 
+
+```{r, child= 'page_closeout.Rmd', eval = params$run_page_ind == F, include = F}
+```

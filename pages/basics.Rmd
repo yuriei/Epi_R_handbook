@@ -21,7 +21,12 @@ params:
 ```{r, child= 'page_setup.Rmd', eval = params$run_page_ind, include = F}
 ```
 
+```{r, echo=F}
+linelist <- linelist %>% 
+  mutate(age = as.numeric(age))
 
+pacman::p_load(apyramid)
+```
 
 <!-- ======================================================= -->
 <!-- ======================================================= -->
@@ -239,7 +244,7 @@ reporting_week                 # prints the current value of reporting_week in t
 
 **Datasets are also objects and must be assigned names when they are imported.**  
 
-In the code below, the object `linelist_raw` is created and assigned the value of a CSV file imported with the **rio** package.  
+In the code below, the object `linelist` is created and assigned the value of a CSV file imported with the **rio** package.  
 
 ```{r basics_objects_dataframes, eval=FALSE}
 # linelist_raw is created and assigned the value of the imported CSV file
@@ -727,4 +732,10 @@ If all else fails, copy the error message into Google along with some key terms 
 <!-- ======================================================= -->
 ### Courses
 
+
+
+
+
+```{r, child= 'page_closeout.Rmd', eval = params$run_page_ind == F, include = F}
+```
 

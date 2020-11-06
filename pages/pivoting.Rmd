@@ -72,3 +72,9 @@ DT::datatable(linelist, rownames = FALSE, filter="top", options = list(pageLengt
 ### Pivot wider  
 
 ### Result
+
+
+
+
+```{r, child= 'page_closeout.Rmd', eval = params$run_page_ind == F, include = F}
+```

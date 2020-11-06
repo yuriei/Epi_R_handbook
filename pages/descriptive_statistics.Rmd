@@ -50,6 +50,11 @@ Data preparation steps such as:
 * Adding or changing variables  
 * melting, pivoting, grouping, etc.   
 
+```{r}
+linelist <- linelist %>% 
+  mutate(age = as.numeric(age))
+```
+
 
 <!-- ======================================================= -->
 ## Summary Statistics {#summarystats .tabset .tabset-fade .tabset-pills}
@@ -158,4 +163,7 @@ Links to other online tutorials or resources.
 
 
 
+
+```{r, child= 'page_closeout.Rmd', eval = params$run_page_ind == F, include = F}
+```
 

@@ -245,3 +245,6 @@ manual_entry_clipboard <- read.table(file = "clipboard",
 
 
 
+
+```{r, child= 'page_closeout.Rmd', eval = params$run_page_ind == F, include = F}
+```

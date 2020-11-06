@@ -17,8 +17,7 @@ params:
     run_page_ind: TRUE
 ---
 
-
-```{r, child = 'page_setup.Rmd', eval = params$run_page_ind, include = F}
+```{r, child= 'page_setup.Rmd', eval = params$run_page_ind, include = F}
 ```
 
 
@@ -40,7 +39,9 @@ For example:
 ```{r echo=F}
 data_date <- as.Date("2013-07-27")
 
-agg_weeks <- count_data %>% 
+facility_count_data <- rio::import(here::here("data", "facility_count_data.csv"))
+
+agg_weeks <- facility_count_data %>% 
   mutate(week = as.Date(aweek::week2date(aweek::date2week(data_date, floor_day = T)))) %>% 
   group_by(location_name, week) %>% 
   summarize(n_days = 7,
@@ -105,7 +106,7 @@ Can be used to separate major steps of data preparation. Re-name as needed.
 <!-- ======================================================= -->
 ## Tracking performance {.tabset .tabset-fade .tabset-pills}
 ```{r}
-DT::datatable(count_data, rownames = FALSE, filter="top", options = list(pageLength = 5, scrollX=T))
+DT::datatable(facility_count_data, rownames = FALSE, filter="top", options = list(pageLength = 5, scrollX=T))
 
 ```
 
@@ -114,7 +115,7 @@ Group the data by week and location, and then make summary calculations:
 
 ```{r}
 # Get number & percent of days data reported for, by week
-agg_weeks <- count_data %>% 
+agg_weeks <- facility_count_data %>% 
   mutate(week = as.Date(aweek::week2date(aweek::date2week(data_date, floor_day = T)))) %>% 
   group_by(location_name, week) %>% 
   summarize(n_days = 7,
@@ -125,7 +126,7 @@ agg_weeks <- count_data %>%
   filter(week < as.Date("2019-06-10"))
 
 ### Days
-agg_days <- count_data %>% 
+agg_days <- facility_count_data %>% 
   
   filter(data_date < as.Date("2019-06-10"))
   
@@ -194,4 +195,7 @@ Links to other online tutorials or resources.
 
 
 
+
+```{r, child= 'page_closeout.Rmd', eval = params$run_page_ind == F, include = F}
+```
 

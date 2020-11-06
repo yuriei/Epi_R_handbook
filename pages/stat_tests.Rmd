@@ -86,3 +86,6 @@ Links to other online tutorials or resources.
 
 
 
+
+```{r, child= 'page_closeout.Rmd', eval = params$run_page_ind == F, include = F}
+```

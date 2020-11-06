@@ -56,6 +56,8 @@ Data preparation steps such as:
 * Adding or changing variables  
 * melting, pivoting, grouping, etc.   
 
+
+
 <!-- ======================================================= -->
 ### sub-tab 1 {.tabset .tabset-fade .tabset-pills}
 
@@ -71,6 +73,12 @@ Can be used to separate major steps of data preparation. Re-name as needed.
 
 <!-- ======================================================= -->
 ## **apyramid** package {.tabset .tabset-fade .tabset-pills}
+
+```{r}
+#load package
+pacman::p_load(apyramid)
+```
+
 
 ```{r}
 
@@ -98,5 +106,8 @@ Links to other online tutorials or resources.
 
 
 
+
+```{r, child= 'page_closeout.Rmd', eval = params$run_page_ind == F, include = F}
+```
 
 
