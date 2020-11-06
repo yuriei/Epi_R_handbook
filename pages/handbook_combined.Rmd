@@ -71,26 +71,6 @@ klippy::klippy(position = c('top', 'right'))
 ```
 
 
-```{r child = 'writing_functions.Rmd'}
-```
-
-
-```{r child = 'r_projects.Rmd'}
-```
-
-
-```{r child = 'rstudio_advanced.Rmd'}
-```
-
-
-```{r child = 'epidemic_models.Rmd'}
-```
-
-
-```{r child = 'moving_average.Rmd'}
-```
-
-
 ```{r child = 'deduplication.Rmd'}
 ```
 
@@ -103,16 +83,39 @@ klippy::klippy(position = c('top', 'right'))
 ```
 
 
+```{r child = 'tables.Rmd'}
+```
 
-```{r child = 'gis.Rmd'}
+
+```{r child = 'descriptive_statistics.Rmd'}
+```
+
+
+```{r child = 'stat_tests.Rmd'}
+```
+
+
+```{r child = 'epicurves.Rmd'}
+```
+
+
+```{r child = 'scatterplots.Rmd'}
+```
+
+
+```{r child = 'boxplots.Rmd'}
+```
+
+
+```{r child = 'moving_average.Rmd'}
+```
+
+
+```{r child = 'transmission_chains.Rmd'}
 ```
 
 
 ```{r child = 'endemic_corridor.Rmd'}
-```
-
-
-```{r child = 'rmarkdown.Rmd'}
 ```
 
 
@@ -121,14 +124,6 @@ klippy::klippy(position = c('top', 'right'))
 
 
 ```{r child = 'survey_analysis.Rmd'}
-```
-
-
-```{r child = 'transmission_chains.Rmd'}
-```
-
-
-```{r child = 'tables.Rmd'}
 ```
 
 
@@ -144,7 +139,6 @@ klippy::klippy(position = c('top', 'right'))
 ```
 
 
-
 ```{r child = 'heatmaps.Rmd'}
 ```
 
@@ -153,23 +147,11 @@ klippy::klippy(position = c('top', 'right'))
 ```
 
 
-```{r child = 'epicurves.Rmd'}
+```{r child = 'rmarkdown.Rmd'}
 ```
 
 
-```{r child = 'stat_tests.Rmd'}
-```
-
-
-```{r child = 'scatterplots.Rmd'}
-```
-
-
-```{r child = 'boxplots.Rmd'}
-```
-
-
-```{r child = 'descriptive_statistics.Rmd'}
+```{r child = 'gis.Rmd'}
 ```
 
 
@@ -178,6 +160,18 @@ klippy::klippy(position = c('top', 'right'))
 
 
 ```{r child = 'modeling.Rmd'}
+```
+
+
+```{r child = 'epidemic_models.Rmd'}
+```
+
+
+```{r child = 'r_projects.Rmd'}
+```
+
+
+```{r child = 'rstudio_advanced.Rmd'}
 ```
 
 
@@ -194,6 +188,10 @@ klippy::klippy(position = c('top', 'right'))
 
 
 ```{r child = 'shiny_basics.Rmd'}
+```
+
+
+```{r child = 'writing_functions.Rmd'}
 ```
 
 
