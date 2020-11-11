@@ -29,6 +29,21 @@ params:
 <!-- ======================================================= -->
 ## Overview
 
+Working with dates in `R` is notoriously difficult when compared to other object classes. `R` often interprets dates as character objects - this means they cannot be used for general date operations such as making time series and calculating time intervals. To make matters more difficult, there are many date formats, some of which can be confused for other formats. Luckily, dates can be wrangled easily with practice, and with a set of helpful packages.
+
+Dates in `R` are their own class of object - the `Date` class. It should be noted that there is also a class that stores objects with date *and* time. Date time objects are formally referred to as  and/or `POSIXt`, `POSIXct`, and/or `POSIXlt` classes (the difference isn't important). These objects are informally referred to as *datetime* classes.
+
+You can get the system date or system datetime by doing the following:
+
+```{r eval=T}
+# get the system date - this is a DATE class
+Sys.Date()
+
+# get the system time - this is a DATETIME class
+Sys.time()
+
+```
+
 * It is important to make R recognize when a variable contains dates.  
 * Dates are an object class and can be tricky to work with.  
 * Here we present several ways to convert date variables to Date class.  
@@ -114,8 +129,72 @@ Once the values are in class Date, R will by default display them in the standar
 <!-- ======================================================= -->
 ## lubridate  
 
-This is a section on using lubridate
-(Henry)
+The `lubridate` package is a `tidyverse` package designed to make working with dates and time more simple and consistent than in base R. For these reasons, `lubridate` is often considered the gold-standard package for dates and time. 
+
+***maybe add in something on `as_date()` and `as_datetime`?
+
+The `lubridate` package provides a number of different helper functions desgined to convert character objects to dates in an intuitive, and more lenient way than specifying the format in `as.Date()`. These functions are specific to the rough date format, but allow for a variety of separators, and synonyms for dates (e.g. 01 vs Jan vs January) - they are named after abbreviations of date formats:
+
+```r{r, eval = T}
+# load packages 
+library(lubridate)
+
+# read date in year-month-day format
+ymd("2020-10-11")
+
+# read date in month-day-year format
+mdy("10/11/2020")
+
+# read date in day-month-year format
+dmy("11 10 2020")
+
+```
+
+`lubridate` can also be used to **extract aspects of a date/datetime**, **perform date arithmetic**, or **calculate date intervals**
+
+```{r, eval = T}
+  # extract the month from this date
+  
+  example_date <- ymd("2020-03-01")
+  
+  # extract the month and year from this date
+  month(example_date)
+  year(example_date)
+  
+  # get the epiweek of this date (this will be expanded later)
+  epiweek(example_date)
+  # get the day of the week for this date (this will be expanded later)
+  wday(example_date)
+  
+  # add 3 days to this date
+  example_date + days(3)
+  
+  # add 7 weeks and subtract two days from this date
+  example_date + weeks(7) - days(2)
+  
+  
+  # find the interval between this date and Feb 20 2020 
+  
+  example_dates - ymd("2020-02-20")
+  
+```
+
+This can all be brought together to work with data - for example:
+
+```r{r, eval = F}
+library(lubridate)
+
+linelist_cleaned <- linelist_cleaned %>%
+    # convert date of onset from character to date objects by specifying dmy format
+    mutate(date_of_onset = dmy(date_of_onset),
+           date_of_hospitalisation = dmy(date_of_onset)) %>%
+    # filter out all cases without onset in march
+    filter(month(date_of_onset) == 3) %>%
+    # find the difference in days between onset and hospitalisation
+    mutate(onset_to_hosp_days = date_of_hospitalisation - date_of_onset)
+
+```
+
 
 
 <!-- ======================================================= -->
