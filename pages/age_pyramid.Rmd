@@ -26,22 +26,40 @@ params:
 <!-- ======================================================= -->
 # Age pyramids {#age_pyramid .tabset .tabset-fade}  
 
-The Page title should be succinct. Consider adding a tag with no spaces into the curly brackets, such as below. This can be used for internal links within the handbook. 
-`{#title_tag .tabset .tabset-fade}`
+Age pyramids can be useful to show patterns by age group. They can show gender, or the distribution of other characteristics.  
+These tabs demonstrate how to produce age pyramids using:  
+
+* Fast & easy:   Using the **apyramid** package  
+* More flexible: Using `ggplot()`  
+
 
 <!-- ======================================================= -->
 ## Overview {.tabset .tabset-fade .tabset-pills}
 
 via ggplot and via R4Epis methods   TODO
 
-```{r echo=F}
+```{r echo=F, fig.width=6, fig.height=4}
 
 linelist$age <- as.numeric(linelist$age)
 
+linelist$age_group <- cut(linelist$age,
+                          breaks = c(0, 5, 10, 15, 20, 30, 45, 100),                              # same breaks
+                          right = FALSE,                                                         # change the inclusion            
+                          include.lowest = TRUE,                                                 # same, but now applies to highest break
+                          labels = c("0-4", "5-9", "10-14", "15-19", "20-29", "30-44", "45+"))
 
-linelist$age_group <- cut(linelist$age, breaks = c(0, 5, 10, 15, 20, 30, 45, 60))
-
-apyramid::age_pyramid(data = linelist, age_group = "age_group", split_by = "gender")
+apyramid::age_pyramid(data = linelist,
+                      age_group = "age_group",
+                      split_by = "gender",
+                      proportional = F)+
+  theme_minimal()+         # this is a standard ggplot() theme that simplifies the aesthetic background
+  labs(y = "Counts",       # note that for age pyramids the x and y labels are switched.
+       x = "Age Groups",   # Read more about this in the ggplot() age pyramid tab
+       caption = "My data source and caption here",
+       title = "Age and gender of cases",
+       subtitle = "Subtitle")+
+  theme(axis.text = element_text(size = 10, face = "bold"),    # see ggplot() tips page for details
+        axis.title = element_text(size = 12, face = "bold"))
 ```
 
 
@@ -49,52 +67,303 @@ apyramid::age_pyramid(data = linelist, age_group = "age_group", split_by = "gend
 <!-- ======================================================= -->
 ## Preparation {.tabset .tabset-fade .tabset-pills}
 
-Keep the title of this section as "Preparation".  
-Data preparation steps such as:  
+To make a traditional age/sex demographic pyramid, the data must first be cleaned in the following ways:  
 
-* Loading dataset  
-* Adding or changing variables  
-* melting, pivoting, grouping, etc.   
+* The gender column must be cleaned.  
+* The age column must be numeric, cleaned, and grouped into age groups  
 
 
 
 <!-- ======================================================= -->
-### sub-tab 1 {.tabset .tabset-fade .tabset-pills}
+### Setup and Importing the data {.tabset .tabset-fade .tabset-pills}
 
-Can be used to separate major steps of data preparation. Re-name as needed
+First, load the packages required for this analysis:  
 
+```{r}
+pacman::p_load(rio,       # to import data
+               here,      # to locate files
+               tidyverse, # to clean, handle, and plot the data (includes ggplot package)
+               apyramid   # a package dedicated to creating age pyramids
+               ) 
+```
+
+Now import the data
+```{r}
+linelist <- import(here("data", "fluH7N9_China_2013.csv"))
+```
 
 <!-- ======================================================= -->
-### sub-tab 2 {.tabset .tabset-fade .tabset-pills}
+### Clean values
 
-Can be used to separate major steps of data preparation. Re-name as needed.
+#### Clean age values  
+
+Sometimes, age variables will import as class "character". This occurs most often if there are non-numeric characters in some of the values, for example entries of "2 months", or how in some countries commas are used in the decimals place (e.g. "4,5" to mean four and one half years)  
+
+In other circumstances, a numeric age variable may be adjacent to another "units" variable (values of either years or months). This will require additional cleaning to calculate a completely numeric age. You can find an example of this in the *cleaning page* (LINK).  
+
+```{r}
+#check the class of the linelist variable age
+class(linelist$age)
+
+# ensure class of age variable is numeric, by re-defining itself 
+linelist$age <- as.numeric(linelist$age)
+```
+
+Now create age groups. There are a few ways to do this. 
+The most simple way is using the **base** function `cut()`, which creates groups from a numeric variable.  
+First you give the numeric variable to be cut (age), the the *breaks* argument which is a vector (`c()`) of number break points.
+
+By default, the grouping occurs so that the right/upper side is "open" and inclusive (and the left/lower side is "closed" or exclusive). The default labels use the notation "(A, B]", which means the group does not include A (the lower break), but includes B (the upper break). You can reverse this behavior by providing the *right* argument and setting equal to `FALSE` (explanation below).  
+
+ 
+
+```{r}
+# Create new variable, by cutting the numeric age variable
+linelist$age_group <- cut(linelist$age,
+                          breaks = c(0, 5, 10, 15, 20, 30, 45, 100))
+
+# tabulate the number of observations per group
+table(linelist$age_group)
+
+```
+
+
+You may want to verify that each age was assigned to the correct group. You can do this by cross-tabulating the age and age_group variables (names added for clarity). For example, you can check that the one 15-year patient was correctly assigned.  
+
+```{r}
+table(age = linelist$age, age_group = linelist$age_group, useNA = "always")
+```
+
+
+**NOTE:** 
+Note that if you provide a highest break value that is too low, values may be excluded accidentally! You can write code that automatically adapts, by replacing the static number with the `max()` function, as below. Don't forget to include `na.rm` argument to `max()` so that missing values are excluded from the maximum calculation (see LINK to description of max function).  
+
+
+```{r}
+linelist$age_group <- cut(linelist$age,
+                          breaks = c(0, 5, 10, 15, 20, 30, 45, max(linelist$age, na.rm=T)))
+table(linelist$age_group)
+
+```
+
+
+It may be important to also include the argument *include.lowest* and set it equal to `TRUE`, so that any values of 0 are still included in the lowest group (this could apply if infants have been coded as age 0). Customized group labels can be added manually with the *labels* argument. Both are shown below:  
+
+```{r}
+linelist$age_group <- cut(linelist$age,
+                          breaks = c(0, 5, 10, 15, 20, 30, 45, 100),
+                          include.lowest = TRUE,
+                          labels = c("0-5", "6-10", "11-15", "16-20", "21-30", "31-45", "46-100"))
+
+table(linelist$age_group)
+```
+
+If you include the argument *right* and set it equal to `TRUE`, then the lower break points will be included in each group and the upper breaks will not be included in the group. Note how one patient moves from the 3rd group to the 4th group.  
+Note: The *include.lowest* argument will now apply to the highest break point (60), not the lowest (0).  
+
+```{r}
+linelist$age_group <- cut(linelist$age,
+                          breaks = c(0, 5, 10, 15, 20, 30, 45, 100),                              # same breaks
+                          right = FALSE,                                                         # change the inclusion            
+                          include.lowest = TRUE,                                                 # same, but now applies to highest break
+                          labels = c("0-4", "5-9", "10-14", "15-19", "20-29", "30-44", "45-100")) # now the labels must change
+
+table(linelist$age_group)
+
+```
+
+
+If you want a fast way to make breaks and labels, you can use this:  
+
+```{r}
+
+# TO DO - NOT CORRECT 
+
+
+# Make groups from 0 to 90 by 5
+age_seq = seq(from = 0, to = 90, by = 5)
+
+# Make labels for the above
+age_lab = paste0(age_seq, "-", age_seq + 4)
+length(age_seq)
+length(age_lab)
+
+# # Use these in the cut() command
+# linelist$age_group <- cut(linelist$age,
+#                           breaks = age_seq,
+#                           labels = age_lab)
+
+
+```
+#### Clean gender values  
+
+Create a table of the values in the variable "Gender"
+```{r}
+table(linelist$gender, useNA = "always")
+```
+
+Take the opportunity to make changes or clean any incorrect values.  
 
 
 
 <!-- ======================================================= -->
 ## **apyramid** package {.tabset .tabset-fade .tabset-pills}
 
+The package **apyramid** allows you to quickly make an age pyramid. For more nuanced situations, see the tab on using `ggplot()` to make age pyramids. You can read more about the **apyramid** package by entering `?age_pyramid` in your R console. 
+
+First we load the package (if not already done)  
+
 ```{r}
 #load package
 pacman::p_load(apyramid)
 ```
 
+Now, using the cleaned dataset (see previous tabs), we can create an age pyramid with just one command.  
+
+* The *data* argument is set as the `linelist` dataframe  
+* The *age_group* argument (y-axis) is set to the name of your grouping variable (in quotes)  
+* The *split_by* argument (colors) in this case is set to our "gender" variable. You can also use other variables.  
+
+*Note: If the split_by variable is bivariate (e.g. male/female, or yes/no), then the result will show up as a pyramid, otherwise, it will be presented as a facetted barplot with with empty bars in the background indicating the range of the un-facetted data set. Values of split_by will show up as labels at top of each facet.*  
+
 
 ```{r}
-
-linelist$age <- as.numeric(linelist$age)
-
-
-linelist$age_group <- cut(linelist$age, breaks = c(0, 5, 10, 15, 20, 30, 45, 60))
-
-
-apyramid::age_pyramid(data = linelist, age_group = "age_group", split_by = "gender")
+apyramid::age_pyramid(data = linelist,
+                      age_group = "age_group",
+                      split_by = "gender")
 ```
+
+By default, the bars display counts (not %), a dashed mid-line for each group is shown, the colors are green/purple, and missing values are not shown. These can all be adjusted, as shown below:  
+
+```{r}
+apyramid::age_pyramid(data = linelist,
+                      age_group = "age_group",
+                      split_by = "gender",
+                      proportional = TRUE, # show percents, not counts
+                      na.rm = FALSE        # show a bar for patients missing age
+                      )
+
+```
+You can always add additional `ggplot()` commands to the plot using the standard `ggplot()` "+" syntax, such as aesthetic themes and label adjustments: 
+
+```{r}
+apyramid::age_pyramid(data = linelist,
+                      age_group = "age_group",
+                      split_by = "gender")+
+  theme_minimal()+         # this is a standard ggplot() theme that simplifies the aesthetic background
+  labs(y = "Counts",       # note that for age pyramids the x and y labels are switched.
+       x = "Age Groups",   # Read more about this in the ggplot() age pyramid tab
+       caption = "My data source and caption here",
+       title = "Title of my plot",
+       subtitle = "Subtitle but with \n2 lines...")+
+  theme(axis.text = element_text(size = 10, face = "bold"),    # see ggplot() tips page for details
+        axis.title = element_text(size = 12, face = "bold"))
+
+```
+
+#### `age_pyramid()` with aggregated data  
+
+If your data are already in counts by age group, you can still use the **apyramid** package, as shown below.  
+
+Let's say that your dataset already looks like this:  
+
+```{r}
+agg_age_data <- linelist %>% 
+  group_by(age_group, gender) %>% 
+  summarize(cases = dplyr::n())
+
+DT::datatable(agg_age_data)
+
+```
+You can give age_pyramid() the column for the counts like this:  
+
+```{r}
+apyramid::age_pyramid(data = agg_age_data,
+                      age_group = "age_group",
+                      split_by = "gender",
+                      count = "cases",      # give the column name for the aggregated counts
+                      na.rm = TRUE          # show a bar for patients missing age
+                      )
+
+
+
+```
+
 
 <!-- ======================================================= -->
 ## `ggplot()` {.tabset .tabset-fade .tabset-pills}
 
-with ggplot is more complex, but is done in this way...  TODO
+Using `ggplot()` to build your age pyramid allows more flexibility, but requires more effort and understanding of how `ggplot()` works. 
+
+
+<!-- ======================================================= -->
+### Constructing the plot {.tabset .tabset-fade .tabset-pills} 
+
+The first thing to understand is that initially the age groups are on the x-axis. You are creating a `geom_histogram()` layer for each of the two genders, **one in positive count values and the other in negative count values**. Then you are using the `coord_flip()` command to switch the X and Y axes.  
+
+
+TODO - automate the axis limits...
+
+
+```{r}
+
+## make the actual plot
+age_sex_pyramid <- linelist %>%
+  ggplot(aes(x = age, fill = gender)) +
+  geom_histogram(data = filter(linelist, gender == "f"),
+                 breaks = age_seq,
+                 colour = "white",
+                 closed = "left") +
+  geom_histogram(data = filter(linelist, gender == "m"),
+                 breaks = age_seq,
+                 aes(y=..count..*(-1)),
+                 color = "white",
+                 closed = "left") +
+  scale_x_continuous(breaks = age_seq + 2.5, labels = age_lab, limits = c(0, 90)) +
+  scale_y_continuous(limits = c(-20, 20), breaks = seq(-20,20,1), labels = abs(seq(-20, 20, 1))) +
+  scale_fill_manual(
+    values = c("f" = "orange",
+               "m" = "darkgreen"),
+    labels = c("Female", "Male"),
+  ) +
+  labs(
+    x = "Age group",
+    y = "Number of cases",
+    fill = NULL,
+    caption = glue::glue("Data are from linelist X \n n = {nrow(linelist)} (age or sex missing for {sum(is.na(linelist$gender) | is.na(linelist$age))} cases \nData as of: {format(Sys.Date(), '%d %b %Y')}")) +
+  coord_flip() +
+  theme(
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    panel.background = element_blank(),
+    axis.line = element_line(colour = "black"),
+    plot.title = element_text(hjust = 0.5), 
+    plot.caption = element_text(hjust=0, size=11)) + 
+  
+  ggtitle(paste0("Age and gender of cases"))
+    
+print(age_sex_pyramid)
+
+```
+
+
+<!-- ======================================================= -->
+### Compare to expected demographics  
+
+With the flexibility of `ggplot()`, you can have a second layer of bars in the background that represent the true population pyramid. This can provide a nice visualization to compare the observed counts with the baseline.  
+
+TO DO
+
+```{r, eval=F}
+
+# TO DO
+
+# extract population data
+pop <- rio::import(here::here("data/RDC_population_polio_2020.xls")) %>%
+  mutate_if(is.character, tolower)
+
+
+```
 
 
 

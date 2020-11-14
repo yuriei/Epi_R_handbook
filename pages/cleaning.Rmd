@@ -38,7 +38,7 @@ factors
 
 
 <!-- ======================================================= -->
-## Packages {.tabset .tabset-fade .tabset-pills}
+## Preparation {.tabset .tabset-fade .tabset-pills}
 
 ```{r, clean_packages}
 pacman::p_load(tidyverse, janitor, epitrix)
@@ -121,6 +121,8 @@ by percentile
 Missing if... `na_if()`
 
 Replace
+
+WHAT TO DO IF AGE IS SPREAD ACROSS TWO VARAIBLES (e.g. numeric age + unit)
 
 
 <!-- ======================================================= -->

@@ -30,16 +30,14 @@ params:
 ## About this handbook
 <h2> About this handbook </h2>
 
-**Purpose**  
+**Objective**  
 
-**This "handbook" will serve as a reference guide specifically for epidemiologists using R, providing step-by-step examples of how to complete common epi tasks and outputs, with clear instructions and code.**
+**To make an open-access digital R reference book which is catered to epidemiologists and public health practitioners, usable offline, and addresses common epidemiological tasks via clear text explanations, step-by-step instructions, and best practice R code examples**
 
 
 **The problem:**
 
-* Most online R help resources are not task-centered nor epidemiology-focused  
-* Epis learning or new to R often must Google and skim dozens of forum pages to complete common data manipulation and visualization epi tasks  
-* Field epidemiologists often work in low internet-connectivity environments and have limited technical support from HQ  
+Most online R help resources are not task-centered nor epidemiology-focused. Epis learning or new to R often must Google and skim dozens of forum pages to complete common data manipulation and visualization epi tasks. Furthermore, field epidemiologists often work in low internet-connectivity environments and have limited technical support.  
 
 
   
@@ -64,7 +62,7 @@ The latest version of this handbook can be found at this [github repository](htt
 * Code in this handbook sometimes explicity names the package of a function (e.g. `dplyr::mutate()`), so it is clear to the reader which package is being used.  
 
 
-**Note types**
+**Types of notes**
 
 ```
 FOR EXAMPLE: This is a boxed example
