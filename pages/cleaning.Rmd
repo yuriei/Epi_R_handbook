@@ -17,7 +17,7 @@ params:
     run_page_ind: TRUE
 ---
 
-```{r, child= 'page_setup.Rmd', eval = params$run_page_ind, include = F}
+```{r, child = 'page_setup.Rmd', eval = params$run_page_ind, include = F}
 ```
 
 
@@ -55,9 +55,26 @@ https://cran.r-project.org/web/packages/janitor/vignettes/janitor.html#cleaning
 
 
 ```{r clean_names}
+names(linelist)
+
 linelist <- linelist %>% 
   janitor::clean_names()
 ```
+
+Note that if you want to use variable names that include spaces, surround the names with back-ticks when referencing them in the code. On a keyboard, the back-tick (`) is different from the single quotation mark ('), and is sometimes on the same key as the tilde (~).  
+
+So a command referencing a variable names containing spaces might look like this:  
+
+```{r, eval=F}
+# re-naming a variable from a name that contains spaces
+linelist$age <- linelist$`age of patient`
+
+# or
+
+linelist <- linelist %>% 
+  mutate(age = `age of patient`)
+```
+
 
 <!-- ======================================================= -->
 ## Classes {.tabset .tabset-fade .tabset-pills #Classes}
