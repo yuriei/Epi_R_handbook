@@ -26,8 +26,12 @@ params:
 <!-- ======================================================= -->
 # Cleaning data {#cleaning .tabset .tabset-fade}
 
+
 <!-- ======================================================= -->
 ## Overview {.tabset .tabset-fade .tabset-pills}  
+
+This tab will demonstrate cleaning a simulated Ebola case linelist.  
+
 
 Text about cleaning data, approaches, etc.
 renaming
@@ -40,39 +44,70 @@ factors
 <!-- ======================================================= -->
 ## Preparation {.tabset .tabset-fade .tabset-pills}
 
+load packages  
+
 ```{r, clean_packages}
-pacman::p_load(tidyverse, janitor, epitrix)
+pacman::p_load(tidyverse,  # data manipulation and visualization
+               janitor,    # data cleaning
+               epitrix,    # data cleaning
+               )
 ```
 
-<!-- ======================================================= -->
-## Clean Variable Names {.tabset .tabset-fade .tabset-pills}
-
-Variable names are used so often, it is best to have them be "clean" (no spaces, no unusual characters, etc.)  
-
-The function `clean_names()` from the package **janitor** is very useful. 
-
-https://cran.r-project.org/web/packages/janitor/vignettes/janitor.html#cleaning
+Import the raw dataset using the `import()` function from the package **rio**.  
 
 
-```{r clean_names}
-names(linelist)
-
-linelist <- linelist %>% 
-  janitor::clean_names()
+```{r, echo=F}
+linelist_raw <- rio::import(here::here("data", "ebola_simulated.xlsx"))
 ```
-
-Note that if you want to use variable names that include spaces, surround the names with back-ticks when referencing them in the code. On a keyboard, the back-tick (`) is different from the single quotation mark ('), and is sometimes on the same key as the tilde (~).  
-
-So a command referencing a variable names containing spaces might look like this:  
 
 ```{r, eval=F}
-# re-naming a variable from a name that contains spaces
-linelist$age <- linelist$`age of patient`
+linelist_raw <- import("ebola_simulated.csv")
+```
 
-# or
 
-linelist <- linelist %>% 
-  mutate(age = `age of patient`)
+<!-- ======================================================= -->
+## Clean Variable Names
+
+Variable names are used so often, it is best to have them be "clean". We suggest the following styles:  
+
+* short
+* no spaces (replaced with underscores (_), 
+* no unusual characters (&, #...)  
+* similar nomenclature (e.g. all dates like date_onset, date_report, date_death)  
+
+The names of the raw linelist are below. We can see that there are some with spaces. We also have different naming patterns for dates ('date onset' and 'infection date').  
+
+```{r}
+names(linelist_raw)
+```
+
+```
+Note: To use a variable names that include spaces, surround the name with back-ticks, for example: linelist$`infection date` 
+On a keyboard, the back-tick (`) is different from the single quotation mark ('), and is sometimes on the same key as the tilde (~).
+```
+
+### Cleaning names automatically  
+
+The function `clean_names()` from the package **janitor** is very useful. Here is an online [vignette](https://cran.r-project.org/web/packages/janitor/vignettes/janitor.html#cleaning)  
+
+```{r clean_names}
+linelist_raw <- linelist_raw %>% 
+  janitor::clean_names()
+
+names(linelist_raw)
+```
+
+### Re-naming variables manually  
+
+Re-naming variables manually is often necessary. Below, re-naming is performed using the `rename()` function from the **dplyr** package, as part of a pipe chain. `rename()` uses the style "NEW = OLD", the new variable name is given before the old variable name.  
+
+```{r}
+linelist <- linelist_raw %>%
+ 
+         # NEW name            # OLD name
+  rename(date_infection       = infection_date,
+         date_hospitalisation = hosp_date,
+         date_outcome         = date_of_outcome)
 ```
 
 
@@ -81,27 +116,63 @@ linelist <- linelist %>%
 
 See section on [object classes](#objectclasses)   
 
+Here we want to ensure that the class of each variable is appropriate, so we'll add it to our cleaning pipe chain.
+
+The class of the "age" variable is character. To perform analysis, we need those numbers to be recognized as numeric! 
+
 ```{r}
-linelist <- linelist %>% 
-  mutate(age           = as.numeric(age),
-         outcome       = as.character(outcome),
-         date_of_onset = as.Date(date_of_onset, format = "%d/%m/%Y"),
-         outcome       = factor(outcome, levels = c("Recover", "Death"))
-         )
+class(linelist_raw$age)
 ```
+
+The class of the "date_onset" variable is also character! To perform analysis, those date must be recognized as dates! 
+```{r}
+class(linelist_raw$date_onset)
+```
+
+Use `table()` or another method to see all the values, can see that we see that one date was entered in a different format (15 April 2014) than all the others!  
+
+```{r, echo=F}
+head(table(linelist_raw$date_onset))
+```
+
+This means before we can classify "date_onset" as a date, we must fix this value. We can do this using `mutate()` and `recode()` in our cleaning pipe chain, *before* the commands to convert to class Date.  
+
+The mutate line can be read as: mutate date_onset to equal date_onset recoded so that OLD VALUE is changed to NEW VALUE. Note that this pattern (OLD = NEW) is the opposite of most R patterns. The R development community is working on revising this.
+
+```{r}
+linelist <- linelist_raw %>%
+  
+  # re-name variables
+         # NEW name            # OLD name
+  rename(date_infection       = infection_date,
+         date_hospitalisation = hosp_date,
+         date_outcome         = date_of_outcome) %>% 
+  
+  # fix incorrect values
+                                        # old value       # new value
+  mutate(date_onset = recode(date_onset, "15 April 2014" = "2014-04-15")) %>% 
+  
+  # correct the class of the variables
+  mutate(age           = as.numeric(age),
+         date_onset    = as.Date(date_onset, format = "%Y-%m-%d"))
+
+```
+
+Especially after converting to class date, check your data visually or with `table()` to confirm that they were converted correctly! The date `format = ` entered is often a source of problems.  
+
 
 <!-- ======================================================= -->
 ## Creating new variables {#newvars .tabset .tabset-fade .tabset-pills}
 
 **base R** method 
 ```{r, eval=F}
-linelist$new_var <- "new value"
+linelist_raw$new_var <- "new value"
 ```
 
 
 Using **dplyr**
 `mutate()`
-transmute()
+`transmute()`
 
 
 ```{r, eval=F}
