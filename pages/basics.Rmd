@@ -284,23 +284,6 @@ Data Frames | Vectors (e.g. columns) that are bound together that all have the s
 Note that to create a vector that "stands alone", or is not part of a data frame (such as a list of location names), the function `c()` is often used:  
 `list_of_names <- c("Ruhengeri", "Gisenyi", "Kigali", "Butare")`  
 
-<!-- ======================================================= -->
-### Variables (`$`) {#dollarsign}  
-
-**Vectors within a data frame (variables in a dataset) can be called, referenced, or created using the `$` symbol.** The `$` symbol connects the name of the column to the name of its data frame. The `$` symbol must be used, otherwise R will not know where to look for or create the column.  
-
-```{r basics_objects_call, eval=F}
-# Retrieve the length of the vector age_years
-length(linelist$age) # (age is a variable in the linelist data frame)
-
-```
-
-By typing the name of the data frame followed by `$` you will also see a list of all variables in the data frame. You can scroll through them using your arrow key, select one with your Enter key, and avoid spelling mistakes!  
-
-```{r basics_objects_callGIF, out.width = "100%", fig.align = "center"}
-knitr::include_graphics(here::here("images", "Calling_Names.gif"))
-```  
-
 
 <!-- ======================================================= -->
 ### Object Classes  {#objectclasses}
@@ -338,11 +321,80 @@ Function | Action
 Here is [more online material on classes and data structures in R](https://swcarpentry.github.io/r-novice-inflammation/13-supp-data-structures/).
 
 
+<!-- ======================================================= -->
+### Variables (`$`) {#dollarsign}  
+
+**Vectors within a data frame (variables in a dataset) can be called, referenced, or created using the `$` symbol.** The `$` symbol connects the name of the column to the name of its data frame. The `$` symbol must be used, otherwise R will not know where to look for or create the column.  
+
+```{r basics_objects_call, eval=F}
+# Retrieve the length of the vector age_years
+length(linelist$age) # (age is a variable in the linelist data frame)
+
+```
+
+By typing the name of the data frame followed by `$` you will also see a list of all variables in the data frame. You can scroll through them using your arrow key, select one with your Enter key, and avoid spelling mistakes!  
+
+```{r basics_objects_callGIF, out.width = "100%", fig.align = "center"}
+knitr::include_graphics(here::here("images", "Calling_Names.gif"))
+```  
 
 
-<h2> Functions </h2>
+
+<span style="color: darkgreen;">**_ADVANCED TIP:_** Some more complex objects (e.g. an `epicontacts` object may have multiple levels which can be accessed through multiple dollar signs. For example `epicontacts$linelist$date_onset`) .</span>
+
+
+
+<!-- ======================================================= -->
+### Access/View with brackets (`[]`) {#brackets}  
+
+You may need to view parts of objects, which is often done using the square brackets `[ ]`.  
+
+To view specific rows and columns of a dataset, you can do this using the syntax `dataframe[rows, columns]`:  
+
+```{r basics_objects_access, eval=F}
+# View a specific row (2) from dataset, with all columns
+linelist[2,]
+
+# View all rows, but just one column
+linelist[, "date_onset"]
+
+# View values from row 2 and columns 5 through 10
+linelist[2, 5:10] 
+
+# View values from row 2 and columns 5 through 10 and 18
+linelist[2, c(5:10, 18)] 
+
+# View rows 2 through 20, and specific columns
+linelist[2:20, c("date_onset", "outcome", "age")]
+
+# View rows and columns based on criteria
+# *** Note the dataframe must still be names in the criteria!
+linelist[linelist$age > 25 , c("date_onset", "date_birth", "age")]
+
+# Use View() to see the outputs in the RStudio Viewer pane (easier to read) 
+# *** Note the capital "V" in View() function
+View(linelist[2:20, "date_onset"])
+
+# Save as a new object
+new_table <- linelist[2:20, c("date_onset")] 
+```
+
+The square brackets also work to call specific parts of summary() function: 
+
+```{r}
+# All of the summary
+summary(linelist$age)
+
+#Just one part
+summary(linelist$age)[2]
+```
+
+
+
 <!-- ======================================================= -->
 ## Functions {#functions .tabset .tabset-fade .tabset-pills}
+<h2> Functions </h2>
+
 
 This section on functions explains:  
 * What a function is and how they work  
@@ -555,14 +607,14 @@ cake <- let_cool(bake(mix_together(batter_3, utensil = spoon, minutes = 2), degr
 
 
 <!-- ======================================================= -->
-<h2> Operators </h2>
-## Operators {#operators .tabset .tabset-fade .tabset-pills}
+<h2> Key operators and functions </h2>
+## Key operators and functions {#operators .tabset .tabset-fade .tabset-pills}
 
 This section details operators in R, such as:  
 * Relational operators (less than, equal too..)  
 * Logical operators (and, or...)  
-* Missingness  
-* Mathematical operators (+, -, /...)
+* Handling missing values  
+* Mathematical operators and functions (+/-, >, sum(), median(), ...)  
 * The `%in%` operator
 
 
@@ -628,9 +680,14 @@ is.na(rdt_result)  # Tests whether the value of rdt_result is NA
 ```
 
 <!-- ======================================================= -->
-### Mathematical operators  
+### Mathematics and statistics  
 
-Mathematical operators are often used to perform addition, division, to create new columns, etc. Below are common mathematical operators in R. Whether you put spaces around the operators is not important.  
+All the operators and functions in this page is automatically available using **base** R.  
+
+#### Mathematical operators  
+
+These are often used to perform addition, division, to create new columns, etc. Below are common mathematical operators in R. Whether you put spaces around the operators is not important.  
+
 
 Objective          |Example in R
 -------------------|-------------
@@ -640,6 +697,54 @@ multiplication     | 2 * 3
 division           | 30 / 5
 exponent           | 2^3
 order of operations| ( )
+
+
+
+#### Mathematical functions
+
+Objective          |Function
+-------------------|-------------
+rounding           | round(x, digits = n)
+ceiling (round up) | ceiling(x)
+floor (round down) | floor(x)
+absolute value     | abs(x)
+square root        | sqrt(x)
+exponent           | exponent(x)
+natural logarithm  | log(x)
+
+
+
+#### Statistical functions:  
+
+<span style="color: orange;">**_CAUTION:_** The functions below will by default include missing values in calculations. Missing values will result in an output of NA, unless the argument `na.rm=TRUE` is specified</span>
+
+
+Objective                |Function
+-------------------------|----------------------
+mean (average)           | mean(x, na.rm=T)
+median                   | median(x, na.rm=T)
+standard deviation       | sd(x, na.rm=T)
+quantiles*               | quantile(x, probs)
+sum                      | sum(x, na.rm=T)
+minimum value            | min(x, na.rm=T)
+maximum value            | max(x, na.rm=T)
+range of numeric values  | range(x, na.rm=T)
+summmary**               | summary(x)
+
+*`quantile()`: x is the numeric vector to examine, and probs is a numeric vector with probabilities within 0 and 1.0, e.g `c(0.5, 0.8, 0.85)`
+
+**`summary()`: gives a summary on a numeric vector including mean, median, and common percentiles
+
+
+
+#### Other useful functions:  
+
+
+Objective                   |Function            |Example
+----------------------------|--------------------|-----------------------------------------------
+create a sequence           | seq(from, to, by)  |`seq(1, 10, 2)`
+repeat x, n times           | rep(x, ntimes)     |`rep(1:3, 2)` or `rep(c("a", "b", "c"), 3)` 
+subdivide a numeric vector  | cut(x, n)          |`cut(linelist$age, 5)`
 
 
 <!-- ======================================================= -->

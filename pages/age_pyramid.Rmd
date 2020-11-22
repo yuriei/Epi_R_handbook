@@ -38,7 +38,7 @@ These tabs demonstrate how to produce age pyramids using:
 
 via ggplot and via R4Epis methods   TODO
 
-```{r echo=F, fig.width=6, fig.height=4}
+```{r echo=F, fig.width=2, fig.height=2}
 
 linelist$age <- as.numeric(linelist$age)
 
