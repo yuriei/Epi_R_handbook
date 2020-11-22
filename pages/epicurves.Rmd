@@ -32,11 +32,45 @@ The Page title should be succinct. Consider adding a tag with no spaces into the
 <!-- ======================================================= -->
 ## Overview {.tabset .tabset-fade .tabset-pills}
 
-Keep the title of this section as "Overview".  
-This tab should include:  
 
-* Textual overview of the purpose of this page  
-* Small image showing outputs   
+
+```{r, out.width=c('50%', '50%'), fig.show='hold', echo=F}
+# Create epiweek object, with counts grouped by gender
+epicurve_weekly_hospital <- incidence::incidence(linelist$`date onset`, 
+                               interval = "week", 
+                               groups = linelist$hospital,
+                               na_as_group = FALSE)   # Prevents missing values from being assigned their own group
+
+
+# Set theme elements using ggplot syntax
+epicurve_theme <- ggplot2::theme(
+  axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1), 
+  legend.title = element_blank(),
+  panel.grid.major.x = element_line(color = "grey60", linetype = 3),
+  panel.grid.major.y = element_line(color = "grey60", linetype = 3)
+)
+
+# Sets labels using ggplot syntax
+epicurve_labels <- labs(x = "Week", 
+                        y = "Cases (n)", 
+                        title = "H5N7 cases by week of onset",
+                        caption = paste0("Source: Linelist data from: ", data_date, "; ", missing_onset, " are missing date of onset and not shown."))
+
+
+# Plot the epicurve
+# Note: Remove the boxes around each case as it makes gender colours hard to see! (show_cases = FALSE)
+nice_plot <- plot(epicurve_weekly_gender, show_cases = FALSE, border = "black", n_breaks = nrow(epicurve_weekly_gender)) + 
+  
+  # add labels (defined in previous section)
+  epicurve_labels +
+  
+  # add theme elements
+  epicurve_theme
+
+nice_plot
+
+                       
+``` 
 
 
 
@@ -95,35 +129,31 @@ pacman::p_load(packages_epicurve, character.only=TRUE)
 
 Two example datasets are used in this section:  
 
-* Linelist of individual data from an H7N9 outbreak in 2013  
-* Aggregated case counts of a fictional disease in 2019
+* Linelist of individual cases from a simulated Ebola epidemic  
+* Aggregated counts by hospital from the same simulated Ebola epidemic  
 
 If viewing in Google Chrome, you can access these datasets in Microsoft Excel by clicking HERE and HERE. TODO.  
 
-The datasets are imported using the `import()` function from the *rio* package. See the *page on importing data* for various ways to import data. Each data set is displayed below as a table for viewing.
+The dataset is imported using the `import()` function from the *rio* package. See the *page on importing data* for various ways to import data. The linelist and aggregated versions of the data are displayed below.
 
 For most of this document, the *linelist dataset* will be used. The aggregated counts dataset will be used at the end.  
 
 
 ```{r epicurve_load_hide, echo=F}
 # import the linelist into R
-linelist <- rio::import(here::here("data", "fluH7N9_china_2013.csv"))
-
+linelist <- linelist_raw
 
 # import the counts data into R
-count_data <- rio::import(here::here("data", "district_count_data.xlsx"))
+count_data <- linelist_raw %>% 
+  group_by(hospital, `hosp date`) %>% 
+  summarize(n_cases = dplyr::n())
 
 ```
 
 
 ```{r epicruve_load_show, eval=F}
 # import the linelist into R
-linelist <- rio::import("fluH7N9_china_2013.csv")
-
-
-# import the counts data into R
-count_data <- rio::import("district_count_data.xlsx")
-
+linelist <- rio::import("ebola_simulated.xlsx")
 ```
 
 
