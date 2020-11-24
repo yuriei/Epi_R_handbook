@@ -147,7 +147,9 @@ DT::datatable(linelist, rownames = FALSE, filter="top", options = list(pageLengt
 <!-- ======================================================= -->
 ## Select variables
 
-Often the first step of cleaning data is selecting the variables you want to work with, and their order in the dataframe. In a **dplyr** chain of verbs, this is done with `select()`. Within `select()` you can do the following:  
+Often the first step of cleaning data is selecting the variables you want to work with, and their order in the dataframe. In a **dplyr** chain of verbs, this is done with `select()`. *Note that in these examples we modify linelist with select(), but do not assign/overwrite. We just display the resulting new column names, for purpose of example.*   
+
+Within `select()` you can do the following:  
 
 * Select only the variables you want to remain, *and their order of appearance*  
 
@@ -157,6 +159,7 @@ linelist %>%
   select(case_id, date_onset, date_hospitalisation, fever) %>% 
   names()
 ```
+ 
 
 
 * You can tell `select()` which variables **to remove** by placing a minus symbol "-" in front of the variable name (or a vector of variable names). It will keep all others. Inside `select()` you can use normal operators such as `:` for consecutive values, `c()` to list values/variables, `!` for opposite, `&` for AND, and `|` for OR.  
@@ -204,23 +207,23 @@ Here we want to ensure that the class of each variable is appropriate, so we'll 
 The class of the "age" variable is character. To perform analysis, we need those numbers to be recognized as numeric! 
 
 ```{r}
-class(linelist_raw$age)
+class(linelist$age)
 ```
 
-The class of the "date_onset" variable is also character! To perform analysis, those date must be recognized as dates! 
+The class of the "date_onset" variable is also character! To perform analysis, these dates must be recognized as dates! 
 ```{r}
-class(linelist_raw$date_onset)
+class(linelist$date_onset)
 ```
 
 Use `table()` or another method to see all the values, can see that we see that one date was entered in a different format (15 April 2014) than all the others!  
 
 ```{r, echo=F}
-head(table(linelist_raw$date_onset))
+head(table(linelist$date_onset))
 ```
 
-This means before we can classify "date_onset" as a date, we must fix this value. We can do this using `mutate()` and `recode()` in our cleaning pipe chain, *before* the commands to convert to class Date.  
+This means before we can classify "date_onset" as a date, we must fix this value. We can do this using `mutate()` and `recode()` in our cleaning pipe chain, *before* the commands to convert to class Date. LINK TO CLASSIFYING VARIABLE AS DATE. 
 
-The mutate line can be read as: mutate date_onset to equal date_onset recoded so that OLD VALUE is changed to NEW VALUE. Note that this pattern (OLD = NEW) is the opposite of most R patterns. The R development community is working on revising this.
+The new mutate line can be read as: mutate date_onset to equal date_onset recoded so that OLD VALUE is changed to NEW VALUE. Note that this pattern (OLD = NEW) is the opposite of most R patterns. The R development community is working on revising this.
 
 ```{r}
 linelist <- linelist_raw %>%
@@ -317,6 +320,7 @@ coalesce()
  if_else(), ifelse()
 
 recode
+CLEANING MISSPELLINGS HOSPITAL NAME
 
 Replace
 
@@ -387,23 +391,14 @@ Within a group, indicate/convert to the highest value in the group
 
 Santa Clara County example - COVID contact tracing data - classification of multiple phone call records from same person into the highest category. (classify all as the highest of the group)
 
-<!-- ======================================================= -->
-## App
-```{r, echo = FALSE}
-library(shiny)
 
-checkboxInput(filter_age, "filter()", value = FALSE, width = NULL)
 
-renderDataTable(
-      DT::datatable(linelist) %>% 
-        filter(age > filter_age)
-      )
+```{r echo=F}
+# EXPORT CLEANED LINELIST FILE TO "DATA" FOLDER
+rio::export(linelist, here::here("data", "linelist_cleaned.xlsx"))
+rio::export(linelist, here::here("data", "linelist_cleaned.rds"))
+
 ```
-
-```{r, echo = FALSE}
-plotOutput('linelist_clean')
-```
-
 
 ```{r, child= 'page_closeout.Rmd', eval = params$run_page_ind == F, include = F}
 ```

@@ -35,8 +35,13 @@ The Page title should be succinct. Consider adding a tag with no spaces into the
 
 
 ```{r, out.width=c('50%', '50%'), fig.show='hold', echo=F}
+# import linelist
+linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
+data_date <- as.Date(max(linelist$date_outcome, na.rm=T))
+missing_onset <- sum(is.na(linelist$date_onset))
+
 # Create epiweek object, with counts grouped by gender
-epicurve_weekly_hospital <- incidence::incidence(linelist$`date onset`, 
+epicurve_weekly_hospital <- incidence::incidence(linelist$date_onset, 
                                interval = "week", 
                                groups = linelist$hospital,
                                na_as_group = FALSE)   # Prevents missing values from being assigned their own group
@@ -53,13 +58,13 @@ epicurve_theme <- ggplot2::theme(
 # Sets labels using ggplot syntax
 epicurve_labels <- labs(x = "Week", 
                         y = "Cases (n)", 
-                        title = "H5N7 cases by week of onset",
+                        title = "Ebola cases by week of onset",
                         caption = paste0("Source: Linelist data from: ", data_date, "; ", missing_onset, " are missing date of onset and not shown."))
 
 
 # Plot the epicurve
 # Note: Remove the boxes around each case as it makes gender colours hard to see! (show_cases = FALSE)
-nice_plot <- plot(epicurve_weekly_gender, show_cases = FALSE, border = "black", n_breaks = nrow(epicurve_weekly_gender)) + 
+nice_plot <- plot(epicurve_weekly_hospital, show_cases = FALSE, border = "black", n_breaks = nrow(epicurve_weekly_hospital)) + 
   
   # add labels (defined in previous section)
   epicurve_labels +
@@ -84,20 +89,6 @@ Data preparation steps such as:
 * Adding or changing variables  
 * melting, pivoting, grouping, etc.   
 
-<!-- ======================================================= -->
-### Methods {.tabset .tabset-fade .tabset-pills}
-
-The data preparation involves the following steps, detailed in the following tabs:
-
-
-* **Load packages**: installs and load the packages required for the scripts  
-
-* **Load data**: imports datasets
-
-* **Clean data**: this section contains *ad hoc* data cleaning, i.e. which is
-  not used in other reports (otherwise cleaning should be done in a dedicated
-  report); this section is also used to create new variables used in the
-  analyses
 
 <!-- ======================================================= -->
 ### Packages {.tabset .tabset-fade .tabset-pills}
@@ -141,11 +132,11 @@ For most of this document, the *linelist dataset* will be used. The aggregated c
 
 ```{r epicurve_load_hide, echo=F}
 # import the linelist into R
-linelist <- linelist_raw
+linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 
 # import the counts data into R
-count_data <- linelist_raw %>% 
-  group_by(hospital, `hosp date`) %>% 
+count_data <- linelist %>% 
+  group_by(hospital, date_hospitalisation) %>% 
   summarize(n_cases = dplyr::n())
 
 ```
@@ -156,7 +147,7 @@ count_data <- linelist_raw %>%
 linelist <- rio::import("ebola_simulated.xlsx")
 ```
 
-
+Do cleaning steps as necessary!!! To Do
 
 <!-- ======================================================= -->
 ### Review data {.tabset .tabset-fade .tabset-pills}
@@ -207,9 +198,10 @@ Method 1
 
 ```{r date_vars}
 # Method 1. Define date variables explicitly in a vector
-DateVars <- c("date_of_onset",
-              "date_of_hospitalisation",
-              "date_of_outcome"
+DateVars <- c("date_onset",
+              "date_hospitalisation",
+              "date_outcome",
+              "date_infection"
               )
 DateVars
 ```
@@ -225,22 +217,7 @@ DateVars
 ```
 
 
-#### Convert to date class
-
-Convert the date variables to class "date". There are a few options that use different packages. Each is explained in the code chunk. 
-
-```{r date_class}
-# Method 1. Manually convert each variable (allows flexibility in format)
-linelist$date_of_onset <- as.Date(linelist$date_of_onset, format = "%m/%d/%Y")
-linelist$date_of_hospitalisation <- as.Date(linelist$date_of_hospitalisation, format = "%m/%d/%Y")
-linelist$date_of_outcome <- as.Date(linelist$date_of_outcome, format = "%m/%d/%Y")
-
-# Method 2. Use clean_dates() on the dataset to clean date variables 
-#linelist <- linelist %>% 
-#        linelist::clean_dates(error_tolerance = 0.1)
-
-# Note: Use guess_dates() function from the linelist package addresses messy dates (different formats within a variable)
-```
+#### Ensure date variables are date class
 
 
 #### Verify
@@ -289,7 +266,7 @@ n_linelist <- nrow(linelist)
 n_linelist
 
 # number missing onset_date and cannot be graphed
-missing_onset <- nrow(linelist[is.na(linelist$date_of_onset),])
+missing_onset <- nrow(linelist[is.na(linelist$date_onset),])
 missing_onset
 ```
 
@@ -314,14 +291,14 @@ First date and last date can also be specified.
 
 ```{r incidence, out.width=c('50%', '50%', '50%', '50%'), fig.show='hold'}
 # incidence object is created, with data aggregated at one day intervals
-epicurve_daily   <- incidence::incidence(linelist$date_of_onset, interval = "day")
+epicurve_daily   <- incidence::incidence(linelist$date_onset, interval = "day")
 
 # If weekly, you can specific the start day
-epicurve_weekly  <- incidence::incidence(linelist$date_of_onset, interval = "Monday week")
-epicurve_3weekly  <- incidence::incidence(linelist$date_of_onset, interval = "3 weeks")
+epicurve_weekly  <- incidence::incidence(linelist$date_onset, interval = "Monday week")
+epicurve_3weekly  <- incidence::incidence(linelist$date_onset, interval = "3 weeks")
 
 # Monthly
-epicurve_monthly <- incidence::incidence(linelist$date_of_onset, interval = "month")
+epicurve_monthly <- incidence::incidence(linelist$date_onset, interval = "month")
 
 # Plot the incidence object
 plot(epicurve_daily)
@@ -377,7 +354,7 @@ Now differentiating the cases by gender, using the groups = argument in the inci
 
 ```{r by_gender}
 # Create epiweek object, with counts grouped by gender
-epicurve_weekly_gender <- incidence(linelist$date_of_onset, 
+epicurve_weekly_gender <- incidence(linelist$date_onset, 
                                interval = "week", 
                                groups = linelist$gender,
                                na_as_group = FALSE)   # Prevents missing values from being assigned their own group
@@ -407,22 +384,22 @@ To filter data, This version is filtered to only show data from a specific provi
 
 ```{r incidence_filtered}
 # filter the dataset and pass it to the incidence() function
-Zhejiang_data <- filter(linelist, province == "Zhejiang")
+Connaught_data <- filter(linelist, hospital == "Connaught Hospital")
 
-epicurve_Zhejiang <- incidence(Zhejiang_data$date_of_onset,
+epicurve_Connaught <- incidence(Connaught_data$date_onset,
                                 interval = "week",
-                                groups = Zhejiang_data$gender)
+                                groups = Connaught_data$gender)
 
 
 # Re-sets labels, changing title to reflect subset
 epicurve_labels <- labs(x = "Week", 
                         y = "Cases", 
-                        title = "H5N7 cases by week of onset in Zhejiang",
+                        title = "Ebola cases by week of onset in Connaught Hospital",
                         caption = paste0("Source: Linelist data from: ", data_date, "; ", missing_onset, " are missing date of onset and not shown."))
                        
 
 # plot as before
-plot(epicurve_Zhejiang, show_cases = TRUE, border = "grey") +
+plot(epicurve_Connaught, show_cases = TRUE, border = "grey") +
      
   # add labels (defined in previous section)
   epicurve_labels +
@@ -446,7 +423,7 @@ Below are tabs on using "ggplot2" package
 
 # Daily case counts 
 ###################
-plot_daily <- ggplot(linelist, aes(x = date_of_onset)) + 
+plot_daily <- ggplot(linelist, aes(x = date_onset)) + 
   
   # stacked bars, bined by day (1 days)
   stat_bin(binwidth = 1, position="stack") 
@@ -456,7 +433,7 @@ print(plot_daily)
 
 # Weekly case counts 
 ###################
-plot_weekly <- ggplot(linelist, aes(x = date_of_onset)) + 
+plot_weekly <- ggplot(linelist, aes(x = date_onset)) + 
   
   # stacked bars, bined by week (7 days)
   stat_bin(binwidth = 7, position="stack", fill = "brown") 
@@ -471,14 +448,14 @@ print(plot_weekly)
 # Preparation
 #############
 # Create epiweek variable. Factor argument automatically includes all weeks in span. Numeric shows just the week number.
-linelist$epiweek <- aweek::date2week(linelist$date_of_onset, factor = TRUE, numeric = TRUE)
+linelist$epiweek <- aweek::date2week(linelist$date_onset, factor = TRUE, numeric = TRUE)
 
 # Calculate maximum number of cases in an epiweek, to get the maximum y-axis height (also helps with uniformity in multiple plots)
 ymax <- max(summary(factor(linelist$epiweek), maxsum = length(linelist$epiweek)))
 
 # Weekly case counts 
 ###################
-plot_weekly <- ggplot(linelist, aes(x = date_of_onset)) + 
+plot_weekly <- ggplot(linelist, aes(x = date_onset)) + 
   
   # stacked bars, bined by week (7 days)
   stat_bin(binwidth = 7, position = "stack", fill = "grey", color = "black") +
@@ -486,10 +463,10 @@ plot_weekly <- ggplot(linelist, aes(x = date_of_onset)) +
   # X-axis 21-day labels
   scale_x_date( 
     # Sets date label breaks as every 3 weeks from Monday before the first case
-    breaks = function(x) seq.Date(from = min(linelist$date_of_onset, na.rm = T), to = max(linelist$date_of_onset, na.rm=T), by = "1 week"),
+    breaks = function(x) seq.Date(from = min(linelist$date_onset, na.rm = T), to = max(linelist$date_onset, na.rm=T), by = "1 week"),
     
     # axis limits determined by max/min + buffer
-    limits = c((min(linelist$date_of_onset, na.rm = T) - 8), (max(linelist$date_of_onset, na.rm = T) + 8)), 
+    limits = c((min(linelist$date_onset, na.rm = T) - 8), (max(linelist$date_onset, na.rm = T) + 8)), 
     
     # displays as date number, then abbreviated month (e.g. 12 Oct)
     date_labels = "%d-%b",   
@@ -559,13 +536,13 @@ linelist$gender <- factor(linelist$gender,
 ymax <- max(summary(factor(linelist$epiweek), maxsum = length(linelist$epiweek)))
 
 # Number missing onset_date and cannot be graphed
-missing_onset <- nrow(linelist[is.na(linelist$date_of_onset),])
+missing_onset <- nrow(linelist[is.na(linelist$date_onset),])
 
 
 
 # PLOT - BY ONSET DATE
 ######################
-plot_defined_cats <- ggplot(linelist, aes(x = date_of_onset, fill = gender)) + 
+plot_defined_cats <- ggplot(linelist, aes(x = date_onset, fill = gender)) + 
   
   # stacked bars, width of 7 days
   stat_bin(binwidth = 7, position = "stack") +
@@ -576,8 +553,8 @@ plot_defined_cats <- ggplot(linelist, aes(x = date_of_onset, fill = gender)) +
   
   # X-axis scale labels (not aggregation, just the labels)
   scale_x_date(# Sets date label breaks as every week
-    breaks = function(x) seq.Date(from = min(linelist$date_of_onset, na.rm = T), to = max(linelist$date_of_onset, na.rm = T), by = "1 week"),
-    limits = c((min(linelist$date_of_onset, na.rm=T)), (max(linelist$date_of_onset, na.rm = T))), # axis limits determined by max/min + buffer
+    breaks = function(x) seq.Date(from = min(linelist$date_onset, na.rm = T), to = max(linelist$date_onset, na.rm = T), by = "1 week"),
+    limits = c((min(linelist$date_onset, na.rm=T)), (max(linelist$date_onset, na.rm = T))), # axis limits determined by max/min + buffer
     date_labels = "%d-%b",   # displays as date # then abbreviated month (e.g. 12 Oct)
     expand = c(0, 0)) +                                # sets origin at (0,0)
   
@@ -619,7 +596,7 @@ print(plot_defined_cats)
 ### By active area {.tabset .tabset-fade .tabset-pills}
 
 
-``` {r setup_plot}
+``` {r, eval=F}
 # PARAMETERS
 #############
 
@@ -627,13 +604,13 @@ print(plot_defined_cats)
 ymax <- max(table(linelist$epiweek))
 
 # Number missing onset_date and cannot be graphed
-missing_onset <- nrow(filter(linelist, is.na(date_of_onset)))
+missing_onset <- nrow(filter(linelist, is.na(date_onset)))
 
 
 # SETUP - ACTIVE/NON-ACTIVE ZONES
 #################################
 # List of "active" zones with a case in the date range
-active_zones <- unique(linelist$province[which(linelist$date_of_onset > (data_date - 90))])
+active_zones <- unique(linelist$province[which(linelist$date_onset > (data_date - 90))])
 active_zones
 
 # Table of active zones and their overall number of cases (for ordering their stacked appearance)
@@ -698,7 +675,7 @@ colors_linelist <- c("#cccccc", rev(colors_linelist[1:colors_needed]))
 
 # MAKE GRAPH
 #############
-plot_overall <- ggplot(linelist, aes(x = date_of_onset, fill = graph_zone)) + 
+plot_overall <- ggplot(linelist, aes(x = date_onset, fill = graph_zone)) + 
   
   # stacked bars, bined by week (7 days)
   stat_bin(binwidth = 7, position = "stack") +
@@ -709,8 +686,8 @@ plot_overall <- ggplot(linelist, aes(x = date_of_onset, fill = graph_zone)) +
   
   # X-axis 21-day labels
   scale_x_date( # Sets date label breaks as every 3 weeks from Monday before the first case
-    breaks = function(x) seq.Date(from = min(linelist$date_of_onset, na.rm = T), to = max(linelist$date_of_onset, na.rm = T), by = "1 week"),
-    limits = c((min(linelist$date_of_onset, na.rm = T) - 8), (max(linelist$date_of_onset, na.rm = T) + 8)), # axis limits determined by max/min + buffer
+    breaks = function(x) seq.Date(from = min(linelist$date_onset, na.rm = T), to = max(linelist$date_onset, na.rm = T), by = "1 week"),
+    limits = c((min(linelist$date_onset, na.rm = T) - 8), (max(linelist$date_onset, na.rm = T) + 8)), # axis limits determined by max/min + buffer
     date_labels = "%d-%b",   # displays as date number, then abbreviated month (e.g. 12 Oct)
     expand = c(0,0)) +                                # sets origin at (0,0)
   
@@ -763,7 +740,7 @@ plot_overall
 <!-- ======================================================= -->
 ### By grouped areas {.tabset .tabset-fade .tabset-pills}
 
-``` {r ggplot_health_area}
+``` {r ggplot_health_area, eval=F}
 
 #SETUP
 #############
@@ -771,7 +748,7 @@ plot_overall
 zone_data <- linelist
 
 # Number missing onset_date and cannot be graphed
-missing_onset <- nrow(filter(linelist, is.na(date_of_onset)))
+missing_onset <- nrow(filter(linelist, is.na(date_onset)))
 
 # Assign health area groups (individual for HAs of interest, groups others together)
 linelist$graph_areas <- factor(case_when(
@@ -816,13 +793,13 @@ colors_aire <- c("#cccccc", rev(colors_aire[1:colors_needed]))
 
 # Plot of province
 #####################################
-plot <- ggplot(linelist, aes(x = date_of_onset, fill = graph_areas)) + 
+plot <- ggplot(linelist, aes(x = date_onset, fill = graph_areas)) + 
   
   stat_bin(binwidth = 7, position="stack") +
   
   scale_fill_manual(values = colors_aire, labels = str_to_sentence(levels(factor(linelist$graph_areas)))) +
   
-  scale_x_date(date_breaks = "1 week", date_labels = "%d-%b", limits = c((min(linelist$date_of_onset, na.rm = T) - 8), (max(linelist$date_of_onset, na.rm = T) + 8)), expand=c(0,0)) + # I used the date onset variable here so x axes will be the same
+  scale_x_date(date_breaks = "1 week", date_labels = "%d-%b", limits = c((min(linelist$date_onset, na.rm = T) - 8), (max(linelist$date_onset, na.rm = T) + 8)), expand=c(0,0)) + # I used the date onset variable here so x axes will be the same
   
   scale_y_continuous(breaks = seq(0, 500, 5), limits = c(0, 35), expand = c(0, 0)) +
   
@@ -865,7 +842,7 @@ plot
 ### By "wave" in time {.tabset .tabset-fade .tabset-pills}
 
 
-``` {r waves}
+``` {r waves, eval=F}
 # Define the waves
 ##################
 # zone_data <- filter(linelist, zone_de_sante == "mabalako")
@@ -1001,7 +978,8 @@ As before, we must ensure date variables are correctly classified.
 
 ```{r aggregated_dates}
 # Convert Date variable to Date class
-count_data$Date <- as.Date(count_data$Date, format = "%d/%m/%Y")
+class(count_data$date_hospitalisation)
+count_data$date_hospitalisation <- as.Date(count_data$date_hospitalisation)
 ```
 
 
@@ -1012,7 +990,7 @@ count_data$Date <- as.Date(count_data$Date, format = "%d/%m/%Y")
 ```{r aggregated_epiweek}
 # Create epiweek variable
 # aweek weeks are also stored as dates, facilitating better display manipulation
-count_data$epiweek <- aweek::date2week(count_data$Date,      # use the Date variable
+count_data$epiweek <- aweek::date2week(count_data$date_hospitalisation,      # use the Date variable
                                         week_start = "Monday", # epiweek begins on Monday
                                         floor_day = TRUE,      # only display year and week #
                                         factor = TRUE)         # expand to include all possible weeks
@@ -1026,7 +1004,7 @@ count_data$epiweek <- aweek::date2week(count_data$Date,      # use the Date vari
 ### Clean dates  
 
 ```{r aggregated_plot}
-ggplot(data = count_data, aes(x = as.Date(epiweek), y = Cases, group = District, fill = District))+
+ggplot(data = count_data, aes(x = as.Date(epiweek), y = n_cases, group = hospital, fill = hospital))+
      geom_bar(stat = "identity")+
      
      # LABELS for x-axis
@@ -1055,7 +1033,7 @@ ggplot(data = count_data, aes(x = as.Date(epiweek), y = Cases, group = District,
      # labels
      labs(x = "Week of report", 
           y = "Number of cases",
-          subtitle = "Cases aggregated by week and shown by district",
+          subtitle = "Cases aggregated by week and shown by hospital",
           caption = "Data source: XXXXX")+
      
      ggtitle("Epidemic curve of disease X in fictional location")
@@ -1080,7 +1058,7 @@ TODO not complete yet
 library(reshape2)
 # group the data by week, summarize counts by group (gender)
 linelist_week <- linelist %>%
-     mutate(onset_epiweek = aweek::date2week(date_of_onset, floor_day = TRUE, factor = TRUE)) %>%
+     mutate(onset_epiweek = aweek::date2week(date_onset, floor_day = TRUE, factor = TRUE)) %>%
      group_by(onset_epiweek) %>%
      summarize(num_male = sum(gender == "m"),
                num_female = sum(gender == "f"),
@@ -1118,8 +1096,8 @@ second_axis <- ggplot(linelist_week_melted,
 
   # X-axis scale labels (not aggregation, just the labels)
   scale_x_date(# Sets date label breaks as every week
-    breaks = function(x) seq.Date(from = min(linelist$date_of_onset, na.rm = T), to = max(linelist$date_of_onset, na.rm = T), by = "1 week"),
-    limits = c((min(linelist$date_of_onset, na.rm=T)), (max(linelist$date_of_onset, na.rm = T))), # axis limits determined by max/min + buffer
+    breaks = function(x) seq.Date(from = min(linelist$date_onset, na.rm = T), to = max(linelist$date_onset, na.rm = T), by = "1 week"),
+    limits = c((min(linelist$date_onset, na.rm=T)), (max(linelist$date_onset, na.rm = T))), # axis limits determined by max/min + buffer
     date_labels = "%d-%b",   # displays as date # then abbreviated month (e.g. 12 Oct)
     expand = c(0, 0)) +                                # sets origin at (0,0)
   
