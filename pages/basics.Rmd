@@ -679,6 +679,10 @@ rdt_result <- c("Positive", "Suspected", "Positive", NA)   # two positive cases,
 is.na(rdt_result)  # Tests whether the value of rdt_result is NA
 ```
 
+To DO:
+SECTION ON OTHER `NA` TYPES: `NA_character`, `NA_real` etc.
+SECTION ON `NULL`
+
 <!-- ======================================================= -->
 ### Mathematics and statistics  
 
