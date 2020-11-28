@@ -15,9 +15,11 @@ output:
     toc_float: yes
 params:
     run_page_ind: TRUE
+knit: (function(inputFile, encoding) {
+  rmarkdown::render(inputFile, encoding = encoding, output_dir = "_outputs_knitted") })
 ---
 
-```{r, child= 'page_setup.Rmd', eval = params$run_page_ind, include = F}
+```{r, child= '_page_setup.Rmd', eval = params$run_page_ind, include = F}
 ```
 
 
@@ -85,7 +87,7 @@ Links to other online tutorials or resources.
 
 
 
-```{r, child= 'page_closeout.Rmd', eval = params$run_page_ind == F, include = F}
+```{r, child= '_page_closeout.Rmd', eval = params$run_page_ind == F, include = F}
 ```
 
 

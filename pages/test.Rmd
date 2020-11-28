@@ -14,7 +14,9 @@ output:
     toc_depth: 3
     toc_float: yes
 params:
-  run_page_ind: FALSE
+    run_page_ind: TRUE
+knit: (function(inputFile, encoding) {
+  rmarkdown::render(inputFile, encoding = encoding, output_dir = "_outputs_knitted") })
 ---
 
 <style>
