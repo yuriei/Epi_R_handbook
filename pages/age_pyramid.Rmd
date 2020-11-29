@@ -40,7 +40,7 @@ These tabs demonstrate how to produce age pyramids using:
 
 via ggplot and via R4Epis methods   TODO
 
-```{r echo=F, fig.width=2, fig.height=2}
+```{r echo=F, fig.width=5, fig.height=3}
 
 linelist$age <- as.numeric(linelist$age)
 
@@ -60,7 +60,8 @@ apyramid::age_pyramid(data = linelist,
        caption = "My data source and caption here",
        title = "Age and gender of cases",
        subtitle = "Subtitle")+
-  theme(axis.text = element_text(size = 10, face = "bold"),    # see ggplot() tips page for details
+  scale_y_continuous(breaks = c(-700, -500, -300, -100, 0, 100, 300, 500, 700), labels = c("700", "500", "300", "100", "0", "100", "300", "500", "700"))+
+  theme(axis.text = element_text(size = 8, face = "bold"),    # see ggplot() tips page for details
         axis.title = element_text(size = 12, face = "bold"))
 ```
 

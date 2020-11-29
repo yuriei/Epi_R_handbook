@@ -35,7 +35,7 @@ knit: (function(inputFile, encoding) {
 
 The primary tool to visualize and analyze transmission chains is the package **epicontacts**, developed by the folks at RECON.  
 
-```{r out.width=c('50%', '50%'), fig.show='hold', echo=F}
+```{r out.width=c('25%', '25%'), fig.show='hold', echo=F}
 library(epicontacts)
 library(outbreaks)
 
