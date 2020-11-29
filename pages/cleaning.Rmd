@@ -32,13 +32,26 @@ knit: (function(inputFile, encoding) {
 <!-- ======================================================= -->
 ## Overview {.tabset .tabset-fade .tabset-pills}  
 
-HOW TO READ THESE TABS
+This page demonstrates common steps necessary to clean a dataset. It uses a simulated Ebola case linelist, which is used throughout the handbook.  
 
-This tab will demonstrate cleaning a simulated Ebola case linelist.  
+```{r basics_RStudio, out.width = "100%", fig.align = "center", echo=F}
+knitr::include_graphics(here::here("images", "cleaning_dataset_snip.png"))
+```
 
+**HOW TO READ:** To emphasize the **tidyverse** coding approach, each cleaning step is explained individually and then incorporated into a **"cleaning pipeline"** - a series of cleaning actions linked together sequentially through pipes (LINK TO PIPES). The pipe begins with the "raw" data (`linelist_raw`) and ends with a "clean" dataset (`linelist`).  
 
-Text about cleaning data, approaches, etc.
-renaming
+The cleaning steps demonstrated include:  
+
+* Loading the data  
+* Variable name cleaning  
+* Variable selection  
+* Designating variable classes  
+* Filtering rows  
+* Re-coding values  
+* Creating groups (`case_when()`)
+* Dealing with character case (upper, lower, title, etc.)
+* Factor variables  
+
 replace missing with
 dealing with cases (all lower, etc)
 case_when()
@@ -69,6 +82,7 @@ linelist_raw <- rio::import(here::here("data", "ebola_simulated.xlsx"))
 ```{r, eval=F}
 linelist_raw <- import("ebola_simulated.xlsx")
 ```
+
 You can view the original **raw** dataset below: 
 
 ```{r message=FALSE}
@@ -96,7 +110,7 @@ Variable names are used so often, it is best that they have "clean" syntax. We s
 * no unusual characters (&, #...)  
 * similar nomenclature (e.g. all dates like date_onset, date_report, date_death)  
 
-The names of the raw linelist are below. We can see that there are some with spaces. We also have different naming patterns for dates ('date onset' and 'infection date').  
+The names of `linelist_raw` are below. We can see that there are some with spaces. We also have different naming patterns for dates ('date onset' and 'infection date').  
 
 ```{r}
 names(linelist_raw)
@@ -196,7 +210,7 @@ As well as `everything()` there are several special functions that work *within*
 
 
 
-* select as a standalone command
+* select as a standalone command TO DO
 
 
 <!-- ======================================================= -->
@@ -252,6 +266,25 @@ linelist <- linelist_raw %>%
 
 Especially after converting to class date, check your data visually or with `table()` to confirm that they were converted correctly! The date `format = ` entered is often a source of problems.  
 
+#### Fix class for multiple variables at once
+
+```{r}
+class(linelist$date_infection)
+head(linelist$date_infection)
+```
+
+You can use The **dplyr** function `across()` with `mutate()` to convert several variables at once to a new class. `across()` allows you to specify which columns you want a function to apply to. Below, we want to mutate the variables where `is.POSIXct()` is TRUE, and apply the function `is.Date()` to them, in order to convert them to class "date".   
+
+* Note that within `across()` we also use the function `where()`.  
+* Note that is.POSIXct is from the package **lubridate**. Others (`is.character()`, `is.numeric()`, and `is.logical()` are from **base R**)  
+* Note that the functions in `across()` are written *without* empty parentheses  
+
+
+```{r}
+linelist <- linelist %>% 
+  mutate(across(where(lubridate::is.POSIXct), as.Date))
+```
+
 
 <!-- ======================================================= -->
 ## Filter rows {.tabset .tabset-fade .tabset-pills}
@@ -264,8 +297,10 @@ After selecting columns, a typical cleaning step is to filter the dataframe for 
 filter(dataset, criteria) OR subset like:
 dataset_new <- dataset[criteria,criteria]
 
+
+
 <!-- ======================================================= -->
-## Creating and modifying new variables {#mutate .tabset .tabset-fade .tabset-pills}
+## Creating and modifying variables {#mutate .tabset .tabset-fade .tabset-pills}
 
 We advise creating new variables with **dplyr** functions as part of a chain of such verb functions (e.g. filter, mutate, etc.)  
 If in need of a stand-alone command, you can use the **base** R style to create a new variable.  
@@ -297,20 +332,100 @@ Scroll to the right to see the new variables:
 DT::datatable(linelist, rownames = FALSE, filter="top", options = list(pageLength = 5, scrollX=T) )
 ```
 
+<span style="color: darkgreen;">**_TIP:_** The verb `transmute()` adds new variables just like `mutate()` but also drops/removes all other variables that you do not mention.</span>
 
-The verb `transmute()` adds new variables just like `mutate()` but also drops/removes all other variables that you do not mention.  
 
-```{r, eval=F}
-linelist <- linelist_raw %>%                   # creating new, or modifying old dataset
-  transmute(new_var_dup    = id,                  # new variable = duplicate/copy another variable
-         new_var_static = 7,                   # new variable = all values the same
-         new_var_static = new_var_static + 5   # you can overwrite a variable, and can modify a variable multiple times
-         new_var_calc   = (age / 12) + months  # new variable = a calculation
-         new_var_paste  = paste0(district, "(", province, ")") # new variable = pasting together values from other variables
+#### Recode a variable  
+To recode the values in a variable, `mutate()` is also used.  
+
+In this case, we notice that we need to clean the variable "hospital". There are several incorrect spelling, and many missing values.
+
+```{r}
+table(linelist$hospital, useNA = "always")
+```
+
+For to change spellings one-by-one, you can use the `recode()` function *within the mutate function*. The code is saying that the variable "hospital" should be defined as the current variable "hospital" but with certain changes (syntax is OLD = NEW). **Don't forget commas!**  
+
+```{r}
+linelist <- linelist %>% 
+  mutate(hospital = recode(hospital,
+                           # OLD = NEW
+                           "Mitylira Hopital"  = "Military Hospital",
+                           "Mitylira Hospital" = "Military Hospital",
+                           "Military Hopital"  = "Military Hospital",
+                           "Connaught Hopital" = "Connaught Hospital",
+                           "Rokupa Hopital"    = "Rokupa Hospital",
+                           "other"             = "Other",
+                           "Princess Christian Maternity Hopital (PCMH)" = "Princess Christian Maternity Hospital (PCMH)"
+                           ))
+
+table(linelist$hospital, useNA = "always")
+```
+
+<span style="color: darkgreen;">**_TIP:_** The number of spaces before and after an equals sign does not matter. Make your code easier to read by aligning the = for all or most rows. Also, consider adding a hashed comment row to clarify for future readers which side is OLD and which side is NEW. </span>  
+
+<span style="color: darkgreen;">**_TIP:_** Sometimes a *blank* character value exists in a dataset (not recognized as R's value for missing - `NA`). You can reference this value with two quotation marks with no space inbetween ("").</span>  
+
+If you need to use logic statements with multiple variables, or want to use operators like `%in%`, use `case_when()` instead, as below. **If you use `case_when()` please read the thorough explanation HERE LINK, as there are important differences from `recode()` in syntax and logic!**   
+
+```{r}
+linelist <- linelist %>% 
+  mutate(hospital = case_when(hospital == "Connaught Hopital"                           ~ "Connaught Hospital",
+                              hospital == "Rokupa Hopital"                              ~ "Rokupa Hospital", 
+                              hospital %in% c("Mitylira Hopital", 
+                                             "Mitylira Hospital",
+                                             "Mitylira Hospital",
+                                             "Military Hopital")                        ~ "Military Hospital",
+                              is.na(hospital)                                           ~ "Missing",
+                              hospital == "Princess Christian Maternity Hopital (PCMH)" ~ "Princess Christian Maternity Hospital (PCMH)",
+                              TRUE                                                      ~  hospital) 
+)
+table(linelist$hospital, useNA = "always")
+
 ```
 
 
-Modifying values in a variable is covered in this tab (LINK HERE)
+To change missing values to a character value, such as "Missing", use the function `replace_na()` in the same manner as `recode` above:  
+
+```{r}
+linelist <- linelist %>% 
+  mutate(hospital = replace_na(hospital, "Missing"))
+```
+
+Likewise you can quickly convert character values to `NA` using `na_if()`, as below:
+
+```{r}
+linelist <- linelist %>% 
+  mutate(hospital = na_if(hospital, "Missing"))
+```
+
+#### logical re-coding
+
+Intro
+For simple cases you can use `ifelse()` or `if_else()`. In most cases it is better to use `case_when()`.  
+
+ifelse() and if_else():  
+These commands are simplified versions of an `if` and `else` statement. The general syntax is ifelse(**condition**, **value if TRUE**, **value if FALSE**). `if_else()` is a special version from **dplyr** that handles dates.
+
+Stringing together ifelse statements - NOT ADVISED!! Difficult to read and keep track of.
+
+IMAGE of ifelse string with X across is. 
+
+Use case-when() instead. 
+
+
+You can reference other variables with the `ifelse()` function within `mutate()`:  
+
+```{r}
+linelist <- linelist %>% 
+  mutate(date_death = if_else(outcome == "Death", date_outcome, NA_real_))
+```
+
+```{r}
+linelist <- linelist %>% 
+  mutate(date_death = if_else(outcome == "Death", date_outcome, NA_real_))
+```
+
 
 
 Missing if... `na_if()`
@@ -325,6 +440,37 @@ recode
 CLEANING MISSPELLINGS HOSPITAL NAME
 
 Replace
+
+
+<!-- ======================================================= -->
+### Using cleaning dictionaries
+
+```{r, eval=F}
+## load cleaning rules and only keep variables in mll
+mll_cleaning_rules <- import(here("dictionaries/mll_cleaning_rules.xlsx")) %>%
+  filter(variable %in% c(names(mll_raw), ".global"))
+
+## define variables that are not cleand
+unchanged <- c(
+  "epilink_relationship",
+  "narratives",
+  "epilink_relationship_detail"
+)
+
+mll_clean <- mll_raw %>%
+  ## convert to tibble
+  as_tibble() %>%
+  ## clean variables using cleaning rules
+  clean_data(
+    wordlists = mll_cleaning_rules,
+    protect = names(.) %in% unchanged
+  )
+
+```
+
+
+<!-- ======================================================= -->
+### Mutating grouped data
 
 Using mutate on GROUPED dataframes
 https://dplyr.tidyverse.org/reference/mutate.html
