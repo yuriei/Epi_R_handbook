@@ -139,6 +139,8 @@ names(linelist)
 Re-naming variables manually is often necessary. Below, re-naming is performed using the `rename()` function from the **dplyr** package, as part of a pipe chain. `rename()` uses the style "NEW = OLD", the new variable name is given before the old variable name.  
 
 ```{r}
+# CLEANING 'PIPE' CHAIN (starts with raw data and pipes it through cleaning steps)
+##################################################################################
 linelist <- linelist_raw %>%
     
     # standardize variable name syntax
@@ -163,17 +165,17 @@ DT::datatable(linelist, rownames = FALSE, filter="top", options = list(pageLengt
 <!-- ======================================================= -->
 ## Select variables
 
-Often the first step of cleaning data is selecting the variables you want to work with, and their order in the dataframe. In a **dplyr** chain of verbs, this is done with `select()`. *Note that in these examples we modify linelist with select(), but do not assign/overwrite. We just display the resulting new column names, for purpose of example.*   
+Often the first step of cleaning data is selecting the variables you want to work with, and to set their order in the dataframe. In a **dplyr** chain of verbs, this is done with `select()`. *Note that in these examples we modify linelist with select(), but do not assign/overwrite. We just display the resulting new column names, for purpose of example.*   
 
 Within `select()` you can do the following:  
 
 * Select only the variables you want to remain, *and their order of appearance*  
 
 ```{r}
-# linelist dataset is piped through select() command, and prints just the variable names
+# linelist dataset is piped through select() command, and names() prints just the variable names
 linelist %>% 
   select(case_id, date_onset, date_hospitalisation, fever) %>% 
-  names()
+  names() # display the variable names
 ```
  
 
@@ -182,66 +184,48 @@ linelist %>%
 
 ```{r}
 linelist %>% 
-  select(-c(fever:vomit)) %>% 
+  select(-c(date_onset, fever:vomit)) %>% # remove onset and all symptom variables
   names()
 ```
 
 * Re-order the variables, using `everything()` to signify all other variables not specified:  
 
 ```{r}
+# case_id, date_onset, date_hospitalisation, and gender moved to beginning
 linelist %>% 
-  select(case_id, date_onset, date_hospitalisation, fever, everything()) %>% 
+  select(case_id, date_onset, date_hospitalisation, gender, everything()) %>% 
   names()
 ```
 
 As well as `everything()` there are several special functions that work *within* `select()`, namely:  
 
-* `everything()` - all other variables not mentioned  
-* `last_col()` - the last column  
+* `everything()`  - all other variables not mentioned  
+* `last_col()`    - the last column  
 * `starts_with()` - matches to a specified prefix. Example: `select(starts_with("date"))`
-* `ends_with()`  - matches to a specified suffix. Example: `select(ends_with("_end"))`  
-* `contains()`  - variables containing a character string. Example: `select(contains("time"))` 
-* `matches()`  - to apply a regular expression (regex). Example: `select(contains("[pt]al"))`  
-* `num_range()`  - 
-* `any_of()` - matches if variable is named. Useful if name might not exist. Example: `select(any_of(date_onset, date_death, cardiac_arrest))`  
-* `where()` - applies a function to all variables and selects those which are TRUE  
-
-
-
+* `ends_with()`   - matches to a specified suffix. Example: `select(ends_with("_end"))`  
+* `contains()`    - variables containing a character string. Example: `select(contains("time"))` 
+* `matches()`     - to apply a regular expression (regex). Example: `select(contains("[pt]al"))`  
+* `num_range()`   - 
+* `any_of()`      - matches if variable is named. Useful if name might not exist. Example: `select(any_of(date_onset, date_death, cardiac_arrest))`  
+* `where()`       - applies a function to all variables and selects those which are TRUE  
 
 
 * select as a standalone command TO DO
 
-
-<!-- ======================================================= -->
-## Fix classes {.tabset .tabset-fade .tabset-pills #Classes}
-
-See section on [object classes](#objectclasses)   
-
-Here we want to ensure that the class of each variable is appropriate, so we'll add it to our cleaning pipe chain.
-
-The class of the "age" variable is character. To perform analysis, we need those numbers to be recognized as numeric! 
+Select can also be used as an independent command. In this case, the first argument is the original dataframe.  
 
 ```{r}
-class(linelist$age)
+linelist_age <- select(linelist, case_id, age, age_unit)
+
 ```
 
-The class of the "date_onset" variable is also character! To perform analysis, these dates must be recognized as dates! 
+
+
+Adding `select()`to the cleaning pipe chain:  
+There is a variable in linelist that we do not need: `row_num`. Let's remove it by adding a select statement to the pipe chain:  
 ```{r}
-class(linelist$date_onset)
-```
-
-Use `table()` or another method to see all the values, can see that we see that one date was entered in a different format (15 April 2014) than all the others!  
-
-```{r, echo=F}
-head(table(linelist$date_onset))
-```
-
-This means before we can classify "date_onset" as a date, we must fix this value. We can do this using `mutate()` and `recode()` in our cleaning pipe chain, *before* the commands to convert to class Date. LINK TO CLASSIFYING VARIABLE AS DATE. 
-
-The new mutate line can be read as: mutate date_onset to equal date_onset recoded so that OLD VALUE is changed to NEW VALUE. Note that this pattern (OLD = NEW) is the opposite of most R patterns. The R development community is working on revising this.
-
-```{r}
+# CLEANING 'PIPE' CHAIN (starts with raw data and pipes it through cleaning steps)
+##################################################################################
 linelist <- linelist_raw %>%
     
     # standardize variable name syntax
@@ -252,10 +236,61 @@ linelist <- linelist_raw %>%
     rename(date_infection       = infection_date,
            date_hospitalisation = hosp_date,
            date_outcome         = date_of_outcome) %>% 
+    
+    # remove column
+    select(-row_num)
+```
+
+
+<!-- ======================================================= -->
+## Fix classes {.tabset .tabset-fade .tabset-pills #Classes}
+
+See section on [object classes](#objectclasses)   
+
+Here we want to ensure that the class of each variable is appropriate. First we run some checks on the classes of important variables.  
+
+The class of the "age" variable is character. To perform analysis, we need those numbers to be recognized as numeric! 
+
+```{r}
+class(linelist$age)
+```
+
+The class of the "date_onset" variable is also character! To perform analysis, these dates must be recognized as dates! 
+ 
+```{r}
+class(linelist$date_onset)
+```
+
+Use `table()` or another method to see all the values, can see that we see that one date was entered in a different format (15 April 2014) than all the others!  
+
+```{r, echo=F}
+head(table(linelist$date_onset))
+```
+
+This means before we can classify "date_onset" as a date, this value must be fixed to be the same format as the others. You can fix the date in the source data. Or, we can do this using `mutate()` and `recode()` in our cleaning pipe chain, *before* the commands to convert to class Date. LINK TO CLASSIFYING VARIABLE AS DATE. 
+
+The new mutate line can be read as: mutate date_onset to equal date_onset recoded so that OLD VALUE is changed to NEW VALUE. Note that this pattern (OLD = NEW) is the opposite of most R patterns. The R development community is working on revising this.
+
+```{r}
+# CLEANING 'PIPE' CHAIN (starts with raw data and pipes it through cleaning steps)
+##################################################################################
+linelist <- linelist_raw %>%
+    
+    # standardize variable name syntax
+    janitor::clean_names() %>% 
+    
+    # manually re-name variables
+           # NEW name             # OLD name
+    rename(date_infection       = infection_date,
+           date_hospitalisation = hosp_date,
+           date_outcome         = date_of_outcome) %>% 
+  
+    # remove column
+    select(-row_num) %>% 
 
 # ABOVE ARE UPSTREAM CLEANING STEPS ALREADY DISCUSSED
-  # fix incorrect values
-                                        # old value       # new value
+  ###################################################
+  # fix incorrect values                 # old value       # new value
   mutate(date_onset = recode(date_onset, "15 April 2014" = "2014-04-15")) %>% 
   
   # correct the class of the variables
@@ -264,7 +299,7 @@ linelist <- linelist_raw %>%
 
 ```
 
-Especially after converting to class date, check your data visually or with `table()` to confirm that they were converted correctly! The date `format = ` entered is often a source of problems.  
+Especially after converting to class date, check your data visually or with `table()` to confirm that they were converted correctly! For `as.Date()`, the `format = ` argument is often a source of errors.  
 
 #### Fix class for multiple variables at once
 
@@ -273,11 +308,11 @@ class(linelist$date_infection)
 head(linelist$date_infection)
 ```
 
-You can use The **dplyr** function `across()` with `mutate()` to convert several variables at once to a new class. `across()` allows you to specify which columns you want a function to apply to. Below, we want to mutate the variables where `is.POSIXct()` is TRUE, and apply the function `is.Date()` to them, in order to convert them to class "date".   
+You can use The **dplyr** function `across()` with `mutate()` to convert several variables at once to a new class. `across()` allows you to specify which columns you want a function to apply to. Below, we want to mutate the variables where `is.POSIXct()` (a type of date/time class that shows unnecessary timestamps) is `TRUE`, and apply the function `is.Date()` to them, in order to convert them to class "date".   
 
 * Note that within `across()` we also use the function `where()`.  
-* Note that is.POSIXct is from the package **lubridate**. Others (`is.character()`, `is.numeric()`, and `is.logical()` are from **base R**)  
-* Note that the functions in `across()` are written *without* empty parentheses  
+* Note that is.POSIXct is from the package **lubridate**. Other similar functions (`is.character()`, `is.numeric()`, and `is.logical()`) are from **base R**  
+* Note that the functions in `across()` are written *without* the empty parentheses ()  
 
 
 ```{r}
@@ -289,14 +324,91 @@ linelist <- linelist %>%
 <!-- ======================================================= -->
 ## Filter rows {.tabset .tabset-fade .tabset-pills}
 
-After selecting columns, a typical cleaning step is to filter the dataframe for specific rows using the **dplyr** verb `filter()`
+After selecting columns, a typical cleaning step is to filter the dataframe for specific rows using the **dplyr** verb `filter()`. Within `filter()`, give the logic that must be `TRUE` for a row in the dataset to be kept. A simple example below filters to keep only the rows where `case_id` is not missing (three rows are removed):
 
+```{r}
+linelist <- linelist %>% 
+  filter(!is.na(case_id))  # keep only rows where case_id is not missing
+```
 
+A more complex example:  
+
+Run a simple histogram of onset dates to see that a second smaller outbreak from 2012-2013 is also included in this dataset. **For our analyses, we want to remove entries from this earlier outbreak.**  
+
+```{r}
+hist(linelist$date_onset, breaks = 50)
+```
+
+If we simply filter `linelist` by date of onset (after June 2013) we may make a mistake! Applying `filter(date_onset > as.Date("2013-06-01")))` would accidentally remove any observations in the later epidemic with a missing date of onset!   
+
+<span style="color: red;">**_DANGER:_** Filtering to greater than (>) or less than (<) a date can remove any observations with missing date values (`NA`)! This is because `NA` is treated as infinitely large and small.</span>
+
+We also know that this first epidemic occurred at Hospital A, Hospital B, and there were 10 cases at Connaught Hospital.  Hospitals A & B did *not* have cases in the second epidemic, but Connaught Hospital had many. This is a complex filter to apply - it is wise to tabulate these variables to know exactly how many rows we expect should be removed.  
+
+Let's examine a cross-tabulation to make sure we exclude only the correct rows:  
+
+```{r}
+table(Hospital  = linelist$hospital,                     # hospital name
+      YearOnset = lubridate::year(linelist$date_onset),  # year of the date_onset
+      useNA     = "always")                              # show missing values
+```
+
+We want to exclude only the `nrow(linelist %>% filter(hospital %in% c("Hospital A", "Hospital B") | date_onset < as.Date("2013-06-01")))` observations from 2012 and 2013 at those three hospitals (A, B, and Connaught), including the 2 from Hospitals A & B with missing onset dates, but not any others with missing onset dates. We start with a linelist of `nrow(linelist)`. Here is our statement:  
+
+```{r}
+linelist <- linelist %>% 
+  filter(date_onset > as.Date("2013-06-01") | (is.na(date_onset) & !hospital %in% c("Hospital A", "Hospital B")))
+
+nrow(linelist)
+```
+
+When we re-make the cross-tabulation, we see that Hospitals A & B are removed completely, the 10 Connaught Hospital cases from 2012 & 2013 are removed, and all other values are the same - just as we wanted.  
+ 
+```{r}
+table(Hospital  = linelist$hospital,                     # hospital name
+      YearOnset = lubridate::year(linelist$date_onset),  # year of the date_onset
+      useNA     = "always")                              # show missing values
+```
+
+Multiple filter statements can be separated by commas, or you can always pipe to a separate filter() statement for clarity. Adding these filter statements to the cleaning pipe chain now looks like this:  
+
+```{r}
+# CLEANING 'PIPE' CHAIN (starts with raw data and pipes it through cleaning steps)
+##################################################################################
+linelist <- linelist_raw %>%
+    
+    # standardize variable name syntax
+    janitor::clean_names() %>% 
+    
+    # manually re-name variables
+           # NEW name             # OLD name
+    rename(date_infection       = infection_date,
+           date_hospitalisation = hosp_date,
+           date_outcome         = date_of_outcome) %>% 
+  
+    # remove column
+    select(-row_num) %>% 
+
+    # fix incorrect values                 # old value       # new value
+    mutate(date_onset = recode(date_onset, "15 April 2014" = "2014-04-15")) %>% 
+    
+    # correct the class of the variables
+    mutate(age           = as.numeric(age),
+           date_onset    = as.Date(date_onset, format = "%Y-%m-%d")) %>% 
+    
+  # ABOVE ARE UPSTREAM CLEANING STEPS ALREADY DISCUSSED
+    ###################################################
+    filter(!is.na(case_id),  # keep only rows where case_id is not missing
+           date_onset > as.Date("2013-06-01") | (is.na(date_onset) & !hospital %in% c("Hospital A", "Hospital B"))
+           ) # close filter
+
+```
 
 ### Standalone command
 filter(dataset, criteria) OR subset like:
 dataset_new <- dataset[criteria,criteria]
 
+nrow(linelist %>% filter())
 
 
 <!-- ======================================================= -->
