@@ -699,6 +699,12 @@ Santa Clara County example - COVID contact tracing data - classification of mult
 
 
 
+<!-- ======================================================= -->
+## Changing multiple variables at one time
+
+across dplyr
+
+
 ```{r echo=F}
 # EXPORT CLEANED LINELIST FILE TO "DATA" FOLDER
 rio::export(linelist, here::here("data", "linelist_cleaned.xlsx"))
