@@ -43,14 +43,14 @@ knitr::include_graphics(here::here("images", "cleaning_dataset_snip.png"))
 The cleaning steps demonstrated include:  
 
 * Loading the data  
-* Variable name cleaning  
-* Variable selection  
-* Designating variable classes  
+* column name cleaning  
+* column selection  
+* Designating column classes  
 * Filtering rows  
 * Re-coding values  
 * Creating groups (`case_when()`)
 * Dealing with character case (upper, lower, title, etc.)
-* Factor variables  
+* Factor columns  
 
 replace missing with
 dealing with cases (all lower, etc)
@@ -97,13 +97,16 @@ DT::datatable(linelist_raw, rownames = FALSE, filter="top", options = list(pageL
 <!-- ======================================================= -->
 ## A cleaning pipeline
 
-Text here about a cleaning pipeline of dplyr verbs...
+As explained in the section on **dplyr** and tidyverse coding style (LINK HERE), a chain of 'verb' functions operate on a dataset through 'pipes' (`%>%`), passing the output from one verb to the next. 
+
 order is important
 
+TO DO
 
-### Standardize variable name syntax  
+<!-- ======================================================= -->
+## Column names  
 
-Variable names are used so often, it is best that they have "clean" syntax. We suggest the following:  
+column names are used so often, it is best that they have "clean" syntax. We suggest the following:  
 
 * short
 * no spaces (replaced with underscores (_), 
@@ -117,13 +120,19 @@ names(linelist_raw)
 ```
 
 ```
-Note: To use a variable names that include spaces, surround the name with back-ticks, for example: linelist$`infection date` 
+Note: To use a column names that include spaces, surround the name with back-ticks, for example: linelist$`infection date` 
 On a keyboard, the back-tick (`) is different from the single quotation mark ('), and is sometimes on the same key as the tilde (~).
 ```
 
 #### Automatic syntax cleaning  
 
-The function `clean_names()` from the package **janitor** is very useful. Here is an online [vignette](https://cran.r-project.org/web/packages/janitor/vignettes/janitor.html#cleaning)  
+The function `clean_names()` from the package **janitor** standardizes column names by transliterating to unique ASCII names by doing the following:  
+
+* Converts all names to consist of only underscores, numbers, and letters  
+* Accented characters are transliterated to ASCII (e.g. german o with umlaut becomes "o", spanish "enye" becomes "n")  
+* Capitalization preference can be specified using the `case = ` argument ("snake" is default, alternatives include "sentence", "title", "small_camel"...)  
+* You can designate specific replacements with the `replace = ` argument (e.g. replace = c(onset = "date_of_onset"))  
+* Here is an online [vignette](https://cran.r-project.org/web/packages/janitor/vignettes/janitor.html#cleaning)  
 
 ```{r clean_names}
 # send the dataset through the function clean_names()
@@ -134,26 +143,26 @@ linelist <- linelist_raw %>%
 names(linelist)
 ```
 
-#### Manual variable name cleaning  
+#### Manual column name cleaning  
 
-Re-naming variables manually is often necessary. Below, re-naming is performed using the `rename()` function from the **dplyr** package, as part of a pipe chain. `rename()` uses the style "NEW = OLD", the new variable name is given before the old variable name.  
+Re-naming columns manually is often necessary. Below, re-naming is performed using the `rename()` function from the **dplyr** package, as part of a pipe chain. `rename()` uses the style "NEW = OLD", the new column name is given before the old column name.  
 
 ```{r}
 # CLEANING 'PIPE' CHAIN (starts with raw data and pipes it through cleaning steps)
 ##################################################################################
 linelist <- linelist_raw %>%
     
-    # standardize variable name syntax
+    # standardize column name syntax
     janitor::clean_names() %>% 
     
-    # manually re-name variables
+    # manually re-name columns
            # NEW name             # OLD name
     rename(date_infection       = infection_date,
            date_hospitalisation = hosp_date,
            date_outcome         = date_of_outcome)
 ```
 
-Now you can see that the variables names have been changed:  
+Now you can see that the columns names have been changed:  
 
 ```{r message=FALSE}
 # display the linelist data as a table
@@ -163,35 +172,45 @@ DT::datatable(linelist, rownames = FALSE, filter="top", options = list(pageLengt
 
 
 <!-- ======================================================= -->
-## Select variables
+## Select columns
 
-Often the first step of cleaning data is selecting the variables you want to work with, and to set their order in the dataframe. In a **dplyr** chain of verbs, this is done with `select()`. *Note that in these examples we modify linelist with select(), but do not assign/overwrite. We just display the resulting new column names, for purpose of example.*   
+<span style="color: orange;">**_CAUTION:_** This tab may follow from previous tabs.</span>
 
-Within `select()` you can do the following:  
 
-* Select only the variables you want to remain, *and their order of appearance*  
+Often the first step of cleaning data is selecting the columns you want to work with, and to set their order in the dataframe. In a **dplyr** chain of verbs, this is done with `select()`. *Note that in these examples we modify linelist with select(), but do not assign/overwrite. We just display the resulting new column names, for purpose of example.*   
+
+**Here are all the column names in the linelist:**
 
 ```{r}
-# linelist dataset is piped through select() command, and names() prints just the variable names
+names(linelist)
+```
+
+### With `select()` you can do the following:  
+
+**Select only the columns you want to remain, *and their order of appearance***  
+
+```{r}
+# linelist dataset is piped through select() command, and names() prints just the column names
 linelist %>% 
   select(case_id, date_onset, date_hospitalisation, fever) %>% 
-  names() # display the variable names
+  names() # display the column names
 ```
  
 
 
-* You can tell `select()` which variables **to remove** by placing a minus symbol "-" in front of the variable name (or a vector of variable names). It will keep all others. Inside `select()` you can use normal operators such as `:` for consecutive values, `c()` to list values/variables, `!` for opposite, `&` for AND, and `|` for OR.  
+**Indicate which columns to remove** by placing a minus symbol "-" in front of the column name (e.g. `select(-outcome)`), or a vector of column names (as below). All other columns will be retained.  
+Inside `select()` you can use normal operators such as `c()` to list several columns, `:` for consecutive columns, `!` for opposite, `&` for AND, and `|` for OR.  
 
 ```{r}
 linelist %>% 
-  select(-c(date_onset, fever:vomit)) %>% # remove onset and all symptom variables
+  select(-c(date_onset, fever:vomit)) %>% # remove onset and all symptom columns
   names()
 ```
 
-* Re-order the variables, using `everything()` to signify all other variables not specified:  
+**Re-order the columns** - use `everything()` to signify all other columns not specified in the `select()` command:  
 
 ```{r}
-# case_id, date_onset, date_hospitalisation, and gender moved to beginning
+# move case_id, date_onset, date_hospitalisation, and gender to beginning
 linelist %>% 
   select(case_id, date_onset, date_hospitalisation, gender, everything()) %>% 
   names()
@@ -199,39 +218,30 @@ linelist %>%
 
 As well as `everything()` there are several special functions that work *within* `select()`, namely:  
 
-* `everything()`  - all other variables not mentioned  
+* `everything()`  - all other columns not mentioned  
 * `last_col()`    - the last column  
 * `starts_with()` - matches to a specified prefix. Example: `select(starts_with("date"))`
 * `ends_with()`   - matches to a specified suffix. Example: `select(ends_with("_end"))`  
-* `contains()`    - variables containing a character string. Example: `select(contains("time"))` 
+* `contains()`    - columns containing a character string. Example: `select(contains("time"))` 
 * `matches()`     - to apply a regular expression (regex). Example: `select(contains("[pt]al"))`  
 * `num_range()`   - 
-* `any_of()`      - matches if variable is named. Useful if name might not exist. Example: `select(any_of(date_onset, date_death, cardiac_arrest))`  
-* `where()`       - applies a function to all variables and selects those which are TRUE  
+* `any_of()`      - matches if column is named. Useful if name might not exist. Example: `select(any_of(date_onset, date_death, cardiac_arrest))`  
+* `where()`       - applies a function to all columns and selects those which are TRUE  
 
 
-* select as a standalone command TO DO
+### Adding `select()`to the cleaning pipe chain:  
 
-Select can also be used as an independent command. In this case, the first argument is the original dataframe.  
+In the linelist, there is one column we do not need: `row_num`. Remove it by adding a `select()` command to the cleaning pipe chain:  
 
-```{r}
-linelist_age <- select(linelist, case_id, age, age_unit)
-
-```
-
-
-
-Adding `select()`to the cleaning pipe chain:  
-There is a variable in linelist that we do not need: `row_num`. Let's remove it by adding a select statement to the pipe chain:  
 ```{r}
 # CLEANING 'PIPE' CHAIN (starts with raw data and pipes it through cleaning steps)
 ##################################################################################
 linelist <- linelist_raw %>%
     
-    # standardize variable name syntax
+    # standardize column name syntax
     janitor::clean_names() %>% 
     
-    # manually re-name variables
+    # manually re-name columns
            # NEW name             # OLD name
     rename(date_infection       = infection_date,
            date_hospitalisation = hosp_date,
@@ -242,20 +252,31 @@ linelist <- linelist_raw %>%
 ```
 
 
+### `select()` as a stand-alone command
+
+Select can also be used as an independent command (not in a pipe chain). In this case, the first argument is the original dataframe to be operated upon.  
+
+```{r}
+# Create a new linelist with only three columns
+linelist_age <- select(linelist, case_id, age, age_unit)
+```
+
 <!-- ======================================================= -->
 ## Fix classes {.tabset .tabset-fade .tabset-pills #Classes}
 
+<span style="color: orange;">**_CAUTION:_** This tab may follow from previous tabs.</span>
+
 See section on [object classes](#objectclasses)   
 
-Here we want to ensure that the class of each variable is appropriate. First we run some checks on the classes of important variables.  
+Here we want to ensure that the class of each column is appropriate. First we run some checks on the classes of important columns.  
 
-The class of the "age" variable is character. To perform analysis, we need those numbers to be recognized as numeric! 
+The class of the "age" column is character. To perform analysis, we need those numbers to be recognized as numeric! 
 
 ```{r}
 class(linelist$age)
 ```
 
-The class of the "date_onset" variable is also character! To perform analysis, these dates must be recognized as dates! 
+The class of the "date_onset" column is also character! To perform analysis, these dates must be recognized as dates! 
  
 ```{r}
 class(linelist$date_onset)
@@ -267,7 +288,7 @@ Use `table()` or another method to see all the values, can see that we see that 
 head(table(linelist$date_onset))
 ```
 
-This means before we can classify "date_onset" as a date, this value must be fixed to be the same format as the others. You can fix the date in the source data. Or, we can do this using `mutate()` and `recode()` in our cleaning pipe chain, *before* the commands to convert to class Date. LINK TO CLASSIFYING VARIABLE AS DATE. 
+This means before we can classify "date_onset" as a date, this value must be fixed to be the same format as the others. You can fix the date in the source data. Or, we can do this using `mutate()` and `recode()` in our cleaning pipe chain, *before* the commands to convert to class Date. LINK TO CLASSIFYING column AS DATE. 
 
 The new mutate line can be read as: mutate date_onset to equal date_onset recoded so that OLD VALUE is changed to NEW VALUE. Note that this pattern (OLD = NEW) is the opposite of most R patterns. The R development community is working on revising this.
 
@@ -276,10 +297,10 @@ The new mutate line can be read as: mutate date_onset to equal date_onset recode
 ##################################################################################
 linelist <- linelist_raw %>%
     
-    # standardize variable name syntax
+    # standardize column name syntax
     janitor::clean_names() %>% 
     
-    # manually re-name variables
+    # manually re-name columns
            # NEW name             # OLD name
     rename(date_infection       = infection_date,
            date_hospitalisation = hosp_date,
@@ -293,7 +314,7 @@ linelist <- linelist_raw %>%
   # fix incorrect values                 # old value       # new value
   mutate(date_onset = recode(date_onset, "15 April 2014" = "2014-04-15")) %>% 
   
-  # correct the class of the variables
+  # correct the class of the columns
   mutate(age           = as.numeric(age),
          date_onset    = as.Date(date_onset, format = "%Y-%m-%d"))
 
@@ -301,14 +322,14 @@ linelist <- linelist_raw %>%
 
 Especially after converting to class date, check your data visually or with `table()` to confirm that they were converted correctly! For `as.Date()`, the `format = ` argument is often a source of errors.  
 
-#### Fix class for multiple variables at once
+#### Fix class for multiple columns at once
 
 ```{r}
 class(linelist$date_infection)
 head(linelist$date_infection)
 ```
 
-You can use The **dplyr** function `across()` with `mutate()` to convert several variables at once to a new class. `across()` allows you to specify which columns you want a function to apply to. Below, we want to mutate the variables where `is.POSIXct()` (a type of date/time class that shows unnecessary timestamps) is `TRUE`, and apply the function `is.Date()` to them, in order to convert them to class "date".   
+You can use The **dplyr** function `across()` with `mutate()` to convert several columns at once to a new class. `across()` allows you to specify which columns you want a function to apply to. Below, we want to mutate the columns where `is.POSIXct()` (a type of date/time class that shows unnecessary timestamps) is `TRUE`, and apply the function `is.Date()` to them, in order to convert them to class "date".   
 
 * Note that within `across()` we also use the function `where()`.  
 * Note that is.POSIXct is from the package **lubridate**. Other similar functions (`is.character()`, `is.numeric()`, and `is.logical()`) are from **base R**  
@@ -323,6 +344,8 @@ linelist <- linelist %>%
 
 <!-- ======================================================= -->
 ## Filter rows {.tabset .tabset-fade .tabset-pills}
+
+<span style="color: orange;">**_CAUTION:_** This tab may follow from previous tabs.</span>
 
 After selecting columns, a typical cleaning step is to filter the dataframe for specific rows using the **dplyr** verb `filter()`. Within `filter()`, give the logic that must be `TRUE` for a row in the dataset to be kept. A simple example below filters to keep only the rows where `case_id` is not missing (three rows are removed):
 
@@ -339,11 +362,11 @@ Run a simple histogram of onset dates to see that a second smaller outbreak from
 hist(linelist$date_onset, breaks = 50)
 ```
 
-If we simply filter `linelist` by date of onset (after June 2013) we may make a mistake! Applying `filter(date_onset > as.Date("2013-06-01")))` would accidentally remove any observations in the later epidemic with a missing date of onset!   
+If we simply filter `linelist` by date of onset (after June 2013) we may make a mistake! Applying `filter(date_onset > as.Date("2013-06-01")))` would accidentally remove any rows in the later epidemic with a missing date of onset!   
 
-<span style="color: red;">**_DANGER:_** Filtering to greater than (>) or less than (<) a date can remove any observations with missing date values (`NA`)! This is because `NA` is treated as infinitely large and small.</span>
+<span style="color: red;">**_DANGER:_** Filtering to greater than (>) or less than (<) a date can remove any rows with missing date values (`NA`)! This is because `NA` is treated as infinitely large and small.</span>
 
-We also know that this first epidemic occurred at Hospital A, Hospital B, and there were 10 cases at Connaught Hospital.  Hospitals A & B did *not* have cases in the second epidemic, but Connaught Hospital had many. This is a complex filter to apply - it is wise to tabulate these variables to know exactly how many rows we expect should be removed.  
+We also know that this first epidemic occurred at Hospital A, Hospital B, and there were 10 cases at Connaught Hospital.  Hospitals A & B did *not* have cases in the second epidemic, but Connaught Hospital had many. This is a complex filter to apply - it is wise to tabulate these columns to know exactly how many rows we expect should be removed.  
 
 Let's examine a cross-tabulation to make sure we exclude only the correct rows:  
 
@@ -353,7 +376,7 @@ table(Hospital  = linelist$hospital,                     # hospital name
       useNA     = "always")                              # show missing values
 ```
 
-We want to exclude only the `nrow(linelist %>% filter(hospital %in% c("Hospital A", "Hospital B") | date_onset < as.Date("2013-06-01")))` observations from 2012 and 2013 at those three hospitals (A, B, and Connaught), including the 2 from Hospitals A & B with missing onset dates, but not any others with missing onset dates. We start with a linelist of `nrow(linelist)`. Here is our statement:  
+We want to exclude only the `nrow(linelist %>% filter(hospital %in% c("Hospital A", "Hospital B") | date_onset < as.Date("2013-06-01")))` rows from 2012 and 2013 at those three hospitals (A, B, and Connaught), including the 2 from Hospitals A & B with missing onset dates, but not any others with missing onset dates. We start with a linelist of `nrow(linelist)`. Here is our statement:  
 
 ```{r}
 linelist <- linelist %>% 
@@ -377,10 +400,10 @@ Multiple filter statements can be separated by commas, or you can always pipe to
 ##################################################################################
 linelist <- linelist_raw %>%
     
-    # standardize variable name syntax
+    # standardize column name syntax
     janitor::clean_names() %>% 
     
-    # manually re-name variables
+    # manually re-name columns
            # NEW name             # OLD name
     rename(date_infection       = infection_date,
            date_hospitalisation = hosp_date,
@@ -392,7 +415,7 @@ linelist <- linelist_raw %>%
     # fix incorrect values                 # old value       # new value
     mutate(date_onset = recode(date_onset, "15 April 2014" = "2014-04-15")) %>% 
     
-    # correct the class of the variables
+    # correct the class of the columns
     mutate(age           = as.numeric(age),
            date_onset    = as.Date(date_onset, format = "%Y-%m-%d")) %>% 
     
@@ -412,51 +435,58 @@ nrow(linelist %>% filter())
 
 
 <!-- ======================================================= -->
-## Creating and modifying variables {#mutate .tabset .tabset-fade .tabset-pills}
+## Creating and modifying columns {#mutate .tabset .tabset-fade .tabset-pills}
 
-We advise creating new variables with **dplyr** functions as part of a chain of such verb functions (e.g. filter, mutate, etc.)  
-If in need of a stand-alone command, you can use the **base** R style to create a new variable.  
+<span style="color: orange;">**_CAUTION:_** This tab may follow from previous tabs.</span>
+
+We advise creating new columns with **dplyr** functions as part of a chain of such verb functions (e.g. filter, mutate, etc.)  
+If in need of a stand-alone command, you can use **plyr** or also the **base** R style to create a new column.  
 
 
 <!-- ======================================================= -->
-### Using **dplyr** verbs
+### Using `mutate()` (**dplyr**)
 
-As explained in the section on **dplyr** and tidyverse coding style (LINK HERE), a chain of 'verb' functions operate on a dataset through 'pipes' (`%>%`), passing the output from one verb to the next. The verb `mutate()` used to add a new variable or modify an existing one. 
-
-Below are some example of creating new variables with `mutate()`. The syntax is: new_variable_name = value or function. It is best practice to separate each new variable with a comma and new line.  
-
+**The verb `mutate()` is used to add a new column or modify an existing one.** Below are some example of creating new columns with `mutate()`. The syntax is: new_column_name = value or function. It is best practice to separate each new column with a comma and new line.  
 
 ```{r}
 linelist <- linelist %>%                   # creating new, or modifying old dataset
-  mutate(new_var_dup    = case_id,                  # new variable = duplicate/copy another variable
-         new_var_static = 7,                   # new variable = all values the same
-         new_var_static = new_var_static + 5,  # you can overwrite a variable, and can modify a variable multiple times
-         new_var_calc   = (age / 12),          # new variable = a calculation
-         new_var_paste  = paste0(hospital, " (", date_hospitalisation, ")") # new variable = pasting together values from other variables
+  mutate(new_var_dup    = case_id,                  # new column = duplicate/copy another column
+         new_var_static = 7,                   # new column = all values the same
+         new_var_static = new_var_static + 5,  # you can overwrite a column, and can modify a column multiple times
+         new_var_calc   = (age / 12),          # new column = a calculation
+         new_var_paste  = paste0(hospital, " (", date_hospitalisation, ")") # new column = pasting together values from other columns
          ) 
 ```
 
 
-Scroll to the right to see the new variables:  
+***Scroll to the right to see the new columns:***  
 
 ```{r message=FALSE}
 # display the linelist data as a table
 DT::datatable(linelist, rownames = FALSE, filter="top", options = list(pageLength = 5, scrollX=T) )
 ```
 
-<span style="color: darkgreen;">**_TIP:_** The verb `transmute()` adds new variables just like `mutate()` but also drops/removes all other variables that you do not mention.</span>
+<span style="color: darkgreen;">**_TIP:_** The verb `transmute()` adds new columns just like `mutate()` but also drops/removes all other columns that you do not mention.</span>
+
+```{r, echo=F}
+# remove new demo columns
+linelist <- linelist %>% 
+  select(-contains("new_var"))
+```
 
 
-#### Recode a variable  
-To recode the values in a variable, `mutate()` is also used.  
+<!-- ======================================================= -->
+### Simple recoding of values  
 
-In this case, we notice that we need to clean the variable "hospital". There are several incorrect spelling, and many missing values.
+To recode the values in a column, `mutate()` is also used.  
+
+For example, in the linelist we need to clean the values in the column "hospital". There are several incorrect spelling, and many missing values.
 
 ```{r}
 table(linelist$hospital, useNA = "always")
 ```
 
-For to change spellings one-by-one, you can use the `recode()` function *within the mutate function*. The code is saying that the variable "hospital" should be defined as the current variable "hospital" but with certain changes (syntax is OLD = NEW). **Don't forget commas!**  
+To change spellings one-by-one, you can use the `recode()` function *within the mutate function*. The code is saying that the column "hospital" should be defined as the current column "hospital" but with certain changes (syntax is OLD = NEW). **Don't forget commas!**  
 
 ```{r}
 linelist <- linelist %>% 
@@ -478,24 +508,10 @@ table(linelist$hospital, useNA = "always")
 
 <span style="color: darkgreen;">**_TIP:_** Sometimes a *blank* character value exists in a dataset (not recognized as R's value for missing - `NA`). You can reference this value with two quotation marks with no space inbetween ("").</span>  
 
-If you need to use logic statements with multiple variables, or want to use operators like `%in%`, use `case_when()` instead, as below. **If you use `case_when()` please read the thorough explanation HERE LINK, as there are important differences from `recode()` in syntax and logic!**   
 
-```{r}
-linelist <- linelist %>% 
-  mutate(hospital = case_when(hospital == "Connaught Hopital"                           ~ "Connaught Hospital",
-                              hospital == "Rokupa Hopital"                              ~ "Rokupa Hospital", 
-                              hospital %in% c("Mitylira Hopital", 
-                                             "Mitylira Hospital",
-                                             "Mitylira Hospital",
-                                             "Military Hopital")                        ~ "Military Hospital",
-                              is.na(hospital)                                           ~ "Missing",
-                              hospital == "Princess Christian Maternity Hopital (PCMH)" ~ "Princess Christian Maternity Hospital (PCMH)",
-                              TRUE                                                      ~  hospital) 
-)
-table(linelist$hospital, useNA = "always")
 
-```
-
+<!-- ======================================================= -->
+### Special recoding functions  
 
 To change missing values to a character value, such as "Missing", use the function `replace_na()` in the same manner as `recode` above:  
 
@@ -526,7 +542,7 @@ IMAGE of ifelse string with X across is.
 Use case-when() instead. 
 
 
-You can reference other variables with the `ifelse()` function within `mutate()`:  
+You can reference other columns with the `ifelse()` function within `mutate()`:  
 
 ```{r}
 linelist <- linelist %>% 
@@ -557,12 +573,14 @@ Replace
 <!-- ======================================================= -->
 ### Using cleaning dictionaries
 
-```{r, eval=F}
-## load cleaning rules and only keep variables in mll
-mll_cleaning_rules <- import(here("dictionaries/mll_cleaning_rules.xlsx")) %>%
-  filter(variable %in% c(names(mll_raw), ".global"))
+<span style="color: orange;">**_CAUTION:_** This tab may follow from previous tabs.</span>
 
-## define variables that are not cleand
+```{r, eval=F}
+## load cleaning rules and only keep columns in mll
+mll_cleaning_rules <- import(here("dictionaries/mll_cleaning_rules.xlsx")) %>%
+  filter(column %in% c(names(mll_raw), ".global"))
+
+## define columns that are not cleand
 unchanged <- c(
   "epilink_relationship",
   "narratives",
@@ -572,7 +590,7 @@ unchanged <- c(
 mll_clean <- mll_raw %>%
   ## convert to tibble
   as_tibble() %>%
-  ## clean variables using cleaning rules
+  ## clean columns using cleaning rules
   clean_data(
     wordlists = mll_cleaning_rules,
     protect = names(.) %in% unchanged
@@ -583,6 +601,8 @@ mll_clean <- mll_raw %>%
 
 <!-- ======================================================= -->
 ### Mutating grouped data
+
+<span style="color: orange;">**_CAUTION:_** This tab may follow from previous tabs.</span>
 
 Using mutate on GROUPED dataframes
 https://dplyr.tidyverse.org/reference/mutate.html
@@ -606,17 +626,17 @@ The former normalises mass by the global average whereas the latter normalises b
 <!-- ======================================================= -->
 ### Using **base** R  
 
-If you need to write a stand-alone command using **base R** (e.g. not part of a chain of **dplyr** verbs), then you can create a new variable by assigning it a value. In the command below, the variable `new_var` does not exist until after the command is executed. In this simple example the variable is assigned the static value "new value", so for all rows the value will be "new value".  
+If you need to write a stand-alone command using **base R** (e.g. not part of a chain of **dplyr** verbs), then you can create a new column by assigning it a value. In the command below, the column `new_var` does not exist until after the command is executed. In this simple example the column is assigned the static value "new value", so for all rows the value will be "new value".  
 
 
 ```{r, eval=F}
 linelist_raw$new_var <- "new value"
 ```
 
-You can also give the new variable a dyanmic value as shown below, or using the `case_when()` command explained in the next tab.
+You can also give the new column a dyanmic value as shown below, or using the `case_when()` command explained in the next tab.
 
 ```{r, eval=F}
-# mathematical operators on another variable
+# mathematical operators on another column
 linelist_raw$new_var <- linelist_raw$OLD_var * 4
 ```
 
@@ -624,6 +644,30 @@ linelist_raw$new_var <- linelist_raw$OLD_var * 4
 
 <!-- ======================================================= -->
 ## Groups by condition (`case_when()`) {#casewhen}
+
+
+<!-- ======================================================= -->
+### Recoding with logic using `case_when()`
+
+If you need to use logic statements to recode values, or want to use operators like `%in%`, use **dplyr**'s `case_when()` instead. **If you use `case_when()` please read the thorough explanation HERE LINK, as there are important differences from `recode()` in syntax and logic order!**   
+
+```{r}
+linelist <- linelist %>% 
+  mutate(hospital = case_when(hospital == "Connaught Hopital"                           ~ "Connaught Hospital",
+                              hospital == "Rokupa Hopital"                              ~ "Rokupa Hospital", 
+                              hospital %in% c("Mitylira Hopital", 
+                                             "Mitylira Hospital",
+                                             "Mitylira Hospital",
+                                             "Military Hopital")                        ~ "Military Hospital",
+                              is.na(hospital)                                           ~ "Missing",
+                              hospital == "Princess Christian Maternity Hopital (PCMH)" ~ "Princess Christian Maternity Hospital (PCMH)",
+                              TRUE                                                      ~  hospital) 
+)
+table(linelist$hospital, useNA = "always")
+
+```
+
+<span style="color: orange;">**_CAUTION:_** This tab may follow from previous tabs.</span>
 
 TODO tutorial on using case_when()
 
@@ -646,6 +690,8 @@ WHAT TO DO IF AGE IS SPREAD ACROSS TWO VARAIBLES (e.g. numeric age + unit)
 
 <!-- ======================================================= -->
 ### Highest in hierarchy
+
+<span style="color: orange;">**_CAUTION:_** This tab may follow from previous tabs.</span>
 
 Within a group, indicate/convert to the highest value in the group
 
