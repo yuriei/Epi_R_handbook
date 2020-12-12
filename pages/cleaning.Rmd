@@ -66,7 +66,7 @@ factors
 ```{r, clean_packages}
 pacman::p_load(tidyverse,  # data manipulation and visualization
                janitor,    # data cleaning
-               epitrix,    # data cleaning
+               epitrix     # data cleaning
                )
 ```
 
@@ -169,6 +169,68 @@ Now you can see that the columns names have been changed:
 DT::datatable(linelist, rownames = FALSE, filter="top", options = list(pageLength = 5, scrollX=T) )
 ```
 
+#### Empty Excel column headers  
+
+If you are importing an Excel sheet and there is a missing column name, it will replace it with a value like "...1" or "...2".
+
+
+#### Skip import of column headers  
+
+Sometimes, you may want to avoid importing a row of data. Using `import()` from the **rio** package, you can do this with the argument `skip = `. Provide the number of rows you want to skip.
+
+
+```{r, eval=F}
+linelist_raw <- import("ebola_simulated.xlsx", skip = 1)  # does not import header row
+```
+
+In other cases you may want to avoid importing the *second* row of data, for example if it is a data dictionary row.  This can be problematic because it can result in all columns being imported as class "character". To address this, you may need to import the data twice.  
+
+1) Import the data in order to store the correct column names  
+2) Import the data again, skipping the first *two* rows  
+3) Combine the correct headers onto the dataframe
+
+Save just the column names  
+
+```{r, eval=F}
+linelist_raw_names <- rio::import(here::here("data", "ebola_simulated.xlsx")) %>% 
+  names()
+```
+
+How you re-attach the names depends on which kind of file (.csv, .tsv, .xlsx, etc.). If using **rio**'s `import()` function, understand which function **rio** is using to import your data, and use the appropriate argument to skip lines and/or add column names. See the handbook page on importing data (LINK) for details on **rio**.  
+
+For Excel files:  
+
+```{r}
+# For excel files
+linelist_raw_names <- import("ebola_simulated.xlsx") %>% names()
+linelist_raw <- import("ebola_simulated.xlsx", skip = 2, col_names = linelist_raw_names)
+```
+
+For CSV files:  
+
+```{r}
+# For csv files
+linelist_raw_names <- import("ebola_simulated.csv") %>% names()
+linelist_raw <- import("ebola_simulated.csv", skip = 2, col.names = linelist_raw_names)
+```
+
+Backup option - changing column names as a separate command
+
+```{r}
+colnames(linelist_raw) <- linelist_raw_names
+```
+
+Bonus! If you do have a second row that is a data dictionary, you can easily create a proper data dictionary from it using the `gather()` command from the **tidyr** package.  
+source: https://alison.rbind.io/post/2018-02-23-read-multiple-header-rows/
+
+TO DO
+```{r, eval=F}
+library(tidyr)
+stickers_dict <- import("ebola_simulated.xlsx") %>% 
+  clean_names() %>% 
+  gather(variable_name, variable_description)
+stickers_dict
+```
 
 
 <!-- ======================================================= -->
