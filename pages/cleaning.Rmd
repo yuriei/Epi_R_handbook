@@ -83,7 +83,7 @@ linelist_raw <- rio::import(here::here("data", "ebola_simulated.xlsx"))
 linelist_raw <- import("ebola_simulated.xlsx")
 ```
 
-You can view the original **raw** dataset below: 
+You can view the original "raw" dataset below: 
 
 ```{r message=FALSE}
 # display the linelist data as a table
@@ -115,6 +115,9 @@ column names are used so often, it is best that they have "clean" syntax. We sug
 
 The names of `linelist_raw` are below. We can see that there are some with spaces. We also have different naming patterns for dates ('date onset' and 'infection date').  
 
+Also note that in the raw data, the two final columns names were one merged cell with the name "header_merged". The `import()` function used the name for the first of the two columns, and assigned the second column the name "...23" (referring to the 23rd column).  
+
+
 ```{r}
 names(linelist_raw)
 ```
@@ -143,6 +146,8 @@ linelist <- linelist_raw %>%
 names(linelist)
 ```
 
+Note that the column name "...23" was changed to "x23".  
+
 #### Manual column name cleaning  
 
 Re-naming columns manually is often necessary. Below, re-naming is performed using the `rename()` function from the **dplyr** package, as part of a pipe chain. `rename()` uses the style "NEW = OLD", the new column name is given before the old column name.  
@@ -169,12 +174,32 @@ Now you can see that the columns names have been changed:
 DT::datatable(linelist, rownames = FALSE, filter="top", options = list(pageLength = 5, scrollX=T) )
 ```
 
-#### Empty Excel column headers  
+You can also rename by column position, instead of column name, as below:  
+
+```{r, eval=F}
+rename(newNameForFirstColumn = 1,
+       newNameForSecondColumn = 2)
+```
+
+#### Empty Excel column names  
 
 If you are importing an Excel sheet and there is a missing column name, it will replace it with a value like "...1" or "...2".
 
 
-#### Skip import of column headers  
+#### Merged Excel column names  
+
+Merged cells in an Excel file can cause problems, especially in the column names. Do your best to ensure the data you recieve is "tidy" without merged cells.  
+
+One solution to deal with merged cells is to import the data with the function `readWorkbook()` from package **openxlsx**. Set the argument `fillMergedCells = TRUE`. This gives the value in a merged cell to all cells within the merge range.
+
+```{r, eval=F}
+linelist_raw <- openxlsx::readWorkbook(here("data", "ebola_simulated.xlsx"), fillMergedCells = TRUE)
+```
+
+!!! Warning: If column names are merged, you will end up with duplicate column names, which you will need to fix manually - R does not work well with duplicate column names. You can re-name them by referencing their position (e.g. column 5), as explained in the section above on manual column name cleaning.  
+
+
+#### Skip import of column names  
 
 Sometimes, you may want to avoid importing a row of data. Using `import()` from the **rio** package, you can do this with the argument `skip = `. Provide the number of rows you want to skip.
 
@@ -183,11 +208,13 @@ Sometimes, you may want to avoid importing a row of data. Using `import()` from 
 linelist_raw <- import("ebola_simulated.xlsx", skip = 1)  # does not import header row
 ```
 
+#### Second header row  
+
 In other cases you may want to avoid importing the *second* row of data, for example if it is a data dictionary row.  This can be problematic because it can result in all columns being imported as class "character". To address this, you may need to import the data twice.  
 
 1) Import the data in order to store the correct column names  
 2) Import the data again, skipping the first *two* rows  
-3) Combine the correct headers onto the dataframe
+3) Combine the correct names onto the dataframe
 
 Save just the column names  
 
@@ -218,6 +245,12 @@ Backup option - changing column names as a separate command
 
 ```{r}
 colnames(linelist_raw) <- linelist_raw_names
+```
+
+You may want to combine two header rows into one:  
+
+```{r, eval=F}
+names(df) <- paste(names(df), df[1, ], sep = "_")
 ```
 
 Bonus! If you do have a second row that is a data dictionary, you can easily create a proper data dictionary from it using the `gather()` command from the **tidyr** package.  
