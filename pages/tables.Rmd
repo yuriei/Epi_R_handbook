@@ -41,17 +41,6 @@ This tab should include:
 * Small image showing outputs   
 
 
-<!-- ======================================================= -->
-<!-- ======================================================= -->
-<!-- ======================================================= -->
-# Making nice tables {#tables .tabset .tabset-fade}
-
-<!-- ======================================================= -->
-## Overview {.tabset .tabset-fade .tabset-pills}
-
-Many audiences and reasons for the tables...
-
-
 
 <!-- ======================================================= -->
 ## Preparation {.tabset .tabset-fade .tabset-pills}
