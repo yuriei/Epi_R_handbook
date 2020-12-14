@@ -144,7 +144,7 @@ count_data <- linelist %>%
 ```
 
 
-```{r epicruve_load_show, eval=F}
+```{r epicurve_load_show, eval=F}
 # import the linelist into R
 linelist <- rio::import("ebola_simulated.xlsx")
 ```
@@ -313,7 +313,7 @@ plot(epicurve_monthly)
 
 
 <!-- ======================================================= -->
-### Aesthetics {.tabset .tabset-fade .tabset-pills}
+### Aesthetic themes {.tabset .tabset-fade .tabset-pills}
 
 
 Behind the scenes, incidence is using ggplot(), so you can add aesthetic themes and other lines using the ggplot syntax.
@@ -444,7 +444,7 @@ print(plot_weekly)
 ```
 
 <!-- ======================================================= -->
-### With aesthetics {.tabset .tabset-fade .tabset-pills}
+### With aesthetic themes {.tabset .tabset-fade .tabset-pills}
 
 ``` {r ggplot_aesthetics}
 # Preparation
@@ -465,7 +465,7 @@ plot_weekly <- ggplot(linelist, aes(x = date_onset)) +
   # X-axis 21-day labels
   scale_x_date( 
     # Sets date label breaks as every 3 weeks from Monday before the first case
-    breaks = function(x) seq.Date(from = min(linelist$date_onset, na.rm = T), to = max(linelist$date_onset, na.rm=T), by = "1 week"),
+    breaks = function(x) seq.Date(from = min(linelist$date_onset, na.rm = T), to = max(linelist$date_onset, na.rm=T), by = "3 weeks"),
     
     # axis limits determined by max/min + buffer
     limits = c((min(linelist$date_onset, na.rm = T) - 8), (max(linelist$date_onset, na.rm = T) + 8)), 
@@ -477,7 +477,7 @@ plot_weekly <- ggplot(linelist, aes(x = date_onset)) +
     expand = c(0,0)) +                                
   
   # Y-axis breaks every 5 cases
-  scale_y_continuous(breaks = seq(0, ymax, 5),
+  scale_y_continuous(breaks = seq(0, ymax, 25),
                      limits = c(0, ymax),
                      expand = c(0, 0)) +
   
@@ -555,13 +555,13 @@ plot_defined_cats <- ggplot(linelist, aes(x = date_onset, fill = gender)) +
   
   # X-axis scale labels (not aggregation, just the labels)
   scale_x_date(# Sets date label breaks as every week
-    breaks = function(x) seq.Date(from = min(linelist$date_onset, na.rm = T), to = max(linelist$date_onset, na.rm = T), by = "1 week"),
+    breaks = function(x) seq.Date(from = min(linelist$date_onset, na.rm = T), to = max(linelist$date_onset, na.rm = T), by = "3 weeks"),
     limits = c((min(linelist$date_onset, na.rm=T)), (max(linelist$date_onset, na.rm = T))), # axis limits determined by max/min + buffer
     date_labels = "%d-%b",   # displays as date # then abbreviated month (e.g. 12 Oct)
     expand = c(0, 0)) +                                # sets origin at (0,0)
   
   # Y-scale in breaks, up to the ymax previously defined
-  scale_y_continuous(breaks = seq(0, 500, 5), limits = c(0, ymax), expand=c(0, 0)) +
+  scale_y_continuous(breaks = seq(0, 500, 25), limits = c(0, ymax), expand=c(0, 0)) +
   
   # Themes for axes, titles, background, etc.
   theme(plot.title       = element_text(size=20, hjust=0.5, face="bold"),
@@ -688,13 +688,13 @@ plot_overall <- ggplot(linelist, aes(x = date_onset, fill = graph_zone)) +
   
   # X-axis 21-day labels
   scale_x_date( # Sets date label breaks as every 3 weeks from Monday before the first case
-    breaks = function(x) seq.Date(from = min(linelist$date_onset, na.rm = T), to = max(linelist$date_onset, na.rm = T), by = "1 week"),
+    breaks = function(x) seq.Date(from = min(linelist$date_onset, na.rm = T), to = max(linelist$date_onset, na.rm = T), by = "3 weeks"),
     limits = c((min(linelist$date_onset, na.rm = T) - 8), (max(linelist$date_onset, na.rm = T) + 8)), # axis limits determined by max/min + buffer
     date_labels = "%d-%b",   # displays as date number, then abbreviated month (e.g. 12 Oct)
     expand = c(0,0)) +                                # sets origin at (0,0)
   
   # Y-axis breaks every 5 cases
-  scale_y_continuous(breaks = seq(0, ymax, 5),
+  scale_y_continuous(breaks = seq(0, ymax, 25),
                      limits = c(0, ymax),
                      expand = c(0, 0)) +
   
