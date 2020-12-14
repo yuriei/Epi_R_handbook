@@ -16,6 +16,9 @@ knitr::opts_chunk$set(echo = TRUE,
 
 ```{r echo=FALSE, include=TRUE}
 #Enables "copy to clipboard" icons   https://rlesur.github.io/klippy/articles/klippy.html
+#install.packages("remotes")
+#remotes::install_github("rlesur/klippy")
+
 klippy::klippy(position = c('top', 'right'))
 ```
 
