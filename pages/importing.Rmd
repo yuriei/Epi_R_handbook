@@ -79,6 +79,20 @@ You can read more about the **rio** package [in this online vignette](https://rd
 
 <span style="color: orange;">**_CAUTION:_** In the example above, the datasets are assumed to be located in the *working directory*, or the same folder as the script.</span>  
 
+TO DO
+
+**import a specific range of cells**
+**skip rows, in excel and csv**
+**rio table of functions used for import/export/convert**
+https://cran.r-project.org/web/packages/rio/vignettes/rio.html
+**other useful function to know as backup**
+EpiInfo
+SAS
+STATA
+Google Spreadsheets
+R files
+
+
 
 <!-- ======================================================= -->
 ## Import from filepath {.tabset .tabset-fade .tabset-pills}  
@@ -234,6 +248,8 @@ And now we display the new dataset:
 DT::datatable(manual_entry_rows)
 ```
 
+
+**OR ADD ROWS dplyr**  TO DO
 
 ### Pasting from clipboard  
 
