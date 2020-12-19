@@ -357,13 +357,85 @@ With the flexibility of `ggplot()`, you can have a second layer of bars in the b
 
 TO DO
 
+
+View the population data
+
+```{r epicurve_viewdata_agg, message=FALSE}
+# display the linelist data as a table
+DT::datatable(pop, rownames = FALSE, filter="top", options = list(pageLength = 10, scrollX=T) )
+```
+
 ```{r, eval=F}
 
-# TO DO
+# transform the data to long format
+pop_long <- pivot_longer(pop, male:female, names_to = c("gender")) %>% 
+  mutate(gender = factor(gender, levels = c("female", "male")),
+         age_group = factor(age_group, levels = c("<5", paste0(seq(5, 80, 5),
+                                                               "-",
+                                                               seq(9,84,5)
+                                                         ),
+                                                  ">=85")))
 
-# extract population data
-pop <- rio::import(here::here("data/RDC_population_polio_2020.xls")) %>%
-  mutate_if(is.character, tolower)
+
+max_pop <- max(pop_long$value)
+
+
+unicef %<>% mutate(num = num/max_pop*max_y)
+
+
+## make the actual plot
+  
+plot <- ggplot() +
+  # geom_bar(data = filter(unicef, gender == "f" & !is.na(age_group)), 
+  #          aes(y=num,
+  #              fill = gender),
+  #          stat="identity", 
+  #          alpha = 0.5,
+  #          width = 1
+  # ) +
+  # geom_bar(data = filter(unicef, gender == "m" & !is.na(age_group)), 
+  #          aes(y = num*(-1),
+  #              fill = gender), 
+  #          stat="identity", 
+  #          alpha = 0.5,
+  #          width = 1
+  # ) +
+  geom_bar(data = filter(linelist, gender == "f" & !is.na(age_group)),
+           color = "black",
+           width = 0.5) +
+  geom_bar(data = filter(linelist, gender == "m" & !is.na(age_group)),
+           aes(y=..count..*(-1)),
+           color = "black",
+           width = 0.5) +
+  
+  scale_x_discrete(labels = age_lab) +
+  scale_y_continuous(limits = c(-max_y, max_y),
+                     breaks = seq(-max_y, max_y, 300),
+                     labels = c(rev(seq(0, max_y, 300)),
+                                seq(300, max_y, 300))
+  )+
+  scale_fill_manual(
+    values = c("female" = "#ff96a4",
+               "male" = "#7e9dc4"),
+    labels = c("Female", "Male"),
+  ) +
+  labs(
+    x = "Age group",
+    y = "Number of contacts",
+    fill = NULL,
+    caption = sprintf("n = %i (age or sex missing for %i cases) \n *lighter color bar represents the shape of overall DRC population age-sex distribution reduced to %.1f ratio",
+                      nrow(cont), 
+                      sum(is.na(cont$sexe) | is.na(cont$age_group)), 
+                      max_y/max_pop)) +
+  coord_flip() +
+  theme(
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    panel.background = element_blank(),
+    axis.line = element_line(colour = "black")
+  ) 
+
+
 
 
 ```

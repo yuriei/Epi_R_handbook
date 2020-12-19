@@ -29,10 +29,7 @@ source(here::here("load_core_packages.R"))
 
 
 ```{r}
-# import the flu linelist
-#linelist <- rio::import(here::here("data", "fluH7N9_china_2013.csv"))
-
-# import the ebola linelist
+# import the raw ebola linelist
 linelist_raw <- rio::import(here::here("data", "ebola_simulated.xlsx"))
 
 # import the cleaned ebola linelist
@@ -43,6 +40,9 @@ count_data <- rio::import(here::here("data", "district_count_data.xlsx"))
 
 # import the count data - facility level
 count_data <- rio::import(here::here("data", "facility_count_data.csv"))
+
+# import the population demographics data
+pop <- rio::import(here::here("data", "country_demographics.csv"))
 
 
 ```
