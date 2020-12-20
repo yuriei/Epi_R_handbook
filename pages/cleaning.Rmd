@@ -1546,11 +1546,16 @@ linelist <- linelist %>%
 ```
 
 Change only numeric columns
-```
-
 
 Here are a few online resources on using `across()`: [Hadley Wickham's thoughts/rationale](https://www.tidyverse.org/blog/2020/04/dplyr-1-0-0-colwise/)
 
+
+
+```{r echo=F}
+# REARRANGE COLUMNS FOR EXPORT
+linelist <- linelist %>% 
+  select(case_id:gender, age, age_unit, age_years, age_cat, age_cat5, everything())
+```
 
 ```{r echo=F}
 # EXPORT CLEANED LINELIST FILE TO "DATA" FOLDER
