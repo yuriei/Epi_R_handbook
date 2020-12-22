@@ -22,6 +22,20 @@ params:
 </style>
 
 
+```{css, echo = FALSE}
+# Sets color of header levels 1 and 2
+# h1, #TOC>ul>li {
+#   color: #ff0000;
+# }
+
+h1, #TOC>ul>ul>li {
+  color: #3341FF;          # blue
+  font-family:  "Times";
+  font-weight: bold;
+}
+```
+
+
 ```{r include=FALSE}
 knitr::opts_chunk$set(echo = TRUE,
                       collapse = TRUE,
