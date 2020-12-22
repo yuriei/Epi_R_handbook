@@ -8,6 +8,12 @@ district_count_data <- rio::import(here::here("data", "district_count_data.xlsx"
 
 # count data
 facility_count_data <- rio::import(here::here("data", "facility_count_data.csv"))
+
+# import the population demographics data
+pop <- rio::import(here::here("data", "country_demographics.csv"))
+
+# import the population demographics data
+likert_data <- rio::import(here::here("data", "likert_data.csv"))
 ```
 
 
