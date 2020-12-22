@@ -1126,8 +1126,8 @@ Common examples include age categories, groups of lab values, etc.
 
 There are several ways to create categories of a numeric column such as age. Here we will discuss:  
 
-* `cut()`, from **base** R  
 * `age_categories()`, from the **epikit** package  
+* `cut()`, from **base** R  
 * using percentiles to break your numbers  
 * natural break points... ? TO DO  
 * case_when()
@@ -1145,49 +1145,105 @@ class(linelist$age_years)
 
 
 <!-- ======================================================= -->
-### Numeric categories using `cut()`  
+### Numeric categories using `age_categories()` from **epikit**
 
-You can use the **base** function `cut()`, which creates categories from a numeric variable.  
+With the **epikit** package, you can use the `age_categories()` function to easily categorize and label numeric columns (note: this can be applied to non-age numeric variables too). The output is an ordered factor.
 
-The basic syntax within `cut()` is to first provide the numeric variable to be cut (age_years), and then the *breaks* argument, which is a numeric vector (`c()`) of break points. Using `cut()`, the resulting column is automatically a ordered factor.
+The break values specified are included in the higher group, that is groups are open on the lower/left side. As shown below, you can add 1 to each break value to achieve groups that are open at the top/right.
 
-If used within `mutate()` (a **dplyr** verb) it is **not necessary** to specify the dataset before the column name (e.g. `linelist$age_years`).
+Other *optional* arguments:  
 
-#### Quick example  
+* `lower = ` Default is 0). The lowest number you want considered.  
+* `upper = ` The highest number you want considered.  
+* `by = `    The number of years between groups.  
+* `separator = ` Default is "-". Character between ages in labels.  
+* `ceiling = ` Default FALSE. If TRUE, the highest break value is a ceiling and a category "XX+" is not included. Any values above highest break or `upper` (if defined) are categorized as `NA`.  
 
-Create new column of age categories (`age_cat`) by cutting the numeric `age_year` column at specified break points:  
+See the function's Help page for more details (enter `?age_categories` in the R console).  
+
+
+```{r}
+library(epikit)
+
+# Simple example
+################
+linelist <- linelist %>% 
+  mutate(age_cat = age_categories(age_years,
+                                  breakers = c(0, 5, 10, 15, 20, 30, 50, 70)))
+# show table
+table(linelist$age_cat, useNA = "always")
+
+
+# With ceiling set to TRUE
+##########################
+linelist <- linelist %>% 
+  mutate(age_cat = age_categories(age_years, 
+                                  breakers = c(0, 5, 10, 15, 20, 30, 50, 70),
+                                  upper = max(linelist$age_years, na.rm=T),
+                                  ceiling = TRUE)) # 70 is the ceiling
+# show table
+table(linelist$age_cat, useNA = "always")
+
+
+# Include upper ends for the same categories
+############################################
+linelist <- linelist %>% 
+  mutate(age_cat = age_categories(age_years, 
+                                  upper = max(linelist$age_years, na.rm=T),
+                                  breakers = c(0, 6, 11, 16, 21, 31, 51, 71, 76)))
+# show table
+table(linelist$age_cat, useNA = "always")
+```
+
+<!-- ======================================================= -->
+### Numeric categories using `cut()`
+
+You can use the **base** R function `cut()`, which creates categories from a numeric variable. The differences from `age_categories()` are:  
+
+* You do not need to install/load another package  
+* You can specify whether groups are open/closed on the right/left  
+* You must provide labels yourself (and ensure they are accurate to the groups)  
+* If you want 0 included in the lowest group you must specify this  
+
+The basic syntax within `cut()` is to first provide the numeric variable to be cut (age_years), and then the *breaks* argument, which is a numeric vector (`c()`) of break points. Using `cut()`, the resulting column is an ordered factor.
+
+If used within `mutate()` (a **dplyr** verb) it is not necessary to specify the dataframe before the column name (e.g. `linelist$age_years`).
+
+#### `cut()` example  
+
+Create new column of age categories (`age_cat`) by cutting the numeric `age_year` column at specified break points. The example below replicates the first `age_categories()` example.  
 
 * Specify numeric vector of break points `c(0, 5, 10, 15, ...)`  
-* Default behavior for `cut()` is that lower break values are excluded from each category, and upper break values are included  
+* Default behavior for `cut()` is that lower break values are *excluded* from each category, and upper break values are *included*. This is the opposite behavior from the `age_categories()` function.  
 * Include 0 in the lowest category by adding `include.lowest = TRUE`  
 * Add a vector of customized labels using the `labels = ` argument  
-* Be aware of and address missing values  
+* Check your work with cross-tabulation of the numeric and category columns - be aware of missing values  
 
 
 ```{r}
 linelist <- linelist %>% 
-  mutate(age_cat = cut(age_years,                     # numeric column
-                        breaks = c(0, 5, 10, 15, 20,
-                                   30, 50, 70, 100),  # break points for categories
-                                                      # default: lower breaks excluded and upper included
-                        include.lowest = TRUE,        # include 0 in lowest category
-                        labels = c("0-5", "6-10", "11-15", "16-20",       # manual labels - be careful!
-                                   "21-30", "31-50", "51-70", "71-100")))       
+  mutate(age_cat = cut(age_years,                                       # numeric column
+                        breaks = c(0, 5, 10, 15, 20, 30, 50, 70,        # break points...
+                                   max(linelist$age_years, na.rm=T)),   # ... with dynamic last break as column max value
+                        right = TRUE,                                   # lower breaks included and upper excluded [a,b)
+                        include.lowest = TRUE,                          # 0 included in lowest category
+                        labels = c("0-4", "5-9", "10-14", "15-19",      # manual labels - be careful!
+                                   "20-29", "30-49", "50-69", "70+")))       
 
 table(linelist$age_cat, useNA = "always")
 ```
 
 
-#### Detailed example  
+#### `cut()` in detail  
 
-Below is a detailed description of the behavior of using `cut()` to make the `age_cat` column:  
+Below is a detailed description of the behavior of using `cut()` to make the `age_cat` column. Key points:    
 
 * Inclusion/exclusion behavior of break points  
 * Custom category labels  
 * Handling missing values  
-* Check your work!  
+* **Check your work!**  
 
-The most basic, simple version of `cut()` applied to `age_years` to make the new variable `age_cat`:  
+The most simple command of `cut()` applied to `age_years` to make the new variable `age_cat` is below:  
 
 ```{r}
 # Create new variable, by cutting the numeric age variable
@@ -1200,54 +1256,21 @@ table(linelist$age_cat, useNA = "always")
 
 ```
 
-#### Inclusion/exclusion criteria for break values  
+* **By default**, the categorization occurs so that the right/upper side is "open" and inclusive (and the left/lower side is "closed" or exclusive). The default labels use the notation "(A, B]", which means the group does not include A (the lower break value), but includes B (the upper break value). **Reverse this behavior by providing the `right = TRUE` argument**.  
 
-By default, the grouping occurs so that the right/upper side is "open" and inclusive (and the left/lower side is "closed" or exclusive). The default labels use the notation "(A, B]", which means the group does not include A (the lower break value), but includes B (the upper break value). You can reverse this behavior by providing the *right* argument and setting equal to `FALSE` (explanation below).  
+* Thus, **by default** "0" values are excluded from the lowest group, and categorized as `NA`. "0" values could be infants coded as age 0. To change this **add the argument `include.lowest = TRUE`**. Then, any "0" values are included in the lowest group. The automatically-generated label for the lowest category will change from "(0,B]" to "[0,B]", which signifies that 0 values are included.  
 
-
-
-#### Check value assignment  
-
-**Check your work!!!** Verify that each age value was assigned to the correct category. Note how above, `r nrow(linelist %>% filter(is.na(age_cat)))` rows are categorized as `NA`. Should all of these be assigned `NA`? Check by cross-tabulating the `age_years` and `age_cat` columns (names added for clarity).  
-
-**You can also see in the cross-tabulation below that  "0" values were assigned as missing (`NA`)!** This is because the command was by default "closed" on the lower side of each category. These "0" values could be infants coded as age 0. Read more how to address this situation below.  
-
-Also check category boundary values are assigned to. For example the `r nrow(linelist %>% filter(age_years == 15))` 15-year-olds. Currently they are in the "(10,15]" category which includes ages 11-15, and they are not in the "(15,20] category which includes ages 16-20.  
+* **Check your work!!!** Verify that each age value was assigned to the correct category by cross-tabulating the numeric and category columns. Examine assignment of boundary values (e.g. 15, if neighboring categories are 10-15 and 15-20).  
 
 ```{r}
-# Cross tabulation of the numeric and category columns. Names specified for clarity.
-table("Numeric Values" = linelist$age_years,
-      "Categories" = linelist$age_cat,
-      useNA = "always")
+# Cross tabulation of the numeric and category columns. 
+table("Numeric Values" = linelist$age_years,   # names specified in table for clarity.
+      "Categories"     = linelist$age_cat,
+      useNA = "always")                        # don't forget to examine NA values
 ```
 
-#### Include 0 in lowest category  
+Read more about `cut()` in its Help page by entering `?cut` in the R console.  
 
-One solution to categorize the "0" values in the lowest category is to **add the argument `include.lowest = TRUE`**. Then, any "0" values are still included in the lowest group. Note how the total for the lowest group changed, and that the automatically-generated label for the lowest category changes from "(0,5]" to "[0,5]", which signifies that 0 values are included. Also note there are still 90 rows missing an `age_years` value, as expected.
-
-```{r}
-linelist <- linelist %>% 
-  mutate(age_cat = cut(age_years,
-                          breaks = c(0, 5, 10, 15, 20, 30, 50, 70, 100),    # same breaks
-                          include.lowest = TRUE))                            # Includes lowest value (0) in lowest group
-
-table(linelist$age_cat, useNA = "always")
-```
-
-#### Customized category labels  
-
-Customized category labels** can be added manually with the `labels` argument. Be careful in your manual labeling! Pay attention to your inclusion/exclusion criteria!  
-
-```{r}
-linelist <- linelist %>% 
-  mutate(age_cat = cut(age_years,
-                          breaks = c(0, 5, 10, 15, 20, 30, 50, 70, 100),    # same breaks
-                          include.lowest = TRUE,                            # Includes lowest value (0) in lowest group
-                          labels = c("0-5", "6-10", "11-15", "16-20",       # manual labels - be careful!
-                                     "21-30", "31-50", "51-70", "71-100")))
-
-table(linelist$age_cat, useNA = "always")
-```
 
 
 #### Reversing break inclusion behavior  
@@ -1271,9 +1294,9 @@ table(linelist$age_cat, useNA = "always")
 
 #### Re-labeling `NA` values with `cut()`
 
-Because `cut()` does not automatically label `NA` values, you may want to assign a label such as "Missing". This requires a few extra steps because `cut()` automatically classified `age_cat` as a Factor (a rigid column class with specific value labels). 
+Because `cut()` does not automatically label `NA` values, you may want to assign a label such as "Missing". This requires a few extra steps because `cut()` automatically classified the new column `age_cat` as a Factor (a rigid column class with specific value labels). 
 
-First, convert `age_cut` from Factor to Character class, so you have flexibility to add new character values ("Missing"). Otherwise you will encounter an error. Then use the **dplyr** verb `replace_na()` to replace `NA` values with a character value like "Missing". These can be combined into one step, as below.  
+First, convert `age_cut` from Factor to Character class, so you have flexibility to add new character values (e.g. "Missing"). Otherwise you will encounter an error. Then, use the **dplyr** verb `replace_na()` to replace `NA` values with a character value like "Missing". These steps can be combined into one step, as shown below.  
 
 Note that Missing has been added, **but the order of the categories is now wrong (alphabetical).**  
 
@@ -1318,22 +1341,6 @@ table(linelist$age_cat, useNA = "always")
 
 ```
 
-
-
-#### Dynamic maximum break  
-
-<span style="color: red;">**_DANGER:_** If you provide a highest break value that is too low, values may be excluded accidentally! You can write code that automatically adapts, by replacing a static highest number with the `max()` function. </span>
-
-Don't forget to include the `na.rm = TRUE` argument to `max()`.
-
-```{r}
-linelist <- linelist %>% 
-  mutate(age_cat = cut(age_years,
-                          breaks = c(0, 5, 10, 15, 20, 30, 50, 70, max(age_years, na.rm=TRUE)),
-                          include.lowest = TRUE))
-
-table(linelist$age_cat, useNA = "always")
-```
 
 
 If you want a fast way to make breaks and labels, you can use something like below (adjust to your specific situation). See the page on using seq() and rep() and c() TO DO
@@ -1465,19 +1472,12 @@ linelist <- linelist_raw %>%
     # ABOVE ARE UPSTREAM CLEANING STEPS ALREADY DISCUSSED
     ###################################################   
     mutate(
-        # age categories column
-        age_cat = cut(age_years,
-                          breaks = c(0, 5, 10, 15, 20,
-                                     30, 50, 70, max(age_years, na.rm = T)), # breaks
-                          include.lowest = TRUE,                             # include 0s in lowest category
-                          labels = c("0-5", "6-10", "11-15", "16-20",       # manual labels - be careful!
-                                     "21-30", "31-50", "51-70", "71+")),
-         # column with 5-year age bins
-         age_cat5 = cut(age_years,
-                        breaks = seq(0, 100, 5),
-                        include.lowest = T))
-  
-
+          # age categories: custom
+          age_cat = epikit::age_categories(age_years, breakers = c(0, 5, 10, 15, 20, 30, 50, 70)),
+        
+          # age categories: 0 to 85 by 5s
+          age_cat5 = epikit::age_categories(age_years, breakers = seq(0, 85, 5)))
+        
 ```
 
 
@@ -1561,7 +1561,6 @@ linelist <- linelist %>%
 # EXPORT CLEANED LINELIST FILE TO "DATA" FOLDER
 rio::export(linelist, here::here("data", "linelist_cleaned.xlsx"))
 rio::export(linelist, here::here("data", "linelist_cleaned.rds"))
-
 ```
 
 
