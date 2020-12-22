@@ -80,6 +80,16 @@ pacman::p_load(rio,       # to import data
                stringr)   # working with strings for titles, captions, etc.
 ```
 
+Load the data  
+
+```{r, echo=F}
+linelist <- rio::import(here("data", "linelist_cleaned.rds"))
+```
+
+```{r, eval=F}
+linelist <- rio::import("linelist_cleaned.csv")
+```
+
 **Check class of variables**  
 
 Ensure that the age variable is class Numeric, and check the class and order of levels of `age_cat` and `age_cat5` 
@@ -208,7 +218,7 @@ apyramid::age_pyramid(data = demo_agg_long,
                       count = "counts")      # give the column name for the aggregated counts
 ```
 
-Note in the above, that the factor order of "m" and "f" is different (pyramid reversed). To adjust the order you must re-define the levels of gender as a Factor.  
+Note in the above, that the factor order of "m" and "f" is different (pyramid reversed). To adjust the order you must re-define gender in the aggredated data as a Factor and order the levels as desired.  
 
 
 
@@ -237,7 +247,7 @@ First, understand that to make such a pyramid using `ggplot()` the approach is t
 
 * Lastly, the counts-axis labels must be specified so they appear as "positive" counts on both sides of the pyramid (despite the underlying values on one side being negative). 
 
-A **simple** version of this is below:
+A **simple** version of this, using `geom_histogram()`, is below:
 
 ```{r}
   # begin ggplot
@@ -258,9 +268,9 @@ A **simple** version of this is below:
   coord_flip() +
   
   # adjust counts-axis scale
-  scale_y_continuous(limits = c(-500, 800),
-                     breaks = seq(-500,800,50),
-                     labels = abs(seq(-500, 800, 50)))
+  scale_y_continuous(limits = c(-600, 900),
+                     breaks = seq(-600,900,100),
+                     labels = abs(seq(-600, 900, 100)))
 ```
 
 <span style="color: red;">**_DANGER:_** If the **limits** of your counts axis are set too low, and a counts bar exceeds them, the bar will disappear entirely or be artificially shortened! Watch for this if analyzing data which is routinely updated. Prevent it by having your count-axis limits auto-adjust to your data, as below.</span>  
@@ -269,7 +279,7 @@ There are many things you can change/add to this simple version, including:
 
 * Auto adjust counts-axis count scale to your data (avoid errors discussed in warning below)  
 * Manually specify colors and legend labels  
-* 
+
 
 ```{r}
 # create dataset with proportion of total
@@ -343,7 +353,16 @@ min_per <- min(pyramid_data$percent, na.rm=T)
 
 With the flexibility of `ggplot()`, you can have a second layer of bars in the background that represent the true population pyramid. This can provide a nice visualization to compare the observed counts with the baseline.  
 
-View the population data
+Import and view the population data
+```{r echo=F}
+# import the population demographics data
+pop <- rio::import(here::here("data", "country_demographics.csv"))
+```
+
+```{r eval=F}
+# import the population demographics data
+pop <- rio::import("country_demographics.csv")
+```
 
 ```{r, message=FALSE}
 # display the linelist data as a table
@@ -506,7 +525,6 @@ ggplot()+  # default x-axis is age in years;
 
 The techniques used to make a population pyramid with `ggplot()` can also be used to make plots of Likert-scale survey data.  
 
-
 ```{r, eval=F, echo=F}
 data_raw <- import("P:/Shared/equateur_mve_2020/lessons learned/Ebola After-Action Survey - HQ epi team (form responses).csv")
 
@@ -532,6 +550,17 @@ likert_data <- data_raw %>%
 table(likert_data$status)
 
 rio::export(likert_data, here::here("data", "likert_data.csv"))
+```
+
+Import the data
+```{r echo=F}
+# import the likert survey response data
+likert_data <- rio::import(here::here("data", "likert_data.csv"))
+```
+
+```{r, eval=F}
+# import the likert survey response data
+likert_data <- rio::import("likert_data.csv")
 ```
 
 Start with data that looks like this, with a categorical classification of each respondent (`status`) and their answers to 8 questions on a 4-point Likert-type scale ("Very poor", "Poor", "Good", "Very good").  
@@ -628,9 +657,6 @@ ggplot()+
            strip.text = element_text(size = 14, face = "bold"),  # facet sub-titles
            plot.title = element_text(size = 20, face = "bold"),
            panel.background = element_rect(fill = NA, color = "black")) # black box around each facet
-     
-     
-
 ```
 
 
