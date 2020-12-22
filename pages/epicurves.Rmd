@@ -82,7 +82,7 @@ nice_plot
 
 
 <!-- ======================================================= -->
-## Preparation
+## Preparation {.tabset .tabset-fade .tabset-pills}
 
 Keep the title of this section as "Preparation".  
 Data preparation steps such as:  
@@ -92,35 +92,45 @@ Data preparation steps such as:
 * melting, pivoting, grouping, etc.   
 
 
-
-### Packages  
+<!-- ======================================================= -->
+### Packages {.tabset .tabset-fade .tabset-pills}
 
 This code chunk shows the loading of packages required for the analyses. 
 
 ```{r epicurve_packages}
-pacman::p_load(rio,          # File import
-               here,         # File locator
-               tidyverse,    # data management + ggplot2 graphics
-               aweek,        # working with dates
-               lubridate,    # Manipulate dates    
-               incidence,    # an option for epicurves of linelist data
-               stringr,      # Search and manipulate character strings
-               forcats,      # working with factors
-               RColorBrewer) # Color palettes from colorbrewer2.org
+# Create vector of names of required packages:
+packages_epicurve <- c("rio",          # File import
+                       "here",         # File locator
+                       "tidyverse",    # data manipulation
+                       "ggplot2",      # Produce plots and graphs
+                       "aweek",        # working with dates
+                       "lubridate",    # Manipulate dates    
+                       "incidence",    # an option for epicurves of linelist data
+                       "stringr",      # Search and manipulate character strings
+                       "forcats",      # working with factors
+                       "RColorBrewer", # Color palettes from colorbrewer2.org
+                       "DT"            # produce tables for this html handbook
+                       )               ### close vector of packages
 
+# Checks if package is installed, installs if necessary, and loads package for current session
+pacman::p_load(packages_epicurve, character.only=TRUE)
 ```
 
 
-### Load data  
+<!-- ======================================================= -->
+### Load data {.tabset .tabset-fade .tabset-pills}
 
 Two example datasets are used in this section:  
 
 * Linelist of individual cases from a simulated Ebola epidemic  
 * Aggregated counts by hospital from the same simulated Ebola epidemic  
 
+If viewing in Google Chrome, you can access these datasets in Microsoft Excel by clicking HERE and HERE. TODO.  
+
 The dataset is imported using the `import()` function from the *rio* package. See the *page on importing data* for various ways to import data. The linelist and aggregated versions of the data are displayed below.
 
 For most of this document, the *linelist dataset* will be used. The aggregated counts dataset will be used at the end.  
+
 
 ```{r epicurve_load_hide, echo=F}
 # import the linelist into R
@@ -130,25 +140,34 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 count_data <- linelist %>% 
   group_by(hospital, date_hospitalisation) %>% 
   summarize(n_cases = dplyr::n())
+
 ```
 
+
 ```{r epicurve_load_show, eval=F}
-# import the linelist
-linelist <- rio::import("linelist_cleaned.xlsx")
+# import the linelist into R
+linelist <- rio::import("ebola_simulated.xlsx")
 ```
+
+Do cleaning steps as necessary!!! To Do
+
+<!-- ======================================================= -->
+### Review data {.tabset .tabset-fade .tabset-pills}
 
 Review the two datasets and notice the differences  
 
-**Case linelist**
+Linelist dataset
 
-```{r, message=FALSE}
+
+```{r epicurve_viewdata_line, message=FALSE}
 # display the linelist data as a table
 DT::datatable(linelist, rownames = FALSE, filter="top", options = list(pageLength = 5, scrollX=T) )
 ```
 
-**Case counts aggregated by hospital**  
 
-```{r message=FALSE}
+Aggregated counts dataset
+
+```{r epicurve_viewdata_agg, message=FALSE}
 # display the linelist data as a table
 DT::datatable(count_data, rownames = FALSE, filter="top", options = list(pageLength = 5, scrollX=T) )
 ```
@@ -156,7 +175,8 @@ DT::datatable(count_data, rownames = FALSE, filter="top", options = list(pageLen
 
 
 
-### Set parameters
+<!-- ======================================================= -->
+### Set parameters {.tabset .tabset-fade .tabset-pills}
 
 You may want to set certain parameters for production of a report, such as the date for which the data is current (the "data date"). In this case, we set this date as 27 July 2013.
 
@@ -165,247 +185,231 @@ Now we can reference the object data_date into the code and have it reference th
 ```{r set_parameters}
 ## set the report date for the report
 ## note: can be set to Sys.Date() for the current date
-data_date <- as.Date("2015-05-15")
+data_date <- as.Date("2013-07-27")
 ```
 
 
 
-### Verify dates
+<!-- ======================================================= -->
+### Clean dates {.tabset .tabset-fade .tabset-pills}
 
-Verify that each date column is class Date and has an approporiate range of values. This `for` loop prints a histogram for each column.  
+
+Optionally, it can be nice to identify all the date variables and store their names in a vector. This can be done by individually naming them, or by searching for them by looking for keywords.  
+
+Method 1  
+
+```{r date_vars}
+# Method 1. Define date variables explicitly in a vector
+DateVars <- c("date_onset",
+              "date_hospitalisation",
+              "date_outcome",
+              "date_infection"
+              )
+DateVars
+```
+
+Method 2  
+
+```{r}
+# Method 2: Search for date columns
+DateVars <- as.character(tidyselect::vars_select(names(linelist), matches("date|Date|dt")))
+DateVars
+
+#Note: other search tool options within vars_select include contains() ends_with(), starts_with(), or one_of()
+```
+
+
+#### Ensure date variables are date class
+
+
+#### Verify
+
+Verify that each variable was successfully converted to date class by printing statistics and a quick histogram for each one.
+
 
 ```{r verify_dates, out.width = c('50%', '50%', '50%'), fig.show='hold'}
-# create character vector of column names 
-DateCols <- as.character(tidyselect::vars_select(names(linelist), matches("date|Date|dt")))
+# To verify successful conversion of date variables
 
-# Produce histogram of each date column
-for (Col in DateCols) {     # open loop. iterate for each name in vector DateCols
-  hist(linelist[, Col],     # print histogram of the column in linelist dataframe
-       breaks = 50,         # number of breaks for the histogram
-       xlab = Col)          # x-axis label is the name of the column
-  }                         # close the loop
+# Creates list of column numbers of date variables 
+varNums <- c()
+for (varName in DateVars) {
+  varNum <- match(varName, names(linelist))
+  varNums <- c(varNums, varNum)
+}
+
+# Produce output for each date variable converted
+for (varNum in varNums) {
+  varName <- names(linelist)[varNum]         # get name of variable
+  class <- class(linelist[, varNum])                  # get class
+  missing <- sum(is.na(linelist[, varNum]))  # get number missing values
+  hist(linelist[, varNum],                   # histogram
+       breaks = 50,
+       main = paste0("Histogram of: ", varName, ", Class: ", class, ", Missing: ", missing),
+       xlab = varName)  
+  }
 ```
-
 
 
 <!-- ======================================================= -->
 ## `incidence` package {.tabset .tabset-fade .tabset-pills}
 
-Below are tabs on making quick epicurves using the **incidence** package  
+Below are tabs on using the "incidence" package
 
-<span style="color: orange;">**_CAUTION:_** Epicontacts expects data to be in a "linelist" format of one row per case (not aggregated). If your data is aggregated counts, look to the ggplot epicurves tab.</span>
+<!-- ======================================================= -->
+### Outline {.tabset .tabset-fade .tabset-pills}
 
-<span style="color: darkgreen;">**_TIP:_** The documentation for plotting an **incidence** object can be accessed by entering `?plot.incidence` in your R console.</span>
+This section shows variations on the epicurve using the **incidence** package
 
-https://cran.r-project.org/web/packages/incidence/vignettes/customize_plot.html#example-data-simulated-ebola-outbreak   
+```{r number_missing}
+#Determine the number of observations that are missing a date of onset
+
+# Number of observations
+n_linelist <- nrow(linelist)
+n_linelist
+
+# number missing onset_date and cannot be graphed
+missing_onset <- nrow(linelist[is.na(linelist$date_onset),])
+missing_onset
+```
 
 
 <!-- ======================================================= -->
 ### Simple {.tabset .tabset-fade .tabset-pills}
 
-The **incidence** package requires **2 steps** to plot an epicurve:  
 
-1) Create an *incidence object* (using the function `incidence()`)  
-2) Plot the incidence object  
+These are simple epicurves using the incidence package. The epicurve is assigned to the object "epicurve", which is then plotted. Remember that incidence::plot() is different to base::plot()
 
-A simple example - an epicurve of daily cases:  
 
-```{r}
-# load package
-library(incidence)
-
-# create the incidence object using data by day
-epi_day   <- incidence(linelist$date_onset, interval = "day")
-
-# plot the incidence object
-plot(epi_day)
-```
-#### Change aggregation of cases  
-
-The interval defines how the observations are grouped. Available options include all options in the package **aweek**, including but not limited to:  
-
+The interval defines how the observations are grouped. Options are all those in the package *aweek*, including but are not limited to:  
 * "Monday week"
 * "2 Monday weeks"
 * "Sunday week"  
 * "MMWRweek" (starts on Sunday)  
 * "Month"  
 * "Quarter"  
-* "Year"  
+* "Year"
 
+First date and last date can also be specified.  
 
-```{r incidence, out.width=c('50%', '50%', '50%'), fig.show='hold'}
-# Weekly
-epi_wk  <- incidence(linelist$date_onset, interval = "Monday week")
+```{r incidence, out.width=c('50%', '50%', '50%', '50%'), fig.show='hold'}
+# incidence object is created, with data aggregated at one day intervals
+epicurve_daily   <- incidence::incidence(linelist$date_onset, interval = "day")
 
-# MMWR week
-epi_MMWRwk  <- incidence(linelist$date_onset, interval = "MMWRweek")
-
-# Three weeks
-epi_3wk  <- incidence(linelist$date_onset, interval = "3 weeks")
+# If weekly, you can specific the start day
+epicurve_weekly  <- incidence::incidence(linelist$date_onset, interval = "Monday week")
+epicurve_3weekly  <- incidence::incidence(linelist$date_onset, interval = "3 weeks")
 
 # Monthly
-epi_month <- incidence(linelist$date_onset, interval = "month")
+epicurve_monthly <- incidence::incidence(linelist$date_onset, interval = "month")
 
-# Plot the incidence objects (with titles)
-plot(epi_wk)+     ggtitle("Monday weeks")
-plot(epi_MMWRwk)+ ggtitle("MMWR weeks")
-plot(epi_3wk)+    ggtitle("Every 3 weeks")
-plot(epi_month)+  ggtitle("Months")
+# Plot the incidence object
+plot(epicurve_daily)
+plot(epicurve_weekly)
+plot(epicurve_3weekly)
+plot(epicurve_monthly)
+
+
 ```
-The first date and last date of the plot can also be specified.  
 
 
 <!-- ======================================================= -->
-### Modifications {.tabset .tabset-fade .tabset-pills}
-
-The **incidence** package enables modifications in the following ways:  
-
-* Arguments of `plot()`  
-* `scale_x_incidence()`  
-* `ggplot()` additions  
-
-Read details in the Help files by entering `?scale_x_incidence` and `?plot.incidence` in the R console. Online vignettes are listed in the resources tab.  
-
-Aesthetic themes and other `ggplot()` syntax can be added with the `+` symbol, because **incidence** is using `ggplot()` in the background.  
+### Aesthetic themes {.tabset .tabset-fade .tabset-pills}
 
 
-#### Show individual cases
+Behind the scenes, incidence is using ggplot(), so you can add aesthetic themes and other lines using the ggplot syntax.
 
-For a smaller outbreak, it may be important to show boxes around each individual case. Use the argument `show_cases = TRUE` in the `plot()` function.  
+```{r Incidence_aesthetics,  out.width = c('50%', '50%'), fig.show='hold'}
+# Set theme elements using ggplot syntax
+epicurve_theme <- ggplot2::theme(
+  axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1), 
+  legend.title = element_blank(),
+  panel.grid.major.x = element_line(color = "grey60", linetype = 3),
+  panel.grid.major.y = element_line(color = "grey60", linetype = 3)
+)
 
-Create the weekly **incidence** object for a smaller outbreak (only cases from Central Hospital)  
+# Sets labels using ggplot syntax
+epicurve_labels <- labs(x = "Week", 
+                        y = "Cases (n)", 
+                        title = "H5N7 cases by week of onset",
+                        caption = paste0("Source: Linelist data from: ", data_date, "; ", missing_onset, " are missing date of onset and not shown."))
+                       
 
-```{r out.width = c('50%', '50%'), fig.show='hold'}
-# create filtered dataset for Central Hospital
-central_data  <- linelist %>% 
-  filter(hospital == "Central Hospital")
 
-# create incidence object (weekly)
-central_outbreak <- incidence(central_data$date_onset, interval = "Monday week")
+# plot the epicurve with aesthetics
+nice_plot <- plot(epicurve_weekly, show_cases = TRUE, border = "black", n_breaks = nrow(epicurve_weekly)) + 
+  scale_y_continuous(expand = c(0, 0)) +  # set origin for axes
+  # add labels
+  epicurve_labels +
+  # add theme
+  epicurve_theme
+nice_plot
+
+# Modify nice_plot to show only 6 breaks in the x-axis 
+nice_plot + scale_x_incidence(epicurve_weekly, n_breaks = 6)
+
 ```
 
-And now plot the epicurve:  
+<!-- ======================================================= -->
+### By descriptor {.tabset .tabset-fade .tabset-pills}
 
-```{r}
-# plot outbreak, showing each case
-plot(central_outbreak,
-     show_cases = T)                 # show boxes around each individual case
-```
-
-The same epicurve showing individual cases, but with many other modifications:  
-
-```{r}
-
-# add plot() arguments and ggplot() commands
-plot(central_outbreak,
-     show_cases = T,                 # show boxes around each individual case
-     #labels_week = T,               # if TRUE: x-axis dates display as weeks ("YYYY-Www") 
-     color = "lightblue",            # color inside boxes
-     border = "darkblue",            # border color of boxes
-     alpha = 0.5,                    # transparency
-     xlab = "Date of onset",         # x-axis label
-     ylab = "Weekly reported cases", # y-axis label
-     n_breaks = 7)+                  # to override auto number of x-axis breaks
-  
-  # ggplot() commands added to the plot
-  ggtitle("Weekly case incidence at Central Hospital")+ # add title separately
-  scale_x_date(date_labels = "%d %b")+                  # adjust how dates are displayed
-  scale_y_continuous(breaks = seq(0, 30, 5))+           # adjust y-axis intervals
-  theme_minimal()+                                      # simplify background
-  theme(axis.title = element_text(size = 12, face = "bold"),
-        plot.caption = element_text(face = "italic", hjust = 0))+
-  labs(#x = "", 
-       #y = "", 
-       title = "Weekly case incidence at Central Hospital",
-       #subtitle = "",
-       caption = stringr::str_glue("Source: Linelist data from: {data_date}
-                                   {nrow(linelist %>% filter(is.na(date_onset)))} cases are missing date of onset and not shown"))
-```
-
-#### Adjusting axes  
-
-Note in the above that the grey gridlines do not align with the case boxes. This is because the gridlines show the 1st of a month, whereas the case boxes are by week. Weeks may overlap the start of months. To align them, include ``labels_week = T` in `plot()` and do *not* specify a `scale_x_date()`.  
-
-<span style="color: darkgreen;">**_TIP:_** While the data may be grouped by day or week, you can quickly reduce the number of labels appearing on the x-axis using `scale_x_incidence()` and specifying the number of axis breaks.</span>
-
-<span style="color: red;">**_DANGER:_** Be cautious setting the y-axis scale breaks (e.g. 0 to 30 by 5: `seq(0, 30, 5)`). Static numbers can cut-off your data if the data changes!.</span>
-
-To enforce a x-axis label for every bin (daily, weekly, etc.), set the `n_breaks =` argument in `plot()` to the number of rows in your incidence object: `n_breaks = nrow(epi_wk)` 
-
-`scale_x_date(date_breaks = , date_labels = )` discuss. TO DO
-
-
-
-#### Color by group
-
-To color the cases by group, provide the column to the `groups =` argument in the `incidence()` command. In the example below the cases are colored by their *generation in the overall transmission chain*.  
-
-Note the `incidence()` argument `na_as_group = ` which if `FALSE` will prevent missing values (`NA`) from being categorized as their own group.  
+Now differentiating the cases by gender, using the groups = argument in the incidence command
 
 ```{r by_gender}
 # Create epiweek object, with counts grouped by gender
-gen_outbreak <- incidence(linelist$date_onset, 
+epicurve_weekly_gender <- incidence(linelist$date_onset, 
                                interval = "week", 
-                               groups = linelist$generation,
-                               na_as_group = FALSE)   # Missing values not assigned their own group
+                               groups = linelist$gender,
+                               na_as_group = FALSE)   # Prevents missing values from being assigned their own group
 
 
-# plot the epicurve
-plot(gen_outbreak) 
-```
+# Plot the epicurve
+# Note: Remove the boxes around each case as it makes gender colours hard to see! (show_cases = FALSE)
+nice_plot <- plot(epicurve_weekly_gender, show_cases = FALSE, border = "black", n_breaks = nrow(epicurve_weekly_gender)) + 
+  
+  # add labels (defined in previous section)
+  epicurve_labels +
+  
+  # add theme elements
+  epicurve_theme
 
-#### Changing colors and legend  
-
-
-To change the legend, use `ggplot()` commands such as `theme(legend.position = "top", legend.direction = "horizontal", 
-          legend.title = element_blank())`. See the page of ggplot() tips for more details.  
-          
-To change the colors:  
-
-Change the color palette to one of the default **base** R palettes using the argument `col_pal` in `plot()` (do *not* put the name of the palette in quotes).  
-
-Other palettes include TO DO add page with palette names... To DO
-
-```{r}
-plot(gen_outbreak, col_pal = rainbow)
-```
-
-To specify colors manually, provide the name of the color or a character vector of colors to the argument `color = `. Note to function properly the number of colors must equal the number of groups (be aware of missing values as a group)  
-
-```{r out.width = c('50%', '50%'), fig.show='hold'}
-hosp_outbreak <- incidence(linelist$date_onset, 
-                               interval = "week", 
-                               groups = linelist$hospital,
-                               na_as_group = FALSE)   # Missing values not assigned their own group
-# default colors
-plot(hosp_outbreak)
-
-# manual colors
-plot(hosp_outbreak, color = c("darkgreen", "darkblue", "purple", "grey", "yellow", "orange"))
+nice_plot
 
 ```
 
-#### Filtered
 
-To plot the epicurve of a subset of data, filter the data first and then use the subset in the `incidence()` command. The example below uses data filtered to show only female cases.
+
+<!-- ======================================================= -->
+### Filtered {.tabset .tabset-fade .tabset-pills}
+
+
+To filter data, This version is filtered to only show data from a specific province.
 
 ```{r incidence_filtered}
-# filter the dataset
-female_data <- filter(linelist, gender == "f")
+# filter the dataset and pass it to the incidence() function
+Connaught_data <- filter(linelist, hospital == "Connaught Hospital")
 
-# create incidence object using female-only data
-female_outbreak <- incidence(female_data$date_onset, interval = "week")
+epicurve_Connaught <- incidence(Connaught_data$date_onset,
+                                interval = "week",
+                                groups = Connaught_data$gender)
 
-# plot
-plot(female_outbreak, color = "orange", border = "black", ylab = "Weekly case incidence")
+
+# Re-sets labels, changing title to reflect subset
+epicurve_labels <- labs(x = "Week", 
+                        y = "Cases", 
+                        title = "Ebola cases by week of onset in Connaught Hospital",
+                        caption = paste0("Source: Linelist data from: ", data_date, "; ", missing_onset, " are missing date of onset and not shown."))
+                       
+
+# plot as before
+plot(epicurve_Connaught, show_cases = TRUE, border = "grey") +
+     
+  # add labels (defined in previous section)
+  epicurve_labels +
+  
+  # add theme elements
+  epicurve_theme
+
 ```
-
-
-#### Facets/small multiples  
-
-To facet the plot by a variable (make "small multiples"), see the tab on epicurves with `ggplot()` 
-
-
 
 
 <!-- ======================================================= -->
@@ -499,7 +503,10 @@ plot_weekly <- ggplot(linelist, aes(x = date_onset)) +
   
   labs(x = "Week of illness onset", 
        y = "Number of cases",
-       subtitle = "subtitle here")
+       subtitle = "subtitle here",
+       caption = paste0(nrow(linelist),
+                        " confirmed and probable cases, reported as of ", data_date, ". ",
+                        missing_onset, " cases missing date of onset and not shown.")) +
   
   ggtitle("Epidemic curve")
 
@@ -576,7 +583,8 @@ plot_defined_cats <- ggplot(linelist, aes(x = date_onset, fill = gender)) +
   
   # Axis and caption labels
   labs(x = "Week of illness onset",
-       y = "Number of Cases") +
+       y = "Number of Cases",
+       caption = paste(missing_onset,"cases were missing onset date and are not included in the onset graph")) +
   
   # Title
   ggtitle("Cases by week of illness onset")
@@ -829,11 +837,6 @@ plot
 
 
 ```
-
-
-
-<!-- ======================================================= -->
-### Faceting {.tabset .tabset-fade .tabset-pills}
 
 
 

@@ -29,12 +29,6 @@ knit: (function(inputFile, encoding) {
 # Cleaning data {#cleaning .tabset .tabset-fade}
 
 
-
-
-
-
-<!-- ======================================================= -->
-<!-- ======================================================= -->
 <!-- ======================================================= -->
 ## Overview {.tabset .tabset-fade .tabset-pills}  
 
@@ -64,13 +58,6 @@ case_when()
 factors
 
 
-
-
-
-
-
-<!-- ======================================================= -->
-<!-- ======================================================= -->
 <!-- ======================================================= -->
 ## Preparation
 
@@ -107,8 +94,7 @@ DT::datatable(head(linelist_raw,50), rownames = FALSE, filter="top", options = l
 
 
 
-<!-- ======================================================= -->
-<!-- ======================================================= -->
+
 <!-- ======================================================= -->
 ## Cleaning pipeline
 
@@ -122,12 +108,6 @@ In a cleaning pipeline the order of the steps is important. Cleaning steps may i
 * Values may be re-coded, cleaned, or grouped  
 
 
-
-
-
-
-<!-- ======================================================= -->
-<!-- ======================================================= -->
 <!-- ======================================================= -->
 ## Column names {.tabset .tabset-fade .tabset-pills} 
 
@@ -251,8 +231,9 @@ The exact arguments used to bind the correct column names depends on the type of
 
 For Excel files:  
 
-```{r}
-# REMOVE 2nd ROW (DATA DICTIONARY)
+```{r, echo=F}
+# DONE BEHIND THE SCENES - NOT VISIBLE TO READER
+# REMOVED 2nd ROW (DATA DICTIONARY)
 linelist_raw_names <- import(here::here("data", "ebola_simulated.xlsx")) %>% names()
 linelist_raw <- import(here::here("data", "ebola_simulated.xlsx"), skip = 2, col_names = linelist_raw_names)
 ```
@@ -302,11 +283,6 @@ names(df) <- paste(names(df), df[1, ], sep = "_")
 
 
 
-
-
-
-<!-- ======================================================= -->
-<!-- ======================================================= -->
 <!-- ======================================================= -->
 ## Select or re-order columns {.tabset .tabset-fade .tabset-pills} 
 
@@ -383,22 +359,11 @@ linelist %>%
 
 ### Adding `select()`to the cleaning pipe chain:  
 
-In the linelist, there are a few columns we do not need: `row_num`, `merged_header`, and `x23`. Remove them by adding a `select()` command to the cleaning pipe chain:  
+In the linelist, there are a few columns we do not need: `row_num`, `merged_column`, and `x23`. Remove them by adding a `select()` command to the cleaning pipe chain:  
 
 ```{r}
 # CLEANING 'PIPE' CHAIN (starts with raw data and pipes it through cleaning steps)
 ##################################################################################
-
-# remove 2nd row, which contains data dictionary values
-#######################################################
-    # store column names
-    linelist_raw_names <- import(here::here("data", "ebola_simulated.xlsx")) %>% names()
-    
-    # import raw dataset, skipping 2nd row (data dictionary row) and re-attaching column names
-    linelist_raw <- import(here::here("data", "ebola_simulated.xlsx"), skip = 2, col_names = linelist_raw_names)
-
-# begin cleaning pipe chain
-###########################
 linelist <- linelist_raw %>%
     
     # standardize column name syntax
@@ -411,7 +376,7 @@ linelist <- linelist_raw %>%
            date_outcome         = date_of_outcome) %>% 
     
     # remove column
-    select(-c(row_num, merged_header, x23))
+    select(-c(row_num, merged_column, x23))
 ```
 
 
@@ -428,23 +393,6 @@ names(linelist_age)
 ```
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- ======================================================= -->
-<!-- ======================================================= -->
 <!-- ======================================================= -->
 ## Add columns and rows {.tabset .tabset-fade .tabset-pills} 
 
@@ -517,43 +465,6 @@ If your class is off you will see an error like this: Error: Can't combine `..1$
 (for a date value remember to wrap the date in the function`as.Date()` like `as.Date("2020-10-10")`)
 
 
-
-
-
-
-### New columns using grouped values
-
-<span style="color: orange;">**_CAUTION:_** This tab may follow from previous tabs.</span>
-
-Using mutate on GROUPED dataframes
-https://dplyr.tidyverse.org/reference/mutate.html
-
-Taken from website above:
-
-```{r, eval=F}
-#Because mutating expressions are computed within groups, they may yield different results on grouped tibbles. This will be the case as #soon as an aggregating, lagging, or ranking function is involved. Compare this ungrouped mutate:
-
-starwars %>%
-  select(name, mass, species) %>%
-  mutate(mass_norm = mass / mean(mass, na.rm = TRUE))
-With the grouped equivalent:
-
-starwars %>%
-  select(name, mass, species) %>%
-  group_by(species) %>%
-  mutate(mass_norm = mass / mean(mass, na.rm = TRUE))
-The former normalises mass by the global average whereas the latter normalises by the averages within species levels.
-```
-
-
-
-
-
-
-
-
-<!-- ======================================================= -->
-<!-- ======================================================= -->
 <!-- ======================================================= -->
 ## Fix classes {.tabset .tabset-fade .tabset-pills #Classes}
 
@@ -589,17 +500,6 @@ The `mutate()` line can be read as: "mutate date_onset to equal date_onset recod
 ```{r}
 # CLEANING 'PIPE' CHAIN (starts with raw data and pipes it through cleaning steps)
 ##################################################################################
-
-# remove 2nd row, which contains data dictionary values
-#######################################################
-    # store column names
-    linelist_raw_names <- import(here::here("data", "ebola_simulated.xlsx")) %>% names()
-    
-    # import raw dataset, skipping 2nd row (data dictionary row) and re-attaching column names
-    linelist_raw <- import(here::here("data", "ebola_simulated.xlsx"), skip = 2, col_names = linelist_raw_names)
-
-# begin cleaning pipe chain
-###########################
 linelist <- linelist_raw %>%
     
     # standardize column name syntax
@@ -612,7 +512,7 @@ linelist <- linelist_raw %>%
            date_outcome         = date_of_outcome) %>% 
   
     # remove column
-    select(-c(row_num, merged_header, x23)) %>% 
+    select(-c(row_num, merged_column, x23)) %>% 
 
 # ABOVE ARE UPSTREAM CLEANING STEPS ALREADY DISCUSSED
   ###################################################
@@ -649,20 +549,6 @@ linelist <- linelist %>%
 ```
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- ======================================================= -->
-<!-- ======================================================= -->
 <!-- ======================================================= -->
 ## Recoding values {.tabset .tabset-fade .tabset-pills #recode}
 
@@ -672,16 +558,13 @@ blah blah blah TO DO
 <!-- ======================================================= -->
 ### Manual recoding  
 
-
-#### Manual using `mutate()`  
-
-`mutate()` is also used to recode the values in a column. For example, in `linelist` the values in the column "hospital" must be cleaned. There are several different spellings (often the word "Hospital" is missing an "s" and is written "Hopital"), and many missing values.
+`mutate()` is also used to recode the values in a column. For example, in `linelist` the values in the column "hospital" must be cleaned. There are several incorrect spellings, and many missing values.
 
 ```{r}
 table(linelist$hospital, useNA = "always")
 ```
 
-#### Manual using `recode()`  
+#### Using `recode()`  
 
 To change spellings manually, one-by-one, you can use the `recode()` function *within the mutate function*. The code is saying that the column "hospital" should be defined as the current column "hospital", but with certain changes (the syntax is OLD = NEW). **Don't forget commas!**  
 
@@ -692,10 +575,10 @@ linelist <- linelist %>%
                       "Mitylira Hopital"  = "Military Hospital",
                       "Mitylira Hospital" = "Military Hospital",
                       "Military Hopital"  = "Military Hospital",
-                      "Port Hopital"      = "Port Hospital",
-                      "Central Hopital"   = "Central Hospital",
+                      "Connaught Hopital" = "Connaught Hospital",
+                      "Rokupa Hopital"    = "Rokupa Hospital",
                       "other"             = "Other",
-                      "St. Marks Maternity Hopital (SMMH)" = "St. Mark's Maternity Hospital (SMMH)"
+                      "Princess Christian Maternity Hopital (PCMH)" = "Princess Christian Maternity Hospital (PCMH)"
                       ))
 ```
 
@@ -710,7 +593,7 @@ table(linelist$hospital, useNA = "always")
 <span style="color: darkgreen;">**_TIP:_** Sometimes a *blank* character value exists in a dataset (not recognized as R's value for missing - `NA`). You can reference this value with two quotation marks with no space inbetween ("").</span>  
 
 
-#### Manual using **base** R  
+#### Manual recode using **base** R  
 
 If you need to write a stand-alone command using **base R** (e.g. not part of a chain of **dplyr** verbs), then you can create a new column by assigning it a value. In the command below, the column `new_var` does not exist until after the command is executed. In this simple example the column is assigned the static value "new value", so for all rows the value will be "new value".  
 
@@ -731,79 +614,77 @@ linelist$date_onset[linelist$case_id == "9d4019"] <- as.Date("2020-10-24")
 <!-- ======================================================= -->
 ### Recoding by logic/condition  
 
-
-#### Logic using `case_when()`  
-
 If you need to use logic statements to recode values, or want to use operators like `%in%`, use **dplyr**'s `case_when()` instead. **If you use `case_when()` please read the thorough explanation HERE LINK, as there are important differences from `recode()` in syntax and logic order!**   
-
-Note that all Right-hand side (RHS) inputs must be of the same class (e.g. character, numeric, logical). Notice the use of the special value `NA_real_` instead of just `NA`.  
 
 ```{r}
 linelist <- linelist %>% 
-  mutate(age_years = case_when(
-            age_unit == "years"  ~ age,     # if age is given in years
-            age_unit == "months" ~ age/12,  # if age is given in months
-            is.na(age_unit)      ~ age,     # if age unit is missing, assume years
-            TRUE                 ~ NA_real_)) # Any other circumstance
+  mutate(hospital = case_when(
+    hospital == "Connaught Hopital"           ~ "Connaught Hospital",
+    hospital == "Rokupa Hopital"              ~ "Rokupa Hospital", 
+    hospital %in% c("Mitylira Hopital", 
+      "Mitylira Hospital",
+      "Mitylira Hospital",
+      "Military Hopital")                     ~ "Military Hospital",
+    is.na(hospital)                           ~ "Missing",
+    stringr::str_detect(hospital, "Princess") ~ "Princess Christian Maternity Hospital (PCMH)",
+    TRUE                                      ~  hospital) 
+)
+```
+
+Table to confirm the values have been cleaned as expected:  
+
+```{r}
+table(linelist$hospital, useNA = "always")
+
 ```
 
 
+#### `ifelse()` and `if_else()`  
 
-#### Logic using `ifelse()` and `if_else()`  
+For simple cases you can use `ifelse()` or `if_else()`. Though in most cases it is better to use `case_when()`.  
 
-For simple uses of logical re-coding or new variable creationgyou can use `ifelse()` or `if_else()`. Though in most cases it is better to use `case_when()`.  
+ifelse() and if_else(): 
 
-These commands are simplified versions of an `if` and `else` statement. The general syntax is ifelse(**condition**, **value if condition evaluates to TRUE**, **value if condition evaluates to FALSE**). If used in a `mutate()`, each row is evaluated. `if_else()` is a special version from **dplyr** that handles dates in the condition.
+These commands are simplified versions of an `if` and `else` statement. The general syntax is ifelse(**condition**, **value if TRUE**, **value if FALSE**). `if_else()` is a special version from **dplyr** that handles dates.
 
-It can be tempting to string together many ifelse commands... resist this and **use `case_when()` instead!** It is much more simple, easier to read, and easier to identify errors.  
+Stringing together ifelse statements - NOT ADVISED!! Difficult to read and keep track of.
 
 IMAGE of ifelse string with X across is. 
 
+Use case-when() instead. 
 
 
 You can reference other columns with the `ifelse()` function within `mutate()`:  
 
-Example of `ifelse()`:  
-
-```{r, eval=F}
-linelist <- linelist %>% 
-  mutate(source_known = ifelse(!is.na(source), "known", "unknown"))
-```
-
-Example of `if_else()` (using dates):
-Note that if the 'true' value is a date, the 'false' value must also qualify a date, hence using the special character `NA_real_` instead of just `NA`.
-
-```{r, eval=F}
+```{r,eval=F}
 linelist <- linelist %>% 
   mutate(date_death = if_else(outcome == "Death", date_outcome, NA_real_))
 ```
 
-Note: If you want to alternate a value used in your code based on other circumstances, consider using `switch()` from **base** R. For example if... TO DO. See the section on using `switch()` in the page on R interactive console.
 
 
 <!-- ======================================================= -->
-### Recoding using special **dplyr** functions  
+### Special recoding functions  
 
-#### Using `replace_na()`  
+#### `replace_na()`  
 
-To change missing values (`NA`) to a specific character value, such as "Missing", use the function `replace_na()` within `mutate()`. Note that this is used in the same manner as `recode` above - the name of the variable must be repeated within `replace_na()`.  
+To change missing values to a character value, such as "Missing", use the function `replace_na()` in the same manner as `recode` above:  
 
 ```{r}
 linelist <- linelist %>% 
   mutate(hospital = replace_na(hospital, "Missing"))
 ```
 
+#### `na_if()`  
 
-#### Using `na_if()`  
-
-Likewise you can quickly convert a specific character value to `NA` using `na_if()`. The command below is the opposite of the one above. It converts any values of "Missing" to `NA`.
+Likewise you can quickly convert character values to `NA` using `na_if()`, as below:
 
 ```{r}
 linelist <- linelist %>% 
   mutate(hospital = na_if(hospital, "Missing"))
 ```
 
-#### Using `coalesce()`  
+#### `coalesce()`  
 
 This **dplyr** function finds the first non-missing value at each position. So, you provide it with columns and for each row it will fill the value with the first non-missing value in the columns you provided.  
 
@@ -821,7 +702,7 @@ cumsum(), cummean(), cummin(), cummax(), cumany(), cumall(),
 
 
 <!-- ======================================================= -->
-### Recoding using cleaning dictionaries
+### Using cleaning dictionaries
 
 <span style="color: orange;">**_CAUTION:_** This tab may follow from previous tabs.</span>
 
@@ -850,24 +731,13 @@ mll_clean <- mll_raw %>%
 
 
 <!-- ======================================================= -->
-### Add recoding to the pipe chain  
+### Add to the pipe chain  
 
-Here we add the described cleaning steps to the pipe chain.  
+We will add the `case_when()` steps to the pipe chain, as `case_when()` is generally more flexible for the future.  
 
 ```{r}
 # CLEANING 'PIPE' CHAIN (starts with raw data and pipes it through cleaning steps)
 ##################################################################################
-
-# remove 2nd row, which contains data dictionary values
-#######################################################
-    # store column names
-    linelist_raw_names <- import(here::here("data", "ebola_simulated.xlsx")) %>% names()
-    
-    # import raw dataset, skipping 2nd row (data dictionary row) and re-attaching column names
-    linelist_raw <- import(here::here("data", "ebola_simulated.xlsx"), skip = 2, col_names = linelist_raw_names)
-
-# begin cleaning pipe chain
-###########################
 linelist <- linelist_raw %>%
     
     # standardize column name syntax
@@ -880,7 +750,7 @@ linelist <- linelist_raw %>%
            date_outcome         = date_of_outcome) %>% 
   
     # remove column
-    select(-c(row_num, merged_header, x23)) %>% 
+    select(-c(row_num, merged_column, x23)) %>% 
 
     # fix incorrect values                 # old value       # new value
     mutate(date_onset = recode(date_onset, "15th April 2014" = "2014-04-15")) %>% 
@@ -894,44 +764,33 @@ linelist <- linelist_raw %>%
   ###################################################
 
     # clean values of hospital column
-    mutate(hospital = recode(hospital,
-                      # OLD = NEW
-                      "Mitylira Hopital"  = "Military Hospital",
-                      "Mitylira Hospital" = "Military Hospital",
-                      "Military Hopital"  = "Military Hospital",
-                      "Port Hopital"      = "Port Hospital",
-                      "Central Hopital"   = "Central Hospital",
-                      "other"             = "Other",
-                      "St. Marks Maternity Hopital (SMMH)" = "St. Mark's Maternity Hospital (SMMH)"
-                      )) %>% 
-    
-    mutate(hospital = replace_na(hospital, "Missing")) %>% 
-
-    # create age_years column (from age and age_unit)
-    mutate(age_years = case_when(
-          age_unit == "years" ~ age,
-          age_unit == "months" ~ age/12,
-          is.na(age_unit) ~ age,
-          TRUE ~ NA_real_))
+    mutate(hospital = case_when(
+          hospital == "Connaught Hopital"           ~ "Connaught Hospital",
+          hospital == "Rokupa Hopital"              ~ "Rokupa Hospital", 
+          hospital %in% c("Mitylira Hopital", 
+            "Mitylira Hospital",
+            "Mitylira Hospital",
+            "Military Hopital")                     ~ "Military Hospital",
+          is.na(hospital)                           ~ "Missing",
+          stringr::str_detect(hospital, "Princess") ~ "Princess Christian Maternity Hospital (PCMH)",
+          TRUE                                      ~  hospital))
 
 ```
 
-<!-- ======================================================= -->
-<!-- ======================================================= -->
+
 <!-- ======================================================= -->
 ## Filter rows {.tabset .tabset-fade .tabset-pills}
 
 <span style="color: orange;">**_CAUTION:_** This tab may follow from previous tabs.</span>
 
-A typical early cleaning step is to filter the dataframe for specific rows using the **dplyr** verb `filter()`. Within `filter()`, give the logic that must be `TRUE` for a row in the dataset to be kept. 
+After selecting columns, a typical cleaning step is to filter the dataframe for specific rows using the **dplyr** verb `filter()`. Within `filter()`, give the logic that must be `TRUE` for a row in the dataset to be kept. 
 
 The tabs below show how to filter rows based on simple and complex logical conditions, and how to filter/subset rows as a stand-alone command and with **base** R
 
 <!-- ======================================================= -->
-### A simple `filter()`  
+### Simple `filter()`  
 
-A simple example applies a filter command within a pipe chain. The command re-defines the dataframe `linelist` as itself having filtered the rows to meet a logical condition. **Only the rows where the logical statement within the parentheses is `TRUE` are kept.**  
-In this case, the logical statement is `!is.na(case_id)`, which is asking whether the value in the column `case_id` is **not** missing (`NA`). Thus, rows where `case_id` is **not** missing are kept.  
+A simple example below re-defines the dataframe `linelist` as itself having filtered the rows to meet a logical condition. Only the rows where the logical statement within the parentheses is `TRUE` are kept. In this case, the logical statement is `!is.na(case_id)`, which is asking whether the value in the column `case_id` is **not** missing. Thus, rows where `case_id` is **not** missing are kept.  
 
 Before the filter is applied, the number of rows in `linelist` is `r nrow(linelist)`.
 
@@ -945,7 +804,7 @@ After the filter is applied, the number of rows in `linelist` is `r nrow(linelis
 
 
 <!-- ======================================================= -->
-### A complex `filter()` 
+### Complex `filter()` 
 
 A more complex example using `filter()`:  
 
@@ -953,58 +812,91 @@ A more complex example using `filter()`:
 
 Below is a simple one-line command to create a histogram of onset dates. See that a second smaller outbreak from 2012-2013 is also included in this dataset. **For our analyses, we want to remove entries from this earlier outbreak.**  
 
-```{r}
+```{r, out.width=c('50%', '50%')}
 hist(linelist$date_onset, breaks = 50)
 ```
-#### Be aware how filters handle missing numeric and date values  
+#### Be aware how filters handle missing values  
 
-Can we just filter by `date_onset` to rows after June 2013? **Caution!** Applying `filter(date_onset > as.Date("2013-06-01")))` would accidentally remove any rows in the later epidemic with a missing date of onset!
+Can we just filter by `onset_date` to rows after June 2013? **Caution!** Applying `filter(date_onset > as.Date("2013-06-01")))` would accidentally remove any rows in the later epidemic with a missing date of onset!
 
-<span style="color: red;">**_DANGER:_** Filtering to greater than (>) or less than (<) a date or number can remove any rows with missing values (`NA`)! This is because `NA` is treated as infinitely large and small.</span>
+<span style="color: red;">**_DANGER:_** Filtering to greater than (>) or less than (<) a date can remove any rows with missing date values (`NA`)! This is because `NA` is treated as infinitely large and small.</span>
 
 #### Design the filter  
 
-Examine a cross-tabulation to make sure we exclude only the correct rows:  
+What other criteria can we filter on? We also happen to know that this first epidemic occurred at Hospital A, Hospital B, and that there were also 10 cases at Connaught Hospital.  Hospitals A & B did *not* have cases in the second epidemic, but Connaught Hospital had many. This is a complex filter to apply - it is wise to cross-tabulate these columns to know exactly how many rows we expect should be removed.  
+
+Let's examine a cross-tabulation to make sure we exclude only the correct rows:  
 
 ```{r}
 table(Hospital  = linelist$hospital,                     # hospital name
-      YearOnset = lubridate::year(linelist$date_onset),  # year of date_onset
+      YearOnset = lubridate::year(linelist$date_onset),  # year of the date_onset
       useNA     = "always")                              # show missing values
 ```
 
-What other criteria can we filter on to remove the first outbreak from the dataset? We see that:  
-
-* The first epidemic occurred at Hospital A, Hospital B, and that there were also 10 cases at Port Hospital.  
-* Hospitals A & B did *not* have cases in the second epidemic, but Port Hospital did.  
-
-We want to exclude:  
-
-* The `r nrow(linelist %>% filter(hospital %in% c("Hospital A", "Hospital B") | date_onset < as.Date("2013-06-01")))` rows with onset in 2012 and 2013 at hospitals A, B, and Port, *including*:  
-  * Excluding the 2 rows from Hospitals A & B with missing onset dates  
-  * Do not exclude any other rows with missing onset dates.  
-
-We start with a linelist of `nrow(linelist)`. Here is our filter statement:  
+We want to exclude only the `nrow(linelist %>% filter(hospital %in% c("Hospital A", "Hospital B") | date_onset < as.Date("2013-06-01")))` rows from 2012 and 2013 at those three hospitals (A, B, and Connaught), including the 2 from Hospitals A & B with missing onset dates, but not any others with missing onset dates. We start with a linelist of `nrow(linelist)`. Here is our statement:  
 
 ```{r}
 linelist <- linelist %>% 
-  # keep rows where onset is after 1 June 2013 OR where onset is missing and it was a hospital OTHER than Hospital A or B
   filter(date_onset > as.Date("2013-06-01") | (is.na(date_onset) & !hospital %in% c("Hospital A", "Hospital B")))
 
 nrow(linelist)
 ```
 
-When we re-make the cross-tabulation, we see that Hospitals A & B are removed completely, and the 10 Port Hospital cases from 2012 & 2013 are removed, and all other values are the same - just as we wanted.  
+When we re-make the cross-tabulation, we see that Hospitals A & B are removed completely, the 10 Connaught Hospital cases from 2012 & 2013 are removed, and all other values are the same - just as we wanted.  
  
 ```{r}
 table(Hospital  = linelist$hospital,                     # hospital name
-      YearOnset = lubridate::year(linelist$date_onset),  # year of date_onset
+      YearOnset = lubridate::year(linelist$date_onset),  # year of the date_onset
       useNA     = "always")                              # show missing values
 ```
 
-Multiple statements can be included within one filter command (separated by commas), or you can always pipe to a separate filter() command for clarity.  
+Multiple filter statements can be separated by commas, or you can always pipe to a separate filter() statement for clarity. Adding these filter statements to the cleaning pipe chain now looks like this:  
 
+```{r}
+# CLEANING 'PIPE' CHAIN (starts with raw data and pipes it through cleaning steps)
+##################################################################################
+linelist <- linelist_raw %>%
+    
+    # standardize column name syntax
+    janitor::clean_names() %>% 
+    
+    # manually re-name columns
+           # NEW name             # OLD name
+    rename(date_infection       = infection_date,
+           date_hospitalisation = hosp_date,
+           date_outcome         = date_of_outcome) %>% 
+  
+    # remove column
+        select(-c(row_num, merged_column, x23)) %>% 
 
-*Note: some readers may notice that it would be easier to just filter by `date_hospitalisation` because it is 100% complete. This is true. But for p`date_onset` is used for purposes of a complex filter example.* 
+    # fix incorrect values                 # old value       # new value
+    mutate(date_onset = recode(date_onset, "15th April 2014" = "2014-04-15")) %>% 
+    
+    # correct the class of the columns
+    mutate(across(contains("date"), as.Date), 
+           generation = as.numeric(generation),
+           age        = as.numeric(age)) %>% 
+    
+  # clean values of hospital column
+    mutate(hospital = case_when(
+          hospital == "Connaught Hopital"           ~ "Connaught Hospital",
+          hospital == "Rokupa Hopital"              ~ "Rokupa Hospital", 
+          hospital %in% c("Mitylira Hopital", 
+            "Mitylira Hospital",
+            "Mitylira Hospital",
+            "Military Hopital")                     ~ "Military Hospital",
+          is.na(hospital)                           ~ "Missing",
+          stringr::str_detect(hospital, "Princess") ~ "Princess Christian Maternity Hospital (PCMH)",
+          TRUE                                      ~  hospital)) %>% 
+    
+  # ABOVE ARE UPSTREAM CLEANING STEPS ALREADY DISCUSSED
+    ###################################################
+    filter(!is.na(case_id),  # keep only rows where case_id is not missing
+           date_onset > as.Date("2013-06-01") | (is.na(date_onset) & !hospital %in% c("Hospital A", "Hospital B")))
+
+```
+
+Now the number of rows in linelist is `r nrow(linelist)`. 
 
 
 ### Filter as a stand-alone command  
@@ -1027,469 +919,37 @@ linelist <- linelist[!is.na(case_id), ]
 
 <span style="color: darkgreen;">**_TIP:_** Use bracket-subset syntax with `View()` to quickly review a few records.</span>
 
-
-
-
-### Filtering to quickly review data  
-
 This **base** R syntax can be handy when you want to quickly view a subset of rows and columns. Use the **base** R `View()` command (note the capital "V") around the [] subset you want to see. The result will appear as a dataframe in your RStudio viewer panel. For example, if I want to review onset and hospitalization dates of 3 specific cases:  
 
 ```{r, eval=F}
 View(linelist[linelist$case_id %in% c("11f8ea", "76b97a", "47a5f5"), c("date_onset", "date_hospitalisation")])
 ```
 
-Note: the above command can also be written with **dplyr** verbs `filter()` and `select()` as below:  
-
-```{r, eval=F}
-View(linelist %>% filter(case_id %in% c("11f8ea", "76b97a", "47a5f5")) %>% select(date_onset, date_hospitalisation)
-```
-
-
-
-
-
-### Add the filters to the cleaning pipe chain  
-
-
-```{r}
-# CLEANING 'PIPE' CHAIN (starts with raw data and pipes it through cleaning steps)
-##################################################################################
-
-# remove 2nd row, which contains data dictionary values
-#######################################################
-    # store column names
-    linelist_raw_names <- import(here::here("data", "ebola_simulated.xlsx")) %>% names()
-    
-    # import raw dataset, skipping 2nd row (data dictionary row) and re-attaching column names
-    linelist_raw <- import(here::here("data", "ebola_simulated.xlsx"), skip = 2, col_names = linelist_raw_names)
-
-# begin cleaning pipe chain
-###########################
-linelist <- linelist_raw %>%
-    
-    # standardize column name syntax
-    janitor::clean_names() %>% 
-    
-    # manually re-name columns
-           # NEW name             # OLD name
-    rename(date_infection       = infection_date,
-           date_hospitalisation = hosp_date,
-           date_outcome         = date_of_outcome) %>% 
-  
-    # remove column
-        select(-c(row_num, merged_header, x23)) %>% 
-
-    # fix incorrect values                 # old value       # new value
-    mutate(date_onset = recode(date_onset, "15th April 2014" = "2014-04-15")) %>% 
-    
-    # correct the class of the columns
-    mutate(across(contains("date"), as.Date), 
-           generation = as.numeric(generation),
-           age        = as.numeric(age)) %>% 
-    
-    # clean values of hospital column
-    mutate(hospital = recode(hospital,
-                      # OLD = NEW
-                      "Mitylira Hopital"  = "Military Hospital",
-                      "Mitylira Hospital" = "Military Hospital",
-                      "Military Hopital"  = "Military Hospital",
-                      "Port Hopital"      = "Port Hospital",
-                      "Central Hopital"   = "Central Hospital",
-                      "other"             = "Other",
-                      "St. Marks Maternity Hopital (SMMH)" = "St. Mark's Maternity Hospital (SMMH)"
-                      )) %>% 
-
-    mutate(hospital = replace_na(hospital, "Missing")) %>% 
-
-    # create age_years column (from age and age_unit)
-    mutate(age_years = case_when(
-          age_unit == "years"  ~ age,
-          age_unit == "months" ~ age/12,
-          is.na(age_unit)      ~ age,
-          TRUE                 ~ NA_real_)) %>% 
-    
-  # ABOVE ARE UPSTREAM CLEANING STEPS ALREADY DISCUSSED
-    ###################################################
-    filter(
-          # keep only rows where case_id is not missing
-          !is.na(case_id),  
-          
-          # also filter to keep only the second outbreak
-          date_onset > as.Date("2013-06-01") | (is.na(date_onset) & !hospital %in% c("Hospital A", "Hospital B")))
-
-```
-
-
-
-
-
 
 <!-- ======================================================= -->
-<!-- ======================================================= -->
-<!-- ======================================================= -->
-## Numeric categories
+## Groups by condition (`case_when()`) {#casewhen}
+
+
 
 <span style="color: orange;">**_CAUTION:_** This tab may follow from previous tabs.</span>
 
-Special approaches for creating numeric categories  
-
-Common examples include age categories, groups of lab values, etc.  
-
-There are several ways to create categories of a numeric column such as age. Here we will discuss:  
-
-* `age_categories()`, from the **epikit** package  
-* `cut()`, from **base** R  
-* using percentiles to break your numbers  
-* natural break points... ? TO DO  
-* case_when()
-
-
-Sometimes, numeric variables will import as class "character". This occurs if there are non-numeric characters in some of the values, for example an entry of "2 months" for age, or (depending on your R locale settings) if a comma is used in the decimals place (e.g. "4,5" to mean four and one half years).  
-
-For this example we will create an `age_cat` column using the `age_years` column.  
-
-```{r}
-#check the class of the linelist variable age
-class(linelist$age_years)
-
-```
-
+TODO tutorial on using case_when()
 
 <!-- ======================================================= -->
-### Numeric categories using `age_categories()` from **epikit**
+### Numeric groups  
 
-With the **epikit** package, you can use the `age_categories()` function to easily categorize and label numeric columns (note: this can be applied to non-age numeric variables too). The output is an ordered factor.
+For example, creating age groups
+`cut()`
 
-The break values specified are included in the higher group, that is groups are open on the lower/left side. As shown below, you can add 1 to each break value to achieve groups that are open at the top/right.
+`case_when()`
 
-Other *optional* arguments:  
+`age_categories()` (R4Epis package)
 
-* `lower = ` Default is 0). The lowest number you want considered.  
-* `upper = ` The highest number you want considered.  
-* `by = `    The number of years between groups.  
-* `separator = ` Default is "-". Character between ages in labels.  
-* `ceiling = ` Default FALSE. If TRUE, the highest break value is a ceiling and a category "XX+" is not included. Any values above highest break or `upper` (if defined) are categorized as `NA`.  
+by percentile
 
-See the function's Help page for more details (enter `?age_categories` in the R console).  
 
 
-```{r}
-library(epikit)
-
-# Simple example
-################
-linelist <- linelist %>% 
-  mutate(age_cat = age_categories(age_years,
-                                  breakers = c(0, 5, 10, 15, 20, 30, 50, 70)))
-# show table
-table(linelist$age_cat, useNA = "always")
-
-
-# With ceiling set to TRUE
-##########################
-linelist <- linelist %>% 
-  mutate(age_cat = age_categories(age_years, 
-                                  breakers = c(0, 5, 10, 15, 20, 30, 50, 70),
-                                  upper = max(linelist$age_years, na.rm=T),
-                                  ceiling = TRUE)) # 70 is the ceiling
-# show table
-table(linelist$age_cat, useNA = "always")
-
-
-# Include upper ends for the same categories
-############################################
-linelist <- linelist %>% 
-  mutate(age_cat = age_categories(age_years, 
-                                  upper = max(linelist$age_years, na.rm=T),
-                                  breakers = c(0, 6, 11, 16, 21, 31, 51, 71, 76)))
-# show table
-table(linelist$age_cat, useNA = "always")
-```
-
-<!-- ======================================================= -->
-### Numeric categories using `cut()`
-
-You can use the **base** R function `cut()`, which creates categories from a numeric variable. The differences from `age_categories()` are:  
-
-* You do not need to install/load another package  
-* You can specify whether groups are open/closed on the right/left  
-* You must provide labels yourself (and ensure they are accurate to the groups)  
-* If you want 0 included in the lowest group you must specify this  
-
-The basic syntax within `cut()` is to first provide the numeric variable to be cut (age_years), and then the *breaks* argument, which is a numeric vector (`c()`) of break points. Using `cut()`, the resulting column is an ordered factor.
-
-If used within `mutate()` (a **dplyr** verb) it is not necessary to specify the dataframe before the column name (e.g. `linelist$age_years`).
-
-#### `cut()` example  
-
-Create new column of age categories (`age_cat`) by cutting the numeric `age_year` column at specified break points. The example below replicates the first `age_categories()` example.  
-
-* Specify numeric vector of break points `c(0, 5, 10, 15, ...)`  
-* Default behavior for `cut()` is that lower break values are *excluded* from each category, and upper break values are *included*. This is the opposite behavior from the `age_categories()` function.  
-* Include 0 in the lowest category by adding `include.lowest = TRUE`  
-* Add a vector of customized labels using the `labels = ` argument  
-* Check your work with cross-tabulation of the numeric and category columns - be aware of missing values  
-
-
-```{r}
-linelist <- linelist %>% 
-  mutate(age_cat = cut(age_years,                                       # numeric column
-                        breaks = c(0, 5, 10, 15, 20, 30, 50, 70,        # break points...
-                                   max(linelist$age_years, na.rm=T)),   # ... with dynamic last break as column max value
-                        right = TRUE,                                   # lower breaks included and upper excluded [a,b)
-                        include.lowest = TRUE,                          # 0 included in lowest category
-                        labels = c("0-4", "5-9", "10-14", "15-19",      # manual labels - be careful!
-                                   "20-29", "30-49", "50-69", "70+")))       
-
-table(linelist$age_cat, useNA = "always")
-```
-
-
-#### `cut()` in detail  
-
-Below is a detailed description of the behavior of using `cut()` to make the `age_cat` column. Key points:    
-
-* Inclusion/exclusion behavior of break points  
-* Custom category labels  
-* Handling missing values  
-* **Check your work!**  
-
-The most simple command of `cut()` applied to `age_years` to make the new variable `age_cat` is below:  
-
-```{r}
-# Create new variable, by cutting the numeric age variable
-# by default, upper break is excluded and lower break excluded from each category
-linelist <- linelist %>% 
-  mutate(age_cat = cut(age_years, breaks = c(0, 5, 10, 15, 20, 30, 50, 70, 100)))
-
-# tabulate the number of observations per group
-table(linelist$age_cat, useNA = "always")
-
-```
-
-* **By default**, the categorization occurs so that the right/upper side is "open" and inclusive (and the left/lower side is "closed" or exclusive). The default labels use the notation "(A, B]", which means the group does not include A (the lower break value), but includes B (the upper break value). **Reverse this behavior by providing the `right = TRUE` argument**.  
-
-* Thus, **by default** "0" values are excluded from the lowest group, and categorized as `NA`. "0" values could be infants coded as age 0. To change this **add the argument `include.lowest = TRUE`**. Then, any "0" values are included in the lowest group. The automatically-generated label for the lowest category will change from "(0,B]" to "[0,B]", which signifies that 0 values are included.  
-
-* **Check your work!!!** Verify that each age value was assigned to the correct category by cross-tabulating the numeric and category columns. Examine assignment of boundary values (e.g. 15, if neighboring categories are 10-15 and 15-20).  
-
-```{r}
-# Cross tabulation of the numeric and category columns. 
-table("Numeric Values" = linelist$age_years,   # names specified in table for clarity.
-      "Categories"     = linelist$age_cat,
-      useNA = "always")                        # don't forget to examine NA values
-```
-
-Read more about `cut()` in its Help page by entering `?cut` in the R console.  
-
-
-
-#### Reversing break inclusion behavior  
-
-Lower break values will be included in each category (and upper break values excluded) if the argument `right = ` is included and and set to `TRUE`. This is applied below - note how the values have shifted among the categories.  
-
-<span style="color: black;">**_NOTE:_** If you include the `include.lowest = TRUE` argument **and** `right = TRUE`, the `include.lowest` will now apply to the *highest* break point value and category, not the lowest.</span>  
-
-```{r}
-linelist <- linelist %>% 
-  mutate(age_cat = cut(age_years,
-                          breaks = c(0, 5, 10, 15, 20, 30, 50, 70, 100),     # same breaks
-                          right = FALSE,                                     # include each *lower* break point            
-                          labels = c("0-4", "5-9", "10-14", "15-19",
-                                     "20-29", "30-49", "50-69", "70-100")))  # now the labels must change
-
-table(linelist$age_cat, useNA = "always")
-
-```
-
-
-#### Re-labeling `NA` values with `cut()`
-
-Because `cut()` does not automatically label `NA` values, you may want to assign a label such as "Missing". This requires a few extra steps because `cut()` automatically classified the new column `age_cat` as a Factor (a rigid column class with specific value labels). 
-
-First, convert `age_cut` from Factor to Character class, so you have flexibility to add new character values (e.g. "Missing"). Otherwise you will encounter an error. Then, use the **dplyr** verb `replace_na()` to replace `NA` values with a character value like "Missing". These steps can be combined into one step, as shown below.  
-
-Note that Missing has been added, **but the order of the categories is now wrong (alphabetical).**  
-
-```{r}
-linelist <- linelist %>% 
-  
-  # cut() creates age_cat, automatically of class Factor      
-  mutate(age_cat = cut(age_years,
-                          breaks = c(0, 5, 10, 15, 20, 30, 50, 70, 100),          
-                          right = FALSE,                                                      
-                          labels = c("0-4", "5-9", "10-14", "15-19",
-                                     "20-29", "30-49", "50-69", "70-100")),
-         
-         # convert to class Character, and replace NA with "Missing"
-         age_cat = replace_na(as.character(age_cat), "Missing"))
-
-
-table(linelist$age_cat, useNA = "always")
-```
-
-To fix this, re-convert `age_cat` to a factor, and define the order of the levels correctly.
-
-```{r}
-linelist <- linelist %>% 
-  
-  # cut() creates age_cat, automatically of class Factor      
-  mutate(age_cat = cut(age_years,
-                          breaks = c(0, 5, 10, 15, 20, 30, 50, 70, 100),          
-                          right = FALSE,                                                      
-                          labels = c("0-4", "5-9", "10-14", "15-19",
-                                     "20-29", "30-49", "50-69", "70-100")),
-         
-         # convert to class Character, and replace NA with "Missing"
-         age_cat = replace_na(as.character(age_cat), "Missing"),
-         
-         # re-classify age_cat as Factor, with correct level order and new "Missing" level
-         age_cat = factor(age_cat, levels = c("0-4", "5-9", "10-14", "15-19", "20-29",
-                                              "30-49", "50-69", "70-100", "Missing")))    
-  
-
-table(linelist$age_cat, useNA = "always")
-
-```
-
-
-
-If you want a fast way to make breaks and labels, you can use something like below (adjust to your specific situation). See the page on using seq() and rep() and c() TO DO
-
-```{r, eval=F}
-# Make break points from 0 to 90 by 5
-age_seq = seq(from = 0, to = 90, by = 5)
-age_seq
-
-# Make labels for the above categories, assuming default cut() settings
-age_labels = paste0(age_seq+1, "-", age_seq + 5)
-age_labels
-
-# check that both vectors are the same length
-length(age_seq) == length(age_labels)
-
-# # Use them in the cut() command
-# cut(linelist$age, breaks = age_seq, labels = age_labels)
-```
-
-
-<!-- ======================================================= -->
-### Numeric categories using `case_when()`
-
-The dplyr function `case_when()` can also be used to create numeric categories.  
-
-* Allows explicit setting of break point inclusion/exclusion  
-* Allows designation of label for `NA` values in one step  
-* More complicated code, *arguably* more prone to error  
-* Allow more flexibility to include other variables in the logic  
-
-**If using `case_when()` please review the in-depth page on it, as the logic and order of assignment are important understand to avoid errors.**
-
-<span style="color: orange;">**_CAUTION:_** In `case_when()` all right-hand side values must be of the same class. Thus, if your categories are character values (e.g. "20-30 years") then any designated outcome for `NA` age values must also be character ("Missing", or the special `NA_character_` instead of `NA`).</span>
-
-You will need to designate the column as a factor (by wrapping `case_when()` in the function `factor()`) and provide the ordering of the factor levels using the `levels = ` argument *after* the close of the `case_when()` function. When using `cut()`, the factor and ordering of levels is done automatically.  
-
-
-```{r}
-linelist <- linelist %>% 
-  mutate(age_cat = factor(case_when(
-          # provide the case_when logic and outcomes
-          age_years >= 0 & age_years < 5     ~ "0-4",          # logic by age_year value
-          age_years >= 5 & age_years < 10    ~ "5-9",
-          age_years >= 10 & age_years < 15   ~ "10-14",
-          age_years >= 15 & age_years < 20   ~ "15-19",
-          age_years >= 20 & age_years < 30   ~ "20-29",
-          age_years >= 30 & age_years < 50   ~ "30-49",
-          age_years >= 50 & age_years < 70   ~ "50-69",
-          age_years >= 45 & age_years <= 100 ~ "70-100",
-          is.na(age_years)                   ~ "Missing",  # if age_years is missing
-          TRUE                               ~ "Check value"   # catch-all alarm to trigger review
-          ), levels = c("0-4","5-9", "10-14", "15-19", "20-29", "30-49", "50-69", "70-100", "Missing", "Check value"))
-         )
-
-
-table(linelist$age_cat, useNA = "always")
-```
-
-
-### Add numeric categories to pipe chain  
-
-Below, code to create two categorical age columns is added to the cleaning pipe chain:  
-
-```{r}
-# CLEANING 'PIPE' CHAIN (starts with raw data and pipes it through cleaning steps)
-##################################################################################
-
-# remove 2nd row, which contains data dictionary values
-#######################################################
-    # store column names
-    linelist_raw_names <- import(here::here("data", "ebola_simulated.xlsx")) %>% names()
-    
-    # import raw dataset, skipping 2nd row (data dictionary row) and re-attaching column names
-    linelist_raw <- import(here::here("data", "ebola_simulated.xlsx"), skip = 2, col_names = linelist_raw_names)
-
-# begin cleaning pipe chain
-###########################
-linelist <- linelist_raw %>%
-    
-    # standardize column name syntax
-    janitor::clean_names() %>% 
-    
-    # manually re-name columns
-           # NEW name             # OLD name
-    rename(date_infection       = infection_date,
-           date_hospitalisation = hosp_date,
-           date_outcome         = date_of_outcome) %>% 
-  
-    # remove column
-        select(-c(row_num, merged_header, x23)) %>% 
-
-    # fix incorrect values                 # old value       # new value
-    mutate(date_onset = recode(date_onset, "15th April 2014" = "2014-04-15")) %>% 
-    
-    # correct the class of the columns
-    mutate(across(contains("date"), as.Date), 
-           generation = as.numeric(generation),
-           age        = as.numeric(age)) %>% 
-    
-    # clean values of hospital column
-    mutate(hospital = recode(hospital,
-                      # OLD = NEW
-                      "Mitylira Hopital"  = "Military Hospital",
-                      "Mitylira Hospital" = "Military Hospital",
-                      "Military Hopital"  = "Military Hospital",
-                      "Port Hopital"      = "Port Hospital",
-                      "Central Hopital"   = "Central Hospital",
-                      "other"             = "Other",
-                      "St. Marks Maternity Hopital (SMMH)" = "St. Mark's Maternity Hospital (SMMH)"
-                      )) %>% 
-
-    mutate(hospital = replace_na(hospital, "Missing")) %>% 
-
-    # create age_years column (from age and age_unit)
-    mutate(age_years = case_when(
-          age_unit == "years" ~ age,
-          age_unit == "months" ~ age/12,
-          is.na(age_unit) ~ age,
-          TRUE ~ NA_real_)) %>% 
-    
-    filter(
-          # keep only rows where case_id is not missing
-          !is.na(case_id),  
-          
-          # also filter to keep only the second outbreak
-          date_onset > as.Date("2013-06-01") | (is.na(date_onset) & !hospital %in% c("Hospital A", "Hospital B"))) %>% 
-  
-    # ABOVE ARE UPSTREAM CLEANING STEPS ALREADY DISCUSSED
-    ###################################################   
-    mutate(
-          # age categories: custom
-          age_cat = epikit::age_categories(age_years, breakers = c(0, 5, 10, 15, 20, 30, 50, 70)),
-        
-          # age categories: 0 to 85 by 5s
-          age_cat5 = epikit::age_categories(age_years, breakers = seq(0, 85, 5)))
-        
-```
+WHAT TO DO IF AGE IS SPREAD ACROSS TWO VARAIBLES (e.g. numeric age + unit)
 
 
 <!-- ======================================================= -->
@@ -1504,37 +964,34 @@ Santa Clara County example - COVID contact tracing data - classification of mult
 
 
 
-
-
-
-
-
-
-
 <!-- ======================================================= -->
-<!-- ======================================================= -->
-<!-- ======================================================= -->
-## rowwise() **dplyr()**
+## Grouping values
 
-https://cran.r-project.org/web/packages/dplyr/vignettes/rowwise.html
+<span style="color: orange;">**_CAUTION:_** This tab may follow from previous tabs.</span>
 
+Using mutate on GROUPED dataframes
+https://dplyr.tidyverse.org/reference/mutate.html
 
-```{r eval=F}
+Taken from website above:
 
-linelist <- linelist %>%
-  rowwise() %>%
-  mutate(num_symptoms = sum(c(fever, chills, cough, aches, vomit) == "yes"))
+```
+Because mutating expressions are computed within groups, they may yield different results on grouped tibbles. This will be the case as soon as an aggregating, lagging, or ranking function is involved. Compare this ungrouped mutate:
 
+starwars %>%
+  select(name, mass, species) %>%
+  mutate(mass_norm = mass / mean(mass, na.rm = TRUE))
+With the grouped equivalent:
+
+starwars %>%
+  select(name, mass, species) %>%
+  group_by(species) %>%
+  mutate(mass_norm = mass / mean(mass, na.rm = TRUE))
+The former normalises mass by the global average whereas the latter normalises by the averages within species levels.
 ```
 
 
 
 
-
-
-
-<!-- ======================================================= -->
-<!-- ======================================================= -->
 <!-- ======================================================= -->
 ## Transforming multiple variables at once
 
@@ -1557,21 +1014,17 @@ linelist <- linelist %>%
 ```
 
 Change only numeric columns
+```
+
 
 Here are a few online resources on using `across()`: [Hadley Wickham's thoughts/rationale](https://www.tidyverse.org/blog/2020/04/dplyr-1-0-0-colwise/)
 
-
-
-```{r echo=F}
-# REARRANGE COLUMNS FOR EXPORT
-linelist <- linelist %>% 
-  select(case_id:gender, age, age_unit, age_years, age_cat, age_cat5, everything())
-```
 
 ```{r echo=F}
 # EXPORT CLEANED LINELIST FILE TO "DATA" FOLDER
 rio::export(linelist, here::here("data", "linelist_cleaned.xlsx"))
 rio::export(linelist, here::here("data", "linelist_cleaned.rds"))
+
 ```
 
 
