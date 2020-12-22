@@ -36,7 +36,7 @@ linelist_raw <- rio::import(here::here("data", "ebola_simulated.xlsx"))
 linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 
 # import the counts data - district level
-count_data <- rio::import(here::here("data", "district_count_data.xlsx"))
+#count_data <- rio::import(here::here("data", "district_count_data.xlsx"))
 
 # import the count data - facility level
 count_data <- rio::import(here::here("data", "facility_count_data.csv"))

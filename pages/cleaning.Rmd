@@ -383,7 +383,7 @@ linelist %>%
 
 ### Adding `select()`to the cleaning pipe chain:  
 
-In the linelist, there are a few columns we do not need: `row_num`, `merged_column`, and `x23`. Remove them by adding a `select()` command to the cleaning pipe chain:  
+In the linelist, there are a few columns we do not need: `row_num`, `merged_header`, and `x23`. Remove them by adding a `select()` command to the cleaning pipe chain:  
 
 ```{r}
 # CLEANING 'PIPE' CHAIN (starts with raw data and pipes it through cleaning steps)
@@ -411,7 +411,7 @@ linelist <- linelist_raw %>%
            date_outcome         = date_of_outcome) %>% 
     
     # remove column
-    select(-c(row_num, merged_column, x23))
+    select(-c(row_num, merged_header, x23))
 ```
 
 
@@ -612,7 +612,7 @@ linelist <- linelist_raw %>%
            date_outcome         = date_of_outcome) %>% 
   
     # remove column
-    select(-c(row_num, merged_column, x23)) %>% 
+    select(-c(row_num, merged_header, x23)) %>% 
 
 # ABOVE ARE UPSTREAM CLEANING STEPS ALREADY DISCUSSED
   ###################################################
@@ -675,7 +675,7 @@ blah blah blah TO DO
 
 #### Manual using `mutate()`  
 
-`mutate()` is also used to recode the values in a column. For example, in `linelist` the values in the column "hospital" must be cleaned. There are several incorrect spellings, and many missing values.
+`mutate()` is also used to recode the values in a column. For example, in `linelist` the values in the column "hospital" must be cleaned. There are several different spellings (often the word "Hospital" is missing an "s" and is written "Hopital"), and many missing values.
 
 ```{r}
 table(linelist$hospital, useNA = "always")
@@ -692,10 +692,10 @@ linelist <- linelist %>%
                       "Mitylira Hopital"  = "Military Hospital",
                       "Mitylira Hospital" = "Military Hospital",
                       "Military Hopital"  = "Military Hospital",
-                      "Connaught Hopital" = "Connaught Hospital",
-                      "Rokupa Hopital"    = "Rokupa Hospital",
+                      "Port Hopital"      = "Port Hospital",
+                      "Central Hopital"   = "Central Hospital",
                       "other"             = "Other",
-                      "Princess Christian Maternity Hopital (PCMH)" = "Princess Christian Maternity Hospital (PCMH)"
+                      "St. Marks Maternity Hopital (SMMH)" = "St. Mark's Maternity Hospital (SMMH)"
                       ))
 ```
 
@@ -880,7 +880,7 @@ linelist <- linelist_raw %>%
            date_outcome         = date_of_outcome) %>% 
   
     # remove column
-    select(-c(row_num, merged_column, x23)) %>% 
+    select(-c(row_num, merged_header, x23)) %>% 
 
     # fix incorrect values                 # old value       # new value
     mutate(date_onset = recode(date_onset, "15th April 2014" = "2014-04-15")) %>% 
@@ -899,10 +899,10 @@ linelist <- linelist_raw %>%
                       "Mitylira Hopital"  = "Military Hospital",
                       "Mitylira Hospital" = "Military Hospital",
                       "Military Hopital"  = "Military Hospital",
-                      "Connaught Hopital" = "Connaught Hospital",
-                      "Rokupa Hopital"    = "Rokupa Hospital",
+                      "Port Hopital"      = "Port Hospital",
+                      "Central Hopital"   = "Central Hospital",
                       "other"             = "Other",
-                      "Princess Christian Maternity Hopital (PCMH)" = "Princess Christian Maternity Hospital (PCMH)"
+                      "St. Marks Maternity Hopital (SMMH)" = "St. Mark's Maternity Hospital (SMMH)"
                       )) %>% 
     
     mutate(hospital = replace_na(hospital, "Missing")) %>% 
@@ -953,47 +953,58 @@ A more complex example using `filter()`:
 
 Below is a simple one-line command to create a histogram of onset dates. See that a second smaller outbreak from 2012-2013 is also included in this dataset. **For our analyses, we want to remove entries from this earlier outbreak.**  
 
-```{r, out.width=c('50%', '50%')}
+```{r}
 hist(linelist$date_onset, breaks = 50)
 ```
 #### Be aware how filters handle missing numeric and date values  
 
-Can we just filter by `onset_date` to rows after June 2013? **Caution!** Applying `filter(date_onset > as.Date("2013-06-01")))` would accidentally remove any rows in the later epidemic with a missing date of onset!
+Can we just filter by `date_onset` to rows after June 2013? **Caution!** Applying `filter(date_onset > as.Date("2013-06-01")))` would accidentally remove any rows in the later epidemic with a missing date of onset!
 
 <span style="color: red;">**_DANGER:_** Filtering to greater than (>) or less than (<) a date or number can remove any rows with missing values (`NA`)! This is because `NA` is treated as infinitely large and small.</span>
 
 #### Design the filter  
 
-What other criteria can we filter on to remove the first outbreak from the dataset? We also happen to know that this first epidemic occurred at Hospital A, Hospital B, and that there were also 10 cases at Connaught Hospital.  Hospitals A & B did *not* have cases in the second epidemic, but Connaught Hospital had many. This is a complex filter to apply - it is wise to cross-tabulate these columns to know exactly how many rows we expect should be removed.  
-
-Let's examine a cross-tabulation to make sure we exclude only the correct rows:  
+Examine a cross-tabulation to make sure we exclude only the correct rows:  
 
 ```{r}
 table(Hospital  = linelist$hospital,                     # hospital name
-      YearOnset = lubridate::year(linelist$date_onset),  # year of the date_onset
+      YearOnset = lubridate::year(linelist$date_onset),  # year of date_onset
       useNA     = "always")                              # show missing values
 ```
 
-We want to exclude only the `nrow(linelist %>% filter(hospital %in% c("Hospital A", "Hospital B") | date_onset < as.Date("2013-06-01")))` rows from 2012 and 2013 at those three hospitals (A, B, and Connaught), including the 2 from Hospitals A & B with missing onset dates, but not any others with missing onset dates. We start with a linelist of `nrow(linelist)`. Here is our filter statement:  
+What other criteria can we filter on to remove the first outbreak from the dataset? We see that:  
+
+* The first epidemic occurred at Hospital A, Hospital B, and that there were also 10 cases at Port Hospital.  
+* Hospitals A & B did *not* have cases in the second epidemic, but Port Hospital did.  
+
+We want to exclude:  
+
+* The `r nrow(linelist %>% filter(hospital %in% c("Hospital A", "Hospital B") | date_onset < as.Date("2013-06-01")))` rows with onset in 2012 and 2013 at hospitals A, B, and Port, *including*:  
+  * Excluding the 2 rows from Hospitals A & B with missing onset dates  
+  * Do not exclude any other rows with missing onset dates.  
+
+We start with a linelist of `nrow(linelist)`. Here is our filter statement:  
 
 ```{r}
 linelist <- linelist %>% 
+  # keep rows where onset is after 1 June 2013 OR where onset is missing and it was a hospital OTHER than Hospital A or B
   filter(date_onset > as.Date("2013-06-01") | (is.na(date_onset) & !hospital %in% c("Hospital A", "Hospital B")))
 
 nrow(linelist)
 ```
 
-When we re-make the cross-tabulation, we see that Hospitals A & B are removed completely, the 10 Connaught Hospital cases from 2012 & 2013 are removed, and all other values are the same - just as we wanted.  
+When we re-make the cross-tabulation, we see that Hospitals A & B are removed completely, and the 10 Port Hospital cases from 2012 & 2013 are removed, and all other values are the same - just as we wanted.  
  
 ```{r}
 table(Hospital  = linelist$hospital,                     # hospital name
-      YearOnset = lubridate::year(linelist$date_onset),  # year of the date_onset
+      YearOnset = lubridate::year(linelist$date_onset),  # year of date_onset
       useNA     = "always")                              # show missing values
 ```
 
-Multiple statements can be included within one filter command (separated by commas), or you can always pipe to a separate filter() command for clarity. Adding these filters to the cleaning pipe chain now looks like this:  
+Multiple statements can be included within one filter command (separated by commas), or you can always pipe to a separate filter() command for clarity.  
 
 
+*Note: some readers may notice that it would be easier to just filter by `date_hospitalisation` because it is 100% complete. This is true. But for p`date_onset` is used for purposes of a complex filter example.* 
 
 
 ### Filter as a stand-alone command  
@@ -1066,7 +1077,7 @@ linelist <- linelist_raw %>%
            date_outcome         = date_of_outcome) %>% 
   
     # remove column
-        select(-c(row_num, merged_column, x23)) %>% 
+        select(-c(row_num, merged_header, x23)) %>% 
 
     # fix incorrect values                 # old value       # new value
     mutate(date_onset = recode(date_onset, "15th April 2014" = "2014-04-15")) %>% 
@@ -1082,10 +1093,10 @@ linelist <- linelist_raw %>%
                       "Mitylira Hopital"  = "Military Hospital",
                       "Mitylira Hospital" = "Military Hospital",
                       "Military Hopital"  = "Military Hospital",
-                      "Connaught Hopital" = "Connaught Hospital",
-                      "Rokupa Hopital"    = "Rokupa Hospital",
+                      "Port Hopital"      = "Port Hospital",
+                      "Central Hopital"   = "Central Hospital",
                       "other"             = "Other",
-                      "Princess Christian Maternity Hopital (PCMH)" = "Princess Christian Maternity Hospital (PCMH)"
+                      "St. Marks Maternity Hopital (SMMH)" = "St. Mark's Maternity Hospital (SMMH)"
                       )) %>% 
 
     mutate(hospital = replace_na(hospital, "Missing")) %>% 
@@ -1431,7 +1442,7 @@ linelist <- linelist_raw %>%
            date_outcome         = date_of_outcome) %>% 
   
     # remove column
-        select(-c(row_num, merged_column, x23)) %>% 
+        select(-c(row_num, merged_header, x23)) %>% 
 
     # fix incorrect values                 # old value       # new value
     mutate(date_onset = recode(date_onset, "15th April 2014" = "2014-04-15")) %>% 
@@ -1447,10 +1458,10 @@ linelist <- linelist_raw %>%
                       "Mitylira Hopital"  = "Military Hospital",
                       "Mitylira Hospital" = "Military Hospital",
                       "Military Hopital"  = "Military Hospital",
-                      "Connaught Hopital" = "Connaught Hospital",
-                      "Rokupa Hopital"    = "Rokupa Hospital",
+                      "Port Hopital"      = "Port Hospital",
+                      "Central Hopital"   = "Central Hospital",
                       "other"             = "Other",
-                      "Princess Christian Maternity Hopital (PCMH)" = "Princess Christian Maternity Hospital (PCMH)"
+                      "St. Marks Maternity Hopital (SMMH)" = "St. Mark's Maternity Hospital (SMMH)"
                       )) %>% 
 
     mutate(hospital = replace_na(hospital, "Missing")) %>% 
