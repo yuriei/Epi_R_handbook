@@ -20,6 +20,9 @@ knit: (function(inputFile, encoding) {
 ---
 
 ```{r, child= '_page_setup.Rmd', eval = params$run_page_ind, include = F}
+# THIS CHUNK RUNS IF PAGE IS KNITTED INDEPENDENTLY OF THE HANDBOOK
+# IT SOURCES RMD "_page_setup.Rmd" TO GET SETTINGS, PACKAGES, AND DATASETS
+# IF WORKING ON THIS PAGE, RUN "_page_setup.Rmd" FIRST
 ```
 
 
@@ -172,7 +175,7 @@ data_date <- as.Date("2015-05-15")
 
 ### Verify dates
 
-Verify that each date column is class Date and has an approporiate range of values. This `for` loop prints a histogram for each column.  
+Verify that each relevant date column is class Date and has an appropriate range of values. This `for` loop prints a histogram for each column.  
 
 ```{r verify_dates, out.width = c('50%', '50%', '50%'), fig.show='hold'}
 # create character vector of column names 
@@ -324,7 +327,7 @@ plot(central_outbreak,
 
 #### Adjusting axes  
 
-Note in the above that the grey gridlines do not align with the case boxes. This is because the gridlines show the 1st of a month, whereas the case boxes are by week. Weeks may overlap the start of months. To align them, include ``labels_week = T` in `plot()` and do *not* specify a `scale_x_date()`.  
+Note in the previous plot that the grey gridlines do not necessarily align with the boxes around each case. This is because the gridlines show the 1st of a month, whereas the case boxes are by week. Weeks may overlap the start of months. To align them, include ``labels_week = T` in `plot()` and do *not* specify a `scale_x_date()`.  
 
 <span style="color: darkgreen;">**_TIP:_** While the data may be grouped by day or week, you can quickly reduce the number of labels appearing on the x-axis using `scale_x_incidence()` and specifying the number of axis breaks.</span>
 
@@ -356,13 +359,9 @@ plot(gen_outbreak)
 
 #### Changing colors and legend  
 
-
-To change the legend, use `ggplot()` commands such as `theme(legend.position = "top", legend.direction = "horizontal", 
-          legend.title = element_blank())`. See the page of ggplot() tips for more details.  
+**To change the legend**, use `ggplot()` commands such as: `theme(legend.position = "top")`, `theme(legend.direction = "horizontal")`, and `theme(legend.title = element_blank())`. See the page of ggplot() tips for more details.  
           
-To change the colors:  
-
-Change the color palette to one of the default **base** R palettes using the argument `col_pal` in `plot()` (do *not* put the name of the palette in quotes).  
+**To change the color palette**, use the argument `col_pal` in `plot()` to change the color palette to one of the default **base** R palettes (do *not* put the name of the palette in quotes).  
 
 Other palettes include TO DO add page with palette names... To DO
 
@@ -370,7 +369,7 @@ Other palettes include TO DO add page with palette names... To DO
 plot(gen_outbreak, col_pal = rainbow)
 ```
 
-To specify colors manually, provide the name of the color or a character vector of colors to the argument `color = `. Note to function properly the number of colors must equal the number of groups (be aware of missing values as a group)  
+**To specify colors manually**, provide the name of the color or a character vector of colors to the argument `color = `. Note to function properly the number of colors must equal the number of groups (be aware of missing values as a group)  
 
 ```{r out.width = c('50%', '50%'), fig.show='hold'}
 hosp_outbreak <- incidence(linelist$date_onset, 
@@ -418,7 +417,6 @@ Below are tabs on using "ggplot2" package
 ### Daily and weekly {.tabset .tabset-fade .tabset-pills}
 
 ``` {r ggplot_simple,  out.width = c('50%', '50%'), fig.show='hold'}
-
 # Daily case counts 
 ###################
 plot_daily <- ggplot(linelist, aes(x = date_onset)) + 
