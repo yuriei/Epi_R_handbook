@@ -27,12 +27,29 @@ params:
 # h1, #TOC>ul>li {
 #   color: #ff0000;
 # }
-
-h1, #TOC>ul>ul>li {
-  color: #3341FF;          # blue
+h1, #TOC>ul>li {
+  color: #A93226;          d
   font-family:  "Times";
   font-weight: bold;
 }
+
+h2, #TOC>ul>ul>li {
+  color: #229954;          
+  font-family:  "Times";
+  font-weight: bold;
+}
+
+h3, #TOC>ul>ul>ul>li {
+  color: #3498DB;          
+  font-family:  "Times";
+  font-weight: bold;
+}
+# 
+# h1, #TOC>ul>ul>li {
+#   color: #3341FF;          # blue
+#   font-family:  "Times";
+#   font-weight: bold;
+# }
 ```
 
 
