@@ -15,8 +15,9 @@ knitr::opts_chunk$set(echo = TRUE,
 
 ```{css, echo = FALSE}
 # Sets color of header levels
+
 h1, #TOC>ul>li {
-  color: #A93226;          d
+  color: #A93226;          
   font-family:  "Times";
   font-weight: bold;
 }
@@ -33,6 +34,11 @@ h3, #TOC>ul>ul>ul>li {
   font-weight: bold;
 }
 
+h4, #TOC>ul>ul>ul>li {
+  color: #F4D03F;          
+  font-family:  "Times";
+  font-weight: bold;
+}
 ```
 
 
