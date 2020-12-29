@@ -716,10 +716,10 @@ ggplot(data = central_data, aes(x = date_onset)) +
 
 To create weekly epicurves where the bins begin on a specific day of the week (e.g. Monday, Sunday), specify the histogram `breaks = ` manually (not `binwidth`). This can be done by creating a sequence of dates using `seq.Date()` from **base** R. You can start/end the sequence at a specific date (`as.Date("YYYY-MM-DD")`, or write flexible code to begin the sequence at a specific day of the week before the first case. An example of creating such weekly breaks is below:  
 
-```
-breaks = seq.Date(from = as.Date(floor_date(min(central_data$date_onset, na.rm=T),   "week", week_start = 1)),
-                  to   = as.Date(ceiling_date(max(central_data$date_onset, na.rm=T), "week", week_start = 1)),
-                  by   = "7 days")
+```{r eval=F}
+seq.Date(from = as.Date(floor_date(min(central_data$date_onset, na.rm=T),   "week", week_start = 1)),
+         to   = as.Date(ceiling_date(max(central_data$date_onset, na.rm=T), "week", week_start = 1)),
+         by   = "7 days")
 ```  
 
 To achieve the "from" value (earliest date of the sequence), the minimum value in the column `date_onset` is fed to `floor_date()` from the **lubridate** package, which according to the above specified arguments produces the start date of that "week", given that the start of each week is a Monday (`week_start = 1`). Likewise, the "to" value (end date of the sequence) is specified using the inverse `ceiling_date()` function to produce the Monday *after* the last case. The "by" argument can be set to any length of days, weeks, or months.   
@@ -823,7 +823,7 @@ ggplot(central_data, aes(x = date_onset)) +
 
 
 <!-- ======================================================= -->
-### Modifications {.tabset .tabset-fade}
+### ggplot modifications {.tabset .tabset-fade}
 
 
 #### Modify axes  
@@ -874,7 +874,7 @@ https://rdrr.io/r/base/strptime.html     ----- see all % shortcuts
 
 **Below is a demonstration of some plots where the bins and the plot labels/gridlines are aligned and not aligned:**  
 
-```{r out.width = c('50%', '50%', '50%', '50%', '50%', '50%', '50%'), fig.show='hold'}
+```{r out.width = c('50%', '50%', '50%', '50%', '50%', '50%', '50%'), fig.show='hold', class.source = 'fold-hide'}
 # 7-day binwidth defaults
 #################
 ggplot(central_data, aes(x = date_onset)) + # x column must be class Date
@@ -1379,7 +1379,7 @@ ggplot(central_data2, aes(x = date_onset)) +
   
   # create facets
   facet_wrap(facet~. ,                            # each plot is one value of facet
-             ncol = 1)            
+             ncol = 1)+            
 
   # labels
   labs(title    = "Weekly incidence of cases, by age category",
