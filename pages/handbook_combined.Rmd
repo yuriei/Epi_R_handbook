@@ -23,12 +23,10 @@ params:
 
 
 ```{css, echo = FALSE}
-# Sets color of header levels 1 and 2
-# h1, #TOC>ul>li {
-#   color: #ff0000;
-# }
+# Sets color of header levels
+
 h1, #TOC>ul>li {
-  color: #A93226;          d
+  color: #A93226;          
   font-family:  "Times";
   font-weight: bold;
 }
@@ -44,12 +42,12 @@ h3, #TOC>ul>ul>ul>li {
   font-family:  "Times";
   font-weight: bold;
 }
-# 
-# h1, #TOC>ul>ul>li {
-#   color: #3341FF;          # blue
-#   font-family:  "Times";
-#   font-weight: bold;
-# }
+
+h4, #TOC>ul>ul>ul>li {
+  color: #F4D03F;          
+  font-family:  "Times";
+  font-weight: bold;
+}
 ```
 
 
