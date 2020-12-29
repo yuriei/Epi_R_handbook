@@ -13,6 +13,28 @@ knitr::opts_chunk$set(echo = TRUE,
                       message = FALSE)
 ```
 
+```{css, echo = FALSE}
+# Sets color of header levels
+h1, #TOC>ul>li {
+  color: #A93226;          d
+  font-family:  "Times";
+  font-weight: bold;
+}
+
+h2, #TOC>ul>ul>li {
+  color: #229954;          
+  font-family:  "Times";
+  font-weight: bold;
+}
+
+h3, #TOC>ul>ul>ul>li {
+  color: #3498DB;          
+  font-family:  "Times";
+  font-weight: bold;
+}
+
+```
+
 
 ```{r echo=FALSE, include=TRUE}
 #Enables "copy to clipboard" icons   https://rlesur.github.io/klippy/articles/klippy.html
@@ -42,10 +64,10 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 count_data <- rio::import(here::here("data", "facility_count_data.csv"))
 
 # import the population demographics data
-pop <- rio::import(here::here("data", "country_demographics.csv"))
+#pop <- rio::import(here::here("data", "country_demographics.csv"))
 
 # import the likert- survey responses data
-likert_data <- rio::import(here::here("data", "likert_data.csv"))
+#likert_data <- rio::import(here::here("data", "likert_data.csv"))
 
 ```
 

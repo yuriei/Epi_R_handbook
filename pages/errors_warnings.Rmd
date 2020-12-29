@@ -72,6 +72,9 @@ i Input `hospital` is `recode(...)`.
 ```
 
 
+`Error: Insufficient values in manual scale. 3 needed but only 2 provided.`
+ggplot() scale_fill_manual() values = c("orange", "purple") ... insufficient for number of factor levels ... consider whether NA is now a factor level...
+
 <!-- ======================================================= -->
 ### sub-tab 2 {.tabset .tabset-fade .tabset-pills}
 
