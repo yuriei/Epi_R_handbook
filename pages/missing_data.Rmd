@@ -39,9 +39,9 @@ etc.
 
 Or change in percent of anything (X) over time, really.  
 
-```{r}
+```{r, eval=F}
 lines <- linelist %>%
-  mutate(date_of_onset = as.Date(date_of_onset, format = "%d/%m/%Y"),
+  mutate(date_onset = as.Date(date_of_onset, format = "%d/%m/%Y"),
          week = aweek::week2date(aweek::date2week(date_of_onset))) %>% 
   group_by(week) %>% 
   summarize(n_obs = n(),

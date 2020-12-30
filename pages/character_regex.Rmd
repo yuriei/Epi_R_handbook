@@ -64,6 +64,14 @@ Data preparation steps such as:
 Can be used to separate major steps of data preparation. Re-name as needed
 
 
+ADD leading zeros (e.g. for times minutes/hours)
+hours = str_pad(hours, 2, pad = "0"),             # pad with leading zeros
+
+
+tolower()
+toupper()
+Title case
+
 <!-- ======================================================= -->
 ### sub-tab 2 {.tabset .tabset-fade .tabset-pills}
 
