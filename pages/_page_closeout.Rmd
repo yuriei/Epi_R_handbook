@@ -1,19 +1,19 @@
 
 ```{r}
 # import the linelist into R
-linelist <- rio::import(here::here("data", "fluH7N9_china_2013.csv"))
+#linelist <- rio::import(here::here("data", "fluH7N9_china_2013.csv"))
 
 # import the counts data into R
-district_count_data <- rio::import(here::here("data", "district_count_data.xlsx"))
+#district_count_data <- rio::import(here::here("data", "district_count_data.xlsx"))
 
 # count data
-facility_count_data <- rio::import(here::here("data", "facility_count_data.csv"))
+#facility_count_data <- rio::import(here::here("data", "facility_count_data.csv"))
 
 # import the population demographics data
-pop <- rio::import(here::here("data", "country_demographics.csv"))
+#pop <- rio::import(here::here("data", "country_demographics.csv"))
 
 # import the population demographics data
-likert_data <- rio::import(here::here("data", "likert_data.csv"))
+#likert_data <- rio::import(here::here("data", "likert_data.csv"))
 ```
 
 

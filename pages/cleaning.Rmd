@@ -46,17 +46,6 @@ This page demonstrates common steps necessary to clean a dataset. It uses a simu
 knitr::include_graphics(here::here("images", "cleaning_dataset_snip.png"))
 ```
 
-**HOW TO READ:** To emphasize the **tidyverse** coding approach, each cleaning step is explained individually and then incorporated into a **"cleaning pipeline"** - a series of cleaning actions linked together sequentially through pipes (LINK TO PIPES). The pipe begins with the "raw" data (`linelist_raw`) and ends with a "clean" dataset (`linelist`).  
-
-The cleaning steps demonstrated include:  
-
-* Loading the data  
-* column name cleaning  
-* column selection  
-* Designating column classes  
-* Filtering rows  
-* Re-coding values  
-* Creating groups (`case_when()`)
 * Dealing with character case (upper, lower, title, etc.)
 * Factor columns  
 
@@ -84,7 +73,7 @@ factors
 pacman::p_load(tidyverse,  # data manipulation and visualization
                janitor,    # data cleaning
                rio,        # importing data
-               epikit)        
+               epikit)     # age_categories() function  
 ```
 
 ### Load data  
@@ -95,11 +84,11 @@ Import the raw dataset using the `import()` function from the package **rio**.  
 ```{r, echo=F}
 # HIDDEN FROM READER
 # actually load the data using here()
-linelist_raw <- rio::import(here::here("data", "ebola_simulated.xlsx"))
+linelist_raw <- rio::import(here::here("data", "linelist_raw.xlsx"))
 ```
 
 ```{r, eval=F}
-linelist_raw <- import("ebola_simulated.xlsx")
+linelist_raw <- import("linelist_raw.xlsx")
 ```
 
 You can view the first 50 rows of the the original "raw" dataset below: 
@@ -118,17 +107,15 @@ DT::datatable(head(linelist_raw,50), rownames = FALSE, filter="top", options = l
 ## Cleaning pipeline
 <h2> Cleaning pipeline </h2>
 
-In epidemiological analysis and data processing, cleaning steps are often performed together and sequentially. In R this often manifests as a cleaning "pipeline", where the raw dataset is passed or "piped" from one cleaning step to another. The chain often utilizes **dplyr** verbs and the **magrittr** pipe operator (see handbook page on **dplyr** and tidyverse coding style (LINK HERE).
+In epidemiological analysis and data processing, cleaning steps are often performed together and sequentially. In R this often manifests as a cleaning "pipeline", where the raw dataset is passed or "piped" from one cleaning step to another. The chain utilizes **dplyr** verbs and the **magrittr** pipe operator (see handbook page on **dplyr** and tidyverse coding style (LINK HERE). The pipe begins with the "raw" data (`linelist_raw`) and ends with a "clean" dataset (`linelist`).  
 
-In a cleaning pipeline the order of the steps is important. Cleaning steps may include:  
+In a cleaning pipeline the order of the steps is important. Cleaning steps might include:  
 
-* Column names may be cleaned or changed  
-* Rows may be filtered or added  
-* Columns may be selected, added, transformed, or re-ordered  
-* Values may be re-coded, cleaned, or grouped  
-
-
-
+* Importing of data  
+* Column names cleaned or changed  
+* Rows filtered, added, or de-duplicated  
+* Columns selected, added, transformed, or re-ordered  
+* Values re-coded, cleaned, or grouped  
 
 
 
@@ -244,7 +231,7 @@ When using **rio**'s `import()` function, the value in a merged cell will be ass
 One solution to deal with merged cells is to import the data with the function `readWorkbook()` from package **openxlsx**. Set the argument `fillMergedCells = TRUE`. This gives the value in a merged cell to all cells within the merge range.
 
 ```{r, eval=F}
-linelist_raw <- openxlsx::readWorkbook("ebola_simulated.xlsx", fillMergedCells = TRUE)
+linelist_raw <- openxlsx::readWorkbook("linelist_raw.xlsx", fillMergedCells = TRUE)
 ```
 
 <span style="color: red;">**_DANGER:_** If column names are merged, you will end up with duplicate column names, which you will need to fix manually - R does not work well with duplicate column names! You can re-name them by referencing their position (e.g. column 5), as explained in the section on manual column name cleaning..</span>
@@ -259,7 +246,7 @@ you can do this with the argument `skip = ` if using `import()` from the **rio**
 
 
 ```{r, eval=F}
-linelist_raw <- import("ebola_simulated.xlsx", skip = 1)  # does not import header row
+linelist_raw <- import("linelist_raw.xlsx", skip = 1)  # does not import header row
 ```
 
 Unfortunately `skip = ` only accepts one integer value, *not* a range (e.g. "2:10"). To skip import of specific rows that are not consecutive from the top, consider importing multiple times and using `bind_rows()` from **dplyr**. See the example below of skipping only row 2.  
@@ -321,20 +308,20 @@ The exact arguments used to bind the correct column names depends on the type of
 
 ```{r, eval=F}
 # For excel files (remove 2nd row)
-linelist_raw_names <- import("ebola_simulated.xlsx") %>% names()  # save true column names
+linelist_raw_names <- import("linelist_raw.xlsx") %>% names()  # save true column names
 
 # import, skip row 2, assign to col_names =
-linelist_raw <- import("ebola_simulated.xlsx", skip = 2, col_names = linelist_raw_names) 
+linelist_raw <- import("linelist_raw.xlsx", skip = 2, col_names = linelist_raw_names) 
 ```
 
 **For CSV files:**  
 
 ```{r, eval=F}
 # For csv files
-linelist_raw_names <- import("ebola_simulated.csv") %>% names() # save true column names
+linelist_raw_names <- import("linelist_raw.csv") %>% names() # save true column names
 
 # note argument is 'col.names ='
-linelist_raw <- import("ebola_simulated.csv", skip = 2, col.names = linelist_raw_names) 
+linelist_raw <- import("linelist_raw.csv", skip = 2, col.names = linelist_raw_names) 
 ```
 
 **Backup option** - changing column names as a separate command
@@ -350,7 +337,7 @@ source: https://alison.rbind.io/post/2018-02-23-read-multiple-header-rows/
 TO DO
 ```{r, eval=F}
 library(tidyr)
-stickers_dict <- import("ebola_simulated.xlsx") %>% 
+stickers_dict <- import("linelist_raw.xlsx") %>% 
   clean_names() %>% 
   gather(variable_name, variable_description)
 stickers_dict
@@ -1378,7 +1365,7 @@ Lower break values will be included in each category (and upper break values exc
 
 <span style="color: black;">**_NOTE:_** If you include the `include.lowest = TRUE` argument **and** `right = TRUE`, the `include.lowest` will now apply to the *highest* break point value and category, not the lowest.</span>  
 
-```{r}
+```{r class.source = 'fold-show'}
 linelist <- linelist %>% 
   mutate(age_cat = cut(age_years,
                           breaks = c(0, 5, 10, 15, 20, 30, 50, 70, 100),     # same breaks
@@ -1609,16 +1596,13 @@ linelist <- linelist %>%
 
 <span style="color: orange;">**_CAUTION:_** This tab may follow from previous tabs.</span>
 
-across dplyr
 
 A transformation can be applied to multiple variables at once using the `across()` function from the package **dplyr** (contained within **tidyverse** package).  
 
 `across()` can be used with any **dplyr** verb, but commonly with as `mutate()`, `filter()`, or `summarise()`. Here are some examples to get started. 
 
-### `across()` with `mutate()`  
-<h3> `across()` with `mutate()` </h3>
 
-Change all columns to character class  
+Example of how one would change all columns to character class  
 
 ```{r, eval=F}
 #to change all columns to character class
@@ -1629,6 +1613,104 @@ linelist <- linelist %>%
 Change only numeric columns
 
 Here are a few online resources on using `across()`: [Hadley Wickham's thoughts/rationale](https://www.tidyverse.org/blog/2020/04/dplyr-1-0-0-colwise/)
+
+
+
+<!-- ======================================================= -->
+<!-- ======================================================= -->
+<!-- ======================================================= -->
+## Deduplication
+<h2> Deduplication </h2>
+
+<span style="color: orange;">**_CAUTION:_** This tab may follow from previous tabs.</span>
+
+The package **dplyr** offers the `distinct()` function to reduce the dataframe to only unique rows - removing duplicates.  
+In this case we just want to remove rows that are complete duplicates, so we just add the simple command `distinct()`.  
+
+For more complex deduplications see the page on deduplicating.  
+
+We begin with `r nrow(linelist)` rows in `linelist`. 
+```{r}
+linelist <- linelist %>% 
+  distinct()
+```
+
+After deduplication there are `r nrow(linelist)` rows. 
+
+
+
+Below, the `distinct()` command is added to the cleaning pipe chain:  
+
+```{r}
+# CLEANING 'PIPE' CHAIN (starts with raw data and pipes it through cleaning steps)
+##################################################################################
+
+# begin cleaning pipe chain
+###########################
+linelist <- linelist_raw %>%
+    
+    # standardize column name syntax
+    janitor::clean_names() %>% 
+    
+    # manually re-name columns
+           # NEW name             # OLD name
+    rename(date_infection       = infection_date,
+           date_hospitalisation = hosp_date,
+           date_outcome         = date_of_outcome) %>% 
+  
+    # remove column
+        select(-c(row_num, merged_header, x24)) %>% 
+
+    # fix incorrect values                 # old value       # new value
+    mutate(date_onset = recode(date_onset, "15th April 2014" = "2014-04-15")) %>% 
+    
+    # correct the class of the columns
+    mutate(across(contains("date"), as.Date), 
+           generation = as.numeric(generation),
+           age        = as.numeric(age)) %>% 
+    
+    # clean values of hospital column
+    mutate(hospital = recode(hospital,
+                      # OLD = NEW
+                      "Mitylira Hopital"  = "Military Hospital",
+                      "Mitylira Hospital" = "Military Hospital",
+                      "Military Hopital"  = "Military Hospital",
+                      "Port Hopital"      = "Port Hospital",
+                      "Central Hopital"   = "Central Hospital",
+                      "other"             = "Other",
+                      "St. Marks Maternity Hopital (SMMH)" = "St. Mark's Maternity Hospital (SMMH)"
+                      )) %>% 
+
+    mutate(hospital = replace_na(hospital, "Missing")) %>% 
+
+    # create age_years column (from age and age_unit)
+    mutate(age_years = case_when(
+          age_unit == "years" ~ age,
+          age_unit == "months" ~ age/12,
+          is.na(age_unit) ~ age,
+          TRUE ~ NA_real_)) %>% 
+    
+    filter(
+          # keep only rows where case_id is not missing
+          !is.na(case_id),  
+          
+          # also filter to keep only the second outbreak
+          date_onset > as.Date("2013-06-01") | (is.na(date_onset) & !hospital %in% c("Hospital A", "Hospital B"))) %>% 
+  
+    mutate(
+          # age categories: custom
+          age_cat = epikit::age_categories(age_years, breakers = c(0, 5, 10, 15, 20, 30, 50, 70)),
+        
+          # age categories: 0 to 85 by 5s
+          age_cat5 = epikit::age_categories(age_years, breakers = seq(0, 85, 5))) %>% 
+  
+    distinct()
+```
+
+
+
+
+
 
 
 
