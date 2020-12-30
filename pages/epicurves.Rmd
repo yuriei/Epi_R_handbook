@@ -873,6 +873,8 @@ https://rdrr.io/r/base/strptime.html     ----- see all % shortcuts
 
 
 **Below is a demonstration of some plots where the bins and the plot labels/gridlines are aligned and not aligned:**  
+Click "Code" to see the code  
+
 
 ```{r out.width = c('50%', '50%', '50%', '50%', '50%', '50%', '50%'), fig.show='hold', class.source = 'fold-hide'}
 # 7-day binwidth defaults
@@ -1052,6 +1054,8 @@ See the page of ggplot() tips for more details on legends.
 
 These steps are shown in the example below:  
 
+*Click "Code" to see the code*
+
 ```{r}
 ########################
 # bin break points for histogram defined here for clarity
@@ -1115,6 +1119,8 @@ ggplot(central_data, aes(x = date_onset)) +
 
 Side-by-side display of group bars (as opposed to stacked) is specified within `geom_histogram()` with `position = "dodge"`.  
 If there are more than two value groups, these can become difficult to read. Consider instead using a faceted plot (small multiples) (see tab). To improve readability in this example, missing gender values are removed.  
+
+*Click "Code" to see the code*
 
 ```{r}
 ########################
@@ -1220,7 +1226,8 @@ my_labels <- as_labeller(c(
 ```
 
 **An example plot**  
-Faceted by column `age_cat`  
+Faceted by column `age_cat`. Click "Code" to see the code.  
+
 
 ```{r}
 # make plot
@@ -1273,7 +1280,8 @@ Add a separate `geom_histogram()` command *before* the current one. Specify that
 ```
 geom_histogram(data = select(central_data, -age_cat), color = "grey", alpha = 0.5)+
 ```
-Note that the y-axis maximum is now based on the height of the entire epidemic.  
+Note that the y-axis maximum is now based on the height of the entire epidemic. Click "Code" to see the code.  
+
 
 ```{r}
 ggplot(central_data, aes(x = date_onset)) + 
@@ -1351,9 +1359,10 @@ Notable changes to the ggplot command are:
 * Labeller will need to be updated, if used  
 * To achieve long/thin plot, facet variable moved to rows side of equation, replaced by "." `facet_wrap(facet~.)`, and `ncol = 1` 
  
-You may also need to adjust the width and height of the save plot image (see `ggsave()`)  
+You may also need to adjust the width and height of the save plot image (see `ggsave()`).  
 
-```{r, fig.height=10, fig.width=3}
+
+```{r, fig.height=10, fig.width=3, class.source = 'fold-hide'}
 ggplot(central_data2, aes(x = date_onset)) + 
   
   # actual epicurves by group
