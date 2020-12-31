@@ -61,16 +61,53 @@ More comprehensive tutorials are available online:
 ## Installation {#install .tabset .tabset-fade }
 <h2> Installation </h2>
 
-How to install R
+**How to install R**  
+
+Visit this website [https://www.r-project.org/](https://www.r-project.org/) and download the latest version of R suitable for your computer.  
+
+**How to install R Studio**  
+
+Visit this website [https://rstudio.com/products/rstudio/download/](https://rstudio.com/products/rstudio/download/) and download the latest free Desktop version of RStudio suitable for your computer.
+
+**How to update R and RStudio**  
 
 
-How to install R Studio
+**Other things you may need to install:**  
+
+* TinyTeX (*for compiling an RMarkdown document to PDF*)  
+* Pandoc  (*for compiling RMarkdown documents*)  
+* RTools  (*for building packages for R*)  
 
 
-Other things you may need to install:  
-* TinyTeX  
-* Pandoc  
-* RTools  
+### TinyTex {.tabset .tabset-fade }
+<h3> TinyTex </h3>
+
+See [https://yihui.org/tinytex/](https://yihui.org/tinytex/)  
+
+To install from R:  
+
+```{r, eval=F}
+install.packages('tinytex')
+tinytex::install_tinytex()
+# to uninstall TinyTeX, run tinytex::uninstall_tinytex()
+```
+
+
+### Pandoc {.tabset .tabset-fade }
+<h3> Pandoc </h3>
+
+Pandoc is a document converter, a separate software from R. **It comes bundled with RStudio.** It helps the process of converting Rmarkdown documents to formats like .pdf and adding complex functionality.  
+
+
+### RTools {.tabset .tabset-fade }
+<h3> TinyTex </h3>
+
+RTools is a collection of software for building packages for R
+
+Install from this website: [https://cran.r-project.org/bin/windows/Rtools/](https://cran.r-project.org/bin/windows/Rtools/)  
+
+
+
 
 <!-- ======================================================= -->
 ## RStudio {#rstudio .tabset .tabset-fade }
