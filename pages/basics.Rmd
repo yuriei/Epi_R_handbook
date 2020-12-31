@@ -37,15 +37,10 @@ pacman::p_load(apyramid)
 
 <!-- ======================================================= -->
 ## Overview
-<h2> Overview </h2>
 
 This section is **not** meant as a comprehensive "how to learn R" tutorial. However, it does cover some of the fundamentals that can be good to reference or refresh. 
 
-More comprehensive tutorials are available online:  
-* Here  
-* and Here  
-* and even Here  
-* Oh yea and Here too (there's a lot of them)  
+More comprehensive tutorials are available online. See the tab on recommended training.  
 
 
 <!-- ======================================================= -->
