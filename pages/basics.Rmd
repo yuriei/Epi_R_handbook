@@ -165,30 +165,38 @@ Change RStudio settings and appearance in the Tools drop-down menu, by selecting
 ## Scripts {#scripts .tabset .tabset-fade }
 <h2> Scripts </h2>
 
-<!-- ======================================================= -->
-### Why use a script
-<h2> Overview </h2>
+Scripts are a fundamental part of programming. Storing your code in a script (vs. typing in the console) has many advantages:  
 
-R scripts (vs. typing in the console)  
-* Advantages (reproducability)
-* General sequence (into, load packages, load data, clean data, conduct analysis, save results)
-* Commenting
+* Reproducibility  
+* Version control  
+* Commenting  
 
 <!-- ======================================================= -->
 ### Rmarkdown {#rmd .tabset .tabset-fade }
 <h3> Rmarkdown </h3>
 
-See the handbook page on Rmarkdown documents.  
+Rmarkdown is a type of script in which the script itself *becomes* a document (PDF, Word, HTML, Powerpoint, etc.). See the handbook page on Rmarkdown documents.  
 
 <!-- ======================================================= -->
 ### R notebooks {#rnotebooks .tabset .tabset-fade }
 <h3> R notebooks </h3>
 
-See the handbook page on Rmarkdown documents.  
+There is no difference between writing in a Rmarkdown vs an R notebook. However the execution of the document differs slightly. See this [site](http://uc-r.github.io/r_notebook) for more details.
 
 <!-- ======================================================= -->
 ### R Shiny {#shinyscripts .tabset .tabset-fade }
 <h3> R Shiny </h3>
+
+Shiny apps are contained within one script, which must be named `app.R`. This file has three components:  
+
+1) A user interface (ui)  
+2) A server function  
+3) A call to the `shinyApp` function  
+
+See the handbook page on Shiny basics, or this online tutorial: [Shiny tutorial](https://shiny.rstudio.com/tutorial/written-tutorial/lesson1/)
+
+*In older versions, the above file was split into two files (`ui.R` and `server.R`)*
+
 
 
 
@@ -436,24 +444,28 @@ View(linelist[2:20, "date_onset"])
 new_table <- linelist[2:20, c("date_onset")] 
 ```
 
-The square brackets also work to call specific parts of summary() function: 
+The square brackets also work to call specific parts of an object, such as output of a `summary()` function, or a vector: 
 
 ```{r}
 # All of the summary
 summary(linelist$age)
 
 #Just one part
-summary(linelist$age)[2]
+summary(linelist$age)[2]  
+
+my_vector <- c("a", "b", "c", "d", "e", "f")  # define the vector
+my_vector[5]                                  # print the 5th element
 ```
 
 
 
 <!-- ======================================================= -->
-## Functions {#functions .tabset .tabset-fade }
-<h2> Functions </h2>
+## Functions and packages {#functions .tabset .tabset-fade }
+<h2> Functions and packages </h2>
 
 
 This section on functions explains:  
+
 * What a function is and how they work  
 * What arguments are  
 * What packages are  
@@ -588,8 +600,9 @@ To read more about a function, you can try searching online for resources OR sea
 
 **Two general approaches to R coding are:**  
 
-1) **Tidyverse - *piping* an object from function to function**  
-2) **defining intermediate objects** (and older method, still worth knowing about) 
+1) **Tidyverse** - *piping* an object from function to function  
+2) **Define intermediate objects** - an older method, yet still worth knowing  
+
 
 <!-- ======================================================= -->
 ### **Pipes** 
@@ -634,6 +647,7 @@ TODO
 <h3> Define intermediate objects </h3>  
 
 Better if:  
+
 * You need to manipulate multiple objects  
 * There are intermediate steps that are meaningful and deserve separate object names
 
@@ -674,11 +688,13 @@ cake <- let_cool(bake(mix_together(batter_3, utensil = spoon, minutes = 2), degr
 <h2> Key operators and functions </h2>
 
 This section details operators in R, such as:  
+
 * Relational operators (less than, equal too..)  
 * Logical operators (and, or...)  
 * Handling missing values  
 * Mathematical operators and functions (+/-, >, sum(), median(), ...)  
-* The `%in%` operator
+* The `%in%` operator  
+
 
 
 <!-- ======================================================= -->
@@ -727,9 +743,8 @@ If the value in `hep_e_rdt` is NOT "Positive" AND the value in `other_cases_in_h
 If one of the above criteria are not met | "Suspected"  
 
 
-{{% notice tip %}}
-Note that R is case-sensitive, so "Positive" is different than "positive"...
-{{% /notice %}}
+*Note that R is case-sensitive, so "Positive" is different than "positive"...*  
+
  
 <!-- ======================================================= -->
 ### Missing values
@@ -821,8 +836,29 @@ subdivide a numeric vector  | cut(x, n)          |`cut(linelist$age, 5)`
 ### `%in%`  
 <h3> `%in%` </h3>
 
+A very helpful operator 
 
+```{r}
+my_vector <- c("a", "b", "c", "d")
+"a" %in% my_vector
+"h" %in% my_vector
+```
 
+To ask if a value is **not** `%in%`, put an exclamation mark (!) **in front** of the logic statement:  
+
+```{r}
+# to negate, put an exclamation in front
+!"a" %in% my_vector
+!"h" %in% my_vector
+```
+
+`%in%` is very useful when using the **dplyr** function `case_when()` to recode values in a column. For example:  
+
+```{r eval=F}
+linelist <- linelist %>% 
+  mutate(hospital = case_when(
+    hospital %in% c("St. Fr.", "Saint Francis") ~ "St. Francis")) # convert to correct spelling
+```
 <!-- ======================================================= -->
 <!-- ======================================================= -->
 <!-- ======================================================= -->
@@ -831,6 +867,7 @@ subdivide a numeric vector  | cut(x, n)          |`cut(linelist$age, 5)`
 
 
 This section describes the several ways to install a package:  
+
 * Via the online package repository (CRAN)  
 * From a ZIP file  
 * From Github  
@@ -840,16 +877,21 @@ This section describes the several ways to install a package:
 ### CRAN {.tabset .tabset-fade }
 <h3> CRAN </h3>
 
+From the CRAN online repository of packages  
 
 <!-- ======================================================= -->
 ### ZIP files {.tabset .tabset-fade }
 <h3> ZIP files </h3>
 
+Download a ZIP file of a package, unpack it, and save it.  
 
 <!-- ======================================================= -->
 ### Github {.tabset .tabset-fade }
 <h3> Github </h3>
 
+Download a package under development from Github repository  
+
+**remotes** package
 
 <!-- ======================================================= -->
 <!-- ======================================================= -->
@@ -858,31 +900,14 @@ This section describes the several ways to install a package:
 <h2> Errors & Warnings </h2>
 
 This section explains:  
+
 * General syntax for writing R code  
 * Code assists  
-* the difference between errors and warnings 
+* the difference between errors and warnings  
 
 Common errors and warnings and their solutions can be found in X section (TODO).
 See the handbook page on common errors and warnings.  
 
-<!-- ======================================================= -->
-### General syntax
-<h3> General syntax </h3>
-
-A few things to remember when writing commands in R, to avoid errors and warnings:  
-
-* Always close parentheses - tip: count the number of opening "(" and closing parentheses ")" for each code chunk
-* Avoid spaces in column and object names. Use underscore ( _ ) or periods ( . ) instead
-* Keep track of and remember to separate a function's arguments with commas
-* R is case-sensitive, meaning `Variable_A` is *different* from `variable_A`
-
-<!-- ======================================================= -->
-### Code assists  
-<h3> Code assists </h3>
-
-Any script (RMarkdown or otherwise) will give clues when you have made a mistake. For example, if you forgot to write a comma where it is needed, or to close a parentheses, RStudio will raise a flag on that line, on the right side of the script, to warn you.  
-
-(/images/Warnings_and_Errors.png)
 
 <!-- ======================================================= -->
 ### Errors and Warnings  
@@ -901,6 +926,27 @@ Look for clues:
 * If an object "is unknown" or "not found", perhaps you spelled it incorrectly, forgot to call a package with library(), or forgot to re-run your script after making changes.  
 
 If all else fails, copy the error message into Google along with some key terms - chances are that someone else has worked through this already!
+
+
+<!-- ======================================================= -->
+### General syntax tips
+<h3> General syntax tips </h3>
+
+A few things to remember when writing commands in R, to avoid errors and warnings:  
+
+* Always close parentheses - tip: count the number of opening "(" and closing parentheses ")" for each code chunk
+* Avoid spaces in column and object names. Use underscore ( _ ) or periods ( . ) instead
+* Keep track of and remember to separate a function's arguments with commas
+* R is case-sensitive, meaning `Variable_A` is *different* from `variable_A`
+
+
+<!-- ======================================================= -->
+### Code assists  
+<h3> Code assists </h3>
+
+Any script (RMarkdown or otherwise) will give clues when you have made a mistake. For example, if you forgot to write a comma where it is needed, or to close a parentheses, RStudio will raise a flag on that line, on the right side of the script, to warn you.  
+
+(/images/Warnings_and_Errors.png)
 
 
 <!-- ======================================================= -->
