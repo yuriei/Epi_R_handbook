@@ -20,6 +20,9 @@ knit: (function(inputFile, encoding) {
 ---
 
 ```{r, child = '_page_setup.Rmd', eval = params$run_page_ind, include = F}
+# THIS CHUNK RUNS IF PAGE IS KNITTED INDEPENDENTLY OF THE HANDBOOK
+# IT SOURCES RMD "_page_setup.Rmd" AS A CHILD, TO GET SETTINGS, PACKAGES, AND DATASETS
+# IF WORKING ON THIS PAGE, RUN ALL CHUNKS OF "_page_setup.Rmd" FIRST TO GET THESE OBJECTS
 ```
 
 
@@ -31,14 +34,10 @@ knit: (function(inputFile, encoding) {
 
 
 
-
-
 <!-- ======================================================= -->
 <!-- ======================================================= -->
 <!-- ======================================================= -->
 ## Overview {.tabset .tabset-fade } 
-<h2> Overview </h2>
-
 
 This page demonstrates common steps necessary to clean a dataset. It uses a simulated Ebola case linelist, which is used throughout the handbook.  
 
@@ -67,7 +66,6 @@ factors
 <h2> Preparation </h2>
 
 ### Load packages  
-<h3> Load packages </h3>
 
 ```{r, clean_packages}
 pacman::p_load(tidyverse,  # data manipulation and visualization
@@ -77,7 +75,6 @@ pacman::p_load(tidyverse,  # data manipulation and visualization
 ```
 
 ### Load data  
-<h3> Load data </h3>
 
 Import the raw dataset using the `import()` function from the package **rio**.  (LINK HERE TO IMPORT PAGE)  
 
@@ -379,8 +376,8 @@ Often the first step of cleaning data is selecting the columns you want to work 
 names(linelist)
 ```
 
-### Select & Re-order
-<h3> Select & Re-order </h3>
+### Select & re-order
+<h3> Select & re-order </h3>
 
 
 **Select only the columns you want to remain, *and their order of appearance***  
@@ -624,7 +621,20 @@ The former normalises mass by the global average whereas the latter normalises b
 
 See section on [object classes](#objectclasses)   
 
-Often you will need to set the correct class for a column. The most common approach is to use `mutate()` to define the column as itself, but with a different class.  
+Often you will need to set the correct class for a column. The most common approach is to use `mutate()` to define the column as itself, but with a different class.  Generally, this looks like this:  
+
+```{r, eval=F}
+# Examples of modifying class
+linelist <- linelist %>% 
+  mutate(date_var      = as.Date(date_var, format = "MM/DD/YYYY"),  # format should be the format of the raw data
+         numeric_var   = as.numeric(numeric_var),
+         character_var = as.character(character_var),
+         factor_var    = factor(factor_var, levels = c(), labels = c())
+         )
+```
+
+### Pre-checks and errors  
+<h3> Pre-checks and errors </h3>
 
 First we run some checks on the classes of important columns.  
 
@@ -639,7 +649,8 @@ The class of the "date_onset" column is also character! To perform analysis, the
 ```{r}
 class(linelist$date_onset)
 ```
-However, if we try to classify this column as date, we would get an error. Use `table()` or *sort* or another method to examine all the values and identify different one. For example in our dataset we see that we see that one `date_onset` value was entered in a different format (15th April 2014) than all the other values!    
+
+However, if we try to classify the `date_onset` column as date, we would get an error. Use `table()` or *sort* or another method to examine all the values and identify different one. For example in our dataset we see that we see that one `date_onset` value was entered in a different format (15th April 2014) than all the other values!    
 
 ```{r, echo=F}
 head(table(linelist$date_onset))
@@ -657,8 +668,8 @@ The `mutate()` line can be read as: "mutate date_onset to equal date_onset recod
 Especially after converting to class date, check your data visually or with `table()` to confirm that they were converted correctly! For `as.Date()`, the `format = ` argument is often a source of errors. 
 
 
-### Modify class for multiple columns
-
+### Modify multiple columns
+<h3> Modify multiple columns </h3>
 ```{r}
 class(linelist$date_infection)
 head(linelist$date_infection)
@@ -740,6 +751,11 @@ table(linelist$hospital, useNA = "always")
 ### Manual recoding {.tabset .tabset-fade }
 <h3> Manual recoding </h3>
 
+These tabs demonstrate re-coding values manually b providing specific spellings to be corrected:  
+
+* Using `recode()`  
+* Using **base** R  
+
 
 #### `recode()`  
 <h4> `recode()` </h4>
@@ -787,6 +803,15 @@ linelist$date_onset[linelist$case_id == "9d4019"] <- as.Date("2020-10-24")
 <!-- ======================================================= -->
 ### Recoding by logic {.tabset .tabset-fade}
 <h3> Recoding by logic </h3>
+
+These tabs demonstrate re-coding values in a column using logic and conditions:  
+
+* Using `case_when()`  
+* Using `ifelse()` and `if_else()`  
+* Using special **dplyr** recoding functions like:  
+  * `replace_na()`  
+  * `na_if()`  
+  * `coalesnce()`  
 
 
 #### `case_when()`  
@@ -988,7 +1013,8 @@ The tabs below show how to filter rows based on simple and complex logical condi
 ### A simple `filter()`  
 <h3> A simple `filter()` </h3>
 
-A simple example applies a filter command within a pipe chain. The command re-defines the dataframe `linelist` as itself having filtered the rows to meet a logical condition. **Only the rows where the logical statement within the parentheses is `TRUE` are kept.**  
+This simple example re-defines the dataframe `linelist` as itself, having filtered the rows to meet a logical condition. **Only the rows where the logical statement within the parentheses is `TRUE` are kept.**  
+
 In this case, the logical statement is `!is.na(case_id)`, which is asking whether the value in the column `case_id` is **not** missing (`NA`). Thus, rows where `case_id` is **not** missing are kept.  
 
 Before the filter is applied, the number of rows in `linelist` is `r nrow(linelist)`.
@@ -1019,7 +1045,7 @@ hist(linelist$date_onset, breaks = 50)
 
 #### How filters handle missing numeric and date values  
 
-Can we just filter by `date_onset` to rows after June 2013? **Caution!** Applying `filter(date_onset > as.Date("2013-06-01")))` would accidentally remove any rows in the later epidemic with a missing date of onset!
+Can we just filter by `date_onset` to rows after June 2013? **Caution! Applying the code `filter(date_onset > as.Date("2013-06-01")))` would accidentally remove any rows in the later epidemic with a missing date of onset!**  
 
 <span style="color: red;">**_DANGER:_** Filtering to greater than (>) or less than (<) a date or number can remove any rows with missing values (`NA`)! This is because `NA` is treated as infinitely large and small.</span>
 
@@ -1041,9 +1067,10 @@ What other criteria can we filter on to remove the first outbreak from the datas
 
 We want to exclude:  
 
-* The `r nrow(linelist %>% filter(hospital %in% c("Hospital A", "Hospital B") | date_onset < as.Date("2013-06-01")))` rows with onset in 2012 and 2013 at hospitals A, B, and Port, *including*:  
-  * Excluding the 2 rows from Hospitals A & B with missing onset dates  
-  * Do not exclude any other rows with missing onset dates.  
+* The `r nrow(linelist %>% filter(hospital %in% c("Hospital A", "Hospital B") | date_onset < as.Date("2013-06-01")))` rows with onset in 2012 and 2013 at either hospital A, B, or Port:  
+  * Exclude the `r nrow(linelist %>% filter(date_onset < as.Date("2013-06-01")))` rows with onset in 2012 and 2013
+  * Exclude the `r nrow(linelist %>% filter(hospital %in% c('Hospital A', 'Hospital B') & is.na(date_onset)))` rows from Hospitals A & B with missing onset dates  
+  * Do **not** exclude the `r nrow(linelist %>% filter(!hospital %in% c('Hospital A', 'Hospital B') & is.na(date_onset)))` other rows with missing onset dates.  
 
 We start with a linelist of `nrow(linelist)`. Here is our filter statement:  
 
