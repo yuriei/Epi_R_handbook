@@ -34,7 +34,6 @@ knit: (function(inputFile, encoding) {
 
 <!-- ======================================================= -->
 ## Overview {.tabset .tabset-fade}
-<h2> Overview </h2>
 
 
 
