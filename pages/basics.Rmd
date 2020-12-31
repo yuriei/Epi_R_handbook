@@ -37,6 +37,7 @@ pacman::p_load(apyramid)
 
 <!-- ======================================================= -->
 ## Overview
+<h2> Overview </h2>
 
 This section is **not** meant as a comprehensive "how to learn R" tutorial. However, it does cover some of the fundamentals that can be good to reference or refresh. 
 
@@ -57,7 +58,7 @@ More comprehensive tutorials are available online:
 * Free
 
 <!-- ======================================================= -->
-## Installation {#install .tabset .tabset-fade .tabset-pills}
+## Installation {#install .tabset .tabset-fade }
 <h2> Installation </h2>
 
 How to install R
@@ -72,7 +73,7 @@ Other things you may need to install:
 * RTools  
 
 <!-- ======================================================= -->
-## RStudio {#rstudio .tabset .tabset-fade .tabset-pills}
+## RStudio {#rstudio .tabset .tabset-fade }
 <h2> RStudio </h2>
 
 
@@ -124,11 +125,12 @@ Change RStudio settings and appearance in the Tools drop-down menu, by selecting
 
 
 <!-- ======================================================= -->
-## Scripts {#scripts .tabset .tabset-fade .tabset-pills}
+## Scripts {#scripts .tabset .tabset-fade }
 <h2> Scripts </h2>
 
 <!-- ======================================================= -->
 ### Why use a script
+<h2> Overview </h2>
 
 R scripts (vs. typing in the console)  
 * Advantages (reproducability)
@@ -136,13 +138,20 @@ R scripts (vs. typing in the console)
 * Commenting
 
 <!-- ======================================================= -->
-### Rmarkdown {#rmd .tabset .tabset-fade .tabset-pills}
+### Rmarkdown {#rmd .tabset .tabset-fade }
+<h3> Rmarkdown </h3>
+
+See the handbook page on Rmarkdown documents.  
 
 <!-- ======================================================= -->
-### R notebooks {#rnotebooks .tabset .tabset-fade .tabset-pills}
+### R notebooks {#rnotebooks .tabset .tabset-fade }
+<h3> R notebooks </h3>
+
+See the handbook page on Rmarkdown documents.  
 
 <!-- ======================================================= -->
-### RShiny {#shinyscripts .tabset .tabset-fade .tabset-pills}
+### R Shiny {#shinyscripts .tabset .tabset-fade }
+<h3> R Shiny </h3>
 
 
 
@@ -162,7 +171,7 @@ NOTE: If using an [R project](#rproject), the working directory will default to 
 ```
 
 <!-- ======================================================= -->
-### Set by Command
+### Set by command
 
 Use the command `setwd()` with the filepath in quotations, for example: `setwd("C:/Documents/R Files")`
 
@@ -195,7 +204,7 @@ How things change in an R project
 
 <h2> Objects </h2>
 <!-- ======================================================= -->
-## Objects {#objects .tabset .tabset-fade .tabset-pills}
+## Objects {#objects .tabset .tabset-fade }
 
 Everything in R is an object. These sections will explain:  
 
@@ -208,13 +217,15 @@ Everything in R is an object. These sections will explain:
 
 <!-- ======================================================= -->
 ### Everything is an object 
+<h3> Everything is an object </h3>
 
 Everything you store in R - datasets, variables, a list of village names, a total population number, even outputs such as graphs - are **objects** which are **assigned a name** and **can be referenced** in later commands.  
 
 An object exists when you have assigned it a value (see the assignment section below). When it is assigned a value, the object appears in the Environment (see the upper right pane of RStudio). It can then be operated upon, manipulated, changed, and re-defined.
 
 <!-- ======================================================= -->
-### Creating objects (`<-`)
+### Defining objects (`<-`)
+<h3> Defining objects </h3>
 
 **Create objects *by assigning them a value* with the <- operator.**  
 You can think of the assignment operator `<-` as the words "is defined as". Assignment commands generally follow a standard order:
@@ -264,7 +275,8 @@ You can read more about importing and exporting datasets with the section on [im
  
 
 <!-- ======================================================= -->
-### Object Structure {#objectstructure}  
+### Object structure {#objectstructure}  
+<h3> Object structure </h3>
 
 **Objects can be a single piece of data (e.g. `my_number <- 24`), or they can consist of structured data.**  
 
@@ -288,7 +300,8 @@ Note that to create a vector that "stands alone", or is not part of a data frame
 
 
 <!-- ======================================================= -->
-### Object Classes  {#objectclasses}
+### Object classes  {#objectclasses}
+<h3> Object classes </h3>
 
 All the objects stored in R have a *class* which tells R how to handle the object. There are many possible classes, but common ones include:
 
@@ -324,9 +337,13 @@ Here is [more online material on classes and data structures in R](https://swcar
 
 
 <!-- ======================================================= -->
-### Variables (`$`) {#dollarsign}  
+### Columns/Variables (`$`) {#dollarsign}  
+<h3> Columns/Variables </h3>
 
 **Vectors within a data frame (variables in a dataset) can be called, referenced, or created using the `$` symbol.** The `$` symbol connects the name of the column to the name of its data frame. The `$` symbol must be used, otherwise R will not know where to look for or create the column.  
+
+In this handbook, we use the word "column" instead of "variable".  
+
 
 ```{r basics_objects_call, eval=F}
 # Retrieve the length of the vector age_years
@@ -347,7 +364,8 @@ knitr::include_graphics(here::here("images", "Calling_Names.gif"))
 
 
 <!-- ======================================================= -->
-### Access/View with brackets (`[]`) {#brackets}  
+### Access with brackets (`[]`) {#brackets}  
+<h3> Access with brackets (`[]`) </h3>
 
 You may need to view parts of objects, which is often done using the square brackets `[ ]`.  
 
@@ -394,7 +412,7 @@ summary(linelist$age)[2]
 
 
 <!-- ======================================================= -->
-## Functions {#functions .tabset .tabset-fade .tabset-pills}
+## Functions {#functions .tabset .tabset-fade }
 <h2> Functions </h2>
 
 
@@ -406,7 +424,8 @@ This section on functions explains:
 
 
 <!-- ======================================================= -->
-### Simple Functions  
+### Simple functions  
+<h3> Simple functions </h3>
 
 **A function is like a machine that receives inputs, does some action with those inputs, and produces an output.**  
 What the output is depends on the function.    
@@ -429,7 +448,8 @@ summary(linelist$age)
 
 
 <!-- ======================================================= -->
-### Functions with Multiple Arguments  
+### Functions with multiple arguments  
+<h3> Functions with multiple arguments </h3>
 
 Functions often ask for several inputs, called ***arguments***, located within the parentheses of the function, usually separated by commas. 
 
@@ -480,6 +500,7 @@ age_pyramid(linelist, "age_group", "gender", proportional = TRUE, pal = c("orang
 
 <!-- ======================================================= -->
 ### Packages {#packages}  
+<h3> Packages </h3>
 
 **Packages contain functions.**  
 
@@ -516,7 +537,8 @@ Packages often depend on other packages, and these are called "dependencies". Wh
 
 
 <!-- ======================================================= -->
-### Function Help  
+### Function help  
+<h3> Function help </h3>
 
 To read more about a function, you can try searching online for resources OR search in the Help tab of the lower-right RStudio pane.  
 
@@ -524,8 +546,8 @@ To read more about a function, you can try searching online for resources OR sea
 <!-- ======================================================= -->
 <!-- ======================================================= -->
 <!-- ======================================================= -->
-<h2>Piping</h2>
 ## Piping (`%>%`) {#piping .tabset .tabset-fade}
+<h2> Piping (`%>%`) </h2> 
 
 **Two general approaches to R coding are:**  
 
@@ -533,7 +555,8 @@ To read more about a function, you can try searching online for resources OR sea
 2) **defining intermediate objects** (and older method, still worth knowing about) 
 
 <!-- ======================================================= -->
-### **Piping** 
+### **Pipes** 
+<h3> Pipes </h3>  
 
 **Simply explained, the pipe operator (`%>%`) passes an intermediate output from one function to the next.**  
 You can think of it as saying "then". Many functions can be linked together with `%>%`.  
@@ -570,7 +593,8 @@ TODO
 %<>% shortcut for re-defining the object and piping
 
 <!-- ======================================================= -->
-### **Intermediate objects**
+### Define intermediate objects
+<h3> Define intermediate objects </h3>  
 
 Better if:  
 * You need to manipulate multiple objects  
@@ -609,8 +633,8 @@ cake <- let_cool(bake(mix_together(batter_3, utensil = spoon, minutes = 2), degr
 
 
 <!-- ======================================================= -->
+## Key operators and functions {#operators .tabset .tabset-fade }
 <h2> Key operators and functions </h2>
-## Key operators and functions {#operators .tabset .tabset-fade .tabset-pills}
 
 This section details operators in R, such as:  
 * Relational operators (less than, equal too..)  
@@ -622,6 +646,7 @@ This section details operators in R, such as:
 
 <!-- ======================================================= -->
 ### Relational and logical operators  
+<h3> Relational and logical operators </h3>
 
 **Relational operators compare values** and are often used when defining new variables and subsets of datasets. Here are the common relational operators in R:  
 
@@ -670,7 +695,8 @@ Note that R is case-sensitive, so "Positive" is different than "positive"...
 {{% /notice %}}
  
 <!-- ======================================================= -->
-### Missing Values
+### Missing values
+<h3> Missing values </h3>
 
 **In R, missing values are represented by the special value `NA`** (capital letters N and A - not in quotation marks). If you import data that records missing data in another way (e.g. 99, "Missing", or .), you may want to re-code those values to `NA`.
   
@@ -687,6 +713,7 @@ SECTION ON `NULL`
 
 <!-- ======================================================= -->
 ### Mathematics and statistics  
+<h3> Mathematics and statistics </h3>
 
 All the operators and functions in this page is automatically available using **base** R.  
 
@@ -755,6 +782,7 @@ subdivide a numeric vector  | cut(x, n)          |`cut(linelist$age, 5)`
 
 <!-- ======================================================= -->
 ### `%in%`  
+<h3> `%in%` </h3>
 
 
 
@@ -762,7 +790,7 @@ subdivide a numeric vector  | cut(x, n)          |`cut(linelist$age, 5)`
 <!-- ======================================================= -->
 <!-- ======================================================= -->
 <h2>Loading Packages </h2>
-## Loading Packages {.tabset .tabset-fade .tabset-pills}
+## Loading Packages {.tabset .tabset-fade }
 
 
 This section describes the several ways to install a package:  
@@ -772,22 +800,25 @@ This section describes the several ways to install a package:
 
 
 <!-- ======================================================= -->
-### CRAN {.tabset .tabset-fade .tabset-pills}
+### CRAN {.tabset .tabset-fade }
+<h3> CRAN </h3>
 
 
 <!-- ======================================================= -->
-### ZIP files {.tabset .tabset-fade .tabset-pills}
+### ZIP files {.tabset .tabset-fade }
+<h3> ZIP files </h3>
 
 
 <!-- ======================================================= -->
-### Github {.tabset .tabset-fade .tabset-pills}
+### Github {.tabset .tabset-fade }
+<h3> Github </h3>
 
 
 <!-- ======================================================= -->
 <!-- ======================================================= -->
 <!-- ======================================================= -->
-<h2>Errors & Warnings</h2>
-## Errors & Warnings {.tabset .tabset-fade .tabset-pills}
+## Errors & Warnings {.tabset .tabset-fade }
+<h2> Errors & Warnings </h2>
 
 This section explains:  
 * General syntax for writing R code  
@@ -795,9 +826,11 @@ This section explains:
 * the difference between errors and warnings 
 
 Common errors and warnings and their solutions can be found in X section (TODO).
+See the handbook page on common errors and warnings.  
 
 <!-- ======================================================= -->
-### General Syntax
+### General syntax
+<h3> General syntax </h3>
 
 A few things to remember when writing commands in R, to avoid errors and warnings:  
 
@@ -808,6 +841,7 @@ A few things to remember when writing commands in R, to avoid errors and warning
 
 <!-- ======================================================= -->
 ### Code assists  
+<h3> Code assists </h3>
 
 Any script (RMarkdown or otherwise) will give clues when you have made a mistake. For example, if you forgot to write a comma where it is needed, or to close a parentheses, RStudio will raise a flag on that line, on the right side of the script, to warn you.  
 
@@ -815,6 +849,7 @@ Any script (RMarkdown or otherwise) will give clues when you have made a mistake
 
 <!-- ======================================================= -->
 ### Errors and Warnings  
+<h3> Errors and warnings </h3>
 
 When a command is run, the R Console may show you warning or error messages in red text.  
 
@@ -835,13 +870,15 @@ If all else fails, copy the error message into Google along with some key terms 
 <!-- ======================================================= -->
 <!-- ======================================================= -->
 <h2>Recommended training</h2>
-## Recommended training {.tabset .tabset-fade .tabset-pills}
+## Recommended training {.tabset .tabset-fade }
 
 <!-- ======================================================= -->
 ### Cheatsheets
+<h3> Cheatsheets </h3>
 
 <!-- ======================================================= -->
 ### Courses
+<h3> Courses </h3>
 
 
 

@@ -26,7 +26,7 @@ knit: (function(inputFile, encoding) {
 <!-- ======================================================= -->
 <!-- ======================================================= -->
 <!-- ======================================================= -->
-# Heatmaps {#heatmap .tabset .tabset-fade}  
+# Heatmaps & density plots {#heatmap .tabset .tabset-fade}  
 
 
 <!-- ======================================================= -->
@@ -36,13 +36,14 @@ Heatmaps can be useful when tracking reporting metrics across many facilities/ju
 
 For example, the image below shows % of weekdays that data was received from each facility, week-by-week:  
 
-```{r echo=F}
+```{r echo=F, out.width=c('50%','50%'), fig.show='hold'}
 
 facility_count_data <- rio::import(here::here("data", "facility_count_data.rds"))
 library(aweek)
 
 
 # Create weekly summary dataset
+###############################
 agg_weeks <- facility_count_data %>% 
   
   # filter the data as appropriate
@@ -69,9 +70,8 @@ agg_weeks <- facility_count_data %>%
 
 
 
-
-
-
+# METRICS PLOT
+##############
 ggplot(agg_weeks,
        aes(x = aweek::week2date(week),            # transformed to date class
            y = location_name,
@@ -109,6 +109,38 @@ ggplot(agg_weeks,
        subtitle = "District health facilities, April-May 2019",
        caption = "7-day weeks beginning on Mondays.")
 
+################
+# DENSITY MAP
+################
+pacman::p_load(OpenStreetMap)
+
+# Fit basemap by range of lat/long coordinates. Choose tile type
+map <- openmap(c(max(linelist$lat, na.rm=T), max(linelist$lon, na.rm=T)),  # limits of tile
+               c(min(linelist$lat, na.rm=T), min(linelist$lon, na.rm=T)),
+               zoom = NULL,
+               type = c("osm", "stamen-toner", "stamen-terrain","stamen-watercolor", "esri","esri-topo")[1],
+               mergeTiles = TRUE)
+
+# Projection WGS84
+map.latlon <- openproj(map, projection = "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs")
+
+# Plot map. Must be autoplotted to work with ggplot
+OpenStreetMap::autoplot.OpenStreetMap(map.latlon)+
+  # Density tiles  
+  ggplot2::stat_density_2d(aes(x = lon,
+        y = lat,
+        fill = ..level..,
+        alpha =..level..),
+    bins = 10,
+    geom = "polygon",
+    contour_var = "count",
+    data = linelist,
+    show.legend = F) +
+  scale_fill_gradient(low = "black", high = "red")+
+  labs(x = "Longitude",
+       y = "Latitude",
+       caption = "OpenStreetMap base tile",
+       title = "Distribution density of simulated cases")
 ```
 
 
@@ -395,18 +427,20 @@ map.latlon <- openproj(map, projection = "+proj=longlat +ellps=WGS84 +datum=WGS8
 # Plot map. Must be autoplotted to work with ggplot
 OpenStreetMap::autoplot.OpenStreetMap(map.latlon)+
   # Density tiles  
-  stat_density2d(aes(x = lon,
-                       y = lat,
-                       fill = ..level..,
-                       alpha=..level..),
-                   bins = 10,
-                   geom = "polygon",
-                   data = linelist) +
-    scale_fill_gradient(low = "black", high = "red")+
-    labs(x = "Longitude",
-         y = "Latitude",
-         title = "Distribution of simulated cases")+
-    theme(legend.position = "none")
+  ggplot2::stat_density_2d(aes(x = lon,
+        y = lat,
+        fill = ..level..,
+        alpha=..level..),
+    bins = 10,
+    geom = "polygon",
+    contour_var = "count",
+    data = linelist,
+    show.legend = F) +
+  scale_fill_gradient(low = "black", high = "red")+
+  labs(x = "Longitude",
+       y = "Latitude",
+       title = "Distribution of simulated cases")
+
 ```
 https://www.rdocumentation.org/packages/OpenStreetMap/versions/0.3.4/topics/autoplot.OpenStreetMap
 

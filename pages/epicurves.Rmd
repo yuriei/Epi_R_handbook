@@ -34,6 +34,7 @@ knit: (function(inputFile, encoding) {
 
 <!-- ======================================================= -->
 ## Overview {.tabset .tabset-fade}
+<h2> Overview </h2>
 
 
 
@@ -93,6 +94,7 @@ plot(gender_outbreak_central,
 
 <!-- ======================================================= -->
 ## Preparation
+<h2> Preparation </h2>
 
 
 ### Packages  
@@ -194,6 +196,7 @@ for (Col in DateCols) {     # open loop. iterate for each name in vector DateCol
 
 <!-- ======================================================= -->
 ## `incidence` package {.tabset .tabset-fade}
+<h2> `incidence` package </h2>
 
 Below are tabs on making quick epicurves using the **incidence** package  
 
@@ -207,7 +210,8 @@ https://cran.r-project.org/web/packages/incidence/vignettes/customize_plot.html#
 
 
 <!-- ======================================================= -->
-### Incidence intro {.tabset .tabset-fade}
+### Intro {.tabset .tabset-fade}
+<h3> Intro </h3>
 
 **2 steps are requires to plot an epicurve with the *incidence* package:**  
 
@@ -275,7 +279,8 @@ plot(epi_month)+  labs(title = "Months")
 
 
 <!-- ======================================================= -->
-### Incidence modifications {.tabset .tabset-fade}
+### Modifications {.tabset .tabset-fade}
+<h3> Modifications </h3>
 
 The **incidence** package enables modifications in the following ways:  
 
@@ -289,6 +294,7 @@ Read details in the Help files by entering `?scale_x_incidence` and `?plot.incid
 
 
 #### `plot()` modifications  
+<h4> `plot()` modifications </h4>
 
 A incidence plot can be modified in the following ways. Type `?plot.incidence` in the R console for more details.  
 
@@ -306,6 +312,7 @@ See examples of these arguments in the subsequent tabs.
 
 
 #### Filtered data
+<h4> Filtered data </h4>
 
 **To plot the epicurve of a subset of data:**  
 
@@ -327,7 +334,8 @@ plot(central_outbreak) + labs(title = "Weekly case incidence at Central Hospital
 ```
 
 
-#### Adjust date-axis labels/format/gridlines {.tabset .tabset-fade} 
+#### Date-axis labels/gridlines {.tabset .tabset-fade} 
+<h4> Date-axis labels/gridlines </h4>
 
 <span style="color: darkgreen;">**_TIP:_** Remember that date-axis **labels** are independent from the aggregation of the data into bars</span>
 
@@ -486,6 +494,7 @@ plot(central_outbreak)+
 
 
 #### Show individual cases
+<h4> Show individual cases </h4>
 
 **To show boxes around each individual case, use the argument `show_cases = TRUE` in the `plot()` function.**  
 
@@ -545,6 +554,7 @@ plot(central_outbreak,
 
 
 #### Color by value
+<h4> Color by value </h4>
 
 To color the cases by value, provide the column to the `groups =` argument in the `incidence()` command. In the example below the cases are colored by their age category. Note the use of `incidence()` argument `na_as_group = `. If TRUE (by default) missing values (`NA`) will form their own group.  
 
@@ -618,7 +628,8 @@ plot(gender_outbreak_central,
            x = "Week of symptom onset")      
 ```
 
-#### Changing colors and legend  
+#### Change colors and legend  
+<h4> Change colors and legend </h4>
 
 **To change the legend**  
 Use `ggplot()` commands such as:  
@@ -669,6 +680,7 @@ plot(age_outbreak, col_pal = rainbow)
 
 
 #### Facets/small multiples  
+<h4> Facets/small multiples </h4>
 
 To facet the plot by a variable (make "small multiples"), see the tab on epicurves with `ggplot()` 
 
@@ -676,7 +688,8 @@ To facet the plot by a variable (make "small multiples"), see the tab on epicurv
 
 
 <!-- ======================================================= -->
-## `ggplot2` {.tabset .tabset-fade}
+## `ggplot()` {.tabset .tabset-fade}
+<h2> `ggplot()` </h2>
 
 Below are tabs on using the **ggplot2** package to produce epicurves from a linelist dataset.
 
@@ -690,8 +703,10 @@ central_data <- linelist %>%
 ```
 
 
+
 <!-- ======================================================= -->
-### ggplot epicurve intro {.tabset .tabset-fade}
+### Intro {.tabset .tabset-fade}
+<h3> Intro </h3>
 
 To produce an epicurve with `ggplot()` there are three main elements:  
 
@@ -823,10 +838,12 @@ ggplot(central_data, aes(x = date_onset)) +
 
 
 <!-- ======================================================= -->
-### ggplot modifications {.tabset .tabset-fade}
+### Modifications {.tabset .tabset-fade}
+<h3> Modifications </h3>
 
 
 #### Modify axes  
+<h4> Modify axes </h4>
 
 <span style="color: darkgreen;">**_TIP:_** Remember that date-axis **labels** are independent from the aggregation of the data into bars</span>
 
@@ -1000,6 +1017,7 @@ ggplot(central_data, aes(x = date_onset)) +
 
 
 #### Color by groups
+<h4> Color by groups </h4>
 
 **Designate a column containing groups**  
 
@@ -1176,6 +1194,7 @@ ggplot(central_data_dodge, aes(x = date_onset)) +
 
 
 #### Faceting/small-multiples
+<h4> Faceting/small-multiples </h4>
 
 As with other ggplots, you can create facetted plots ("small multiples") off values in a column. As explained in the ggplot tips page of this handbook, you can use either:  
 
@@ -1213,7 +1232,7 @@ Labels of the facet plots can be modified through the "labels" of the column as 
 
 Make a labeller like this, using the function `as_labeller()` from **ggplot2**:  
 
-```{r}
+```{r, class.source = 'fold-show'}
 my_labels <- as_labeller(c(
      "0-4"   = "Ages 0-4",
      "5-9"   = "Ages 5-9",
@@ -1272,6 +1291,7 @@ ggplot(central_data, aes(x = date_onset)) +
        y        = "Weekly incident cases reported",
        caption  = stringr::str_glue("n = {nrow(central_data)} from Central Hospital; Case onsets range from {format(min(central_data$date_onset, na.rm=T), format = '%a %d %b %Y')} to {format(max(central_data$date_onset, na.rm=T), format = '%a %d %b %Y')}\n{nrow(central_data %>% filter(is.na(date_onset)))} cases missing date of onset and not shown"))
 ```
+
 See this [link](https://ggplot2.tidyverse.org/reference/labellers.html) for more information on labellers.  
 
 **Add total epidemic to background**  
@@ -1280,6 +1300,7 @@ Add a separate `geom_histogram()` command *before* the current one. Specify that
 ```
 geom_histogram(data = select(central_data, -age_cat), color = "grey", alpha = 0.5)+
 ```
+
 Note that the y-axis maximum is now based on the height of the entire epidemic. Click "Code" to see the code.  
 
 
@@ -1400,19 +1421,23 @@ ggplot(central_data2, aes(x = date_onset)) +
 ```
 
 
-#### Moving average
+#### Moving averages
+<h4> Moving averages </h4>
 
 
 
-#### Add rectangle for tentative reporting  
+#### Tentative data  
+<h4> Tentative data </h4>
 
 
 
 #### Dual axis
-
+<h4> Dual axis </h4>
+Two axes
 
 
 #### Multi-level date labels  
+<h4> Multi-level date labels </h4>
 
 Years under months  
 1) Faceting
@@ -1421,14 +1446,15 @@ Years under months
 https://stackoverflow.com/questions/44616530/axis-labels-on-two-lines-with-nested-x-variables-year-below-months
 https://stackoverflow.com/questions/20571306/multi-row-x-axis-labels-in-ggplot-line-chart
 
-#### transform and display as aggregate counts  
+#### Aggregate linelist data  
+<h4> Aggregate linelist data   </h4>
 
 Best is to use the **aweek** package to create a new column, then group_by and summarize, 
 
 **Get weeks, then plot** *use **aweek** to convert dates to weeks, then plot the weekly counts*  
 To aggregate into weeks and show ALL weeks (even ones with no cases), do these two things:  
-1) use floor_date = T and factor = T in the date2week() command, and  
-2) use .drop = F in the group_by() command
+1) use `floor_date = TRUE` and `factor = TRUE` in the `date2week()` command, and  
+2) use `.drop = F` in the `group_by()` command
 
 like this:  
 ```
@@ -1440,7 +1466,7 @@ central_tab <- central_data %>%
 
 ```{r, eval=F}
 linelist <- linelist %>% 
-  mutate(week = aweek::date2week(date_onset, floor_day = T))
+  mutate(week = aweek::date2week(date_onset, floor_day = T, factor = TRUE))
 
 linelist %>% 
   group_by(week, .drop = F) %>% 
@@ -1453,6 +1479,7 @@ linelist %>%
 
 <!-- ======================================================= -->
 ## Aggregated data {.tabset .tabset-fade}
+<h2> Aggregated data </h2>
 
 
 Often instead of a linelist, you begin with aggregated counts from facilities, districts, etc. You can make an epicurve from `ggplot()` but the code will be slightly different. The incidence package does not support aggregate data.
@@ -1541,6 +1568,7 @@ ggplot(data = count_data_weekly,
 
 <!-- ======================================================= -->
 ## Dual-axis {.tabset .tabset-fade}  
+<h2> Dual-axis </h2>
 
 Although there are fierce discussions about the validity of this within the data visualization community, many supervisors want to see an epicurve or similar chart with a percent overlaid with a second axis.
 
@@ -1548,7 +1576,9 @@ In ggplot it is very difficult to do this, except for the case where you are sho
 
 
 <!-- ======================================================= -->
-### Second axis  
+### Second axis
+<h3> Second axis </h3>
+
 This uses the linelist dataset
 
 TODO not complete yet
@@ -1641,6 +1671,7 @@ print(plot_defined_cats)
 
 <!-- ======================================================= -->
 ## Resources {.tabset .tabset-fade}
+<h2> Resources </h2>
 
 This tab should stay with the name "Resources".
 Links to other online tutorials or resources.

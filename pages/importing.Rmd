@@ -20,6 +20,9 @@ knit: (function(inputFile, encoding) {
 ---
 
 ```{r, child= '_page_setup.Rmd', eval = params$run_page_ind, include = F}
+# THIS CHUNK RUNS IF PAGE IS KNITTED INDEPENDENTLY OF THE HANDBOOK
+# IT SOURCES RMD "_page_setup.Rmd" AS A CHILD, TO GET SETTINGS, PACKAGES, AND DATASETS
+# IF WORKING ON THIS PAGE, RUN ALL CHUNKS OF "_page_setup.Rmd" FIRST TO GET THESE OBJECTS
 ```
 
 
@@ -31,12 +34,12 @@ knit: (function(inputFile, encoding) {
 <!-- ======================================================= -->
 ## Overview
 
-
 Introduction to importing data
 
 
 <!-- ======================================================= -->
-## Packages {.tabset .tabset-fade .tabset-pills}  
+## Packages {.tabset .tabset-fade}  
+<h2> Packages </h2>
 
 The key package we recommend for importing data is: **rio**. **rio** offers the useful function `import()` which can import many types of files into R.  
 
@@ -53,7 +56,8 @@ pacman::p_load(rio, here)
 ```
 
 <!-- ======================================================= -->
-## `import()` {.tabset .tabset-fade .tabset-pills}
+## `import()` {.tabset .tabset-fade}
+<h2> `import()` </h2>
 
 When you import a dataset, you are doing the following:  
 
@@ -77,6 +81,8 @@ my_Excel_data <- import("observations.xlsx", which = "February") # import an Exc
 
 You can read more about the **rio** package [in this online vignette](https://rdrr.io/cran/rio/f/vignettes/rio.Rmd)
 
+https://cran.r-project.org/web/packages/rio/readme/README.html
+
 <span style="color: orange;">**_CAUTION:_** In the example above, the datasets are assumed to be located in the *working directory*, or the same folder as the script.</span>  
 
 TO DO
@@ -95,7 +101,8 @@ R files
 
 
 <!-- ======================================================= -->
-## Import from filepath {.tabset .tabset-fade .tabset-pills}  
+## Import from filepath {.tabset .tabset-fade}  
+<h2> Import from filepath </h2>
 
 A filepath can be provided in full (as below) or as a *relative filepath* (see next tab). Providing a full filepath can be fast and may be the best if referencing files from a shared/network drive).  
 
@@ -110,7 +117,8 @@ my_data <- rio::import("C:/Users/Neale/Documents/my_excel_file.xlsx")
 ```
 
 <!-- ======================================================= -->
-## Import Excel sheet {.tabset .tabset-fade .tabset-pills}
+## Excel sheet {.tabset .tabset-fade}
+<h2> Excel sheets </h2>
 
 If importing a specific **sheet** from an Excel file, include the sheet name in the `which = ` argument of `import()`. For example:  
 
@@ -127,7 +135,8 @@ linelist_raw <- import(here("data", "linelists", "linelist.xlsx"), which = "Shee
 ```
 
 <!-- ======================================================= -->
-## Select file manually {.tabset .tabset-fade .tabset-pills}
+## Select file manually {.tabset .tabset-fade}
+<h2> Select file manually </h2>
 
 You can import data manually via one of these methods:  
 
@@ -146,7 +155,8 @@ my_data <- rio::import(file.choose())
 
 
 <!-- ======================================================= -->
-## Relative filepaths (`here()`) {#here .tabset .tabset-fade .tabset-pills}
+## Relative filepaths (`here()`) {#here .tabset .tabset-fade}
+<h2> Relative filepaths (`here()`) </h2>
 
 *Relative filepaths* differ from static filepaths in that they are *relative from a [R project](#rproject) root directory*. For example:  
 
@@ -195,11 +205,137 @@ linelist <- import(here("data", "fluH7N9_China_2013.csv"))
 <span style="color: black;">**_NOTE:_** You can still import a specific sheet of an excel file as noted in the Excel tab. The `here()` command only supplies the filepath.</span>
 
 
+<!-- ======================================================= -->
+## Google sheets {.tabset .tabset-fade}
+<h2> Google sheets </h2>
+
+Code from WHO
+API
+Other live online data sources?
+
+
 
 <!-- ======================================================= -->
-## Manual data entry {.tabset .tabset-fade .tabset-pills}
+## Websites {.tabset .tabset-fade}
+<h2> Websites </h2>
 
-### Entry by columns
+Setting up to auto-import data stored on a website  
+
+
+<!-- ======================================================= -->
+## Skip rows  
+<h2> Skip rows </h2>
+
+Sometimes, you may want to avoid importing a row of data (e.g. the column names, which are row 1).  
+you can do this with the argument `skip = ` if using `import()` from the **rio** package on a .xlsx or .csv file. Provide the number of rows you want to skip.  
+
+
+
+```{r, eval=F}
+linelist_raw <- import("linelist_raw.xlsx", skip = 1)  # does not import header row
+```
+
+Unfortunately `skip = ` only accepts one integer value, *not* a range (e.g. "2:10"). To skip import of specific rows that are not consecutive from the top, consider importing multiple times and using `bind_rows()` from **dplyr**. See the example below of skipping only row 2.  
+
+
+
+### Removing a second header row  
+
+Your data may have a *second* row of data, for example if it is a "data dictionary" row (see example below). 
+
+```{r, echo=F}
+# HIDDEN FROM READER
+####################
+# Create second header row of "data dictionary" and insert into row 2. Save as new dataframe.
+linelist_2headers <- rio::import(here::here("data", "linelist_cleaned.rds")) %>%         
+        mutate(across(everything(), as.character)) %>% 
+        add_row(.before = 1,
+                #row_num = "000",
+                case_id = "case identification number assigned by MOH",
+                generation = "transmission chain generation number",
+                date_infection = "estimated date of infection, mm/dd/yyyy",
+                date_onset = "date of symptom onset, YYYY-MM-DD",
+                date_hospitalisation = "date of initial hospitalization, mm/dd/yyyy",
+                date_outcome = "date of outcome status determination",
+                outcome = "either 'Death' or 'Recovered' or 'Unknown'",
+                gender = "either 'm' or 'f' or 'unknown'",
+                hospital = "Name of hospital of first admission",
+                lon = "longitude of residence, approx",
+                lat = "latitude of residence, approx",
+                infector = "case_id of infector",
+                source = "context of known transmission event",
+                age = "age number",
+                age_unit = "age unit, either 'years' or 'months' or 'days'",
+                fever = "presence of fever on admission, either 'yes' or 'no'",
+                chills = "presence of chills on admission, either 'yes' or 'no'",
+                cough = "presence of cough on admission, either 'yes' or 'no'",
+                aches = "presence of aches on admission, either 'yes' or 'no'",
+                vomit = "presence of vomiting on admission, either 'yes' or 'no'",
+                time_admission = "time of hospital admission HH:MM")
+```
+
+
+```{r message=FALSE, echo=F}
+# display the linelist data as a table
+DT::datatable(head(linelist_2headers, 5), rownames = FALSE, filter="top", options = list(pageLength = 4, scrollX=T) )
+```
+
+This situation can be problematic because it can result in all columns being imported as class "character". To solve this, you will likely need to import the data twice.  
+
+1) Import the data in order to store the correct column names  
+2) Import the data again, skipping the first *two* rows (header and second rows)  
+3) Bind the correct names onto the reduced dataframe
+
+The exact arguments used to bind the correct column names depends on the type of data file (.csv, .tsv, .xlsx, etc.). If using **rio**'s `import()` function, understand which function **rio** uses to import your data, and then give the appropriate argument to skip lines and/or designate the column names. See the handbook page on importing data (LINK) for details on **rio**.  
+
+**For Excel files:**  
+
+```{r, eval=F}
+# For excel files (remove 2nd row)
+linelist_raw_names <- import("linelist_raw.xlsx") %>% names()  # save true column names
+
+# import, skip row 2, assign to col_names =
+linelist_raw <- import("linelist_raw.xlsx", skip = 2, col_names = linelist_raw_names) 
+```
+
+**For CSV files:**  
+
+```{r, eval=F}
+# For csv files
+linelist_raw_names <- import("linelist_raw.csv") %>% names() # save true column names
+
+# note argument is 'col.names ='
+linelist_raw <- import("linelist_raw.csv", skip = 2, col.names = linelist_raw_names) 
+```
+
+**Backup option** - changing column names as a separate command
+
+```{r, eval=F}
+# assign/overwrite headers using the base 'colnames()' function
+colnames(linelist_raw) <- linelist_raw_names
+```
+
+Bonus! If you do have a second row that is a data dictionary, you can easily create a proper data dictionary from it using the `gather()` command from the **tidyr** package.  
+source: https://alison.rbind.io/post/2018-02-23-read-multiple-header-rows/
+
+TO DO
+```{r, eval=F}
+library(tidyr)
+stickers_dict <- import("linelist_raw.xlsx") %>% 
+  clean_names() %>% 
+  gather(variable_name, variable_description)
+stickers_dict
+```
+
+
+
+<!-- ======================================================= -->
+## Manual data entry {.tabset .tabset-fade}
+<h2> Manual data entry </h2>
+
+### Entry by columns  
+<h3> Entry by columns </h3>
+
 Since a data frame is a combination of vertical vectors (columns), R by default expects manual entry of data to also be in vertical vectors (columns). 
 
 ```{r import_manual_col}
@@ -225,7 +361,9 @@ DT::datatable(manual_entry_cols)
 ```
 
 
-### Entry by rows
+### Entry by rows  
+<h3> Entry by rows </h3>
+
 Use the `tribble` function from the **tibble** package from the tidverse ([onlinetibble reference](https://tibble.tidyverse.org/reference/tribble.html)).  
   
 Note how column headers start with a *tilde* (`~`).  Also note that each column must contain only one class of data (character, numeric, etc.).  
@@ -252,6 +390,8 @@ DT::datatable(manual_entry_rows)
 **OR ADD ROWS dplyr**  TO DO
 
 ### Pasting from clipboard  
+<h3> Pasting from clipboard </h3>
+
 
 If you copy data from elsewhere and have it on your clipboard, you can try the following command to convert those data into an R data frame:  
 
