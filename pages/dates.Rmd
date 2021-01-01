@@ -146,7 +146,50 @@ class(linelist_cleaned$date_of_onset)
 
 Once the values are in class Date, R will by default display them in the standard format, which is YYYY-MM-DD.
 
+<!-- ======================================================= -->
+## Converting to `datetime` classes
 
+As previously mentioned, R also supports a `datetime` class - a variable that contains date **and** time information. As with the `Date` class, these often need to be converted from `character` objects to `datetime` objects. 
+
+A standard `datetime` object is formatted with the date first, which is followed by a time component - for example  _01 Jan 2020, 16:30_. As with dates, there are many ways this can be formatted, and there are numerous levels of precision (hours, minutes, seconds) that can be supplied. Luckily, lubridate helper functions also exist to help convert these strings to `datetime` objects. These functions are the same as the date helper functions, with `_h` (only hours supplied), `_hm` (hours and minutes supplied), or `_hms` (hours, minutes, and seconds supplied) appended to the end (e.g. `dmy_hms()`). These can be used as shown:
+
+```{r, eval = TRUE}
+
+# convert datetime with only hours to datetime object
+ymd_h("2020-01-01 16hrs")
+ymd_h("2020-01-01 4PM")
+
+
+# convert datetime with hours and minutes to datetime object
+dmy_hm("Jan 1st 2020 16:20")
+
+# convert datetime with hours, minutes, and seconds to datetime object
+mdy_hms("01 January 20, 16:20:40")
+# you can supply time zone but it is ignored
+mdy_hms("01 January 20, 16:20:40 PST")
+
+```
+
+When working with a linelist, time and date columns can be combined to create a datetime column using these functions:
+
+```{r, eval = FALSE}
+# time_admission is a variable in hours:minutes
+linelist_cleaned <- linelist_cleaned %>%
+  # assume that when time of admission is not given, it the median admission time
+  mutate(
+    time_admission_clean = ifelse(
+      is.na(time_admission),
+      median(time_admission),
+      time_admission
+  ) %>%
+  # use paste0 to combine two columns to create a character vector, and use ymd_hm() to convert to datetime
+  mutate(
+    date_time_of_admission = paste0(
+      date_hospitalisation, time_admission_clean, sep = " "
+    ) %>% ymd_hm()
+  )
+
+```
 <!-- ======================================================= -->
 ## lubridate  
 
