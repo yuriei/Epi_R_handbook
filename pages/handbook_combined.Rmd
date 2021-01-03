@@ -128,11 +128,11 @@ klippy::klippy(position = c('top', 'right'))
 ```
 
 
-```{r child = 'scatterplots.Rmd'}
+```{r child = 'plot_discrete.Rmd'}
 ```
 
 
-```{r child = 'boxplots.Rmd'}
+```{r child = 'plot_continuous.Rmd'}
 ```
 
 
