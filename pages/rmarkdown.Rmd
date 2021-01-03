@@ -54,7 +54,7 @@ Because R Markdown can run into pandoc issues when running on a shared network d
 
 An R Markdown document looks like and can be edited just like a standard R script, in R Studio. However, it contains more than just the usual R code and hashed comments. There are three basic components:
 
-**1. Metadata**: This is referred to as the ‘YAML’ and is at the top of the R Markdown document between two ‘---‘s. It will tell your Rmd file what type of output to produce, formatting preferences, and other metadata such as document title, author, and date. There are other uses not mentioned here (but referred to in ‘Producing an output’). Note that indentation matters. 
+**1. Metadata**: This is referred to as the ‘YAML metadata’ and is at the top of the R Markdown document between two ‘---‘s. It will tell your Rmd file what type of output to produce, formatting preferences, and other metadata sucsh as document title, author, and date. There are other uses not mentioned here (but referred to in ‘Producing an output’). Note that indentation matters. 
 
 ![](../images/markdown/1_yaml.png)
 
@@ -64,8 +64,9 @@ An R Markdown document looks like and can be edited just like a standard R scrip
 * `**text**` for **bold text**
 * `#` at the start of a new line for a title (and `##` for second-level title, `##` for third-level title etc)
 * `*` at the start of a new line for bullet points 
+* ```text``` to display text as code (as above)
 
-The actual appearance of the font can be set by using specific templates (specified in the YAML; see example tabs).  
+The actual appearance of the font can be set by using specific templates (specified in the YAML metadata; see example tabs).  
 
 You can also include minimal R code within backwards ticks, for within-text values. See example below.
 
@@ -134,7 +135,7 @@ Parameterised reports are the next step so that the content of the R Markdown it
 Let's say you want to run the markdown to produce a report with surveillance data for Area1 and Area2. You will:
 
 1. Edit your R Markdown:
-  a) Change your YAML to include a 'params' section, which specifies the dynamic object. 
+  a) Change your YAML metadata to include a 'params' section, which specifies the dynamic object. 
   b) Refer to this parameterised object within the code as needed. E.g. `filter(area == params$areanumber)` rather than `filter(area=="Area1")`. 
   
 For instance (simplified version which does not include setup code such as library/data loading):
