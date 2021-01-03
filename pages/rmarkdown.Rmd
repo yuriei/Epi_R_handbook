@@ -40,6 +40,21 @@ This guide will go through the basics. See 'resources' tab for further info.
 <!-- ======================================================= -->
 ## Preparation {.tabset .tabset-fade .tabset-pills}
 
+**Installation**
+
+To create R Markdown, you need to have the following installed:
+
+* The Rmarkdown package, which coverts Rmd files into a range of different outputs. ```install.packages('rmarkdown')```
+* Pandoc, which is a document converter. This comes with RStudio. If you are not using RStudio, you can download it here: http://pandoc.org. 
+* If you want to generate PDF output (a bit trickier), you will need to install LaTeX. For R Markdown users who have not installed LaTeX before, we recommend that you install TinyTeX (https://yihui.name/tinytex/): 
+
+```
+install.packages('tinytex')
+tinytex::install_tinytex()  # install TinyTeX
+```
+
+**Workflow**
+
 Preparation of an R Markdown workflow involves ensuring you have set up an R project and have a folder structure that suits the desired workflow. 
 
 For instance, you may want an 'output' folder for your rendered documents, an 'input' folder for new cleaned data files, as well as subfolders within them which are date-stamped or reflect the subgeographies of interest. The markdown itself can go in a 'rmd' subfolder, particularly if you have multiple Rmd files within the same project. 
@@ -54,7 +69,7 @@ Because R Markdown can run into pandoc issues when running on a shared network d
 
 An R Markdown document looks like and can be edited just like a standard R script, in R Studio. However, it contains more than just the usual R code and hashed comments. There are three basic components:
 
-**1. Metadata**: This is referred to as the ‘YAML metadata’ and is at the top of the R Markdown document between two ‘---‘s. It will tell your Rmd file what type of output to produce, formatting preferences, and other metadata sucsh as document title, author, and date. There are other uses not mentioned here (but referred to in ‘Producing an output’). Note that indentation matters. 
+**1. Metadata**: This is referred to as the ‘YAML metadata’ and is at the top of the R Markdown document between two ‘- - -‘s. It will tell your Rmd file what type of output to produce, formatting preferences, and other metadata sucsh as document title, author, and date. There are other uses not mentioned here (but referred to in ‘Producing an output’). Note that indentation matters. 
 
 ![](../images/markdown/1_yaml.png)
 
@@ -181,6 +196,8 @@ Further information can be found via:
 
 * https://bookdown.org/yihui/rmarkdown/
 * https://rmarkdown.rstudio.com/articles_intro.html
+
+A good explainer of markdown vs knitr vs Rmarkdown is here: https://stackoverflow.com/questions/40563479/relationship-between-r-markdown-knitr-pandoc-and-bookdown
 
 
 
