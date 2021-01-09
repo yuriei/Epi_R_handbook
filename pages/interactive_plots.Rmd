@@ -28,67 +28,132 @@ knit: (function(inputFile, encoding) {
 <!-- ======================================================= -->
 # Interactive plots {#interative_plots .tabset .tabset-fade}  
 
-Data visualisation is increasingly required to be interrogable by the audience. Consequently creating interactive plots are becoming common. There are several ways to include these but the two most important are user of {*plotly*} and {*shiny*}. 
+Data visualisation is increasingly required to be interrogable by the audience. Consequently creating interactive plots are becoming common. There are several ways to include these but the two most important are {*plotly*} and {*shiny*}. 
 
-Although {*shiny*} is covered in another part of this handbook, we will cover some important steps here too that require understanding of {*shiny*}.
+{**Shiny**} is covered in another part of this handbook, so we will only cover {**plotly**} here.
 #TODO - link to shiny page
 
 
 <!-- ======================================================= -->
 ## Overview {.tabset .tabset-fade .tabset-pills}
 
-Keep the title of this section as "Overview".  
-This tab should include:  
+Making plots interactive is a much more daunting prospect than it transpires to be, thanks to some fantastic tool. However, like much of R, if you want to really customise something, you can make it much harder, often for a good payoff 
 
-* Textual overview of the purpose of this page  
-* Small image showing outputs   
+You'll learn to easily make a plot interactive with {the wonders {**ggplot2**} and {**plotly**}
 
+```{r plotly_demo, out.width=c('75%'), out.height=c('500px'), echo=F}
+pacman::p_load(plotly, ggplot2, dplyr)
+linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 
+## these buttons are superfluous/distracting
+plotly_buttons_remove <- list('zoom2d','pan2d','lasso2d', 'select2d','zoomIn2d',
+                              'zoomOut2d','autoScale2d','hoverClosestCartesian',
+                              'toggleSpikelines','hoverCompareCartesian')
+
+p <- linelist %>% 
+  mutate(outcome = if_else(is.na(outcome), "Unknown", outcome),
+         date_earliest = if_else(is.na(date_infection), date_onset, date_infection),
+         week_earliest = floor_date(date_earliest, unit = "week",week_start = 1))%>% 
+  count(week_earliest, outcome) %>% 
+  ggplot()+
+  geom_col(aes(week_earliest, n, fill = outcome))+
+  xlab("Week of infection/onset") + ylab("Cases per week")+
+  theme_minimal()
+
+p %>% 
+  ggplotly() %>% 
+  partial_bundle() %>% 
+  config(displaylogo = FALSE, modeBarButtonsToRemove = plotly_buttons_remove)
+
+```
 
 <!-- ======================================================= -->
 ## Preparation {.tabset .tabset-fade .tabset-pills}
 
-Keep the title of this section as "Preparation".  
-Data preparation steps such as:  
+In the example you saw a very basic epicurve that had been transformed to bbe interactive using the fantastic {**ggplot2**} - {**plotly**} integrations. So to start, make a basic chart of your own:
 
-* Loading dataset  
-* Adding or changing variables  
-* melting, pivoting, grouping, etc.   
+Loading data
+```{r eval=F,}
+linelist <- rio::import("linelist_cleaned.xlsx")
+```
+  
+Manipulate and add columns (best taught in the epicurves section)
+```{r manipulate_show, eval=F}
+linelist <- linelist %>% 
+  dplyr::mutate(
+    ## If the outcome column is NA, change to "Unknown"
+    outcome = dplyr::if_else(condition = is.na(outcome),
+                             true = "Unknown",
+                             false = outcome),
+    ## If the date of infection is NA, use the date of onset instead
+    date_earliest = dplyr::if_else(condition = is.na(date_infection),
+                                   true = date_onset,
+                                   false = date_infection),
+    ## Summarise earliest date to earliest week 
+    week_earliest = lubridate::floor_date(x = date_earliest,
+                                          unit = "week",
+                                          week_start = 1)
+    )
+```
+  
+Count for plotting
+```{r manipulate_show2, eval=F}
+## Find number of cases in each week by their outcome
+linelist <- linelist %>% 
+  dplyr::count(week_earliest, outcome)
+```
+  
+Make into a plot
+```{r plot_show, eval=F}
+p <- linelist %>% 
+  ggplot()+
+  geom_col(aes(week_earliest, n, fill = outcome))+
+  xlab("Week of infection/onset") + ylab("Cases per week")+
+  theme_minimal()
+  plotly::ggplotly()
+```
+  
+Make interactive
+```{r interactive_show, eval=F}
+p <- p %>% 
+  plotly::ggplotly()
+```
+  
+*Voila!*
+```{r, eval=F}
+p
+```
 
-
+```{r, eval=TRUE, out.width=c('75%'), out.height=c('500px'), echo=FALSE}
+p %>% 
+  ggplotly() %>% 
+  partial_bundle() 
+```
+  
 <!-- ======================================================= -->
-## Option 1 {.tabset .tabset-fade .tabset-pills}
+## Modifications {.tabset .tabset-fade .tabset-pills}
+When exporting in an Rmarkdown generated HTML (like this book!) you want to make the plot as small as possible (with no negative side effects in most cases). For this, just add add this line:
+```{r plot_tidyshow, eval=F}
+linelist <- linelist %>% 
+  plotly::partial_bundle()
+```
+  
+Some of the buttons on a standard plotly (as shown on the preparation tab) are superfluous and can be distracting, so it's best to remove them. You can do this simply by piping the output into `plotly::config`
+```{r plot_tidyshow2, eval=F}
+## these buttons are superfluous/distracting
+plotly_buttons_remove <- list('zoom2d','pan2d','lasso2d', 'select2d','zoomIn2d',
+                              'zoomOut2d','autoScale2d','hoverClosestCartesian',
+                              'toggleSpikelines','hoverCompareCartesian')
 
-This tab can be renamed. 
-This tab should demonstrate execution of the task using recommended package/approach. For example, using a package customized for this task where the execution is simple and fast but perhaps less customizable. For example using *incidence* package to create an epicurve.
-
-
-<!-- ======================================================= -->
-### Option 1 sub-tab {.tabset .tabset-fade .tabset-pills}
-
-Sub-tabs if necessary. Re-name as needed.
-
-
-
-<!-- ======================================================= -->
-## Option 2 {.tabset .tabset-fade .tabset-pills}
-
-This tab can be re-named. 
-This tab should demonstrate execution of the task a more standard/core package (e.g. ggplot2, or base R) that allows for more flexibility in the output or more package stability. For example, showing how to create an epicurve using *ggplot2*. 
-
-
-<!-- ======================================================= -->
-### Option 2 sub-tab {.tabset .tabset-fade .tabset-pills}
-
-Sub-tabs if necessary. Re-name as needed.
-
+linelist <- linelist %>% 
+  config(displaylogo = FALSE, modeBarButtonsToRemove = plotly_buttons_remove)
+```
 
 
 <!-- ======================================================= -->
 ## Resources {.tabset .tabset-fade .tabset-pills}
 
-This tab should stay with the name "Resources".
-Links to other online tutorials or resources.
+Plotly is not just for R, but also works well with Python (and really any data science language as it's built in JavaScript). You can read more about it onn the [plotly website](https://plotly.com/r/)
 
 
 

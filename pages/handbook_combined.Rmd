@@ -220,6 +220,10 @@ klippy::klippy(position = c('top', 'right'))
 ```
 
 
+```{r child = 'interactive_plots.Rmd'}
+```
+
+
 ```{r child = 'writing_functions.Rmd'}
 ```
 
