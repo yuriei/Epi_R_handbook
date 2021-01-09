@@ -119,7 +119,7 @@ stats::quantile(linelist$age, probs = c(.05, 0.5, 0.75, 0.98), na.rm=TRUE) # per
 ## Frequency/cross-tabs {.tabset .tabset-fade .tabset-pills}
 
 Frequency table of 1 and 2 categorical variables
-```{r}
+```{r, eval=F}
 table(linelist$province)
 
 x <- table(linelist$province, linelist$gender)
@@ -128,7 +128,7 @@ x <- table(linelist$province, linelist$gender)
 ```
 
 A table with 3 variables
-```{r}
+```{r, eval=F}
 table_3vars <- table(linelist$province, linelist$gender, linelist$outcome)
 
 ftable(table_3vars)

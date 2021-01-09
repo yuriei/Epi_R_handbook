@@ -13,6 +13,34 @@ knitr::opts_chunk$set(echo = TRUE,
                       message = FALSE)
 ```
 
+```{css, echo = FALSE}
+# Sets color of header levels
+
+h1, #TOC>ul>li {
+  color: #A93226;          
+  font-family:  "Times";
+  font-weight: bold;
+}
+
+h2, #TOC>ul>ul>li {
+  color: #229954;          
+  font-family:  "Times";
+  font-weight: bold;
+}
+
+h3, #TOC>ul>ul>ul>li {
+  color: #3498DB;          
+  font-family:  "Times";
+  font-weight: bold;
+}
+
+h4, #TOC>ul>ul>ul>li {
+  color: #F4D03F;          
+  font-family:  "Times";
+  font-weight: bold;
+}
+```
+
 
 ```{r echo=FALSE, include=TRUE}
 #Enables "copy to clipboard" icons   https://rlesur.github.io/klippy/articles/klippy.html
@@ -29,9 +57,6 @@ source(here::here("load_core_packages.R"))
 
 
 ```{r}
-# import the raw ebola linelist
-linelist_raw <- rio::import(here::here("data", "ebola_simulated.xlsx"))
-
 # import the cleaned ebola linelist
 linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 
@@ -39,13 +64,13 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 #count_data <- rio::import(here::here("data", "district_count_data.xlsx"))
 
 # import the count data - facility level
-count_data <- rio::import(here::here("data", "facility_count_data.csv"))
+count_data <- rio::import(here::here("data", "facility_count_data.rds"))
 
 # import the population demographics data
-pop <- rio::import(here::here("data", "country_demographics.csv"))
+#pop <- rio::import(here::here("data", "country_demographics.csv"))
 
 # import the likert- survey responses data
-likert_data <- rio::import(here::here("data", "likert_data.csv"))
+#likert_data <- rio::import(here::here("data", "likert_data.csv"))
 
 ```
 

@@ -25,23 +25,30 @@ knit: (function(inputFile, encoding) {
 <!-- ======================================================= -->
 <!-- ======================================================= -->
 <!-- ======================================================= -->
-# Missing Data {#transformation .tabset .tabset-fade}
+# Missing data {#transformation .tabset .tabset-fade}
 
 <!-- ======================================================= -->
-## Overview {.tabset .tabset-fade .tabset-pills}
+## Overview {.tabset .tabset-fade}
 
 dealing with missing data
 percent missing over time
 etc.
 
+
 <!-- ======================================================= -->
-## Percent missing over time {.tabset .tabset-fade .tabset-pills}
+## Assess by column {.tabset .tabset-fade}
+<h2> Assess by column </h2>
+
+
+<!-- ======================================================= -->
+## Over time {.tabset .tabset-fade}
+<h2> Over time </h2>
 
 Or change in percent of anything (X) over time, really.  
 
-```{r}
+```{r, eval=F}
 lines <- linelist %>%
-  mutate(date_of_onset = as.Date(date_of_onset, format = "%d/%m/%Y"),
+  mutate(date_onset = as.Date(date_of_onset, format = "%d/%m/%Y"),
          week = aweek::week2date(aweek::date2week(date_of_onset))) %>% 
   group_by(week) %>% 
   summarize(n_obs = n(),
@@ -68,6 +75,11 @@ lines <- linelist %>%
 lines
 ```
 
+
+
+<!-- ======================================================= -->
+## Imputation {.tabset .tabset-fade}
+<h2> Imputation </h2>
 
 
 
