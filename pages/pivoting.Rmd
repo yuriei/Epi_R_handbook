@@ -34,6 +34,8 @@ knit: (function(inputFile, encoding) {
 (pivoting/melting etc.)
 Transforming datasets from wide-to-long, or long-to-wide...  
 
+https://datacarpentry.org/r-socialsci/03-dplyr-tidyr/index.html
+
 
 <!-- ======================================================= -->
 ## Wide-to-long {#pivot_widetolong .color-tabs .tabset .tabset-fade .tabset-pills}
