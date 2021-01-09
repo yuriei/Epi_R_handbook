@@ -28,7 +28,7 @@ knit: (function(inputFile, encoding) {
 <!-- ======================================================= -->
 # ggplot tips {#ggplot_tips .tabset .tabset-fade}  
 
-
+https://www.tidyverse.org/blog/2018/07/ggplot2-3-0-0/
 
 <!-- ======================================================= -->
 ## Overview {.tabset .tabset-fade .tabset-pills}
