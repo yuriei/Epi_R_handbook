@@ -43,10 +43,10 @@ links <- epicontacts::make_epicontacts(linelist = mers_korea_2015$linelist,
                                        contacts = mers_korea_2015$contacts, 
                                        directed = TRUE)
 # plot without time
-plot(links,
-     selector = FALSE,
-     height = 700,
-     width = 700)
+# plot(links,
+#      selector = FALSE,
+#      height = 700,
+#      width = 700)
 
 # plot with date of onset as x-axis
 plot(sim,

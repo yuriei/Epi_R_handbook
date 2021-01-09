@@ -811,6 +811,15 @@ maximum value            | max(x, na.rm=T)
 range of numeric values  | range(x, na.rm=T)
 summmary**               | summary(x)
 
+<span style="color: red;">**_DANGER:_** If providing a vector of numbers to one of the above functions, be sure to wrap the numbers within `c()` .</span>
+
+```{r}
+# If supplying raw numbers to a function, wrap them in c()
+mean(1, 6, 12, 10, 5, 0)    # !!! INCORRECT !!!  
+
+mean(c(1, 6, 12, 10, 5, 0)) # CORRECT
+```
+
 *`quantile()`: x is the numeric vector to examine, and probs is a numeric vector with probabilities within 0 and 1.0, e.g `c(0.5, 0.8, 0.85)`
 
 **`summary()`: gives a summary on a numeric vector including mean, median, and common percentiles
