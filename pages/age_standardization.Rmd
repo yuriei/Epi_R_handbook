@@ -65,9 +65,6 @@ pacman::p_load(rio,       # to import data
 ```
 
 **Then, load the data**  
-```{r, eval=F}
-pop_tables <- rio::import("country_demographics.csv")
-```
 
 <!-- ======================================================= -->
 ### sub-tab 1 {.tabset .tabset-fade .tabset-pills}
