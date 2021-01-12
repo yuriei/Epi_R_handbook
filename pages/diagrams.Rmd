@@ -532,7 +532,64 @@ Timeline Sankey - LTFU from cohort... application/rejections... etc.
 <h2> Event timelines </h2>
 
 E.g. border closures during COVID
+TO DO need to change to non-sensitive example
 
+```{r}
+# IHR timeline of travel restrictions by time and by country
+
+# reference: https://cran.r-project.org/web/packages/vistime/vignettes/vistime-vignette.html#ex.-2-project-planning
+
+library(vistime)
+data <- read.csv(text="event,group,start,end,color
+                       Entry ban, DPRK, 2020-01-22, 2020-01-22, #90caf9
+                       Entry ban, Samoa, 2020-01-23, 2020-01-23, #90caf9
+                       Flights suspension, Republic of Korea,2020-01-23,2020-01-23, #1565c0
+                       Exit ban, People's Republic of China, 2020-01-25,2020-01-25, #f44336
+                       Entry ban, Marshall Islands, 2020-01-25, 2020-01-25, #90caf9
+                       Visa restriction, Kazakhstan, 2020-01-26, 2020-01-26, #8d6e63
+                       Flights suspension, Egypt,2020-01-27,2020-01-27, #1565c0
+                       Entry ban, Malaysia, 2020-01-27, 2020-01-27, #90caf9
+                       Border closure, Mongolia, 2020-01-27,2020-01-27,#90a4ae
+                       Visa restriction, Kazakhstan, 2020-01-28,2020-01-28,#fc8d62
+                       Isolation without symptoms, Kyrgyzstan, 2020-01-28,2020-01-28, #6a3d9a
+                       Entry ban, Philippines, 2020-01-28, 2020-01-28, #90caf9
+                       Visa refusal, Philippines, 2020-01-28, 2020-01-28, #fc8d62
+                       Flights suspension, Philippines, 2020-01-28, 2020-01-28, #1565c0
+                       Entry ban, Palau, 2020-01-29, 2020-01-29, #90caf9
+                       Entry ban, Russian Federation, 2020-01-29, 2020-01-29, #90caf9
+                       Border closure, Russian Federation, 2020-01-29,2020-01-29,#90a4ae
+                       Flights suspension, United Kingdom (BA),2020-01-29,2020-01-29, #1565c0
+                       Flight reduced, United States of America (United),2020-01-29,2020-01-29, #1565c0
+                       Flights suspension, Germany (Lufthansa),2020-01-29,2020-01-29, #1565c0
+                       Entry ban, Papua New Guinea, 2020-01-29, 2020-01-29, #90caf9
+
+")
+
+p <- vistime(data)
+
+library(plotly)
+# step 1: transform into a list
+pp <- plotly_build(p)
+
+# step 2: Marker size
+for(i in 1:length(pp$x$data)){
+  if(pp$x$data[[i]]$mode == "markers") pp$x$data[[i]]$marker$size <- 10
+}
+
+# step 2: text size
+for(i in 1:length(pp$x$data)){
+  if(pp$x$data[[i]]$mode == "text") pp$x$data[[i]]$textfont$size <- 10
+}
+
+
+# step : text position
+for(i in 1:length(pp$x$data)){
+  if(pp$x$data[[i]]$mode == "text") pp$x$data[[i]]$textposition <- "right"
+}
+
+pp
+
+```
 
 
 <!-- ======================================================= -->
