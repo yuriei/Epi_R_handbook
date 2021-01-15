@@ -51,18 +51,17 @@ This tab should include:
 <!-- ======================================================= -->
 ## Preparation {.tabset .tabset-fade .tabset-pills}
 
-Keep the title of this section as "Preparation".  
-Data preparation steps such as:  
+```{r}
+pacman::p_load(stringr)
+```
 
-* Loading dataset  
-* Adding or changing variables  
-* melting, pivoting, grouping, etc.   
+https://cran.r-project.org/web/packages/stringr/vignettes/stringr.html
+
+https://evoldyn.gitlab.io/evomics-2018/ref-sheets/R_strings.pdf
+
 
 <!-- ======================================================= -->
 ### sub-tab 1 {.tabset .tabset-fade .tabset-pills}
-
-Can be used to separate major steps of data preparation. Re-name as needed
-
 
 ADD leading zeros (e.g. for times minutes/hours)
 hours = str_pad(hours, 2, pad = "0"),             # pad with leading zeros
@@ -72,19 +71,49 @@ tolower()
 toupper()
 Title case
 
-<!-- ======================================================= -->
-### sub-tab 2 {.tabset .tabset-fade .tabset-pills}
-
-Can be used to separate major steps of data preparation. Re-name as needed.
-
-
 
 <!-- ======================================================= -->
-## Option 1 {.tabset .tabset-fade .tabset-pills}
+## Access and assess {.tabset .tabset-fade .tabset-pills}
 
-This tab can be renamed. 
-This tab should demonstrate execution of the task using recommended package/approach. For example, using a package customized for this task where the execution is simple and fast but perhaps less customizable. For example using *incidence* package to create an epicurve.
+```{r}
+str_length("abc")
+#also, nchar() from base R
+```
 
+
+**Components of `str_sub()`:**  
+
+1) character vector(s)  
+2) start position  
+3) end position  
+
+Is a position number is positive, the position is counted from the left of the string. If a position number is negative, it is counted from the right end of the string. Positions outside the string will be truncated. Position numbers are inclusive.  
+
+
+```{r}
+str_sub("pneumonia", 3, 3)
+
+str_sub("pneumonia", 0, 0)
+
+str_sub("pneumonia", 6, -1)
+
+str_sub("pneumonia", -5, -1)
+
+```
+
+
+
+
+<!-- ======================================================= -->
+## Modify {.tabset .tabset-fade .tabset-pills}
+
+`str_sub()` can be used to modify as well: 
+
+```{r}
+x <- "pneumonia"
+str_sub(x, 3, 3) <- "X"
+x
+```
 
 <!-- ======================================================= -->
 ### Option 1 sub-tab {.tabset .tabset-fade .tabset-pills}
