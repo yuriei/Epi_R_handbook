@@ -1,0 +1,345 @@
+---
+title:  Visualizing phylogenetic trees
+  ![](../images/R Handbook Logo.png)
+author: "Natalie Fischer"
+date: "Produced `r format(Sys.time(), '%A %d %B %Y')`"
+output:
+  html_document:
+    code_folding: show
+    highlight: zenburn
+    number_sections: no
+    theme: sandstone
+    toc: yes
+    toc_collapse: no
+    toc_depth: 3
+    toc_float: yes
+params:
+    run_page_ind: TRUE
+---
+
+```{r, child= 'page_setup.Rmd', eval = params$run_page_ind, include = F}
+```
+
+
+<!-- ======================================================= -->
+<!-- ======================================================= -->
+<!-- ======================================================= -->
+# Visualizing phylogenetic trees {.tabset .tabset-fade}  
+
+
+<!-- ======================================================= -->
+<h2> Overview </h2> 
+## Overview {.tabset .tabset-fade .tabset-pills}
+
+  
+Next-generation sequencing (NGS) has become more affordable and is becoming more widely used in public health. Portable devices decrease the turn around time and make data available for the support of outbreak investigation in real-time. NGS data can be used to identify the origin or source of an outbreak strain and its propagation, as well as determine presence of antimicrobial resistance genes. To visualize the genetic relatedness between samples a phylogenetic tree is constructed. In this page we will learn how to use the **ggtree()** package, which allows for combination of phylogenetic trees with additional sample data in form of a datafrane in order to help observe patterns and improve understanding of the outbreak dynamic.
+
+
+
+<!-- ======================================================= -->
+<h2> Preparation</h2> 
+## Preparation {.tabset .tabset-fade .tabset-pills}
+
+This code chunk shows the loading of required packages:
+```{r, phylogenetic_trees_loading_packages}
+library(here)
+library(ggplot2)
+library(dplyr)
+library(ape)
+library(ggtree)
+library(treeio)
+library(ggnewscale)
+library(linelist)
+
+```
+
+First we import a phylogenetic tree in Newick file format (.nwk). 
+```{r, phylogenetic_trees_loading_treefile}
+
+# read in the tree: we use the here package to specify the location of our R project and data files:
+tree <- read.tree(here::here("data", "Shigella_tree.nwk"))
+
+# inspect the tree file:
+tree
+
+```
+
+Second we import a table with additional information for each sequenced sample: 
+```{r, phylogenetic_trees_loading_sampledata}
+#We read in a csv file into a dataframe format:
+df <- read.csv(here::here("data","sample_data_Shigella_tree.csv"),sep=",", na.strings=c("NA"), head = TRUE, stringsAsFactors=F)
+
+#We clean the data: we select certain columns to be protected from cleaning in order to main tain their formating (eg. for the sample names, as they have to match the names in the phylogenetic tree file)
+df <- linelist::clean_data(df, protect = c(1, 3:5)) 
+
+#In order to add a dataframe with metadata to the ggtree plot the first column of the dataframe needs to match the tree tips:
+
+head(tree$tip.label) #these are the sample names in the tree - we inspect the first 6 with head()
+colnames(df)   #the first column in our dataframe is Sample_ID
+
+#We look at the sample_IDs in the dataframe
+head(df$Sample_ID) #we inspect only the first 6 using head()
+
+```
+
+Upon inspection we can see that the sample_ID in the dataframe corresponds to the sample names at the tree tips.
+
+We are ready to go!
+
+<!-- ======================================================= -->
+<h2> Simple tree visualization </h2> 
+## Simple tree visualization {.tabset .tabset-fade .tabset-pills}
+
+### 1.) Different tree layouts:
+**ggtree()** offers many different layout formats and some may be more suitable for your specific purpose than others:
+```{r, phylogenetic_trees_example_formats}
+#Examples:
+ggtree(tree) #most simple linear tree
+ggtree(tree,  branch.length = "none") # most simple linear tree with all tips aligned
+ggtree(tree, layout="circular") #most simple circular tree
+ggtree(tree, layout="circular", branch.length = "none") #most simple circular tree with all tips aligned
+
+#for other options see online: http://yulab-smu.top/treedata-book/chapter4.html
+
+```
+
+### 2.) Simple tree with addition of sample data:
+The most easy annotation of your tree is the addition of the sample names at the tips, as well as coloring of tip points and if desired branches:
+
+```{r, phylogenetic_trees_adding_sampledata}
+
+#A: Plot Circular tree:
+ggtree(tree, layout="circular", branch.length='none') %<+% df + # the %<+% is used to add your dataframe with sample data to the tree
+  aes(color=I(source))+ #color the branches according to a variable in your dataframe
+  scale_color_manual(name = "Sample Origin", # name of your color scheme (will show up in the legend like this)
+                     breaks = c("nrc_bel", "NA"), #the different options in your variable
+                     labels = c("NRCSS Belgium", ""), #how you want the different options named in your legend, allows for formatting
+                     values= c("blue"), #the color you want to assign to the variable if its "nrc_bel"
+                     na.value="grey")+ #for the NA values we choose the color grey
+  new_scale_color()+ #allows to add an additional color scheme for another variable
+     geom_tippoint(aes(color=Continent), size=1.5)+ #color the tip point by continent, you may change shape adding "shape = "
+scale_color_brewer(name = "Continent",  # name of your color scheme (will show up in the legend like this)
+                       palette="Set1", #we choose a premade set of colors coming with the brewer package
+                   na.value="grey")+ #for the NA values we choose the color grey
+  geom_tiplab(color='black', offset = 1, size = 1, geom = "text" , align=TRUE)+ #add the name of the sample to the tip of its branch (you can add as many text lines as you like with the + , you just need to change the offset value to place them next to each other)
+  ggtitle("Phylogenetic tree of Shigella sonnei")+ #title of your graph
+  theme(axis.title.x=element_blank(), #removes x-axis title
+      axis.title.y=element_blank(), #removes y-axis title
+     legend.title=element_text(face="bold", size =12), #defines font size and format of the legend title
+       legend.text=element_text(face="bold", size =10), #defines font size and format of the legend text
+      plot.title = element_text(size =12, face="bold"),  #defines font size and format of the plot title
+     legend.position="bottom", #defines placement of the legend
+        legend.box="vertical", legend.margin=margin()) #defines placement of the legend
+
+#Export your tree graph:
+ggsave(here::here("example_tree_circular_1.png"), width = 12, height = 14)
+
+```
+
+
+<!-- ======================================================= -->
+<h2> Manipulation of phylogenetic trees  </h2> 
+## Manipulation of phylogenetic trees {.tabset .tabset-fade .tabset-pills}
+
+### 3.) Subsetting a tree:
+Sometimes you may have a very large phylogenetic tree and you may want to subset your tree or zoom in to view a certain part of the tree:
+```{r, phylogenetic_trees_subsetting}
+
+#To do so you can add the node and tip labels to your tree to see which part you want to subset:
+ggtree(tree, branch.length='none', layout='circular') %<+% df +
+  geom_tiplab(size =1) + #labels the tips of all branche with the sample name in the tree file
+  geom_text2(aes(subset=!isTip, label=node), size =3, color = "darkred") +#labela all the nodes in the tree
+ theme(legend.position = "none", #removes the legend all together
+ axis.title.x=element_blank(),
+      axis.title.y=element_blank(),
+      plot.title = element_text(size =12, face="bold"))
+
+#A: Subset tree based on node:
+sub_tree1 <- tree_subset(tree, node = 528) #we subset the tree at node 528
+#lets have a look at the subset tree:
+ggtree(sub_tree1)+  geom_tiplab(size =3) 
+
+#B: Subset the same part of the tree based on a samplem in this case S17BD07692:
+sub_tree2 <- tree_subset(tree,"S17BD07692", levels_back = 9) #levels back defines how many nodes backwards from the sample tip you want to go
+#lets have a look at the subset tree:
+ggtree(sub_tree2)+  geom_tiplab(size =3) 
+```
+
+Lets say we are investigating a cluster of cases with clonal expansion in 2017 and 2018 at the top of our sub-tree. We add the year of strain isolation as well as travel history and color by country to see origin of other closely related strains:
+
+```{r, phylogenetic_trees_inspect_subset_example}
+
+#Add sample data:
+ggtree(sub_tree2) %<+% df + 
+   geom_tiplab(size =3, offset = 0.001, align = TRUE) + #labels the tips of all branche with the sample name in the tree file
+  theme_tree2()+
+  xlab("genetic distance")+ #add a label to the x-azis
+  xlim(0, 0.015)+ #set the x-axis limits of our tree
+  geom_tippoint(aes(color=Country), size=1.5)+ #color the tip point by continent
+  scale_color_brewer(name = "Country", 
+                       palette="Set1", 
+                     na.value="grey")+
+    geom_tiplab(aes(label = year), color='blue', offset = 0.0045, size = 3, linetype = "blank" , geom = "text" , align=TRUE)+ #add isolation year
+    geom_tiplab(aes(label = Travel_history), color='red', offset = 0.006, size = 3, linetype = "blank" , geom = "text" , align=TRUE)+ #add travel history
+  ggtitle("Phylogenetic tree of Belgian S. sonnei strains with travel history")+ #add plot title
+  theme(axis.title.x=element_blank(),
+      axis.title.y=element_blank(),
+     legend.title=element_text(face="bold", size =12),
+       legend.text=element_text(face="bold", size =10),
+      plot.title = element_text(size =12, face="bold"))
+
+```
+
+Our observation points towards an import of strains from Asia, which then circulated in Belgium over the years and seem to have caused our latest outbreak.
+
+<!-- ======================================================= -->
+<h2> More complex trees </h2>
+## More complex trees: adding heatmaps of sample data {.tabset .tabset-fade .tabset-pills}
+
+We can add more complex information, such as categorical presence of antimicrobial resistance genes and numeric values for actually  measured resistance to antimicrobials in form of a heatmap:
+```{r, phylogenetic_trees_sampledata_heatmap}
+
+#First we need to plot our tree (this can be either linear or circular): We will use the sub_stree from part 3.)
+
+#A: Circular tree:
+p <- ggtree(sub_tree2, branch.length='none', layout='circular') %<+% df +
+  geom_tiplab(size =3) + 
+ theme(legend.position = "none",
+ axis.title.x=element_blank(),
+      axis.title.y=element_blank(),
+      plot.title = element_text(size =12, face="bold",hjust = 0.5, vjust = -15))
+p
+
+#Second we prepare our data. To visualize different variables with new color schemes, we subset our dataframe to the desired variable:
+
+#For example we want to look at gender and mutations that could confer resistance to ciprofloxacin:
+#Create your gender dataframe:
+gender <- data.frame("gender" = df[,c("gender")])
+#Its important to add the Sample_ID as rownames otherwise it cannot match the data to the tree tip.labels:
+rownames(gender) <- df$Sample_ID
+
+#Create your ciprofloxacin dataframe based on mutations in the gyrA gene:
+cipR <- data.frame("cipR" = df[,c("gyra_mutations")])
+rownames(cipR) <- df$Sample_ID
+
+#Create your ciprofloxacin dataframe based on the measured minimum inhibitory concentration (MIC) from the laboratory:
+MIC_Cip <- data.frame("mic_cip" = df[,c("mic_cip")])
+rownames(MIC_Cip) <- df$Sample_ID
+
+#First we add gender:
+h1 <-  gheatmap(p, gender, offset = 10, width=0.10, color=NULL, #offset shifts the heatmap to the right, width defines the width of the heatmap column, color defines the boarder of the heatmap columns
+         colnames = FALSE)+ #hides column names for the heatmap
+  scale_fill_manual(name = "Gender", #define the coloring scheme and legend for gender
+                    values = c("#00d1b1", "purple"),
+                    breaks = c("male", "female"),
+                    labels = c("Male", "Female"))+
+   theme(legend.position="bottom",
+        legend.title = element_text(size=12),
+        legend.text = element_text(size =10),
+        legend.box="vertical", legend.margin=margin())
+#h1
+
+#Then we add ciprofloxacin after adding another colorscheme layer:
+
+h2 <- h1 + new_scale_fill() #adds new coloring scheme to our previous plot
+
+h3 <- gheatmap(h2, cipR,  offset = 12, width=0.10, #adds the second row of heatmap describing ciprofloxacin resistance genes
+                colnames = FALSE)+
+  scale_fill_manual(name = "Ciprofloxacin resistance \n conferring mutation",
+                    values = c("#fe9698","#ea0c92"),
+                    breaks = c( "gyra_d87y", "gyra_s83l"),
+                    labels = c( "gyrA d87y", "gyrA s83l"))+
+   theme(legend.position="bottom",
+        legend.title = element_text(size=12),
+        legend.text = element_text(size =10),
+        legend.box="vertical", legend.margin=margin())+
+  guides(fill=guide_legend(nrow=2,byrow=TRUE))
+#h3
+
+#Then we add the minimum inhibitory concentration determined by the lab (MIC):
+h4 <- h3 + new_scale_fill()
+h5 <- gheatmap(h4, MIC_Cip,  offset = 14, width=0.10,
+                colnames = FALSE)+
+  scale_fill_continuous(name = "MIC for ciprofloxacin",
+                      low = "yellow", high = "red",
+                      breaks = c(0, 0.50, 1.00),
+                      na.value = "white")+
+   guides(fill = guide_colourbar(barwidth = 5, barheight = 1))+
+   theme(legend.position="bottom",
+        legend.title = element_text(size=12),
+        legend.text = element_text(size =10),
+        legend.box="vertical", legend.margin=margin())
+h5
+
+#B: Lineartree:
+p <- ggtree(sub_tree2) %<+% df +
+  geom_tiplab(size =3) + #labels the tips
+  theme_tree2()+
+  xlab("genetic distance")+
+  xlim(0, 0.015)+
+ theme(legend.position = "none",
+      axis.title.y=element_blank(),
+      plot.title = element_text(size =12, face="bold",hjust = 0.5, vjust = -15))
+p
+
+#First we add gender:
+
+h1 <-  gheatmap(p, gender, offset = 0.003, width=0.1, color="black", 
+         colnames = FALSE)+
+  scale_fill_manual(name = "Gender",
+                    values = c("#00d1b1", "purple"),
+                    breaks = c("male", "female"),
+                    labels = c("Male", "Female"))+
+   theme(legend.position="bottom",
+        legend.title = element_text(size=12),
+        legend.text = element_text(size =10),
+        legend.box="vertical", legend.margin=margin())
+#h1
+
+#Then we add ciprofloxacin after adding another colorscheme layer:
+
+h2 <- h1 + new_scale_fill()
+h3 <- gheatmap(h2, cipR,  offset = 0.004, width=0.1,color="black",
+                colnames = FALSE)+
+  scale_fill_manual(name = "Ciprofloxacin resistance \n conferring mutation",
+                    values = c("#fe9698","#ea0c92"),
+                    breaks = c( "gyra_d87y", "gyra_s83l"),
+                    labels = c( "gyrA d87y", "gyrA s83l"))+
+   theme(legend.position="bottom",
+        legend.title = element_text(size=12),
+        legend.text = element_text(size =10),
+        legend.box="vertical", legend.margin=margin())+
+  guides(fill=guide_legend(nrow=2,byrow=TRUE))
+#h3
+
+#Then we add the minimum inhibitory concentration determined by the lab (MIC):
+h4 <- h3 + new_scale_fill()
+h5 <- gheatmap(h4, MIC_Cip, offset = 0.005, width=0.1, color="black", 
+                colnames = FALSE)+
+  scale_fill_continuous(name = "MIC for ciprofloxacin",
+                      low = "yellow", high = "red",
+                      breaks = c(0,0.50,1.00),
+                      na.value = "white")+
+   guides(fill = guide_colourbar(barwidth = 5, barheight = 1))+
+   theme(legend.position="bottom",
+        legend.title = element_text(size=10),
+        legend.text = element_text(size =8),
+        legend.box="horizontal", legend.margin=margin())+
+  guides(shape = guide_legend(override.aes = list(size = 2)))
+h5
+
+```
+
+
+<!-- ======================================================= -->
+## Resources {.tabset .tabset-fade .tabset-pills}
+
+http://hydrodictyon.eeb.uconn.edu/eebedia/index.php/Ggtree#Clade_Colors
+https://bioconductor.riken.jp/packages/3.2/bioc/vignettes/ggtree/inst/doc/treeManipulation.html
+https://guangchuangyu.github.io/ggtree-book/chapter-ggtree.html
+
+
+
+```{r, child= 'page_closeout.Rmd', eval = params$run_page_ind==F, include = F}
+```
+
