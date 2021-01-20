@@ -31,7 +31,10 @@ The Page title should be succinct. Consider adding a tag with no spaces into the
 `{#title_tag .tabset .tabset-fade}`
 
 <!-- ======================================================= -->
-## Overview {.tabset .tabset-fade .tabset-pills}
+## Overview {.tabset .tabset-fade}
+
+
+This tab demonstrates use of the **stringr** package to evaluate and manage character (strings).  
 
 1. Syntax/regex
 2. Splitting string variables
@@ -40,16 +43,9 @@ The Page title should be succinct. Consider adding a tag with no spaces into the
 
 
 
-Keep the title of this section as "Overview".  
-This tab should include:  
-
-* Textual overview of the purpose of this page  
-* Small image showing outputs   
-
-
 
 <!-- ======================================================= -->
-## Preparation {.tabset .tabset-fade .tabset-pills}
+## Preparation {.tabset .tabset-fade}
 
 ```{r}
 pacman::p_load(stringr)
@@ -59,9 +55,6 @@ https://cran.r-project.org/web/packages/stringr/vignettes/stringr.html
 
 https://evoldyn.gitlab.io/evomics-2018/ref-sheets/R_strings.pdf
 
-
-<!-- ======================================================= -->
-### sub-tab 1 {.tabset .tabset-fade .tabset-pills}
 
 ADD leading zeros (e.g. for times minutes/hours)
 hours = str_pad(hours, 2, pad = "0"),             # pad with leading zeros
@@ -73,7 +66,7 @@ Title case
 
 
 <!-- ======================================================= -->
-## Access and assess {.tabset .tabset-fade .tabset-pills}
+## Evaluate and access {.tabset .tabset-fade}
 
 ```{r}
 str_length("abc")
@@ -105,7 +98,7 @@ str_sub("pneumonia", -5, -1)
 
 
 <!-- ======================================================= -->
-## Modify {.tabset .tabset-fade .tabset-pills}
+## Modify {.tabset .tabset-fade}
 
 `str_sub()` can be used to modify as well: 
 
@@ -116,28 +109,28 @@ x
 ```
 
 <!-- ======================================================= -->
-### Option 1 sub-tab {.tabset .tabset-fade .tabset-pills}
+### Option 1 sub-tab {.tabset .tabset-fade}
 
 Sub-tabs if necessary. Re-name as needed.
 
 
 
 <!-- ======================================================= -->
-## Option 2 {.tabset .tabset-fade .tabset-pills}
+## Option 2 {.tabset .tabset-fade}
 
 This tab can be re-named. 
 This tab should demonstrate execution of the task a more standard/core package (e.g. ggplot2, or base R) that allows for more flexibility in the output or more package stability. For example, showing how to create an epicurve using *ggplot2*. 
 
 
 <!-- ======================================================= -->
-### Option 2 sub-tab {.tabset .tabset-fade .tabset-pills}
+### Option 2 sub-tab {.tabset .tabset-fade}
 
 Sub-tabs if necessary. Re-name as needed.
 
 
 
 <!-- ======================================================= -->
-## Resources {.tabset .tabset-fade .tabset-pills}
+## Resources {.tabset .tabset-fade}
 
 This tab should stay with the name "Resources".
 Links to other online tutorials or resources.
