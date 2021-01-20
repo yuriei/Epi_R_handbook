@@ -27,8 +27,6 @@ knit: (function(inputFile, encoding) {
 <!-- ======================================================= -->
 # Character manipulation/search (regex) {#regex .tabset .tabset-fade}  
 
-The Page title should be succinct. Consider adding a tag with no spaces into the curly brackets, such as below. This can be used for internal links within the handbook. 
-`{#title_tag .tabset .tabset-fade}`
 
 <!-- ======================================================= -->
 ## Overview {.tabset .tabset-fade}
@@ -41,102 +39,334 @@ This tab demonstrates use of the **stringr** package to evaluate and manage char
 3. Searcihg ICD codes chief complaints
 4. classifing occupations (Santa Clara County example)
 
-
-
+Much of this page is adapted from this [online vignette](
+https://cran.r-project.org/web/packages/stringr/vignettes/stringr.html)
 
 <!-- ======================================================= -->
 ## Preparation {.tabset .tabset-fade}
 
+Install or load the **stringr** package.  
+
 ```{r}
+# install or load the stringr package
 pacman::p_load(stringr)
 ```
 
-https://cran.r-project.org/web/packages/stringr/vignettes/stringr.html
 
-https://evoldyn.gitlab.io/evomics-2018/ref-sheets/R_strings.pdf
+A reference sheet for **stringr** functions can be found [here](https://evoldyn.gitlab.io/evomics-2018/ref-sheets/R_strings.pdf)
 
 
 ADD leading zeros (e.g. for times minutes/hours)
 hours = str_pad(hours, 2, pad = "0"),             # pad with leading zeros
 
 
-tolower()
-toupper()
-Title case
+
 
 
 <!-- ======================================================= -->
 ## Evaluate and access {.tabset .tabset-fade}
 
+**Length of string**  
+
 ```{r}
 str_length("abc")
-#also, nchar() from base R
+# alternatively, use nchar() from base R
 ```
 
+**Subset string by position**  
 
-**Components of `str_sub()`:**  
+Use `str_sub()` to return only a part of a string. The functio takes three main arguments:  
 
-1) character vector(s)  
+1) the character vector(s)  
 2) start position  
 3) end position  
 
-Is a position number is positive, the position is counted from the left of the string. If a position number is negative, it is counted from the right end of the string. Positions outside the string will be truncated. Position numbers are inclusive.  
+A few notes on position numbers:  
 
+* If a position number is positive, the position is counted from the left of the string.  
+* If a position number is negative, it is counted from the right end of the string.  
+* Position numbers are inclusive.  
+* Positions outside the string will be truncated (removed).  
+
+Below are some examples on the string "pneumonia":  
 
 ```{r}
+# third from left
 str_sub("pneumonia", 3, 3)
 
+# 0 is not present
 str_sub("pneumonia", 0, 0)
 
+# 6th from right, to the first from right
 str_sub("pneumonia", 6, -1)
 
+# fifth from right, to the first from right
 str_sub("pneumonia", -5, -1)
 
 ```
 
+**Subset string by word**
 
+```{r}
+chief_complaints <- c("I just got out of the hospital 2 days ago, but still can barely breathe.",
+                      "My stomach hurts",
+                      "Severe ear pain")
+```
+
+To extract the nth 'word', use `word()`. Separator between words is space, unless otherwise indicated with `sep =` (e.g. `sep = "\\_"` for underscore between words.  
+
+```{r}
+word(chief_complaints, 1, 3)
+```
+
+
+
+```{r}
+str_extract(x, "abc")
+```
+
+<!-- ======================================================= -->
+## Combine {.tabset .tabset-fade}
+
+```{r}
+combined <- str_c("String 1", "String 2", "String 3")
+combined <- str_c("String 1", "String 2", "String 3", sep = ", ")
+combined <- str_c("String 1", "String 2", "String 3", sep = ", ")
+length(combined)
+
+```
 
 
 <!-- ======================================================= -->
 ## Modify {.tabset .tabset-fade}
 
-`str_sub()` can be used to modify as well: 
+These commands can be used on a single character string as shown, or on a vector of multiple strings (such as a column in a dataframe).  
+
+**Replace characters**  
+
+`str_sub()` paired with the assignment operator (`<-`) can be used to modify a part of a string: 
 
 ```{r}
 x <- "pneumonia"
-str_sub(x, 3, 3) <- "X"
+
+# convert the third and fourth characters to X 
+str_sub(x, 3, 4) <- "XX"
+
 x
 ```
 
 <!-- ======================================================= -->
-### Option 1 sub-tab {.tabset .tabset-fade}
+### Truncate and pad {.tabset .tabset-fade}
 
-Sub-tabs if necessary. Re-name as needed.
+
+**Increase minimum length (pad)**  
+
+Use `str_pad()` to add characters to a string, to a minimum length.  
+
+By default spaces are added, but you can also pad with other characters using the `pad = ` argument.  
+
+
+```{r}
+# ICD codes of differing length
+ICD_codes <- c("R10.13",
+               "R10.819",
+               "R17")
+
+# ICD codes padded to 7 characters on the right side
+str_pad(ICD_codes, 7, "right")
+
+# Pad with periods instead of spaces
+str_pad(ICD_codes, 7, "right", pad = ".")
+```
+
+For example, to pad numbers with leading zeros (such as for hours or minutes), you can pad the number to minimum length of 2 with `pad = "0"`.
+
+```{r}
+# Add leading zeros to two digits (e.g. for times minutes/hours)
+str_pad("4", 2, pad = "0") 
+
+# example with column name "hours"
+# hours <- str_pad(hours, 2, pad = "0") 
+```
+
+
+**Truncate/shorten**  
+
+`str_trunc()` sets a maximum length for each string. If a string exceeds this length, it is truncated (shortened) and an ellipsis (...) is included to indicate that the string was previously longer. Note that the ellipsis *is* counted in the length. The ellipsis characters can be changed with the argument `ellipsis = `.  The optional `side = ` argument specifies which where the ellipsis will appear within the truncated string ("left", "right", or "center").  
+
+```{r}
+original <- "Symptom onset on 4/3/2020 with vomiting"
+str_trunc(original, 10, "center")
+```
+
+**To ensure each value is the same length**  
+
+Use `str_trunc()` to set a maximum length, and then use `str_pad()` to expand the very short strings to that truncated length. In the example below, 6 is set as the maximum length (one value is truncated), and then a very short value is padded to achieve length of 6.    
+
+```{r}
+# ICD codes of differing length
+ICD_codes   <- c("R10.13",
+                 "R10.819",
+                 "R17")
+
+# truncate to maximum length of 6
+ICD_codes_2 <- str_trunc(ICD_codes, 6)
+ICD_codes_2
+
+# expand to minimum length of 6
+ICD_codes_3 <- str_pad(ICD_codes_2, 6, "right")
+ICD_codes_3
+```
+
+
+**Remove leading/trailing whitespace**  
+
+Use `str_trim()` to remove spaces, newlines (`\n`) or tabs (`\t`) on sides of a string input.  
+Add `"right"` `"left"`, or `"both"` to the command to specify which side to trim (e.g. `str_trim(x, "right")`. 
+
+```{r}
+# ID numbers with excess spaces on right
+IDs <- c("provA_1852  ", # two excess spaces
+         "provA_2345",   # zero excess spaces
+         "provA_9460 ")  # one excess space
+
+# IDs trimmed to remove excess spaces on right side only
+str_trim(IDs)
+```
+
+
+**Remove repeated whitespace *within* strings**  
+
+Use `str_squish()` to remove repeated spaces that appear *inside* a string. For example, to convert double spaces into single spaces. It also removes spaces, newlines, or tabs on the outside of the string like `str_trim()`.  
+
+
+```{r}
+# original contains excess spaces within string
+str_squish("  Pt requires   IV saline\n") 
+```
+
+Enter `?str_trim`, `?str_pad` in your R console to see further details.  
+
+
+<!-- ======================================================= -->
+### Changing case {.tabset .tabset-fade}
+
+Often one must alter the case/capitalization of a string value, for example names of jursidictions. Use `str_to_upper()`, `str_to_upper()`, and `str_to_title()`, as shown below:  
+
+```{r}
+str_to_upper("California")
+
+str_to_lower("California")
+```
+
+Using *base** R, the above can also be achieved with `toupper()`, `tolower()`.  
+
+
+**Title case**
+Transforming the string so each word is capitalized can be achieved with `str_to_title()`:  
+
+```{r}
+str_to_title("go to the US state of california ")
+```
+
+Use `toTitleCase()` from the **tools** package to achieve more nuanced capitalization (words like "to", "the", and "of" are not capitalized).  
+
+```{r}
+tools::toTitleCase("This is the US state of california")
+```
+
+You can also use `str_to_sentence()`, which capitalizes only the first letter of the string.
+
+```{r}
+str_to_sentence("the patient must be transported")
+```
+
+
+<!-- ======================================================= -->
+### Wrapping paragraphs {.tabset .tabset-fade}
+
+Use `str_wrap()` to wrap a long unstructured text into a structured paragraph. Provide the ideal character length for each line, and it applies an algorithm to insert newlines (`\n`) within the paragraph, as seen in the example below.   
+
+```{r}
+pt_course <- "Symptom onset 1/4/2020 vomiting chills fever. Pt saw traditional healer in home village on 2/4/2020. On 5/4/2020 pt symptoms worsened and was admitted to Lumta clinic. Sample was taken and pt was transported to regional hospital on 6/4/2020. Pt died at regional hospital on 7/4/2020."
+
+str_wrap(pt_course, 40)
+```
+
+The **base** function `cat()` can be wrapped around the above command in order to print the output, displaying the new lines added.  
+
+```{r}
+cat(str_wrap(pt_course, 40))
+```
 
 
 
 <!-- ======================================================= -->
-## Option 2 {.tabset .tabset-fade}
+## Sorting {.tabset .tabset-fade}
 
-This tab can be re-named. 
-This tab should demonstrate execution of the task a more standard/core package (e.g. ggplot2, or base R) that allows for more flexibility in the output or more package stability. For example, showing how to create an epicurve using *ggplot2*. 
+Several strings can be sorted by alphabetical order. `str_order()` returns the order, while `str_sort()` returns the strings in that order.  
+
+```{r}
+# strings
+health_zones <- c("Alba", "Takota", "Delta")
+
+# return the alphabetical order
+str_order(health_zones)
+
+# return the strings in alphabetical order
+str_sort(health_zones)
+```
+
+To use a different alphabet, add the argument `locale = `. See the full list of locales by entering `stringi::stri_locale_list()` in the R console.  
 
 
 <!-- ======================================================= -->
-### Option 2 sub-tab {.tabset .tabset-fade}
+## Patterns {.tabset .tabset-fade}
 
-Sub-tabs if necessary. Re-name as needed.
+Many **stringr** functions work to detect, locate, extract, match, replace, and split based on a specified *pattern*.  
+
+**Presence/absence of a pattern**  
+
+Use `str_detect()` as below:  
+
+```{r}
+occupations <- c("field laborer",
+                 "school teacher",
+                 "primary school teacher",
+                 "nurse",
+                 "lineworker at Amberdeen Fish Factory")
 
 
+str_detect(occupations, "teacher")
+```
+
+`str_detect()` is often used within `case_when()` (**dplyr**). Let's say there is a linelist with an "occupation column with values similar to those shown above. Below, `mutate()` creates a new column called `is_teacher` by using `case_when()`.  
+As described in the page on data Cleaning, ...
+
+For each row in te`str_detect()`    
+
+```{r}
+df <- df %>% 
+  mutate(is_teacher = case_when(
+    str_detect(occupations, "teacher") ~ "teacher",
+    TRUE                               ~ "Not a teacher"))
+```
+
+A more complicated example where you want the search to consider multiple terms: 
+
+
+```"teacher|educator|professor"```
+
+now with shortened endings... regex
 
 <!-- ======================================================= -->
 ## Resources {.tabset .tabset-fade}
 
-This tab should stay with the name "Resources".
-Links to other online tutorials or resources.
+A reference sheet for **stringr** functions can be found [here](https://evoldyn.gitlab.io/evomics-2018/ref-sheets/R_strings.pdf)
 
 
-
+A vignette on **stringr** can be found [here](
+https://cran.r-project.org/web/packages/stringr/vignettes/stringr.html)
 
 ```{r, child= '_page_closeout.Rmd', eval = params$run_page_ind == F, include = F}
 ```
