@@ -25,7 +25,7 @@ knit: (function(inputFile, encoding) {
 <!-- ======================================================= -->
 <!-- ======================================================= -->
 <!-- ======================================================= -->
-# Character manipulation/search (regex) {#regex .tabset .tabset-fade}  
+# Characters/strings {.tabset .tabset-fade}  
 
 
 <!-- ======================================================= -->
@@ -34,13 +34,21 @@ knit: (function(inputFile, encoding) {
 
 This tab demonstrates use of the **stringr** package to evaluate and manage character (strings).  
 
-1. Syntax/regex
-2. Splitting string variables
-3. Searcihg ICD codes chief complaints
-4. classifing occupations (Santa Clara County example)
+1. Evaluate and subset/extract - `str_length()`, `str_sub()`, `word()`  
+2. Combine, order, arrange - `str_c()`, `str_glue()`, `str_order()`  
+3. Modify and replace - `str_sub()`, `str_replace()`  
+4. Adjust length - `str_pad()`, `str_trunc()`, `str_wrap()`  
+5. Change case - `str_to_upper()`, `str_to_title()`, `str_to_lower()`, `str_to_sentence()`  
+6. Search for patterns - `str_detect()`, `str_subset()`, `str_match()`  
+
+
+For ease of display most examples are shown acting on a short defined character vector, however they can easily be applied/adapted to a column within a dataset.  
 
 Much of this page is adapted from this [online vignette](
 https://cran.r-project.org/web/packages/stringr/vignettes/stringr.html)
+
+
+
 
 <!-- ======================================================= -->
 ## Preparation {.tabset .tabset-fade}
@@ -56,26 +64,26 @@ pacman::p_load(stringr)
 A reference sheet for **stringr** functions can be found [here](https://evoldyn.gitlab.io/evomics-2018/ref-sheets/R_strings.pdf)
 
 
-ADD leading zeros (e.g. for times minutes/hours)
-hours = str_pad(hours, 2, pad = "0"),             # pad with leading zeros
-
-
 
 
 
 <!-- ======================================================= -->
-## Evaluate and access {.tabset .tabset-fade}
+## Evaluate and subset {.tabset .tabset-fade}
 
-**Length of string**  
+
+**Evaluate the length of a string**  
 
 ```{r}
 str_length("abc")
-# alternatively, use nchar() from base R
 ```
 
-**Subset string by position**  
+Alternatively, use `nchar()` from **base** R
 
-Use `str_sub()` to return only a part of a string. The functio takes three main arguments:  
+
+
+**Subset/extract string by position**  
+
+Use `str_sub()` to return only a part of a string. The function takes three main arguments:  
 
 1) the character vector(s)  
 2) start position  
@@ -83,12 +91,12 @@ Use `str_sub()` to return only a part of a string. The functio takes three main 
 
 A few notes on position numbers:  
 
-* If a position number is positive, the position is counted from the left of the string.  
-* If a position number is negative, it is counted from the right end of the string.  
+* If a position number is positive, the position is counted starting from the left end of the string.  
+* If a position number is negative, it is counted starting from the right end of the string.  
 * Position numbers are inclusive.  
-* Positions outside the string will be truncated (removed).  
+* Positions extending beyond the string will be truncated (removed).  
 
-Below are some examples on the string "pneumonia":  
+Below are some examples applied to the string "pneumonia":  
 
 ```{r}
 # third from left
@@ -103,60 +111,207 @@ str_sub("pneumonia", 6, -1)
 # fifth from right, to the first from right
 str_sub("pneumonia", -5, -1)
 
+# positions outside the string
+str_sub("pneumonia", 4, 15)
 ```
 
-**Subset string by word**
+**Subset string by word position**
+
+To extract the nth 'word', use `word()`, also from **stringr**. Provide the string(s), then the first word position to extract, and the last word position to extract.  
+
+By default, the separator between 'words' is assumed to be a space, unless otherwise indicated with `sep = ` (e.g. `sep = "_"` when words are separated by underscores.  
+
 
 ```{r}
+# strings to evaluate
 chief_complaints <- c("I just got out of the hospital 2 days ago, but still can barely breathe.",
                       "My stomach hurts",
                       "Severe ear pain")
+
+# extract 1st-3rd words of each string
+word(chief_complaints, start = 1, end = 3, sep = " ")
 ```
 
-To extract the nth 'word', use `word()`. Separator between words is space, unless otherwise indicated with `sep =` (e.g. `sep = "\\_"` for underscore between words.  
-
-```{r}
-word(chief_complaints, 1, 3)
-```
-
-
-
-```{r}
-str_extract(x, "abc")
-```
-
-<!-- ======================================================= -->
-## Combine {.tabset .tabset-fade}
-
-```{r}
-combined <- str_c("String 1", "String 2", "String 3")
-combined <- str_c("String 1", "String 2", "String 3", sep = ", ")
-combined <- str_c("String 1", "String 2", "String 3", sep = ", ")
-length(combined)
-
-```
 
 
 <!-- ======================================================= -->
-## Modify {.tabset .tabset-fade}
+## Combine, order, and arrange {.tabset .tabset-fade}
 
-These commands can be used on a single character string as shown, or on a vector of multiple strings (such as a column in a dataframe).  
 
-**Replace characters**  
+This section covers using `str_c()`, `str_glue()`, `str_order()`, to combine, arrange, and paste together strings.  
+
+
+<!-- ======================================================= -->
+### Combine strings
+
+It is common to see **base** R functions `paste()` and `paste0()`, which concatenate vectors after converting all parts to character. The act similarly to `str_c()` but the syntax differs - the parts (either text or code/pre-defined objects) are separated by commas, for example: `paste("Regional hospital needs", n_beds, "beds and", n_masks, "masks.")`.  The `sep` and `collapse` arguments can be adjusted. By default `sep` is a space, unless using `paste0()` where there is no space between parts.  
+
+To combine multiple strings into one string, you can use `str_c()`, which is the **stringr** version of `c()` (concatenate). 
+
+```{r}
+str_c("String1", "String2", "String3")
+```
+
+The argument `sep = ` inserts characters between each input vectors (e.g. a comma or newline `"\n"`)  
+
+```{r}
+str_c("String1", "String2", "String3", sep = ", ")
+```
+
+The argument `collapse = ` is relevant if producing multiple elements. The example below shows the combination of first and last names. The `sep` value goes between each first and last name, while the `collapse` value goes between the people.  
+
+```{r}
+first_names <- c("abdul", "fahruk", "janice") 
+last_names  <- c("hussein", "akinleye", "musa")
+
+# sep is between the respective strings, while collapse is between the elements produced
+str_c(first_names, last_names, sep = " ", collapse = ";  ")
+
+# For newlines to print correctly, the phrase may need to be wrapped in cat()
+cat(str_c(first_names, last_names, sep = " ", collapse = ";\n"))
+```
+
+
+<!-- ======================================================= -->
+### Glueing strings and other values
+
+**str_glue()**  
+
+You can also combine strings and other pre-defined values and characters with `str_glue()`. This is a very useful function for creating dynamic plot captions, as demonstrated below.  
+
+* All content goes between quotation marks ("").  
+* Any dynamic code or calls to pre-defined objects must be within curly brackets `{}`. There can be many curly brackets.  
+* Within the outer quotation marks, use single quotes if necessary (e.g. when providing date format)  
+* You can provide newlines (`\n`), use `format()` to display dates, use `Sys.Date()` to display the current date.  
+* If using the `%>%` pipe operator, ensure the **tidyverse** package is loaded.  
+
+A simple example:  
+
+```{r}
+str_glue("The linelist is current to {format(Sys.Date(), '%d %b %Y')} and includes {nrow(linelist)} cases.")
+```
+
+An alternative format is to use placeholders within the brackets and define the code in separate arguments at the end of the `str_glue()` function, as below. This can improve code readability if the codes are long.
+
+```{r}
+str_glue("Data source is the confirmed case linelist as of {current_date}.\nThe last case was reported hospitalized on {last_hospital}.\n{n_missing_onset} cases are missing date of onset and not shown",
+         current_date = format(Sys.Date(), '%d %b %Y'),
+         last_hospital = format(as.Date(max(linelist$date_hospitalisation, na.rm=T)), '%d %b %Y'),
+         n_missing_onset = nrow(linelist %>% filter(is.na(date_onset)))
+         )
+
+```
+
+Sometimes, it is useful to pull data from dataframe and have it pasted together in sequence. Below is an example using this dataset to make a summary output of jurisdictions and the new and total cases:  
+
+```{r, echo=F}
+case_table <- data.frame(zone      = c("Zone 1", "Zone 2", "Zone 3", "Zone 4", "Zone 5"),
+                         new_cases = c(3, 0, 7, 0, 15),
+                         total_cases = c(40, 4, 25, 10, 103))
+```
+
+```{r}
+DT::datatable(case_table, rownames = FALSE, filter="top", options = list(pageLength = 5, scrollX=T) )
+```
+Use `str_c()` with the dataframe and column names (as in the example above with first & last names). Provide `sep` and `collapse` arguments.  
+
+```{r}
+str_c(case_table$zone, case_table$new_cases, sep = " = ", collapse = ";  ")
+```
+
+We add the text "New Cases: " to the beginning of the summary by using wrapping with a separate `str_c()`. If "New Cases" was added within the original `str_c()`, it would appear multiple times.  
+
+```{r}
+str_c("New Cases: ", str_c(case_table$zone, case_table$new_cases, sep = " = ", collapse = ";  "))
+```
+
+You can achieve a similar result with `str_glue()`, with newlines added automatically:  
+
+```{r}
+str_glue("{case_table$zone}: {case_table$new_cases} new cases ({case_table$total_cases} total cases)")
+```
+
+To use str_glue() but have more control (e.g. to use double newlines), wrap it within `str_c()` and adjust the `collapse` value. You may need to print using `cat()` to correctly print the newlines.  
+
+```{r}
+case_summary <- str_c(str_glue("{case_table$zone}: {case_table$new_cases} new cases ({case_table$total_cases} total cases)"), collapse = "\n\n")
+
+cat(case_summary) # print
+```
+
+
+
+
+<!-- ======================================================= -->
+### Sorting
+
+Several strings can be sorted by alphabetical order. `str_order()` returns the order, while `str_sort()` returns the strings in that order.  
+
+```{r}
+# strings
+health_zones <- c("Alba", "Takota", "Delta")
+
+# return the alphabetical order
+str_order(health_zones)
+
+# return the strings in alphabetical order
+str_sort(health_zones)
+```
+
+To use a different alphabet, add the argument `locale = `. See the full list of locales by entering `stringi::stri_locale_list()` in the R console.  
+
+
+
+<!-- ======================================================= -->
+### base R functions
+
+It is common to see **base** R functions `paste()` and `paste0()`, which concatenate vectors after converting all parts to character. The act similarly to `str_c()` but the syntax differs - the parts (either text or code/pre-defined objects) are separated by commas, for example: `paste("Regional hospital needs", n_beds, "beds and", n_masks, "masks.")`.  The `sep` and `collapse` arguments can be adjusted. By default `sep` is a space, unless using `paste0()` where there is no space between parts.  
+
+
+
+<!-- ======================================================= -->
+## Modify and replace {.tabset .tabset-fade}
+
+
+**Replace specific character positions**  
 
 `str_sub()` paired with the assignment operator (`<-`) can be used to modify a part of a string: 
 
 ```{r}
-x <- "pneumonia"
+word <- "pneumonia"
 
 # convert the third and fourth characters to X 
-str_sub(x, 3, 4) <- "XX"
+str_sub(word, 3, 4) <- "XX"
 
-x
+word
 ```
 
+An example applied to multiple strings (e.g. a column). Note the expansion in length of "HIV".  
+
+```{r}
+words <- c("pneumonia", "tubercolosis", "HIV")
+
+# convert the third and fourth characters to X 
+str_sub(words, 3, 4) <- "XX"
+
+words
+```
+
+**Replace patterns**  
+
+Use `str_replace()` as a "find and replace" tool. First, provide the strings to be evaluated, then the pattern to be replaced, and then the replacement value. The example below replaces all instances of "dead" with "deceased". Note, this IS case sensitive.  
+
+```{r}
+outcome <- c("Karl: dead",
+            "Samantha: dead",
+            "Marco: not dead")
+
+str_replace(outcome, "dead", "deceased")
+```
+
+
 <!-- ======================================================= -->
-### Truncate and pad {.tabset .tabset-fade}
+## Adjust length {.tabset .tabset-fade}
 
 
 **Increase minimum length (pad)**  
@@ -185,8 +340,8 @@ For example, to pad numbers with leading zeros (such as for hours or minutes), y
 # Add leading zeros to two digits (e.g. for times minutes/hours)
 str_pad("4", 2, pad = "0") 
 
-# example with column name "hours"
-# hours <- str_pad(hours, 2, pad = "0") 
+# example using a numeric column named "hours"
+# hours <- str_pad(hours, 2, pad = "0")
 ```
 
 
@@ -248,8 +403,28 @@ str_squish("  Pt requires   IV saline\n")
 Enter `?str_trim`, `?str_pad` in your R console to see further details.  
 
 
+**Wrap lines into paragraphs**  
+
+Use `str_wrap()` to wrap a long unstructured text into a structured paragraph with fixed line length. Provide the ideal character length for each line, and it applies an algorithm to insert newlines (`\n`) within the paragraph, as seen in the example below.   
+
+```{r}
+pt_course <- "Symptom onset 1/4/2020 vomiting chills fever. Pt saw traditional healer in home village on 2/4/2020. On 5/4/2020 pt symptoms worsened and was admitted to Lumta clinic. Sample was taken and pt was transported to regional hospital on 6/4/2020. Pt died at regional hospital on 7/4/2020."
+
+str_wrap(pt_course, 40)
+```
+
+The **base** function `cat()` can be wrapped around the above command in order to print the output, displaying the new lines added.  
+
+```{r}
+cat(str_wrap(pt_course, 40))
+```
+
+
+
+
+
 <!-- ======================================================= -->
-### Changing case {.tabset .tabset-fade}
+## Change case {.tabset .tabset-fade}
 
 Often one must alter the case/capitalization of a string value, for example names of jursidictions. Use `str_to_upper()`, `str_to_upper()`, and `str_to_title()`, as shown below:  
 
@@ -282,42 +457,7 @@ str_to_sentence("the patient must be transported")
 ```
 
 
-<!-- ======================================================= -->
-### Wrapping paragraphs {.tabset .tabset-fade}
-
-Use `str_wrap()` to wrap a long unstructured text into a structured paragraph. Provide the ideal character length for each line, and it applies an algorithm to insert newlines (`\n`) within the paragraph, as seen in the example below.   
-
-```{r}
-pt_course <- "Symptom onset 1/4/2020 vomiting chills fever. Pt saw traditional healer in home village on 2/4/2020. On 5/4/2020 pt symptoms worsened and was admitted to Lumta clinic. Sample was taken and pt was transported to regional hospital on 6/4/2020. Pt died at regional hospital on 7/4/2020."
-
-str_wrap(pt_course, 40)
-```
-
-The **base** function `cat()` can be wrapped around the above command in order to print the output, displaying the new lines added.  
-
-```{r}
-cat(str_wrap(pt_course, 40))
-```
-
-
-
-<!-- ======================================================= -->
-## Sorting {.tabset .tabset-fade}
-
-Several strings can be sorted by alphabetical order. `str_order()` returns the order, while `str_sort()` returns the strings in that order.  
-
-```{r}
-# strings
-health_zones <- c("Alba", "Takota", "Delta")
-
-# return the alphabetical order
-str_order(health_zones)
-
-# return the strings in alphabetical order
-str_sort(health_zones)
-```
-
-To use a different alphabet, add the argument `locale = `. See the full list of locales by entering `stringi::stri_locale_list()` in the R console.  
+ 
 
 
 <!-- ======================================================= -->
@@ -325,39 +465,170 @@ To use a different alphabet, add the argument `locale = `. See the full list of 
 
 Many **stringr** functions work to detect, locate, extract, match, replace, and split based on a specified *pattern*.  
 
-**Presence/absence of a pattern**  
 
-Use `str_detect()` as below:  
+
+<!-- ======================================================= -->
+### Detect presence/absence of a pattern
+
+Use `str_detect()` as below. Note that by default the search *is case sensitive*!
 
 ```{r}
+str_detect("primary school teacher", "teach")
+```
+
+The argument `negate = ` can be included and set to `TRUE` if you want to know if the pattern is NOT present.  
+ 
+```{r}
+str_detect("primary school teacher", "teach", negate = TRUE)
+```
+
+To ignore case/capitalization, wrap the pattern within `regex()` and *within* `regex()` add the argument `ignore_case = T`.  
+
+```{r}
+str_detect("Teacher", regex("teach", ignore_case = T))
+```
+
+When `str_detect()` is applied to a character vector/column, it will return a TRUE/FALSE for each of the values in the vector. 
+
+```{r}
+# a vector/column of occupations 
 occupations <- c("field laborer",
-                 "school teacher",
-                 "primary school teacher",
-                 "nurse",
-                 "lineworker at Amberdeen Fish Factory")
+                 "university professor",
+                 "primary school teacher & tutor",
+                 "tutor",
+                 "nurse at regional hospital",
+                 "lineworker at Amberdeen Fish Factory",
+                 "physican",
+                 "cardiologist",
+                 "office worker",
+                 "food service")
 
-
-str_detect(occupations, "teacher")
+# Detect presence of pattern "teach" in each string - output is vector of TRUE/FALSE
+str_detect(occupations, "teach")
 ```
 
-`str_detect()` is often used within `case_when()` (**dplyr**). Let's say there is a linelist with an "occupation column with values similar to those shown above. Below, `mutate()` creates a new column called `is_teacher` by using `case_when()`.  
-As described in the page on data Cleaning, ...
-
-For each row in te`str_detect()`    
+If you need to count these, apply `sum()` to the output. This counts the number TRUE.  
 
 ```{r}
-df <- df %>% 
-  mutate(is_teacher = case_when(
-    str_detect(occupations, "teacher") ~ "teacher",
-    TRUE                               ~ "Not a teacher"))
+sum(str_detect(occupations, "teach"))
 ```
 
-A more complicated example where you want the search to consider multiple terms: 
+To search inclusive of multiple terms, include them separated by OR bars (|) within the pattern, as shown below:  
+```{r}
+sum(str_detect(occupations, "teach|professor|tutor"))
+```
+
+If you need to make a long list of search terms, you can combine them using `str_c()` and `sep = |`, define this is a character object, and reference it later more succinctly. The example below includes possible occupation search terms for frontline medical providers.     
+
+```{r}
+# search terms
+occupation_med_frontline <- str_c("medical", "medicine", "hcw", "healthcare", "home care", "home health",
+                                "surgeon", "doctor", "doc", "physician", "surgery", "peds", "pediatrician",
+                               "intensivist", "cardiologist", "coroner", "nurse", "nursing", "rn", "lpn",
+                               "cna", "pa", "physician assistant", "mental health",
+                               "emergency department technician", "resp therapist", "respiratory",
+                                "phlebotomist", "pharmacy", "pharmacist", "hospital", "snf", "rehabilitation",
+                               "rehab", "activity", "elderly", "subacute", "sub acute",
+                                "clinic", "post acute", "therapist", "extended care",
+                                "dental", "dential", "dentist", sep = "|")
+
+occupation_med_frontline
+```
+
+This command returns the number of occupations which contain any one of the search terms for front-line medical providers (`occupation_med_frontline`):  
+
+```{r}
+sum(str_detect(occupations, occupation_med_frontline))
+```
 
 
-```"teacher|educator|professor"```
 
-now with shortened endings... regex
+
+<!-- ======================================================= -->
+### Patterns in conditional logic
+
+**Within `case_when()`**  
+
+`str_detect()` is often used within `case_when()` (from **dplyr**). Let's say the occupations are a column in the linelist called `occupations`. The `mutate()` below creates a new column called `is_educator` by using conditional logic via `case_when()`. See the page on data cleaning to learn more about `case_when()`.  
+
+
+```{r, eval=F}
+df <- df %>% 
+  mutate(is_educator = case_when(
+    # term search within occupation, not case sensitive
+    str_detect(occupations,
+               regex("teach|prof|tutor|university",
+                     ignore_case = TRUE))              ~ "Educator",
+    # all others
+    TRUE                                               ~ "Not an educator"))
+```
+
+As a reminder, it may be important to add exclusion criteria to the conditional logic (`negate = F`):  
+
+```{r, eval=F}
+df <- df %>% 
+  # value in new column is_educator is based on conditional logic
+  mutate(is_educator = case_when(
+    
+    # occupation column must meet 2 criteria to be assigned "Educator":
+    # it must have a search term AND NOT any exclusion term
+    
+    # Must have a search term AND
+    str_detect(occupations,
+               regex("teach|prof|tutor|university", ignore_case = T)) &              
+    # Must NOT have an exclusion term
+    str_detect(occupations,
+               regex("admin", ignore_case = T),
+               negate = T)                          ~ "Educator"
+    
+    # All rows not meeting above criteria
+    TRUE                                            ~ "Not an educator"))
+```
+
+
+<!-- ======================================================= -->
+### Subset and Count  
+
+**Subset, Count**  
+
+Aligned functions include `str_subset()` and `str_count()`.  
+
+`str_subset()` returns the actual values which contained the pattern: 
+
+```{r}
+str_subset(occupations, "teach|prof|tutor")
+```
+
+`str_count() returns a vector of numbers: the **number of times** a search term appears in each evaluated value.  
+
+```{r}
+str_count(occupations, regex("teach|prof|tutor", ignore_case = TRUE))
+```
+
+
+<!-- ======================================================= -->
+### Splitting  
+
+To split a string based on a pattern, use `str_split()`.  
+
+TBD
+
+Need example of expanding one column into several columns, or creating N new columns.
+
+
+
+<!-- ======================================================= -->
+### Regex groups
+
+`str_extract()` extracts *only the first match* in each evaluated string, producing a character vector including `NA` where there was no match. The `NA` can be removed by wrapping the vector with `na.exclude()`.  
+`str_extract_all() produces a `list` (not a vector) and contains *all* matches in each evaluated string  
+
+
+**Groups within strings**  
+
+`str_match()`   TBD
+
+
 
 <!-- ======================================================= -->
 ## Resources {.tabset .tabset-fade}
@@ -367,6 +638,8 @@ A reference sheet for **stringr** functions can be found [here](https://evoldyn.
 
 A vignette on **stringr** can be found [here](
 https://cran.r-project.org/web/packages/stringr/vignettes/stringr.html)
+
+
 
 ```{r, child= '_page_closeout.Rmd', eval = params$run_page_ind == F, include = F}
 ```
