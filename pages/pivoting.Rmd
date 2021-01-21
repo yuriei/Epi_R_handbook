@@ -27,6 +27,7 @@ knit: (function(inputFile, encoding) {
 <!-- ======================================================= -->
 # Pivoting {#pivot .color-tabs .tabset .tabset-fade}
 
+Test!!
 
 <!-- ======================================================= -->
 ## Overview {#pivot_intro .emphasized .tabset .tabset-fade .tabset-pills}
