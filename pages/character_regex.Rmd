@@ -36,7 +36,7 @@ This tab demonstrates use of the **stringr** package to evaluate and manage char
 
 1. Evaluate and subset/extract - `str_length()`, `str_sub()`, `word()`  
 2. Combine, order, arrange - `str_c()`, `str_glue()`, `str_order()`  
-3. Modify and replace - `str_sub()`, `str_replace()`  
+3. Modify and replace - `str_sub()`, `str_replace_all()`  
 4. Adjust length - `str_pad()`, `str_trunc()`, `str_wrap()`  
 5. Change case - `str_to_upper()`, `str_to_title()`, `str_to_lower()`, `str_to_sentence()`  
 6. Search for patterns - `str_detect()`, `str_subset()`, `str_match()`  
@@ -57,7 +57,9 @@ Install or load the **stringr** package.
 
 ```{r}
 # install or load the stringr package
-pacman::p_load(stringr)
+pacman::p_load(stringr,
+               tidyverse  # for optional data manipulation
+               )
 ```
 
 
@@ -299,15 +301,18 @@ words
 
 **Replace patterns**  
 
-Use `str_replace()` as a "find and replace" tool. First, provide the strings to be evaluated, then the pattern to be replaced, and then the replacement value. The example below replaces all instances of "dead" with "deceased". Note, this IS case sensitive.  
+Use `str_replace_all()` as a "find and replace" tool. First, provide the strings to be evaluated, then the pattern to be replaced, and then the replacement value. The example below replaces all instances of "dead" with "deceased". Note, this IS case sensitive.  
 
 ```{r}
 outcome <- c("Karl: dead",
             "Samantha: dead",
             "Marco: not dead")
 
-str_replace(outcome, "dead", "deceased")
+str_replace_all(outcome, "dead", "deceased")
 ```
+
+To replace a pattern with `NA`, use `str_replace_na()`.  The function `str_replace()` replaces only the first instance of the pattern within each evaluated string.  
+
 
 
 <!-- ======================================================= -->
@@ -541,11 +546,16 @@ This command returns the number of occupations which contain any one of the sear
 sum(str_detect(occupations, occupation_med_frontline))
 ```
 
+**Base R string search functions**  
+
+The **base** function `grepl()` works similarly to `str_detect()`, in that it searches for matches to a pattern and returns a logical vector. The basic syntax is `grepl(pattern, strings_to_search, ignore.case = FALSE, ...)`. One advantage is that the `ignore.case` argument is easier to write (there is no need to involve `regex()` function).  
+
+Likewise, the **base** functions `sub()` and `gsub()` act similarly to `str_replace()`. Their basic syntax is: `gsub(pattern, replacement, strings_to_search, ignore.case = FALSE)`. `sub()` will replace the first instance of the pattern, whereas `gsub()` will replace all instances of the pattern.  
 
 
 
 <!-- ======================================================= -->
-### Patterns in conditional logic
+### Detects patterns in conditional logic
 
 **Within `case_when()`**  
 
@@ -587,6 +597,43 @@ df <- df %>%
 
 
 <!-- ======================================================= -->
+### Locate pattern position  
+
+To locate the *first* position of a pattern, use `str_locate()`. It outputs a start and end position.   
+
+```{r}
+str_locate("I wish", "sh")
+```
+
+Like other `str` functions, there is an "_all" version (`str_locate_all()`) which will return the positions of *all* instances of the pattern within each string. This outputs as a `list`.  
+
+```{r}
+phrases <- c("I wish", "I hope", "he hopes", "He hopes")
+
+str_locate(phrases, "h" )     # position of *first* instance of the pattern
+str_locate_all(phrases, "h" ) # position of *every* instance of the pattern
+```
+
+
+<!-- ======================================================= -->
+### Extract a match  
+
+`str_extract_all()` returns the matching patterns themselves, which is most useful when you have offered several patterns via "OR" conditions. For example, looking in the string vector of occupations (see previous tab) for *either* "teach", "prof", or "tutor".
+
+`str_extract_all()` returns a `list` which contains *all matches* for each evaluated string. See below how occupation 3 has two pattern matches within it.  
+
+```{r}
+str_extract_all(occupations, "teach|prof|tutor")
+```
+
+
+`str_extract()` extracts *only the first match* in each evaluated string, producing a character vector with one element for each evaluated string. It returns `NA` where there was no match. The `NA`s can be removed by wrapping the returned vector with `na.exclude()`. Note how the second of occupation 3's matches is not shown.  
+
+```{r}
+str_extract(occupations, "teach|prof|tutor")
+```
+
+<!-- ======================================================= -->
 ### Subset and Count  
 
 **Subset, Count**  
@@ -609,25 +656,188 @@ str_count(occupations, regex("teach|prof|tutor", ignore_case = TRUE))
 <!-- ======================================================= -->
 ### Splitting  
 
-To split a string based on a pattern, use `str_split()`.  
+To split a string based on a pattern, use `str_split()`. It evaluates the strings and returns a list of character vectors consisting of the newly-split values.
 
-TBD
+The simple example below evaluates one string, and produces a list with one element - a character vector with three values:
 
-Need example of expanding one column into several columns, or creating N new columns.
+```{r}
+str_split("jaundice, fever, chills", ",", simplify = T)
+```
+
+You can assign this as a named object, and access the nth symptom:  
+
+```{r}
+pt1_symptoms <- str_split("jaundice, fever, chills", ",", simplify = T)
+
+pt1_symptoms[2]
+```
+
+If multiple strings are evaluated, there will be more than one element in the returned list.  
+
+```{r}
+symptoms <- c("jaundice, fever, chills",     # patient 1
+              "chills, aches, pains",        # patient 2 
+              "fever",                       # patient 3
+              "vomiting, diarrhoea",         # patient 4
+              "bleeding from gums, fever",   # patient 5
+              "rapid pulse, headache")       # patient 6
+
+str_split(symptoms, ",")                     # split each patient's symptoms
+```
+
+To access a specific symptom you can use syntax like this: `the_split_return_object[[2]][1]`, which would access the first symptom from the second evaluated string ("chills"). See the R basics page for more detail on accessing elements.  
+
+
+To return a "character matrix" instead, which may be useful if creating dataframe columns, set the argument `simplify = TRUE` as shown below:  
+
+```{r}
+str_split(symptoms, ",", simplify = T)
+```
+
+You can also adjust the number of splits to create with the `n = ` argument. For example, this restricts the number of splits (from the left side) to 2 splits. The further commas remain within the second split. 
+
+```{r}
+str_split(symptoms, ",", simplify = T, n = 2)
+```
+
+*Note - the same outputs can be achieved with `str_split_fixed()`, in which you do *not* give the `simplify` argument, but must instead designate the number of columns (`n`).* 
+
+```{r, eval=F}
+str_split_fixed(symptoms, ",", n = 2)
+```
+
+
+**Splitting a column within a dataframe**  
+
+Within a dataframe, to split one character column into other columns use use `separate()` from **dplyr**.  
+
+If we have a simple dataframe `df` consisting of a case ID column, one character column with symptoms, and one outcome column:  
+
+```{r, echo=F}
+df <- data.frame(case_ID = c(1:6),
+                 symptoms  = 
+                   c("jaundice, fever, chills",     # patient 1
+                     "chills, aches, pains",        # patient 2 
+                     "fever",                       # patient 3
+                     "vomiting, diarrhoea",         # patient 4
+                     "bleeding from gums, fever",   # patient 5
+                     "rapid pulse, headache"),      # patient 6
+                 outcome = c("Success", "Failure", 
+                             "Failure", "Success",
+                             "Success", "Success"))
+```
+
+```{r, echo=F}
+DT::datatable(df, rownames = FALSE, filter="top", options = list(pageLength = 5, scrollX=T) )
+```
+
+First provide the column to be separated, then provide a vector (`c()`) of new columns names to the argument `into = `, as shown below. The argument `sep = ` can be a character, or a number (interpreted as the character position to split at). 
+
+Optional arguments include `remove = ` (FALSE by default, removes the input column) and `convert = ` (FALSE by default, will cause string "NA"s to become `NA`).  
+
+`extra = ` will control what happens if there are more many values created by the separation than new columns named. Setting `extra` equal to `"warn"` means R will return a warning but proceed and drop the values (the default). `"drop"` means the values will be dropped with no warning.  
+
+**Setting `extra = "merge"` will only split to the number of new columns listed in `into` - *this setting will preserve all your data*.**  
+
+```{r}
+# third symptoms combined into second new column
+df %>% 
+  separate(symptoms, into = c("sym_1", "sym_2"), sep=",", extra = "merge")
+```
+
+```{r}
+# third symptoms are lost
+df %>% 
+  separate(symptoms, into = c("sym_1", "sym_2", "sym_3"), sep=",")
+```
+```{r}
+# third symptoms given their own column
+df %>% 
+  separate(symptoms, into = c("sym_1", "sym_2", "sym_3"), sep=",")
+```
+
+<span style="color: orange;">**_CAUTION:_** If you do not provide enough `into` values for the new columns, your data may be truncated.</span>  
+
+One solution to automatically make as many columns as needed is:  
+
+
+**`unite()`**  
+
+Within a dataframe, bringing together multiple columns (the opposite of `separate()`) can be achieved with `unite()` from **tidyr**.  
+
+Provide the name of the new united column. Then provide the names of the columns you wish to unite. By default the separator used in the united column is "_", but this can be changed with the `sep` argument. Other optional arguments include `remove = ` (TRUE by default, removes the input columns from the data frame), and `na.rm = ` (FALSE by default, it removes missing values while uniting).  
+
+Below, we re-unite the dataframe that was separated above.  
+
+```{r}
+separated %>% 
+  unite(
+    col = "all_symptoms",         # name of the new united column
+    c("sym_1", "sym_2", "sym_3"), # columns to unite
+    sep = ", ",                   # separator to use in united column
+    remove = TRUE,                # if TRUE, removes input cols from the data frame
+    na.rm = TRUE                  # if TRUE, missing values are removed before uniting
+  )
+```
 
 
 
 <!-- ======================================================= -->
 ### Regex groups
 
-`str_extract()` extracts *only the first match* in each evaluated string, producing a character vector including `NA` where there was no match. The `NA` can be removed by wrapping the vector with `na.exclude()`.  
-`str_extract_all() produces a `list` (not a vector) and contains *all* matches in each evaluated string  
-
 
 **Groups within strings**  
 
 `str_match()`   TBD
 
+
+<!-- ======================================================= -->
+## Regex and special characters {.tabset .tabset-fade} 
+
+Syntax basics TBD
+
+
+<!-- ======================================================= -->
+### Regular expressions (regex)
+
+Regex is a concise language for describing patterns in strings. If you are unfamiliar, it can look like an alien language:  
+
+```{r, eval=F}
+
+```
+
+
+
+
+You can view a useful list of regex expressions and tips on page 2 of [this cheatsheet](https://evoldyn.gitlab.io/evomics-2018/ref-sheets/R_strings.pdf)  
+
+Also see this [tutorial](https://towardsdatascience.com/a-gentle-introduction-to-regular-expressions-with-r-df5e897ca432).  
+
+<!-- ======================================================= -->
+### Special characters
+
+**Backslash `\` as escape**  
+
+The backslash `\` is used to "escape" the meaning of the next character. This way, a backslash can be used to have a quote mark display *within* other quote marks (`\"`) - the middle quote mark will not "break" the surrounding quote marks.  
+
+Note - thus, if you want to *display* a backslash, you must escape it's meaning with *another backslash. So you must write two backslashes `\\` to display one.  
+
+
+Special character | Purpose  
+----------------- | --------------------------------------------------------------    
+`\n` | a new line (newline)   
+`\\` | backslash  
+`\"` | double-quote *within* double quotes  
+`\'` | single-quote *within* single quotes  
+`\`` | grave accent  
+`\r` | carriage return  
+`\t` | tab  
+`\v` | vertical tab 
+`\b` | backspace  
+
+
+
+Run `?"'"` in the R Console to display a complete list of these special characters (it will appear in the RStudio Help pane). 
 
 
 <!-- ======================================================= -->
