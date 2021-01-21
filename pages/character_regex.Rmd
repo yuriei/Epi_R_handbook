@@ -57,8 +57,9 @@ Install or load the **stringr** package.
 
 ```{r}
 # install or load the stringr package
-pacman::p_load(stringr,
-               tidyverse  # for optional data manipulation
+pacman::p_load(stringr,   # many functions for handling strings
+               tidyverse,  # for optional data manipulation
+               tools      # alternative for converting to title case
                )
 ```
 
@@ -752,13 +753,18 @@ df %>%
 ```
 ```{r}
 # third symptoms given their own column
-df %>% 
+separated <- df %>% 
   separate(symptoms, into = c("sym_1", "sym_2", "sym_3"), sep=",")
+
+separated
 ```
 
 <span style="color: orange;">**_CAUTION:_** If you do not provide enough `into` values for the new columns, your data may be truncated.</span>  
 
-One solution to automatically make as many columns as needed is:  
+One solution to automatically make as many columns as needed could be:  
+
+
+
 
 
 **`unite()`**  
@@ -794,24 +800,11 @@ separated %>%
 <!-- ======================================================= -->
 ## Regex and special characters {.tabset .tabset-fade} 
 
-Syntax basics TBD
+Regular expressions, or "regex", is a concise language for describing patterns in strings.
+
+*Much of this tab is adapted from [this tutorial](https://towardsdatascience.com/a-gentle-introduction-to-regular-expressions-with-r-df5e897ca432) and [this cheatsheet](https://evoldyn.gitlab.io/evomics-2018/ref-sheets/R_strings.pdf)*  
 
 
-<!-- ======================================================= -->
-### Regular expressions (regex)
-
-Regex is a concise language for describing patterns in strings. If you are unfamiliar, it can look like an alien language:  
-
-```{r, eval=F}
-
-```
-
-
-
-
-You can view a useful list of regex expressions and tips on page 2 of [this cheatsheet](https://evoldyn.gitlab.io/evomics-2018/ref-sheets/R_strings.pdf)  
-
-Also see this [tutorial](https://towardsdatascience.com/a-gentle-introduction-to-regular-expressions-with-r-df5e897ca432).  
 
 <!-- ======================================================= -->
 ### Special characters
@@ -822,22 +815,176 @@ The backslash `\` is used to "escape" the meaning of the next character. This wa
 
 Note - thus, if you want to *display* a backslash, you must escape it's meaning with *another backslash. So you must write two backslashes `\\` to display one.  
 
+**Special characters**  
 
-Special character | Purpose  
+Special character | Represents  
 ----------------- | --------------------------------------------------------------    
-`\n` | a new line (newline)   
-`\\` | backslash  
-`\"` | double-quote *within* double quotes  
-`\'` | single-quote *within* single quotes  
-`\`` | grave accent  
-`\r` | carriage return  
-`\t` | tab  
-`\v` | vertical tab 
-`\b` | backspace  
-
+`"\\"` | backslash  
+`"\n"` | a new line (newline)   
+`"\""` | double-quote *within* double quotes  
+`'\''` | single-quote *within* single quotes  
+`"\`"` | grave accent  
+`"\r"` | carriage return  
+`"\t"` | tab  
+`"\v"` | vertical tab 
+`"\b"` | backspace  
 
 
 Run `?"'"` in the R Console to display a complete list of these special characters (it will appear in the RStudio Help pane). 
+
+
+
+<!-- ======================================================= -->
+### Regular expressions (regex)
+
+ If you are not familiar with it, a regular expression can look like an alien language:  
+
+```{r, eval=F}
+
+```
+
+A regular expression is applied to extract specific patterns from unstructured text - for example medical notes, chief complaint, matient history, or other free text columns in a dataset.  
+
+There are four basic tools one can use to create a basic regular expression:  
+
+1) Character sets  
+2) Meta characters  
+3) Quantifiers  
+4) Groups  
+
+
+**Character sets**  
+
+Character sets, are a way of expressing listing options for a character match, within brackets. So any a match will be triggered if any of the characters within the brackets are found in the string. For example, to look for vowels one could use this character set: "[aeiou]". Some other common character sets are:  
+
+Character set | Matches for  
+----------------- | --------------------------------------------------------------    
+`"[A-Z]"` | any single capital letter  
+`"[a-z]"` | any single lowercase letter  
+`"[0-9]"` | any digit  
+`[:alnum:]` | any alphanumeric character  
+`[:digit:]` | any numeric digit  
+`[:alpha:]` | any letter (upper or lowercase)  
+`[:upper:]` | any uppercase letter  
+`[:lower:]` | any lowercase letter  
+
+
+Character sets can be combined within one bracket (no spaces!), such as `"[A-Za-z]"` (any upper or lowercase letter), or another example `"[t-z0-5]"` (lowercase t through z OR number 0 through 5).  
+
+
+
+**Meta characters**  
+
+Meta characters are shorthand for character sets. Some of the important ones are listed below:  
+
+Meta character | Represents  
+----------------- | --------------------------------------------------------------    
+`"\\s"` | a single space  
+`"\\w"` | any single alphanumeric character (A-Z, a-z, or 0-9)  
+`"\\d"` | any single numeric digit (0-9)  
+
+
+**Quantifiers**  
+
+Typically you do not want to search for a match on only one character. Quantifiers allow you to designate the length of letters/numbers to allow for the match.  
+
+Quantifiers are numbers written within curly brackets `{ }` *after* the character they are quantifying, for example,  
+
+* `"A{2}"` will return instances of **two** capital A letters.  
+* `"A{2,4}"` will return instances of **between two and four** capital A letters *(do not put spaces!)*.  
+* `"A{2,}"` will return instances of **two or more** capital A letters.  
+* `"A+"` will return instances of **one or more** capital A letters (group extended until a different character is encountered).  
+* Precede with an `*` asterisk to return **zero or more** matches (useful if you are not sure the pattern is present)  
+
+
+Using the `+` plus symbol as a quantifier, the match will occur until a different character is encountered. For example, this expression will return all *words* (alpha characters: `"[A-Za-z]+"`  
+
+
+```{r}
+# test string for quantifiers
+test <- "A-AA-AAA-AAAA"
+```
+
+When a quantifier of {2} is used, only pairs of consecutive A's are returned. Two pairs are identified within `AAAA`.  
+
+```{r}
+str_extract_all(test, "A{2}")
+```
+
+When a quantifier of {2,4} is used, groups of consecutive A's that are two to four in length are returned.  
+
+```{r}
+str_extract_all(test, "A{2,4}")
+```
+
+With the quantifier `+`, groups of **one or more** are returned:  
+
+```{r}
+str_extract_all(test, "A+")
+```
+
+**Relative position**  
+
+These express requirements for what precedes or follows a pattern. For example, to extract sentences, "two numbers that are followed by a period" (`""`).  (?<=\\.)\\s(?=[A-Z]) 
+
+```{r}
+str_extract_all(test, "")
+```
+
+Position statement | Matches to  
+----------------- | --------------------------------------------------------------    
+`"(?<=b)a"` | "a" that **is preceded** by a "b"  
+`"(?<!b)a"` | "a" that **is NOT preceded** by a "b"  
+`"a(?=b)"` | "a" that **is followed** by a "b"  
+`"a(?!b)"` | "a" that **is NOT followed** by a "b"  
+
+
+
+
+
+**Groups**  
+
+Capturing groups in your regular expression is a way to have a more organized output upon extraction.  
+
+
+
+
+**Regex examples**  
+
+Below is a free text for the examples. We will try to extract useful information from it using a regular expression search term.  
+
+```{r}
+pt_note <- "Patient arrived at Broward Hospital emergency ward at 18:00 on 6/12/2005. Patient presented with radiating abdominal pain from LR quadrant. Patient skin was pale, cool, and clammy. Patient temperature was 99.8 degrees farinheit. Patient pulse rate was 100 bpm and thready. Respiratory rate was 29 per minute."
+```
+
+This expression matches to all words (any character until hitting non-character such as a space):  
+
+```{r}
+str_extract_all(pt_note, "[A-Za-z]+")
+```
+
+The expression `"[0-9]{1,2}"` matches to consecutive numbers that are 1 or 2 digits in length. It could also be written `"\\d{1,2}"`, or `"[:digit:]{1,2}"`.  
+
+```{r}
+str_extract_all(pt_note, "[0-9]{1,2}")
+```
+
+```{r}
+str_split(pt_note, ".")
+```
+
+This expression will extract all sentences (assuming first letter is capitalized, and the sentence ends with a period). The pattern reads in English as: "A capital letter followed by some lowercase letters, a space, some letters, a space,    
+
+```{r}
+str_extract_all(pt_note, "[A-Z][a-z]+\\s\\w+\\s\\d{1,2}\\s\\w+\\s*\\w*")
+```
+
+
+You can view a useful list of regex expressions and tips on page 2 of [this cheatsheet](https://evoldyn.gitlab.io/evomics-2018/ref-sheets/R_strings.pdf)  
+
+Also see this [tutorial](https://towardsdatascience.com/a-gentle-introduction-to-regular-expressions-with-r-df5e897ca432).  
+
+
 
 
 <!-- ======================================================= -->

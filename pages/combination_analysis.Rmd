@@ -46,6 +46,10 @@ An example plot is below. Five symptoms are shown. Below each vertical bar is a 
 ```
 
 ```{r echo=F, out.width= "75%"}
+pacman::p_load(tidyverse,
+               UpSetR,
+               ggupset)
+
 # Adds new symptom variables to the linelist, with random "yes" or "no" values 
 linelist_sym <- linelist %>% 
   mutate(fever  = sample(c("yes", "no"), nrow(linelist), replace = T, prob = c(0.80, 0.20)),
@@ -89,6 +93,12 @@ UpSetR::upset(
 <!-- ======================================================= -->
 ## Preparation {.tabset .tabset-fade .tabset-pills}
 
+```{r}
+pacman::p_load(tidyverse,
+               UpSetR,
+               ggupset)
+```
+
 <!-- ======================================================= -->
 ### View the data  
 
@@ -96,7 +106,7 @@ This linelist includes five "yes/no" variables on reported symptoms. We will nee
 
 View the data (scroll to the right to see the symptoms variables)
 
-```{r}
+```{r, echo=F}
 DT::datatable(linelist_sym, rownames = FALSE, filter="top", options = list(pageLength = 5, scrollX=T))
 ```
 
