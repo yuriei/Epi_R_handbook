@@ -205,6 +205,8 @@ linelist <- import(here("data", "fluH7N9_China_2013.csv"))
 <span style="color: black;">**_NOTE:_** You can still import a specific sheet of an excel file as noted in the Excel tab. The `here()` command only supplies the filepath.</span>
 
 
+
+
 <!-- ======================================================= -->
 ## Google sheets {.tabset .tabset-fade}
 <h2> Google sheets </h2>
@@ -212,6 +214,8 @@ linelist <- import(here("data", "fluH7N9_China_2013.csv"))
 Code from WHO
 API
 Other live online data sources?
+TBD
+
 
 
 
@@ -220,6 +224,9 @@ Other live online data sources?
 <h2> Websites </h2>
 
 Setting up to auto-import data stored on a website  
+TBD
+
+
 
 
 <!-- ======================================================= -->

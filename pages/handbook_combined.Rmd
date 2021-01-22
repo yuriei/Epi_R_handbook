@@ -252,6 +252,10 @@ klippy::klippy(position = c('top', 'right'))
 ```
 
 
+```{r child = 'collaboration.Rmd'}
+```
+
+
 ```{r child = 'errors_warnings.Rmd'}
 ```
 

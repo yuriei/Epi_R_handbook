@@ -37,13 +37,9 @@ knit: (function(inputFile, encoding) {
 
 **Objective**  
 
-**To make an open-access digital R reference book which is catered to epidemiologists and public health practitioners, usable offline, and addresses common epidemiological tasks via clear text explanations, step-by-step instructions, and best practice R code examples**
+**A free open-access digital R reference book catered to epidemiologists and public health practitioners that is usable offline and addresses common epidemiological tasks via clear text explanations, step-by-step instructions, and best practice R code examples**
 
-
-**The problem:**
-
-Most online R help resources are not task-centered nor epidemiology-focused. Epis learning or new to R often must Google and skim dozens of forum pages to complete common data manipulation and visualization epi tasks. Furthermore, field epidemiologists often work in low internet-connectivity environments and have limited technical support.  
-
+Epis using R must often Google search and read dozens of forum pages to complete common data manipulation and visualization epi tasks. However, field epidemiologists often work in low internet-connectivity environments and have limited technical support. This handbook aims to fill this gap.  
 
   
 **How to read this handbook:**  
