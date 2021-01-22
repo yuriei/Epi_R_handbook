@@ -84,6 +84,17 @@ Error: unexpected symbol in:
 If you see "unexpected symbol" check for missing commas  
 
 
+
+
+**Wrong slashes**
+If you see an error like this when you try to export or import:  
+```
+No such file or directory:
+```
+ Make sure you have used `/` within the filepath, not `\`.  
+ 
+
+
 <!-- ======================================================= -->
 ### sub-tab 2 {.tabset .tabset-fade .tabset-pills}
 
