@@ -24,10 +24,9 @@ knit: (function(inputFile, encoding) {
 ```
 
 ```{r, echo=F}
-linelist <- linelist %>% 
-  mutate(age = as.numeric(age))
-
+#Just for demo purposes
 pacman::p_load(apyramid)
+linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 ```
 
 <!-- ======================================================= -->
@@ -42,6 +41,20 @@ This section is **not** meant as a comprehensive "how to learn R" tutorial. Howe
 
 More comprehensive tutorials are available online. See the tab on recommended training.  
 
+
+<!-- ======================================================= -->
+## Preparation
+<h2> Preparation </h2>
+
+**Load packages**  
+
+```{r}
+pacman::p_load(
+  tidyverse,
+  rio,
+  here
+)
+```
 
 <!-- ======================================================= -->
 ## Why use R?
@@ -300,7 +313,7 @@ reporting_week                 # prints the current value of reporting_week in t
 In the code below, the object `linelist` is created and assigned the value of a CSV file imported with the **rio** package.  
 
 ```{r basics_objects_dataframes, eval=FALSE}
-# linelist_raw is created and assigned the value of the imported CSV file
+# linelist is created and assigned the value of the imported CSV file
 linelist <- rio::import("my_linelist.csv")
 ```
 
@@ -330,10 +343,10 @@ knitr::include_graphics(here::here("images", "R_data_structures.png"))
 In epidemiology (and particularly field epidemiology), you will *most commonly* encounter data frames and vectors:  
 
 
-Common structure | Explanation | Example from templates
+Common structure | Explanation | Example
 ------------------- | ------------------------------------ | ------------------------  
 Vectors | A container for a sequence of singular objects, all of the same class (e.g. numeric, character). | **"Variables" (columns) in data frames are vectors** (e.g. the variable `age_years`).  
-Data Frames | Vectors (e.g. columns) that are bound together that all have the same number of rows. | `linelist_raw` and `linelist_cleaned` are both data frames.  
+Data Frames | Vectors (e.g. columns) that are bound together that all have the same number of rows. | `linelist` is a data frame.  
 
 Note that to create a vector that "stands alone", or is not part of a data frame (such as a list of location names), the function `c()` is often used:  
 `list_of_names <- c("Ruhengeri", "Gisenyi", "Kigali", "Butare")`  
