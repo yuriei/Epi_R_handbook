@@ -244,10 +244,6 @@ klippy::klippy(position = c('top', 'right'))
 ```
 
 
-```{r child = 'plotly.Rmd'}
-```
-
-
 ```{r child = 'directories.Rmd'}
 ```
 
