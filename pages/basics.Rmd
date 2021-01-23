@@ -606,13 +606,13 @@ To read more about a function, you can try searching online for resources OR sea
 **Simply explained, the pipe operator (`%>%`) passes an intermediate output from one function to the next.**  
 You can think of it as saying "then". Many functions can be linked together with `%>%`.  
 
-* Piping emphasizes a sequence of actions, not the object the actions are being performed on  
+* **Piping emphasizes a sequence of actions, not the object the actions are being performed on**  
 * Best when a sequence of actions must be performed on one object  
 
-* from **magrittr**. Included in **dplyr** and **tidyverse**
+* From **magrittr**. Included in **dplyr** and **tidyverse**
 * Makes code more clean and easier to read, intuitive
-* express a sequence of operations  
-* the object is altered and then passed on to the next function  
+* Express a sequence of operations  
+* The object is altered and then passed on to the next function  
 
 Example:
 
@@ -634,8 +634,10 @@ Piping is not a base function. To use piping, the **dplyr** package must be inst
 
 <span style="color: orange;">**_CAUTION:_** Remember that even when using piping to link functions, if the assignment operator (`<-`) is present, the object to the left will still be over-written (re-defined) by the right side.</span>
 
-TODO
-%<>% shortcut for re-defining the object and piping
+
+**`%<>%`**  
+This is an "assignment pipe" from the **magritter** package, which pipes an object forward and also re-defines the object. It must be the first pipe operator in the chain. It is shorthand, so `object %<>% function() %>% function()` is the same as `object <- object %>% function() %>% function()`.  
+
 
 <!-- ======================================================= -->
 ### Define intermediate objects
@@ -684,6 +686,7 @@ cake <- let_cool(bake(mix_together(batter_3, utensil = spoon, minutes = 2), degr
 
 This section details operators in R, such as:  
 
+* Definitional operators  
 * Relational operators (less than, equal too..)  
 * Logical operators (and, or...)  
 * Handling missing values  
@@ -691,6 +694,34 @@ This section details operators in R, such as:
 * The `%in%` operator  
 
 
+
+<!-- ======================================================= -->
+### Assignment operators  
+<h3> Assignment operators </h3>
+
+**`<-`**  
+
+The basic assignment operator in R is `<-`. Such that `object_name <- value` (see R Basics tab on "Defining an Object").  
+This assignment operator can also be written as `=`. We advise use of `<-` for general R use.  
+We also advise surrounding operators with spaces, for readability.  
+
+
+**`<<-`**  
+
+If writing functions (LINK TO PAGE), or using R in an interactive way with sourced scripts (LINK TO PAGE), then you may need to use this assignment operator `<<-` (**base** R). This operator is used to define an object in a higher 'parent' R `Environment` (LINK to tab on R environments). Also see this [online reference](https://stat.ethz.ch/R-manual/R-devel/library/base/html/assignOps.html).
+
+
+**`%<>%`**  
+
+This is an "assignment pipe" from the **magritter** package, which pipes an object forward and also re-defines the object. It must be the first pipe operator in the chain. It is shorthand, so `object %<>% function() %>% function()` is the same as `object <- object %>% function() %>% function()`.  
+
+
+**`%<+%`**
+
+Used to add data to phylogenetic trees with the **ggtree** package. See the (LINK TO PAGE) or this online [resource book](https://yulab-smu.top/treedata-book/).  
+
+
+ 
 
 <!-- ======================================================= -->
 ### Relational and logical operators  
@@ -784,7 +815,8 @@ order of operations| ( )
 
 Objective          |Function
 -------------------|-------------
-rounding           | round(x, digits = n)
+rounding           | round(x, digits = n)  
+rounding           | janitor::round_half_up(x, digits = n)
 ceiling (round up) | ceiling(x)
 floor (round down) | floor(x)
 absolute value     | abs(x)
@@ -792,6 +824,14 @@ square root        | sqrt(x)
 exponent           | exponent(x)
 natural logarithm  | log(x)
 
+<span style="color: red;">**_DANGER:_** R uses "banker's rounding" which round up only if the upper number is even. Use `round_half_up()` from **janitor** to consistently round halfs up to the nearest whole number. See [this](https://cran.r-project.org/web/packages/janitor/vignettes/janitor.html#explore-records-with-duplicated-values-for-specific-combinations-of-variables-with-get_dupes) </span>  
+
+```{r}
+# use the appropriate rounding function for your work
+round(c(2.5, 3.5))
+
+janitor::round_half_up(c(2.5, 3.5))
+```
 
 
 #### Statistical functions:  
