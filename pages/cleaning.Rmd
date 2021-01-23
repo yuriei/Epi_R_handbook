@@ -789,8 +789,27 @@ table(linelist$hospital, useNA = "always")
 
 These tabs demonstrate re-coding values manually b providing specific spellings to be corrected:  
 
-* Using `recode()`  
+* Using `replace()` for specific rows  
+* Using `recode()` for entire columns  
 * Using **base** R  
+
+
+#### `replace()`  
+
+To manually change values for specific rows within a dataframe (from within a pipe chain), use `replace()` within `mutate()`.  
+Use a logic condition to specify rows, for example an ID value of one row. The general syntax is:  
+
+`mutate(col_to_change = replace(col_to_change, criteria for rows, new value))`.  
+
+In the first example below, the gender value, in the row where id is "2195", is changed to "Female".  
+
+```{r, eval=F}
+# Example: change gender of one specific observation to "Female" 
+mutate(gender = replace(gender, id == "2195", "Female")
+
+# Example: chance gender of one specific observation to NA 
+mutate(gender = replace(gender, id == "2195", NA)
+```
 
 
 #### `recode()`  
