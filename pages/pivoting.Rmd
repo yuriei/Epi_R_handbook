@@ -45,6 +45,8 @@ https://datacarpentry.org/r-socialsci/03-dplyr-tidyr/index.html
 
 Transforming a dataset from wide to long
 
+![](https://d33wubrfki0l68.cloudfront.net/3aea19108d39606bbe49981acda07696c0c7fcd8/2de65/images/tidy-9.png)
+
 <!-- ======================================================= -->
 ### Data
 
@@ -177,19 +179,170 @@ count_data %>%
 <!-- ======================================================= -->
 ## Long-to-wide {#pivot_longtowide .color-tabs .tabset .tabset-fade .tabset-pills}
 
-**dplyr**
-`pivot_wider()`
+Transforming a dataset from long to wide
 
-```{r}
+![](https://d33wubrfki0l68.cloudfront.net/8350f0dda414629b9d6c354f87acf5c5f722be43/bcb84/images/tidy-8.png)
 
-```
 
+In some instances, we may wish to convert a dataset to a wider format. For this, we can use the `pivot_wider()` function.
+
+A typical use case is when we want to transform the results of an analysis into a format which is more digestible for the reader. Typically, we are transforming a dataset in which the observations are spread over multiple rows to one in which each observation occupies a single row.
+
+This introduces the useful topic of "tidy data", in which each variable has it's own column, each observation has it's own row, and each value has it's own cell. More about this topic can be found here https://r4ds.had.co.nz/tidy-data.html. 
 
 ### Data
 
+Let us use the `linelist` dataset. Suppose that we want to know the counts of individuals in the different age groups, by sex:
+
+```{r}
+linelist <- 
+  linelist %>% 
+  as_tibble()
+  
+df_wide <- 
+  linelist %>% 
+  count(age_cat, gender)
+```
+
+This gives us a long dataset that is great for visualisation, but not ideal for presentation in a table:
+
+```{r}
+ggplot(df_wide) +
+  geom_col(aes(x = age_cat, y = n, fill = gender))
+```
+
 ### Pivot wider  
 
+Therefore, we can use `pivot_wider()` to put this into a better format for inclusion as tables in our reports. The argument `names_from` specifies the column *from* which to generate the new column *names*, while the argument `values_from` specifies the column *from* which to take the *values* to populate the cells:
 
+```{r}
+table_wide <- 
+  df_wide %>% 
+  pivot_wider(
+    names_from = gender,
+    values_from = n
+  )
+
+table_wide
+```
+
+This table is much nicer for inclusion in our reports:
+
+```{r}
+table_wide %>% 
+  janitor::adorn_totals(c("row", "col")) %>% # adds a total row and column
+  knitr::kable() %>% 
+  kableExtra::row_spec(row = 9, bold = TRUE) %>% 
+  kableExtra::column_spec(column = 5, bold = TRUE) 
+```
+
+
+<!-- ======================================================= -->
+## Fill {#fill .color-tabs .tabset .tabset-fade .tabset-pills}
+
+Filling in missing data
+
+<!-- ======================================================= -->
+### Data
+
+In some situations after a `pivot`, and more commonly after a `bind`, we are left with gaps in some cells that we would like to fill. For example, take two datasets, each with observations for the measurement number, the name of the facility, and the case count at that time. However, the second dataset also has a variable `Year`. When we perform a `bind_rows()` to join the two datasets together, the `Year` variable is filled with `NA` for those rows where there was no prior information (i.e. the first dataset):
+
+
+```{r}
+df1 <- 
+  tibble::tribble(
+       ~Measurement, ~Facility, ~Cases,
+                  1,  "Hosp 1",     66,
+                  2,  "Hosp 1",     26,
+                  3,  "Hosp 1",      8,
+                  1,  "Hosp 2",     71,
+                  2,  "Hosp 2",     62,
+                  3,  "Hosp 2",     70,
+                  1,  "Hosp 3",     47,
+                  2,  "Hosp 3",     70,
+                  3,  "Hosp 3",     38,
+       )
+
+df1 
+
+df2 <- 
+  tibble::tribble(
+    ~Year, ~Measurement, ~Facility, ~Cases,
+     2000,            1,  "Hosp 4",     82,
+     2001,            2,  "Hosp 4",     87,
+     2002,            3,  "Hosp 4",     46
+  )
+
+df2
+
+df_combined <- 
+  bind_rows(df1, df2) %>% 
+  arrange(Measurement, Facility)
+
+df_combined
+
+```
+
+<!-- ======================================================= -->
+### `fill()`
+
+In this case, `Year` is a useful variable to include, particularly if we want to explore trends over time. Therefore, we use `fill()` to *fill* in those empty cells, by specifying the column to fill and the direction (in this case **up**):
+
+```{r}
+df_combined %>% 
+  fill(Year, .direction = "up")
+```
+
+We can rearrange the data so that we would need to fill in a downward direction:
+
+```{r}
+df_combined <- 
+  df_combined %>% 
+  arrange(Measurement, desc(Facility))
+
+df_combined
+
+df_combined <- 
+  df_combined %>% 
+  fill(Year, .direction = "down")
+
+df_combined
+```
+
+This dataset is now useful for plotting:
+
+```{r}
+ggplot(df_combined) +
+  aes(Year, Cases, fill = Facility) +
+  geom_col()
+```
+
+But less useful for presenting in a table, so let's practice converting this long, untidy dataframe into a wider, tidy dataframe:
+
+```{r}
+df_combined %>% 
+  pivot_wider(
+    id_cols = c(Facility, Year, Cases),
+    names_from = "Year",
+    values_from = "Cases"
+  ) %>% 
+  arrange(Facility) %>% 
+  janitor::adorn_totals(c("row", "col")) %>% 
+  knitr::kable() %>% 
+  kableExtra::row_spec(row = 5, bold = TRUE) %>% 
+  kableExtra::column_spec(column = 5, bold = TRUE) 
+```
+
+N.B. In this case, we had to specify to only include the three variables `Facility`, `Year`, and `Cases` as the additional variable `Measurement` would interfere with the creation of the table:
+
+```{r}
+df_combined %>% 
+  pivot_wider(
+    names_from = "Year",
+    values_from = "Cases"
+  ) %>% 
+  knitr::kable()
+```
 
 
 ```{r, child= '_page_closeout.Rmd', eval = params$run_page_ind == F, include = F}
