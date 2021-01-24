@@ -22,150 +22,427 @@ knit: (function(inputFile, encoding) {
 ```{r, child= '_page_setup.Rmd', eval = params$run_page_ind, include = F}
 ```
 
+<!-- ======================================================= -->
 
 <!-- ======================================================= -->
-<!-- ======================================================= -->
-<!-- ======================================================= -->
-# Descriptive analysis {.tabset .tabset-fade}  
-
-The Page title should be succinct. Consider adding a tag with no spaces into the curly brackets, such as below. This can be used for internal links within the handbook. 
-`{#title_tag .tabset .tabset-fade}`
 
 <!-- ======================================================= -->
+
+# Descriptive analysis {.tabset .tabset-fade}
+
+<!-- ======================================================= -->
+
 ## Overview {.tabset .tabset-fade .tabset-pills}
 
-Keep the title of this section as "Overview".  
-This tab should include:  
+This tab demonstrates the use of **gtsummary** and **dplyr** to produce descriptive statistics.
 
-* Textual overview of the purpose of this page  
-* Small image showing outputs   
+1.  Browse data: get a quick overview of your dataset using the **skimr** package
 
+2.  Summary statistics: mean, median, range, standard deviations, percentiles
 
+3.  Frequency / cross-tabs: counts and proportions
+
+4.  Statistical tests: t-tests, chi-squares, kruskal-wallis and wilcoxon rank sum
+
+5.  Correlations
 
 <!-- ======================================================= -->
+
 ## Preparation {.tabset .tabset-fade .tabset-pills}
 
-Keep the title of this section as "Preparation".  
-Data preparation steps such as:  
+<h2>
 
-* Loading dataset  
-* Adding or changing variables  
-* melting, pivoting, grouping, etc.   
+Preparation
 
-```{r}
+</h2>
+
+### Packages
+
+This code chunk shows the loading of packages required for the analyses.
+
+```{r descriptive_packages}
+pacman::p_load(rio,          # File import
+               here,         # File locator
+               skimr,        # get overview of data
+               tidyverse,    # data management + ggplot2 graphics, 
+               gtsummary     # summary statistics and tests 
+               )
+```
+
+### Load data
+
+The example dataset used in this section:
+
+-   Linelist of individual cases from a simulated epidemic
+
+The dataset is imported using the `import()` function from the *rio* package. See the *page on importing data* for various ways to import data.
+
+```{r descriptive_load_hide, echo=F}
+# import the linelist into R
+linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
+
+```
+
+```{r descriptive_load_show, eval=F}
+# import the linelist
+linelist <- rio::import("linelist_cleaned.xlsx")
+```
+
+The first 50 rows of the linelist are displayed below.
+
+```{r, message=FALSE, echo=F}
+# display the linelist data as a table
+DT::datatable(head(linelist, 50), rownames = FALSE, filter="top", options = list(pageLength = 5, scrollX=T) )
+```
+
+### Clean data
+
+```{r descriptive_clean}
+
+## make sure that age variable is numeric 
 linelist <- linelist %>% 
   mutate(age = as.numeric(age))
 ```
 
+<!-- ======================================================= -->
+
+## Browse data {.tabset .tabset-fade .tabset-pills}
+
+<h2>
+
+Browse data
+
+</h2>
+
+### Base R
+
+You can use the `summary` function to get information about variables and data sets.
+
+For a numeric variable it will give you the minimum, median, mean and max as well as the 1st quartile (= 25th percentile) and the 3rd quartile (= 75th percentile)
+
+```{r descriptive_browse}
+
+## get information about a numeric variable 
+summary(linelist$age)
+
+```
+
+You can also get an overview of each variable in a whole dataset.
+
+```{r descriptive_browse_df}
+
+## get information about each variable in a dataset 
+summary(linelist)
+```
+
+### `skimr` package
+
+Using the `skimr` package you can get a more detailed overview of each of the variables in your dataset.
+
+```{r descriptive_browse_skimr}
+
+## get information about each variable in a dataset 
+skim(linelist)
+```
 
 <!-- ======================================================= -->
+
 ## Summary Statistics {#summarystats .tabset .tabset-fade .tabset-pills}
 
-### **Summary of *numeric* variable**
-```{r descriptive_summary}
-summary(linelist$age)
+### `gtsummary` package
+
+Using `gtsummary` you can create a table with different summary statistics, for example mean, median, range, standard deviation and percentiles. You can also show these all in one table.
+
+#### **Mean**
+
+Note that this automatically excludes all missing values. If missing values are not excluded, the returned value will be NA (missing). The number of missing values is seen in the Unknown column.
+
+```{r descriptive_gt_mean}
+
+linelist %>% 
+  ## only keep variable of interest
+  select(age) %>% 
+  ## create summary table with mean
+  tbl_summary(statistic = age ~ "{mean}")
+
 ```
 
+#### **Median**
 
-### **Mean**
-Note the argument na.rm=T, which removes missing values from the calculation.  
+Note that this automatically excludes all missing values. If missing values are not excluded, the returned value will be NA (missing). The number of missing values is seen in the Unknown column).
+
+```{r descriptive_gt_median}
+
+linelist %>% 
+  ## only keep variable of interest
+  select(age) %>% 
+  ## create summary table with median
+  tbl_summary(statistic = age ~ "{median}")
+
+```
+
+#### **Range**
+
+The range here is the minimum and maximum values for the variable. (see *percentiles* for interquartile range) Note that this automatically excludes all missing values. If missing values are not excluded, the returned value will be NA (missing). The number of missing values is seen in the Unknown column).
+
+```{r descriptive_gt_range}
+
+linelist %>% 
+  ## only keep variable of interest
+  select(age) %>% 
+  ## create summary table with range 
+  tbl_summary(statistic = age ~ "{min}, {max}")
+
+```
+
+#### **Standard deviation**
+
+Note that this automatically excludes all missing values. If missing values are not excluded, the returned value will be NA (missing). The number of missing values is seen in the Unknown column).
+
+```{r descriptive_gt_sd}
+
+linelist %>% 
+  ## only keep variable of interest
+  select(age) %>% 
+  ## create summary table with standard deviation
+  tbl_summary(statistic = age ~ "{sd}")
+
+```
+
+#### **Percentile**
+
+To return percentiles you can type in one value that you would like, or you can type in multiple (e.g. to return the interquartile range).
+
+Note that this automatically excludes all missing values. If missing values are not excluded, the returned value will be NA (missing). The number of missing values is seen in the Unknown column).
+
+```{r descriptive_gt_percentile}
+
+linelist %>% 
+  ## only keep variable of interest
+  select(age) %>% 
+  ## create summary table with interquartile range 
+  tbl_summary(statistic = age ~ "{p25}, {p75}")
+
+```
+
+#### **Combined table**
+
+You can combine all of the previously shown elements in one table by choosing which statistics you want to show. To do this you need to tell the function that you want to get a table back by entering the type as "continuous2".
+
+Note that this automatically excludes all missing values. If missing values are not excluded, the returned value will be NA (missing). The number of missing values is seen in the Unknown column).
+
+```{r descriptive_gt_combined}
+
+linelist %>% 
+  ## only keep variable of interest
+  select(age) %>% 
+  ## create summary table with interquartile range 
+  tbl_summary(
+    ## tell the function you want to get multiple statistics back 
+    type = age ~ "continuous2",
+    ## define which statistics you want to get back 
+    statistic = age ~ c(
+    "{mean} ({sd})", 
+    "{median} ({p25}, {p75})",
+    "{min}, {max}")
+    )
+
+```
+
+### `dplyr` package
+
+You can also use `dplyr` to create a table with different summary statistics, for example mean, median, range, standard deviation and percentiles. You can also show these all in one table. The difference with using dplyr is that the output is not automatically formatted as nicely as with `gtsummary`
+
+#### **Mean**
+
+Note the argument `na.rm = TRUE`, which removes missing values from the calculation.\
 If missing values are not excluded, the returned value will be NA (missing).
-```{r descriptive_mean}
-mean(linelist$age)
-mean(linelist$age, na.rm=TRUE)  # with the na.rm= argument set to TRUE
+
+```{r descriptive_dplyr_mean}
+
+linelist %>% 
+  ## get the mean value of age while excluding missings
+  summarise(mean = mean(age, na.rm = TRUE))
 ```
 
+#### **Median**
 
-### **Median**
-Note the argument na.rm=T, which removes missing values from the calculation.  
-If missing values are not excluded, the returned value will be NA (missing).  
-
-```{r descriptive_median}
-median(linelist$age)
-median(linelist$age, na.rm=TRUE)  # with the na.rm= argument set to TRUE
-```
-
-
-### **Range**
-Note the argument na.rm=T, which removes missing values from the calculation.  
-If missing values are not excluded, the returned value will be NA (missing).  
-
-```{r descriptive_range}
-range(linelist$age)
-range(linelist$age, na.rm=TRUE)  # with the na.rm= argument set to TRUE
-```
-
-
-
-### **Standard Deviation**
-Note the argument na.rm=T, which removes missing values from the calculation.  
+Note the argument `na.rm = TRUE`, which removes missing values from the calculation.\
 If missing values are not excluded, the returned value will be NA (missing).
-```{r descriptive_std}
-sd(linelist$age)
-sd(linelist$age, na.rm=TRUE)  # with the na.rm= argument set to TRUE
+
+```{r descriptive_dplyr_median}
+
+linelist %>% 
+  ## get the median value of age while excluding missings
+  summarise(median = median(age, na.rm = TRUE))
 ```
 
+#### **Range**
 
-### **Percentile**
-Note the argument na.rm=T, which removes missing values from the calculation.  
+Note the argument `na.rm = TRUE`, which removes missing values from the calculation.\
 If missing values are not excluded, the returned value will be NA (missing).
-```{r descriptive_pctile}
-stats::quantile(linelist$age, na.rm=TRUE)  # default %iles
-stats::quantile(linelist$age, probs = c(.05, 0.5, 0.75, 0.98), na.rm=TRUE) # percentiles specified
+
+```{r descriptive_dplyr_range}
+
+linelist %>% 
+  ## get the range value of age while excluding missings
+  summarise(range = range(age, na.rm = TRUE))
 ```
+
+#### **Standard Deviation**
+
+Note the argument `na.rm = TRUE`, which removes missing values from the calculation.\
+If missing values are not excluded, the returned value will be NA (missing).
+
+```{r descriptive_dplyr_sd}
+
+linelist %>% 
+  ## get the range value of age while excluding missings
+  summarise(sd = sd(age, na.rm = TRUE))
+
+```
+
+#### **Percentile**
+To return percentiles you can type in one value that you would like, or you can type in multiple (e.g. to return the interquartile range).
+
+Note the argument `na.rm = TRUE`, which removes missing values from the calculation.\
+If missing values are not excluded, the returned value will be NA (missing).
+
+```{r descriptive_dplyr_percentile}
+
+
+linelist %>% 
+  ## get the default percentile values of age while excluding missings 
+  ## these are 0%,  25%,  50%,  75%, 100%
+  summarise(percentiles = quantile(age, na.rm = TRUE))
+
+
+linelist %>% 
+  ## get specified percentile values of age while excluding missings 
+  ## these are 0%, 50%,  75%, 98%
+  summarise(percentiles = quantile(age,
+                                   probs = c(.05, 0.5, 0.75, 0.98), 
+                                   na.rm=TRUE))
+```
+
+
+#### **Combined table** 
+
+You can combine all of the previously shown elements in one table by choosing which statistics you want to show. In dplyr you will need to use the `paste0` function to combine outputs 
+for the IQR and the range in to one cell, separated by a comma. 
+
+Note that this automatically excludes all missing values. If missing values are not excluded, the returned value will be NA (missing). The number of missing values is seen in the Unknown column).
+
+```{r}
+
+linelist %>% 
+  summarise(
+    ## get the mean 
+    mean = mean(age, na.rm = TRUE),
+    ## get the standard deviation
+    SD = sd(age, na.rm = TRUE),
+    ## get the median 
+    median = median(age, na.rm = TRUE), 
+    ## collapse the IQR separated by a comma
+    IQR = paste0(
+      quantile(age, probs = c(0.25, 0.75), na.rm = TRUE), 
+      collapse = ", "
+      ), 
+    ## collapse the range separated by a comma
+    Range = paste0(
+      range(age, na.rm = TRUE), 
+      collapse = ", "
+    )
+  )
+
+```
+
 
 
 <!-- ======================================================= -->
+
 ## Frequency/cross-tabs {.tabset .tabset-fade .tabset-pills}
 
-Frequency table of 1 and 2 categorical variables
-```{r, eval=F}
-table(linelist$province)
+### `gtsummary` package
 
-x <- table(linelist$province, linelist$gender)
-#janitor::adorn_totals(x)
+TODO: Note that percentages are calculated without missings 
+
+Using `gtsummary` you can create a table with different counts and proportions 
+for variables with two or more categories, as well as grouping by another variable. 
+
+To produce the counts of a single variable we can use the `tbl_summary` function. 
+Note that here, the fever variable is yes/no (dichotomous) and `tbl_summary`
+automatically only presents the "yes" row. 
+To show all levels you could use the type argument to choose categorical, 
+e.g. `tbl_summary(type = fever ~ "categorical")`. 
+```{r descriptive_gt_freq_one}
+
+linelist %>% 
+  ## only keep the variable interested in
+  select(fever) %>% 
+  ## produce summary table
+  tbl_summary()
+```
+
+You can also show multiple variables below each other simply by adding them to 
+`select`. 
+```{r descriptive_gt_freq_one_mult}
+
+linelist %>% 
+  ## only keep the variable interested in
+  select(fever, gender) %>% 
+  ## produce summary table
+  tbl_summary()
 
 ```
+
+
+There are two options to produce a two-by-two table (i.e. comparing two variables). 
+One option is to use `tbl_cross`, however this function only accepts two variables
+at once. The option below with `tbl_summary` allows more variables. 
+```{r descriptive_gt_freq_two}
+
+linelist %>% 
+  ## only keep the variable interested in
+  select(fever, outcome, gender) %>% 
+  ## produce summary table stratified by gender
+  tbl_summary(by = gender) %>% 
+  ## add a column for the totals
+  add_overall()
+
+```
+
 
 A table with 3 variables
+
 ```{r, eval=F}
-table_3vars <- table(linelist$province, linelist$gender, linelist$outcome)
+## TODO: add stratified tables when available 
 
-ftable(table_3vars)
+# table_3vars <- table(linelist$fever, linelist$gender, linelist$outcome)
+# 
+# ftable(table_3vars)
 ```
+
+### `dplyr` package
+
+TODO: add this (or use janitor?)
+
+<!-- ======================================================= -->
+
+## Statistical tests {.tabset .tabset-fade .tabset-pills}
+
 
 
 <!-- ======================================================= -->
-## Summary by group {.tabset .tabset-fade .tabset-pills}
 
-```{r eval=F}
-count_data %>% 
-  group_by(District) %>% 
-  summarise(n_obs = n(), # number of observations
-            range_date = max(Date, na.rm=T) - min(Date, na.rm=T)
-            )
-
-```
-
-
-<!-- ======================================================= -->
 ## Correlations {.tabset .tabset-fade .tabset-pills}
 
 
 <!-- ======================================================= -->
-## T-tests {.tabset .tabset-fade .tabset-pills}
 
-
-<!-- ======================================================= -->
 ## Resources {.tabset .tabset-fade .tabset-pills}
 
-This tab should stay with the name "Resources".
-Links to other online tutorials or resources.
-
-
-
-
+This tab should stay with the name "Resources". Links to other online tutorials or resources.
 
 ```{r, child= '_page_closeout.Rmd', eval = params$run_page_ind == F, include = F}
 ```
-
