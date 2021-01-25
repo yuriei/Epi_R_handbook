@@ -65,7 +65,8 @@ pacman::p_load(rio,          # File import
                here,         # File locator
                skimr,        # get overview of data
                tidyverse,    # data management + ggplot2 graphics, 
-               gtsummary     # summary statistics and tests 
+               gtsummary,    # summary statistics and tests 
+               corrr         # correlation analayis for numeric variables
                )
 ```
 

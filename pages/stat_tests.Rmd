@@ -41,42 +41,274 @@ ratios)
 1.  Univariate: two-by-two tables 
 2.  Stratified: mantel-haenszel estimates 
 3.  Multivariable: variable selection, model selection, final table
+4.  Forest plot
 
 
 <!-- ======================================================= -->
 
 ## Preparation {.tabset .tabset-fade .tabset-pills}
+<h2>
 
-Keep the title of this section as "Preparation".\
-Data preparation steps such as:
+Preparation
 
--   Loading dataset\
--   Adding or changing variables\
--   melting, pivoting, grouping, etc.
+</h2>
+
+### Packages
+
+This code chunk shows the loading of packages required for the analyses.
+
+```{r descriptive_packages}
+pacman::p_load(rio,          # File import
+               here,         # File locator
+               skimr,        # get overview of data
+               tidyverse,    # data management + ggplot2 graphics, 
+               gtsummary,    # summary statistics and tests 
+               corrr         # correlation analayis for numeric variables
+               )
+```
+
+### Load data
+
+The example dataset used in this section:
+
+-   Linelist of individual cases from a simulated epidemic
+
+The dataset is imported using the `import()` function from the *rio* package. See the *page on importing data* for various ways to import data.
+
+```{r descriptive_load_hide, echo=F}
+# import the linelist into R
+linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
+
+```
+
+```{r descriptive_load_show, eval=F}
+# import the linelist
+linelist <- rio::import("linelist_cleaned.xlsx")
+```
+
+The first 50 rows of the linelist are displayed below.
+
+```{r, message=FALSE, echo=F}
+# display the linelist data as a table
+DT::datatable(head(linelist, 50), rownames = FALSE, filter="top", options = list(pageLength = 5, scrollX=T) )
+```
+
+### Clean data
+
+```{r descriptive_clean}
+
+## make sure that age variable is numeric 
+linelist <- linelist %>% 
+  mutate(age = as.numeric(age))
+
+## define variables of interest 
+explanatory_vars <- c("gender", "fever", "chills", "cough", "aches", "vomit")
+
+## make dichotomous variables in to 0/1 
+linelist <- linelist %>% 
+  mutate(
+    ## for each of the variables listed
+    across(
+      all_of(c(explanatory_vars, "outcome")), 
+           ~case_when(
+             . %in% c("m", "yes", "Death")   ~ 1,
+             . %in% c("f", "no",  "Recover") ~ 0, 
+             TRUE ~ NA_real_
+           ))
+  )
+
+## add in age_category to the explanatory vars 
+explanatory_vars <- c(explanatory_vars, "age_cat")
+
+```
 
 <!-- ======================================================= -->
 
-## Option 1 {.tabset .tabset-fade .tabset-pills}
+## Univariate {.tabset .tabset-fade .tabset-pills}
 
-This tab can be renamed. This tab should demonstrate execution of the task using recommended package/approach. For example, using a package customized for this task where the execution is simple and fast but perhaps less customizable. For example using *incidence* package to create an epicurve.
+There are two options for doing univariate analysis. 
+You can use the `gtsummary` package or you can use the individual regression 
+functions available in `base` together with the `broom` package. 
 
 <!-- ======================================================= -->
 
-### Option 1 sub-tab {.tabset .tabset-fade .tabset-pills}
+### `gtsummary` package {.tabset .tabset-fade .tabset-pills}
+
+```{r odds_gt}
+
+linelist %>% 
+  ## select variables of interest
+  select(explanatory_vars, outcome) %>% 
+  ## produce univariate table
+  tbl_uvregression(
+    ## define regression want to run (generalised linear model)
+    method = glm, 
+    ## define outcome variable
+    y = outcome, 
+    ## define what type of glm want to run (logistic)
+    method.args = list(family = binomial), 
+    ## exponentiate the outputs to produce odds ratios (rather than log odds)
+    exponentiate = TRUE
+    )
+
+```
+
+
+<!-- ======================================================= -->
+
+### `base` {.tabset .tabset-fade .tabset-pills}
+
+Using the `glm` function from the **stats** package (part of base R), you can 
+produce odds ratios. 
+
+For a single exposure variable, pass the names to `glm` and then use `tidy` from 
+the **broom** package to get the exponentiated odds ratio estimates and confidence
+intervals. Here we demonstrate how to combine model outputs with a table of 
+counts. 
+
+```{r odds_base_single}
+
+model <- glm(
+  ## define the variables of interest
+  outcome ~ age_cat, 
+  ## define the type of regression (logistic)
+  family = "binomial", 
+  ## define your dataset
+  data = linelist) %>% 
+  ## clean up the outputs of the regression (exponentiate and produce CIs)
+  broom::tidy(
+      exponentiate = TRUE, 
+      conf.int = TRUE)
+
+
+linelist %>% 
+  ## get counts of variable of interest grouped by outcome
+  group_by(outcome) %>% 
+  count(age_cat) %>% 
+  ## spread to wide format (as in cross-tabulation)
+  pivot_wider(names_from = outcome, values_from = n) %>% 
+  ## drop rows with missings
+  filter(!is.na(age_cat)) %>% 
+  ## merge with the outputs of the regression 
+  bind_cols(., model) %>% 
+  ## only keep columns interested in 
+  select(term, 2:3, estimate, conf.low, conf.high, p.value)
+
+
+```
+
+
+To run over several exposure variables to produce univariate odds ratios (i.e. 
+not controlling for each other), you can pass a vector of variable names to the 
+`map` function in the **purrr** package. This will loop over each of the variables
+running regressions for each one. 
+
+```{r odds_base_multiple}
+
+models <- explanatory_vars %>% 
+  ## combine each name of the variables of interest with the name of outcome variable
+  str_c("outcome ~ ", .) %>% 
+  ## for each string above (outcome ~ "variable of interest)
+  map(
+    ## run a general linear model 
+    ~glm(
+      ## define formula as each of the strings above
+      as.formula(.x), 
+      ## define type of glm (logistic)
+      family = "binomial", 
+      ## define your dataset
+      data = linelist)
+  ) %>% 
+  ## for each of the output regressions from above 
+  map(
+    ## tidy the output
+    ~broom::tidy(
+      ## each of the regressions 
+      .x, 
+      ## exponentiate and produce CIs
+      exponentiate = TRUE, 
+      conf.int = TRUE)
+  ) %>% 
+  ## collapse the list of regressions outputs in to one data frame
+  bind_rows()
+
+
+
+## for each explanatory variable
+map(explanatory_vars, 
+      ~{linelist %>% 
+          ## group data set by outcome
+          group_by(outcome) %>% 
+          ## produce counts for variable of interest
+          count(.data[[.x]]) %>% 
+          ## spread to wide format (as in cross-tabulation)
+          pivot_wider(names_from = outcome, values_from = n) %>% 
+          ## drop rows with missings
+          filter(!is.na(.data[[.x]])) %>% 
+          ## change the variable of interest column to be called "variable"
+          rename("variable" = .x) %>% 
+          ## change the variable of interest column to be a character 
+          ## otherwise non-dichotomous (categorical) variables come out as factor and cant be merged
+          mutate(variable = as.character(variable))
+                 }
+      ) %>% 
+  ## collapse the list of count outputs in to one data frame
+  bind_rows() %>% 
+  ## merge with the outputs of the regression 
+  bind_cols(., models) %>% 
+  ## only keep columns interested in 
+  select(term, 2:3, estimate, conf.low, conf.high, p.value)
+
+```
+
+
+
+<!-- ======================================================= -->
+
+## Stratified {.tabset .tabset-fade .tabset-pills}
+
+Stratified analysis is currently still being worked on for `gtsummary`, 
+this page will be updated in due course. 
+
+
+<!-- ======================================================= -->
+
+### `gtsummary` package {.tabset .tabset-fade .tabset-pills}
+
+WIP
+
+<!-- ======================================================= -->
+
+### `base` {.tabset .tabset-fade .tabset-pills}
+
+WIP
+
+<!-- ======================================================= -->
+
+## Multivariable {.tabset .tabset-fade .tabset-pills}
+
+For multivariable analysis you can use a combination of `base` and `gtsummary`
+functions, or `base` with `broom`. 
+
+
+<!-- ======================================================= -->
+
+### `gtsummary` package {.tabset .tabset-fade .tabset-pills}
 
 Sub-tabs if necessary. Re-name as needed.
 
 <!-- ======================================================= -->
 
-## Option 2 {.tabset .tabset-fade .tabset-pills}
+### `base` {.tabset .tabset-fade .tabset-pills}
 
-This tab can be re-named. This tab should demonstrate execution of the task a more standard/core package (e.g. ggplot2, or base R) that allows for more flexibility in the output or more package stability. For example, showing how to create an epicurve using *ggplot2*.
+Sub-tabs if necessary. Re-name as needed.
+
 
 <!-- ======================================================= -->
 
-### Option 2 sub-tab {.tabset .tabset-fade .tabset-pills}
+## Forest plot {.tabset .tabset-fade .tabset-pills}
 
-Sub-tabs if necessary. Re-name as needed.
+This section shows how to produce a plot with the outputs of your regression.  
 
 <!-- ======================================================= -->
 
