@@ -42,7 +42,7 @@ This tab demonstrates the use of **gtsummary** and **dplyr** to produce descript
 
 3.  Frequency / cross-tabs: counts and proportions
 
-4.  Statistical tests: t-tests, chi-squares, kruskal-wallis and wilcoxon rank sum
+4.  Statistical tests: t-tests, wilcoxon rank sum, kruskal-wallis and chi-squares
 
 5.  Correlations
 
@@ -328,8 +328,10 @@ linelist %>%
 
 #### **Combined table** 
 
-You can combine all of the previously shown elements in one table by choosing which statistics you want to show. In dplyr you will need to use the `paste0` function to combine outputs 
-for the IQR and the range in to one cell, separated by a comma. 
+You can combine all of the previously shown elements in one table by choosing 
+which statistics you want to show. In dplyr you will need to use the `str_c` 
+function from **stringr** to combine outputs for the IQR and the range in to one 
+cell, separated by a comma. 
 
 Note that this automatically excludes all missing values. If missing values are not excluded, the returned value will be NA (missing). The number of missing values is seen in the Unknown column).
 
@@ -344,12 +346,12 @@ linelist %>%
     ## get the median 
     median = median(age, na.rm = TRUE), 
     ## collapse the IQR separated by a comma
-    IQR = paste0(
+    IQR = str_c(
       quantile(age, probs = c(0.25, 0.75), na.rm = TRUE), 
       collapse = ", "
       ), 
     ## collapse the range separated by a comma
-    Range = paste0(
+    Range = str_c(
       range(age, na.rm = TRUE), 
       collapse = ", "
     )
@@ -370,6 +372,7 @@ TODO: Note that percentages are calculated without missings
 Using `gtsummary` you can create a table with different counts and proportions 
 for variables with two or more categories, as well as grouping by another variable. 
 
+#### **One way table**
 To produce the counts of a single variable we can use the `tbl_summary` function. 
 Note that here, the fever variable is yes/no (dichotomous) and `tbl_summary`
 automatically only presents the "yes" row. 
@@ -384,8 +387,11 @@ linelist %>%
   tbl_summary()
 ```
 
+#### **Multiple variable one way table**
+
 You can also show multiple variables below each other simply by adding them to 
 `select`. 
+
 ```{r descriptive_gt_freq_one_mult}
 
 linelist %>% 
@@ -396,10 +402,12 @@ linelist %>%
 
 ```
 
+#### **Two way table**
 
 There are two options to produce a two-by-two table (i.e. comparing two variables). 
 One option is to use `tbl_cross`, however this function only accepts two variables
 at once. The option below with `tbl_summary` allows more variables. 
+
 ```{r descriptive_gt_freq_two}
 
 linelist %>% 
@@ -412,10 +420,10 @@ linelist %>%
 
 ```
 
+#### **Three way table**
+Producing counts based on three variables (adding a stratifier). 
 
-A table with 3 variables
-
-```{r, eval=F}
+```{r descriptive_gt_freq_three, eval=F}
 ## TODO: add stratified tables when available 
 
 # table_3vars <- table(linelist$fever, linelist$gender, linelist$outcome)
@@ -425,24 +433,334 @@ A table with 3 variables
 
 ### `dplyr` package
 
-TODO: add this (or use janitor?)
+Creating cross tabulations with dplyr is less straightforward, as this does not
+fit within the **tidyverse** dataset structure. It is still useful to demonstrate
+though as the data produced can be used for plotting *reference ggplot section*. 
+Another option is to use the **janitor** package [`tabyl` function](http://sfirke.github.io/janitor/reference/tabyl.html). 
+
+#### **One way table**
+Producing counts and proportions for a single variable. 
+To see how to do this for multiple variables - *reference for-loop section*. 
+
+```{r descriptive_dplyr_freq_one}
+
+linelist %>% 
+  ## count the variable of interest
+  count(fever) %>% 
+  ## calculate proportion 
+  mutate(percentage = n / sum(n) * 100)
+```
+
+#### **Two way table**
+
+Producing counts and proportions based on a grouping variable. Here we use the 
+**dplyr** `group_by` function, for more information see the 
+*reference grouping and aggregating section*. 
+You can calculate the percentages of the total by using `ungroup()` after `count(...)`. 
+
+Note that it is possible to change the bellow table to wide format, making it 
+more like a two-by-two (cross tabulation), using the **tidyr** `pivot_wider` function.
+This would be done by adding this to the end of the code blow: 
+`pivot_wider(names_from = gender, values_from = c(n, percentage))`
+For more information see the *reference pivot section*. 
+
+```{r descriptive_dplyr_freq_two}
+
+linelist %>% 
+  ## do everything by gender 
+  group_by(gender) %>% 
+  ## count the variable of interest
+  count(fever) %>% 
+  ## calculate proportion 
+  ## note that the denominator here is the sum of each gender
+  mutate(percentage = n / sum(n) * 100)
+
+```
+
+#### **Three way table**
+
+Producing counts based on three variables (adding a stratifier). 
+
+```{r descriptive_dplyr_freq_three}
+
+linelist %>% 
+  ## do everything by gender and outcome 
+  group_by(gender, outcome) %>% 
+  ## count the variable of interest 
+  count(fever) %>% 
+  ## calculate the proportion
+  ## note that the denominator here is the sum of each group combination
+  mutate(percentage = n / sum(n) * 100)
+
+```
+
 
 <!-- ======================================================= -->
 
 ## Statistical tests {.tabset .tabset-fade .tabset-pills}
 
+### `gtsummary` package
 
+Performing statistical tests of comparison with `tbl_summary` is done by using 
+`add_p` function and specifying which test to use. 
+It is possible to get p-values corrected for multiple testing by using the
+`add_q` function. 
+
+#### T-tests 
+
+Compare the difference in means for a continuous variable in two groups. 
+For example compare the mean age by patient outcome. 
+
+```{r ttest_gt}
+
+linelist %>% 
+  ## only keep variables of interested
+  select(age, outcome) %>% 
+  ## produce summary table
+  tbl_summary(
+    ## specify what statistic want to show
+    statistic = age ~ "{mean} ({sd})", 
+    ## specify the grouping variable
+    by = outcome) %>% 
+  ## specify what test want to perform
+  add_p(age ~ "t.test")
+
+```
+
+#### Wilcoxon rank sum test
+
+Compare the distribution of a continuous variable in two groups. The default 
+is to use the Wilcoxon rank sum test and the median (IQR) when comparing two 
+groups. However for non-normally distributed data or comparing multiple groups, 
+the Kruskal-wallis test is more appropriate. 
+
+```{r wilcox_gt}
+
+linelist %>% 
+  ## only keep variables of interested
+  select(age, outcome) %>% 
+  ## produce summary table
+  tbl_summary(
+    ## specify what statistic want to show (default so could remove)
+    statistic = age ~ "{median} ({p25}, {p75})", 
+    ## specify the grouping variable
+    by = outcome) %>% 
+  ## specify what test want to perform (default so could leave brackets empty)
+  add_p(age ~ "wilcox.test")
+
+```
+
+#### Kruskal-wallis test
+
+Compare the distribution of a continuous variable in two or more groups, 
+regardless of whether the data is normally distributed. 
+
+```{r kruskal_gt}
+
+linelist %>% 
+  ## only keep variables of interested
+  select(age, outcome) %>% 
+  ## produce summary table
+  tbl_summary(
+    ## specify what statistic want to show (default so could remove)
+    statistic = age ~ "{median} ({p25}, {p75})", 
+    ## specify the grouping variable
+    by = outcome) %>% 
+  ## specify what test want to perform
+  add_p(age ~ "kruskal.test")
+
+```
+
+#### Chi-squared test 
+
+Compare the proportions of a categorical variable in two groups. The default is 
+to perform a chi-squared test of independence with continuity correction, but if 
+any expected call count is below 5 then a Fisher's exact test is used. 
+
+```{r chi_gt}
+
+linelist %>% 
+  ## only keep variables of interested
+  select(gender, outcome) %>% 
+  ## produce summary table
+  tbl_summary(
+    ## specify the grouping variable
+    by = outcome
+  ) %>% 
+  ## specify what test want to perform
+  add_p()
+
+```
+
+### `dplyr` package
+
+Performing statistical tests in `dplyr` alone is very dense, again because it 
+does not fit within the tidy-data framework. It requires using `purrr` to create
+a list of dataframes for each of the subgroups you want to compare. 
+An easier alternative may be the `rstatix` package. 
+
+#### T-tests 
+
+```{r ttest_dplyr}
+
+linelist %>% 
+  ## only keep variables of interest
+  select(age, outcome) %>% 
+  ## drop those missing outcome 
+  filter(!is.na(outcome)) %>% 
+  ## specify the grouping variable
+  group_by(outcome) %>% 
+  ## create a subset of data for each group (as a list)
+  nest() %>% 
+  ## spread in to wide format
+  pivot_wider(names_from = outcome, values_from = data) %>% 
+  mutate(
+    ## calculate the mean age for the death group
+    Death_mean = map(Death, ~mean(.x$age, na.rm = TRUE)),
+    ## calculate the sd among dead 
+    Death_sd = map(Death, ~sd(.x$age, na.rm = TRUE)),
+    ## calculate the mean age for the recover group
+    Recover_mean = map(Recover, ~mean(.x$age, na.rm = TRUE)), 
+    ## calculate the sd among recovered 
+    Recover_sd = map(Recover, ~sd(.x$age, na.rm = TRUE)),
+    ## using both grouped data sets compare mean age with a t-test
+    ## keep only the p.value
+    t_test = map2(Death, Recover, ~t.test(.x$age, .y$age)$p.value)
+  ) %>% 
+  ## drop datasets 
+  select(-Death, -Recover) %>% 
+  ## return a dataset with the medians and p.value (drop missing)
+  unnest(cols = everything())
+
+```
+
+
+#### Wilcoxon rank sum test
+
+```{r wilcox_dplyr}
+
+linelist %>% 
+  ## only keep variables of interest
+  select(age, outcome) %>% 
+  ## drop those missing outcome 
+  filter(!is.na(outcome)) %>% 
+  ## specify the grouping variable
+  group_by(outcome) %>% 
+  ## create a subset of data for each group (as a list)
+  nest() %>% 
+  ## spread in to wide format
+  pivot_wider(names_from = outcome, values_from = data) %>% 
+  mutate(
+    ## calculate the median age for the death group
+    Death_median = map(Death, ~median(.x$age, na.rm = TRUE)),
+    ## calculate the sd among dead 
+    Death_iqr = map(Death, ~str_c(
+      quantile(.x$age, probs = c(0.25, 0.75), na.rm = TRUE), 
+      collapse = ", "
+      )),
+    ## calculate the median age for the recover group
+    Recover_median = map(Recover, ~median(.x$age, na.rm = TRUE)), 
+    ## calculate the sd among recovered 
+    Recover_iqr = map(Recover, ~str_c(
+      quantile(.x$age, probs = c(0.25, 0.75), na.rm = TRUE), 
+      collapse = ", "
+      )),
+    ## using both grouped data sets compare age distribution with a wilcox test
+    ## keep only the p.value
+    wilcox = map2(Death, Recover, ~wilcox.test(.x$age, .y$age)$p.value)
+  ) %>% 
+  ## drop datasets 
+  select(-Death, -Recover) %>% 
+  ## return a dataset with the medians and p.value (drop missing)
+  unnest(cols = everything())
+
+```
+
+#### Kruskal-wallis test
+
+
+```{r kruskal_dplyr}
+
+linelist %>% 
+  ## only keep variables of interest
+  select(age, outcome) %>% 
+  ## drop those missing outcome 
+  filter(!is.na(outcome)) %>% 
+  ## specify the grouping variable
+  group_by(outcome) %>% 
+  ## create a subset of data for each group (as a list)
+  nest() %>% 
+  ## spread in to wide format
+  pivot_wider(names_from = outcome, values_from = data) %>% 
+  mutate(
+    ## calculate the median age for the death group
+    Death_median = map(Death, ~median(.x$age, na.rm = TRUE)),
+    ## calculate the sd among dead 
+    Death_iqr = map(Death, ~str_c(
+      quantile(.x$age, probs = c(0.25, 0.75), na.rm = TRUE), 
+      collapse = ", "
+      )),
+    ## calculate the median age for the recover group
+    Recover_median = map(Recover, ~median(.x$age, na.rm = TRUE)), 
+    ## calculate the sd among recovered 
+    Recover_iqr = map(Recover, ~str_c(
+      quantile(.x$age, probs = c(0.25, 0.75), na.rm = TRUE), 
+      collapse = ", "
+      )),
+    ## using the original data set compare age distribution with a kruskal test
+    ## keep only the p.value
+    kruskal = kruskal.test(linelist$age, linelist$outcome)$p.value
+  ) %>% 
+  ## drop datasets 
+  select(-Death, -Recover) %>% 
+  ## return a dataset with the medians and p.value (drop missing)
+  unnest(cols = everything())
+
+```
+
+#### Chi-squared test 
+
+
+```{r}
+linelist %>% 
+  ## do everything by gender 
+  group_by(outcome) %>% 
+  ## count the variable of interest
+  count(gender) %>% 
+  ## calculate proportion 
+  ## note that the denominator here is the sum of each gender
+  mutate(percentage = n / sum(n) * 100) %>% 
+  pivot_wider(names_from = outcome, values_from = c(n, percentage)) %>% 
+  filter(!is.na(gender)) %>% 
+  mutate(pval = chisq.test(linelist$gender, linelist$outcome)$p.value)
+```
 
 <!-- ======================================================= -->
 
 ## Correlations {.tabset .tabset-fade .tabset-pills}
+
+TODO: use a different dataset
+
+```{r}
+
+check <- linelist %>% 
+  select(generation, age, ct_blood, days_onset_hosp) %>% 
+  correlate() %>%
+  shave() %>% 
+  rplot()
+```
 
 
 <!-- ======================================================= -->
 
 ## Resources {.tabset .tabset-fade .tabset-pills}
 
-This tab should stay with the name "Resources". Links to other online tutorials or resources.
+Much of the information in this page is adapted from these resources and vignettes online:  
+
+[gtsummary](http://www.danieldsjoberg.com/gtsummary/articles/tbl_summary.html)
+[dplyr](https://dplyr.tidyverse.org/articles/grouping.html)
+[corrr](https://corrr.tidymodels.org/articles/using-corrr.html)
+[sthda correlation](http://www.sthda.com/english/wiki/correlation-test-between-two-variables-in-r)
 
 ```{r, child= '_page_closeout.Rmd', eval = params$run_page_ind == F, include = F}
 ```
