@@ -1,0 +1,30 @@
+#book_filename: "R Handbook for Epis"
+language:
+  ui:
+    chapter_name: ""
+
+fontsize: 6pt   # this is for pdf only
+
+delete_merged_file: FALSE
+#view: https://github.com/nsbatra/Epi_R_Handbook/blob/master/%s
+#new_session: yes
+
+#rmd_subdir: "raw_pages"
+
+rmd_files: [
+  "index.Rmd",
+  
+  "raw_pages/cat_about_book.Rmd",
+  "raw_pages/editorial_style.Rmd",
+  "raw_pages/data_used.Rmd",
+
+  "raw_pages/cat_data_management.Rmd",
+  "raw_pages/cleaning.Rmd",
+
+  "raw_pages/cat_data_viz.Rmd",
+  "raw_pages/age_pyramid.Rmd",
+
+
+]
+
+#before_chapter_script: "_common.R"
