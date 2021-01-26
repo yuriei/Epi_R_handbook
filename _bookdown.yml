@@ -3,6 +3,7 @@ language:
   ui:
     chapter_name: ""
 
+output_dir: "docs"
 fontsize: 6pt   # this is for pdf only
 
 delete_merged_file: FALSE
