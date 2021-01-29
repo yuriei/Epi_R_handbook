@@ -15,9 +15,14 @@ output:
     toc_float: yes
 params:
     run_page_ind: TRUE
+knit: (function(inputFile, encoding) {
+  rmarkdown::render(inputFile, encoding = encoding, output_dir = "_outputs_knitted") })
 ---
 
-```{r, child= 'page_setup.Rmd', eval = params$run_page_ind, include = F}
+```{r, child= '_page_setup.Rmd', eval = params$run_page_ind, include = F}
+# THIS CHUNK RUNS IF PAGE IS KNITTED INDEPENDENTLY OF THE HANDBOOK
+# IT SOURCES RMD "_page_setup.Rmd" AS A CHILD, TO GET SETTINGS, PACKAGES, AND DATASETS
+# IF WORKING ON THIS PAGE, RUN ALL CHUNKS OF "_page_setup.Rmd" FIRST TO GET THESE OBJECTS
 ```
 
 <!-- ======================================================= -->
@@ -32,34 +37,53 @@ params:
 
 **Objective**  
 
-**To make an open-access digital R reference book which is catered to epidemiologists and public health practitioners, usable offline, and addresses common epidemiological tasks via clear text explanations, step-by-step instructions, and best practice R code examples**
+**A free open-access digital R reference book catered to epidemiologists and public health practitioners that is usable offline and addresses common epidemiological tasks via clear text explanations, step-by-step instructions, and best practice R code examples**
 
-
-**The problem:**
-
-Most online R help resources are not task-centered nor epidemiology-focused. Epis learning or new to R often must Google and skim dozens of forum pages to complete common data manipulation and visualization epi tasks. Furthermore, field epidemiologists often work in low internet-connectivity environments and have limited technical support.  
-
+Epis using R must often Google search and read dozens of forum pages to complete common data manipulation and visualization epi tasks. However, field epidemiologists often work in low internet-connectivity environments and have limited technical support. This handbook aims to fill this gap.  
 
   
 **How to read this handbook:**  
 
-* *This handbook in an HTML file. It is not online, you are only using your web browser to view this local file.*  
+* The is an HTML file which *can* be viewed offline, and is best viewed with Google Chrome.  
 
-* *This handbook is ***best viewed with Google Chrome***. Some functions may not work in other browsers.*  
+* Click the "clipboard" icon in the upper-right of each code chunk to copy it.    
 
-* *Use tabs on the right to hide/view code. See 'Copy to clipboard' icon in the upper-right of each code section*  
+* Package names are written in bold (e.g. **dplyr**) and functions are written like this: `mutate()`. Packages referenced either in text or within code like this: `dplyr::mutate()`  
 
 
 **Version**  
 The latest version of this handbook can be found at this [github repository](https://github.com/nsbatra/R_epi_handbook).  
 
 
-**Style**
 
-* The handbook gives one recommended way of completing a task, and offers other methods/packages as appropriate.  
-* The handbook generally uses **tidyverse** R codying style. Read more here (TODO).
-* Package names are written in bold (e.g. **dplyr**) and functions are like this: `mutate()`.  
-* Code in this handbook sometimes explicity names the package of a function (e.g. `dplyr::mutate()`), so it is clear to the reader which package is being used.  
+<!-- ======================================================= -->
+## Style and editorial decisions {#style}
+<h2> Style and editorial decisions </h2>
+
+
+* The handbook generally uses **tidyverse** R coding style. Read more [here](https://www.tidyverse.org/)
+
+
+**Emphasis on readability and instruction**  
+
+We chose to frequently write code on new lines, in order to offer more understandable comments. As a result, code that *could* be written like this:  
+
+```{r, eval=F}
+obs %>% 
+  group_by(name) %>%                    # group the rows by 'name'
+  slice_max(date, n = 1, with_ties = F) # if there's a tie (of date), take the first row
+```
+
+...is often written like this:  
+
+```{r, eval=F}
+obs %>% 
+  group_by(name) %>%   # group the rows by 'name'
+  slice_max(
+    date,              # keep row per group with maximum date value 
+    n = 1,             # keep only the single highest row 
+    with_ties = F)     # if there's a tie (of date), take the first row
+```
 
 
 **Types of notes**
@@ -77,6 +101,22 @@ FOR EXAMPLE: This is a boxed example
 
 <span style="color: red;">**_DANGER:_** This is a warning.</span>
 
+
+
+
+
+
+**Table of package, function, and other editorial decisions**  
+
+See below some brief notes on decisions we made and our rationale. If you disagree or want to offer a new tool, please to join/start a conversation on our Github page.  
+
+Decision          |     Considered     |    Outcome        |    Brief rationale   
+----------------- | --------------------|---------------|--------------------------------------------------    
+Epiweeks | aweek, lubridate | lubridate | consistency, package maintenance prospects  
+   
+
+
+
 <!-- ======================================================= -->
 ## Datasets used {#datasets}
 <h2> Datasets used </h2>
@@ -89,29 +129,6 @@ Here the datasets used in this handbook will be described and will be "downloada
 * GIS shapefile (...)  
 * modeling dataset? (...)
 
-```{r handbook_packages_silent, echo = F}
-
-source(here::here("load_core_packages.R"))
-
-# remotes::install_github("rlesur/klippy")
-# remotes::install_github("reconhub/epicontacts@ttree")
-# remotes::install_github("reconhub/linelist")
-
-
-```
-
-
-```{r datasets_import_silent, echo = F, cache=T}
-
-# linelist
-linelist <- rio::import(here::here("data", "fluH7N9_China_2013.csv"))
-
-# district count data
-district_count_data <- rio::import(here::here("data", "district_count_data.xlsx"))  
-
-# facility count data
-facility_count_data <- rio::import(here::here("data", "facility_count_data.csv"))
-```
 
 
 <!-- ======================================================= -->

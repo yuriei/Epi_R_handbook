@@ -15,9 +15,11 @@ output:
     toc_float: yes
 params:
     run_page_ind: TRUE
+knit: (function(inputFile, encoding) {
+  rmarkdown::render(inputFile, encoding = encoding, output_dir = "_outputs_knitted") })
 ---
 
-```{r, child= 'page_setup.Rmd', eval = params$run_page_ind, include = F}
+```{r, child= '_page_setup.Rmd', eval = params$run_page_ind, include = F}
 ```
 
 
@@ -33,7 +35,7 @@ params:
 
 The primary tool to visualize and analyze transmission chains is the package **epicontacts**, developed by the folks at RECON.  
 
-```{r out.width=c('50%', '50%'), fig.show='hold', echo=F}
+```{r out.width=c('25%', '25%'), fig.show='hold', echo=F}
 library(epicontacts)
 library(outbreaks)
 
@@ -41,10 +43,10 @@ links <- epicontacts::make_epicontacts(linelist = mers_korea_2015$linelist,
                                        contacts = mers_korea_2015$contacts, 
                                        directed = TRUE)
 # plot without time
-plot(links,
-     selector = FALSE,
-     height = 700,
-     width = 700)
+# plot(links,
+#      selector = FALSE,
+#      height = 700,
+#      width = 700)
 
 # plot with date of onset as x-axis
 plot(sim,
@@ -109,6 +111,6 @@ Links to other online tutorials or resources.
 
 
 
-```{r, child= 'page_closeout.Rmd', eval = params$run_page_ind == F, include = F}
+```{r, child= '_page_closeout.Rmd', eval = params$run_page_ind == F, include = F}
 ```
 

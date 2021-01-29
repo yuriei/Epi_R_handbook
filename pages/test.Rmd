@@ -1,7 +1,7 @@
 ---
 title:  |  
   ![](../images/R Handbook Logo.png)
-author: "Version 1.0.0 - Separate pages"
+author: "Version 1.0.0"
 date: "Produced `r format(Sys.time(), '%A %d %B %Y')`"
 output:
   html_document:
@@ -22,6 +22,37 @@ params:
 </style>
 
 
+```{css, echo = FALSE}
+# Sets color of header levels 1 and 2
+# h1, #TOC>ul>li {
+#   color: #ff0000;
+# }
+h1, #TOC>ul>li {
+  color: #A93226;          d
+  font-family:  "Times";
+  font-weight: bold;
+}
+
+h2, #TOC>ul>ul>li {
+  color: #229954;          
+  font-family:  "Times";
+  font-weight: bold;
+}
+
+h3, #TOC>ul>ul>ul>li {
+  color: #3498DB;          
+  font-family:  "Times";
+  font-weight: bold;
+}
+# 
+# h1, #TOC>ul>ul>li {
+#   color: #3341FF;          # blue
+#   font-family:  "Times";
+#   font-weight: bold;
+# }
+```
+
+
 ```{r include=FALSE}
 knitr::opts_chunk$set(echo = TRUE,
                       collapse = TRUE,
@@ -33,27 +64,95 @@ knitr::opts_chunk$set(echo = TRUE,
 ```
 
 
-```{r echo=FALSE, include=TRUE}
-#Enables "copy to clipboard" icons   https://rlesur.github.io/klippy/articles/klippy.html
-klippy::klippy(position = c('top', 'right'))
+<!-- ======================================================= -->
+<!-- ======================================================= -->
+<!-- ======================================================= -->
+# H1 Page title under three arrows {.tabset .tabset-fade}  
+
+The Page title should be succinct. Consider adding a tag with no spaces into the curly brackets, such as below. This can be used for internal links within the handbook. 
+`{#title_tag .tabset .tabset-fade}`
+
+<!-- ======================================================= -->
+# H1 under one arrow {.tabset .tabset-fade}
+
+
+# H1 no arrows {.tabset .tabset-fade}
+
+<!-- ======================================================= -->
+<!-- ======================================================= -->
+<!-- ======================================================= -->
+## H2 under 3 arrows {.tabset .tabset-fade .tabset-pills}
+
+<!-- ======================================================= -->
+## H2 under one arrow {.tabset .tabset-fade .tabset-pills}
+
+## H2 under no arrows
+
+## H2 no arrows, undertitle 
+<h2> text </h2>
+
+Keep the title of this section as "Overview".  
+This tab should include:  
+
+* Textual overview of the purpose of this page  
+* Small image showing outputs   
+
+
+
+<!-- ======================================================= -->
+## Preparation {.tabset .tabset-fade .tabset-pills}
+
+Keep the title of this section as "Preparation".  
+Data preparation steps such as:  
+
+* Loading dataset  
+* Adding or changing variables  
+* melting, pivoting, grouping, etc.   
+
+
+<!-- ======================================================= -->
+## Option 1 {.tabset .tabset-fade .tabset-pills}
+
+This tab can be renamed. 
+This tab should demonstrate execution of the task using recommended package/approach. For example, using a package customized for this task where the execution is simple and fast but perhaps less customizable. For example using *incidence* package to create an epicurve.
+
+
+<!-- ======================================================= -->
+<!-- ======================================================= -->
+<!-- ======================================================= -->
+### H3 3 arrows {.tabset .tabset-fade .tabset-pills}
+
+<!-- ======================================================= -->
+### H3 1 arrow {.tabset .tabset-fade .tabset-pills}
+
+Sub-tabs if necessary. Re-name as needed.
+
+
+#### Test 4-level header no arrows
+
+
+<!-- ======================================================= -->
+## Option 2 {.tabset .tabset-fade .tabset-pills}
+
+This tab can be re-named. 
+This tab should demonstrate execution of the task a more standard/core package (e.g. ggplot2, or base R) that allows for more flexibility in the output or more package stability. For example, showing how to create an epicurve using *ggplot2*. 
+
+
+<!-- ======================================================= -->
+### Option 2 sub-tab {.tabset .tabset-fade .tabset-pills}
+
+Sub-tabs if necessary. Re-name as needed.
+
+
+
+<!-- ======================================================= -->
+## Resources {.tabset .tabset-fade .tabset-pills}
+
+This tab should stay with the name "Resources".
+Links to other online tutorials or resources.
+
+
+
+```{r, child= '_page_closeout.Rmd', eval = params$run_page_ind==F, include = F}
 ```
-
-
-
-```{r child = 'intro.Rmd'}
-```
-
-
-```{r child = 'basics.Rmd'}
-```
-
-
-```{r child = 'importing.Rmd'}
-```
-
-
-```{r child = 'descriptive_statistics.Rmd'}
-```
-
-
 

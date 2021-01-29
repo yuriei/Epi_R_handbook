@@ -1,7 +1,7 @@
 ---
 title:  |  
   ![](../images/R Handbook Logo.png)
-author: "Version 1.0.0 - Separate pages"
+author: "Version 1.0.0"
 date: "Produced `r format(Sys.time(), '%A %d %B %Y')`"
 output:
   html_document:
@@ -20,6 +20,35 @@ params:
 <style>
 .color-tabs>.nav-pills>li:nth-child(2){background:green;}
 </style>
+
+
+```{css, echo = FALSE}
+# Sets color of header levels
+
+h1, #TOC>ul>li {
+  color: #A93226;          
+  font-family:  "Times";
+  font-weight: bold;
+}
+
+h2, #TOC>ul>ul>li {
+  color: #229954;          
+  font-family:  "Times";
+  font-weight: bold;
+}
+
+h3, #TOC>ul>ul>ul>li {
+  color: #3498DB;          
+  font-family:  "Times";
+  font-weight: bold;
+}
+
+h4, #TOC>ul>ul>ul>li {
+  color: #F4D03F;          
+  font-family:  "Times";
+  font-weight: bold;
+}
+```
 
 
 ```{r include=FALSE}
@@ -99,11 +128,11 @@ klippy::klippy(position = c('top', 'right'))
 ```
 
 
-```{r child = 'scatterplots.Rmd'}
+```{r child = 'plot_discrete.Rmd'}
 ```
 
 
-```{r child = 'boxplots.Rmd'}
+```{r child = 'plot_continuous.Rmd'}
 ```
 
 
@@ -191,6 +220,10 @@ klippy::klippy(position = c('top', 'right'))
 ```
 
 
+```{r child = 'interactive_plots.Rmd'}
+```
+
+
 ```{r child = 'writing_functions.Rmd'}
 ```
 
@@ -211,11 +244,11 @@ klippy::klippy(position = c('top', 'right'))
 ```
 
 
-```{r child = 'plotly.Rmd'}
+```{r child = 'directories.Rmd'}
 ```
 
 
-```{r child = 'directories.Rmd'}
+```{r child = 'collaboration.Rmd'}
 ```
 
 

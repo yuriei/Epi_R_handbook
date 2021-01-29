@@ -15,45 +15,56 @@ output:
     toc_float: yes
 params:
     run_page_ind: TRUE
+knit: (function(inputFile, encoding) {
+  rmarkdown::render(inputFile, encoding = encoding, output_dir = "_outputs_knitted") })
 ---
 
-```{r, child= 'page_setup.Rmd', eval = params$run_page_ind, include = F}
+```{r, child= '_page_setup.Rmd', eval = params$run_page_ind, include = F}
 ```
 
 
 <!-- ======================================================= -->
 <!-- ======================================================= -->
 <!-- ======================================================= -->
-# Age Standardization {#agestandardize .tabset .tabset-fade}  
+# Standardization {#agestandardize .tabset .tabset-fade}  
 
-The Page title should be succinct. Consider adding a tag with no spaces into the curly brackets, such as below. This can be used for internal links within the handbook. 
+This page will show you two ways to standardize an outcome, such as hospitalizations or mortality, by characteristics such as age and sex. 
+
+* Using **PHEindicatormethods** package
+* Using **dsr** package 
 `{#title_tag .tabset .tabset-fade}`
 
 <!-- ======================================================= -->
 ## Overview {.tabset .tabset-fade .tabset-pills}
 
-Why
-How
-When
-etc.
-
-Keep the title of this section as "Overview".  
-This tab should include:  
-
-* Textual overview of the purpose of this page  
-* Small image showing outputs   
-
-
+There are two main ways to standardize: direct and indirect standardization.
+Let's say we would like to standardize COVID-19 mortality in London by age and sex.
+* For direct standardization, you will have to know the number of the at-risk population and number of deaths for each age and sex stratum. One stratum in our example could be females between ages 15-44. 
+* For indirect standardization, you only need to know the total number of deaths and the age- and sex structure in our study population, London. This option is therefore feasible if age- and sex-specific mortality rates or population numbers are not available. Indirect standardization is furthermore preferable in case of small numbers per stratum, as estimates in direct standardization would be influenced by substantial sampling variation. 
 
 <!-- ======================================================= -->
 ## Preparation {.tabset .tabset-fade .tabset-pills}
+<h2> Preparation </h2>
 
-Keep the title of this section as "Preparation".  
-Data preparation steps such as:  
+To show how indirect standardization is done, we will use the `country_demographics` dataset which includes population numbers by age (in 5 year categories) and sex (female, male). We will add our own fictitious mortality data to this dataset. To make the dataset ready for use, we will perform the following steps:
 
-* Loading dataset  
-* Adding or changing variables  
-* melting, pivoting, grouping, etc.   
+* We need one row per stratum of age and sex
+* We need to add mortality numbers per stratum
+
+Alternatively, instead of just adding mortality numbers per stratum you may have a dataset with one row for each death and information on age and sex for each (or a significant proportion) of these deaths. In this case, you can aggregate this dataset by age and sex to create a dataset with numbers per stratum, and then add this to the dataset with population numbers per stratum. We will also show you how to do this.
+
+**Load packages**  
+
+First, load the packages required for this analysis:  
+
+```{r}
+pacman::p_load(rio,       # to import data
+               here,      # to locate files
+               tidyverse, # to clean, handle, and plot the data (includes ggplot2 package)
+               dsr)  # a package for directly standardized rates
+```
+
+**Then, load the data**  
 
 <!-- ======================================================= -->
 ### sub-tab 1 {.tabset .tabset-fade .tabset-pills}
@@ -85,7 +96,7 @@ Links to other online tutorials or resources.
 
 
 
-```{r, child= 'page_closeout.Rmd', eval = params$run_page_ind == F, include = F}
+```{r, child= '_page_closeout.Rmd', eval = params$run_page_ind == F, include = F}
 ```
 
 

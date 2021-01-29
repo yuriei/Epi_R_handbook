@@ -15,9 +15,11 @@ output:
     toc_float: yes
 params:
     run_page_ind: TRUE
+knit: (function(inputFile, encoding) {
+  rmarkdown::render(inputFile, encoding = encoding, output_dir = "_outputs_knitted") })
 ---
 
-```{r, child= 'page_setup.Rmd', eval = params$run_page_ind, include = F}
+```{r, child= '_page_setup.Rmd', eval = params$run_page_ind, include = F}
 ```
 
 
@@ -44,6 +46,10 @@ An example plot is below. Five symptoms are shown. Below each vertical bar is a 
 ```
 
 ```{r echo=F, out.width= "75%"}
+pacman::p_load(tidyverse,
+               UpSetR,
+               ggupset)
+
 # Adds new symptom variables to the linelist, with random "yes" or "no" values 
 linelist_sym <- linelist %>% 
   mutate(fever  = sample(c("yes", "no"), nrow(linelist), replace = T, prob = c(0.80, 0.20)),
@@ -87,6 +93,12 @@ UpSetR::upset(
 <!-- ======================================================= -->
 ## Preparation {.tabset .tabset-fade .tabset-pills}
 
+```{r}
+pacman::p_load(tidyverse,
+               UpSetR,
+               ggupset)
+```
+
 <!-- ======================================================= -->
 ### View the data  
 
@@ -94,7 +106,7 @@ This linelist includes five "yes/no" variables on reported symptoms. We will nee
 
 View the data (scroll to the right to see the symptoms variables)
 
-```{r}
+```{r, echo=F}
 DT::datatable(linelist_sym, rownames = FALSE, filter="top", options = list(pageLength = 5, scrollX=T))
 ```
 
@@ -245,7 +257,7 @@ Links to other online tutorials or resources.
 
 
 
-```{r, child= 'page_closeout.Rmd', eval = params$run_page_ind == F, include = F}
+```{r, child= '_page_closeout.Rmd', eval = params$run_page_ind == F, include = F}
 ```
 
 
