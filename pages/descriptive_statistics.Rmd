@@ -736,19 +736,80 @@ linelist %>%
   mutate(pval = chisq.test(linelist$gender, linelist$outcome)$p.value)
 ```
 
+
+### `base` package
+
+You can also just use the `base` functions to produce the results of statistical 
+tests. The outputs of these are however usually lists, and so are harder to 
+manipulate. 
+
+#### T-tests 
+
+```{r ttest_base}
+
+## compare mean age by outcome group with a t-test
+t.test(age ~ outcome, data = linelist)
+```
+
+
+#### Wilcoxon rank sum test
+
+```{r wilcox_base}
+
+## compare age distribution by outcome group with a wilcox test
+wilcox.test(age ~ outcome, data = linelist)
+
+```
+
+#### Kruskal-wallis test
+
+
+```{r kruskal_dplyr}
+
+## compare age distribution by outcome group with a kruskal-wallis test
+kruskal.test(age ~ outcome, linelist)
+
+```
+
+#### Chi-squared test 
+
+
+```{r}
+
+## compare the proportions in each group with a chi-squared test
+chisq.test(linelist$gender, linelist$outcome)
+
+```
+
+
+
+
 <!-- ======================================================= -->
 
 ## Correlations {.tabset .tabset-fade .tabset-pills}
 
-TODO: use a different dataset
-
+Correlation between numeric variables can be investigated using the tidyverse 
+`corrr` package. It allows you to compute correlations using Pearson, Kendall
+tau or Spearman rho. The package creates a table and also has a function to 
+automatically plot the values. 
 ```{r}
 
-check <- linelist %>% 
-  select(generation, age, ct_blood, days_onset_hosp) %>% 
-  correlate() %>%
-  shave() %>% 
-  rplot()
+correlation_tab <- linelist %>% 
+  ## pick the numeric variables of interest
+  select(generation, age, ct_blood, days_onset_hosp, wt_kg, ht_cm) %>% 
+  ## create correlation table (using default pearson)
+  correlate()
+
+## remove duplicate entries (the table is mirrored) 
+correlation_tab <- correlation_tab %>% 
+  shave()
+
+
+## view correlation table 
+correlation_tab
+
+## plot correlations 
+rplot(correlation_tab)
 ```
 
 
