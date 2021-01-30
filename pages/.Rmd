@@ -1,5 +1,6 @@
+R script
 ---
-title:  |  
+     title:  |  
      ![](../images/R Handbook Logo.png)
 author: ""
 date: "Produced `r format(Sys.time(), '%A %d %B %Y')`"
@@ -18,22 +19,23 @@ params:
 knit: (function(inputFile, encoding) {
      rmarkdown::render(inputFile, encoding = encoding, output_dir = "_outputs_knitted") })
 ---
-   
-```{r, child= '_page_setup.Rmd', eval = params$run_page_ind, include = F}
+     
+     ```{r, child= '_page_setup.Rmd', eval = params$run_page_ind, include = F}
 ```
 
 
 <!-- ======================================================= -->
-<!-- ======================================================= -->
-<!-- ======================================================= -->
-# Grouping/aggregating data {#grouping .tabset .tabset-fade}  
+     <!-- ======================================================= -->
+     <!-- ======================================================= -->
+     # Grouping/aggregating data {#grouping .tabset .tabset-fade}  
      
-This page reviews how to group and aggregate data for descriptive analysis. It makes use of tidyverse packages for common and easy-to-use functions. 
+     This page reviews how to group and aggregate data for descriptive analysis. It makes use of tidyverse packages for common and easy-to-use functions. 
+`{#group_agg .tabset .tabset-fade}`
 
 <!-- ======================================================= -->
-## Overview {.tabset .tabset-fade .tabset-pills}
-
-Before doing descriptive analyses, it will almost always be a necessary to first group your data and summarize it across these groups (whether it be by time period, place, or a relevant categorical variable) since most often summary statistics across these groups are more meaningful. Luckily, tidyverse makes this really easy through the `group_by` function.
+     ## Overview {.tabset .tabset-fade .tabset-pills}
+     
+     Before doing descriptive analyses, it will almost always be a necessary to first group your data and summarize it across these groups (whether it be by time period, place, or a relevant categorical variable) since most often summary statistics across these groups are more meaningful. Luckily, tidyverse makes this really easy through the `group_by` function.
 
 This page will how to perform these grouping operations
 
@@ -45,13 +47,13 @@ This page will how to perform these grouping operations
 
 
 <!-- ======================================================= -->
-## Preparation {.tabset .tabset-fade .tabset-pills}
+     ## Preparation {.tabset .tabset-fade .tabset-pills}
      
-For this tab we use the `linelist` dataset that is cleaned in the Cleaning tab.
+     For this tab we use the `linelist` dataset that is cleaned in the Cleaning tab.
 
 **Load packages**  
      
-Ensure tidyverse is installed, which includes dplyr for group_by 
+     Ensure tidyverse is installed, which includes dplyr for group_by 
 
 ```{r}
 pacman::p_load(rio,       # to import data
@@ -72,9 +74,9 @@ linelist <- rio::import(here("data", "linelist_cleaned.xlsx"))
 
 
 <!-- ======================================================= -->
-## `group_by()` {.tabset .tabset-fade .tabset-pills}
+     ## `group_by()` {.tabset .tabset-fade .tabset-pills}
      
-You can perform different operations after first grouping by one variable, say, `outcome`. This provides instruction that any calculations should then be performed within the context of the grouped columns. You can group by 1 or more columns.
+     You can perform different operations after first grouping by one variable, say, `outcome`. This provides instruction that any calculations should then be performed within the context of the grouped columns. You can group by 1 or more columns.
 
 First, let's convert `outcome` to a factor to make resulting plots easier to work with.
 
