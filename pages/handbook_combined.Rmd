@@ -156,6 +156,10 @@ klippy::klippy(position = c('top', 'right'))
 ```
 
 
+```{r child = 'survival_analysis.Rmd'}
+```
+
+
 ```{r child = 'age_standardization.Rmd'}
 ```
 
