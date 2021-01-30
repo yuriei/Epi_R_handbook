@@ -60,10 +60,12 @@ This code chunk shows the loading of packages required for the analyses.
 ```{r descriptive_packages}
 pacman::p_load(rio,          # File import
                here,         # File locator
-               skimr,        # get overview of data
                tidyverse,    # data management + ggplot2 graphics, 
+               stringr,      # manipulate text strings 
+               purrr,        # loop over objects in a tidy way
                gtsummary,    # summary statistics and tests 
-               corrr         # correlation analayis for numeric variables
+               broom,        # tidy up results from regressions
+               parameters    # alternative to tidy up results from regressions
                )
 ```
 
@@ -110,6 +112,8 @@ linelist <- linelist %>%
     ## for each of the variables listed
     across(
       all_of(c(explanatory_vars, "outcome")), 
+      ## recode male, yes and death to 1; female, no and recover to 0
+      ## otherwise set to missing
            ~case_when(
              . %in% c("m", "yes", "Death")   ~ 1,
              . %in% c("f", "no",  "Recover") ~ 0, 
@@ -119,6 +123,10 @@ linelist <- linelist %>%
 
 ## add in age_category to the explanatory vars 
 explanatory_vars <- c(explanatory_vars, "age_cat")
+
+## drop rows with missing information for variables of interest 
+linelist <- linelist %>% 
+  drop_na(any_of(c("outcome", explanatory_vars)))
 
 ```
 
@@ -136,7 +144,7 @@ functions available in `base` together with the `broom` package.
 
 ```{r odds_gt}
 
-linelist %>% 
+univ_tab <- linelist %>% 
   ## select variables of interest
   select(explanatory_vars, outcome) %>% 
   ## produce univariate table
@@ -151,6 +159,8 @@ linelist %>%
     exponentiate = TRUE
     )
 
+## view univariate results table 
+univ_tab
 ```
 
 
@@ -176,7 +186,7 @@ model <- glm(
   ## define your dataset
   data = linelist) %>% 
   ## clean up the outputs of the regression (exponentiate and produce CIs)
-  broom::tidy(
+  tidy(
       exponentiate = TRUE, 
       conf.int = TRUE)
 
@@ -222,7 +232,7 @@ models <- explanatory_vars %>%
   ## for each of the output regressions from above 
   map(
     ## tidy the output
-    ~broom::tidy(
+    ~tidy(
       ## each of the regressions 
       .x, 
       ## exponentiate and produce CIs
@@ -235,7 +245,7 @@ models <- explanatory_vars %>%
 
 
 ## for each explanatory variable
-map(explanatory_vars, 
+univ_tab_base <- map(explanatory_vars, 
       ~{linelist %>% 
           ## group data set by outcome
           group_by(outcome) %>% 
@@ -275,46 +285,156 @@ this page will be updated in due course.
 
 ### `gtsummary` package {.tabset .tabset-fade .tabset-pills}
 
-WIP
+TODO
 
 <!-- ======================================================= -->
 
 ### `base` {.tabset .tabset-fade .tabset-pills}
 
-WIP
+TODO
 
 <!-- ======================================================= -->
 
 ## Multivariable {.tabset .tabset-fade .tabset-pills}
 
-For multivariable analysis you can use a combination of `base` and `gtsummary`
-functions, or `base` with `broom`. 
+For multivariable analysis you can use a combination there is not much difference 
+between using `gtsummary` or `broom` to present the data. 
+The workflow is the same for both, as below, and only the last step of pulling a 
+table together is different. 
+
+```{r mv_regression}
+
+## run a regression with all variables of interest 
+mv_reg <- explanatory_vars %>% 
+  ## combine all names of the variables of interest separated by a plus
+  str_c(collapse = "+") %>% 
+  ## combined the names of variables of interest with outcome in formula style
+  str_c("outcome ~ ", .) %>% 
+  glm(## define type of glm (logistic)
+      family = "binomial", 
+      ## define your dataset
+      data = linelist) 
+
+## choose a model using forward selection based on AIC
+## you can also do "backward" or "both" by adjusting the direction
+final_mv_reg <- mv_reg %>%
+  step(direction = "forward", trace = FALSE)
+
+```
 
 
 <!-- ======================================================= -->
 
 ### `gtsummary` package {.tabset .tabset-fade .tabset-pills}
 
-Sub-tabs if necessary. Re-name as needed.
+The `gtsummary` package provides the `tbl_regression` function, which will 
+take the outputs from a regression (`glm` in this case) and produce an easy 
+summary table. 
+You can also combine several different output tables produced by `gtsummary` with 
+the `tbl_mege` function. 
+```{r mv_regression_gt}
+
+## show results table of final regression 
+mv_tab <- tbl_regression(final_mv_reg, exponentiate = TRUE)
+
+## combine with univariate results 
+tbl_merge(
+  tbls = list(univ_tab, mv_tab), 
+  tab_spanner = c("**Univariate**", "**Multivariable**"))
+
+```
+
 
 <!-- ======================================================= -->
 
 ### `base` {.tabset .tabset-fade .tabset-pills}
 
-Sub-tabs if necessary. Re-name as needed.
+```{r mv_regression_base}
+
+mv_tab_base <- final_mv_reg %>% 
+  ## get a tidy dataframe of estimates 
+  broom::tidy(exponentiate = TRUE, conf.int = TRUE)
+
+## combine univariate and multivariable tables 
+left_join(univ_tab_base, mv_tab_base, by = "term") %>% 
+  ## choose columns and rename them
+  select(
+    "characteristic" = term, 
+    "recovered"      = "0", 
+    "dead"           = "1", 
+    "univ_or"        = estimate.x, 
+    "univ_ci_low"    = conf.low.x, 
+    "univ_ci_high"   = conf.high.x,
+    "univ_pval"      = p.value.x, 
+    "mv_or"          = estimate.y, 
+    "mvv_ci_low"     = conf.low.y, 
+    "mv_ci_high"     = conf.high.y,
+    "mv_pval"        = p.value.y 
+  )
+
+```
+
 
 
 <!-- ======================================================= -->
 
 ## Forest plot {.tabset .tabset-fade .tabset-pills}
 
-This section shows how to produce a plot with the outputs of your regression.  
+This section shows how to produce a plot with the outputs of your regression.
+There are two options, you can build a plot yourself using `ggplot2` or use a 
+package called 
+
+
+<!-- ======================================================= -->
+
+### `ggplot2` package {.tabset .tabset-fade .tabset-pills}
+
+```{r ggplot_forest}
+
+## remove the intercept term from your multivariable results
+mv_tab_base %>% 
+  filter(term != "(Intercept)") %>% 
+  ## plot with variable on the y axis and estimate (OR) on the x axis
+  ggplot(aes(x = estimate, y = term)) +
+  ## show the estimate as a point
+  geom_point() + 
+  ## add in an error bar for the confidence intervals
+  geom_errorbar(aes(xmin = conf.low, xmax = conf.high)) + 
+  ## show where OR = 1 is for reference as a dashed line
+  geom_vline(xintercept = 1, linetype = "dashed")
+  
+```
+
+
+<!-- ======================================================= -->
+
+### `easytats` packages {.tabset .tabset-fade .tabset-pills}
+
+The alternative if you do not want to decide all of the different things required
+for a `ggplot`, is to use a combination of `easystats` packages. 
+In this case the `paramaters` package function `model_paramets` does the equivalent
+of `broom` package function `tidy`. The `see` package then accepts those outputs
+and creates a default forest plot as a `ggplot` object. 
+
+```{r easystats_forest}
+
+## remove the intercept term from your multivariable results
+final_mv_reg %>% 
+  model_parameters(exponentiate = TRUE) %>% 
+  plot()
+  
+```
+
 
 <!-- ======================================================= -->
 
 ## Resources {.tabset .tabset-fade .tabset-pills}
 
-This tab should stay with the name "Resources". Links to other online tutorials or resources.
+Much of the information in this page is adapted from these resources and vignettes online:  
+
+[gtsummary](http://www.danieldsjoberg.com/gtsummary/articles/tbl_regression.html)  
+
+[sthda stepwise regression](http://www.sthda.com/english/articles/36-classification-methods-essentials/150-stepwise-logistic-regression-essentials-in-r/)   
 
 ```{r, child= '_page_closeout.Rmd', eval = params$run_page_ind == F, include = F}
 ```
