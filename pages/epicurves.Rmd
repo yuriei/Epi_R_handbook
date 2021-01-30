@@ -104,8 +104,8 @@ This code chunk shows the loading of packages required for the analyses.
 pacman::p_load(rio,          # File import
                here,         # File locator
                tidyverse,    # data management + ggplot2 graphics
-               aweek,        # working with dates
-               lubridate,    # Manipulate dates    
+               lubridate,    # working with  dates    
+               aweek,        # alternative package for working with dates
                incidence,    # an option for epicurves of linelist data
                stringr,      # Search and manipulate character strings
                forcats,      # working with factors
@@ -132,6 +132,7 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 count_data <- linelist %>% 
   group_by(hospital, date_hospitalisation) %>% 
   summarize(n_cases = dplyr::n()) %>% 
+  filter(date_hospitalisation > as.Date("2013-06-01")) %>% 
   ungroup()
 ```
 
@@ -1451,6 +1452,7 @@ ll_counts_7day <- linelist %>%
   ## count cases by date
   count(date_onset,
         name = "new_cases") %>%   # name of new column
+  filter(!is.na(date_onset)) %>%  # remove cases with missing date_onset
   
   ## calculate the average number of cases in the preceding 7 days
   mutate(
@@ -1702,6 +1704,7 @@ A few notes on the code below:
 * A line is used instead of a histogram, as the faceting approach below does not work well with histograms.  
 
 
+Aggreagate the weekly counts
 
 ```{r out.width = c('50%', '50%'), fig.show='hold'}
 
@@ -1709,23 +1712,26 @@ A few notes on the code below:
 #######################################
 central_weekly <- linelist %>%
   filter(hospital == "Central Hospital") %>%           # filter linelist
-  mutate(week = aweek::date2week(date_onset,           # create weeks column
-                                 floor_day = T,        # round dates to weeks
-                                 factor = T)) %>%      # include weeks with no cases  
+  mutate(week = lubridate::floor_date(date_onset, unit = "weeks")) %>%  
   count(week, .drop=F) %>%                             # summarize weekly case counts
-  mutate(week_as_date = week2date(week,                # make col of week start date in Date class (for plotting)
-                               week_start = "Monday")) %>%  #  this is done after count() so that all weeks are present
-  ungroup()
+  filter(!is.na(week)) %>%                             # remove cases with missing onset_date
+  complete(week = seq.Date(from = min(week),           # fill-in all weeks with no cases reported
+                           to   = max(week),
+                           by   = "week"))
+```
 
+Make plots  
+
+```{r}
 # plot
 ######
 ggplot(central_weekly) +
-  geom_line(aes(x = week_as_date, y = n),    # make line, specify x and y
+  geom_line(aes(x = week, y = n),    # make line, specify x and y
             stat = "identity") +             # because line height is count number
   scale_x_date(date_labels="%b",             # date label format show month 
                date_breaks="month",          # date labels on 1st of each month
                expand=c(0,0)) +              # remove excess space
-  facet_grid(~lubridate::year(week_as_date), # facet on year (of Date class column)
+  facet_grid(~lubridate::year(week), # facet on year (of Date class column)
              space="free_x",                
              scales="free_x",                # x-axes adapt to data range (not "fixed")
              switch="x") +                   # facet labels (year) on bottom
@@ -1740,7 +1746,7 @@ ggplot(central_weekly) +
 # plot no border
 ################
 ggplot(central_weekly,
-       aes(x = week_as_date, y = n)) +         # establish x and y for entire plot
+       aes(x = week, y = n)) +              # establish x and y for entire plot
   geom_line(stat = "identity",              # make line, line height is count number
             color = "#69b3a2") +            # line color
   geom_point(size=1, color="#69b3a2") +     # make points at the weekly data points
@@ -1749,7 +1755,7 @@ ggplot(central_weekly,
   scale_x_date(date_labels="%b",            # date label format show month 
                date_breaks="month",         # date labels on 1st of each month
                expand=c(0,0)) +             # remove excess space
-  facet_grid(~lubridate::year(week_as_date),   # facet on year (of Date class column)
+  facet_grid(~lubridate::year(week),   # facet on year (of Date class column)
              space="free_x",                
              scales="free_x",               # x-axes adapt to data range (not "fixed")
              switch="x") +                  # facet labels (year) on bottom
@@ -1779,30 +1785,28 @@ Create a new column that is weeks, then use `group_by()` with `summarize()` to g
 
 To aggregate into weeks and show ALL weeks (even ones with no cases), do this:  
 
-1) Create a new 'week' column within `mutate()`, using `date2week()` from the **aweek** package:  
-    + use `week_start = ` to set the weekday start of the week (e.g. "Monday", "Sunday") - the default is Monday  
-    + use `floor_date = TRUE` so the output is "YYYY-Www" (not the default "YYYY-Www-d" including day of the week)  
-    + use `factor = TRUE` so all possible weeks in the range are included as factor levels, so all weeks will appear *when summarized*.  
-    + use `numeric = TRUE` if you want only the week number (note this will not distinguish between years)
-2) Use `.drop = F` in the subsequent `group_by()` command, preserving all weeks even those with no cases.  
+
+1) Create a new 'week' column within `mutate()`, using `floor_date()` from the **lubridate** package:  
+    + use `unit = ` to set the desired time unit, e.g. "week`  
+    + use `week_start = ` to set the weekday start of the week (7 = Sunday, 1 = Monday)  
+
+2) Follow with `complete()` to ensure that all weeks appear - even those with no cases.  
+
 
 For example:  
 
 ```{r}
 # Make dataset of weekly case counts
 weekly_counts <- linelist %>% 
-  mutate(week = aweek::date2week(date_onset,          # new column of week of onset
-                                 floor_day = T,       # show as weeks without weekday
-                                 factor = TRUE)) %>%  # include all possible weeks
-  group_by(week, .drop = F) %>%                       # group data by new week col, keep all weeks
-  summarise(n_weekly_cases = n()) %>%                # new summary column = number of linelist rows in each week
+  mutate(
+    week = lubridate::floor_date(date_onset,
+                                 unit = "week")) %>%  # new column of week of onset
+  count(week) %>%                                     # group data by week and count rows per group
+  filter(!is.na(week)) %>%                            # remove entries for cases missing date_onset
+  complete(week = seq.Date(from = min(week),          # fill-in all weeks with no cases reported
+                           to = max(week),
+                           by="week")) %>% 
   ungroup()                                           # deactivate grouping
-
-# Optional: add column of start DATE for each week
-# Use this in ggplot() when class Date x-axis is expected
-# note: add this AFTER the summarize statement above, to ensure all weeks are present
-weekly_counts <- weekly_counts %>% 
-  mutate(week_as_date = aweek::week2date(week, week_start = "Monday")) # output is Monday date of each week
 ```
 
 Here are the first 50 rows of the resulting dataframe:  
@@ -1811,22 +1815,37 @@ Here are the first 50 rows of the resulting dataframe:
 DT::datatable(head(weekly_counts, 50), rownames = FALSE, filter="top", options = list(pageLength = 5, scrollX=T) )
 ```
 
-**Alternatively, you can use the **lubridate** package's `floor_date()` function**. Set `unit = "week` and you can adjust `week_start = ` to set the start day (7 = Sunday, 1 = Monday). This approach will *not* create a factor Class column so weeks with no cases may not appear. If this is needed, add the `complete()` command as described in the Months section below.  
+**Alternatively, you can use the [**aweek**](https://cran.r-project.org/web/packages/aweek/vignettes/introduction.html) package's `date2week()` function**. As shown below, set `week_start = ` to "Sunday", or "Monday", etc. Set `floor_date = TRUE` so the output is YYYY-Www. Set `factor = TRUE` so that all possible weeks are included, even if there are no cases (this replaces the `complete()` step in the **lubridate** approach above). You can also use `numeric = TRUE` if you want only the week number (note this will not distinguish between years). 
+
+```{r}
+# Make dataset of weekly case counts
+weekly_counts <- linelist %>% 
+  mutate(week = aweek::date2week(date_onset,          # new column of week of onset
+                                 floor_day = T,       # show as weeks without weekday
+                                 factor = TRUE)) %>%  # include all possible weeks
+  count(week) %>% 
+  ungroup()                                           # deactivate grouping
+
+# Optional: add column of start DATE for each week - e.g. for ggplot() when date x-axis is expected
+# note: add this step AFTER the above code, to ensure all weeks are present
+weekly_counts <- weekly_counts %>% 
+  mutate(week_as_date = aweek::week2date(week, week_start = "Monday")) # output is Monday date of each week
+```
 
 
 ##### **Months**  
 
-To aggregate cases into months, the process is very similar but instead of the **aweek** package, use `floor_date()` from the **lubridate** package, with the argument `unit = "months"`. This rounds each date down to the 1st of its month. The output will be class Date.  
+To aggregate cases into months, again use `floor_date()` from the **lubridate** package, but with the argument `unit = "months"`. This rounds each date down to the 1st of its month. The output will be class Date.  
 
-Unlike the **aweek** example, all months are not included. To ensure all months are included, even if no cases were reported, add the `complete()` command at the end, to enforce that the new month column is a complete sequence of all months in the possible range.  
+Note that in the `complete()` step we also use "months"  
 
 
 ```{r}
 # Make dataset of weekly case counts
 monthly_counts <- linelist %>% 
   mutate(month = lubridate::floor_date(date_onset, unit = "months")) %>%   # new column, 1st of month of onset
-  group_by(month) %>%                       # group data by new month col, keep all months
-  summarise(n_monthly_cases = n()) %>%      # new summary column = number of linelist rows in each month
+  count(month) %>% 
+  filter(!is.na(month)) %>% 
   complete(month = seq.Date(min(month),     # fill-in all months with no cases reported
                             max(month),
                             by="month"))    
@@ -1835,6 +1854,7 @@ monthly_counts <- linelist %>%
 ```{r message=FALSE, echo=F}
 DT::datatable(head(monthly_counts, 50), rownames = FALSE, filter="top", options = list(pageLength = 5, scrollX=T) )
 ```
+
 
 ##### **Days**  
 
@@ -1845,12 +1865,14 @@ If plotting a histogram, missing days in the data are not a problem as long as t
 ```{r, eval=F}
 # Make dataset of weekly case counts
 daily_counts <- linelist %>% 
-  group_by(date_onset, .drop = F) %>%             # group data by new month col, keep all months
-  summarise(n_monthly_cases = n()) %>%            # new summary column = number of linelist rows in each day
+  count(date_onset) %>%                           # count number of rows per unique date
+  filter(!is.na(date_onset)) %>%                  # remove aggregation of rows that were missing date_onset
   complete(date_onset = seq.Date(min(date_onset), # ensure all days appear
                                  max(date_onset),
                                  by="day"))  
 ```
+
+
 
 <!-- ======================================================= -->
 ## Aggregated data {.tabset .tabset-fade}
@@ -1859,7 +1881,7 @@ daily_counts <- linelist %>%
 
 Often instead of a linelist, you begin with aggregated counts from facilities, districts, etc. You can make an epicurve from `ggplot()` but the code will be slightly different. The incidence package does not support aggregate data.
 
-This section will utilize the `counts_data` dataset that was imported earlier, in the data preparation section. It is the `linelist` aggregated to day-hospital counts. The first 50 rows are displayed below.  
+This section will utilize the `count_data` dataset that was imported earlier, in the data preparation section. It is the `linelist` aggregated to day-hospital counts. The first 50 rows are displayed below.  
 
 ```{r message=FALSE, echo=F}
 # display the linelist data as a table
@@ -1889,15 +1911,12 @@ ggplot(data = count_data, aes(x = as.Date(date_hospitalisation), y = n_cases))+
 
 **aggregate further**  
 
-To aggregated further, into weeks, we use the package **aweek** and function `date2week()`:  
+To aggregated further, into weeks, we use the package **lubridate** and function `floor_date()`, as described above. Note that we use `group_by()` and `summarize()` in place of `count()` becase we need to `sum()` case counts instead of just counting the number of rows per group.  
  
 ```{r aggregated_epiweek}
 # Create weekly dataset with epiweek column
 count_data_weekly <- count_data %>%
-  mutate(epiweek = aweek::date2week(count_data$date_hospitalisation,
-                                    week_start = "Monday", # epiweeks to begin on Mondays
-                                    floor_day = TRUE,      # round each day into the epiweek - don't show week-day 
-                                    factor = TRUE)) %>%    # make an ordered factor and expand data to include all possible weeks
+  mutate(epiweek = lubridate::floor_date(date_hospitalisation, "week")) %>% 
   group_by(hospital, epiweek, .drop=F) %>% 
   summarize(n_cases_weekly = sum(n_cases, na.rm=T))   
 ```
@@ -1917,11 +1936,11 @@ count_data_weekly <- count_data_weekly %>%
                            levels = c("Missing", "Port Hospital", "Military Hospital", "Central Hospital", "St. Mark's Maternity Hospital (SMMH)", "Other")))
 ```
 
-Now plot by epiweek. In this case we want the epiweeks to be recognized as class Date so that we can use `scale_x_date()` to easily adjust the x-axis labels. So within `aes()` we set `x = ` to epiweek wrapped in the **aweek** function `week2date()` which transforms the week back to a date (given a particular start day of the week).  
+Now plot by epiweek.
 
 ```{r}
 ggplot(data = count_data_weekly,
-       aes(x = week2date(epiweek, week_start = "Monday"),
+       aes(x = epiweek,
            y = n_cases_weekly,
            group = hospital,
            fill = hospital))+
@@ -1955,166 +1974,12 @@ In ggplot it is difficult to do this, except for the case where you are showing 
 See the handbook page on ggplot tips for details on how to make a second axis.  
 
 
-<!-- ======================================================= -->
-### Second axis
-<h3> Second axis </h3>
-
-https://stackoverflow.com/questions/3099219/ggplot-with-2-y-axes-on-each-side-and-different-scales
-
-
-1) Create a dataframe, by date x-axis, with a column for each element (bar height, or line height)  
-2) 
-
-```{r, eval=F}
-# Value used to transform the data
-coeff <- 10
-
-# A few constants
-temperatureColor <- "#69b3a2"
-priceColor <- rgb(0.2, 0.6, 0.9, 1)
-
-# dataset
-plot_data <- linelist %>% 
-  mutate(week = aweek::date2week(date_onset, floor_day = T, factor = T)) %>% 
-  group_by(week) %>% 
-  summarize(n_cases = n(),
-            n_male = sum(gender == "m"),
-            pct_male = round(100*(n_male / n()))) %>%
-  mutate(week_as_date = week2date(week))
-  
-# complete(date_onset = seq.Date(min(date_onset),
-#                                  max(date_onset),
-#                                  by = "day"))
-
-total_value <- sum(plot_data$n_male, na.rm = T)
-
-ggplot(data = plot_data, aes(x = week_as_date))+
-    geom_bar(aes(y = n_cases), stat = "identity")+
-    geom_line(aes(y = n_male / 0.01), size=2, color="blue")+
-    #scale_y_continuous(sec.axis = sec_axis(~.*0.01, name = "Percentage"))
-    scale_y_continuous(sec.axis = sec_axis(~(./total_value)*100, name = "Percentages"))
-
-
-```
-
-
-ggplot(linelist, aes(x=date_onset)) +
-  
-  geom_line( aes(y=temperature), size=2, color=temperatureColor) + 
-  geom_line( aes(y=price / coeff), size=2, color=priceColor) +
-  
-  scale_y_continuous(
-    
-    # Features of the first axis
-    name = "Temperature (Celsius °)",
-    
-    # Add a second axis and specify its features
-    sec.axis = sec_axis(~.*coeff, name="Price ($)")
-  ) + 
-  
-  theme_ipsum() +
-
-  theme(
-    axis.title.y = element_text(color = temperatureColor, size=13),
-    axis.title.y.right = element_text(color = priceColor, size=13)
-  ) +
-
-  ggtitle("Temperature down, price up")
-```
-
-
-
-
-```{r sec_axis, eval=F}
-library(reshape2)
-# group the data by week, summarize counts by group (gender)
-linelist_week <- linelist %>%
-     mutate(onset_epiweek = aweek::date2week(date_onset, floor_day = TRUE, factor = TRUE)) %>%
-     group_by(onset_epiweek, .drop = F) %>%
-     summarize(num_male = sum(gender == "m"),
-               num_female = sum(gender == "f"),
-               pct_male = round(100*(num_male / n())),
-               med_age  = median(as.numeric(age), na.rm=T)
-               ) 
-# remove pct and melt
-linelist_week_melted <- linelist_week %>%
-     select(-c("pct_male", "med_age")) %>%
-     reshape2::melt(id.vars = c("onset_epiweek"))
-
-# merge together (multiple of the same values in week will attach to melted)
-linelist_week_melted <- merge(linelist_week_melted,
-                              linelist_week,
-                              by = "onset_epiweek")
-
-second_axis <- ggplot(linelist_week_melted,
-                      aes(x = aweek::week2date(onset_epiweek),
-                          y = value, group = variable,
-                          fill = variable)) + 
-  
-  # bars
-  geom_bar(stat = "identity")+
-  
-  # Colors and labels of confirmed/probable
-  scale_fill_manual(values = c("blue", "red"),
-                    labels = str_to_sentence(levels(factor(linelist_week_melted$variable)))) +
-  
-  geom_line(mapping = aes(y = pct_male, color = "% male"), size = 0.5) +
-     
-  scale_color_manual(values = "black")+
-     
-  scale_y_continuous(sec.axis = sec_axis(~(./sum(linelist_week_melted$value, na.rm = T)*100), name = "name here", breaks = seq(0, 100, 20)))+
-
-
-  # X-axis scale labels (not aggregation, just the labels)
-  scale_x_date(# Sets date label breaks as every week
-    breaks = function(x) seq.Date(from = min(linelist$date_onset, na.rm = T), to = max(linelist$date_onset, na.rm = T), by = "1 week"),
-    limits = c((min(linelist$date_onset, na.rm=T)), (max(linelist$date_onset, na.rm = T))), # axis limits determined by max/min + buffer
-    date_labels = "%d-%b",   # displays as date # then abbreviated month (e.g. 12 Oct)
-    expand = c(0, 0)) +                                # sets origin at (0,0)
-  
-  # Y-scale in breaks, up to the ymax previously defined
-  scale_y_continuous(breaks = seq(0, 500, 5), expand=c(0, 0)) +
-  
-  # Themes for axes, titles, background, etc.
-  theme(plot.title       = element_text(size=20, hjust=0.5, face="bold"),
-        axis.text        = element_text(size=12),
-        axis.title       = element_text(size=14, face="bold"),
-        panel.grid.major = element_blank(),
-        panel.grid.minor = element_blank(),
-        panel.background = element_blank(),
-        axis.line        = element_line(colour = "black"),
-        axis.text.x      = element_text(angle=90, vjust=0.5, hjust=1)) +
-  
-  # Legend specifications
-  theme(legend.title           = element_blank(),
-        legend.justification   = c(0, 1), 
-        legend.position        = c(0.09, 0.98),
-        legend.background      = element_blank(),
-        legend.text            = element_text(size = 12)) +
-  guides(fill = guide_legend(reverse = TRUE, override.aes = list(size = 0.2))) +
-  
-  # Axis and caption labels
-  labs(x = "Week of illness onset",
-       y = "Number of Cases") +
-  
-  # Title
-  ggtitle("Cases by week of illness onset")
-
-second_axis
-
-# print
-print(plot_defined_cats)
-
-
-```
-
 
 
 <!-- ======================================================= -->
 ## Resources {.tabset .tabset-fade}
 <h2> Resources </h2>
 
-This tab should stay with the name "Resources".
 Links to other online tutorials or resources.
 
 
