@@ -164,7 +164,7 @@ linelist <- linelist_raw %>%
 names(linelist)
 ```
 
-<span style="color: black;">**_NOTE:_** The column name "...25" was changed to "x25".</span>
+<span style="color: black;">**_NOTE:_** The column name "...28" was changed to "x28".</span>
 
 
 ### Manual column name cleaning  
@@ -455,7 +455,7 @@ names(linelist_age)
 ### Add to the pipe chain  
 <h3> Add to the pipe chain </h3>
 
-In the linelist, there are a few columns we do not need: `row_num`, `merged_header`, and `x25`. Remove them by adding a `select()` command to the cleaning pipe chain:  
+In the linelist, there are a few columns we do not need: `row_num`, `merged_header`, and `x28`. Remove them by adding a `select()` command to the cleaning pipe chain:  
 
 ```{r}
 # CLEANING 'PIPE' CHAIN (starts with raw data and pipes it through cleaning steps)
@@ -475,7 +475,7 @@ linelist <- linelist_raw %>%
            date_outcome         = date_of_outcome) %>% 
     
     # remove column
-    select(-c(row_num, merged_header, x25))
+    select(-c(row_num, merged_header, x28))
 ```
 
 
@@ -577,7 +577,7 @@ linelist <- linelist_raw %>%
            date_outcome         = date_of_outcome) %>% 
   
     # remove column
-    select(-c(row_num, merged_header, x25)) %>% 
+    select(-c(row_num, merged_header, x28)) %>% 
 
   
 # ABOVE ARE UPSTREAM CLEANING STEPS ALREADY DISCUSSED
@@ -746,7 +746,7 @@ linelist <- linelist_raw %>%
            date_outcome         = date_of_outcome) %>% 
   
     # remove column
-    select(-c(row_num, merged_header, x25)) %>% 
+    select(-c(row_num, merged_header, x28)) %>% 
 
     # fix incorrect values                 # old value       # new value
     mutate(date_onset = recode(date_onset, "15th April 2014" = "2014-04-15")) %>% 
@@ -1016,7 +1016,7 @@ linelist <- linelist_raw %>%
            date_outcome         = date_of_outcome) %>% 
   
     # remove column
-    select(-c(row_num, merged_header, x25)) %>% 
+    select(-c(row_num, merged_header, x28)) %>% 
 
     # fix incorrect values                 # old value       # new value
     mutate(date_onset = recode(date_onset, "15th April 2014" = "2014-04-15")) %>% 
@@ -1229,7 +1229,7 @@ linelist <- linelist_raw %>%
            date_outcome         = date_of_outcome) %>% 
   
     # remove column
-        select(-c(row_num, merged_header, x25)) %>% 
+        select(-c(row_num, merged_header, x28)) %>% 
 
     # fix incorrect values                 # old value       # new value
     mutate(date_onset = recode(date_onset, "15th April 2014" = "2014-04-15")) %>% 
@@ -1599,7 +1599,7 @@ linelist <- linelist_raw %>%
            date_outcome         = date_of_outcome) %>% 
   
     # remove column
-        select(-c(row_num, merged_header, x25)) %>% 
+        select(-c(row_num, merged_header, x28)) %>% 
 
     # fix incorrect values                 # old value       # new value
     mutate(date_onset = recode(date_onset, "15th April 2014" = "2014-04-15")) %>% 
@@ -1752,7 +1752,7 @@ linelist <- linelist_raw %>%
            date_outcome         = date_of_outcome) %>% 
   
     # remove column
-        select(-c(row_num, merged_header, x25)) %>% 
+        select(-c(row_num, merged_header, x28)) %>% 
 
     # fix incorrect values                 # old value       # new value
     mutate(date_onset = recode(date_onset, "15th April 2014" = "2014-04-15")) %>% 
