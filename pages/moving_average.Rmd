@@ -84,7 +84,8 @@ First we count the number of cases reported each day. Note that `count()` is app
 # make dataset of daily counts and 7-day moving average
 #######################################################
 ll_counts_7day <- linelist %>% 
-  count(date_onset, name = "new_cases")   # count cases by date, new column is named "new_cases"
+  count(date_onset, name = "new_cases") %>%    # count cases by date, new column is named "new_cases"
+  filter(!is.na(date_onset))
 ```
 
 The new dataset now looks like this:  

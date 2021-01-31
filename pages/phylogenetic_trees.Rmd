@@ -17,7 +17,7 @@ params:
     run_page_ind: TRUE
 ---
 
-```{r, child= 'page_setup.Rmd', eval = params$run_page_ind, include = F}
+```{r, child= '_page_setup.Rmd', eval = params$run_page_ind, include = F}
 ```
 
 
@@ -487,6 +487,6 @@ https://bioconductor.riken.jp/packages/3.8/bioc/vignettes/ggtree/inst/doc/treeMa
 
 
 
-```{r, child= 'page_closeout.Rmd', eval = params$run_page_ind==F, include = F}
+```{r, child= '_page_closeout.Rmd', eval = params$run_page_ind==F, include = F}
 ```
 

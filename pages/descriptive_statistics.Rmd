@@ -60,7 +60,7 @@ Preparation
 
 This code chunk shows the loading of packages required for the analyses.
 
-```{r descriptive_packages}
+```{r}
 pacman::p_load(rio,          # File import
                here,         # File locator
                skimr,        # get overview of data
@@ -78,13 +78,12 @@ The example dataset used in this section:
 
 The dataset is imported using the `import()` function from the *rio* package. See the *page on importing data* for various ways to import data.
 
-```{r descriptive_load_hide, echo=F}
+```{r, echo=F}
 # import the linelist into R
 linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
-
 ```
 
-```{r descriptive_load_show, eval=F}
+```{r, eval=F}
 # import the linelist
 linelist <- rio::import("linelist_cleaned.xlsx")
 ```
@@ -98,7 +97,7 @@ DT::datatable(head(linelist, 50), rownames = FALSE, filter="top", options = list
 
 ### Clean data
 
-```{r descriptive_clean}
+```{r}
 
 ## make sure that age variable is numeric 
 linelist <- linelist %>% 
@@ -764,7 +763,7 @@ wilcox.test(age ~ outcome, data = linelist)
 #### Kruskal-wallis test
 
 
-```{r kruskal_dplyr}
+```{r }
 
 ## compare age distribution by outcome group with a kruskal-wallis test
 kruskal.test(age ~ outcome, linelist)
