@@ -62,6 +62,27 @@ We also need a reference population, the standard population. There are several 
 <!-- ======================================================= -->
 ### Load packages {.tabset .tabset-fade .tabset-pills}
 
+<span style="color: orange;">**_CAUTION:_** If you have a newer version of R, the **dsr** package cannot be directly downloaded as it is archived. However, it is still available from the CRAN archive. You can install and use this one. </span>
+
+For non-Mac users:
+```{r} eval=FALSE}
+packageurl <- "https://cran.r-project.org/src/contrib/Archive/dsr/dsr_0.2.2.tar.gz"
+install.packages(packageurl, repos=NULL, type="source")
+```
+
+```{r} eval=FALSE}
+# Another solution that may work
+require(devtools)
+devtools::install_version("dsr", version="0.2.2", repos="http:/cran.us.r.project.org")
+```
+
+For Mac users:
+```{r} eval=FALSE}
+require(devtools)
+devtools::install_version("dsr", version="0.2.2", repos="https://mac.R-project.org")
+```
+
+
 First, load the packages required for this analysis:  
 ```{r}
 pacman::p_load(rio,       # to import data
@@ -70,19 +91,6 @@ pacman::p_load(rio,       # to import data
                frailtypack, # needed for dsr, for frailty models
                dsr,  
                PHEindicatormethods)
-```
-<span style="color: darkgreen;">**_NB:_** you may get an error that the **dsr** package is not available if you try to install it (if you are using a newer version of R), as it has recently been removed from the CRAN repository. However, older versions have been archived, so you can download and use those.</span>
-
-For non-Mac users:
-```{r}
-require(devtools)
-install_version("dsr", version="0.2.2", repos="http:/cran.us.r.project.org")
-```
-
-For Mac users:
-```{r}
-require(devtools)
-install_version("dsr", version="0.2.2", repos="https://mac.R-project.org")
 ```
 
 <!-- ======================================================= -->
