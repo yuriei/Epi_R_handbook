@@ -71,20 +71,19 @@ packageurl <- "https://cran.r-project.org/src/contrib/Archive/dsr/dsr_0.2.2.tar.
 install.packages(packageurl, repos=NULL, type="source")
 ```
 
-```{r} eval=FALSE}
-# Another solution that may work
+```{r, eval=FALSE}
+# Other solution that may work
 require(devtools)
 devtools::install_version("dsr", version="0.2.2", repos="http:/cran.us.r.project.org")
 ```
 
 For Mac users:
-```{r} eval=FALSE}
+```{r, eval=FALSE}
 require(devtools)
 devtools::install_version("dsr", version="0.2.2", repos="https://mac.R-project.org")
 ```
 
-
-First, load the packages required for this analysis:  
+Load the packages required for this analysis:  
 ```{r}
 pacman::p_load(rio,       # to import data
                here,      # to locate files
@@ -192,6 +191,9 @@ standard_pop <- standard_pop %>% mutate(AgeGroup = factor(AgeGroup,
                                    
 # Arrange by AgeGroup
 standard_pop <- standard_pop %>% arrange(AgeGroup, Sex, pop)
+
+# Add standard_pop to poptables_countries object (we need this in one dataset for **PHEindicatormethods**)
+countries_alldata <- left_join(poptable_countries, standard_pop, by=c("AgeGroup", "Sex"))
 ```
 
 <!-- ======================================================= -->
@@ -207,7 +209,7 @@ The **dsr** package allows you to calculate and compare directly standardized ra
 ### Standardized rates {.tabset .tabset-fade .tabset-pills}
 
 ```{r}
-# Calculate rates per country directly standardized by age and sex
+# Calculate rates per country directly standardized for age and sex
 mortality_rate <- dsr::dsr(data=poptable_countries, # specify object containing number of deaths per stratum
                       event=Deaths, # column containing number of deaths per stratum 
                       fu=Tot, # column containing number of population per stratum
@@ -252,6 +254,7 @@ The standardized mortality rate is 1.22 times higher in country A compared to co
 ### Standardized rate difference {.tabset .tabset-fade .tabset-pills}
 
 ```{r}
+# Calculate RD
 mortality_rd <- dsr::dsrr(data=poptable_countries, # specify object containing number of deaths per stratum
                     event=Deaths, # column containing number of deaths per stratum 
                     fu=Tot, # column containing number of population per stratum
@@ -273,17 +276,29 @@ Country A has 4.24 additional deaths per 100.000 population (95% CI 3.24-5.24) c
 <!-- ======================================================= -->
 ## **PHEindicatormethods** package {.tabset .tabset-fade .tabset-pills}
 
-Another way of calculating standardized rates is with the **PHEindicatormethods** package.
+Another way of calculating standardized rates is with the **PHEindicatormethods** package. This package allows you to calculate directly as well as indirectly standardized rates. We need the reference (standard) population as well as the country-specific mortality and population data in one object, which we have made earlier: `countries_alldata`.
 
 <!-- ======================================================= -->
-### Standardized rates {.tabset .tabset-fade .tabset-pills}
+### Directly standardized rates {.tabset .tabset-fade .tabset-pills}
 
+```{r}
+# Calculate rates per country directly standardized for age and sex
+mortality_rate_phe <- countries_alldata %>% group_by(Country) %>% 
+  PHEindicatormethods::phe_dsr(Deaths, # observed number of events (column name)
+                               n = Tot, # non-standard pops for category i.e. ageband
+                               stdpop = pop, # standard populations for each stratum
+                               stdpoptype = "field") # standalone vector or field name, for the std populations
+                                                   
+# Print table
+knitr::kable(mortality_rate_phe)
+```
 
 <!-- ======================================================= -->
 ## Resources {.tabset .tabset-fade .tabset-pills}
 
 <span style="color: darkgreen;">**_TIP:_** If you would like to see another reproducible example than listed in this Handbook, please go to https://mran.microsoft.com/snapshot/2020-02-12/web/packages/dsr/vignettes/dsr.html.</span>
 
+**PHEindicatormethods** reference file: https://cran.r-project.org/web/packages/PHEindicatormethods/PHEindicatormethods.pdf 
 
 
 
