@@ -15,7 +15,9 @@
 <script src="libs/dt-core-1.10.20/js/jquery.dataTables.min.js"></script><link href="libs/nouislider-7.0.10/jquery.nouislider.min.css" rel="stylesheet">
 <script src="libs/nouislider-7.0.10/jquery.nouislider.min.js"></script><link href="libs/selectize-0.12.0/selectize.bootstrap3.css" rel="stylesheet">
 <script src="libs/selectize-0.12.0/selectize.min.js"></script><link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet">
-<script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script><script src="https://cdn.jsdelivr.net/autocomplete.js/0/autocomplete.jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/mark.js@8.11.1/dist/mark.min.js"></script><!-- CSS --><link rel="stylesheet" href="style_bs4.css">
+<script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script><script src="libs/viz-1.8.2/viz.js"></script><link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet">
+<script src="libs/grViz-binding-1.0.6.1/grViz.js"></script><script src="libs/d3-4.5.0/d3.min.js"></script><script src="libs/sankey-1/sankey.js"></script><script src="libs/sankeyNetwork-binding-0.4/sankeyNetwork.js"></script><script src="libs/plotly-binding-4.9.3/plotly.js"></script><script src="libs/typedarray-0.1/typedarray.min.js"></script><link href="libs/plotly-htmlwidgets-css-1.57.1/plotly-htmlwidgets.css" rel="stylesheet">
+<script src="libs/plotly-main-1.57.1/plotly-latest.min.js"></script><script src="https://cdn.jsdelivr.net/autocomplete.js/0/autocomplete.jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/mark.js@8.11.1/dist/mark.min.js"></script><!-- CSS --><link rel="stylesheet" href="style_bs4.css">
 </head>
 <body data-spy="scroll" data-target="#toc">
 
@@ -49,8 +51,21 @@
 <li><a class="" href="working-with-dates.html"><span class="header-section-number">7</span> Working with Dates</a></li>
 <li><a class="" href="charactersstrings.html"><span class="header-section-number">8</span> Characters/strings</a></li>
 <li><a class="" href="de-duplication.html"><span class="header-section-number">9</span> De-duplication</a></li>
+<li><a class="" href="ifelse-for-loops.html"><span class="header-section-number">10</span> if/else &amp; ‘for’ loops</a></li>
+<li><a class="" href="apply-functions.html"><span class="header-section-number">11</span> apply functions</a></li>
+<li class="book-part">Analysis</li>
+<li><a class="" href="cat-analysis.html"><span class="header-section-number">12</span> Analysis</a></li>
+<li><a class="" href="descriptive-analysis.html"><span class="header-section-number">13</span> Descriptive analysis</a></li>
+<li><a class="" href="abberation-detection.html"><span class="header-section-number">14</span> Abberation detection</a></li>
 <li class="book-part">Data Vizualization</li>
-<li><a class="" href="age-pyramids.html"><span class="header-section-number">10</span> Age pyramids</a></li>
+<li><a class="" href="epidemic-curves.html"><span class="header-section-number">15</span> Epidemic curves</a></li>
+<li><a class="" href="age-pyramids.html"><span class="header-section-number">16</span> Age pyramids</a></li>
+<li><a class="" href="diagrams.html"><span class="header-section-number">17</span> Diagrams</a></li>
+<li><a class="" href="combination-analysis.html"><span class="header-section-number">18</span> Combination analysis</a></li>
+<li><a class="" href="heatmaps-density-plots.html"><span class="header-section-number">19</span> Heatmaps &amp; density plots</a></li>
+<li class="book-part">Advanced</li>
+<li><a class="" href="collaboration.html"><span class="header-section-number">20</span> Collaboration</a></li>
+<li><a class="" href="directory-interactions.html"><span class="header-section-number">21</span> Directory interactions</a></li>
 </ul>
 
         <div class="book-extra">
@@ -676,7 +691,7 @@ Functions with multiple arguments
 <p><span style="color: black;"><strong><em>NOTE:</em></strong> For arguments specified with an equals symbol (e.g. <code>coltotals = ...</code>), their order among the arguments is not important (must still be within the parentheses and separated by commas).</span></p>
 <div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">age_pyramid</span><span class="op">(</span><span class="va">linelist</span>, <span class="st">"age_group"</span>, <span class="st">"gender"</span>, proportional <span class="op">=</span> <span class="cn">TRUE</span>, pal <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"orange"</span>, <span class="st">"purple"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-10-1.png" width="75%" height="75%"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-15-1.png" width="75%" height="75%"></div>
 <!-- ======================================================= -->
 </div>
 <div id="packages" class="section level3" number="4.9.3">
@@ -745,8 +760,8 @@ Piping (<code>%&gt;%</code>)
 Pipes
 <a class="anchor" aria-label="anchor" href="#pipes"><i class="fas fa-link"></i></a>
 </h3>
-<p><strong>Simply explained, the pipe operator (<code>%&gt;%</code>) passes an intermediate output from one function to the next.</strong><br>
-You can think of it as saying “then”. Many functions can be linked together with <code>%&gt;%</code>.</p>
+<p><strong>Simply explained, the pipe operator (<code><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></code>) passes an intermediate output from one function to the next.</strong><br>
+You can think of it as saying “then”. Many functions can be linked together with <code><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></code>.</p>
 <ul>
 <li><p><strong>Piping emphasizes a sequence of actions, not the object the actions are being performed on</strong><br></p></li>
 <li><p>Best when a sequence of actions must be performed on one object</p></li>
@@ -761,9 +776,9 @@ You can think of it as saying “then”. Many functions can be linked together 
 <code class="sourceCode R"><span class="co"># A fake example of how to bake a care using piping syntax</span>
 
 <span class="va">cake</span> <span class="op">&lt;-</span> <span class="va">flour</span> <span class="op">%&gt;%</span>       <span class="co"># to define cake, start with flour, and then...</span>
-  <span class="fu">left_join</span><span class="op">(</span><span class="va">eggs</span><span class="op">)</span> <span class="op">%&gt;%</span>   <span class="co"># add eggs</span>
-  <span class="fu">left_join</span><span class="op">(</span><span class="va">oil</span><span class="op">)</span> <span class="op">%&gt;%</span>    <span class="co"># add oil</span>
-  <span class="fu">left_join</span><span class="op">(</span><span class="va">water</span><span class="op">)</span> <span class="op">%&gt;%</span>  <span class="co"># add water</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span><span class="va">eggs</span><span class="op">)</span> <span class="op">%&gt;%</span>   <span class="co"># add eggs</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span><span class="va">oil</span><span class="op">)</span> <span class="op">%&gt;%</span>    <span class="co"># add oil</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span><span class="va">water</span><span class="op">)</span> <span class="op">%&gt;%</span>  <span class="co"># add water</span>
   <span class="fu">mix_together</span><span class="op">(</span>utensil <span class="op">=</span> <span class="va">spoon</span>, minutes <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">%&gt;%</span>                <span class="co"># mix together</span>
   <span class="fu">bake</span><span class="op">(</span>degrees <span class="op">=</span> <span class="fl">350</span>, system <span class="op">=</span> <span class="st">"fahrenheit"</span>, minutes <span class="op">=</span> <span class="fl">35</span><span class="op">)</span> <span class="op">%&gt;%</span>  <span class="co"># bake</span>
   <span class="fu">let_cool</span><span class="op">(</span><span class="op">)</span>            <span class="co"># let it cool down</span></code></pre></div>
@@ -799,9 +814,9 @@ Define intermediate objects
 <p>Below are some examples:</p>
 <div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># a fake example of how to bake a cake using this method (defining intermediate objects)</span>
-<span class="va">batter_1</span> <span class="op">&lt;-</span> <span class="fu">left_join</span><span class="op">(</span><span class="va">flour</span>, <span class="va">eggs</span><span class="op">)</span>
-<span class="va">batter_2</span> <span class="op">&lt;-</span> <span class="fu">left_join</span><span class="op">(</span><span class="va">batter_1</span>, <span class="va">oil</span><span class="op">)</span>
-<span class="va">batter_3</span> <span class="op">&lt;-</span> <span class="fu">left_join</span><span class="op">(</span><span class="va">batter_2</span>, <span class="va">water</span><span class="op">)</span>
+<span class="va">batter_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span><span class="va">flour</span>, <span class="va">eggs</span><span class="op">)</span>
+<span class="va">batter_2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span><span class="va">batter_1</span>, <span class="va">oil</span><span class="op">)</span>
+<span class="va">batter_3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span><span class="va">batter_2</span>, <span class="va">water</span><span class="op">)</span>
 
 <span class="va">batter_4</span> <span class="op">&lt;-</span> <span class="fu">mix_together</span><span class="op">(</span>object <span class="op">=</span> <span class="va">batter_3</span>, utensil <span class="op">=</span> <span class="va">spoon</span>, minutes <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>
 
@@ -956,10 +971,10 @@ Relational and logical operators
 </tr>
 </tbody>
 </table></div>
-<p>For example, below, we have a linelist with two variables we want to use to create our case definition, <code>hep_e_rdt</code>, a test result and <code>other_cases_in_hh</code>, which will tell us if there are other cases in the household. The command below uses the function <code>case_when()</code> to create the new variable <code>case_def</code> such that:</p>
+<p>For example, below, we have a linelist with two variables we want to use to create our case definition, <code>hep_e_rdt</code>, a test result and <code>other_cases_in_hh</code>, which will tell us if there are other cases in the household. The command below uses the function <code><a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when()</a></code> to create the new variable <code>case_def</code> such that:</p>
 <div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">linelist_cleaned</span> <span class="op">&lt;-</span> <span class="va">linelist_cleaned</span> <span class="op">%&gt;%</span>
-  <span class="fu">mutate</span><span class="op">(</span>case_def <span class="op">=</span> <span class="fu">case_when</span><span class="op">(</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>case_def <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when</a></span><span class="op">(</span>
     <span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">hep_e_rdt</span><span class="op">)</span> <span class="op">&amp;</span> <span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">other_cases_in_hh</span><span class="op">)</span>           <span class="op">~</span> <span class="cn">NA_character_</span>,
     <span class="va">hep_e_rdt</span> <span class="op">==</span> <span class="st">"Positive"</span>                               <span class="op">~</span> <span class="st">"Confirmed"</span>,
     <span class="va">hep_e_rdt</span> <span class="op">!=</span> <span class="st">"Positive"</span> <span class="op">&amp;</span> <span class="va">other_cases_in_hh</span> <span class="op">==</span> <span class="st">"Yes"</span>  <span class="op">~</span> <span class="st">"Probable"</span>,
@@ -1014,7 +1029,7 @@ Missing values
 <p>Here is the <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/NA.html">R documentation on missing values</a></p>
 <p><strong>Variations on <code>NA</code></strong></p>
 <p><code>NA</code> is actually a logical value of length 1. You may also encounter <code>NA_character_</code>, <code>NA_real_</code>, <code>NA_complex_</code>, and <code>NA_integer_</code>, which correspond to specific classes.</p>
-<p>The most prominent application of one of these variants in common epidemiology work is using <code>case_when()</code>. The Right-Hand Side (RHS) values must all be of the same class. Thus, if you have character outcomes on the RHS like “Confirmed”, “Suspect”, “Probable” and <code>NA</code> - you will get an error. Instead of <code>NA</code> you must have <code>NA_character_</code>. Likewise for integers, use <code>NA_integer_</code>.</p>
+<p>The most prominent application of one of these variants in common epidemiology work is using <code><a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when()</a></code>. The Right-Hand Side (RHS) values must all be of the same class. Thus, if you have character outcomes on the RHS like “Confirmed”, “Suspect”, “Probable” and <code>NA</code> - you will get an error. Instead of <code>NA</code> you must have <code>NA_character_</code>. Likewise for integers, use <code>NA_integer_</code>.</p>
 <p><strong><code>NULL</code></strong></p>
 <p><code>NULL</code> is the null object in R, often used to represent a list of 0 length. Use <code><a href="https://rdrr.io/r/base/NULL.html">is.null()</a></code> to evaluate this status.</p>
 <p>More detail on the difference between <code>NA</code> and <code>NULL</code> is <a href="https://www.r-bloggers.com/2010/04/r-na-vs-null/">here</a></p>
@@ -1241,10 +1256,10 @@ Mathematics and statistics
 <div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="op">!</span><span class="st">"h"</span> <span class="op">%in%</span> <span class="va">my_vector</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<p><code><a href="https://rdrr.io/r/base/match.html">%in%</a></code> is very useful when using the <strong>dplyr</strong> function <code>case_when()</code> to recode values in a column. For example:</p>
+<p><code><a href="https://rdrr.io/r/base/match.html">%in%</a></code> is very useful when using the <strong>dplyr</strong> function <code><a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when()</a></code> to recode values in a column. For example:</p>
 <div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">linelist</span> <span class="op">&lt;-</span> <span class="va">linelist</span> <span class="op">%&gt;%</span> 
-  <span class="fu">mutate</span><span class="op">(</span>hospital <span class="op">=</span> <span class="fu">case_when</span><span class="op">(</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>hospital <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when</a></span><span class="op">(</span>
     <span class="va">hospital</span> <span class="op">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"St. Fr."</span>, <span class="st">"Saint Francis"</span><span class="op">)</span> <span class="op">~</span> <span class="st">"St. Francis"</span><span class="op">)</span><span class="op">)</span> <span class="co"># convert to correct spelling</span></code></pre></div>
 <!-- ======================================================= -->
 <!-- ======================================================= -->

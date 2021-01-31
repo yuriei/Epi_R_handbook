@@ -15,7 +15,9 @@
 <script src="libs/dt-core-1.10.20/js/jquery.dataTables.min.js"></script><link href="libs/nouislider-7.0.10/jquery.nouislider.min.css" rel="stylesheet">
 <script src="libs/nouislider-7.0.10/jquery.nouislider.min.js"></script><link href="libs/selectize-0.12.0/selectize.bootstrap3.css" rel="stylesheet">
 <script src="libs/selectize-0.12.0/selectize.min.js"></script><link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet">
-<script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script><script src="https://cdn.jsdelivr.net/autocomplete.js/0/autocomplete.jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/mark.js@8.11.1/dist/mark.min.js"></script><!-- CSS --><link rel="stylesheet" href="style_bs4.css">
+<script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script><script src="libs/viz-1.8.2/viz.js"></script><link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet">
+<script src="libs/grViz-binding-1.0.6.1/grViz.js"></script><script src="libs/d3-4.5.0/d3.min.js"></script><script src="libs/sankey-1/sankey.js"></script><script src="libs/sankeyNetwork-binding-0.4/sankeyNetwork.js"></script><script src="libs/plotly-binding-4.9.3/plotly.js"></script><script src="libs/typedarray-0.1/typedarray.min.js"></script><link href="libs/plotly-htmlwidgets-css-1.57.1/plotly-htmlwidgets.css" rel="stylesheet">
+<script src="libs/plotly-main-1.57.1/plotly-latest.min.js"></script><script src="https://cdn.jsdelivr.net/autocomplete.js/0/autocomplete.jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/mark.js@8.11.1/dist/mark.min.js"></script><!-- CSS --><link rel="stylesheet" href="style_bs4.css">
 </head>
 <body data-spy="scroll" data-target="#toc">
 
@@ -49,8 +51,21 @@
 <li><a class="active" href="working-with-dates.html"><span class="header-section-number">7</span> Working with Dates</a></li>
 <li><a class="" href="charactersstrings.html"><span class="header-section-number">8</span> Characters/strings</a></li>
 <li><a class="" href="de-duplication.html"><span class="header-section-number">9</span> De-duplication</a></li>
+<li><a class="" href="ifelse-for-loops.html"><span class="header-section-number">10</span> if/else &amp; ‘for’ loops</a></li>
+<li><a class="" href="apply-functions.html"><span class="header-section-number">11</span> apply functions</a></li>
+<li class="book-part">Analysis</li>
+<li><a class="" href="cat-analysis.html"><span class="header-section-number">12</span> Analysis</a></li>
+<li><a class="" href="descriptive-analysis.html"><span class="header-section-number">13</span> Descriptive analysis</a></li>
+<li><a class="" href="abberation-detection.html"><span class="header-section-number">14</span> Abberation detection</a></li>
 <li class="book-part">Data Vizualization</li>
-<li><a class="" href="age-pyramids.html"><span class="header-section-number">10</span> Age pyramids</a></li>
+<li><a class="" href="epidemic-curves.html"><span class="header-section-number">15</span> Epidemic curves</a></li>
+<li><a class="" href="age-pyramids.html"><span class="header-section-number">16</span> Age pyramids</a></li>
+<li><a class="" href="diagrams.html"><span class="header-section-number">17</span> Diagrams</a></li>
+<li><a class="" href="combination-analysis.html"><span class="header-section-number">18</span> Combination analysis</a></li>
+<li><a class="" href="heatmaps-density-plots.html"><span class="header-section-number">19</span> Heatmaps &amp; density plots</a></li>
+<li class="book-part">Advanced</li>
+<li><a class="" href="collaboration.html"><span class="header-section-number">20</span> Collaboration</a></li>
+<li><a class="" href="directory-interactions.html"><span class="header-section-number">21</span> Directory interactions</a></li>
 </ul>
 
         <div class="book-extra">
@@ -77,7 +92,7 @@
 <div class="sourceCode" id="cb184"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># get the system time - this is a DATETIME class</span>
 <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.time</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<pre><code>## [1] "2021-01-31 12:12:43 EST"</code></pre>
+<pre><code>## [1] "2021-01-31 13:17:48 EST"</code></pre>
 <ul>
 <li>It is important to make R recognize when a variable contains dates.<br>
 </li>
@@ -174,7 +189,7 @@
 <p>If using <a href="r-basics.html#piping">piping</a> and the tidyverse, the converting a character column to dates might look like this:</p>
 <div class="sourceCode" id="cb201"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">linelist_cleaned</span> <span class="op">&lt;-</span> <span class="va">linelist_cleaned</span> <span class="op">%&gt;%</span>
-  <span class="fu">mutate</span><span class="op">(</span>date_of_onset <span class="op">=</span> <span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="http://lubridate.tidyverse.org/reference/ymd.html">dmy</a></span><span class="op">(</span><span class="va">date_of_onset</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>date_of_onset <span class="op">=</span> <span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="http://lubridate.tidyverse.org/reference/ymd.html">dmy</a></span><span class="op">(</span><span class="va">date_of_onset</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>Once complete, you can run a command to verify the class of the variable</p>
 <div class="sourceCode" id="cb202"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Check the class of the variable</span>
@@ -271,12 +286,12 @@
 
 <span class="va">linelist_cleaned</span> <span class="op">&lt;-</span> <span class="va">linelist_cleaned</span> <span class="op">%&gt;%</span>
     <span class="co"># convert date of onset from character to date objects by specifying dmy format</span>
-    <span class="fu">mutate</span><span class="op">(</span>date_of_onset <span class="op">=</span> <span class="fu"><a href="http://lubridate.tidyverse.org/reference/ymd.html">dmy</a></span><span class="op">(</span><span class="va">date_of_onset</span><span class="op">)</span>,
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>date_of_onset <span class="op">=</span> <span class="fu"><a href="http://lubridate.tidyverse.org/reference/ymd.html">dmy</a></span><span class="op">(</span><span class="va">date_of_onset</span><span class="op">)</span>,
            date_of_hospitalisation <span class="op">=</span> <span class="fu"><a href="http://lubridate.tidyverse.org/reference/ymd.html">dmy</a></span><span class="op">(</span><span class="va">date_of_hospitalisation</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
     <span class="co"># filter out all cases without onset in march</span>
-    <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="http://lubridate.tidyverse.org/reference/month.html">month</a></span><span class="op">(</span><span class="va">date_of_onset</span><span class="op">)</span> <span class="op">==</span> <span class="fl">3</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="http://lubridate.tidyverse.org/reference/month.html">month</a></span><span class="op">(</span><span class="va">date_of_onset</span><span class="op">)</span> <span class="op">==</span> <span class="fl">3</span><span class="op">)</span> <span class="op">%&gt;%</span>
     <span class="co"># find the difference in days between onset and hospitalisation</span>
-    <span class="fu">mutate</span><span class="op">(</span>onset_to_hosp_days <span class="op">=</span> <span class="va">date_of_hospitalisation</span> <span class="op">-</span> <span class="va">date_of_onset</span><span class="op">)</span></code></pre></div>
+    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>onset_to_hosp_days <span class="op">=</span> <span class="va">date_of_hospitalisation</span> <span class="op">-</span> <span class="va">date_of_onset</span><span class="op">)</span></code></pre></div>
 <!-- ======================================================= -->
 </div>
 <div id="guess_dates" class="section level2" number="7.6">
@@ -349,14 +364,14 @@
 <div class="sourceCode" id="cb237"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># easy way to get full date and time (no formatting)</span>
 <span class="fu"><a href="http://lubridate.tidyverse.org/reference/date.html">date</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<pre><code>## [1] "Sun Jan 31 12:12:45 2021"</code></pre>
+<pre><code>## [1] "Sun Jan 31 13:17:49 2021"</code></pre>
 <div class="sourceCode" id="cb239"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># formatted date, time, and time zone (using paste0() function)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span>
   <span class="fu"><a href="https://rdrr.io/r/base/format.html">format</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.Date</a></span><span class="op">(</span><span class="op">)</span>, format <span class="op">=</span> <span class="st">"%A, %b %d '%y, %z  %Z, "</span><span class="op">)</span>, 
   <span class="fu"><a href="https://rdrr.io/r/base/format.html">format</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.time</a></span><span class="op">(</span><span class="op">)</span>, format <span class="op">=</span> <span class="st">"%H:%M:%S"</span><span class="op">)</span>
 <span class="op">)</span></code></pre></div>
-<pre><code>## [1] "Sunday, Jan 31 '21, +0000  UTC, 12:12:45"</code></pre>
+<pre><code>## [1] "Sunday, Jan 31 '21, +0000  UTC, 13:17:49"</code></pre>
 <!-- ======================================================= -->
 </div>
 <div id="calculating-distance-between-dates" class="section level2" number="7.9">
@@ -407,7 +422,7 @@
 <code class="sourceCode R"><span class="co"># assign the current time to a variable</span>
 <span class="va">time_now</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.time</a></span><span class="op">(</span><span class="op">)</span>
 <span class="va">time_now</span></code></pre></div>
-<pre><code>## [1] "2021-01-31 12:12:46 EST"</code></pre>
+<pre><code>## [1] "2021-01-31 13:17:49 EST"</code></pre>
 <div class="sourceCode" id="cb246"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># use with_tz() to assign a new timezone to the variable, while CHANGING the clock time</span>
 <span class="va">time_london_real</span> <span class="op">&lt;-</span> <span class="fu"><a href="http://lubridate.tidyverse.org/reference/with_tz.html">with_tz</a></span><span class="op">(</span><span class="va">time_now</span>, <span class="st">"Europe/London"</span><span class="op">)</span>
