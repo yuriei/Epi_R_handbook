@@ -65,7 +65,8 @@ We also need a reference population, the standard population. There are several 
 <span style="color: orange;">**_CAUTION:_** If you have a newer version of R, the **dsr** package cannot be directly downloaded as it is archived. However, it is still available from the CRAN archive. You can install and use this one. </span>
 
 For non-Mac users:
-```{r} eval=FALSE}
+```{r} 
+require(Rtools)
 packageurl <- "https://cran.r-project.org/src/contrib/Archive/dsr/dsr_0.2.2.tar.gz"
 install.packages(packageurl, repos=NULL, type="source")
 ```
