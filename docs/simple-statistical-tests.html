@@ -136,7 +136,7 @@ ratios)</p>
 <span class="header-section-number">19.2.1</span> Packages<a class="anchor" aria-label="anchor" href="#packages-4"><i class="fas fa-link"></i></a>
 </h3>
 <p>This code chunk shows the loading of packages required for the analyses.</p>
-<div class="sourceCode" id="cb544"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb545"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span><span class="va">rio</span>,          <span class="co"># File import</span>
                <span class="va">here</span>,         <span class="co"># File locator</span>
                <span class="va">tidyverse</span>,    <span class="co"># data management + ggplot2 graphics, </span>
@@ -157,18 +157,18 @@ ratios)</p>
 <li>Linelist of individual cases from a simulated epidemic</li>
 </ul>
 <p>The dataset is imported using the <code><a href="https://rdrr.io/pkg/rio/man/import.html">import()</a></code> function from the <em>rio</em> package. See the <em>page on importing data</em> for various ways to import data.</p>
-<div class="sourceCode" id="cb545"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb546"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># import the linelist</span>
 <span class="va">linelist</span> <span class="op">&lt;-</span> <span class="fu">rio</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/rio/man/import.html">import</a></span><span class="op">(</span><span class="st">"linelist_cleaned.xlsx"</span><span class="op">)</span></code></pre></div>
 <p>The first 50 rows of the linelist are displayed below.</p>
-<div id="htmlwidget-c3717c7e116724617b59" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-c3717c7e116724617b59">{"x":{"filter":"top","filterHTML":"<tr>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"2\" data-max=\"12\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"date\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"1399334400000\" data-max=\"1.405728e+12\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"date\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"1.39752e+12\" data-max=\"1406419200000\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"date\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"1399334400000\" data-max=\"1406851200000\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"date\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"1400025600000\" data-max=\"1408838400000\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"1\" data-max=\"43\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"disabled\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"1\" data-max=\"43\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"factor\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"width: 100%; display: none;\">\n      <select multiple=\"multiple\" style=\"width: 100%;\" data-options=\"[&quot;0-4&quot;,&quot;5-9&quot;,&quot;10-14&quot;,&quot;15-19&quot;,&quot;20-29&quot;,&quot;30-49&quot;,&quot;50-69&quot;,&quot;70+&quot;]\"><\/select>\n    <\/div>\n  <\/td>\n  <td data-type=\"factor\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"width: 100%; display: none;\">\n      <select multiple=\"multiple\" style=\"width: 100%;\" data-options=\"[&quot;0-4&quot;,&quot;5-9&quot;,&quot;10-14&quot;,&quot;15-19&quot;,&quot;20-24&quot;,&quot;25-29&quot;,&quot;30-34&quot;,&quot;35-39&quot;,&quot;40-44&quot;,&quot;45-49&quot;,&quot;50-54&quot;,&quot;55-59&quot;,&quot;60-64&quot;,&quot;65-69&quot;,&quot;70-74&quot;,&quot;75-79&quot;,&quot;80-84&quot;,&quot;85+&quot;]\"><\/select>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"-13.2628934511971\" data-max=\"-13.2093776169918\" data-scale=\"13\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"8.45020022241045\" data-max=\"8.48932072596067\" data-scale=\"14\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"18.5860458051297\" data-max=\"90.5769525550137\" data-scale=\"13\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"28.1660762993844\" data-max=\"211.611265576819\" data-scale=\"13\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"20\" data-max=\"24\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"36.2427185251953\" data-max=\"37.8861007735333\" data-scale=\"13\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"0\" data-max=\"21\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","data":[["20b688","a3c8b8","72b905","8689b7","11f8ea","893f25","c4e706","e02f66","ce9c02","56d39e","07e3e8","8a4580","369449","f393b4","60f0c2","9f6884","d6f195","2eaa9a","c97dd9","542d07","3a7673","7f5a01","f86ce2","c9e790","99e8fa","af1c1f","c62127","b799eb","c2e83e","bc2adf","170473","f3881f","f0461f","1c1848","42e1a9","e56412","62a2ef","52ea64","148f18","f81362","58b968","342b03","92ddf7","386dfb","eae3e8","c76676","896214","baacc1","917506","23e499"],[3,4,4,4,2,3,5,4,5,5,4,4,4,4,7,4,4,5,9,5,8,7,9,9,7,5,9,5,8,6,7,6,9,8,12,9,9,7,6,8,10,7,9,9,7,9,11,12,9,9],[null,"2014-05-07","2014-05-06",null,null,"2014-05-18",null,"2014-05-18","2014-05-27",null,"2014-05-22",null,"2014-05-28",null,"2014-06-04","2014-06-02",null,"2014-06-07",null,"2014-06-10",null,"2014-06-23",null,"2014-06-12","2014-06-24",null,"2014-06-20","2014-06-27","2014-06-29","2014-07-03","2014-07-05",null,"2014-07-09","2014-07-09",null,"2014-07-12","2014-07-02","2014-07-15",null,null,"2014-07-18",null,"2014-07-19","2014-07-19","2014-06-26","2014-07-18","2014-07-18","2014-07-18","2014-07-18",null],["2014-04-15","2014-05-08","2014-05-12","2014-05-13","2014-05-16","2014-05-21",null,null,"2014-05-27","2014-05-27","2014-05-27","2014-06-02","2014-06-02","2014-06-05","2014-06-07","2014-06-07","2014-06-10","2014-06-17","2014-06-19","2014-06-22","2014-06-23","2014-06-25","2014-06-26","2014-06-27","2014-06-28",null,"2014-07-02","2014-07-03","2014-07-07","2014-07-09","2014-07-09","2014-07-10","2014-07-12","2014-07-12",null,"2014-07-15","2014-07-17","2014-07-18","2014-07-19","2014-07-20","2014-07-20","2014-07-22","2014-07-23","2014-07-23","2014-07-23","2014-07-25","2014-07-26","2014-07-27","2014-07-27",null],["2014-05-06","2014-05-10","2014-05-13","2014-05-14","2014-05-18","2014-05-22","2014-05-24","2014-05-25","2014-05-29","2014-05-28","2014-05-29","2014-06-02","2014-06-03","2014-06-06","2014-06-08","2014-06-07","2014-06-12","2014-06-17","2014-06-19","2014-06-23","2014-06-24","2014-06-27","2014-06-26","2014-06-29","2014-06-29","2014-06-29","2014-07-03","2014-07-05","2014-07-08","2014-07-09","2014-07-10","2014-07-11","2014-07-12","2014-07-14","2014-07-14","2014-07-17","2014-07-19","2014-07-20","2014-07-20","2014-07-21","2014-07-21","2014-07-24","2014-07-25","2014-07-23","2014-07-25","2014-07-25","2014-07-28","2014-07-27","2014-07-27","2014-08-01"],["2014-05-14","2014-05-14",null,"2014-05-18","2014-05-30","2014-05-29","2014-06-02","2014-05-31","2014-06-17",null,"2014-06-01",null,"2014-06-07","2014-06-18","2014-05-30","2014-07-01",null,null,"2014-07-11","2014-06-28","2014-06-25","2014-07-06",null,"2014-07-25","2014-07-09","2014-07-01","2014-07-17","2014-07-12","2014-07-30",null,"2014-08-09","2014-07-17","2014-07-17","2014-07-14","2014-07-20","2014-07-19","2014-07-23","2014-07-26","2014-07-23","2014-08-07","2014-07-28","2014-08-24",null,null,"2014-08-03",null,"2014-07-29",null,null,"2014-08-06"],["Death","Recover","Recover","Recover","Recover","Recover",null,null,"Death","Death","Recover","Death","Death","Recover","Death",null,"Death","Recover","Recover","Death",null,"Death","Recover","Recover","Recover",null,"Recover","Recover",null,null,"Recover","Recover",null,"Death","Death","Death","Death","Death","Death","Death",null,null,"Recover","Recover","Recover","Death","Death","Death","Death","Death"],["m","m","m","f","m","m","m","f","m","f","f","m","f","m","m","m","m","f","m","m","f","f","m","f","m","f","m","m","m","m","f","m","m","f","f","f","f","f","f","m","m","f","m","f","f","f","m","m","m","f"],[14,12,26,25,18,22,6,1,13,27,15,5,12,9,8,10,3,4,26,2,11,1,5,15,18,2,11,12,5,13,43,4,15,29,22,4,14,4,37,16,26,9,19,5,25,22,23,16,29,12],["years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years"],[14,12,26,25,18,22,6,1,13,27,15,5,12,9,8,10,3,4,26,2,11,1,5,15,18,2,11,12,5,13,43,4,15,29,22,4,14,4,37,16,26,9,19,5,25,22,23,16,29,12],["10-14","10-14","20-29","20-29","15-19","20-29","5-9","0-4","10-14","20-29","15-19","5-9","10-14","5-9","5-9","10-14","0-4","0-4","20-29","0-4","10-14","0-4","5-9","15-19","15-19","0-4","10-14","10-14","5-9","10-14","30-49","0-4","15-19","20-29","20-29","0-4","10-14","0-4","30-49","15-19","20-29","5-9","15-19","5-9","20-29","20-29","20-29","15-19","20-29","10-14"],["10-14","10-14","25-29","25-29","15-19","20-24","5-9","0-4","10-14","25-29","15-19","5-9","10-14","5-9","5-9","10-14","0-4","0-4","25-29","0-4","10-14","0-4","5-9","15-19","15-19","0-4","10-14","10-14","5-9","10-14","40-44","0-4","15-19","25-29","20-24","0-4","10-14","0-4","35-39","15-19","25-29","5-9","15-19","5-9","25-29","20-24","20-24","15-19","25-29","10-14"],["Central Hospital","Port Hospital","Other","Missing","St. Mark's Maternity Hospital (SMMH)","Military Hospital","Missing","Port Hospital","Port Hospital","St. Mark's Maternity Hospital (SMMH)","Missing","Military Hospital","Missing","Missing","Port Hospital","Port Hospital","Missing","Missing","Port Hospital","Port Hospital","Port Hospital","Missing","Military Hospital","Missing","Port Hospital","Port Hospital","Port Hospital","Missing","Missing","Missing","Military Hospital","Military Hospital","Missing","Port Hospital","Military Hospital","Central Hospital","Central Hospital","Missing","Missing","Other","Port Hospital","Other","Missing","Military Hospital","Port Hospital","Military Hospital","St. Mark's Maternity Hospital (SMMH)","Other","Port Hospital","Other"],[-13.2330769474001,-13.2231931914572,-13.2122631729853,-13.2152339775486,-13.212910703914,-13.2228638912441,-13.2143394209926,-13.2599196027204,-13.2243703238737,-13.2115157489446,-13.2331547837254,-13.2222002700958,-13.2320975453153,-13.2225511595637,-13.2270219251255,-13.2242058657802,-13.2183252570302,-13.209391925612,-13.2243437095992,-13.2628934511971,-13.21422143145,-13.2339681355349,-13.2289363806984,-13.2343804000797,-13.2250089377786,-13.2338585724463,-13.2593132020914,-13.2162953240809,-13.2093776169918,-13.2266742923612,-13.247814368147,-13.2472804825882,-13.2362371704204,-13.2113470441303,-13.2142410663192,-13.2343341712241,-13.2379376608352,-13.2177946632397,-13.2483677722899,-13.2163318124535,-13.238964614443,-13.2209544818868,-13.2221173306518,-13.2510797882678,-13.2181811346655,-13.2209026809759,-13.2261633517308,-13.2330734719715,-13.250631166599,-13.2547212675054],[8.46002984141364,8.47325128269697,8.46838441895748,8.45171855856465,8.46481700596819,8.46082377490923,8.48932072596067,8.45436259178895,8.47024789713924,8.45094401624318,8.46272931462646,8.46388925014565,8.46144367534271,8.46191259217774,8.47745440981732,8.48663467687094,8.47967725011828,8.47570184950483,8.47145134147474,8.46479592922727,8.48528034195779,8.46957530395867,8.46886903678583,8.46901638731497,8.47404889511544,8.47955475519858,8.45810737927856,8.46395131808455,8.4765592834436,8.48408263734462,8.47038713612408,8.46592212548667,8.48544694884164,8.47982352763317,8.4641347894342,8.47832062438022,8.4697737543226,8.45020022241045,8.48466158574339,8.4630635336683,8.48776686246878,8.48436046542975,8.46420961833913,8.47178418137766,8.4757725605068,8.46353857052336,8.47203374851162,8.46178968158864,8.47947718621549,8.45825808128071],[null,"2ae019","2ae019",null,null,"11f8ea",null,"bd8c0e","53da57",null,"893f25",null,"133ee7",null,"cbbe78","431135",null,"9f6884",null,"4977bd",null,"a75c7f",null,"2671fa","ab634e",null,"c36eb4","ea3740","beb26e","b799eb","71577a",null,"b80480","3e6957",null,"894024","b0c500","64c8ef",null,null,"62a2ef",null,"d15be5","f36522","8940e5","cfd79c","021718","d145b7","cfd79c",null],[null,"other","other",null,null,"other",null,"other","other",null,"other",null,"other",null,"funeral","other",null,"other",null,"funeral",null,"other",null,"other","other",null,"other","other","funeral","other","other",null,"other","other",null,"funeral","other","other",null,null,"other",null,"other","other","other","other","other","other","other",null],[57.9543370750053,72.903315711843,61.3550373807362,74.9252154987378,60.8140332121575,73.0392927197671,40.3952926046292,18.5860458051297,65.915405266829,59.7407289858923,58.850023146804,41.7793981661872,64.3207186043017,45.3071059265302,49.2346597712611,55.6132568449462,44.7917460048021,36.1029809686007,78.4242900973357,34.0573768682361,37.1666798452591,23.3102599354947,54.1674564323421,60.1511973138815,64.5714791642557,24.2673242687725,68.0484697494943,63.8629037670008,49.8224101387143,64.5379712152469,90.5769525550137,36.0166754500094,64.7999465562328,71.0494317101083,63.6769790626423,39.698689226328,56.848873724477,35.9567070403828,76.1176769410485,65.0476759466627,62.3022824150437,44.9747053136027,61.5511693539164,43.2422219122552,63.2672625030581,47.4381108715924,72.1707361942321,67.853226553865,73.6857714546986,47.2529971424094],[166.749418687763,133.818602320123,151.695755303934,153.316319514732,165.290650391993,120.122123158907,108.261883736877,47.4422250141074,166.387318202026,156.775506829027,118.160296743799,84.9245792519324,119.097329118499,124.904352980613,72.5598509739827,149.021006790393,75.1358593284519,55.0179963945138,210.543288076169,50.8667977790487,110.215510985474,28.1660762993844,80.2852746720437,120.963312698541,167.656991740146,37.2430369850988,132.609319255062,142.729680187775,84.5131434907977,151.212937283442,200.582682003085,77.7531591755265,120.247308139647,140.245897914456,142.433078928918,82.8576503511686,146.911391485897,67.388094657533,211.611265576819,145.5168399601,178.785450175307,104.916098108791,184.2272908349,76.9581212124093,167.176929885444,142.262756500034,166.053378508752,124.15789217315,171.478674181257,110.647858657317],[21,22,21,23,22,21,21,23,22,22,22,22,24,21,22,21,22,20,22,21,22,23,23,22,22,23,22,24,24,23,22,22,23,21,24,21,21,23,22,22,21,23,21,21,23,22,22,21,21,23],["no","no",null,"no","no","no",null,"no","no","no","no",null,"no","no","no",null,null,"no","no","no","no","no","no","no","no","no","no","no",null,"no","no","no","no","no",null,"no","no","no","no",null,null,"no","no","no",null,null,"no","no","no",null],["no","no",null,"no","yes","no",null,"no","yes","no","no",null,"yes","yes","no",null,null,"yes","no","yes","no","yes","no","no","no","yes","no","no",null,"no","yes","no","no","no",null,"yes","no","no","no",null,null,"no","no","no",null,null,"no","yes","no",null],["no","yes",null,"yes","yes","yes",null,"yes","yes","no","yes",null,"no","yes","yes",null,null,"yes","yes","yes","yes","yes","yes","yes","no","yes","yes","yes",null,"yes","yes","yes","yes","yes",null,"yes","no","yes","no",null,null,"yes","no","yes",null,null,"no","yes","yes",null],["no","no",null,"no","no","no",null,"no","no","no","yes",null,"no","no","no",null,null,"no","no","yes","no","yes","no","yes","no","yes","no","no",null,"no","no","no","no","no",null,"no","no","no","no",null,null,"no","no","no",null,null,"no","no","yes",null],["no","no",null,"no","no","yes",null,"yes","no","no","yes",null,"no","yes","no",null,null,"yes","yes","yes","yes","no","yes","no","no","yes","no","yes",null,"no","yes","yes","no","no",null,"no","yes","yes","yes",null,null,"yes","no","yes",null,null,"yes","yes","yes",null],[36.2840110708362,37.4817129799808,37.1331561923118,36.5729378731705,36.6132940820539,36.9562671678823,36.8447226634927,37.2397852010363,37.2266736491902,37.2344022830661,36.5330245928798,36.4644771929462,37.6041462353006,37.3284244592967,36.3361625891291,37.7085947123389,37.4823622504343,36.6778850163965,36.9665689427275,36.2427185251953,37.1978056174955,36.5110221161676,37.0110832645393,37.6299404880321,36.9521080508208,37.3753025924304,37.5791540988549,36.9014777869365,37.2885432396843,37.2261179823582,36.8817916145012,37.2096759938222,36.949229724288,37.0421117401582,36.4546360878183,36.7214069539379,36.6154216315974,37.8861007735333,37.7850506908724,37.4765739629385,37.3965605173202,37.1551734248063,36.3735869941929,37.2017322796443,37.0261875673878,37.8233197801684,36.8393765475446,37.635014845436,36.6533129418459,37.4625706486188],[null,"12:25",null,"13:23","19:49","15:31","13:10","14:27","20:43","15:55","21:32","15:36","05:49","08:47","16:37","16:47","12:38","16:28","20:36","13:49","07:24","13:37","14:54","06:60","13:49","13:30","17:26","13:33","07:35","09:18","18:46","12:38","10:08","12:52","11:13","18:26","09:29","16:17","18:34","16:37","16:41",null,null,"15:17","19:29","15:54","10:30","13:36",null,"13:47"],[21,2,1,1,2,1,null,null,2,1,2,0,1,1,1,0,2,0,0,1,1,2,0,2,1,null,1,2,1,0,1,1,0,2,null,2,2,2,1,1,1,2,2,0,2,0,2,0,0,null]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>case_id<\/th>\n      <th>generation<\/th>\n      <th>date_infection<\/th>\n      <th>date_onset<\/th>\n      <th>date_hospitalisation<\/th>\n      <th>date_outcome<\/th>\n      <th>outcome<\/th>\n      <th>gender<\/th>\n      <th>age<\/th>\n      <th>age_unit<\/th>\n      <th>age_years<\/th>\n      <th>age_cat<\/th>\n      <th>age_cat5<\/th>\n      <th>hospital<\/th>\n      <th>lon<\/th>\n      <th>lat<\/th>\n      <th>infector<\/th>\n      <th>source<\/th>\n      <th>wt_kg<\/th>\n      <th>ht_cm<\/th>\n      <th>ct_blood<\/th>\n      <th>fever<\/th>\n      <th>chills<\/th>\n      <th>cough<\/th>\n      <th>aches<\/th>\n      <th>vomit<\/th>\n      <th>temp<\/th>\n      <th>time_admission<\/th>\n      <th>days_onset_hosp<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"scrollX":true,"columnDefs":[{"className":"dt-right","targets":[1,8,10,14,15,18,19,20,26,28]}],"order":[],"autoWidth":false,"orderClasses":false,"orderCellsTop":true,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-e344a7bbd7e46a8b5969" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-e344a7bbd7e46a8b5969">{"x":{"filter":"top","filterHTML":"<tr>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"2\" data-max=\"12\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"date\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"1399334400000\" data-max=\"1.405728e+12\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"date\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"1.39752e+12\" data-max=\"1406419200000\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"date\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"1399334400000\" data-max=\"1406851200000\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"date\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"1400025600000\" data-max=\"1408838400000\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"1\" data-max=\"43\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"disabled\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"1\" data-max=\"43\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"factor\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"width: 100%; display: none;\">\n      <select multiple=\"multiple\" style=\"width: 100%;\" data-options=\"[&quot;0-4&quot;,&quot;5-9&quot;,&quot;10-14&quot;,&quot;15-19&quot;,&quot;20-29&quot;,&quot;30-49&quot;,&quot;50-69&quot;,&quot;70+&quot;]\"><\/select>\n    <\/div>\n  <\/td>\n  <td data-type=\"factor\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"width: 100%; display: none;\">\n      <select multiple=\"multiple\" style=\"width: 100%;\" data-options=\"[&quot;0-4&quot;,&quot;5-9&quot;,&quot;10-14&quot;,&quot;15-19&quot;,&quot;20-24&quot;,&quot;25-29&quot;,&quot;30-34&quot;,&quot;35-39&quot;,&quot;40-44&quot;,&quot;45-49&quot;,&quot;50-54&quot;,&quot;55-59&quot;,&quot;60-64&quot;,&quot;65-69&quot;,&quot;70-74&quot;,&quot;75-79&quot;,&quot;80-84&quot;,&quot;85+&quot;]\"><\/select>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"-13.2628934511971\" data-max=\"-13.2093776169918\" data-scale=\"13\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"8.45020022241045\" data-max=\"8.48932072596067\" data-scale=\"14\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"18.5860458051297\" data-max=\"90.5769525550137\" data-scale=\"13\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"28.1660762993844\" data-max=\"211.611265576819\" data-scale=\"13\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"20\" data-max=\"24\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"36.2427185251953\" data-max=\"37.8861007735333\" data-scale=\"13\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"0\" data-max=\"21\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","data":[["20b688","a3c8b8","72b905","8689b7","11f8ea","893f25","c4e706","e02f66","ce9c02","56d39e","07e3e8","8a4580","369449","f393b4","60f0c2","9f6884","d6f195","2eaa9a","c97dd9","542d07","3a7673","7f5a01","f86ce2","c9e790","99e8fa","af1c1f","c62127","b799eb","c2e83e","bc2adf","170473","f3881f","f0461f","1c1848","42e1a9","e56412","62a2ef","52ea64","148f18","f81362","58b968","342b03","92ddf7","386dfb","eae3e8","c76676","896214","baacc1","917506","23e499"],[3,4,4,4,2,3,5,4,5,5,4,4,4,4,7,4,4,5,9,5,8,7,9,9,7,5,9,5,8,6,7,6,9,8,12,9,9,7,6,8,10,7,9,9,7,9,11,12,9,9],[null,"2014-05-07","2014-05-06",null,null,"2014-05-18",null,"2014-05-18","2014-05-27",null,"2014-05-22",null,"2014-05-28",null,"2014-06-04","2014-06-02",null,"2014-06-07",null,"2014-06-10",null,"2014-06-23",null,"2014-06-12","2014-06-24",null,"2014-06-20","2014-06-27","2014-06-29","2014-07-03","2014-07-05",null,"2014-07-09","2014-07-09",null,"2014-07-12","2014-07-02","2014-07-15",null,null,"2014-07-18",null,"2014-07-19","2014-07-19","2014-06-26","2014-07-18","2014-07-18","2014-07-18","2014-07-18",null],["2014-04-15","2014-05-08","2014-05-12","2014-05-13","2014-05-16","2014-05-21",null,null,"2014-05-27","2014-05-27","2014-05-27","2014-06-02","2014-06-02","2014-06-05","2014-06-07","2014-06-07","2014-06-10","2014-06-17","2014-06-19","2014-06-22","2014-06-23","2014-06-25","2014-06-26","2014-06-27","2014-06-28",null,"2014-07-02","2014-07-03","2014-07-07","2014-07-09","2014-07-09","2014-07-10","2014-07-12","2014-07-12",null,"2014-07-15","2014-07-17","2014-07-18","2014-07-19","2014-07-20","2014-07-20","2014-07-22","2014-07-23","2014-07-23","2014-07-23","2014-07-25","2014-07-26","2014-07-27","2014-07-27",null],["2014-05-06","2014-05-10","2014-05-13","2014-05-14","2014-05-18","2014-05-22","2014-05-24","2014-05-25","2014-05-29","2014-05-28","2014-05-29","2014-06-02","2014-06-03","2014-06-06","2014-06-08","2014-06-07","2014-06-12","2014-06-17","2014-06-19","2014-06-23","2014-06-24","2014-06-27","2014-06-26","2014-06-29","2014-06-29","2014-06-29","2014-07-03","2014-07-05","2014-07-08","2014-07-09","2014-07-10","2014-07-11","2014-07-12","2014-07-14","2014-07-14","2014-07-17","2014-07-19","2014-07-20","2014-07-20","2014-07-21","2014-07-21","2014-07-24","2014-07-25","2014-07-23","2014-07-25","2014-07-25","2014-07-28","2014-07-27","2014-07-27","2014-08-01"],["2014-05-14","2014-05-14",null,"2014-05-18","2014-05-30","2014-05-29","2014-06-02","2014-05-31","2014-06-17",null,"2014-06-01",null,"2014-06-07","2014-06-18","2014-05-30","2014-07-01",null,null,"2014-07-11","2014-06-28","2014-06-25","2014-07-06",null,"2014-07-25","2014-07-09","2014-07-01","2014-07-17","2014-07-12","2014-07-30",null,"2014-08-09","2014-07-17","2014-07-17","2014-07-14","2014-07-20","2014-07-19","2014-07-23","2014-07-26","2014-07-23","2014-08-07","2014-07-28","2014-08-24",null,null,"2014-08-03",null,"2014-07-29",null,null,"2014-08-06"],["Death","Recover","Recover","Recover","Recover","Recover",null,null,"Death","Death","Recover","Death","Death","Recover","Death",null,"Death","Recover","Recover","Death",null,"Death","Recover","Recover","Recover",null,"Recover","Recover",null,null,"Recover","Recover",null,"Death","Death","Death","Death","Death","Death","Death",null,null,"Recover","Recover","Recover","Death","Death","Death","Death","Death"],["m","m","m","f","m","m","m","f","m","f","f","m","f","m","m","m","m","f","m","m","f","f","m","f","m","f","m","m","m","m","f","m","m","f","f","f","f","f","f","m","m","f","m","f","f","f","m","m","m","f"],[14,12,26,25,18,22,6,1,13,27,15,5,12,9,8,10,3,4,26,2,11,1,5,15,18,2,11,12,5,13,43,4,15,29,22,4,14,4,37,16,26,9,19,5,25,22,23,16,29,12],["years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years"],[14,12,26,25,18,22,6,1,13,27,15,5,12,9,8,10,3,4,26,2,11,1,5,15,18,2,11,12,5,13,43,4,15,29,22,4,14,4,37,16,26,9,19,5,25,22,23,16,29,12],["10-14","10-14","20-29","20-29","15-19","20-29","5-9","0-4","10-14","20-29","15-19","5-9","10-14","5-9","5-9","10-14","0-4","0-4","20-29","0-4","10-14","0-4","5-9","15-19","15-19","0-4","10-14","10-14","5-9","10-14","30-49","0-4","15-19","20-29","20-29","0-4","10-14","0-4","30-49","15-19","20-29","5-9","15-19","5-9","20-29","20-29","20-29","15-19","20-29","10-14"],["10-14","10-14","25-29","25-29","15-19","20-24","5-9","0-4","10-14","25-29","15-19","5-9","10-14","5-9","5-9","10-14","0-4","0-4","25-29","0-4","10-14","0-4","5-9","15-19","15-19","0-4","10-14","10-14","5-9","10-14","40-44","0-4","15-19","25-29","20-24","0-4","10-14","0-4","35-39","15-19","25-29","5-9","15-19","5-9","25-29","20-24","20-24","15-19","25-29","10-14"],["Central Hospital","Port Hospital","Other","Missing","St. Mark's Maternity Hospital (SMMH)","Military Hospital","Missing","Port Hospital","Port Hospital","St. Mark's Maternity Hospital (SMMH)","Missing","Military Hospital","Missing","Missing","Port Hospital","Port Hospital","Missing","Missing","Port Hospital","Port Hospital","Port Hospital","Missing","Military Hospital","Missing","Port Hospital","Port Hospital","Port Hospital","Missing","Missing","Missing","Military Hospital","Military Hospital","Missing","Port Hospital","Military Hospital","Central Hospital","Central Hospital","Missing","Missing","Other","Port Hospital","Other","Missing","Military Hospital","Port Hospital","Military Hospital","St. Mark's Maternity Hospital (SMMH)","Other","Port Hospital","Other"],[-13.2330769474001,-13.2231931914572,-13.2122631729853,-13.2152339775486,-13.212910703914,-13.2228638912441,-13.2143394209926,-13.2599196027204,-13.2243703238737,-13.2115157489446,-13.2331547837254,-13.2222002700958,-13.2320975453153,-13.2225511595637,-13.2270219251255,-13.2242058657802,-13.2183252570302,-13.209391925612,-13.2243437095992,-13.2628934511971,-13.21422143145,-13.2339681355349,-13.2289363806984,-13.2343804000797,-13.2250089377786,-13.2338585724463,-13.2593132020914,-13.2162953240809,-13.2093776169918,-13.2266742923612,-13.247814368147,-13.2472804825882,-13.2362371704204,-13.2113470441303,-13.2142410663192,-13.2343341712241,-13.2379376608352,-13.2177946632397,-13.2483677722899,-13.2163318124535,-13.238964614443,-13.2209544818868,-13.2221173306518,-13.2510797882678,-13.2181811346655,-13.2209026809759,-13.2261633517308,-13.2330734719715,-13.250631166599,-13.2547212675054],[8.46002984141364,8.47325128269697,8.46838441895748,8.45171855856465,8.46481700596819,8.46082377490923,8.48932072596067,8.45436259178895,8.47024789713924,8.45094401624318,8.46272931462646,8.46388925014565,8.46144367534271,8.46191259217774,8.47745440981732,8.48663467687094,8.47967725011828,8.47570184950483,8.47145134147474,8.46479592922727,8.48528034195779,8.46957530395867,8.46886903678583,8.46901638731497,8.47404889511544,8.47955475519858,8.45810737927856,8.46395131808455,8.4765592834436,8.48408263734462,8.47038713612408,8.46592212548667,8.48544694884164,8.47982352763317,8.4641347894342,8.47832062438022,8.4697737543226,8.45020022241045,8.48466158574339,8.4630635336683,8.48776686246878,8.48436046542975,8.46420961833913,8.47178418137766,8.4757725605068,8.46353857052336,8.47203374851162,8.46178968158864,8.47947718621549,8.45825808128071],[null,"2ae019","2ae019",null,null,"11f8ea",null,"bd8c0e","53da57",null,"893f25",null,"133ee7",null,"cbbe78","431135",null,"9f6884",null,"4977bd",null,"a75c7f",null,"2671fa","ab634e",null,"c36eb4","ea3740","beb26e","b799eb","71577a",null,"b80480","3e6957",null,"894024","b0c500","64c8ef",null,null,"62a2ef",null,"d15be5","f36522","8940e5","cfd79c","021718","d145b7","cfd79c",null],[null,"other","other",null,null,"other",null,"other","other",null,"other",null,"other",null,"funeral","other",null,"other",null,"funeral",null,"other",null,"other","other",null,"other","other","funeral","other","other",null,"other","other",null,"funeral","other","other",null,null,"other",null,"other","other","other","other","other","other","other",null],[57.9543370750053,72.903315711843,61.3550373807362,74.9252154987378,60.8140332121575,73.0392927197671,40.3952926046292,18.5860458051297,65.915405266829,59.7407289858923,58.850023146804,41.7793981661872,64.3207186043017,45.3071059265302,49.2346597712611,55.6132568449462,44.7917460048021,36.1029809686007,78.4242900973357,34.0573768682361,37.1666798452591,23.3102599354947,54.1674564323421,60.1511973138815,64.5714791642557,24.2673242687725,68.0484697494943,63.8629037670008,49.8224101387143,64.5379712152469,90.5769525550137,36.0166754500094,64.7999465562328,71.0494317101083,63.6769790626423,39.698689226328,56.848873724477,35.9567070403828,76.1176769410485,65.0476759466627,62.3022824150437,44.9747053136027,61.5511693539164,43.2422219122552,63.2672625030581,47.4381108715924,72.1707361942321,67.853226553865,73.6857714546986,47.2529971424094],[166.749418687763,133.818602320123,151.695755303934,153.316319514732,165.290650391993,120.122123158907,108.261883736877,47.4422250141074,166.387318202026,156.775506829027,118.160296743799,84.9245792519324,119.097329118499,124.904352980613,72.5598509739827,149.021006790393,75.1358593284519,55.0179963945138,210.543288076169,50.8667977790487,110.215510985474,28.1660762993844,80.2852746720437,120.963312698541,167.656991740146,37.2430369850988,132.609319255062,142.729680187775,84.5131434907977,151.212937283442,200.582682003085,77.7531591755265,120.247308139647,140.245897914456,142.433078928918,82.8576503511686,146.911391485897,67.388094657533,211.611265576819,145.5168399601,178.785450175307,104.916098108791,184.2272908349,76.9581212124093,167.176929885444,142.262756500034,166.053378508752,124.15789217315,171.478674181257,110.647858657317],[21,22,21,23,22,21,21,23,22,22,22,22,24,21,22,21,22,20,22,21,22,23,23,22,22,23,22,24,24,23,22,22,23,21,24,21,21,23,22,22,21,23,21,21,23,22,22,21,21,23],["no","no",null,"no","no","no",null,"no","no","no","no",null,"no","no","no",null,null,"no","no","no","no","no","no","no","no","no","no","no",null,"no","no","no","no","no",null,"no","no","no","no",null,null,"no","no","no",null,null,"no","no","no",null],["no","no",null,"no","yes","no",null,"no","yes","no","no",null,"yes","yes","no",null,null,"yes","no","yes","no","yes","no","no","no","yes","no","no",null,"no","yes","no","no","no",null,"yes","no","no","no",null,null,"no","no","no",null,null,"no","yes","no",null],["no","yes",null,"yes","yes","yes",null,"yes","yes","no","yes",null,"no","yes","yes",null,null,"yes","yes","yes","yes","yes","yes","yes","no","yes","yes","yes",null,"yes","yes","yes","yes","yes",null,"yes","no","yes","no",null,null,"yes","no","yes",null,null,"no","yes","yes",null],["no","no",null,"no","no","no",null,"no","no","no","yes",null,"no","no","no",null,null,"no","no","yes","no","yes","no","yes","no","yes","no","no",null,"no","no","no","no","no",null,"no","no","no","no",null,null,"no","no","no",null,null,"no","no","yes",null],["no","no",null,"no","no","yes",null,"yes","no","no","yes",null,"no","yes","no",null,null,"yes","yes","yes","yes","no","yes","no","no","yes","no","yes",null,"no","yes","yes","no","no",null,"no","yes","yes","yes",null,null,"yes","no","yes",null,null,"yes","yes","yes",null],[36.2840110708362,37.4817129799808,37.1331561923118,36.5729378731705,36.6132940820539,36.9562671678823,36.8447226634927,37.2397852010363,37.2266736491902,37.2344022830661,36.5330245928798,36.4644771929462,37.6041462353006,37.3284244592967,36.3361625891291,37.7085947123389,37.4823622504343,36.6778850163965,36.9665689427275,36.2427185251953,37.1978056174955,36.5110221161676,37.0110832645393,37.6299404880321,36.9521080508208,37.3753025924304,37.5791540988549,36.9014777869365,37.2885432396843,37.2261179823582,36.8817916145012,37.2096759938222,36.949229724288,37.0421117401582,36.4546360878183,36.7214069539379,36.6154216315974,37.8861007735333,37.7850506908724,37.4765739629385,37.3965605173202,37.1551734248063,36.3735869941929,37.2017322796443,37.0261875673878,37.8233197801684,36.8393765475446,37.635014845436,36.6533129418459,37.4625706486188],[null,"12:25",null,"13:23","19:49","15:31","13:10","14:27","20:43","15:55","21:32","15:36","05:49","08:47","16:37","16:47","12:38","16:28","20:36","13:49","07:24","13:37","14:54","06:60","13:49","13:30","17:26","13:33","07:35","09:18","18:46","12:38","10:08","12:52","11:13","18:26","09:29","16:17","18:34","16:37","16:41",null,null,"15:17","19:29","15:54","10:30","13:36",null,"13:47"],[21,2,1,1,2,1,null,null,2,1,2,0,1,1,1,0,2,0,0,1,1,2,0,2,1,null,1,2,1,0,1,1,0,2,null,2,2,2,1,1,1,2,2,0,2,0,2,0,0,null]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>case_id<\/th>\n      <th>generation<\/th>\n      <th>date_infection<\/th>\n      <th>date_onset<\/th>\n      <th>date_hospitalisation<\/th>\n      <th>date_outcome<\/th>\n      <th>outcome<\/th>\n      <th>gender<\/th>\n      <th>age<\/th>\n      <th>age_unit<\/th>\n      <th>age_years<\/th>\n      <th>age_cat<\/th>\n      <th>age_cat5<\/th>\n      <th>hospital<\/th>\n      <th>lon<\/th>\n      <th>lat<\/th>\n      <th>infector<\/th>\n      <th>source<\/th>\n      <th>wt_kg<\/th>\n      <th>ht_cm<\/th>\n      <th>ct_blood<\/th>\n      <th>fever<\/th>\n      <th>chills<\/th>\n      <th>cough<\/th>\n      <th>aches<\/th>\n      <th>vomit<\/th>\n      <th>temp<\/th>\n      <th>time_admission<\/th>\n      <th>days_onset_hosp<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"scrollX":true,"columnDefs":[{"className":"dt-right","targets":[1,8,10,14,15,18,19,20,26,28]}],"order":[],"autoWidth":false,"orderClasses":false,"orderCellsTop":true,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
 </div>
 <div id="clean-data-1" class="section level3" number="19.2.3">
 <h3>
 <span class="header-section-number">19.2.3</span> Clean data<a class="anchor" aria-label="anchor" href="#clean-data-1"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb546"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb547"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## make sure that age variable is numeric </span>
 <span class="va">linelist</span> <span class="op">&lt;-</span> <span class="va">linelist</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>age <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">age</span><span class="op">)</span><span class="op">)</span>
@@ -212,7 +212,7 @@ functions available in <code>base</code> together with the <code>broom</code> pa
 <h3>
 <span class="header-section-number">19.3.1</span> <code>gtsummary</code> package<a class="anchor" aria-label="anchor" href="#gtsummary-package-3"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb547"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb548"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">univ_tab</span> <span class="op">&lt;-</span> <span class="va">linelist</span> <span class="op">%&gt;%</span> 
   <span class="co">## select variables of interest</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">explanatory_vars</span>, <span class="va">outcome</span><span class="op">)</span> <span class="op">%&gt;%</span> 
@@ -226,15 +226,19 @@ functions available in <code>base</code> together with the <code>broom</code> pa
     method.args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>family <span class="op">=</span> <span class="va">binomial</span><span class="op">)</span>, 
     <span class="co">## exponentiate the outputs to produce odds ratios (rather than log odds)</span>
     exponentiate <span class="op">=</span> <span class="cn">TRUE</span>
-    <span class="op">)</span>
-
-<span class="co">## view univariate results table </span>
+    <span class="op">)</span></code></pre></div>
+<pre><code>## Note: Using an external vector in selections is ambiguous.
+## i Use `all_of(explanatory_vars)` instead of `explanatory_vars` to silence this message.
+## i See &lt;https://tidyselect.r-lib.org/reference/faq-external-vector.html&gt;.
+## This message is displayed once per session.</code></pre>
+<div class="sourceCode" id="cb550"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co">## view univariate results table </span>
 <span class="va">univ_tab</span></code></pre></div>
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#cvdlcwhhro .gt_table {
+#qtlrqdrirx .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -259,7 +263,7 @@ functions available in <code>base</code> together with the <code>broom</code> pa
   border-left-color: #D3D3D3;
 }
 
-#cvdlcwhhro .gt_heading {
+#qtlrqdrirx .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -271,7 +275,7 @@ functions available in <code>base</code> together with the <code>broom</code> pa
   border-right-color: #D3D3D3;
 }
 
-#cvdlcwhhro .gt_title {
+#qtlrqdrirx .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -281,7 +285,7 @@ functions available in <code>base</code> together with the <code>broom</code> pa
   border-bottom-width: 0;
 }
 
-#cvdlcwhhro .gt_subtitle {
+#qtlrqdrirx .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -291,13 +295,13 @@ functions available in <code>base</code> together with the <code>broom</code> pa
   border-top-width: 0;
 }
 
-#cvdlcwhhro .gt_bottom_border {
+#qtlrqdrirx .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#cvdlcwhhro .gt_col_headings {
+#qtlrqdrirx .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -312,7 +316,7 @@ functions available in <code>base</code> together with the <code>broom</code> pa
   border-right-color: #D3D3D3;
 }
 
-#cvdlcwhhro .gt_col_heading {
+#qtlrqdrirx .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -332,7 +336,7 @@ functions available in <code>base</code> together with the <code>broom</code> pa
   overflow-x: hidden;
 }
 
-#cvdlcwhhro .gt_column_spanner_outer {
+#qtlrqdrirx .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -344,15 +348,15 @@ functions available in <code>base</code> together with the <code>broom</code> pa
   padding-right: 4px;
 }
 
-#cvdlcwhhro .gt_column_spanner_outer:first-child {
+#qtlrqdrirx .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#cvdlcwhhro .gt_column_spanner_outer:last-child {
+#qtlrqdrirx .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#cvdlcwhhro .gt_column_spanner {
+#qtlrqdrirx .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -364,7 +368,7 @@ functions available in <code>base</code> together with the <code>broom</code> pa
   width: 100%;
 }
 
-#cvdlcwhhro .gt_group_heading {
+#qtlrqdrirx .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -386,7 +390,7 @@ functions available in <code>base</code> together with the <code>broom</code> pa
   vertical-align: middle;
 }
 
-#cvdlcwhhro .gt_empty_group_heading {
+#qtlrqdrirx .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -401,15 +405,15 @@ functions available in <code>base</code> together with the <code>broom</code> pa
   vertical-align: middle;
 }
 
-#cvdlcwhhro .gt_from_md > :first-child {
+#qtlrqdrirx .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#cvdlcwhhro .gt_from_md > :last-child {
+#qtlrqdrirx .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#cvdlcwhhro .gt_row {
+#qtlrqdrirx .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -428,7 +432,7 @@ functions available in <code>base</code> together with the <code>broom</code> pa
   overflow-x: hidden;
 }
 
-#cvdlcwhhro .gt_stub {
+#qtlrqdrirx .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -440,7 +444,7 @@ functions available in <code>base</code> together with the <code>broom</code> pa
   padding-left: 12px;
 }
 
-#cvdlcwhhro .gt_summary_row {
+#qtlrqdrirx .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -450,7 +454,7 @@ functions available in <code>base</code> together with the <code>broom</code> pa
   padding-right: 5px;
 }
 
-#cvdlcwhhro .gt_first_summary_row {
+#qtlrqdrirx .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -460,7 +464,7 @@ functions available in <code>base</code> together with the <code>broom</code> pa
   border-top-color: #D3D3D3;
 }
 
-#cvdlcwhhro .gt_grand_summary_row {
+#qtlrqdrirx .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -470,7 +474,7 @@ functions available in <code>base</code> together with the <code>broom</code> pa
   padding-right: 5px;
 }
 
-#cvdlcwhhro .gt_first_grand_summary_row {
+#qtlrqdrirx .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -480,11 +484,11 @@ functions available in <code>base</code> together with the <code>broom</code> pa
   border-top-color: #D3D3D3;
 }
 
-#cvdlcwhhro .gt_striped {
+#qtlrqdrirx .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#cvdlcwhhro .gt_table_body {
+#qtlrqdrirx .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -493,7 +497,7 @@ functions available in <code>base</code> together with the <code>broom</code> pa
   border-bottom-color: #D3D3D3;
 }
 
-#cvdlcwhhro .gt_footnotes {
+#qtlrqdrirx .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -507,13 +511,13 @@ functions available in <code>base</code> together with the <code>broom</code> pa
   border-right-color: #D3D3D3;
 }
 
-#cvdlcwhhro .gt_footnote {
+#qtlrqdrirx .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#cvdlcwhhro .gt_sourcenotes {
+#qtlrqdrirx .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -527,46 +531,46 @@ functions available in <code>base</code> together with the <code>broom</code> pa
   border-right-color: #D3D3D3;
 }
 
-#cvdlcwhhro .gt_sourcenote {
+#qtlrqdrirx .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#cvdlcwhhro .gt_left {
+#qtlrqdrirx .gt_left {
   text-align: left;
 }
 
-#cvdlcwhhro .gt_center {
+#qtlrqdrirx .gt_center {
   text-align: center;
 }
 
-#cvdlcwhhro .gt_right {
+#qtlrqdrirx .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#cvdlcwhhro .gt_font_normal {
+#qtlrqdrirx .gt_font_normal {
   font-weight: normal;
 }
 
-#cvdlcwhhro .gt_font_bold {
+#qtlrqdrirx .gt_font_bold {
   font-weight: bold;
 }
 
-#cvdlcwhhro .gt_font_italic {
+#qtlrqdrirx .gt_font_italic {
   font-style: italic;
 }
 
-#cvdlcwhhro .gt_super {
+#qtlrqdrirx .gt_super {
   font-size: 65%;
 }
 
-#cvdlcwhhro .gt_footnote_marks {
+#qtlrqdrirx .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="cvdlcwhhro" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><div class="inline-table"><table class="gt_table">
+<div id="qtlrqdrirx" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><div class="inline-table"><table class="gt_table">
 <thead class="gt_col_headings"><tr>
 <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1"><strong>Characteristic</strong></th>
       <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1"><strong>N</strong></th>
@@ -701,7 +705,7 @@ produce odds ratios.</p>
 the <strong>broom</strong> package to get the exponentiated odds ratio estimates and confidence
 intervals. Here we demonstrate how to combine model outputs with a table of
 counts.</p>
-<div class="sourceCode" id="cb548"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb551"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op">(</span>
   <span class="co">## define the variables of interest</span>
   <span class="va">outcome</span> <span class="op">~</span> <span class="va">age_cat</span>, 
@@ -741,7 +745,7 @@ counts.</p>
 not controlling for each other), you can pass a vector of variable names to the
 <code>map</code> function in the <strong>purrr</strong> package. This will loop over each of the variables
 running regressions for each one.</p>
-<div class="sourceCode" id="cb550"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb553"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">models</span> <span class="op">&lt;-</span> <span class="va">explanatory_vars</span> <span class="op">%&gt;%</span> 
   <span class="co">## combine each name of the variables of interest with the name of outcome variable</span>
   <span class="fu">str_c</span><span class="op">(</span><span class="st">"outcome ~ "</span>, <span class="va">.</span><span class="op">)</span> <span class="op">%&gt;%</span> 
@@ -795,6 +799,10 @@ running regressions for each one.</p>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind.html">bind_cols</a></span><span class="op">(</span><span class="va">.</span>, <span class="va">models</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="co">## only keep columns interested in </span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">term</span>, <span class="fl">2</span><span class="op">:</span><span class="fl">3</span>, <span class="va">estimate</span>, <span class="va">conf.low</span>, <span class="va">conf.high</span>, <span class="va">p.value</span><span class="op">)</span></code></pre></div>
+<pre><code>## Note: Using an external vector in selections is ambiguous.
+## i Use `all_of(.x)` instead of `.x` to silence this message.
+## i See &lt;https://tidyselect.r-lib.org/reference/faq-external-vector.html&gt;.
+## This message is displayed once per session.</code></pre>
 <!-- ======================================================= -->
 </div>
 </div>
@@ -828,7 +836,7 @@ this page will be updated in due course.</p>
 between using <code>gtsummary</code> or <code>broom</code> to present the data.
 The workflow is the same for both, as below, and only the last step of pulling a
 table together is different.</p>
-<div class="sourceCode" id="cb551"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb555"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## run a regression with all variables of interest </span>
 <span class="va">mv_reg</span> <span class="op">&lt;-</span> <span class="va">explanatory_vars</span> <span class="op">%&gt;%</span> 
   <span class="co">## combine all names of the variables of interest separated by a plus</span>
@@ -854,7 +862,7 @@ take the outputs from a regression (<code>glm</code> in this case) and produce a
 summary table.
 You can also combine several different output tables produced by <code>gtsummary</code> with
 the <code>tbl_mege</code> function.</p>
-<div class="sourceCode" id="cb552"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb556"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## show results table of final regression </span>
 <span class="va">mv_tab</span> <span class="op">&lt;-</span> <span class="fu">tbl_regression</span><span class="op">(</span><span class="va">final_mv_reg</span>, exponentiate <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 
@@ -866,7 +874,7 @@ the <code>tbl_mege</code> function.</p>
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#fuabtgbxdw .gt_table {
+#saioihejrh .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -891,7 +899,7 @@ the <code>tbl_mege</code> function.</p>
   border-left-color: #D3D3D3;
 }
 
-#fuabtgbxdw .gt_heading {
+#saioihejrh .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -903,7 +911,7 @@ the <code>tbl_mege</code> function.</p>
   border-right-color: #D3D3D3;
 }
 
-#fuabtgbxdw .gt_title {
+#saioihejrh .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -913,7 +921,7 @@ the <code>tbl_mege</code> function.</p>
   border-bottom-width: 0;
 }
 
-#fuabtgbxdw .gt_subtitle {
+#saioihejrh .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -923,13 +931,13 @@ the <code>tbl_mege</code> function.</p>
   border-top-width: 0;
 }
 
-#fuabtgbxdw .gt_bottom_border {
+#saioihejrh .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#fuabtgbxdw .gt_col_headings {
+#saioihejrh .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -944,7 +952,7 @@ the <code>tbl_mege</code> function.</p>
   border-right-color: #D3D3D3;
 }
 
-#fuabtgbxdw .gt_col_heading {
+#saioihejrh .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -964,7 +972,7 @@ the <code>tbl_mege</code> function.</p>
   overflow-x: hidden;
 }
 
-#fuabtgbxdw .gt_column_spanner_outer {
+#saioihejrh .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -976,15 +984,15 @@ the <code>tbl_mege</code> function.</p>
   padding-right: 4px;
 }
 
-#fuabtgbxdw .gt_column_spanner_outer:first-child {
+#saioihejrh .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#fuabtgbxdw .gt_column_spanner_outer:last-child {
+#saioihejrh .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#fuabtgbxdw .gt_column_spanner {
+#saioihejrh .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -996,7 +1004,7 @@ the <code>tbl_mege</code> function.</p>
   width: 100%;
 }
 
-#fuabtgbxdw .gt_group_heading {
+#saioihejrh .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1018,7 +1026,7 @@ the <code>tbl_mege</code> function.</p>
   vertical-align: middle;
 }
 
-#fuabtgbxdw .gt_empty_group_heading {
+#saioihejrh .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1033,15 +1041,15 @@ the <code>tbl_mege</code> function.</p>
   vertical-align: middle;
 }
 
-#fuabtgbxdw .gt_from_md > :first-child {
+#saioihejrh .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#fuabtgbxdw .gt_from_md > :last-child {
+#saioihejrh .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#fuabtgbxdw .gt_row {
+#saioihejrh .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1060,7 +1068,7 @@ the <code>tbl_mege</code> function.</p>
   overflow-x: hidden;
 }
 
-#fuabtgbxdw .gt_stub {
+#saioihejrh .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1072,7 +1080,7 @@ the <code>tbl_mege</code> function.</p>
   padding-left: 12px;
 }
 
-#fuabtgbxdw .gt_summary_row {
+#saioihejrh .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1082,7 +1090,7 @@ the <code>tbl_mege</code> function.</p>
   padding-right: 5px;
 }
 
-#fuabtgbxdw .gt_first_summary_row {
+#saioihejrh .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1092,7 +1100,7 @@ the <code>tbl_mege</code> function.</p>
   border-top-color: #D3D3D3;
 }
 
-#fuabtgbxdw .gt_grand_summary_row {
+#saioihejrh .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1102,7 +1110,7 @@ the <code>tbl_mege</code> function.</p>
   padding-right: 5px;
 }
 
-#fuabtgbxdw .gt_first_grand_summary_row {
+#saioihejrh .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1112,11 +1120,11 @@ the <code>tbl_mege</code> function.</p>
   border-top-color: #D3D3D3;
 }
 
-#fuabtgbxdw .gt_striped {
+#saioihejrh .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#fuabtgbxdw .gt_table_body {
+#saioihejrh .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1125,7 +1133,7 @@ the <code>tbl_mege</code> function.</p>
   border-bottom-color: #D3D3D3;
 }
 
-#fuabtgbxdw .gt_footnotes {
+#saioihejrh .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1139,13 +1147,13 @@ the <code>tbl_mege</code> function.</p>
   border-right-color: #D3D3D3;
 }
 
-#fuabtgbxdw .gt_footnote {
+#saioihejrh .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#fuabtgbxdw .gt_sourcenotes {
+#saioihejrh .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1159,46 +1167,46 @@ the <code>tbl_mege</code> function.</p>
   border-right-color: #D3D3D3;
 }
 
-#fuabtgbxdw .gt_sourcenote {
+#saioihejrh .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#fuabtgbxdw .gt_left {
+#saioihejrh .gt_left {
   text-align: left;
 }
 
-#fuabtgbxdw .gt_center {
+#saioihejrh .gt_center {
   text-align: center;
 }
 
-#fuabtgbxdw .gt_right {
+#saioihejrh .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#fuabtgbxdw .gt_font_normal {
+#saioihejrh .gt_font_normal {
   font-weight: normal;
 }
 
-#fuabtgbxdw .gt_font_bold {
+#saioihejrh .gt_font_bold {
   font-weight: bold;
 }
 
-#fuabtgbxdw .gt_font_italic {
+#saioihejrh .gt_font_italic {
   font-style: italic;
 }
 
-#fuabtgbxdw .gt_super {
+#saioihejrh .gt_super {
   font-size: 65%;
 }
 
-#fuabtgbxdw .gt_footnote_marks {
+#saioihejrh .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="fuabtgbxdw" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><div class="inline-table"><table class="gt_table">
+<div id="saioihejrh" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><div class="inline-table"><table class="gt_table">
 <thead class="gt_col_headings">
 <tr>
 <th class="gt_col_heading gt_center gt_columns_bottom_border" rowspan="2" colspan="1"><strong>Characteristic</strong></th>
@@ -1386,7 +1394,7 @@ the <code>tbl_mege</code> function.</p>
 <h3>
 <span class="header-section-number">19.5.2</span> <code>base</code><a class="anchor" aria-label="anchor" href="#base-2"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb553"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb557"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">mv_tab_base</span> <span class="op">&lt;-</span> <span class="va">final_mv_reg</span> <span class="op">%&gt;%</span> 
   <span class="co">## get a tidy dataframe of estimates </span>
   <span class="fu">broom</span><span class="fu">::</span><span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html">tidy</a></span><span class="op">(</span>exponentiate <span class="op">=</span> <span class="cn">TRUE</span>, conf.int <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
@@ -1444,7 +1452,7 @@ package called</p>
 <h3>
 <span class="header-section-number">19.6.1</span> <code>ggplot2</code> package<a class="anchor" aria-label="anchor" href="#ggplot2-package"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb555"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb559"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## remove the intercept term from your multivariable results</span>
 <span class="va">mv_tab_base</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">term</span> <span class="op">!=</span> <span class="st">"(Intercept)"</span><span class="op">)</span> <span class="op">%&gt;%</span> 
@@ -1468,7 +1476,7 @@ for a <code>ggplot</code>, is to use a combination of <code>easystats</code> pac
 In this case the <code>paramaters</code> package function <code>model_paramets</code> does the equivalent
 of <code>broom</code> package function <code>tidy</code>. The <code>see</code> package then accepts those outputs
 and creates a default forest plot as a <code>ggplot</code> object.</p>
-<div class="sourceCode" id="cb556"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb560"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## remove the intercept term from your multivariable results</span>
 <span class="va">final_mv_reg</span> <span class="op">%&gt;%</span> 
   <span class="fu">model_parameters</span><span class="op">(</span>exponentiate <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">%&gt;%</span> 

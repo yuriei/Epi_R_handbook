@@ -147,7 +147,7 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 #count_data <- rio::import(here::here("data", "facility_count_data.rds"))
 ```
 
-<!--chapter:end:raw_pages/cat_about_book.Rmd-->
+<!--chapter:end:new_pages/cat_about_book.Rmd-->
 
 # Style and editorial notes {.tabset .tabset-fade}
 
@@ -244,7 +244,7 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 #count_data <- rio::import(here::here("data", "facility_count_data.rds"))
 ```
 
-<!--chapter:end:raw_pages/editorial_style.Rmd-->
+<!--chapter:end:new_pages/editorial_style.Rmd-->
 
 # Datasets used
 
@@ -275,7 +275,7 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 #count_data <- rio::import(here::here("data", "facility_count_data.rds"))
 ```
 
-<!--chapter:end:raw_pages/data_used.Rmd-->
+<!--chapter:end:new_pages/data_used.Rmd-->
 
 # (PART) Basics {-}
 ```{r include=FALSE, cache=FALSE}
@@ -299,7 +299,7 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 #count_data <- rio::import(here::here("data", "facility_count_data.rds"))
 ```
 
-<!--chapter:end:raw_pages/cat_basics.Rmd-->
+<!--chapter:end:new_pages/cat_basics.Rmd-->
 
 # R Basics {.tabset .tabset-fade}
 
@@ -1488,7 +1488,7 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 #count_data <- rio::import(here::here("data", "facility_count_data.rds"))
 ```
 
-<!--chapter:end:raw_pages/basics.Rmd-->
+<!--chapter:end:new_pages/basics.Rmd-->
 
 # Importing data {.tabset .tabset-fade}
 
@@ -1910,7 +1910,7 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 #count_data <- rio::import(here::here("data", "facility_count_data.rds"))
 ```
 
-<!--chapter:end:raw_pages/importing.Rmd-->
+<!--chapter:end:new_pages/importing.Rmd-->
 
 
 # R projects {.tabset .tabset-fade}  
@@ -2010,7 +2010,7 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 #count_data <- rio::import(here::here("data", "facility_count_data.rds"))
 ```
 
-<!--chapter:end:raw_pages/r_projects.Rmd-->
+<!--chapter:end:new_pages/r_projects.Rmd-->
 
 
 # Errors & Warnings {.tabset .tabset-fade}  
@@ -2144,7 +2144,7 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 #count_data <- rio::import(here::here("data", "facility_count_data.rds"))
 ```
 
-<!--chapter:end:raw_pages/errors_warnings.Rmd-->
+<!--chapter:end:new_pages/errors_warnings.Rmd-->
 
 # (PART) Data Management {-}
 ```{r include=FALSE, cache=FALSE}
@@ -2168,7 +2168,7 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 #count_data <- rio::import(here::here("data", "facility_count_data.rds"))
 ```
 
-<!--chapter:end:raw_pages/cat_data_management.Rmd-->
+<!--chapter:end:new_pages/cat_data_management.Rmd-->
 
 # Cleaning data {.tabset .tabset-fade}
 
@@ -3983,7 +3983,7 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 #count_data <- rio::import(here::here("data", "facility_count_data.rds"))
 ```
 
-<!--chapter:end:raw_pages/cleaning.Rmd-->
+<!--chapter:end:new_pages/cleaning.Rmd-->
 
 
 # Working with Dates {.tabset .tabset-fade}
@@ -4410,7 +4410,7 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 #count_data <- rio::import(here::here("data", "facility_count_data.rds"))
 ```
 
-<!--chapter:end:raw_pages/dates.Rmd-->
+<!--chapter:end:new_pages/dates.Rmd-->
 
 
 # Missing data {.tabset .tabset-fade}
@@ -4559,7 +4559,7 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 #count_data <- rio::import(here::here("data", "facility_count_data.rds"))
 ```
 
-<!--chapter:end:raw_pages/missing_data.Rmd-->
+<!--chapter:end:new_pages/missing_data.Rmd-->
 
 
 # Grouping/aggregating data {.tabset .tabset-fade}  
@@ -4720,7 +4720,7 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 #count_data <- rio::import(here::here("data", "facility_count_data.rds"))
 ```
 
-<!--chapter:end:raw_pages/grouping_aggregating.Rmd-->
+<!--chapter:end:new_pages/grouping_aggregating.Rmd-->
 
 
 # Joining & matching datasets {.tabset .tabset-fade}  
@@ -5145,7 +5145,7 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 #count_data <- rio::import(here::here("data", "facility_count_data.rds"))
 ```
 
-<!--chapter:end:raw_pages/matching_joining.Rmd-->
+<!--chapter:end:new_pages/matching_joining.Rmd-->
 
 
 # Characters/strings {.tabset .tabset-fade}  
@@ -6142,7 +6142,7 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 #count_data <- rio::import(here::here("data", "facility_count_data.rds"))
 ```
 
-<!--chapter:end:raw_pages/character_regex.Rmd-->
+<!--chapter:end:new_pages/character_regex.Rmd-->
 
 
 # De-duplication {.tabset}  
@@ -6737,7 +6737,7 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 #count_data <- rio::import(here::here("data", "facility_count_data.rds"))
 ```
 
-<!--chapter:end:raw_pages/deduplication.Rmd-->
+<!--chapter:end:new_pages/deduplication.Rmd-->
 
 
 # if/else & 'for' loops {.tabset .tabset-fade}  
@@ -6817,7 +6817,7 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 #count_data <- rio::import(here::here("data", "facility_count_data.rds"))
 ```
 
-<!--chapter:end:raw_pages/conditional_loops.Rmd-->
+<!--chapter:end:new_pages/conditional_loops.Rmd-->
 
 
 # apply functions {.tabset .tabset-fade}  
@@ -6917,7 +6917,7 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 #count_data <- rio::import(here::here("data", "facility_count_data.rds"))
 ```
 
-<!--chapter:end:raw_pages/apply_functions.Rmd-->
+<!--chapter:end:new_pages/apply_functions.Rmd-->
 
 # (PART) Analysis {-}
 
@@ -6946,7 +6946,7 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 #count_data <- rio::import(here::here("data", "facility_count_data.rds"))
 ```
 
-<!--chapter:end:raw_pages/cat_analysis.Rmd-->
+<!--chapter:end:new_pages/cat_analysis.Rmd-->
 
 # Descriptive analysis {.tabset .tabset-fade}
 
@@ -7763,7 +7763,7 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 #count_data <- rio::import(here::here("data", "facility_count_data.rds"))
 ```
 
-<!--chapter:end:raw_pages/descriptive_statistics.Rmd-->
+<!--chapter:end:new_pages/descriptive_statistics.Rmd-->
 
 # Simple statistical tests {.tabset .tabset-fade}
 
@@ -8195,7 +8195,7 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 #count_data <- rio::import(here::here("data", "facility_count_data.rds"))
 ```
 
-<!--chapter:end:raw_pages/stat_tests.Rmd-->
+<!--chapter:end:new_pages/stat_tests.Rmd-->
 
 
 # Moving averages {.tabset .tabset-fade}  
@@ -8356,7 +8356,7 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 #count_data <- rio::import(here::here("data", "facility_count_data.rds"))
 ```
 
-<!--chapter:end:raw_pages/moving_average.Rmd-->
+<!--chapter:end:new_pages/moving_average.Rmd-->
 
 
 # Outbreak detection {.tabset .tabset-fade}  
@@ -8461,7 +8461,7 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 #count_data <- rio::import(here::here("data", "facility_count_data.rds"))
 ```
 
-<!--chapter:end:raw_pages/endemic_corridor.Rmd-->
+<!--chapter:end:new_pages/endemic_corridor.Rmd-->
 
 
 # Time series analysis {.tabset .tabset-fade}  
@@ -8562,7 +8562,7 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 #count_data <- rio::import(here::here("data", "facility_count_data.rds"))
 ```
 
-<!--chapter:end:raw_pages/time_series.Rmd-->
+<!--chapter:end:new_pages/time_series.Rmd-->
 
 
 # Epidemic modeling {#epidemicmodels .tabset .tabset-fade}  
@@ -8666,7 +8666,7 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 #count_data <- rio::import(here::here("data", "facility_count_data.rds"))
 ```
 
-<!--chapter:end:raw_pages/epidemic_models.Rmd-->
+<!--chapter:end:new_pages/epidemic_models.Rmd-->
 
 
 # Modeling {.tabset .tabset-fade}  
@@ -8744,7 +8744,7 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 #count_data <- rio::import(here::here("data", "facility_count_data.rds"))
 ```
 
-<!--chapter:end:raw_pages/modeling.Rmd-->
+<!--chapter:end:new_pages/modeling.Rmd-->
 
 
 # Survey analysis {.tabset .tabset-fade}  
@@ -8827,7 +8827,7 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 #count_data <- rio::import(here::here("data", "facility_count_data.rds"))
 ```
 
-<!--chapter:end:raw_pages/survey_analysis.Rmd-->
+<!--chapter:end:new_pages/survey_analysis.Rmd-->
 
 
 # Survival analysis {.tabset .tabset-fade}  
@@ -8915,7 +8915,7 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 #count_data <- rio::import(here::here("data", "facility_count_data.rds"))
 ```
 
-<!--chapter:end:raw_pages/survival_analysis.Rmd-->
+<!--chapter:end:new_pages/survival_analysis.Rmd-->
 
 
 # GIS basics {.tabset .tabset-fade}  
@@ -8998,7 +8998,7 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 #count_data <- rio::import(here::here("data", "facility_count_data.rds"))
 ```
 
-<!--chapter:end:raw_pages/gis.Rmd-->
+<!--chapter:end:new_pages/gis.Rmd-->
 
 # (PART) Data Vizualization {-}
 ```{r include=FALSE, cache=FALSE}
@@ -9022,7 +9022,7 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 #count_data <- rio::import(here::here("data", "facility_count_data.rds"))
 ```
 
-<!--chapter:end:raw_pages/cat_data_viz.Rmd-->
+<!--chapter:end:new_pages/cat_data_viz.Rmd-->
 
 
 # ggplot tips {.tabset .tabset-fade}  
@@ -9113,7 +9113,7 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 #count_data <- rio::import(here::here("data", "facility_count_data.rds"))
 ```
 
-<!--chapter:end:raw_pages/ggplot_tips.Rmd-->
+<!--chapter:end:new_pages/ggplot_tips.Rmd-->
 
 
 # Epidemic curves {.tabset .tabset-fade}  
@@ -11095,7 +11095,7 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 #count_data <- rio::import(here::here("data", "facility_count_data.rds"))
 ```
 
-<!--chapter:end:raw_pages/epicurves.Rmd-->
+<!--chapter:end:new_pages/epicurves.Rmd-->
 
 
 # Plotting continuous data {.tabset .tabset-fade}  
@@ -11387,7 +11387,7 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 #count_data <- rio::import(here::here("data", "facility_count_data.rds"))
 ```
 
-<!--chapter:end:raw_pages/plot_continuous.Rmd-->
+<!--chapter:end:new_pages/plot_continuous.Rmd-->
 
 
 # Plotting discrete variables  {.tabset .tabset-fade}  
@@ -11466,7 +11466,7 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 #count_data <- rio::import(here::here("data", "facility_count_data.rds"))
 ```
 
-<!--chapter:end:raw_pages/plot_discrete.Rmd-->
+<!--chapter:end:new_pages/plot_discrete.Rmd-->
 
 
 # Tables {.tabset .tabset-fade}  
@@ -11554,7 +11554,7 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 #count_data <- rio::import(here::here("data", "facility_count_data.rds"))
 ```
 
-<!--chapter:end:raw_pages/tables.Rmd-->
+<!--chapter:end:new_pages/tables.Rmd-->
 
 
 # Age pyramids {.tabset .tabset-fade}  
@@ -12230,7 +12230,7 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 #count_data <- rio::import(here::here("data", "facility_count_data.rds"))
 ```
 
-<!--chapter:end:raw_pages/age_pyramid.Rmd-->
+<!--chapter:end:new_pages/age_pyramid.Rmd-->
 
 
 # Diagrams {.tabset .tabset-fade}  
@@ -12854,7 +12854,7 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 #count_data <- rio::import(here::here("data", "facility_count_data.rds"))
 ```
 
-<!--chapter:end:raw_pages/diagrams.Rmd-->
+<!--chapter:end:new_pages/diagrams.Rmd-->
 
 
 # Combination analysis {.tabset .tabset-fade}  
@@ -13107,7 +13107,7 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 #count_data <- rio::import(here::here("data", "facility_count_data.rds"))
 ```
 
-<!--chapter:end:raw_pages/combination_analysis.Rmd-->
+<!--chapter:end:new_pages/combination_analysis.Rmd-->
 
 
 # Heatmaps & density plots {.tabset .tabset-fade}  
@@ -13120,13 +13120,13 @@ Heatmaps can be useful when tracking reporting metrics across many facilities/ju
 
 For example, the image below shows % of weekdays that data was received from each facility, week-by-week:  
 
-```{r echo=F, out.width=c('50%','50%'), fig.show='hold'}
-
+```{r echo=F, fig.show='hold', message=FALSE, warning=FALSE, out.width=c('50%','50%')}
+linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 facility_count_data <- rio::import(here::here("data", "facility_count_data.rds"))
 pacman::p_load(aweek, tidyverse)
 ```
 
-```{r}
+```{r, message=FALSE, warning=FALSE, echo=F}
 # Create weekly summary dataset
 ###############################
 agg_weeks <- facility_count_data %>% 
@@ -13155,7 +13155,7 @@ agg_weeks <- facility_count_data %>%
 ```
 
 
-```{r}
+```{r echo=F, fig.show='hold', message=FALSE, warning=FALSE, out.width=c('50%','50%')}
 # METRICS PLOT
 ##############
 ggplot(agg_weeks,
@@ -13295,7 +13295,7 @@ To achieve this:
 5) The dataframe is joined (`right_join()`) to a comprehensive list of all possible facility-week combinations, to make the dataset complete. The matrix of all possible combinations is created by applying `expand()` to those two columns of the dataframe as it is at that moment in the pipe chain (represented by "."). Because a `right_join()` is used, all rows in the `expand()` dataframe are kept, and added to agg_weeks if necessary. These new rows appear with `NA` (missing) summarized values.  
 
 
-```{r}
+```{r, message=FALSE, warning=FALSE}
 # Create weekly summary dataset
 agg_weeks <- facility_count_data %>% 
   
@@ -13342,7 +13342,7 @@ The `ggplot()` is make using `geom_tile()`:
 #### Basic  
 <h4> Basic </h4>
 
-```{r}
+```{r, message=FALSE, warning=FALSE}
 ggplot(agg_weeks,
        aes(x = aweek::week2date(week),            # transformed to date class
            y = location_name,
@@ -13393,9 +13393,11 @@ facility_order <- agg_weeks %>%
   summarize(tot_reports = sum(n_days_reported, na.rm=T)) %>% 
   arrange(tot_reports) # ascending order
 ```
+
 ```{r}
 as.tibble(facility_order)
 ```
+
 Now use the above vector (`facility_order$location_name`) to be the order of the factor levels of location_name in the dataset `agg_weeks`:  
 
 ```{r}
@@ -13405,7 +13407,7 @@ agg_weeks <- agg_weeks %>%
 
 And now the data are re-plotted, with location_name being an ordered factor:  
 
-```{r}
+```{r, message=FALSE, warning=FALSE}
 ggplot(agg_weeks,
        aes(x = aweek::week2date(week),            # transformed to date class
            y = location_name,
@@ -13453,7 +13455,7 @@ You can add a `geom_text()` layer on top of the tiles, to display the actual num
 
 * Note the fillowing code added `geom_text(aes(label=p_days_reported))+`. In the aesthetic `aes()` of the `geom_tile()` the argument `label` (what to show) is set to the same numeric column used to create the color gradient.  
 
-```{r}
+```{r, message=FALSE, warning=FALSE}
 ggplot(agg_weeks,
        aes(x = aweek::week2date(week),            # transformed to date class
            y = location_name,
@@ -13504,7 +13506,7 @@ Contoured heatmap of cases over a basemap
 
 http://data-analytics.net/cep/Schedule_files/geospatial.html
 
-```{r}
+```{r, message=FALSE, warning=FALSE}
 pacman::p_load(OpenStreetMap)
 
 # Fit basemap by range of lat/long coordinates. Choose tile type
@@ -13567,7 +13569,7 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 #count_data <- rio::import(here::here("data", "facility_count_data.rds"))
 ```
 
-<!--chapter:end:raw_pages/heatmaps.Rmd-->
+<!--chapter:end:new_pages/heatmaps.Rmd-->
 
 
 # Transmission Chains {.tabset .tabset-fade}
@@ -13674,7 +13676,7 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 #count_data <- rio::import(here::here("data", "facility_count_data.rds"))
 ```
 
-<!--chapter:end:raw_pages/transmission_chains.Rmd-->
+<!--chapter:end:new_pages/transmission_chains.Rmd-->
 
 
 # Phylogenetic trees {.tabset .tabset-fade}  
@@ -14160,7 +14162,7 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 #count_data <- rio::import(here::here("data", "facility_count_data.rds"))
 ```
 
-<!--chapter:end:raw_pages/phylogenetic_trees.Rmd-->
+<!--chapter:end:new_pages/phylogenetic_trees.Rmd-->
 
 
 # Interactive plots {.tabset .tabset-fade}  
@@ -14438,7 +14440,7 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 #count_data <- rio::import(here::here("data", "facility_count_data.rds"))
 ```
 
-<!--chapter:end:raw_pages/interactive_plots.Rmd-->
+<!--chapter:end:new_pages/interactive_plots.Rmd-->
 
 # (PART) Advanced {-}
 ```{r include=FALSE, cache=FALSE}
@@ -14462,7 +14464,7 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 #count_data <- rio::import(here::here("data", "facility_count_data.rds"))
 ```
 
-<!--chapter:end:raw_pages/cat_advanced.Rmd-->
+<!--chapter:end:new_pages/cat_advanced.Rmd-->
 
 
 # Advanced RStudio {.tabset .tabset-fade}  
@@ -14562,7 +14564,7 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 #count_data <- rio::import(here::here("data", "facility_count_data.rds"))
 ```
 
-<!--chapter:end:raw_pages/rstudio_advanced.Rmd-->
+<!--chapter:end:new_pages/rstudio_advanced.Rmd-->
 
 # Relational databases {.tabset .tabset-fade}  
 
@@ -14662,7 +14664,7 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 #count_data <- rio::import(here::here("data", "facility_count_data.rds"))
 ```
 
-<!--chapter:end:raw_pages/relational_databases.Rmd-->
+<!--chapter:end:new_pages/relational_databases.Rmd-->
 
 
 # Routine reports { .tabset .tabset-fade}  
@@ -14762,7 +14764,7 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 #count_data <- rio::import(here::here("data", "facility_count_data.rds"))
 ```
 
-<!--chapter:end:raw_pages/reportfactory.Rmd-->
+<!--chapter:end:new_pages/reportfactory.Rmd-->
 
 
 # R Markdown {.tabset .tabset-fade}  
@@ -14962,7 +14964,7 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 #count_data <- rio::import(here::here("data", "facility_count_data.rds"))
 ```
 
-<!--chapter:end:raw_pages/rmarkdown.Rmd-->
+<!--chapter:end:new_pages/rmarkdown.Rmd-->
 
 
 # Shiny basics {.tabset .tabset-fade}  
@@ -15062,7 +15064,7 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 #count_data <- rio::import(here::here("data", "facility_count_data.rds"))
 ```
 
-<!--chapter:end:raw_pages/shiny_basics.Rmd-->
+<!--chapter:end:new_pages/shiny_basics.Rmd-->
 
 
 # Collaboration {.tabset .tabset-fade}  
@@ -15150,7 +15152,7 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 #count_data <- rio::import(here::here("data", "facility_count_data.rds"))
 ```
 
-<!--chapter:end:raw_pages/collaboration.Rmd-->
+<!--chapter:end:new_pages/collaboration.Rmd-->
 
 
 # Writing functions {.tabset .tabset-fade}  
@@ -15250,7 +15252,7 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 #count_data <- rio::import(here::here("data", "facility_count_data.rds"))
 ```
 
-<!--chapter:end:raw_pages/writing_functions.Rmd-->
+<!--chapter:end:new_pages/writing_functions.Rmd-->
 
 
 # R on network drives {.tabset .tabset-fade}  
@@ -15443,7 +15445,7 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 #count_data <- rio::import(here::here("data", "facility_count_data.rds"))
 ```
 
-<!--chapter:end:raw_pages/network_drives.Rmd-->
+<!--chapter:end:new_pages/network_drives.Rmd-->
 
 
 # Directory interactions {.tabset .tabset-fade}  
@@ -15537,5 +15539,5 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 #count_data <- rio::import(here::here("data", "facility_count_data.rds"))
 ```
 
-<!--chapter:end:raw_pages/directories.Rmd-->
+<!--chapter:end:new_pages/directories.Rmd-->
 

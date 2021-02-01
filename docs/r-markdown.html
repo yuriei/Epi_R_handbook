@@ -132,7 +132,7 @@
 </h2>
 <p>An R Markdown document looks like and can be edited just like a standard R script, in R Studio. However, it contains more than just the usual R code and hashed comments. There are three basic components:</p>
 <p><strong>1. Metadata</strong>: This is referred to as the ‘YAML metadata’ and is at the top of the R Markdown document between two ‘—‘s. It will tell your Rmd file what type of output to produce, formatting preferences, and other metadata sucsh as document title, author, and date. There are other uses not mentioned here (but referred to in ‘Producing an output’). Note that indentation matters.</p>
-<div class="inline-figure"><img src="../images/markdown/1_yaml.png"></div>
+<div class="inline-figure"><img src="images/markdown/1_yaml.PNG" width="467"></div>
 <p><strong>2. Text</strong>: This is the narrative of your document, including the titles. It is written in the markdown language, used across many different programmes. This means you can add basic formatting, for instance:</p>
 <ul>
 <li>
@@ -150,7 +150,7 @@
 </ul>
 <p>The actual appearance of the font can be set by using specific templates (specified in the YAML metadata; see example tabs).</p>
 <p>You can also include minimal R code within backwards ticks, for within-text values. See example below.</p>
-<div class="inline-figure"><img src="../images/markdown/2_text.png"></div>
+<div class="inline-figure"><img src="images/markdown/2_text.png" width="400"></div>
 <p><strong>3. Code chunks</strong>: This is where the R code goes, for the actual data management and visualisation. To note:
 These ‘chunks’ will appear to have a slightly different background colour from the narrative part of the document.</p>
 <p>Each chunk always starts with three backticks and chunk information within squiggly brackets, and ends with three more backticks.</p>
@@ -160,9 +160,8 @@ These ‘chunks’ will appear to have a slightly different background colour fr
 <li>Followed by the chunk name - note this should ALWAYS be a unique name or else R will complain when you try to render.</li>
 <li>It can include other options too, but many of these can be configured with point-and-click using the setting buttons at the top right of the chunk. Here, you can specify which parts of the chunk you want the rendered document to include, namely the code, the outputs, and the warnings. This will come out as written preferences within the squiggly brackets, e.g. ‘echo=FALSE’ if you specify you want to ‘Show output only’.</li>
 </ul>
-<div class="inline-figure">There are also two arrows at the top right of each chunk, which are useful to run code within a chunk, or all code in prior chunks.
-<img src="../images/markdown/3_chunk.png">
-</div>
+<p>There are also two arrows at the top right of each chunk, which are useful to run code within a chunk, or all code in prior chunks.</p>
+<div class="inline-figure"><img src="images/markdown/3_chunk.png" width="466"></div>
 <!-- ======================================================= -->
 </div>
 <div id="producing-an-output" class="section level2 tabset tabset-fade tabset-pills" number="43.4">
@@ -172,7 +171,8 @@ These ‘chunks’ will appear to have a slightly different background colour fr
 <p><strong>General notes</strong></p>
 <p>Everything used by this markdown must be referenced within the Rmd file. For instance, you need to load any required packages or data.</p>
 <p><strong>A single or test run from within R Markdown</strong></p>
-<div class="inline-figure">To render a single document, for instance if you are testing it or if you only need to produce one rendered document at a time, you can do it from within the open R Markdown file. Click the <img src="../images/markdown/4_knitbutton.png"> button at the top of the document.</div>
+<p>To render a single document, for instance if you are testing it or if you only need to produce one rendered document at a time, you can do it from within the open R Markdown file. Click the “knit” button at the top of the document.</p>
+<div class="inline-figure"><img src="images/markdown/4_knitbutton.PNG" width="24"></div>
 <p>The ‘R Markdown’ tab will start processing to show you the overall progress, and a complete document will automatically open when complete. This document will also be saved in the same folder as your markdown, and with the same file name aside from the file extension. This is obviously not ideal for version control, as you will then rename the file yourself.</p>
 <p><strong>A single run from an separate script</strong></p>
 <p>To run the markdown so that a date-stamped file is produced, you can create a separate script and call the Rmd file from within it. You can also specify the folder and file name, and include a dynamic date and time, so that file will be date stamped on production.</p>
@@ -207,7 +207,7 @@ rmarkdown::render(("rmd_reports/create_report.Rmd"),
 <li>Refer to this parameterised object within the code as needed. E.g. <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter(area == params$areanumber)</a></code> rather than <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter(area=="Area1")</a></code>.</li>
 </ol>
 <p>For instance (simplified version which does not include setup code such as library/data loading):</p>
-<div class="inline-figure"><img src="../images/markdown/5_parameterized.png"></div>
+<div class="inline-figure"><img src="images/markdown/5_parameterized.png" width="366"></div>
 <p>You can change the content by editing the YAML as needed, or set up a loop in a separate script to iterate through the areas. As with the previous section, you can set up the folders as well.</p>
 <p>As you can see below, you set up a list which includes all areas of interest (<code>arealist</code>), and when rendering the markdown you specify that the parameterized <code>areanumber</code> for a specific iteration is the Nth value of the arealist. For instance, for the first iteration, areanumber will equate to “Area1”. The code below also specifies that the Nth area name will be included in the output file name.</p>
 <p>Note that this will work even if an area or date are specified within the YAML itself - that YAML information will get overwritten by the loop.</p>

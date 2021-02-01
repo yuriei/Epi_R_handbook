@@ -121,7 +121,7 @@
 <div class="sourceCode" id="cb197"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># get the system time - this is a DATETIME class</span>
 <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.time</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<pre><code>## [1] "2021-01-31 17:44:34 EST"</code></pre>
+<pre><code>## [1] "2021-01-31 19:10:54 EST"</code></pre>
 <ul>
 <li>It is important to make R recognize when a variable contains dates.<br>
 </li>
@@ -218,7 +218,7 @@
 <p>If using <a href="r-basics.html#piping">piping</a> and the tidyverse, the converting a character column to dates might look like this:</p>
 <div class="sourceCode" id="cb214"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">linelist_cleaned</span> <span class="op">&lt;-</span> <span class="va">linelist_cleaned</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>date_of_onset <span class="op">=</span> <span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="http://lubridate.tidyverse.org/reference/ymd.html">dmy</a></span><span class="op">(</span><span class="va">date_of_onset</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+  <span class="fu">mutate</span><span class="op">(</span>date_of_onset <span class="op">=</span> <span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="http://lubridate.tidyverse.org/reference/ymd.html">dmy</a></span><span class="op">(</span><span class="va">date_of_onset</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>Once complete, you can run a command to verify the class of the variable</p>
 <div class="sourceCode" id="cb215"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Check the class of the variable</span>
@@ -315,12 +315,12 @@
 
 <span class="va">linelist_cleaned</span> <span class="op">&lt;-</span> <span class="va">linelist_cleaned</span> <span class="op">%&gt;%</span>
     <span class="co"># convert date of onset from character to date objects by specifying dmy format</span>
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>date_of_onset <span class="op">=</span> <span class="fu"><a href="http://lubridate.tidyverse.org/reference/ymd.html">dmy</a></span><span class="op">(</span><span class="va">date_of_onset</span><span class="op">)</span>,
+    <span class="fu">mutate</span><span class="op">(</span>date_of_onset <span class="op">=</span> <span class="fu"><a href="http://lubridate.tidyverse.org/reference/ymd.html">dmy</a></span><span class="op">(</span><span class="va">date_of_onset</span><span class="op">)</span>,
            date_of_hospitalisation <span class="op">=</span> <span class="fu"><a href="http://lubridate.tidyverse.org/reference/ymd.html">dmy</a></span><span class="op">(</span><span class="va">date_of_hospitalisation</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
     <span class="co"># filter out all cases without onset in march</span>
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="http://lubridate.tidyverse.org/reference/month.html">month</a></span><span class="op">(</span><span class="va">date_of_onset</span><span class="op">)</span> <span class="op">==</span> <span class="fl">3</span><span class="op">)</span> <span class="op">%&gt;%</span>
+    <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="http://lubridate.tidyverse.org/reference/month.html">month</a></span><span class="op">(</span><span class="va">date_of_onset</span><span class="op">)</span> <span class="op">==</span> <span class="fl">3</span><span class="op">)</span> <span class="op">%&gt;%</span>
     <span class="co"># find the difference in days between onset and hospitalisation</span>
-    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>onset_to_hosp_days <span class="op">=</span> <span class="va">date_of_hospitalisation</span> <span class="op">-</span> <span class="va">date_of_onset</span><span class="op">)</span></code></pre></div>
+    <span class="fu">mutate</span><span class="op">(</span>onset_to_hosp_days <span class="op">=</span> <span class="va">date_of_hospitalisation</span> <span class="op">-</span> <span class="va">date_of_onset</span><span class="op">)</span></code></pre></div>
 <!-- ======================================================= -->
 </div>
 <div id="guess_dates" class="section level2" number="9.6">
@@ -393,14 +393,14 @@
 <div class="sourceCode" id="cb250"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># easy way to get full date and time (no formatting)</span>
 <span class="fu"><a href="http://lubridate.tidyverse.org/reference/date.html">date</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<pre><code>## [1] "Sun Jan 31 17:44:35 2021"</code></pre>
+<pre><code>## [1] "Sun Jan 31 19:10:56 2021"</code></pre>
 <div class="sourceCode" id="cb252"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># formatted date, time, and time zone (using paste0() function)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span>
   <span class="fu"><a href="https://rdrr.io/r/base/format.html">format</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.Date</a></span><span class="op">(</span><span class="op">)</span>, format <span class="op">=</span> <span class="st">"%A, %b %d '%y, %z  %Z, "</span><span class="op">)</span>, 
   <span class="fu"><a href="https://rdrr.io/r/base/format.html">format</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.time</a></span><span class="op">(</span><span class="op">)</span>, format <span class="op">=</span> <span class="st">"%H:%M:%S"</span><span class="op">)</span>
 <span class="op">)</span></code></pre></div>
-<pre><code>## [1] "Sunday, Jan 31 '21, +0000  UTC, 17:44:35"</code></pre>
+<pre><code>## [1] "Sunday, Jan 31 '21, +0000  UTC, 19:10:56"</code></pre>
 <!-- ======================================================= -->
 </div>
 <div id="calculating-distance-between-dates" class="section level2" number="9.9">
@@ -451,7 +451,7 @@
 <code class="sourceCode R"><span class="co"># assign the current time to a variable</span>
 <span class="va">time_now</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.time</a></span><span class="op">(</span><span class="op">)</span>
 <span class="va">time_now</span></code></pre></div>
-<pre><code>## [1] "2021-01-31 17:44:35 EST"</code></pre>
+<pre><code>## [1] "2021-01-31 19:10:56 EST"</code></pre>
 <div class="sourceCode" id="cb259"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># use with_tz() to assign a new timezone to the variable, while CHANGING the clock time</span>
 <span class="va">time_london_real</span> <span class="op">&lt;-</span> <span class="fu"><a href="http://lubridate.tidyverse.org/reference/with_tz.html">with_tz</a></span><span class="op">(</span><span class="va">time_now</span>, <span class="st">"Europe/London"</span><span class="op">)</span>

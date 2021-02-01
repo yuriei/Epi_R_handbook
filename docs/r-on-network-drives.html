@@ -135,7 +135,7 @@
 <li>the <strong>rmarkdown</strong> package must not be in a "\" library, as then it can’t talk to TinyTex or Pandoc.</li>
 </ol>
 <p><strong>Useful commands</strong></p>
-<div class="sourceCode" id="cb952"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb879"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Find libraries</span>
 <span class="fu"><a href="https://rdrr.io/r/base/libPaths.html">.libPaths</a></span><span class="op">(</span><span class="op">)</span>                   <span class="co"># Your library paths, listed in order that R installs/searches. </span>
                               <span class="co"># Note: all libraries will be listed, but to install to some (e.g. C:) you </span>
@@ -162,7 +162,7 @@
 </h2>
 <p><strong>“Failed to compile…tex in rmarkdown”</strong></p>
 <p>check/install tinytex, to C: location</p>
-<div class="sourceCode" id="cb953"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb880"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># check/install tinytex, to C: location</span>
 <span class="fu">tinytex</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/tinytex/man/install_tinytex.html">install_tinytex</a></span><span class="op">(</span><span class="op">)</span>
 <span class="fu">tinytex</span><span class="fu">:::</span><span class="fu">is_tinytex</span><span class="op">(</span><span class="op">)</span> <span class="co"># should return TRUE (note three colons)</span></code></pre></div>
@@ -193,7 +193,7 @@
 <li>See <a href="https://ciser.cornell.edu/rmarkdown-knit-to-html-word-pdf/" class="uri">https://ciser.cornell.edu/rmarkdown-knit-to-html-word-pdf/</a>
 </li>
 </ul>
-<div class="sourceCode" id="cb954"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb881"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">myPaths</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/libPaths.html">.libPaths</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># get the library paths</span>
 <span class="va">myPaths</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">myPaths</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>, <span class="va">myPaths</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span> <span class="co"># switch them</span>
 <span class="fu"><a href="https://rdrr.io/r/base/libPaths.html">.libPaths</a></span><span class="op">(</span><span class="va">myPaths</span><span class="op">)</span> <span class="co"># reassign them</span></code></pre></div>
