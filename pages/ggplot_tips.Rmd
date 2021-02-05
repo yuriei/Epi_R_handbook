@@ -29,11 +29,72 @@ knit: (function(inputFile, encoding) {
 # ggplot tips {#ggplot_tips .tabset .tabset-fade}  
 
 
-
 <!-- ======================================================= -->
 ## Overview {.tabset .tabset-fade .tabset-pills}
 
 Embed ggplot cheatsheet
+
+`ggplot2` is the most popular data visualisation package in R, and is generally used instead of base `R` for creating figures. `ggplot2` benefits from a wide variety of supplementary packages that further enhance its functionality. Despite this, ggplot syntax is significantly different from base `R` plotting, and has a learning curve associated with it. Using `ggplot2` generally requires the user to format their data in a way that is highly `tidyverse` compatible, which ultimately makes using these packages together very effective.
+
+Plotting with `ggplot2` is based on defining base attributes to a plot, and adding layers on top. In addition, the user can change various plot attributes like axis settings, colour schemes, and labels with additional objects that are "added" to the plot. While ggplot objects can be highly complex, the basic order of creating a ggplot looks something like this:
+
+1. Define base/default plot attributes and aesthetic swith `ggplot()` function
+2. Add geometric objects to the plot - i.e. is the plot a bar graph, a line plot, a scatter plot, or a histogram? Or is it a combination of these? These functions all start with `geom_` as a prefix.
+3. Change plot aesthetics e.g. changing the axes, labels, colour scheme, background etc.
+
+In code, this might look like this:
+
+```{r, eval = TRUE}
+# read in dataset
+
+# define base plot attributes and dataset
+ggplot(data = linelist_cleaned, mapping = aes(x = age)) +
+  # add a geometric object with some parameters
+  geom_histogram(binwidth = 10, fill = "red", col = "black") +
+  # add labels to the axes
+  labs(x = "Age in years", y = "Number of cases")
+  
+
+```
+
+With this code, the most important things to note are:
+
+  1. When making a ggplot, all objects are combined with a `+` sign.
+  2. Understanding the principles behind aesthetic mapping with the `mappping = aes()` argument is essential to using ggplot. This can be done in the `ggplot()` function as well as every geometric object. Mapping with `aes()` is used to define which variables are assigned to each axis (these can be continuous or categorical variables). It is also used to define whether a variable can be used to create different plot aesthetics. This can apply to the:
+  
+    a. line colour (`col = `)
+    b. filled colour (`fill = `)
+    c. linetype (e.g. dotted, dashed) (`linetype =`)
+    d. size of an object (`size = `)
+  
+  This list is not exhaustive, but is enough to give a rough overview.
+  
+  3. Aesthetics of geometric objects can be defined *explicitly* as in the code above - this is different from assigning them to a variable. In cases where this is done, it must be *outside* the `mapping` argument. 
+  
+```{r, eval = FALSE}
+# correct
+ggplot(data = linelist_cleaned, mapping = aes(x = age)) +
+  geom_histogram(col = "black")
+
+# incorrect
+# correct
+ggplot(data = linelist_cleaned, mapping = aes(x = age)) +
+  geom_histogram(mapping = aes(col = "black"))
+
+```
+
+An example of defining aesthetics with a variable can be seen here:
+
+```{r, eval = TRUE}
+# read in dataset
+
+# define base plot attributes and dataset
+ggplot(data = linelist_cleaned, mapping = aes(x = age, fill = outcome)) +
+  # add a geometric object with some parameters (NO FILL GIVEN)
+  geom_histogram(binwidth = 10, col = "black") +
+  # add labels to the axes
+  labs(x = "Age in years", y = "Number of cases")
+```
 
 
 <!-- ======================================================= -->
