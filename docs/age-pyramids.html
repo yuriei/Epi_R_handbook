@@ -48,12 +48,12 @@
 <li><a class="" href="datasets-used.html"><span class="header-section-number">2</span> Datasets used</a></li>
 <li class="book-part">Basics</li>
 <li><a class="" href="r-basics.html"><span class="header-section-number">3</span> R Basics</a></li>
-<li><a class="" href="importing-data.html"><span class="header-section-number">4</span> Importing data</a></li>
+<li><a class="" href="importing-and-exporting.html"><span class="header-section-number">4</span> Importing and exporting</a></li>
 <li><a class="" href="r-projects.html"><span class="header-section-number">5</span> R projects</a></li>
 <li><a class="" href="suggested-packages.html"><span class="header-section-number">6</span> Suggested packages</a></li>
 <li class="book-part">Data Management</li>
 <li><a class="" href="cleaning-data.html"><span class="header-section-number">7</span> Cleaning data</a></li>
-<li><a class="" href="working-with-dates.html"><span class="header-section-number">8</span> Working with Dates</a></li>
+<li><a class="" href="working-with-dates.html"><span class="header-section-number">8</span> Working with dates</a></li>
 <li><a class="" href="missing-data.html"><span class="header-section-number">9</span> Missing data</a></li>
 <li><a class="" href="groupingaggregating-data.html"><span class="header-section-number">10</span> Grouping/aggregating data</a></li>
 <li><a class="" href="joining-matching-datasets.html"><span class="header-section-number">11</span> Joining &amp; matching datasets</a></li>
@@ -83,7 +83,7 @@
 <li><a class="" href="diagrams.html"><span class="header-section-number">33</span> Diagrams</a></li>
 <li><a class="" href="combination-analysis.html"><span class="header-section-number">34</span> Combination analysis</a></li>
 <li><a class="" href="heatmaps-density-plots.html"><span class="header-section-number">35</span> Heatmaps &amp; density plots</a></li>
-<li><a class="" href="transmission-chains.html"><span class="header-section-number">36</span> Transmission Chains</a></li>
+<li><a class="" href="transmission-chains.html"><span class="header-section-number">36</span> Transmission chains</a></li>
 <li><a class="" href="phylogenetic-trees.html"><span class="header-section-number">37</span> Phylogenetic trees</a></li>
 <li><a class="" href="interactive-plots.html"><span class="header-section-number">38</span> Interactive plots</a></li>
 <li class="book-part">Advanced</li>
@@ -135,9 +135,9 @@ These tabs demonstrate how to produce age pyramids using:</p>
 </ul>
 <!-- ======================================================= -->
 </div>
-<div id="preparation-24" class="section level2 tabset tabset-fade" number="32.2">
+<div id="preparation-23" class="section level2 tabset tabset-fade" number="32.2">
 <h2>
-<span class="header-section-number">32.2</span> Preparation<a class="anchor" aria-label="anchor" href="#preparation-24"><i class="fas fa-link"></i></a>
+<span class="header-section-number">32.2</span> Preparation<a class="anchor" aria-label="anchor" href="#preparation-23"><i class="fas fa-link"></i></a>
 </h2>
 <p>For this tab we use the <code>linelist</code> dataset that is cleaned in the Cleaning tab.</p>
 <p>To make a traditional age/sex demographic pyramid, the data must first be cleaned in the following ways:</p>
@@ -148,36 +148,36 @@ These tabs demonstrate how to produce age pyramids using:</p>
 </ul>
 <p><strong>Load packages</strong></p>
 <p>First, load the packages required for this analysis:</p>
-<div class="sourceCode" id="cb815"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb820"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span><span class="va">rio</span>,       <span class="co"># to import data</span>
                <span class="va">here</span>,      <span class="co"># to locate files</span>
                <span class="va">tidyverse</span>, <span class="co"># to clean, handle, and plot the data (includes ggplot2 package)</span>
                <span class="va">apyramid</span>,  <span class="co"># a package dedicated to creating age pyramids</span>
                <span class="va">stringr</span><span class="op">)</span>   <span class="co"># working with strings for titles, captions, etc.</span></code></pre></div>
 <p>Load the data</p>
-<div class="sourceCode" id="cb816"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb821"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">linelist</span> <span class="op">&lt;-</span> <span class="fu">rio</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/rio/man/import.html">import</a></span><span class="op">(</span><span class="st">"linelist_cleaned.csv"</span><span class="op">)</span></code></pre></div>
 <p><strong>Check class of variables</strong></p>
 <p>Ensure that the age variable is class Numeric, and check the class and order of levels of <code>age_cat</code> and <code>age_cat5</code></p>
-<div class="sourceCode" id="cb817"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb822"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">linelist</span><span class="op">$</span><span class="va">age_years</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] "numeric"</code></pre>
-<div class="sourceCode" id="cb819"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb824"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">linelist</span><span class="op">$</span><span class="va">age_cat</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] "factor"</code></pre>
-<div class="sourceCode" id="cb821"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb826"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">linelist</span><span class="op">$</span><span class="va">age_cat5</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] "factor"</code></pre>
-<div class="sourceCode" id="cb823"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb828"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">linelist</span><span class="op">$</span><span class="va">age_cat</span>, useNA <span class="op">=</span> <span class="st">"always"</span><span class="op">)</span></code></pre></div>
 <pre><code>## 
 ##   0-4   5-9 10-14 15-19 20-29 30-49 50-69   70+  &lt;NA&gt; 
-##  1081  1148   971   837  1091   628    45     0    88</code></pre>
-<div class="sourceCode" id="cb825"><pre class="downlit sourceCode r">
+##  1089  1069  1043   799  1151   616    32     1    88</code></pre>
+<div class="sourceCode" id="cb830"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">linelist</span><span class="op">$</span><span class="va">age_cat5</span>, useNA <span class="op">=</span> <span class="st">"always"</span><span class="op">)</span></code></pre></div>
 <pre><code>## 
 ##   0-4   5-9 10-14 15-19 20-24 25-29 30-34 35-39 40-44 45-49 50-54 55-59 60-64 65-69 70-74 75-79 80-84   85+  &lt;NA&gt; 
-##  1081  1148   971   837   600   491   295   181    98    54    26    14     2     3     0     0     0     0    88</code></pre>
+##  1089  1069  1043   799   696   455   314   153    92    57    24     4     3     1     1     0     0     0    88</code></pre>
 <!-- ======================================================= -->
 </div>
 <div id="apyramid-package" class="section level2 tabset tabset-fade" number="32.3">
@@ -197,31 +197,31 @@ These tabs demonstrate how to produce age pyramids using:</p>
 </li>
 <li>The <em>split_by</em> argument (bar colors) should be a binary column (in this case “gender”)</li>
 </ul>
-<div class="sourceCode" id="cb827"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb832"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">apyramid</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/apyramid/man/age_pyramid.html">age_pyramid</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">linelist</span>,
                       age_group <span class="op">=</span> <span class="st">"age_cat5"</span>,
                       split_by <span class="op">=</span> <span class="st">"gender"</span><span class="op">)</span></code></pre></div>
-<pre><code>## Warning: 283 missing rows were removed (88 values from `age_cat5` and 283 values from `gender`).</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-474-1.png" width="672">
+<pre><code>## Warning: 287 missing rows were removed (88 values from `age_cat5` and 287 values from `gender`).</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-491-1.png" width="672">
 When using <strong>agepyramid</strong> package, if the <code>split_by</code> column is binary (e.g. male/female, or yes/no), then the result will appear as a pyramid. However if there are more than two values in the <code>split_by</code> column (not including <code>NA</code>), the pyramid will appears as a faceted barplot with empty bars in the background indicating the range of the un-faceted data set for the age group. Values of split_by will appear as labels at top of each facet. For example below if the <code>split_by</code> variable is “hospital”.</p>
-<div class="sourceCode" id="cb829"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb834"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">apyramid</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/apyramid/man/age_pyramid.html">age_pyramid</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">linelist</span>,
                       age_group <span class="op">=</span> <span class="st">"age_cat5"</span>,
                       split_by <span class="op">=</span> <span class="st">"hospital"</span>,
                       na.rm <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>        <span class="co"># show a bar for patients missing age, (note: this changes the pyramid into a faceted barplot)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-475-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-492-1.png" width="672"></div>
 <p><strong>Missing values</strong><br>
 Rows missing values for the <code>split_by</code> or <code>age_group</code> columns, if coded as <code>NA</code>, will not trigger the faceting shown above. By default these rows will not be shown. However you can specify that they appear, in an adjacent barplot and as a separate age group at the top, by specifying <code>na.rm = FALSE</code>.</p>
-<div class="sourceCode" id="cb830"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb835"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">apyramid</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/apyramid/man/age_pyramid.html">age_pyramid</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">linelist</span>,
                       age_group <span class="op">=</span> <span class="st">"age_cat5"</span>,
                       split_by <span class="op">=</span> <span class="st">"gender"</span>,
                       na.rm <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>         <span class="co"># show patients missing age or gender</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-476-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-493-1.png" width="672"></div>
 <p><strong>Proportions, colors, &amp; aesthetics</strong></p>
 <p>By default, the bars display counts (not %), a dashed mid-line for each group is shown, and the colors are green/purple. Each of these parameters can all be adjusted, as shown below:</p>
 <p>You can also add additional <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code> commands to the plot using the standard <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code> “+” syntax, such as aesthetic themes and label adjustments:</p>
-<div class="sourceCode" id="cb831"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb836"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">apyramid</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/apyramid/man/age_pyramid.html">age_pyramid</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">linelist</span>,
                       age_group <span class="op">=</span> <span class="st">"age_cat5"</span>,
                       split_by <span class="op">=</span> <span class="st">"gender"</span>,
@@ -244,9 +244,9 @@ Rows missing values for the <code>split_by</code> or <code>age_group</code> colu
     legend.position <span class="op">=</span> <span class="st">"bottom"</span>,                             <span class="co"># move legend to bottom</span>
     axis.text <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">10</span>, face <span class="op">=</span> <span class="st">"bold"</span><span class="op">)</span>,     <span class="co"># fonts/sizes, see ggplot tips page</span>
     axis.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">12</span>, face <span class="op">=</span> <span class="st">"bold"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<pre><code>## Warning: 283 missing rows were removed (88 values from `age_cat5` and 283 values from `gender`).</code></pre>
+<pre><code>## Warning: 287 missing rows were removed (88 values from `age_cat5` and 287 values from `gender`).</code></pre>
 <pre><code>## Scale for 'fill' is already present. Adding another scale for 'fill', which will replace the existing scale.</code></pre>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-477-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-494-1.png" width="672"></div>
 </div>
 <div id="aggregated-data-1" class="section level3" number="32.3.2">
 <h3>
@@ -256,29 +256,29 @@ Rows missing values for the <code>split_by</code> or <code>age_group</code> colu
 <p>Let’s say that your dataset looks like this, with columns for age category, and male counts, female counts, and missing counts.<br>
 (see the handbook page on Transforming data for tips)</p>
 <pre><code>## `summarise()` has grouped output by 'age_cat5'. You can override using the `.groups` argument.</code></pre>
-<div class="sourceCode" id="cb835"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb840"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># View the aggregated data</span>
 <span class="fu">DT</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/DT/man/datatable.html">datatable</a></span><span class="op">(</span><span class="va">demo_agg</span>, rownames <span class="op">=</span> <span class="cn">FALSE</span>, filter<span class="op">=</span><span class="st">"top"</span>, options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>pageLength <span class="op">=</span> <span class="fl">5</span>, scrollX<span class="op">=</span><span class="cn">T</span><span class="op">)</span> <span class="op">)</span></code></pre></div>
 <p><code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code> perfers data in “long” format, so first pivot the data to be “long” with the <code><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer()</a></code> function from <strong>dplyr</strong>.</p>
-<div class="sourceCode" id="cb836"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb841"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># pivot the aggregated data into long format</span>
 <span class="va">demo_agg_long</span> <span class="op">&lt;-</span> <span class="va">demo_agg</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">f</span>, <span class="va">m</span>, <span class="va">missing_gender</span><span class="op">)</span>,            <span class="co"># cols to elongate</span>
                names_to <span class="op">=</span> <span class="st">"gender"</span>,                <span class="co"># name for new col of categories</span>
                values_to <span class="op">=</span> <span class="st">"counts"</span><span class="op">)</span> <span class="op">%&gt;%</span>           <span class="co"># name for new col of counts</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>gender <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/na_if.html">na_if</a></span><span class="op">(</span><span class="va">gender</span>, <span class="st">"missing_gender"</span><span class="op">)</span><span class="op">)</span> <span class="co"># convert "missing_gender" to NA</span></code></pre></div>
-<div class="sourceCode" id="cb837"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb842"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># View the aggregated data</span>
 <span class="fu">DT</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/DT/man/datatable.html">datatable</a></span><span class="op">(</span><span class="va">demo_agg_long</span>, rownames <span class="op">=</span> <span class="cn">FALSE</span>, filter<span class="op">=</span><span class="st">"top"</span>, options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>pageLength <span class="op">=</span> <span class="fl">5</span>, scrollX<span class="op">=</span><span class="cn">T</span><span class="op">)</span> <span class="op">)</span></code></pre></div>
 <p>Then use the <code>split_by</code> and <code>count</code> arguments of <code>age_pyramid()</code> to specify the respective columns:</p>
-<div class="sourceCode" id="cb838"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb843"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">apyramid</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/apyramid/man/age_pyramid.html">age_pyramid</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">demo_agg_long</span>,
                       age_group <span class="op">=</span> <span class="st">"age_cat5"</span>,
                       split_by <span class="op">=</span> <span class="st">"gender"</span>,
                       count <span class="op">=</span> <span class="st">"counts"</span><span class="op">)</span>      <span class="co"># give the column name for the aggregated counts</span></code></pre></div>
-<pre><code>## Warning: Removed 19 rows containing missing values (position_stack).</code></pre>
+<pre><code>## Warning: Removed 21 rows containing missing values (position_stack).</code></pre>
 <pre><code>## Warning: Removed 19 rows containing missing values.</code></pre>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-482-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-499-1.png" width="672"></div>
 <p>Note in the above, that the factor order of “m” and “f” is different (pyramid reversed). To adjust the order you must re-define gender in the aggredated data as a Factor and order the levels as desired.</p>
 <!-- ======================================================= -->
 </div>
@@ -303,7 +303,7 @@ Rows missing values for the <code>split_by</code> or <code>age_group</code> colu
 <li><p>Lastly, the counts-axis labels must be specified so they appear as “positive” counts on both sides of the pyramid (despite the underlying values on one side being negative).</p></li>
 </ul>
 <p>A <strong>simple</strong> version of this, using <code><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram()</a></code>, is below:</p>
-<div class="sourceCode" id="cb841"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb846"><pre class="downlit sourceCode r">
 <code class="sourceCode R">  <span class="co"># begin ggplot</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">linelist</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">age</span>, fill <span class="op">=</span> <span class="va">gender</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   
@@ -325,7 +325,7 @@ Rows missing values for the <code>split_by</code> or <code>age_group</code> colu
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span><span class="op">(</span>limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">600</span>, <span class="fl">900</span><span class="op">)</span>,
                      breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="op">-</span><span class="fl">600</span>,<span class="fl">900</span>,<span class="fl">100</span><span class="op">)</span>,
                      labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="op">-</span><span class="fl">600</span>, <span class="fl">900</span>, <span class="fl">100</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-483-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-500-1.png" width="672"></div>
 <p><span style="color: red;"><strong><em>DANGER:</em></strong> If the <strong>limits</strong> of your counts axis are set too low, and a counts bar exceeds them, the bar will disappear entirely or be artificially shortened! Watch for this if analyzing data which is routinely updated. Prevent it by having your count-axis limits auto-adjust to your data, as below.</span></p>
 <p>There are many things you can change/add to this simple version, including:</p>
 <ul>
@@ -333,7 +333,7 @@ Rows missing values for the <code>split_by</code> or <code>age_group</code> colu
 </li>
 <li>Manually specify colors and legend labels</li>
 </ul>
-<div class="sourceCode" id="cb842"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb847"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># create dataset with proportion of total</span>
 <span class="va">pyramid_data</span> <span class="op">&lt;-</span> <span class="va">linelist</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">age_cat5</span>, <span class="va">gender</span><span class="op">)</span> <span class="op">%&gt;%</span> 
@@ -345,7 +345,7 @@ Rows missing values for the <code>split_by</code> or <code>age_group</code> colu
             <span class="va">gender</span> <span class="op">==</span> <span class="st">"m"</span> <span class="op">~</span> <span class="op">-</span><span class="va">percent</span>,
             <span class="cn">TRUE</span>          <span class="op">~</span> <span class="cn">NA_real_</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>## `summarise()` has grouped output by 'age_cat5'. You can override using the `.groups` argument.</code></pre>
-<div class="sourceCode" id="cb844"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb849"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">max_per</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">pyramid_data</span><span class="op">$</span><span class="va">percent</span>, na.rm<span class="op">=</span><span class="cn">T</span><span class="op">)</span>
 <span class="va">min_per</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span><span class="op">(</span><span class="va">pyramid_data</span><span class="op">$</span><span class="va">percent</span>, na.rm<span class="op">=</span><span class="cn">T</span><span class="op">)</span>
 
@@ -395,8 +395,8 @@ Rows missing values for the <code>split_by</code> or <code>age_group</code> colu
     plot.caption <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>hjust<span class="op">=</span><span class="fl">0</span>, size<span class="op">=</span><span class="fl">11</span>, face <span class="op">=</span> <span class="st">"italic"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
   
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"Age and gender of cases"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<pre><code>## Warning: Removed 12 rows containing missing values (position_stack).</code></pre>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-484-1.png" width="672"></div>
+<pre><code>## Warning: Removed 10 rows containing missing values (position_stack).</code></pre>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-501-1.png" width="672"></div>
 <!-- ======================================================= -->
 </div>
 <div id="compare-to-baseline" class="section level3" number="32.4.2">
@@ -405,16 +405,16 @@ Rows missing values for the <code>split_by</code> or <code>age_group</code> colu
 </h3>
 <p>With the flexibility of <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code>, you can have a second layer of bars in the background that represent the true population pyramid. This can provide a nice visualization to compare the observed counts with the baseline.</p>
 <p>Import and view the population data</p>
-<div class="sourceCode" id="cb846"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb851"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># import the population demographics data</span>
 <span class="va">pop</span> <span class="op">&lt;-</span> <span class="fu">rio</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/rio/man/import.html">import</a></span><span class="op">(</span><span class="st">"country_demographics.csv"</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb847"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb852"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># display the linelist data as a table</span>
 <span class="fu">DT</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/DT/man/datatable.html">datatable</a></span><span class="op">(</span><span class="va">pop</span>, rownames <span class="op">=</span> <span class="cn">FALSE</span>, filter<span class="op">=</span><span class="st">"top"</span>, options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>pageLength <span class="op">=</span> <span class="fl">10</span>, scrollX<span class="op">=</span><span class="cn">T</span><span class="op">)</span> <span class="op">)</span></code></pre></div>
-<div id="htmlwidget-4ead32843464989b9723" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-4ead32843464989b9723">{"x":{"filter":"top","filterHTML":"<tr>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"integer\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"40402\" data-max=\"7828087\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"integer\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"64656\" data-max=\"7674675\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","data":[["0-4","5-9","10-14","15-19","20-24","25-29","30-34","35-39","40-44","45-49","50-54","55-59","60-64","65-69","70-74","75-79","80-84","85+"],[7828087,6705882,5601230,4576430,3734111,3111651,2571215,2121247,1735468,1418749,1145345,900239,685141,500248,347093,202240,94325,40402],[7674675,6592449,5522555,4533885,3726537,3118040,2592416,2150490,1771213,1459439,1193903,956070,745682,563894,416543,258538,130479,64656]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>age_cat5<\/th>\n      <th>m<\/th>\n      <th>f<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":10,"scrollX":true,"columnDefs":[{"className":"dt-right","targets":[1,2]}],"order":[],"autoWidth":false,"orderClasses":false,"orderCellsTop":true}},"evals":[],"jsHooks":[]}</script><p>First some data management steps:</p>
+<div id="htmlwidget-ed242e309ab16d7c01d8" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-ed242e309ab16d7c01d8">{"x":{"filter":"top","filterHTML":"<tr>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"integer\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"40402\" data-max=\"7828087\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"integer\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"64656\" data-max=\"7674675\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","data":[["0-4","5-9","10-14","15-19","20-24","25-29","30-34","35-39","40-44","45-49","50-54","55-59","60-64","65-69","70-74","75-79","80-84","85+"],[7828087,6705882,5601230,4576430,3734111,3111651,2571215,2121247,1735468,1418749,1145345,900239,685141,500248,347093,202240,94325,40402],[7674675,6592449,5522555,4533885,3726537,3118040,2592416,2150490,1771213,1459439,1193903,956070,745682,563894,416543,258538,130479,64656]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>age_cat5<\/th>\n      <th>m<\/th>\n      <th>f<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":10,"scrollX":true,"columnDefs":[{"className":"dt-right","targets":[1,2]}],"order":[],"autoWidth":false,"orderClasses":false,"orderCellsTop":true}},"evals":[],"jsHooks":[]}</script><p>First some data management steps:</p>
 <p>Here we record the order of age categories that we want to appear. Due to some quirks the way the <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code> is implemented, it is easiest to store these as a character vector and use them later in the plotting function.</p>
-<div class="sourceCode" id="cb848"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb853"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># record correct age cat levels</span>
 <span class="va">age_levels</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"0-4"</span>,<span class="st">"5-9"</span>, <span class="st">"10-14"</span>, <span class="st">"15-19"</span>, <span class="st">"20-24"</span>,
                 <span class="st">"25-29"</span>,<span class="st">"30-34"</span>, <span class="st">"35-39"</span>, <span class="st">"40-44"</span>, <span class="st">"45-49"</span>,
@@ -428,7 +428,7 @@ Rows missing values for the <code>split_by</code> or <code>age_group</code> colu
 </li>
 <li>Bind them together, one on-top of the other (<code><a href="https://dplyr.tidyverse.org/reference/bind.html">bind_rows()</a></code>)</li>
 </ul>
-<div class="sourceCode" id="cb849"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb854"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># create/transform populaton data, with percent of total</span>
 <span class="co">########################################################</span>
 <span class="va">pop_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer</a></span><span class="op">(</span><span class="va">pop</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">m</span>, <span class="va">f</span><span class="op">)</span>, names_to <span class="op">=</span> <span class="st">"gender"</span>, values_to <span class="op">=</span> <span class="st">"counts"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="co"># pivot gender columns longer</span>
@@ -439,11 +439,11 @@ Rows missing values for the <code>split_by</code> or <code>age_group</code> colu
                             <span class="va">gender</span> <span class="op">==</span> <span class="st">"m"</span> <span class="op">~</span> <span class="op">-</span><span class="va">percent</span>,
                             <span class="cn">TRUE</span>          <span class="op">~</span> <span class="cn">NA_real_</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>Review the changed population dataset</p>
-<div class="sourceCode" id="cb850"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb855"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># display the linelist data as a table</span>
 <span class="fu">DT</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/DT/man/datatable.html">datatable</a></span><span class="op">(</span><span class="va">pop_data</span>, rownames <span class="op">=</span> <span class="cn">FALSE</span>, filter<span class="op">=</span><span class="st">"top"</span>, options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>pageLength <span class="op">=</span> <span class="fl">5</span>, scrollX<span class="op">=</span><span class="cn">T</span><span class="op">)</span> <span class="op">)</span></code></pre></div>
 <p>Now implement the same for the case linelist. Slightly different because it begins with case-rows, not counts.</p>
-<div class="sourceCode" id="cb851"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb856"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># create case data by age/gender, with percent of total</span>
 <span class="co">#######################################################</span>
 <span class="va">case_data</span> <span class="op">&lt;-</span> <span class="va">linelist</span> <span class="op">%&gt;%</span>
@@ -458,15 +458,15 @@ Rows missing values for the <code>split_by</code> or <code>age_group</code> colu
             <span class="cn">TRUE</span>          <span class="op">~</span> <span class="cn">NA_real_</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>## `summarise()` has grouped output by 'age_cat5'. You can override using the `.groups` argument.</code></pre>
 <p>Review the changed case dataset</p>
-<div class="sourceCode" id="cb853"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb858"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># display the linelist data as a table</span>
 <span class="fu">DT</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/DT/man/datatable.html">datatable</a></span><span class="op">(</span><span class="va">case_data</span>, rownames <span class="op">=</span> <span class="cn">FALSE</span>, filter<span class="op">=</span><span class="st">"top"</span>, options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>pageLength <span class="op">=</span> <span class="fl">5</span>, scrollX<span class="op">=</span><span class="cn">T</span><span class="op">)</span> <span class="op">)</span></code></pre></div>
 <p>Now the two datasets are combined, one on top of the other (same column names)</p>
-<div class="sourceCode" id="cb854"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb859"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># combine case and population data (same column names, age_cat values, and gender values)</span>
 <span class="va">pyramid_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind.html">bind_rows</a></span><span class="op">(</span><span class="va">case_data</span>, <span class="va">pop_data</span><span class="op">)</span></code></pre></div>
 <p>Store the maximum and minimum percent values, used in the plotting funtion to define the extent of the plot (and not cut off any bars!)</p>
-<div class="sourceCode" id="cb855"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb860"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Define extent of percent axis, used for plot limits</span>
 <span class="va">max_per</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">pyramid_data</span><span class="op">$</span><span class="va">percent</span>, na.rm<span class="op">=</span><span class="cn">T</span><span class="op">)</span>
 <span class="va">min_per</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span><span class="op">(</span><span class="va">pyramid_data</span><span class="op">$</span><span class="va">percent</span>, na.rm<span class="op">=</span><span class="cn">T</span><span class="op">)</span></code></pre></div>
@@ -475,7 +475,7 @@ Rows missing values for the <code>split_by</code> or <code>age_group</code> colu
 <li>One bar graph of population data (wider, more transparent bars)</li>
 <li>One bar graph of case data (small, more solid bars)</li>
 </ul>
-<div class="sourceCode" id="cb856"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb861"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># begin ggplot</span>
 <span class="co">##############</span>
 <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span><span class="op">+</span>  <span class="co"># default x-axis is age in years;</span>
@@ -541,8 +541,8 @@ Rows missing values for the <code>split_by</code> or <code>age_group</code> colu
     axis.line <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_line</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span>,
     plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>hjust <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>, 
     plot.caption <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>hjust<span class="op">=</span><span class="fl">0</span>, size<span class="op">=</span><span class="fl">11</span>, face <span class="op">=</span> <span class="st">"italic"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<pre><code>## Warning: Removed 12 rows containing missing values (position_stack).</code></pre>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-495-1.png" width="672"></div>
+<pre><code>## Warning: Removed 10 rows containing missing values (position_stack).</code></pre>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-512-1.png" width="672"></div>
 <!-- ======================================================= -->
 </div>
 </div>
@@ -552,11 +552,11 @@ Rows missing values for the <code>split_by</code> or <code>age_group</code> colu
 </h2>
 <p>The techniques used to make a population pyramid with <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code> can also be used to make plots of Likert-scale survey data.</p>
 <p>Import the data</p>
-<div class="sourceCode" id="cb858"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb863"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># import the likert survey response data</span>
 <span class="va">likert_data</span> <span class="op">&lt;-</span> <span class="fu">rio</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/rio/man/import.html">import</a></span><span class="op">(</span><span class="st">"likert_data.csv"</span><span class="op">)</span></code></pre></div>
 <p>Start with data that looks like this, with a categorical classification of each respondent (<code>status</code>) and their answers to 8 questions on a 4-point Likert-type scale (“Very poor”, “Poor”, “Good”, “Very good”).</p>
-<div class="sourceCode" id="cb859"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb864"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># display the linelist data as a table</span>
 <span class="fu">DT</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/DT/man/datatable.html">datatable</a></span><span class="op">(</span><span class="va">likert_data</span>, rownames <span class="op">=</span> <span class="cn">FALSE</span>, filter<span class="op">=</span><span class="st">"top"</span>, options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>pageLength <span class="op">=</span> <span class="fl">10</span>, scrollX<span class="op">=</span><span class="cn">T</span><span class="op">)</span> <span class="op">)</span></code></pre></div>
 <p>First, some data management steps:</p>
@@ -569,7 +569,7 @@ Rows missing values for the <code>split_by</code> or <code>age_group</code> colu
 </li>
 <li>Store the max count value so limits of plot are appropriate</li>
 </ul>
-<div class="sourceCode" id="cb860"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb865"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">melted</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer</a></span><span class="op">(</span><span class="va">likert_data</span>, <span class="va">Q1</span><span class="op">:</span><span class="va">Q8</span>, names_to <span class="op">=</span> <span class="st">"Question"</span>, values_to <span class="op">=</span> <span class="st">"Response"</span><span class="op">)</span> <span class="op">%&gt;%</span> 
      <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>direction <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when</a></span><span class="op">(</span>
                <span class="va">Response</span> <span class="op">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Poor"</span>,<span class="st">"Very Poor"</span><span class="op">)</span> <span class="op">~</span> <span class="st">"Negative"</span>,
@@ -584,10 +584,10 @@ Rows missing values for the <code>split_by</code> or <code>age_group</code> colu
    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">status</span>, <span class="va">Question</span><span class="op">)</span> <span class="op">%&gt;%</span> 
    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html">n</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>## `summarise()` has grouped output by 'status'. You can override using the `.groups` argument.</code></pre>
-<div class="sourceCode" id="cb862"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb867"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">melted_max</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">melted_max</span><span class="op">$</span><span class="va">n</span>, na.rm<span class="op">=</span><span class="cn">T</span><span class="op">)</span></code></pre></div>
 <p>Now make the plot:</p>
-<div class="sourceCode" id="cb863"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb868"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># make plot</span>
 <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span><span class="op">+</span>
      <span class="co"># bar graph of the "negative" responses </span>
@@ -647,7 +647,7 @@ Rows missing values for the <code>split_by</code> or <code>age_group</code> colu
 <pre><code>## Warning: Ignoring unknown parameters: closed
 
 ## Warning: Ignoring unknown parameters: closed</code></pre>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-501-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-518-1.png" width="672"></div>
 <!-- ======================================================= -->
 </div>
 <div id="resources-22" class="section level2 tabset tabset-fade" number="32.6">
@@ -667,7 +667,7 @@ Links to other online tutorials or resources.</p>
       <ul class="nav navbar-nav">
 <li><a class="nav-link" href="#age-pyramids"><span class="header-section-number">32</span> Age pyramids</a></li>
 <li><a class="nav-link" href="#overview-29"><span class="header-section-number">32.1</span> Overview</a></li>
-<li><a class="nav-link" href="#preparation-24"><span class="header-section-number">32.2</span> Preparation</a></li>
+<li><a class="nav-link" href="#preparation-23"><span class="header-section-number">32.2</span> Preparation</a></li>
 <li>
 <a class="nav-link" href="#apyramid-package"><span class="header-section-number">32.3</span> apyramid package</a><ul class="nav navbar-nav">
 <li><a class="nav-link" href="#linelist-data"><span class="header-section-number">32.3.1</span> Linelist data</a></li>
@@ -698,7 +698,7 @@ Links to other online tutorials or resources.</p>
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>R Handbook for Epidemiologists</strong>" was written by the handbook team. It was last built on 2021-02-03.</p>
+    <p>"<strong>R Handbook for Epidemiologists</strong>" was written by the handbook team. It was last built on 2021-02-06.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
