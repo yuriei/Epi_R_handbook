@@ -1,8 +1,6 @@
 gis-basics
 overview
 preparation
-sub-tab-1
-sub-tab-2
 plotting-coordinates
 polygons-and-shapefiles
 time-series-heatmap
