@@ -132,7 +132,7 @@ Preparation
 <a class="anchor" aria-label="anchor" href="#preparation-29"><i class="fas fa-link"></i></a>
 </h2>
 <p>This code chunk shows the loading of required packages:</p>
-<div class="sourceCode" id="cb1014"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1052"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># First we load the pacman package:</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/trinker/pacman">pacman</a></span><span class="op">)</span>
 
@@ -141,7 +141,7 @@ Preparation
 <p>There are several different formats in which a phylogenetic tree can be stored (eg. Newick, NEXUS, Phylip). A common one, which we will also use here in this example is the Newick file format (.nwk), which is the standard for representing trees in computer-readable form. Which means, an entire tree can be expressed in a string format such as “((t2:0.04,t1:0.34):0.89,(t5:0.37,(t4:0.03,t3:0.67):0.9):0.59);” listing all nodes and tips and their relationship (branch length) to each other.</p>
 <p>It is important to understand that the phylogenetic tree file in itself does not contain sequencing data, but is merely the result of the distances between the sequences. We therefore cannot extract sequencing data from a tree file.</p>
 <p>We use the <strong>ape()</strong> package to import a phylogenetic tree file and store it in a list object of class “phylo”. We inspect our tree object and see it contains 299 tips (or samples) and 236 nodes.</p>
-<div class="sourceCode" id="cb1015"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1053"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># read in the tree: we use the here package to specify the location of our R project and data files:</span>
 <span class="va">tree</span> <span class="op">&lt;-</span> <span class="fu">ape</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ape/man/read.tree.html">read.tree</a></span><span class="op">(</span><span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"data"</span>, <span class="st">"Shigella_tree.nwk"</span><span class="op">)</span><span class="op">)</span>
 
@@ -157,11 +157,11 @@ Preparation
 ## 
 ## Rooted; includes branch lengths.</code></pre>
 <p>Second we import a table with additional information for each sequenced sample such as gender, country of origine and attributes for antimicrobial resistance:</p>
-<div class="sourceCode" id="cb1017"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1055"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># We read in a csv file into a dataframe format:</span>
 <span class="va">sample_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op">(</span><span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"data"</span>,<span class="st">"sample_data_Shigella_tree.csv"</span><span class="op">)</span>,sep<span class="op">=</span><span class="st">","</span>, na.strings<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"NA"</span><span class="op">)</span>, head <span class="op">=</span> <span class="cn">TRUE</span>, stringsAsFactors<span class="op">=</span><span class="cn">F</span><span class="op">)</span></code></pre></div>
 <p>We clean and inspect our data: In order to assign the correct sample data to the phylogenetic tree, the Sample_IDs in the sample_data file need to match the tip.labels in the tree file:</p>
-<div class="sourceCode" id="cb1018"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1056"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># We clean the data: we select certain columns to be protected from cleaning in order to main tain their formating (eg. for the sample names, as they have to match the names in the phylogenetic tree file)</span>
 <span class="co">#sample_data &lt;- linelist::clean_data(sample_data, protect = c(1, 3:5)) </span>
 
@@ -169,13 +169,14 @@ Preparation
 
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">tree</span><span class="op">$</span><span class="va">tip.label</span><span class="op">)</span> <span class="co"># these are the sample names in the tree - we inspect the first 6 with head()</span></code></pre></div>
 <pre><code>## [1] "SRR5006072" "SRR4192106" "S18BD07865" "S18BD00489" "S17BD08906" "S17BD05939"</code></pre>
-<div class="sourceCode" id="cb1020"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1058"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># We make sure the first column in our dataframe are the Sample_IDs:</span>
 <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span><span class="op">(</span><span class="va">sample_data</span><span class="op">)</span>   </code></pre></div>
-<pre><code>##  [1] "Sample_ID"                  "serotype"                   "Country"                    "Continent"                  "Travel_history"            
-##  [6] "Year"                       "Patient_age"                "Source"                     "Gender"                     "gyrA_mutations"            
-## [11] "macrolide_resistance_genes" "ESBL"                       "MIC_AZM"                    "MIC_CIP"</code></pre>
-<div class="sourceCode" id="cb1022"><pre class="downlit sourceCode r">
+<pre><code>##  [1] "Sample_ID"                  "serotype"                   "Country"                    "Continent"                 
+##  [5] "Travel_history"             "Year"                       "Patient_age"                "Source"                    
+##  [9] "Gender"                     "gyrA_mutations"             "macrolide_resistance_genes" "ESBL"                      
+## [13] "MIC_AZM"                    "MIC_CIP"</code></pre>
+<div class="sourceCode" id="cb1060"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># We look at the sample_IDs in the dataframe to make sure the formatting is the same than in the tip.labels (eg. letters are all capital, no extra _ between letters and numbers etc.)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">sample_data</span><span class="op">$</span><span class="va">Sample_ID</span><span class="op">)</span> <span class="co"># we inspect only the first 6 using head()</span></code></pre></div>
 <pre><code>## [1] "ERR025692" "ERR025682" "ERR025714" "ERR025713" "ERR025709" "ERR025711"</code></pre>
@@ -196,7 +197,7 @@ Simple tree visualization
 <span class="header-section-number">36.3.1</span> Different tree layouts:<a class="anchor" aria-label="anchor" href="#different-tree-layouts"><i class="fas fa-link"></i></a>
 </h3>
 <p><strong>ggtree()</strong> offers many different layout formats and some may be more suitable for your specific purpose than others:</p>
-<div class="sourceCode" id="cb1024"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1062"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Examples:</span>
 <span class="fu">ggtree</span><span class="op">(</span><span class="va">tree</span><span class="op">)</span> <span class="co"># most simple linear tree</span>
 <span class="fu">ggtree</span><span class="op">(</span><span class="va">tree</span>,  branch.length <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span> <span class="co"># most simple linear tree with all tips aligned</span>
@@ -211,7 +212,7 @@ Simple tree visualization
 <span class="header-section-number">36.3.2</span> Simple tree with addition of sample data:<a class="anchor" aria-label="anchor" href="#simple-tree-with-addition-of-sample-data"><i class="fas fa-link"></i></a>
 </h3>
 <p>The most easy annotation of your tree is the addition of the sample names at the tips, as well as coloring of tip points and if desired branches:</p>
-<div class="sourceCode" id="cb1025"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1063"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># A: Plot Circular tree:</span>
 <span class="fu">ggtree</span><span class="op">(</span><span class="va">tree</span>, layout<span class="op">=</span><span class="st">"circular"</span>, branch.length<span class="op">=</span><span class="st">'none'</span><span class="op">)</span> <span class="op">%&lt;+%</span> <span class="va">sample_data</span> <span class="op">+</span> <span class="co"># the %&lt;+% is used to add your dataframe with sample data to the tree</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>color<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/AsIs.html">I</a></span><span class="op">(</span><span class="va">Source</span><span class="op">)</span><span class="op">)</span><span class="op">+</span> <span class="co"># color the branches according to a variable in your dataframe</span>
@@ -238,7 +239,7 @@ Simple tree visualization
 
 ## Warning: Duplicated aesthetics after name standardisation: size</code></pre>
 <div class="inline-figure"><img src="_main_files/figure-html/phylogenetic_trees_adding_sampledata-1.png" width="672" style="display: block; margin: auto;"></div>
-<div class="sourceCode" id="cb1027"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1065"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Export your tree graph:</span>
 <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsave.html">ggsave</a></span><span class="op">(</span><span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"example_tree_circular_1.png"</span><span class="op">)</span>, width <span class="op">=</span> <span class="fl">12</span>, height <span class="op">=</span> <span class="fl">14</span><span class="op">)</span></code></pre></div>
 <!-- ======================================================= -->
@@ -259,7 +260,7 @@ Manipulation of phylogenetic trees
 <span class="header-section-number">36.4.1</span> Zooming in on one part of the tree:<a class="anchor" aria-label="anchor" href="#zooming-in-on-one-part-of-the-tree"><i class="fas fa-link"></i></a>
 </h3>
 <p>If you don’t want to “cut” your tree, but only inspect part of it more closely you can zoom in to view a specific part:</p>
-<div class="sourceCode" id="cb1028"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1066"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># First we plot the whole tree:</span>
 <span class="va">p</span> <span class="op">&lt;-</span> <span class="fu">ggtree</span><span class="op">(</span><span class="va">tree</span>,<span class="op">)</span> <span class="op">%&lt;+%</span> <span class="va">sample_data</span> <span class="op">+</span>
   <span class="fu">geom_tiplab</span><span class="op">(</span>size <span class="op">=</span><span class="fl">1.5</span><span class="op">)</span> <span class="op">+</span> <span class="co"># labels the tips of all branche with the sample name in the tree file</span>
@@ -267,7 +268,7 @@ Manipulation of phylogenetic trees
 <span class="va">p</span></code></pre></div>
 <div class="inline-figure"><img src="_main_files/figure-html/phylogenetic_trees_zoom_in-1.png" width="50%" style="display: block; margin: auto;"></div>
 <p>We want to zoom into the branch which is sticking out, after node number 452 to get a closer look:</p>
-<div class="sourceCode" id="cb1029"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1067"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">viewClade</span><span class="op">(</span><span class="va">p</span> , node<span class="op">=</span><span class="fl">452</span><span class="op">)</span></code></pre></div>
 <div class="inline-figure"><img src="_main_files/figure-html/phylogenetic_trees_zoom_in_452-1.png" width="50%" style="display: block; margin: auto;"></div>
 </div>
@@ -276,7 +277,7 @@ Manipulation of phylogenetic trees
 <span class="header-section-number">36.4.2</span> Collapsing one part of the tree:<a class="anchor" aria-label="anchor" href="#collapsing-one-part-of-the-tree"><i class="fas fa-link"></i></a>
 </h3>
 <p>The other way around we may want to ignore this branch which is sticking out and can do so by collapsing it at the node (indicated here by the blue square):</p>
-<div class="sourceCode" id="cb1030"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1068"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#First we collapse at node 452</span>
 <span class="va">p_collapsed</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/compute.html">collapse</a></span><span class="op">(</span><span class="va">p</span>, node<span class="op">=</span><span class="fl">452</span><span class="op">)</span>
 
@@ -289,7 +290,7 @@ Manipulation of phylogenetic trees
 <span class="header-section-number">36.4.3</span> Subsetting a tree:<a class="anchor" aria-label="anchor" href="#subsetting-a-tree"><i class="fas fa-link"></i></a>
 </h3>
 <p>If we want to make a more permanent change and create a new tree to work with we can subset part of it and even save it as new newick tree file.</p>
-<div class="sourceCode" id="cb1031"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1069"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># To do so you can add the node and tip labels to your tree to see which part you want to subset:</span>
 <span class="fu">ggtree</span><span class="op">(</span><span class="va">tree</span>, branch.length<span class="op">=</span><span class="st">'none'</span>, layout<span class="op">=</span><span class="st">'circular'</span><span class="op">)</span> <span class="op">%&lt;+%</span> <span class="va">sample_data</span> <span class="op">+</span>
   <span class="fu">geom_tiplab</span><span class="op">(</span>size <span class="op">=</span><span class="fl">1</span><span class="op">)</span> <span class="op">+</span> <span class="co"># labels the tips of all branche with the sample name in the tree file</span>
@@ -312,7 +313,7 @@ Manipulation of phylogenetic trees
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span><span class="op">(</span><span class="st">"Subset tree 2"</span><span class="op">)</span></code></pre></div>
 <p><img src="_main_files/figure-html/phylogenetic_trees_subsetting-1.png" width="50%" style="display: block; margin: auto;"><img src="_main_files/figure-html/phylogenetic_trees_subsetting-2.png" width="50%" style="display: block; margin: auto;"><img src="_main_files/figure-html/phylogenetic_trees_subsetting-3.png" width="50%" style="display: block; margin: auto;"></p>
 <p>You can also save your new tree as a Newick file:</p>
-<div class="sourceCode" id="cb1032"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1070"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">ape</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ape/man/write.tree.html">write.tree</a></span><span class="op">(</span><span class="va">sub_tree2</span>, file<span class="op">=</span><span class="st">'Shigelle_subtree_2.nwk'</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="rotating-nodes-in-a-tree" class="section level3" number="36.4.4">
@@ -321,13 +322,13 @@ Manipulation of phylogenetic trees
 </h3>
 <p>As mentioned before we cannot change the order of tips or nodes in the tree, as this is based on their genetic relatedness and is not subject to visual manipulation. But we can rote branches around nodes if that eases our visualization.</p>
 <p>First we plot our new subsetted tree with nodelabels to choose the node we want to manipulate:</p>
-<div class="sourceCode" id="cb1033"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1071"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu">ggtree</span><span class="op">(</span><span class="va">sub_tree2</span><span class="op">)</span> <span class="op">+</span>  <span class="fu">geom_tiplab</span><span class="op">(</span>size <span class="op">=</span><span class="fl">4</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">geom_text2</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>subset<span class="op">=</span><span class="op">!</span><span class="va">isTip</span>, label<span class="op">=</span><span class="va">node</span><span class="op">)</span>, size <span class="op">=</span><span class="fl">5</span>, color <span class="op">=</span> <span class="st">"darkred"</span>, hjust <span class="op">=</span><span class="fl">1</span>, vjust <span class="op">=</span><span class="fl">1</span><span class="op">)</span> <span class="co"># labels all the nodes in the tree</span>
 <span class="va">p</span></code></pre></div>
 <div class="inline-figure"><img src="_main_files/figure-html/phylogenetic_trees_rotating_1-1.png" width="50%" style="display: block; margin: auto;"></div>
 <p>We choose to manipulate node number 39: we do so by applying <strong>ggtree::rotate()</strong> or <strong>ggtree::fluip()</strong> indirectly to node 36 so node 39 moves to the bottom and nodes 37 and 38 move to the top:</p>
-<div class="sourceCode" id="cb1034"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1072"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># </span>
 <span class="co"># p1 &lt;- p + geom_hilight(39, "steelblue", extend =0.0015)+ # highlights the node 39 in blue</span>
 <span class="co">#    geom_hilight(37, "yellow", extend =0.0015)  + # highlights the node 37 in yellow</span>
@@ -346,7 +347,7 @@ Manipulation of phylogenetic trees
 <span class="header-section-number">36.4.5</span> Example subtree with sample data annotation:<a class="anchor" aria-label="anchor" href="#example-subtree-with-sample-data-annotation"><i class="fas fa-link"></i></a>
 </h3>
 <p>Lets say we are investigating the cluster of cases with clonal expansion which occured in 2017 and 2018 at node 39 in our sub-tree. We add the year of strain isolation as well as travel history and color by country to see origin of other closely related strains:</p>
-<div class="sourceCode" id="cb1035"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1073"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Add sample data:</span>
 <span class="fu">ggtree</span><span class="op">(</span><span class="va">sub_tree2</span><span class="op">)</span> <span class="op">%&lt;+%</span> <span class="va">sample_data</span> <span class="op">+</span> 
    <span class="fu">geom_tiplab</span><span class="op">(</span>size <span class="op">=</span><span class="fl">2.5</span>, offset <span class="op">=</span> <span class="fl">0.001</span>, align <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">+</span> <span class="co"># labels the tips of all branche with the sample name in the tree file</span>
@@ -385,7 +386,7 @@ More complex trees
 </h2>
 <p>We can add more complex information, such as categorical presence of antimicrobial resistance genes and numeric values for actually measured resistance to antimicrobials in form of a heatmap using the <strong>ggtree::gheatmap()</strong> function.</p>
 <p>First we need to plot our tree (this can be either linear or circular): We will use the sub_stree from part 3.)</p>
-<div class="sourceCode" id="cb1037"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1075"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># A: Circular tree:</span>
 <span class="va">p</span> <span class="op">&lt;-</span> <span class="fu">ggtree</span><span class="op">(</span><span class="va">sub_tree2</span>, branch.length<span class="op">=</span><span class="st">'none'</span>, layout<span class="op">=</span><span class="st">'circular'</span><span class="op">)</span> <span class="op">%&lt;+%</span> <span class="va">sample_data</span> <span class="op">+</span>
   <span class="fu">geom_tiplab</span><span class="op">(</span>size <span class="op">=</span><span class="fl">3</span><span class="op">)</span> <span class="op">+</span> 
@@ -397,7 +398,7 @@ More complex trees
 <div class="inline-figure"><img src="_main_files/figure-html/phylogenetic_trees_sampledata_heatmap-1.png" width="60%" style="display: block; margin: auto;"></div>
 <p>Second we prepare our data. To visualize different variables with new color schemes, we subset our dataframe to the desired variable.</p>
 <p>For example we want to look at gender and mutations that could confer resistance to ciprofloxacin:</p>
-<div class="sourceCode" id="cb1038"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1076"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Create your gender dataframe:</span>
 <span class="va">gender</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="st">"gender"</span> <span class="op">=</span> <span class="va">sample_data</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Gender"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span>
 <span class="co"># Its important to add the Sample_ID as rownames otherwise it cannot match the data to the tree tip.labels:</span>
@@ -411,7 +412,7 @@ More complex trees
 <span class="va">MIC_Cip</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="st">"mic_cip"</span> <span class="op">=</span> <span class="va">sample_data</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"MIC_CIP"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">MIC_Cip</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">sample_data</span><span class="op">$</span><span class="va">Sample_ID</span></code></pre></div>
 <p>We create a first plot adding a binary heatmap for gender to the phylogenetic tree:</p>
-<div class="sourceCode" id="cb1039"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1077"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># First we add gender:</span>
 <span class="va">h1</span> <span class="op">&lt;-</span>  <span class="fu">gheatmap</span><span class="op">(</span><span class="va">p</span>, <span class="va">gender</span>, offset <span class="op">=</span> <span class="fl">10</span>, width<span class="op">=</span><span class="fl">0.10</span>, color<span class="op">=</span><span class="cn">NULL</span>, <span class="co"># offset shifts the heatmap to the right, width defines the width of the heatmap column, color defines the boarder of the heatmap columns</span>
          colnames <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">+</span> <span class="co"># hides column names for the heatmap</span>
@@ -425,11 +426,11 @@ More complex trees
         legend.box<span class="op">=</span><span class="st">"vertical"</span>, legend.margin<span class="op">=</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">margin</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>## Scale for 'y' is already present. Adding another scale for 'y', which will replace the existing scale.</code></pre>
 <pre><code>## Scale for 'fill' is already present. Adding another scale for 'fill', which will replace the existing scale.</code></pre>
-<div class="sourceCode" id="cb1042"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1080"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">h1</span></code></pre></div>
 <div class="inline-figure"><img src="_main_files/figure-html/phylogenetic_trees_sampledata_heatmap_gender-1.png" width="70%" style="display: block; margin: auto;"></div>
 <p>Then we add information on ciprofloxacin resistance genes:</p>
-<div class="sourceCode" id="cb1043"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1081"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># First we assigng a new color scheme to our existing plot, this enables us to define and change the colors for our second variable</span>
 <span class="va">h2</span> <span class="op">&lt;-</span> <span class="va">h1</span> <span class="op">+</span> <span class="fu">new_scale_fill</span><span class="op">(</span><span class="op">)</span> 
 
@@ -447,12 +448,12 @@ More complex trees
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guides.html">guides</a></span><span class="op">(</span>fill<span class="op">=</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guide_legend.html">guide_legend</a></span><span class="op">(</span>nrow<span class="op">=</span><span class="fl">2</span>,byrow<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>## Scale for 'y' is already present. Adding another scale for 'y', which will replace the existing scale.</code></pre>
 <pre><code>## Scale for 'fill' is already present. Adding another scale for 'fill', which will replace the existing scale.</code></pre>
-<div class="sourceCode" id="cb1046"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1084"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">h3</span></code></pre></div>
 <div class="inline-figure"><img src="_main_files/figure-html/phylogenetic_trees_sampledata_heatmap_cip_genes-1.png" width="80%" style="display: block; margin: auto;"></div>
 <p>Next we add continuous data on actual resistance determined by the laboratory
 as the minimum inhibitory concentration (MIC) of ciprofloxacin :</p>
-<div class="sourceCode" id="cb1047"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1085"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># First we add the new coloring scheme:</span>
 <span class="va">h4</span> <span class="op">&lt;-</span> <span class="va">h3</span> <span class="op">+</span> <span class="fu">new_scale_fill</span><span class="op">(</span><span class="op">)</span>
 
@@ -470,11 +471,11 @@ as the minimum inhibitory concentration (MIC) of ciprofloxacin :</p>
         legend.box<span class="op">=</span><span class="st">"vertical"</span>, legend.margin<span class="op">=</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">margin</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>## Scale for 'y' is already present. Adding another scale for 'y', which will replace the existing scale.</code></pre>
 <pre><code>## Scale for 'fill' is already present. Adding another scale for 'fill', which will replace the existing scale.</code></pre>
-<div class="sourceCode" id="cb1050"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1088"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">h5</span></code></pre></div>
 <div class="inline-figure"><img src="_main_files/figure-html/phylogenetic_trees_sampledata_heatmap_cip_MIC-1.png" width="90%" style="display: block; margin: auto;"></div>
 <p>We can do the same exercise for a linear tree:</p>
-<div class="sourceCode" id="cb1051"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1089"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># B: Lineartree:</span>
 <span class="va">p</span> <span class="op">&lt;-</span> <span class="fu">ggtree</span><span class="op">(</span><span class="va">sub_tree2</span><span class="op">)</span> <span class="op">%&lt;+%</span> <span class="va">sample_data</span> <span class="op">+</span>
   <span class="fu">geom_tiplab</span><span class="op">(</span>size <span class="op">=</span><span class="fl">3</span><span class="op">)</span> <span class="op">+</span> <span class="co"># labels the tips</span>
@@ -500,7 +501,7 @@ as the minimum inhibitory concentration (MIC) of ciprofloxacin :</p>
         legend.box<span class="op">=</span><span class="st">"vertical"</span>, legend.margin<span class="op">=</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">margin</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>## Scale for 'y' is already present. Adding another scale for 'y', which will replace the existing scale.</code></pre>
 <pre><code>## Scale for 'fill' is already present. Adding another scale for 'fill', which will replace the existing scale.</code></pre>
-<div class="sourceCode" id="cb1054"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1092"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># h1</span>
 
 <span class="co"># Then we add ciprofloxacin after adding another colorscheme layer:</span>
@@ -519,7 +520,7 @@ as the minimum inhibitory concentration (MIC) of ciprofloxacin :</p>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guides.html">guides</a></span><span class="op">(</span>fill<span class="op">=</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guide_legend.html">guide_legend</a></span><span class="op">(</span>nrow<span class="op">=</span><span class="fl">2</span>,byrow<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>## Scale for 'y' is already present. Adding another scale for 'y', which will replace the existing scale.
 ## Scale for 'fill' is already present. Adding another scale for 'fill', which will replace the existing scale.</code></pre>
-<div class="sourceCode" id="cb1056"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1094"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># h3</span>
 
 <span class="co"># Then we add the minimum inhibitory concentration determined by the lab (MIC):</span>
@@ -538,7 +539,7 @@ as the minimum inhibitory concentration (MIC) of ciprofloxacin :</p>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guides.html">guides</a></span><span class="op">(</span>shape <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guide_legend.html">guide_legend</a></span><span class="op">(</span>override.aes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>## Scale for 'y' is already present. Adding another scale for 'y', which will replace the existing scale.
 ## Scale for 'fill' is already present. Adding another scale for 'fill', which will replace the existing scale.</code></pre>
-<div class="sourceCode" id="cb1058"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1096"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">h5</span></code></pre></div>
 <div class="inline-figure"><img src="_main_files/figure-html/phylogenetic_trees_sampledata_heatmap_linear-1.png" width="80%" style="display: block; margin: auto;"></div>
 <!-- ======================================================= -->
@@ -611,7 +612,7 @@ More complex trees
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>R Handbook for Epidemiologists</strong>" was written by the handbook team. It was last built on 2021-02-08.</p>
+    <p>"<strong>R Handbook for Epidemiologists</strong>" was written by the handbook team. It was last built on 2021-02-13.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

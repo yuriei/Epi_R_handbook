@@ -693,7 +693,7 @@ For example, the function <code><a href="https://rdrr.io/r/base/MathFun.html">sq
 <p><span style="color: black;"><strong><em>NOTE:</em></strong> For arguments specified with an equals symbol (e.g. <code>coltotals = ...</code>), their order among the arguments is not important (must still be within the parentheses and separated by commas).</span></p>
 <div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">apyramid</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/apyramid/man/age_pyramid.html">age_pyramid</a></span><span class="op">(</span><span class="va">linelist</span>, <span class="st">"age_cat5"</span>, <span class="st">"gender"</span>, proportional <span class="op">=</span> <span class="cn">TRUE</span>, pal <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"orange"</span>, <span class="st">"purple"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-37-1.png" width="75%" height="75%"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-74-1.png" width="75%" height="75%"></div>
 <!-- ======================================================= -->
 <!-- ======================================================= -->
 <!-- ======================================================= -->
@@ -725,20 +725,20 @@ For example, the function <code><a href="https://rdrr.io/r/base/MathFun.html">sq
 <div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></code></pre></div>
 <p><strong>Using pacman</strong></p>
-<p>This handbook uses the package <strong>pacman</strong> (abbreviation for “package manager”), which offers the useful function <code><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load()</a></code>. This function combines the above two steps into one - it <em>installs and/or loads packages</em>, depending on what is needed. If the package has not yet been installed, it will attempt to install from CRAN, and then load it.</p>
+<p>This handbook uses the package <strong>pacman</strong> (abbreviation for “package manager”), which offers the useful function <code>p_load()</code>. This function combines the above two steps into one - it <em>installs and/or loads packages</em>, depending on what is needed. If the package has not yet been installed, it will attempt to install from CRAN, and then load it.</p>
 <p>Below, we load some of the packages used in this R basics page:</p>
 <div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span><span class="va">tidyverse</span>, <span class="va">rio</span>, <span class="va">here</span><span class="op">)</span></code></pre></div>
-<p>The function <code><a href="https://rdrr.io/pkg/pacman/man/p_isinstalled.html">p_isinstalled()</a></code> will test whether packages are installed already.</p>
+<p>The function <code>p_isinstalled()</code> will test whether packages are installed already.</p>
 <p><strong>Install from github</strong></p>
-<p>Sometimes, you need to install the <em>development version</em> of a package, from a github repository. You can use <code><a href="https://rdrr.io/pkg/pacman/man/p_load_gh.html">p_load_gh()</a></code> from <strong>pacman</strong> (this function is a wrapper around <code><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github()</a></code> from <strong>devtools</strong>).</p>
+<p>Sometimes, you need to install the <em>development version</em> of a package, from a github repository. You can use <code>p_load_gh()</code> from <strong>pacman</strong> (this function is a wrapper around <code><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github()</a></code> from <strong>devtools</strong>).</p>
 <p>The first name listed in the quotation marks is the Github ID of the repository owner, and after the slash is the name of the repository. If you want to install from a branch other than the main/master branch, add it after an “@”.</p>
 <div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># install development version of package from github repository</span>
-<span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_install_gh.html">p_install_gh</a></span><span class="op">(</span><span class="st">"reconhub/epicontacts"</span><span class="op">)</span>
+<span class="fu">p_install_gh</span><span class="op">(</span><span class="st">"reconhub/epicontacts"</span><span class="op">)</span>
 
 <span class="co"># load development version of package which you had downloaded from github repository</span>
-<span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load_gh.html">p_load_gh</a></span><span class="op">(</span><span class="st">"reconhub/epicontacts"</span><span class="op">)</span></code></pre></div>
+<span class="fu">p_load_gh</span><span class="op">(</span><span class="st">"reconhub/epicontacts"</span><span class="op">)</span></code></pre></div>
 <p>Read more about <strong>pacman</strong> <a href="http://trinker.github.io/pacman/vignettes/Introduction_to_pacman.html">here</a></p>
 <p><strong>Install from ZIP or TAR</strong></p>
 <p>You could get the package from a URL:</p>
@@ -756,19 +756,19 @@ For example, the function <code><a href="https://rdrr.io/r/base/MathFun.html">sq
 
 <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"~/Downloads/dplyr-master.zip"</span>, repos<span class="op">=</span><span class="cn">NULL</span>, type<span class="op">=</span><span class="st">"source"</span><span class="op">)</span></code></pre></div>
 <p><strong>Delete packages</strong></p>
-<p>Use <code><a href="https://rdrr.io/pkg/pacman/man/p_delete.html">p_delete()</a></code> from <strong>pacman</strong>, or <code><a href="https://rdrr.io/r/utils/remove.packages.html">remove.packages()</a></code> from <strong>base</strong> R. Alternatively, go find the folder which contains your library and manually delete the folder.</p>
+<p>Use <code>p_delete()</code> from <strong>pacman</strong>, or <code><a href="https://rdrr.io/r/utils/remove.packages.html">remove.packages()</a></code> from <strong>base</strong> R. Alternatively, go find the folder which contains your library and manually delete the folder.</p>
 <p><strong>Dependencies</strong></p>
 <p>Packages often depend on other packages to work. These are called dependencies. If a dependency fails to install, then the package depending on it may also fail to install.</p>
-<p>See the dependencies of a package with <code><a href="https://rdrr.io/pkg/pacman/man/p_depends.html">p_depends()</a></code>, and see which packages depend on it with <code><a href="https://rdrr.io/pkg/pacman/man/p_depends.html">p_depends_reverse()</a></code></p>
+<p>See the dependencies of a package with <code>p_depends()</code>, and see which packages depend on it with <code>p_depends_reverse()</code></p>
 <p><strong>Masked functions</strong></p>
-<p>It is not uncommon that two or more packages contain the same function name. For example, the package <strong>dplyr</strong> has a <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> function, but so does the package <strong>stats</strong>. The default <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> function depends on the order these packages are first loaded in the R session - the later one will be the default for the command <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code>.</p>
+<p>It is not uncommon that two or more packages contain the same function name. For example, the package <strong>dplyr</strong> has a <code><a href="https://rdrr.io/r/stats/filter.html">filter()</a></code> function, but so does the package <strong>stats</strong>. The default <code><a href="https://rdrr.io/r/stats/filter.html">filter()</a></code> function depends on the order these packages are first loaded in the R session - the later one will be the default for the command <code><a href="https://rdrr.io/r/stats/filter.html">filter()</a></code>.</p>
 <p>You can check the order in your Environment pane of R Studio - click the drop-down for “Global Environment” and see the order of the packages. Functions from packages <em>lower</em> on that drop-down list will mask functions of the same name in packages that appear highest in the drop-down list. When first loading a package, R will warn you in the console if masking is occurring, but this can be easy to miss.</p>
 <div class="inline-figure"><img src="images/masking_functions.png" width="50%" style="display: block; margin: auto;"></div>
 <p>Here are ways you can fix masking:</p>
 <ol style="list-style-type: decimal">
 <li>Specify the package name in the command. For example, use <code><a href="https://dplyr.tidyverse.org/reference/filter.html">dplyr::filter()</a></code><br>
 </li>
-<li>Re-arrange the order in which the packages are loaded (e.g. within <code><a href="https://rdrr.io/r/base/library.html">library()</a></code> or <code><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load()</a></code>), and start a new R session</li>
+<li>Re-arrange the order in which the packages are loaded (e.g. within <code><a href="https://rdrr.io/r/base/library.html">library()</a></code> or <code>p_load()</code>), and start a new R session</li>
 </ol>
 <p><strong>Detach / unload</strong></p>
 <p>To detach a package, use this command, with the correct package name:</p>
@@ -805,8 +805,8 @@ Using the package name will also load the package if it is not already loaded.</
 <h3>
 <span class="header-section-number">3.10.1</span> <strong>Pipes</strong><a class="anchor" aria-label="anchor" href="#pipes"><i class="fas fa-link"></i></a>
 </h3>
-<p><strong>Simply explained, the pipe operator (<code><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></code>) passes an intermediate output from one function to the next.</strong><br>
-You can think of it as saying “then”. Many functions can be linked together with <code><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></code>.</p>
+<p><strong>Simply explained, the pipe operator (<code>%&gt;%</code>) passes an intermediate output from one function to the next.</strong><br>
+You can think of it as saying “then”. Many functions can be linked together with <code>%&gt;%</code>.</p>
 <ul>
 <li>
 <strong>Piping emphasizes a sequence of actions, not the object the actions are being performed on</strong><br>
@@ -823,9 +823,9 @@ You can think of it as saying “then”. Many functions can be linked together 
 <code class="sourceCode R"><span class="co"># A fake example of how to bake a care using piping syntax</span>
 
 <span class="va">cake</span> <span class="op">&lt;-</span> <span class="va">flour</span> <span class="op">%&gt;%</span>       <span class="co"># to define cake, start with flour, and then...</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span><span class="va">eggs</span><span class="op">)</span> <span class="op">%&gt;%</span>   <span class="co"># add eggs</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span><span class="va">oil</span><span class="op">)</span> <span class="op">%&gt;%</span>    <span class="co"># add oil</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span><span class="va">water</span><span class="op">)</span> <span class="op">%&gt;%</span>  <span class="co"># add water</span>
+  <span class="fu">left_join</span><span class="op">(</span><span class="va">eggs</span><span class="op">)</span> <span class="op">%&gt;%</span>   <span class="co"># add eggs</span>
+  <span class="fu">left_join</span><span class="op">(</span><span class="va">oil</span><span class="op">)</span> <span class="op">%&gt;%</span>    <span class="co"># add oil</span>
+  <span class="fu">left_join</span><span class="op">(</span><span class="va">water</span><span class="op">)</span> <span class="op">%&gt;%</span>  <span class="co"># add water</span>
   <span class="fu">mix_together</span><span class="op">(</span>utensil <span class="op">=</span> <span class="va">spoon</span>, minutes <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">%&gt;%</span>                <span class="co"># mix together</span>
   <span class="fu">bake</span><span class="op">(</span>degrees <span class="op">=</span> <span class="fl">350</span>, system <span class="op">=</span> <span class="st">"fahrenheit"</span>, minutes <span class="op">=</span> <span class="fl">35</span><span class="op">)</span> <span class="op">%&gt;%</span>  <span class="co"># bake</span>
   <span class="fu">let_cool</span><span class="op">(</span><span class="op">)</span>            <span class="co"># let it cool down</span></code></pre></div>
@@ -857,9 +857,9 @@ This is an “assignment pipe” from the <strong>magritter</strong> package, wh
 <p>Below are some examples:</p>
 <div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># a fake example of how to bake a cake using this method (defining intermediate objects)</span>
-<span class="va">batter_1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span><span class="va">flour</span>, <span class="va">eggs</span><span class="op">)</span>
-<span class="va">batter_2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span><span class="va">batter_1</span>, <span class="va">oil</span><span class="op">)</span>
-<span class="va">batter_3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span><span class="va">batter_2</span>, <span class="va">water</span><span class="op">)</span>
+<span class="va">batter_1</span> <span class="op">&lt;-</span> <span class="fu">left_join</span><span class="op">(</span><span class="va">flour</span>, <span class="va">eggs</span><span class="op">)</span>
+<span class="va">batter_2</span> <span class="op">&lt;-</span> <span class="fu">left_join</span><span class="op">(</span><span class="va">batter_1</span>, <span class="va">oil</span><span class="op">)</span>
+<span class="va">batter_3</span> <span class="op">&lt;-</span> <span class="fu">left_join</span><span class="op">(</span><span class="va">batter_2</span>, <span class="va">water</span><span class="op">)</span>
 
 <span class="va">batter_4</span> <span class="op">&lt;-</span> <span class="fu">mix_together</span><span class="op">(</span>object <span class="op">=</span> <span class="va">batter_3</span>, utensil <span class="op">=</span> <span class="va">spoon</span>, minutes <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>
 
@@ -1002,10 +1002,10 @@ We also advise surrounding operators with spaces, for readability.</p>
 </tr>
 </tbody>
 </table></div>
-<p>For example, below, we have a linelist with two variables we want to use to create our case definition, <code>hep_e_rdt</code>, a test result and <code>other_cases_in_hh</code>, which will tell us if there are other cases in the household. The command below uses the function <code><a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when()</a></code> to create the new variable <code>case_def</code> such that:</p>
+<p>For example, below, we have a linelist with two variables we want to use to create our case definition, <code>hep_e_rdt</code>, a test result and <code>other_cases_in_hh</code>, which will tell us if there are other cases in the household. The command below uses the function <code>case_when()</code> to create the new variable <code>case_def</code> such that:</p>
 <div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">linelist_cleaned</span> <span class="op">&lt;-</span> <span class="va">linelist_cleaned</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>case_def <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when</a></span><span class="op">(</span>
+  <span class="fu">mutate</span><span class="op">(</span>case_def <span class="op">=</span> <span class="fu">case_when</span><span class="op">(</span>
     <span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">hep_e_rdt</span><span class="op">)</span> <span class="op">&amp;</span> <span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">other_cases_in_hh</span><span class="op">)</span>           <span class="op">~</span> <span class="cn">NA_character_</span>,
     <span class="va">hep_e_rdt</span> <span class="op">==</span> <span class="st">"Positive"</span>                               <span class="op">~</span> <span class="st">"Confirmed"</span>,
     <span class="va">hep_e_rdt</span> <span class="op">!=</span> <span class="st">"Positive"</span> <span class="op">&amp;</span> <span class="va">other_cases_in_hh</span> <span class="op">==</span> <span class="st">"Yes"</span>  <span class="op">~</span> <span class="st">"Probable"</span>,
@@ -1056,7 +1056,7 @@ We also advise surrounding operators with spaces, for readability.</p>
 <p>Here is the <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/NA.html">R documentation on missing values</a></p>
 <p><strong>Variations on <code>NA</code></strong></p>
 <p><code>NA</code> is actually a logical value of length 1. You may also encounter <code>NA_character_</code>, <code>NA_real_</code>, <code>NA_complex_</code>, and <code>NA_integer_</code>, which correspond to specific classes.</p>
-<p>The most prominent application of one of these variants in common epidemiology work is using <code><a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when()</a></code>. The Right-Hand Side (RHS) values must all be of the same class. Thus, if you have character outcomes on the RHS like “Confirmed”, “Suspect”, “Probable” and <code>NA</code> - you will get an error. Instead of <code>NA</code> you must have <code>NA_character_</code>. Likewise for integers, use <code>NA_integer_</code>.</p>
+<p>The most prominent application of one of these variants in common epidemiology work is using <code>case_when()</code>. The Right-Hand Side (RHS) values must all be of the same class. Thus, if you have character outcomes on the RHS like “Confirmed”, “Suspect”, “Probable” and <code>NA</code> - you will get an error. Instead of <code>NA</code> you must have <code>NA_character_</code>. Likewise for integers, use <code>NA_integer_</code>.</p>
 <p><strong><code>NULL</code></strong></p>
 <p><code>NULL</code> is the null object in R, often used to represent a list of 0 length. Use <code><a href="https://rdrr.io/r/base/NULL.html">is.null()</a></code> to evaluate this status.</p>
 <p>More detail on the difference between <code>NA</code> and <code>NULL</code> is <a href="https://www.r-bloggers.com/2010/04/r-na-vs-null/">here</a></p>
@@ -1275,10 +1275,10 @@ We also advise surrounding operators with spaces, for readability.</p>
 <div class="sourceCode" id="cb76"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="op">!</span><span class="st">"h"</span> <span class="op">%in%</span> <span class="va">my_vector</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<p><code><a href="https://rdrr.io/r/base/match.html">%in%</a></code> is very useful when using the <strong>dplyr</strong> function <code><a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when()</a></code> to recode values in a column. For example:</p>
+<p><code><a href="https://rdrr.io/r/base/match.html">%in%</a></code> is very useful when using the <strong>dplyr</strong> function <code>case_when()</code> to recode values in a column. For example:</p>
 <div class="sourceCode" id="cb78"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">linelist</span> <span class="op">&lt;-</span> <span class="va">linelist</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>hospital <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when</a></span><span class="op">(</span>
+  <span class="fu">mutate</span><span class="op">(</span>hospital <span class="op">=</span> <span class="fu">case_when</span><span class="op">(</span>
     <span class="va">hospital</span> <span class="op">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"St. Fr."</span>, <span class="st">"Saint Francis"</span><span class="op">)</span> <span class="op">~</span> <span class="st">"St. Francis"</span><span class="op">)</span><span class="op">)</span> <span class="co"># convert to correct spelling</span></code></pre></div>
 <!-- ======================================================= -->
 <!-- ======================================================= -->
@@ -1461,7 +1461,7 @@ See the handbook page on common errors and warnings.</p>
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>R Handbook for Epidemiologists</strong>" was written by the handbook team. It was last built on 2021-02-08.</p>
+    <p>"<strong>R Handbook for Epidemiologists</strong>" was written by the handbook team. It was last built on 2021-02-13.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
