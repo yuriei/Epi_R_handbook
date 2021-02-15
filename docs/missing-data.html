@@ -45,7 +45,7 @@
 
       <nav aria-label="Table of contents"><h2>Table of contents</h2>
         <ul class="book-toc list-unstyled">
-<li><a class="" href="index.html">Welcome</a></li>
+<li><a class="" href="index.html">Welcome - THIS IS A DRAFT</a></li>
 <li class="book-part">About this book</li>
 <li><a class="" href="style-and-editorial-notes.html"><span class="header-section-number">1</span> Style and editorial notes</a></li>
 <li><a class="" href="datasets-used.html"><span class="header-section-number">2</span> Datasets used</a></li>
@@ -194,14 +194,14 @@ You can usually avoid this by removing missing values from the calculation, by i
 <p>The percent of all values that are missing</p>
 <div class="sourceCode" id="cb311"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">pct_miss</span><span class="op">(</span><span class="va">linelist</span><span class="op">)</span>  <span class="co"># also see n_miss() for counts</span></code></pre></div>
-<pre><code>## [1] 6.419271</code></pre>
+<pre><code>## [1] 6.419270833333333</code></pre>
 <p>These two functions return the percent of rows with any missing values, or that are entirely complete, respectively. Note that "" or " " will register as non-missing.</p>
 <div class="sourceCode" id="cb313"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">pct_miss_case</span><span class="op">(</span><span class="va">linelist</span><span class="op">)</span>   <span class="co"># also see n_complete() for counts</span></code></pre></div>
-<pre><code>## [1] 68.0197</code></pre>
+<pre><code>## [1] 68.01970108695652</code></pre>
 <div class="sourceCode" id="cb315"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">pct_complete_case</span><span class="op">(</span><span class="va">linelist</span><span class="op">)</span> <span class="co"># see n_complete</span></code></pre></div>
-<pre><code>## [1] 31.9803</code></pre>
+<pre><code>## [1] 31.98029891304348</code></pre>
 </div>
 <div id="visualizing-missingness" class="section level3" number="9.4.2">
 <h3>
@@ -210,11 +210,11 @@ You can usually avoid this by removing missing values from the calculation, by i
 <p>The <code>gg_miss_var()</code> function will tell you the number missing in each column. You can add a bare column name to the argument <code>facet =</code> if desired to see the plot by groups. By default, counts are shown instead of percents (<code>show_pct = FALSE</code>). You can also add labs as a normal ggplot with <code>+labs()</code>.</p>
 <div class="sourceCode" id="cb317"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">gg_miss_var</span><span class="op">(</span><span class="va">linelist</span>, show_pct <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-253-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-228-1.png" width="672"></div>
 <p>You can use <code>vis_miss()</code> to visualize the dataframe as a heatmap, showing whether each value is missing or not:</p>
 <div class="sourceCode" id="cb318"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">vis_miss</span><span class="op">(</span><span class="va">linelist</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-254-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-229-1.png" width="672"></div>
 </div>
 <div id="explore-and-visualize-missingness-relationships" class="section level3" number="9.4.3">
 <h3>
@@ -229,15 +229,15 @@ In the scatterplot below, the red dots are records where the value for one colum
   <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">age_years</span>,             
       y <span class="op">=</span> <span class="va">temp</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>     <span class="co"># column to show missingness</span>
   <span class="fu">geom_miss_point</span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-255-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-230-1.png" width="672"></div>
 <p>To assess missingness in the dataframe by another column, consider <code>gg_miss_fct()</code>, which returns a heatmap of percent missingness in the dataframe by a factor/categorical (or date) column:</p>
 <div class="sourceCode" id="cb320"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">gg_miss_fct</span><span class="op">(</span><span class="va">linelist</span>, <span class="va">age_cat5</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-256-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-231-1.png" width="672"></div>
 <p>This function can also be used on date column to neat effect:</p>
 <div class="sourceCode" id="cb321"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">gg_miss_fct</span><span class="op">(</span><span class="va">linelist</span>, <span class="va">date_onset</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-257-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-232-1.png" width="672"></div>
 <p><strong>“Shadow” columns</strong></p>
 <p>Another way to visualize missingness in one column by values in a second column is using the “shadow” that <strong>naniar</strong> can create. Essentially, <code>bind_shadow()</code> creates a binary <code>NA</code>/not <code>NA</code> column for every column, and adds all these columns to the dataset (doubling the number of columns). See below:</p>
 <div class="sourceCode" id="cb322"><pre class="downlit sourceCode r">
@@ -267,7 +267,7 @@ In the scatterplot below, the red dots are records where the value for one colum
   <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">date_hospitalisation</span>,        <span class="co"># numeric or date column</span>
       colour <span class="op">=</span> <span class="va">age_years_NA</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>        <span class="co"># shadow column of interest</span>
   <span class="fu">geom_density</span><span class="op">(</span><span class="op">)</span>                       <span class="co"># plots the density curves</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-259-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-234-1.png" width="672"></div>
 <p>You can also use these “shadow” columns to stratify a statistical summary, as shown below:</p>
 <div class="sourceCode" id="cb325"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">linelist</span> <span class="op">%&gt;%</span>
@@ -322,7 +322,7 @@ In the scatterplot below, the red dots are records where the value for one colum
   <span class="fu">theme</span><span class="op">(</span>
     legend.position <span class="op">=</span> <span class="st">"bottom"</span>
   <span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-262-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-237-1.png" width="672"></div>
 <!-- ======================================================= -->
 </div>
 </div>
@@ -451,12 +451,12 @@ In the scatterplot below, the red dots are records where the value for one colum
 <pre><code>## Warning: Number of logged events: 1</code></pre>
 <div class="sourceCode" id="cb343"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">model_fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">multiple_imputation</span>, <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">temp</span> <span class="op">~</span> <span class="va">age_years</span> <span class="op">+</span> <span class="va">fever</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="fu">pool</span><span class="op">(</span><span class="va">model_fit</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<pre><code>##          term     estimate    std.error  statistic       df   p.value
-## 1 (Intercept) 37.016111183 0.0197240191 1876.70226 163.5443 0.0000000
-## 2   age_years  0.000449005 0.0005749766    0.78091 323.9202 0.4354257
-## 3    feveryes  1.996246550 0.0181179401  110.18066 582.4824 0.0000000</code></pre>
-<p>Here we used the mice default method of imputation, which is Predictive Mean Matching. We then used these imputed datasets to seperately estimate and then pool results from simple linear regressions on each of these datasets. There are many details we’ve glossed over and many settings you can adjust during the Multiple Imputation process while using the mice package. For example, you won’t always have numerical data and might need to use other imputation methods (you can still use the mice package for many other types of data and methods). But, for a more robust analysis when missing data is a significant concern, Multiple Imputation is good solution that isn’t always much more work than doing a complete case analysis.</p>
+<span class="fu">base</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="fu">mice</span><span class="fu">::</span><span class="fu"><a href="https://amices.org/mice/reference/pool.html">pool</a></span><span class="op">(</span><span class="va">model_fit</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<pre><code>##          term              estimate             std.error             statistic                df            p.value
+## 1 (Intercept) 3.701611118257919e+01 0.0197240190833987313 1876.7022596188235184 163.5443034372564 0.0000000000000000
+## 2   age_years 4.490049634751263e-04 0.0005749765650674905    0.7809100244327737 323.9202230737526 0.4354257409459559
+## 3    feveryes 1.996246550007732e+00 0.0181179400837435806  110.1806574467521642 582.4823751772824 0.0000000000000000</code></pre>
+<p>Here we used the mice default method of imputation, which is Predictive Mean Matching. We then used these imputed datasets to separately estimate and then pool results from simple linear regressions on each of these datasets. There are many details we’ve glossed over and many settings you can adjust during the Multiple Imputation process while using the mice package. For example, you won’t always have numerical data and might need to use other imputation methods (you can still use the mice package for many other types of data and methods). But, for a more robust analysis when missing data is a significant concern, Multiple Imputation is good solution that isn’t always much more work than doing a complete case analysis.</p>
 <!-- ======================================================= -->
 </div>
 </div>
@@ -515,7 +515,7 @@ In the scatterplot below, the red dots are records where the value for one colum
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>R Handbook for Epidemiologists</strong>" was written by the handbook team. It was last built on 2021-02-13.</p>
+    <p>"<strong>R Handbook for Epidemiologists</strong>" was written by the handbook team. It was last built on 2021-02-14.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
