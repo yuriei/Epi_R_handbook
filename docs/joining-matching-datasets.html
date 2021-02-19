@@ -45,7 +45,7 @@
 
       <nav aria-label="Table of contents"><h2>Table of contents</h2>
         <ul class="book-toc list-unstyled">
-<li><a class="" href="index.html">Welcome</a></li>
+<li><a class="" href="index.html">Welcome - THIS IS A DRAFT</a></li>
 <li class="book-part">About this book</li>
 <li><a class="" href="style-and-editorial-notes.html"><span class="header-section-number">1</span> Style and editorial notes</a></li>
 <li><a class="" href="datasets-used.html"><span class="header-section-number">2</span> Datasets used</a></li>
@@ -137,15 +137,15 @@
 </ol>
 <p><strong>“miniature” linelist</strong></p>
 <p>Below is the miniature linelist used for demonstration purposes:</p>
-<div class="sourceCode" id="cb392"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb393"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">linelist_mini</span> <span class="op">&lt;-</span> <span class="va">linelist</span> <span class="op">%&gt;%</span>                 <span class="co"># start with original linelist</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">case_id</span>, <span class="va">date_onset</span>, <span class="va">hospital</span><span class="op">)</span> <span class="op">%&gt;%</span>   <span class="co"># select columns</span>
   <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span>                                    <span class="co"># keep only the first 10 rows</span></code></pre></div>
-<div id="htmlwidget-6be64e99dc9e3e3151a2" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-6be64e99dc9e3e3151a2">{"x":{"filter":"none","data":[["6c286a","5fe599","6285c9","893f25","c4e706","275cc7","133ee7","dbebea","788a99","2978ac"],["2014-04-27","2014-05-13","2014-05-14","2014-05-21","2014-05-23","2014-05-27","2014-05-27","2014-06-02","2014-06-06","2014-06-06"],["Missing","Other","Missing","Military Hospital","Missing","Central Hospital","Missing","Port Hospital","Port Hospital","Port Hospital"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>case_id<\/th>\n      <th>date_onset<\/th>\n      <th>hospital<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":10,"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script><p><strong>Hospital Information dataframe</strong></p>
+<div id="htmlwidget-9513910af90937aa3149" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-9513910af90937aa3149">{"x":{"filter":"none","data":[["6c286a","5fe599","6285c9","893f25","c4e706","275cc7","133ee7","dbebea","788a99","2978ac"],["2014-04-27","2014-05-13","2014-05-14","2014-05-21","2014-05-23","2014-05-27","2014-05-27","2014-06-02","2014-06-06","2014-06-06"],["Missing","Other","Missing","Military Hospital","Missing","Central Hospital","Missing","Port Hospital","Port Hospital","Port Hospital"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>case_id<\/th>\n      <th>date_onset<\/th>\n      <th>hospital<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":10,"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script><p><strong>Hospital Information dataframe</strong></p>
 <p>Below is the separate dataframe with additional information about each hospital.</p>
-<div id="htmlwidget-61928258c7b0c95730d2" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-61928258c7b0c95730d2">{"x":{"filter":"none","data":[["central hospital","military","military","port","St. Mark's","ignace","sisters"],[1950280,40500,10000,50280,12000,5000,4200],["Tertiary","Secondary","Primary","Secondary","Secondary","Primary","Primary"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>hosp_name<\/th>\n      <th>catchment_pop<\/th>\n      <th>level<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":7,"columnDefs":[{"className":"dt-right","targets":1}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[7,10,25,50,100]}},"evals":[],"jsHooks":[]}</script><!-- ======================================================= -->
+<div id="htmlwidget-bf5037dacf04d2bf2563" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-bf5037dacf04d2bf2563">{"x":{"filter":"none","data":[["central hospital","military","military","port","St. Mark's","ignace","sisters"],[1950280,40500,10000,50280,12000,5000,4200],["Tertiary","Secondary","Primary","Secondary","Secondary","Primary","Primary"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>hosp_name<\/th>\n      <th>catchment_pop<\/th>\n      <th>level<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":7,"columnDefs":[{"className":"dt-right","targets":1}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[7,10,25,50,100]}},"evals":[],"jsHooks":[]}</script><!-- ======================================================= -->
 </div>
 <div id="pre-cleaning" class="section level3 tabset tabset-fade" number="11.2.2">
 <h3>
@@ -155,17 +155,17 @@
 <p><strong>Identify differences</strong></p>
 <p>We need the values of <code>hosp_name</code> column in <code>hosp_info</code> dataframe to match the values of <code>hospital</code> column in the <code>linelist</code> dataframe.</p>
 <p>Here are the values in <code>linelist_mini</code>:</p>
-<div class="sourceCode" id="cb393"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb394"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">linelist_mini</span><span class="op">$</span><span class="va">hospital</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] "Missing"           "Other"             "Military Hospital" "Central Hospital"  "Port Hospital"</code></pre>
 <p>and here are the values in <code>hosp_info</code>:</p>
-<div class="sourceCode" id="cb395"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb396"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">hosp_info</span><span class="op">$</span><span class="va">hosp_name</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] "central hospital" "military"         "port"             "St. Mark's"       "ignace"           "sisters"</code></pre>
 <p><strong>Align matching values</strong></p>
 <p>We begin by cleaning the values in <code>hosp_name</code>. We use logic to code the values in the new column using <code><a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when()</a></code> (LINK). We correct the hospital names that exist in both dataframes, and leave the others as they are (see <code>TRUE ~ hosp_name</code>).</p>
 <p><span style="color: orange;"><strong><em>CAUTION:</em></strong> Typically, one should create a new column (e.g. <code>hosp_name_clean</code>), but for ease of demonstration we show modification of the old column</span></p>
-<div class="sourceCode" id="cb397"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb398"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">hosp_info</span> <span class="op">&lt;-</span> <span class="va">hosp_info</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>
     hosp_name <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when</a></span><span class="op">(</span>
@@ -177,10 +177,10 @@
       <span class="op">)</span>
     <span class="op">)</span></code></pre></div>
 <p>We now see that the hospital names that appear in both dataframe are aligned. There are some hospitals in <code>hosp_info</code> that are not present in <code>linelist</code> - we will deal with these later, in the join.</p>
-<div class="sourceCode" id="cb398"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb399"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">hosp_info</span><span class="op">$</span><span class="va">hosp_name</span><span class="op">)</span></code></pre></div>
-<pre><code>## [1] "Central Hospital"                     "Military Hospital"                    "Port Hospital"                        "St. Mark's Maternity Hospital (SMMH)"
-## [5] "ignace"                               "sisters"</code></pre>
+<pre><code>## [1] "Central Hospital"                     "Military Hospital"                    "Port Hospital"                       
+## [4] "St. Mark's Maternity Hospital (SMMH)" "ignace"                               "sisters"</code></pre>
 <p>If you need to convert to all values UPPER or lower case, use these functions from <strong>stringr</strong>, as shown in the page on characters/strings (LINK).</p>
 <p><code>str_to_upper()</code><br><code>str_to_upper()</code><br><code>str_to_title()</code></p>
 <!-- ======================================================= -->
@@ -199,10 +199,10 @@
 <p><strong>General function structure</strong></p>
 <p>Any of these join commands can be run independently, like below.</p>
 <p>An object is being created, or re-defined: dataframe 2 is being joined to dataframe 1, on the basis of matches between the “ID” column in <code>df1</code> and “identifier” column in <code>df2</code>. Because this example uses <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join()</a></code>, any rows in <code>df2</code> that do not match to <code>df1</code> will be dropped.</p>
-<div class="sourceCode" id="cb400"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb401"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">object</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span><span class="va">df1</span>, <span class="va">df2</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"ID"</span> <span class="op">=</span> <span class="st">"identifier"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>The join commands can also be run within a pipe chain. The first dataframe <code>df1</code> is known to be the dataframe that is being passed through the pipes. An example is shown below, in context with some additional non-important <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> and <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> commands before the join.</p>
-<div class="sourceCode" id="cb401"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb402"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">object</span> <span class="op">&lt;-</span> <span class="va">df1</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">var1</span> <span class="op">==</span> <span class="fl">2</span><span class="op">)</span> <span class="op">%&gt;%</span>        <span class="co"># for demonstration only</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>lag <span class="op">=</span> <span class="va">day</span> <span class="op">+</span> <span class="fl">7</span><span class="op">)</span> <span class="op">%&gt;%</span>    <span class="co"># for demonstration only</span>
@@ -254,21 +254,21 @@
 </li>
 <li>Rows in the secondary dataframe with no match to the baseline dataframe (“sisters” and “ignace”) were dropped</li>
 </ul>
-<div class="sourceCode" id="cb402"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb403"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">linelist_mini</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span><span class="va">hosp_info</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"hospital"</span> <span class="op">=</span> <span class="st">"hosp_name"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<div id="htmlwidget-f4308d819566cc0dd088" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-f4308d819566cc0dd088">{"x":{"filter":"none","data":[["6c286a","5fe599","6285c9","893f25","893f25","c4e706","275cc7","133ee7","dbebea","788a99","2978ac"],["2014-04-27","2014-05-13","2014-05-14","2014-05-21","2014-05-21","2014-05-23","2014-05-27","2014-05-27","2014-06-02","2014-06-06","2014-06-06"],["Missing","Other","Missing","Military Hospital","Military Hospital","Missing","Central Hospital","Missing","Port Hospital","Port Hospital","Port Hospital"],[null,null,null,40500,10000,null,1950280,null,50280,50280,50280],[null,null,null,"Secondary","Primary",null,"Tertiary",null,"Secondary","Secondary","Secondary"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>case_id<\/th>\n      <th>date_onset<\/th>\n      <th>hospital<\/th>\n      <th>catchment_pop<\/th>\n      <th>level<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":11,"columnDefs":[{"className":"dt-right","targets":3}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[10,11,25,50,100]}},"evals":[],"jsHooks":[]}</script><p><strong>“Should I use a right join, or a left join?”</strong><br>
+<div id="htmlwidget-d910090a1b5cef270874" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-d910090a1b5cef270874">{"x":{"filter":"none","data":[["6c286a","5fe599","6285c9","893f25","893f25","c4e706","275cc7","133ee7","dbebea","788a99","2978ac"],["2014-04-27","2014-05-13","2014-05-14","2014-05-21","2014-05-21","2014-05-23","2014-05-27","2014-05-27","2014-06-02","2014-06-06","2014-06-06"],["Missing","Other","Missing","Military Hospital","Military Hospital","Missing","Central Hospital","Missing","Port Hospital","Port Hospital","Port Hospital"],[null,null,null,40500,10000,null,1950280,null,50280,50280,50280],[null,null,null,"Secondary","Primary",null,"Tertiary",null,"Secondary","Secondary","Secondary"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>case_id<\/th>\n      <th>date_onset<\/th>\n      <th>hospital<\/th>\n      <th>catchment_pop<\/th>\n      <th>level<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":11,"columnDefs":[{"className":"dt-right","targets":3}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[10,11,25,50,100]}},"evals":[],"jsHooks":[]}</script><p><strong>“Should I use a right join, or a left join?”</strong><br>
 Most important is to ask “which dataframe should retain all of its rows?” - use this one as the baseline.</p>
 <p>The two commands below achieve the same output - 10 rows of <code>hosp_info</code> joined <em>into</em> a <code>linelist_mini</code> baseline. However, the column order will differ based on whether <code>hosp_info</code> arrives from the right (in the left join) or arrives from the left (in the right join). The order of the rows may also shift consequently.</p>
 <p>Also consider whether your use-case is within a pipe chain (<code><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></code>). If the dataset in the pipes is the baseline, you will likely use a left join to add data to it.</p>
-<div class="sourceCode" id="cb403"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb404"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># The two commands below achieve the same data, but with differently ordered rows and columns</span>
 <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">left_join</a></span><span class="op">(</span><span class="va">linelist_mini</span>, <span class="va">hosp_info</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"hospital"</span> <span class="op">=</span> <span class="st">"hosp_name"</span><span class="op">)</span><span class="op">)</span>
 <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">right_join</a></span><span class="op">(</span><span class="va">hosp_info</span>, <span class="va">linelist_mini</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"hosp_name"</span> <span class="op">=</span> <span class="st">"hospital"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<div id="htmlwidget-b4de3f494f15f38659f8" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-b4de3f494f15f38659f8">{"x":{"filter":"none","data":[["6c286a","5fe599","6285c9","893f25","893f25","c4e706","275cc7","133ee7","dbebea","788a99","2978ac"],["2014-04-27","2014-05-13","2014-05-14","2014-05-21","2014-05-21","2014-05-23","2014-05-27","2014-05-27","2014-06-02","2014-06-06","2014-06-06"],["Missing","Other","Missing","Military Hospital","Military Hospital","Missing","Central Hospital","Missing","Port Hospital","Port Hospital","Port Hospital"],[null,null,null,40500,10000,null,1950280,null,50280,50280,50280],[null,null,null,"Secondary","Primary",null,"Tertiary",null,"Secondary","Secondary","Secondary"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>case_id<\/th>\n      <th>date_onset<\/th>\n      <th>hospital<\/th>\n      <th>catchment_pop<\/th>\n      <th>level<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":11,"columnDefs":[{"className":"dt-right","targets":3}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[10,11,25,50,100]}},"evals":[],"jsHooks":[]}</script><div id="htmlwidget-a1e52e45f59935567777" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-a1e52e45f59935567777">{"x":{"filter":"none","data":[["Central Hospital","Military Hospital","Military Hospital","Port Hospital","Port Hospital","Port Hospital","Missing","Other","Missing","Missing","Missing"],[1950280,40500,10000,50280,50280,50280,null,null,null,null,null],["Tertiary","Secondary","Primary","Secondary","Secondary","Secondary",null,null,null,null,null],["275cc7","893f25","893f25","dbebea","788a99","2978ac","6c286a","5fe599","6285c9","c4e706","133ee7"],["2014-05-27","2014-05-21","2014-05-21","2014-06-02","2014-06-06","2014-06-06","2014-04-27","2014-05-13","2014-05-14","2014-05-23","2014-05-27"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>hosp_name<\/th>\n      <th>catchment_pop<\/th>\n      <th>level<\/th>\n      <th>case_id<\/th>\n      <th>date_onset<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":11,"columnDefs":[{"className":"dt-right","targets":1}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[10,11,25,50,100]}},"evals":[],"jsHooks":[]}</script><!-- ======================================================= -->
+<div id="htmlwidget-d3961c35d62efad1511a" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-d3961c35d62efad1511a">{"x":{"filter":"none","data":[["6c286a","5fe599","6285c9","893f25","893f25","c4e706","275cc7","133ee7","dbebea","788a99","2978ac"],["2014-04-27","2014-05-13","2014-05-14","2014-05-21","2014-05-21","2014-05-23","2014-05-27","2014-05-27","2014-06-02","2014-06-06","2014-06-06"],["Missing","Other","Missing","Military Hospital","Military Hospital","Missing","Central Hospital","Missing","Port Hospital","Port Hospital","Port Hospital"],[null,null,null,40500,10000,null,1950280,null,50280,50280,50280],[null,null,null,"Secondary","Primary",null,"Tertiary",null,"Secondary","Secondary","Secondary"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>case_id<\/th>\n      <th>date_onset<\/th>\n      <th>hospital<\/th>\n      <th>catchment_pop<\/th>\n      <th>level<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":11,"columnDefs":[{"className":"dt-right","targets":3}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[10,11,25,50,100]}},"evals":[],"jsHooks":[]}</script><div id="htmlwidget-299523d5e6a5443ccbc6" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-299523d5e6a5443ccbc6">{"x":{"filter":"none","data":[["Central Hospital","Military Hospital","Military Hospital","Port Hospital","Port Hospital","Port Hospital","Missing","Other","Missing","Missing","Missing"],[1950280,40500,10000,50280,50280,50280,null,null,null,null,null],["Tertiary","Secondary","Primary","Secondary","Secondary","Secondary",null,null,null,null,null],["275cc7","893f25","893f25","dbebea","788a99","2978ac","6c286a","5fe599","6285c9","c4e706","133ee7"],["2014-05-27","2014-05-21","2014-05-21","2014-06-02","2014-06-06","2014-06-06","2014-04-27","2014-05-13","2014-05-14","2014-05-23","2014-05-27"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>hosp_name<\/th>\n      <th>catchment_pop<\/th>\n      <th>level<\/th>\n      <th>case_id<\/th>\n      <th>date_onset<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":11,"columnDefs":[{"className":"dt-right","targets":1}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[10,11,25,50,100]}},"evals":[],"jsHooks":[]}</script><!-- ======================================================= -->
 </div>
 <div id="full-join" class="section level3" number="11.3.4">
 <h3>
@@ -290,11 +290,11 @@ Most important is to ask “which dataframe should retain all of its rows?” - 
 <li>
 <code>NA</code> fills in where baseline rows did not match to secondary rows (<code>hospital</code> was “Other” or “Missing”), or the opposite (where <code>hosp_name</code> was “ignace” or “sisters”)</li>
 </ul>
-<div class="sourceCode" id="cb404"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb405"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">linelist_mini</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">full_join</a></span><span class="op">(</span><span class="va">hosp_info</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"hospital"</span> <span class="op">=</span> <span class="st">"hosp_name"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<div id="htmlwidget-a8f284f3d72f5d5c0f72" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-a8f284f3d72f5d5c0f72">{"x":{"filter":"none","data":[["6c286a","5fe599","6285c9","893f25","893f25","c4e706","275cc7","133ee7","dbebea","788a99","2978ac",null,null,null],["2014-04-27","2014-05-13","2014-05-14","2014-05-21","2014-05-21","2014-05-23","2014-05-27","2014-05-27","2014-06-02","2014-06-06","2014-06-06",null,null,null],["Missing","Other","Missing","Military Hospital","Military Hospital","Missing","Central Hospital","Missing","Port Hospital","Port Hospital","Port Hospital","St. Mark's Maternity Hospital (SMMH)","ignace","sisters"],[null,null,null,40500,10000,null,1950280,null,50280,50280,50280,12000,5000,4200],[null,null,null,"Secondary","Primary",null,"Tertiary",null,"Secondary","Secondary","Secondary","Secondary","Primary","Primary"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>case_id<\/th>\n      <th>date_onset<\/th>\n      <th>hospital<\/th>\n      <th>catchment_pop<\/th>\n      <th>level<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":13,"columnDefs":[{"className":"dt-right","targets":3}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[10,13,25,50,100]}},"evals":[],"jsHooks":[]}</script><!-- ======================================================= -->
+<div id="htmlwidget-38c5e50d6c91dfb92bf8" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-38c5e50d6c91dfb92bf8">{"x":{"filter":"none","data":[["6c286a","5fe599","6285c9","893f25","893f25","c4e706","275cc7","133ee7","dbebea","788a99","2978ac",null,null,null],["2014-04-27","2014-05-13","2014-05-14","2014-05-21","2014-05-21","2014-05-23","2014-05-27","2014-05-27","2014-06-02","2014-06-06","2014-06-06",null,null,null],["Missing","Other","Missing","Military Hospital","Military Hospital","Missing","Central Hospital","Missing","Port Hospital","Port Hospital","Port Hospital","St. Mark's Maternity Hospital (SMMH)","ignace","sisters"],[null,null,null,40500,10000,null,1950280,null,50280,50280,50280,12000,5000,4200],[null,null,null,"Secondary","Primary",null,"Tertiary",null,"Secondary","Secondary","Secondary","Secondary","Primary","Primary"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>case_id<\/th>\n      <th>date_onset<\/th>\n      <th>hospital<\/th>\n      <th>catchment_pop<\/th>\n      <th>level<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":13,"columnDefs":[{"className":"dt-right","targets":3}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[10,13,25,50,100]}},"evals":[],"jsHooks":[]}</script><!-- ======================================================= -->
 </div>
 <div id="inner-join" class="section level3" number="11.3.5">
 <h3>
@@ -312,14 +312,14 @@ This means that your original dataset may reduce in number of rows. Adjustment o
 </li>
 <li>Only the identifier column from the baseline is kept (<code>hospital</code>)</li>
 </ul>
-<div class="sourceCode" id="cb405"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb406"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">linelist_mini</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">inner_join</a></span><span class="op">(</span><span class="va">hosp_info</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"hospital"</span> <span class="op">=</span> <span class="st">"hosp_name"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb406"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb407"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">hosp_info</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">inner_join</a></span><span class="op">(</span><span class="va">linelist_mini</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"hosp_name"</span> <span class="op">=</span> <span class="st">"hospital"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<div id="htmlwidget-14f2ee9fb409376014a9" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-14f2ee9fb409376014a9">{"x":{"filter":"none","data":[["893f25","893f25","275cc7","dbebea","788a99","2978ac"],["2014-05-21","2014-05-21","2014-05-27","2014-06-02","2014-06-06","2014-06-06"],["Military Hospital","Military Hospital","Central Hospital","Port Hospital","Port Hospital","Port Hospital"],[40500,10000,1950280,50280,50280,50280],["Secondary","Primary","Tertiary","Secondary","Secondary","Secondary"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>case_id<\/th>\n      <th>date_onset<\/th>\n      <th>hospital<\/th>\n      <th>catchment_pop<\/th>\n      <th>level<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":12,"columnDefs":[{"className":"dt-right","targets":3}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[10,12,25,50,100]}},"evals":[],"jsHooks":[]}</script><!-- ======================================================= -->
+<div id="htmlwidget-b1a0bd7bc4d60c36eab3" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-b1a0bd7bc4d60c36eab3">{"x":{"filter":"none","data":[["893f25","893f25","275cc7","dbebea","788a99","2978ac"],["2014-05-21","2014-05-21","2014-05-27","2014-06-02","2014-06-06","2014-06-06"],["Military Hospital","Military Hospital","Central Hospital","Port Hospital","Port Hospital","Port Hospital"],[40500,10000,1950280,50280,50280,50280],["Secondary","Primary","Tertiary","Secondary","Secondary","Secondary"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>case_id<\/th>\n      <th>date_onset<\/th>\n      <th>hospital<\/th>\n      <th>catchment_pop<\/th>\n      <th>level<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":12,"columnDefs":[{"className":"dt-right","targets":3}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[10,12,25,50,100]}},"evals":[],"jsHooks":[]}</script><!-- ======================================================= -->
 </div>
 <div id="semi-join" class="section level3" number="11.3.6">
 <h3>
@@ -329,7 +329,7 @@ This means that your original dataset may reduce in number of rows. Adjustment o
 A <strong>semi-join keeps all observations in dataframe 1 that have a match in dataframe 2</strong> (but does not add new columns or duplicate any rows with multiple matches). Read more about filtering joins <a href="https://towardsdatascience.com/level-up-with-semi-joins-in-r-a068426096e0">here</a>.</p>
 <div class="inline-figure"><img src="images/semi-join.gif" width="50%"></div>
 <p>The below code would return <strong>0</strong> rows, because the two dataframes are completely different - there are no rows that are in both.</p>
-<div class="sourceCode" id="cb407"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb408"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">hosp_info</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter-joins.html">semi_join</a></span><span class="op">(</span><span class="va">linelist_mini</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"hosp_name"</span> <span class="op">=</span> <span class="st">"hospital"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <!-- ======================================================= -->
@@ -345,22 +345,22 @@ A <strong>semi-join keeps all observations in dataframe 1 that have a match in d
 <div class="inline-figure"><img src="images/anti-join.gif" width="50%"></div>
 <p><strong>Simple example</strong></p>
 <p>For an example, let’s find the <code>hosp_info</code> hospitals that do not have any cases present in <code>linelist_mini</code>. We list <code>hosp_info</code> first, as the baseline dataframe. The two hospitals which are not present in <code>linelist_mini</code> are returned.</p>
-<div class="sourceCode" id="cb408"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb409"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">hosp_info</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter-joins.html">anti_join</a></span><span class="op">(</span><span class="va">linelist_mini</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"hosp_name"</span> <span class="op">=</span> <span class="st">"hospital"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<div id="htmlwidget-9180fca0642da93e5b2b" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-9180fca0642da93e5b2b">{"x":{"filter":"none","data":[["St. Mark's Maternity Hospital (SMMH)","ignace","sisters"],[12000,5000,4200],["Secondary","Primary","Primary"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>hosp_name<\/th>\n      <th>catchment_pop<\/th>\n      <th>level<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":12,"columnDefs":[{"className":"dt-right","targets":1}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[10,12,25,50,100]}},"evals":[],"jsHooks":[]}</script><p><strong>Example 2</strong></p>
+<div id="htmlwidget-524e0d92dc7e822be5e7" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-524e0d92dc7e822be5e7">{"x":{"filter":"none","data":[["St. Mark's Maternity Hospital (SMMH)","ignace","sisters"],[12000,5000,4200],["Secondary","Primary","Primary"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>hosp_name<\/th>\n      <th>catchment_pop<\/th>\n      <th>level<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":12,"columnDefs":[{"className":"dt-right","targets":1}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[10,12,25,50,100]}},"evals":[],"jsHooks":[]}</script><p><strong>Example 2</strong></p>
 <p>For another example, let us say we ran an <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">inner_join()</a></code> between <code>linelist_mini</code> and <code>hosp_info</code>. This returns only 8 of the original 11 <code>linelist_mini</code> records.</p>
-<div class="sourceCode" id="cb409"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">linelist_mini</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">inner_join</a></span><span class="op">(</span><span class="va">hosp_info</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"hospital"</span> <span class="op">=</span> <span class="st">"hosp_name"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<div id="htmlwidget-b8ef55961fe999a9f631" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-b8ef55961fe999a9f631">{"x":{"filter":"none","data":[["893f25","893f25","275cc7","dbebea","788a99","2978ac"],["2014-05-21","2014-05-21","2014-05-27","2014-06-02","2014-06-06","2014-06-06"],["Military Hospital","Military Hospital","Central Hospital","Port Hospital","Port Hospital","Port Hospital"],[40500,10000,1950280,50280,50280,50280],["Secondary","Primary","Tertiary","Secondary","Secondary","Secondary"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>case_id<\/th>\n      <th>date_onset<\/th>\n      <th>hospital<\/th>\n      <th>catchment_pop<\/th>\n      <th>level<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":8,"columnDefs":[{"className":"dt-right","targets":3}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[8,10,25,50,100]}},"evals":[],"jsHooks":[]}</script><p>To review the 3 <code>linelist_mini</code> records that were excluded in the inner join, we can run an anti-join with <code>linelist_mini</code> as the baseline dataframe.</p>
 <div class="sourceCode" id="cb410"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">linelist_mini</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">inner_join</a></span><span class="op">(</span><span class="va">hosp_info</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"hospital"</span> <span class="op">=</span> <span class="st">"hosp_name"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<div id="htmlwidget-6fcc758ddd9cb19ff662" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-6fcc758ddd9cb19ff662">{"x":{"filter":"none","data":[["893f25","893f25","275cc7","dbebea","788a99","2978ac"],["2014-05-21","2014-05-21","2014-05-27","2014-06-02","2014-06-06","2014-06-06"],["Military Hospital","Military Hospital","Central Hospital","Port Hospital","Port Hospital","Port Hospital"],[40500,10000,1950280,50280,50280,50280],["Secondary","Primary","Tertiary","Secondary","Secondary","Secondary"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>case_id<\/th>\n      <th>date_onset<\/th>\n      <th>hospital<\/th>\n      <th>catchment_pop<\/th>\n      <th>level<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":8,"columnDefs":[{"className":"dt-right","targets":3}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[8,10,25,50,100]}},"evals":[],"jsHooks":[]}</script><p>To review the 3 <code>linelist_mini</code> records that were excluded in the inner join, we can run an anti-join with <code>linelist_mini</code> as the baseline dataframe.</p>
+<div class="sourceCode" id="cb411"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">linelist_mini</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter-joins.html">anti_join</a></span><span class="op">(</span><span class="va">hosp_info</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"hospital"</span> <span class="op">=</span> <span class="st">"hosp_name"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<div id="htmlwidget-f3f582e2919793ebe809" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-f3f582e2919793ebe809">{"x":{"filter":"none","data":[["6c286a","5fe599","6285c9","c4e706","133ee7"],["2014-04-27","2014-05-13","2014-05-14","2014-05-23","2014-05-27"],["Missing","Other","Missing","Missing","Missing"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>case_id<\/th>\n      <th>date_onset<\/th>\n      <th>hospital<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script><p>To see the <code>hosp_info</code> records that were excluded in the inner join, we could also run an anti-join with <code>hosp_info</code> as the baseline dataframe.</p>
+<div id="htmlwidget-c3bd6138c26966745b3b" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-c3bd6138c26966745b3b">{"x":{"filter":"none","data":[["6c286a","5fe599","6285c9","c4e706","133ee7"],["2014-04-27","2014-05-13","2014-05-14","2014-05-23","2014-05-27"],["Missing","Other","Missing","Missing","Missing"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>case_id<\/th>\n      <th>date_onset<\/th>\n      <th>hospital<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script><p>To see the <code>hosp_info</code> records that were excluded in the inner join, we could also run an anti-join with <code>hosp_info</code> as the baseline dataframe.</p>
 <!-- ======================================================= -->
 </div>
 </div>
@@ -368,8 +368,62 @@ A <strong>semi-join keeps all observations in dataframe 1 that have a match in d
 <h2>
 <span class="header-section-number">11.4</span> Probabalistic matching<a class="anchor" aria-label="anchor" href="#probabalistic-matching"><i class="fas fa-link"></i></a>
 </h2>
-<p>rowmatcher
-other options (finlay?)</p>
+<p>Under construction - TBD</p>
+<p>RecordLinkage -</p>
+<p>fastLink package -</p>
+<p><strong>Load packages</strong></p>
+<div class="sourceCode" id="cb412"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span><span class="va">RecordLinkage</span>,  <span class="co"># Note, install also installs the BH package which is large</span>
+               <span class="va">rio</span>,            <span class="co"># import/export data</span>
+               <span class="va">tidyverse</span>,      <span class="co"># data manipulation and visualization</span>
+               <span class="va">fastLink</span>,        
+               <span class="op">)</span></code></pre></div>
+<pre><code>## 
+## Your package installed</code></pre>
+<pre><code>## Warning in pacman::p_load(RecordLinkage, rio, tidyverse, fastLink, ): Failed to install/load:</code></pre>
+<p>Here are two example datasets that we will use to do probabilistic matching:</p>
+<p><strong>Dataframe A (<code>dfA</code>)</strong>:</p>
+<div id="htmlwidget-4b1465768d0b9eb6a9ee" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-4b1465768d0b9eb6a9ee">{"x":{"filter":"none","data":[["1_1","1_2","1_3","1_4","1_5","1_6","1_7","1_8","1_9","1_10","1_11","1_12","1_13","1_14","1_15"],["M","M","F","F","F",null,"F","F","M","M","F","M","F","M","F"],["Amir","Tony","Maria","Betty","Andrea","Jose","Caroline","Trang","Olivier","Mike","Cassidy","Mohammad","Blessing","Abubakar","Maria"],[null,"B","Contreras","Casteel",null,"Sanchez",null,null,"Laurent","Murphy","Jones",null,null,null,"Salinas"],["Khan","Smith","Rodriguez","Chase","Kumaraswamy","Lopez","Wang","Nguyen","De Bordeaux","O'Callaghan","Davis","Ali","Adebayo","Abullahi","Contreras"],[1989,1970,1972,1954,2001,1995,1988,1981,null,1969,1980,1942,1955,1960,1955],[11,9,4,3,1,1,12,6,null,4,7,1,2,1,3],[22,19,15,3,5,6,11,10,null,12,19,17,14,1,3],["River","River","City","City","Rural","City","Rural","Rural","River","Rural","City","City","Rural","River","River"],[true,true,false,true,true,false,false,true,true,false,true,false,true,true,true]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>idA<\/th>\n      <th>gender<\/th>\n      <th>first<\/th>\n      <th>middle<\/th>\n      <th>last<\/th>\n      <th>yr<\/th>\n      <th>mon<\/th>\n      <th>day<\/th>\n      <th>district<\/th>\n      <th>followup_complete<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":15,"columnDefs":[{"className":"dt-right","targets":[5,6,7]}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[10,15,25,50,100]}},"evals":[],"jsHooks":[]}</script><p><strong>Dataframe B (<code>dfB</code>)</strong>:</p>
+<div id="htmlwidget-781b636c31cf0a13caae" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-781b636c31cf0a13caae">{"x":{"filter":"none","data":[["2_1","2_2","2_3","2_4","2_5","2_6","2_7","2_8"],["M","M","F","F","M","F","M","M"],["Amir","Anthony","Marialisa","Elizabeth","Jose","Cassidy","Michael","Oliver"],[null,"B.","Contreras","Casteel","Sanchez","Jones","Murphy","Laurent"],["Khan","Smith","Rodrigues","Chase","Lopez","Davis","O'Calaghan","De Bordow"],[1989,1970,1972,1954,1996,1980,1969,1971],[11,9,4,3,1,7,4,2],[22,19,15,3,6,19,12,4],["River","River","River","City","City","City","Rural","River"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>idA<\/th>\n      <th>gender<\/th>\n      <th>first<\/th>\n      <th>middle<\/th>\n      <th>last<\/th>\n      <th>yr<\/th>\n      <th>mon<\/th>\n      <th>day<\/th>\n      <th>district<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":8,"columnDefs":[{"className":"dt-right","targets":[5,6,7]}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[8,10,25,50,100]}},"evals":[],"jsHooks":[]}</script><p>Using the <strong>fastLink</strong> package, a table can be retrieved with the matches.</p>
+<div class="sourceCode" id="cb415"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">fastLink</span><span class="op">)</span>
+
+<span class="va">matches.out</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/fastLink/man/fastLink.html">fastLink</a></span><span class="op">(</span>
+  dfA <span class="op">=</span> <span class="va">dfA</span>,
+  dfB <span class="op">=</span> <span class="va">dfB</span>,
+  varnames <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"gender"</span>, <span class="st">"first"</span>, <span class="st">"middle"</span>, <span class="st">"last"</span>, <span class="st">"yr"</span>, <span class="st">"mon"</span>, <span class="st">"day"</span>, <span class="st">"district"</span><span class="op">)</span>,
+  stringdist.match <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"first"</span>, <span class="st">"middle"</span>, <span class="st">"last"</span>, <span class="st">"district"</span><span class="op">)</span>,
+  numeric.match <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"yr"</span>, <span class="st">"mon"</span>, <span class="st">"day"</span><span class="op">)</span>,
+  <span class="co">#gender.field = "gender"</span>
+  <span class="op">)</span></code></pre></div>
+<pre><code>## 
+## ==================== 
+## fastLink(): Fast Probabilistic Record Linkage
+## ==================== 
+## 
+## If you set return.all to FALSE, you will not be able to calculate a confusion table as a summary statistic.
+## Calculating matches for each variable.
+## Getting counts for parameter estimation.
+##     Parallelizing calculation using OpenMP. 1 threads out of 4 are used.
+## Running the EM algorithm.
+## Getting the indices of estimated matches.
+##     Parallelizing calculation using OpenMP. 1 threads out of 4 are used.
+## Deduping the estimated matches.
+## Getting the match patterns for each estimated match.</code></pre>
+<div class="sourceCode" id="cb417"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># print matches</span>
+<span class="va">matches.out</span><span class="op">$</span><span class="va">matches</span></code></pre></div>
+<pre><code>##   inds.a inds.b
+## 1      1      1
+## 2      2      2
+## 3      3      3
+## 4      4      4
+## 5      6      5
+## 6     11      6
+## 7     10      7
+## 8      9      8</code></pre>
 <!-- ======================================================= -->
 </div>
 <div id="resources-3" class="section level2 tabset tabset-fade" number="11.5">
@@ -377,6 +431,7 @@ other options (finlay?)</p>
 <span class="header-section-number">11.5</span> Resources<a class="anchor" aria-label="anchor" href="#resources-3"><i class="fas fa-link"></i></a>
 </h2>
 <p>The <a href="https://dplyr.tidyverse.org/reference/join.html">dplyr page on joins</a></p>
+<p>Publication describing <a href="https://journal.r-project.org/archive/2010/RJ-2010-017/RJ-2010-017.pdf">RecordLinkage package</a></p>
 
 </div>
 </div>
@@ -423,7 +478,7 @@ other options (finlay?)</p>
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>R Handbook for Epidemiologists</strong>" was written by the handbook team. It was last built on 2021-02-08.</p>
+    <p>"<strong>R Handbook for Epidemiologists</strong>" was written by the handbook team. It was last built on 2021-02-14.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

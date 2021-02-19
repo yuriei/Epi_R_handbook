@@ -27,7 +27,7 @@ documentclass: book
 <!-- description: "This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." -->
 <!-- --- -->
 
-# Welcome {-}
+# Welcome - THIS IS A DRAFT {-}
 
 ```{r, out.width = "100%", fig.align = "center", echo=F}
 knitr::include_graphics(here::here("images", "R Handbook Logo.png"))
@@ -86,7 +86,7 @@ This handbook is written by epidemiologists, for epidemiologists. Examples are t
 <!-- ======================================================= -->
 ## Edit or contribute {-}
 
-If you have suggestions or want to contribute content, please post an issue at this [github repository](https://github.com/nsbatra/R_epi_handbook).  
+If you have suggestions or want to contribute content, please post an issue or submit a pull request to this [github repository](https://github.com/nsbatra/R_epi_handbook).  
 
 
 
@@ -97,8 +97,9 @@ If you have suggestions or want to contribute content, please post an issue at t
 
 ### Contributors {-}  
 
-This handbook is a collaborative team production; it has been conceived, written, and edited by epidemiologists and public health practitioners from around the world. Here are the team members:  
+This handbook is a collaborative team production. It has been conceived, written, and edited by epidemiologists and public health practitioners from around the world, who have drawn upon their experiences within a constellation of organizations including local/state/provincial/national health departments and ministries, the World Health Organization (WHO), MSF (Medecins sans frontiers / Doctors without Borders), UNHCR, WFP, hospital systems, and academic institutions.
 
+Here are the team members:  
 
 **Editor-in-Chief:** 
 
@@ -149,8 +150,9 @@ Logo: [CDC Public Health Image library](https://phil.cdc.gov/), [R Graph Gallery
 
 ### License and Terms of Use {-}  
 
+This handbook is **not** an approved product of any specific organization. Although we strive for accuracy, we provide no guarantee of the content in this book.  
 
-Creative Commons license TBD...
+This book is licensed under a [Creative Commons license](https://creativecommons.org/licenses/) TBD... 
 
 
 ```{r include=FALSE, cache=FALSE}
@@ -166,6 +168,7 @@ rm(list = ls(all = TRUE))
 filter <- dplyr::filter
 select <- dplyr::select
 summarise <- dplyr::summarise
+summary <- base::summary
 
 #load core packages
 pacman::p_load(
@@ -200,6 +203,7 @@ rm(list = ls(all = TRUE))
 filter <- dplyr::filter
 select <- dplyr::select
 summarise <- dplyr::summarise
+summary <- base::summary
 
 #load core packages
 pacman::p_load(
@@ -307,6 +311,7 @@ rm(list = ls(all = TRUE))
 filter <- dplyr::filter
 select <- dplyr::select
 summarise <- dplyr::summarise
+summary <- base::summary
 
 #load core packages
 pacman::p_load(
@@ -348,6 +353,7 @@ rm(list = ls(all = TRUE))
 filter <- dplyr::filter
 select <- dplyr::select
 summarise <- dplyr::summarise
+summary <- base::summary
 
 #load core packages
 pacman::p_load(
@@ -382,6 +388,7 @@ rm(list = ls(all = TRUE))
 filter <- dplyr::filter
 select <- dplyr::select
 summarise <- dplyr::summarise
+summary <- base::summary
 
 #load core packages
 pacman::p_load(
@@ -402,7 +409,7 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 
 <!--chapter:end:new_pages/cat_basics.Rmd-->
 
-# R Basics {.tabset .tabset-fade}
+# R Basics {}
 
 <!-- ======================================================= -->
 ## Overview
@@ -438,7 +445,7 @@ The broad R community is enormous and collaborative. New packages and tools are 
 
 
 <!-- ======================================================= -->
-## Installation {#install .tabset .tabset-fade }
+## Installation {#install  }
 
 **How to install R**  
 
@@ -458,7 +465,7 @@ Visit this website [https://rstudio.com/products/rstudio/download/](https://rstu
 * RTools  (*for building packages for R*)  
 
 
-### TinyTex {.tabset .tabset-fade }
+### TinyTex { }
 
 TinyTex is a custom LaTeX distribution, useful when trying to produce PDFs from R.  
 See [https://yihui.org/tinytex/](https://yihui.org/tinytex/)  
@@ -472,12 +479,12 @@ tinytex::install_tinytex()
 ```
 
 
-### Pandoc {.tabset .tabset-fade }
+### Pandoc { }
 
 Pandoc is a document converter, a separate software from R. **It comes bundled with RStudio.** It helps the process of converting Rmarkdown documents to formats like .pdf and adding complex functionality.  
 
 
-### RTools {.tabset .tabset-fade }
+### RTools { }
 
 RTools is a collection of software for building packages for R
 
@@ -487,7 +494,7 @@ Install from this website: [https://cran.r-project.org/bin/windows/Rtools/](http
 
 
 <!-- ======================================================= -->
-## RStudio {#rstudio .tabset .tabset-fade }
+## RStudio {#rstudio  }
 
 
 ### RStudio Orientation
@@ -542,7 +549,7 @@ knitr::include_graphics(here::here("images", "RStudio_tools_options.png"))
 
 
 <!-- ======================================================= -->
-## Scripts {#scripts .tabset .tabset-fade }
+## Scripts {#scripts  }
 
 Scripts are a fundamental part of programming. Storing your code in a script (vs. typing in the console) has many advantages:  
 
@@ -552,18 +559,18 @@ Scripts are a fundamental part of programming. Storing your code in a script (vs
 
 
 <!-- ======================================================= -->
-### Rmarkdown {#rmd .tabset .tabset-fade }
+### Rmarkdown {#rmd  }
 
 Rmarkdown is a type of script in which the script itself *becomes* a document (PDF, Word, HTML, Powerpoint, etc.). See the handbook page on Rmarkdown documents.  
 
 
 <!-- ======================================================= -->
-### R notebooks {#rnotebooks .tabset .tabset-fade }
+### R notebooks {#rnotebooks  }
 
 There is no difference between writing in a Rmarkdown vs an R notebook. However the execution of the document differs slightly. See this [site](http://uc-r.github.io/r_notebook) for more details.
 
 <!-- ======================================================= -->
-### R Shiny {#shinyscripts .tabset .tabset-fade }
+### R Shiny {#shinyscripts  }
 
 Shiny apps are contained within one script, which must be named `app.R`. This file has three components:  
 
@@ -649,7 +656,7 @@ If you are working in an R project, your working directory will by default be th
 
 
 <!-- ======================================================= -->
-## Objects {#objects .tabset .tabset-fade }
+## Objects {#objects  }
 
 Everything in R is an object. These sections will explain:  
 
@@ -921,7 +928,7 @@ rm(list = ls(all = TRUE))
 
 
 <!-- ======================================================= -->
-## Functions {#functions .tabset .tabset-fade }
+## Functions {#functions  }
 
 
 This section on functions explains:  
@@ -1196,7 +1203,7 @@ To read more about a function, you can search for it in the Help tab of the lowe
 <!-- ======================================================= -->
 <!-- ======================================================= -->
 <!-- ======================================================= -->
-## Piping (`%>%`) {#piping .tabset .tabset-fade}
+## Piping (`%>%`) {#piping }
 
 **Two general approaches to working with objects are:**  
 
@@ -1285,7 +1292,7 @@ cake <- let_cool(bake(mix_together(batter_3, utensil = spoon, minutes = 2), degr
 
 
 <!-- ======================================================= -->
-## Key operators and functions {#operators .tabset .tabset-fade }
+## Key operators and functions {#operators  }
 
 This section details operators in R, such as:  
 
@@ -1528,7 +1535,7 @@ linelist <- linelist %>%
 <!-- ======================================================= -->
 <!-- ======================================================= -->
 <!-- ======================================================= -->
-## Errors & Warnings {.tabset .tabset-fade }
+## Errors & Warnings { }
 
 This section explains:  
 
@@ -1586,7 +1593,7 @@ Any script (RMarkdown or otherwise) will give clues when you have made a mistake
 <!-- ======================================================= -->
 <!-- ======================================================= -->
 <!-- ======================================================= -->
-## Recommended training {.tabset .tabset-fade }
+## Recommended training { }
 
 <!-- ======================================================= -->
 ### Cheatsheets
@@ -1613,6 +1620,7 @@ rm(list = ls(all = TRUE))
 filter <- dplyr::filter
 select <- dplyr::select
 summarise <- dplyr::summarise
+summary <- base::summary
 
 #load core packages
 pacman::p_load(
@@ -1633,7 +1641,7 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 
 <!--chapter:end:new_pages/basics.Rmd-->
 
-# Importing and exporting {.tabset .tabset-fade}
+# Importing and exporting {}
 
 <!-- ======================================================= -->
 ## Overview
@@ -1642,7 +1650,7 @@ Introduction to importing data
 
 
 <!-- ======================================================= -->
-## Packages {.tabset .tabset-fade}  
+## Packages {}  
 
 The key package we recommend for importing many types of data is: **rio**. **rio** offers the useful function `import()` which can import many types of files into R.  
 
@@ -1661,7 +1669,7 @@ pacman::p_load(rio, here)
 
 
 <!-- ======================================================= -->
-## Relative filepaths (`here()`) {#here .tabset .tabset-fade}
+## Relative filepaths (`here()`) {#here}
 
 *Relative filepaths* differ from static filepaths in that they are *relative from a [R project](#rproject) root directory*. 
 For example:  
@@ -1715,7 +1723,7 @@ linelist <- import(here("data", "fluH7N9_China_2013.csv"))
 
 
 <!-- ======================================================= -->
-## Importing {.tabset .tabset-fade}
+## Importing {}
 
 When you import a dataset, you are doing the following:  
 
@@ -1759,7 +1767,7 @@ R files
 
 
 <!-- ======================================================= -->
-### Import from filepath {.tabset .tabset-fade}  
+### Import from filepath {}  
 
 A filepath can be provided in full (as below) or as a *relative filepath* (see next tab). Providing a full filepath can be fast and may be the best if referencing files from a shared/network drive).  
 
@@ -1774,7 +1782,7 @@ my_data <- rio::import("C:/Users/Neale/Documents/my_excel_file.xlsx")
 ```
 
 <!-- ======================================================= -->
-### Excel sheet {.tabset .tabset-fade}
+### Excel sheet {}
 
 If importing a specific **sheet** from an Excel file, include the sheet name in the `which = ` argument of `import()`. For example:  
 
@@ -1791,7 +1799,7 @@ linelist_raw <- import(here("data", "linelists", "linelist.xlsx"), which = "Shee
 ```
 
 <!-- ======================================================= -->
-### Select file manually {.tabset .tabset-fade}
+### Select file manually {}
 
 You can import data manually via one of these methods:  
 
@@ -1811,7 +1819,7 @@ my_data <- rio::import(file.choose())
 
 
 <!-- ======================================================= -->
-## Google sheets {.tabset .tabset-fade}
+## Google sheets {}
 
 You can import data from an online Google spreadsheet with the **googlesheet4** package and by authenticating your access to the spreadsheet.  
 
@@ -1842,7 +1850,7 @@ Here are some other helpful online tutorials: [basic importing tutorial](https:/
 
 
 <!-- ======================================================= -->
-## Websites {.tabset .tabset-fade}
+## Websites {}
 
 Scraping data from a website - TBD
 
@@ -1956,7 +1964,7 @@ stickers_dict
 
 
 <!-- ======================================================= -->
-## Manual data entry {.tabset .tabset-fade}
+## Manual data entry {}
 
 ### Entry by columns  
 
@@ -2027,7 +2035,7 @@ manual_entry_clipboard <- read.table(file = "clipboard",
 
 
 <!-- ======================================================= -->
-## Rdata files {.tabset .tabset-fade}
+## Rdata files {}
 
 `.Rdata` files store R objects, and can actually store multiple R objects within one file, for example multiple dataframes, model results, lists, etc. This can be very useful to consolidate or share your data.  
 
@@ -2053,6 +2061,7 @@ rm(list = ls(all = TRUE))
 filter <- dplyr::filter
 select <- dplyr::select
 summarise <- dplyr::summarise
+summary <- base::summary
 
 #load core packages
 pacman::p_load(
@@ -2074,13 +2083,13 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 <!--chapter:end:new_pages/importing.Rmd-->
 
 
-# R projects {.tabset .tabset-fade}  
+# R projects {}  
 
 
 An R project enables your work to be bundled in a self-contained, self-sufficient folder associated with a working directory. The project can include all the relevant data files, figures/outputs, scripts, and history, and can be shared. 
 
 <!-- ======================================================= -->
-## Creating an R project {.tabset .tabset-fade}
+## Creating an R project {}
 
 To create an R project, select "New Project" from the File menu.
 
@@ -2119,7 +2128,7 @@ One tip is that you can search across an entire project or folder using the "Fin
 
 
 <!-- ======================================================= -->
-## Resources {.tabset .tabset-fade}
+## Resources {}
 
 RStudio page on [using R projects](https://support.rstudio.com/hc/en-us/articles/200526207-Using-Projects)
 
@@ -2139,6 +2148,7 @@ rm(list = ls(all = TRUE))
 filter <- dplyr::filter
 select <- dplyr::select
 summarise <- dplyr::summarise
+summary <- base::summary
 
 #load core packages
 pacman::p_load(
@@ -2242,6 +2252,7 @@ rm(list = ls(all = TRUE))
 filter <- dplyr::filter
 select <- dplyr::select
 summarise <- dplyr::summarise
+summary <- base::summary
 
 #load core packages
 pacman::p_load(
@@ -2276,6 +2287,7 @@ rm(list = ls(all = TRUE))
 filter <- dplyr::filter
 select <- dplyr::select
 summarise <- dplyr::summarise
+summary <- base::summary
 
 #load core packages
 pacman::p_load(
@@ -4176,6 +4188,7 @@ rm(list = ls(all = TRUE))
 filter <- dplyr::filter
 select <- dplyr::select
 summarise <- dplyr::summarise
+summary <- base::summary
 
 #load core packages
 pacman::p_load(
@@ -4703,6 +4716,7 @@ rm(list = ls(all = TRUE))
 filter <- dplyr::filter
 select <- dplyr::select
 summarise <- dplyr::summarise
+summary <- base::summary
 
 #load core packages
 pacman::p_load(
@@ -5115,10 +5129,10 @@ Here is an example of applying the Multiple Imputation process to predict temper
 multiple_imputation = mice(model_dataset, seed = 1, m = 10, print = FALSE) #imputing missing values for all variables in our model_dataset, and creating 10 new imputed datasets
 
 model_fit <- with(multiple_imputation, lm(temp ~ age_years + fever))
-summary(pool(model_fit))
+base::summary(mice::pool(model_fit))
 ```
 
-Here we used the mice default method of imputation, which is Predictive Mean Matching. We then used these imputed datasets to seperately estimate and then pool results from simple linear regressions on each of these datasets. There are many details we've glossed over and many settings you can adjust during the Multiple Imputation process while using the mice package. For example, you won't always have numerical data and might need to use other imputation methods (you can still use the mice package for many other types of data and methods). But, for a more robust analysis when missing data is a significant concern, Multiple Imputation is good solution that isn't always much more work than doing a complete case analysis. 
+Here we used the mice default method of imputation, which is Predictive Mean Matching. We then used these imputed datasets to separately estimate and then pool results from simple linear regressions on each of these datasets. There are many details we've glossed over and many settings you can adjust during the Multiple Imputation process while using the mice package. For example, you won't always have numerical data and might need to use other imputation methods (you can still use the mice package for many other types of data and methods). But, for a more robust analysis when missing data is a significant concern, Multiple Imputation is good solution that isn't always much more work than doing a complete case analysis. 
 
 
 
@@ -5143,6 +5157,7 @@ rm(list = ls(all = TRUE))
 filter <- dplyr::filter
 select <- dplyr::select
 summarise <- dplyr::summarise
+summary <- base::summary
 
 #load core packages
 pacman::p_load(
@@ -5174,14 +5189,20 @@ This page reviews how to group and aggregate data for descriptive analysis. It m
 <!-- ======================================================= -->
 ## Overview {.tabset .tabset-fade .tabset-pills}
 
-Before doing descriptive analyses, it will almost always be a necessary to first group your data and summarise it across these groups (whether it be by time period, place, or a relevant categorical variable) since most often summary statistics across these groups are more meaningful. Luckily, tidyverse makes this really easy through the `group_by` function.
+Grouping data is a core component of data management and analysis. Grouped data can be plotted, or summarised by group (whether by time period, place, or a relevant categorical variable). Functions from the **dplyr** package (part of the **tidyverse**) make grouping and subsequent operations quite easy.  
 
-This page will how to perform these grouping operations
+This page will how to perform these grouping operations using
 
-* Fast & easy using `group_by()` command in **dplyr** or
-* Base R `aggregate()` command 
-
-
+* `group_by()` command in **dplyr**  
+  * Grouping  
+  * Un-group  
+  * Summarise with statistics  
+  * Count and tally  
+  * Arranging grouped data  
+  * Filters applied to grouped data  
+  * Mutate columns within grouped data  
+  * Select columns within grouped data  
+* Base R `aggregate()` command as an alternative  
 
 
 
@@ -5191,13 +5212,14 @@ This page will how to perform these grouping operations
      
 **Load packages**  
      
-Ensure tidyverse is installed, which includes dplyr for group_by 
+Ensure **tidyverse** package is installed and loaded (includes **dplyr**).  
 
 ```{r}
 pacman::p_load(rio,       # to import data
                here,      # to locate files
-               tidyverse  # to clean, handle, and plot the data (includes dplyr!)
-)
+               tidyverse, # to clean, handle, and plot the data (includes dplyr)
+               janitor    # adding total rows and columns
+               )
 ```
 
 **Load data**  
@@ -5223,20 +5245,20 @@ DT::datatable(head(linelist,50), rownames = FALSE, filter="top", options = list(
 
 
 <!-- ======================================================= -->
-## `group_by()` {.tabset .tabset-fade .tabset-pills}
+## Grouping {.tabset .tabset-fade .tabset-pills}
      
-Grouping by one or more columns establishes that any subsequent calculations will be performed within the context of each unique group.  
+The function `group_by()` from **dplyr** groups the rows by the unique values in the specified columns. Each unique value contitutes a group (or unique combination of values, if multiple grouping columns are specified). Subsequent changes to the dataset or calculations can then be performed within the context of each unique group.  
 
-For example, to group by unique values in one column, `outcome`, we would run the code below, placing `outcome` within `group_by()`.  
+For example, the command below takes the linelist and groups the rows by unique values in column `outcome`, saving the output as a new dataframe `ll_by_outcome`. The column name is placed inside the parentheses of the function `group_by()`.  
 
 ```{r}
 ll_by_outcome <- linelist %>% 
   group_by(outcome)
 ```
 
-**Note that there is no perceptible change to the dataset** until a **dplyr** verb such as `mutate()` or `summarise()` is applied on the "grouped" dataframe.  
+**Note that there is no perceptible change to the dataset** after `group_by()`, *until* another **dplyr** verb such as `mutate()` or `summarise()` is applied on the "grouped" dataframe.  
 
-We can however "see" the groupings by printing. When you print a grouped dataframe, you will see it has been transformed into a `tibble` class object (LINK) which when printed displays which grouping columns have been applied and how many groups there are - written just above the header row.  
+You can however "see" the groupings by printing the dataframe. When you print a grouped dataframe, you will see it has been transformed into a `tibble` class object (LINK) which, when printed, displays which grouping columns have been applied and how many groups there are - written just above the header row.  
 
 ```{r}
 # print to see which groups are active
@@ -5265,7 +5287,7 @@ linelist %>%
 ```
 ### New columns  
 
-You can also create a new column *within* the group_by() statement. This is equivalent to calling `mutate()` before the `group_by()`.  
+You can also create a new grouping column *within* the group_by() statement. This is equivalent to calling `mutate()` before the `group_by()`. For a quick tabulation this style can be handy, but for more clarity in your code consider creating this column in it's own `mutate()` step and then piping to `group_by()`.
 
 ```{r}
 # group dat based on a binary column created *within* the group_by() command
@@ -5277,7 +5299,7 @@ linelist %>%
 
 ### Replace/add grouping columns  
 
-By default if you run `group_by()` on grouped data, the old groups will be removed and the new one(s) will apply. If however, you want to just add new groups to the existing ones, add the arguement `.add=TRUE`.  
+By default if you run `group_by()` on data that are already grouped, the old groups will be removed and the new one(s) will apply. If you want to add new groups to the existing ones, add the argument `.add=TRUE`.  
 
 ````{r, eval=F}
 # Grouped by outcome
@@ -5454,6 +5476,46 @@ linelist %>%
 ```
 
 
+### Add totals  
+
+If you want to add total rows or column after using `tally()` or `count()`, consider using the **janitor** package, which offers functions like `adorn_totals()` and `adorn_percentages()`. There are many useful functions (search Help for details), here are a few of them:  
+
+* Use `adorn_totals()` to get totals - specify the argument `where = ` either "row" or "col" or `c("row", "col")`.  
+* Use `adorn_percentages()` to convert counts to proportions - specify the argument `denominator = ` either "row", "col", or "all".  
+* Use `adorn_pct_formatting()` to convert proportions to percentages (can specify number of `digits = `, whether to add "%" with `affix_sign =`, and specify specific column names to operate on)  
+* Use `adorn_ns()` to add back the underlying counts ("N"s) to a table whose proportions were calculated by `adorn_percentages()` - to display them together. Indicate `position = ` of the Ns as either "rear" or "front" of the proportions.  
+
+
+To add totals:  
+
+```{r}
+linelist %>% 
+  count(outcome) %>% 
+  adorn_totals(where = "col")
+```
+
+To convert the numbers to proportions:  
+
+```{r}
+linelist %>% 
+  count(outcome) %>% 
+  adorn_totals(where = "row") %>%              # add total row
+  adorn_percentages(denominator = "col") %>%   # convert to proportions
+  adorn_rounding(digits = 2)                   # round the proportions
+```
+
+**janitor** functions can be use together, as below:  
+
+```{r}
+linelist %>% 
+  count(outcome) %>%              # produce the counts by unique outcome
+  adorn_totals(where = "row") %>% # add total row
+  adorn_percentages("col") %>%    # add proportion by column
+  adorn_pct_formatting() %>%      # proportion converted to percent
+  adorn_ns(position = "front")    # Add the underlying N, in front of the percentage
+```
+
+
 
 
 
@@ -5614,6 +5676,7 @@ rm(list = ls(all = TRUE))
 filter <- dplyr::filter
 select <- dplyr::select
 summarise <- dplyr::summarise
+summary <- base::summary
 
 #load core packages
 pacman::p_load(
@@ -6047,9 +6110,90 @@ To see the `hosp_info` records that were excluded in the inner join, we could al
 <!-- ======================================================= -->
 ## Probabalistic matching {.tabset .tabset-fade}
 
-rowmatcher
-other options (finlay?)
+Under construction - TBD
 
+RecordLinkage - 
+
+fastLink package - 
+
+**Load packages**  
+
+```{r}
+pacman::p_load(RecordLinkage,  # Note, install also installs the BH package which is large
+               rio,            # import/export data
+               tidyverse,      # data manipulation and visualization
+               fastLink,        
+               )
+```
+
+
+
+```{r, echo=F}
+# make datasets
+dfA <- tribble(
+  ~idA, ~gender,  ~first,     ~middle,     ~last,          ~yr, ~mon, ~day, ~district, ~followup_complete,
+  "1_1",  "M",      "Amir",     NA,          "Khan",         1989, 11,   22,  "River", TRUE,
+  "1_2",  "M",      "Tony",   "B",         "Smith",        1970, 09,   19,  "River",  TRUE,
+  "1_3",  "F",      "Maria",    "Contreras", "Rodriguez",    1972, 04,   15,  "City", FALSE,
+  "1_4",  "F",      "Betty",    "Casteel",   "Chase",        1954, 03,   03,  "City", TRUE,
+  "1_5",  "F",      "Andrea",   NA,          "Kumaraswamy",  2001, 01,   05,  "Rural", TRUE,      
+  "1_6",  NA,       "Jose",     "Sanchez",   "Lopez",        1995, 01, 06,     "City", FALSE,     
+  "1_7",  "F",      "Caroline", NA,          "Wang",         1988, 12, 11,    "Rural", FALSE,
+  "1_8",  "F",      "Trang",    NA,          "Nguyen",       1981, 06, 10,    "Rural", TRUE,
+  "1_9",  "M",      "Olivier" , "Laurent",   "De Bordeaux",  NA, NA, NA,    "River",  TRUE,
+  "1_10", "M",      "Mike",     "Murphy",    "O'Callaghan",  1969, 04, 12,    "Rural", FALSE,
+  "1_11", "F",      "Cassidy",  "Jones",     "Davis",        1980, 07, 19,    "City", TRUE,
+  "1_12", "M",      "Mohammad", NA,          "Ali",          1942, 01, 17,    "City", FALSE, 
+  "1_13", "F",      "Blessing", NA,          "Adebayo",      1955, 02, 14,   "Rural", TRUE,
+  "1_14", "M",      "Abubakar", NA,          "Abullahi",     1960, 01, 01,   "River", TRUE,
+  "1_15", "F",      "Maria",    "Salinas",   "Contreras",    1955, 03, 03,   "River", TRUE
+  )
+
+dfB <- tribble(
+  ~idA, ~gender, ~first,      ~middle,     ~last,        ~yr,   ~mon, ~day, ~district,
+  "2_1",  "M",     "Amir",      NA,          "Khan",       1989,  11,   22,   "River",
+  "2_2",  "M",     "Anthony",   "B.",        "Smith",      1970, 09, 19,      "River", 
+  "2_3",  "F",     "Marialisa", "Contreras", "Rodrigues",  1972, 04, 15,      "River",
+  "2_4",  "F",     "Elizabeth", "Casteel",   "Chase",      1954, 03, 03,      "City",
+  "2_5",  "M",     "Jose",      "Sanchez",   "Lopez",      1996, 01, 06,      "City",
+  "2_6",  "F",     "Cassidy",   "Jones",      "Davis",     1980, 07, 19,      "City",
+  "2_7",  "M",     "Michael",   "Murphy",     "O'Calaghan",1969, 04, 12,      "Rural", 
+  "2_8",  "M",     "Oliver",    "Laurent",    "De Bordow" , 1971, 02, 04,     "River"
+)
+```
+
+Here are two example datasets that we will use to do probabilistic matching:  
+
+**Dataframe A (`dfA`)**:  
+
+```{r message=FALSE, echo=F}
+# display the hospital data as a table
+DT::datatable(dfA, rownames = FALSE, options = list(pageLength = nrow(dfA)))
+```
+
+**Dataframe B (`dfB`)**:  
+
+```{r message=FALSE, echo=F}
+# display the hospital data as a table
+DT::datatable(dfB, rownames = FALSE, options = list(pageLength = nrow(dfB)))
+```
+Using the **fastLink** package, a table can be retrieved with the matches.  
+
+```{r}
+library(fastLink)
+
+matches.out <- fastLink(
+  dfA = dfA,
+  dfB = dfB,
+  varnames = c("gender", "first", "middle", "last", "yr", "mon", "day", "district"),
+  stringdist.match = c("first", "middle", "last", "district"),
+  numeric.match = c("yr", "mon", "day"),
+  #gender.field = "gender"
+  )
+
+# print matches
+matches.out$matches
+```
 
 
 
@@ -6058,7 +6202,7 @@ other options (finlay?)
 
 The [dplyr page on joins](https://dplyr.tidyverse.org/reference/join.html)  
 
-
+Publication describing [RecordLinkage package](https://journal.r-project.org/archive/2010/RJ-2010-017/RJ-2010-017.pdf)
 
 
 
@@ -6076,6 +6220,7 @@ rm(list = ls(all = TRUE))
 filter <- dplyr::filter
 select <- dplyr::select
 summarise <- dplyr::summarise
+summary <- base::summary
 
 #load core packages
 pacman::p_load(
@@ -7168,6 +7313,7 @@ rm(list = ls(all = TRUE))
 filter <- dplyr::filter
 select <- dplyr::select
 summarise <- dplyr::summarise
+summary <- base::summary
 
 #load core packages
 pacman::p_load(
@@ -7773,6 +7919,7 @@ rm(list = ls(all = TRUE))
 filter <- dplyr::filter
 select <- dplyr::select
 summarise <- dplyr::summarise
+summary <- base::summary
 
 #load core packages
 pacman::p_load(
@@ -8007,6 +8154,7 @@ rm(list = ls(all = TRUE))
 filter <- dplyr::filter
 select <- dplyr::select
 summarise <- dplyr::summarise
+summary <- base::summary
 
 #load core packages
 pacman::p_load(
@@ -8042,6 +8190,7 @@ rm(list = ls(all = TRUE))
 filter <- dplyr::filter
 select <- dplyr::select
 summarise <- dplyr::summarise
+summary <- base::summary
 
 #load core packages
 pacman::p_load(
@@ -8861,6 +9010,7 @@ rm(list = ls(all = TRUE))
 filter <- dplyr::filter
 select <- dplyr::select
 summarise <- dplyr::summarise
+summary <- base::summary
 
 #load core packages
 pacman::p_load(
@@ -9299,6 +9449,7 @@ rm(list = ls(all = TRUE))
 filter <- dplyr::filter
 select <- dplyr::select
 summarise <- dplyr::summarise
+summary <- base::summary
 
 #load core packages
 pacman::p_load(
@@ -9610,6 +9761,7 @@ rm(list = ls(all = TRUE))
 filter <- dplyr::filter
 select <- dplyr::select
 summarise <- dplyr::summarise
+summary <- base::summary
 
 #load core packages
 pacman::p_load(
@@ -9781,6 +9933,7 @@ rm(list = ls(all = TRUE))
 filter <- dplyr::filter
 select <- dplyr::select
 summarise <- dplyr::summarise
+summary <- base::summary
 
 #load core packages
 pacman::p_load(
@@ -9896,6 +10049,7 @@ rm(list = ls(all = TRUE))
 filter <- dplyr::filter
 select <- dplyr::select
 summarise <- dplyr::summarise
+summary <- base::summary
 
 #load core packages
 pacman::p_load(
@@ -10007,6 +10161,7 @@ rm(list = ls(all = TRUE))
 filter <- dplyr::filter
 select <- dplyr::select
 summarise <- dplyr::summarise
+summary <- base::summary
 
 #load core packages
 pacman::p_load(
@@ -10121,6 +10276,7 @@ rm(list = ls(all = TRUE))
 filter <- dplyr::filter
 select <- dplyr::select
 summarise <- dplyr::summarise
+summary <- base::summary
 
 #load core packages
 pacman::p_load(
@@ -10209,6 +10365,7 @@ rm(list = ls(all = TRUE))
 filter <- dplyr::filter
 select <- dplyr::select
 summarise <- dplyr::summarise
+summary <- base::summary
 
 #load core packages
 pacman::p_load(
@@ -10302,6 +10459,7 @@ rm(list = ls(all = TRUE))
 filter <- dplyr::filter
 select <- dplyr::select
 summarise <- dplyr::summarise
+summary <- base::summary
 
 #load core packages
 pacman::p_load(
@@ -10400,6 +10558,7 @@ rm(list = ls(all = TRUE))
 filter <- dplyr::filter
 select <- dplyr::select
 summarise <- dplyr::summarise
+summary <- base::summary
 
 #load core packages
 pacman::p_load(
@@ -10455,7 +10614,6 @@ knitr::include_graphics(here::here("images", "gis_hf_catchment.png"))
 
 
 
-
 <!-- ======================================================= -->
 ## Preparation {.tabset .tabset-fade .tabset-pills}
 
@@ -10474,13 +10632,12 @@ pacman::p_load(rio,       # to import data
                )   
 ```
 
-
-
 **Sample case data**
 
 ```{r}
 # import aggregated case counts of disease X
 linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))  
+linelist <- linelist[sample(nrow(linelist), 1000),]
 
 # Create sf object
 linelist_sf <- 
@@ -10490,8 +10647,6 @@ linelist_sf <-
 ```
 
 
-
-
 **Sierra Leone: Admin boundary shapefiles**  
 Data downloaded from HDX:
 https://data.humdata.org/dataset/sierra-leone-all-ad-min-level-boundaries
@@ -10499,11 +10654,8 @@ https://data.humdata.org/dataset/sierra-leone-all-ad-min-level-boundaries
 ```{r}
 # ADM3 level
 sle_adm3 <- 
-  sf::read_sf(here::here("data/shp", "sle_adm3.shp")) %>% janitor::clean_names()
-
-# ADM4 level
-sle_adm4 <-
-  sf::read_sf(here::here("data/shp", "sle_adm4.shp")) %>% janitor::clean_names()
+  sf::read_sf(here::here("data/shp", "sle_adm3.shp")) %>% janitor::clean_names() %>%
+  filter(admin2name %in% c("Western Area Urban", "Western Area Rural"))
 
 ```
 
@@ -10534,10 +10686,6 @@ sle_hf <-
 ```
 
 
-
-
-
-
 <!-- ======================================================= -->
 ## Plotting coordinates {.tabset .tabset-fade .tabset-pills}
 
@@ -10550,17 +10698,21 @@ https://rstudio-pubs-static.s3.amazonaws.com/324400_69a673183ba449e9af4011b1eeb4
 
 
 ```{r}
-tmap_mode("view") # or "plot"
-tm_shape(linelist_sf) + tm_dots(size=0.1, col='blue') +
-tm_shape(sle_adm4) + tm_borders(col = "#686868", lwd = 2) +
-tm_shape(sle_adm3) + tm_borders(col = "#000000", lwd = 3)
+tmap_mode("plot") # or "plot"
+#tm_shape(sle_adm3, bbox = st_bbox(linelist_sf)) +
+tm_shape(sle_adm3, bbox = c(-13.3,8.43, -13.2,8.5)) +
+  tm_polygons(col = "#F7F7F7") +
+  tm_borders(col = "#000000", lwd = 2) +
+  tm_text("admin3name") +
+tm_shape(linelist_sf) + tm_dots(size=0.08, col='blue') 
+
 
 ```
 
 
 
 <!-- ======================================================= -->
-## Polygons and shapefiles {.tabset .tabset-fade .tabset-pills}
+## polygons and shapefiles {.tabset .tabset-fade .tabset-pills}
 
 Choropleth maps can be useful to visualize your data by pre-defined area usually by administrative unit or health area for outbreak response to be able to target resources for specific area high incidence rates for example.
 
@@ -10573,58 +10725,19 @@ https://r-spatial.github.io/sf/reference/geos_binary_pred.html
 
 
 **Spatial assign administrative units to cases**
-First spatially intersect our case locations (points) with the ADM4 boundaries (polygons)
+First spatially intersect our case locations (points) with the ADM3 boundaries (polygons)
 
 ```{r}
-case_adm <- 
+linelist_adm <- 
      linelist_sf %>%
-     sf::st_join(sle_adm4,   join = st_intersects) %>%
-     select(names(linelist_sf), admin4name, admin4pcod, admin3name, admin3pcod)
+     sf::st_join(sle_adm3,   join = st_intersects) %>%
+     select(names(linelist_sf), admin3name, admin3pcod)
 
-# Now you will see the ADM3-4 names attached to each case
-case_adm %>% select(case_id, admin4name, admin3name)
-
-```
-
-
-19 cases did not get assigned to any administrative unit as the polygons do not cover the areas or some points are located in the ocean.
-See red points in the map below.
-
-```{r}
-case_noadm <- 
-     case_adm %>% 
-     filter(is.na(admin3name)) %>%
-     select(names(linelist_sf))
-
-tmap_mode("view") # or "plot"
-tm_shape(linelist_sf) + tm_dots(size=0.1, col='blue') +
-tm_shape(case_noadm) + tm_dots(size=0.1, col='red') +
-tm_shape(sle_adm3) + tm_borders(col = "#000000", lwd = 3)
+# Now you will see the ADM3 names attached to each case
+linelist_adm %>% select(case_id, admin3name)
 
 ```
 
-
-We can assign these cases to their nearest ADM4 polygon this time instead of intersecting.
-
-```{r}
-case_noadm_nearest <-
-     case_noadm %>%
-     st_join(sle_adm4, join=st_nearest_feature) %>%
-     select(names(linelist_sf), admin4name, admin4pcod, admin3name, admin3pcod)
-
-case_noadm_nearest %>% select(case_id, admin4name, admin3name)
-
-```
-
-
-Merge all cases with the administrative units. 
-
-```{r}
-linelist_adm <-
-     case_adm %>% filter(!is.na(admin3name)) %>%
-     bind_rows(case_noadm_nearest)
-
-```
 
 
 Case counts by ADM3
@@ -10692,7 +10805,7 @@ tm_shape(case_adm3_sf) +
 tmap_mode("plot")
 tm_shape(case_adm3_sf) + 
         tm_polygons("case_10kpop",
-                    breaks=c(0, 10, 50, 100, 500),
+                    breaks=c(0, 10, 50, 100),
                     palette = "Purples"
                     ) +
         tm_text("admin3name")
@@ -10706,7 +10819,7 @@ We can also look at the combination of time and space by facetting the heatmaps.
 
 Set parameters for the basemap using the **OpenStreetMap** package.
 
-```{r message=FALSE, warning=FALSE}
+```{r}
 
 # Fit basemap by range of lat/long coordinates. Choose tile type
 map <- openmap(c(max(linelist$lat, na.rm=T), max(linelist$lon, na.rm=T)),  # limits of tile
@@ -10721,54 +10834,31 @@ map.latlon <- openproj(map, projection = "+proj=longlat +ellps=WGS84 +datum=WGS8
 ```
 
 
-**Cumulative heatmap**
-
-```{r}
-
-# Plot map. Must be autoplotted to work with ggplot
-OpenStreetMap::autoplot.OpenStreetMap(map.latlon)+
-        # Density tiles  
-        ggplot2::stat_density_2d(aes(x = lon,
-                                     y = lat,
-                                     fill = ..level..,
-                                     alpha=..level..),
-                                 bins = 10,
-                                 geom = "polygon",
-                                 contour_var = "count",
-                                 data = linelist %>% filter(date_onset>='2014-07-01' & date_onset<='2015-02-28'),
-                                 show.legend = F) +
-        #scale_fill_gradient(low = "black", high = "red")+
-        labs(x = "Longitude",
-             y = "Latitude",
-             title = "Distribution of simulated cases")
-
-```
-
 
 **Heatmap by month of onset**
 
 ```{r}
 # Extract month of onset
 linelist$date_onset_ym <- format(linelist$date_onset, "%Y-%m")
-
+ 
 # Simply facet above map by month of onset
 # Plot map. Must be autoplotted to work with ggplot
 OpenStreetMap::autoplot.OpenStreetMap(map.latlon)+
-        # Density tiles  
-        ggplot2::stat_density_2d(aes(x = lon,
-                                     y = lat,
-                                     fill = ..level..,
-                                     alpha=..level..),
-                                 bins = 10,
-                                 geom = "polygon",
-                                 contour_var = "count",
-                                 data = linelist %>% filter(date_onset>='2014-07-01' & date_onset<='2015-02-28'),
-                                 show.legend = F) +
-        #scale_fill_gradient(low = "black", high = "red")+
-        labs(x = "Longitude",
-             y = "Latitude",
-             title = "Distribution of simulated cases by month of onset") +
-        facet_wrap(~ date_onset_ym, ncol = 4)
+       # Density tiles  
+       ggplot2::stat_density_2d(aes(x = lon,
+                                    y = lat,
+                                    fill = ..level..,
+                                    alpha=..level..),
+                              bins = 10,
+                                geom = "polygon",
+                                contour_var = "count",
+                                data = linelist %>% filter(date_onset>='2014-08-01' & date_onset<='2015-01-31'),
+                                show.legend = F) +
+       #scale_fill_gradient(low = "black", high = "red")+
+       labs(x = "Longitude",
+            y = "Latitude",
+            title = "Distribution of simulated cases by month of onset") +
+       facet_wrap(~ date_onset_ym, ncol = 3)
 
 ```
 
@@ -10807,10 +10897,11 @@ hf_catchment
 
 Visualizing the results on the map
 
-```{r}
+```{r, fig.width = 5, fig.height = 3}
 tmap_mode("view")
-tm_shape(linelist_sf_hf) + tm_dots(size=0.1, col='name') +
-        tm_shape(sle_hf) + tm_dots(size=0.3, col='red') + tm_text("name")
+tm_shape(linelist_sf_hf) + tm_dots(size=0.08, col='name') +
+        tm_shape(sle_hf) + tm_dots(size=0.3, col='red') + tm_text("name") +
+tm_view(set.view = c(-13.2284,8.4699, 13), set.zoom.limits = c(13,14))
 ```
 
 
@@ -10847,7 +10938,7 @@ linelist_sf_hf_2k <-
 
 Count the results
 
-1225 out of 5888 cases (20.8%, shown in red dots in the map below) live more than 30 mins away from the nearest health facility)
+202 out of 1000 cases (20.2%, shown in red dots in the map below) live more than 30 mins away from the nearest health facility)
 
 ```{r}
 nrow(linelist_sf_hf_2k)
@@ -10856,11 +10947,12 @@ nrow(linelist_sf_hf_2k[is.na(linelist_sf_hf_2k$osm_id.y),])
 
 Visualize the results
 
-```{r}
+```{r, fig.width = 5, fig.height = 3}
 tmap_mode("view")
 tm_shape(linelist_sf_hf) + tm_dots(size=0.08, col='name') +
         tm_shape(sle_hf_2k) + tm_borders(col = "red", lwd = 2) +
-        tm_shape(linelist_sf_hf_2k[is.na(linelist_sf_hf_2k$osm_id.y),]) +tm_dots(size=0.1, col='red')
+        tm_shape(linelist_sf_hf_2k[is.na(linelist_sf_hf_2k$osm_id.y),]) +tm_dots(size=0.1, col='red') +
+tm_view(set.view = c(-13.2284,8.4699, 13), set.zoom.limits = c(13,14))
 ```
 
 
@@ -10878,6 +10970,7 @@ https://journal.r-project.org/archive/2013-1/kahle-wickham.pdf
 
 
 
+
 ```{r include=FALSE, cache=FALSE}
 
 # clear workspace
@@ -10891,6 +10984,7 @@ rm(list = ls(all = TRUE))
 filter <- dplyr::filter
 select <- dplyr::select
 summarise <- dplyr::summarise
+summary <- base::summary
 
 #load core packages
 pacman::p_load(
@@ -10925,6 +11019,7 @@ rm(list = ls(all = TRUE))
 filter <- dplyr::filter
 select <- dplyr::select
 summarise <- dplyr::summarise
+summary <- base::summary
 
 #load core packages
 pacman::p_load(
@@ -11022,6 +11117,7 @@ rm(list = ls(all = TRUE))
 filter <- dplyr::filter
 select <- dplyr::select
 summarise <- dplyr::summarise
+summary <- base::summary
 
 #load core packages
 pacman::p_load(
@@ -12995,6 +13091,7 @@ rm(list = ls(all = TRUE))
 filter <- dplyr::filter
 select <- dplyr::select
 summarise <- dplyr::summarise
+summary <- base::summary
 
 #load core packages
 pacman::p_load(
@@ -13295,6 +13392,7 @@ rm(list = ls(all = TRUE))
 filter <- dplyr::filter
 select <- dplyr::select
 summarise <- dplyr::summarise
+summary <- base::summary
 
 #load core packages
 pacman::p_load(
@@ -13539,6 +13637,7 @@ rm(list = ls(all = TRUE))
 filter <- dplyr::filter
 select <- dplyr::select
 summarise <- dplyr::summarise
+summary <- base::summary
 
 #load core packages
 pacman::p_load(
@@ -13859,6 +13958,7 @@ rm(list = ls(all = TRUE))
 filter <- dplyr::filter
 select <- dplyr::select
 summarise <- dplyr::summarise
+summary <- base::summary
 
 #load core packages
 pacman::p_load(
@@ -14538,6 +14638,7 @@ rm(list = ls(all = TRUE))
 filter <- dplyr::filter
 select <- dplyr::select
 summarise <- dplyr::summarise
+summary <- base::summary
 
 #load core packages
 pacman::p_load(
@@ -15160,6 +15261,7 @@ rm(list = ls(all = TRUE))
 filter <- dplyr::filter
 select <- dplyr::select
 summarise <- dplyr::summarise
+summary <- base::summary
 
 #load core packages
 pacman::p_load(
@@ -15423,6 +15525,7 @@ rm(list = ls(all = TRUE))
 filter <- dplyr::filter
 select <- dplyr::select
 summarise <- dplyr::summarise
+summary <- base::summary
 
 #load core packages
 pacman::p_load(
@@ -15894,6 +15997,7 @@ rm(list = ls(all = TRUE))
 filter <- dplyr::filter
 select <- dplyr::select
 summarise <- dplyr::summarise
+summary <- base::summary
 
 #load core packages
 pacman::p_load(
@@ -16491,6 +16595,7 @@ rm(list = ls(all = TRUE))
 filter <- dplyr::filter
 select <- dplyr::select
 summarise <- dplyr::summarise
+summary <- base::summary
 
 #load core packages
 pacman::p_load(
@@ -16987,6 +17092,7 @@ rm(list = ls(all = TRUE))
 filter <- dplyr::filter
 select <- dplyr::select
 summarise <- dplyr::summarise
+summary <- base::summary
 
 #load core packages
 pacman::p_load(
@@ -17275,6 +17381,7 @@ rm(list = ls(all = TRUE))
 filter <- dplyr::filter
 select <- dplyr::select
 summarise <- dplyr::summarise
+summary <- base::summary
 
 #load core packages
 pacman::p_load(
@@ -17309,6 +17416,7 @@ rm(list = ls(all = TRUE))
 filter <- dplyr::filter
 select <- dplyr::select
 summarise <- dplyr::summarise
+summary <- base::summary
 
 #load core packages
 pacman::p_load(
@@ -17421,6 +17529,7 @@ rm(list = ls(all = TRUE))
 filter <- dplyr::filter
 select <- dplyr::select
 summarise <- dplyr::summarise
+summary <- base::summary
 
 #load core packages
 pacman::p_load(
@@ -17531,6 +17640,7 @@ rm(list = ls(all = TRUE))
 filter <- dplyr::filter
 select <- dplyr::select
 summarise <- dplyr::summarise
+summary <- base::summary
 
 #load core packages
 pacman::p_load(
@@ -17641,6 +17751,7 @@ rm(list = ls(all = TRUE))
 filter <- dplyr::filter
 select <- dplyr::select
 summarise <- dplyr::summarise
+summary <- base::summary
 
 #load core packages
 pacman::p_load(
@@ -17751,6 +17862,7 @@ rm(list = ls(all = TRUE))
 filter <- dplyr::filter
 select <- dplyr::select
 summarise <- dplyr::summarise
+summary <- base::summary
 
 #load core packages
 pacman::p_load(
@@ -17978,6 +18090,7 @@ rm(list = ls(all = TRUE))
 filter <- dplyr::filter
 select <- dplyr::select
 summarise <- dplyr::summarise
+summary <- base::summary
 
 #load core packages
 pacman::p_load(
@@ -18088,6 +18201,7 @@ rm(list = ls(all = TRUE))
 filter <- dplyr::filter
 select <- dplyr::select
 summarise <- dplyr::summarise
+summary <- base::summary
 
 #load core packages
 pacman::p_load(
@@ -18258,6 +18372,7 @@ rm(list = ls(all = TRUE))
 filter <- dplyr::filter
 select <- dplyr::select
 summarise <- dplyr::summarise
+summary <- base::summary
 
 #load core packages
 pacman::p_load(
@@ -18368,6 +18483,7 @@ rm(list = ls(all = TRUE))
 filter <- dplyr::filter
 select <- dplyr::select
 summarise <- dplyr::summarise
+summary <- base::summary
 
 #load core packages
 pacman::p_load(
@@ -18571,6 +18687,7 @@ rm(list = ls(all = TRUE))
 filter <- dplyr::filter
 select <- dplyr::select
 summarise <- dplyr::summarise
+summary <- base::summary
 
 #load core packages
 pacman::p_load(
@@ -18675,6 +18792,7 @@ rm(list = ls(all = TRUE))
 filter <- dplyr::filter
 select <- dplyr::select
 summarise <- dplyr::summarise
+summary <- base::summary
 
 #load core packages
 pacman::p_load(

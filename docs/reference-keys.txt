@@ -158,7 +158,7 @@ resources-1
 grouping-data
 overview-5
 preparation-1
-group_by
+grouping
 unique-groups
 new-columns-1
 replaceadd-grouping-columns
@@ -166,6 +166,7 @@ un-group
 summarise
 summarise-across-multiple-columns
 count-and-tally
+add-totals
 arranging-grouped-data
 filter-on-grouped-data
 filter
