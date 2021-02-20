@@ -59,7 +59,7 @@
 <li><a class="" href="working-with-dates.html"><span class="header-section-number">8</span> Working with dates</a></li>
 <li><a class="" href="missing-data.html"><span class="header-section-number">9</span> Missing data</a></li>
 <li><a class="" href="grouping-data.html"><span class="header-section-number">10</span> Grouping data</a></li>
-<li><a class="" href="joining-matching-datasets.html"><span class="header-section-number">11</span> Joining &amp; matching datasets</a></li>
+<li><a class="" href="joining-data.html"><span class="header-section-number">11</span> Joining data</a></li>
 <li><a class="" href="charactersstrings.html"><span class="header-section-number">12</span> Characters/strings</a></li>
 <li><a class="" href="de-duplication.html"><span class="header-section-number">13</span> De-duplication</a></li>
 <li><a class="" href="iteration-and-loops.html"><span class="header-section-number">14</span> Iteration and loops</a></li>
@@ -70,7 +70,7 @@
 <li><a class="" href="moving-averages.html"><span class="header-section-number">18</span> Moving averages</a></li>
 <li><a class="" href="outbreak-detection.html"><span class="header-section-number">19</span> Outbreak detection</a></li>
 <li><a class="" href="time-series-analysis.html"><span class="header-section-number">20</span> Time series analysis</a></li>
-<li><a class="" href="epidemicmodels.html"><span class="header-section-number">21</span> Epidemic modeling</a></li>
+<li><a class="" href="epidemic-modeling.html"><span class="header-section-number">21</span> Epidemic modeling</a></li>
 <li><a class="" href="modeling.html"><span class="header-section-number">22</span> Modeling</a></li>
 <li><a class="" href="survey-analysis.html"><span class="header-section-number">23</span> Survey analysis</a></li>
 <li><a class="" href="survival-analysis-1.html"><span class="header-section-number">24</span> Survival analysis</a></li>
@@ -134,7 +134,7 @@
 <span class="header-section-number">15.2.1</span> Packages<a class="anchor" aria-label="anchor" href="#packages-3"><i class="fas fa-link"></i></a>
 </h3>
 <p>This code chunk shows the loading of packages required for the analyses.</p>
-<div class="sourceCode" id="cb597"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb608"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span><span class="va">rio</span>,          <span class="co"># File import</span>
                <span class="va">here</span>,         <span class="co"># File locator</span>
                <span class="va">skimr</span>,        <span class="co"># get overview of data</span>
@@ -152,18 +152,18 @@
 <li>Linelist of individual cases from a simulated epidemic</li>
 </ul>
 <p>The dataset is imported using the <code><a href="https://rdrr.io/pkg/rio/man/import.html">import()</a></code> function from the <em>rio</em> package. See the <em>page on importing data</em> for various ways to import data.</p>
-<div class="sourceCode" id="cb598"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb609"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># import the linelist</span>
 <span class="va">linelist</span> <span class="op">&lt;-</span> <span class="fu">rio</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/rio/man/import.html">import</a></span><span class="op">(</span><span class="st">"linelist_cleaned.xlsx"</span><span class="op">)</span></code></pre></div>
 <p>The first 50 rows of the linelist are displayed below.</p>
-<div id="htmlwidget-138ddc0269514e5e286b" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-138ddc0269514e5e286b">{"x":{"filter":"top","filterHTML":"<tr>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"2\" data-max=\"14\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"date\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"1399161600000\" data-max=\"1406937600000\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"date\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"1398556800000\" data-max=\"1.407024e+12\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"date\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"1398556800000\" data-max=\"1407110400000\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"date\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"1399420800000\" data-max=\"1410566400000\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"0\" data-max=\"66\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"disabled\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"0\" data-max=\"66\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"factor\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"width: 100%; display: none;\">\n      <select multiple=\"multiple\" style=\"width: 100%;\" data-options=\"[&quot;0-4&quot;,&quot;5-9&quot;,&quot;10-14&quot;,&quot;15-19&quot;,&quot;20-29&quot;,&quot;30-49&quot;,&quot;50-69&quot;,&quot;70+&quot;]\"><\/select>\n    <\/div>\n  <\/td>\n  <td data-type=\"factor\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"width: 100%; display: none;\">\n      <select multiple=\"multiple\" style=\"width: 100%;\" data-options=\"[&quot;0-4&quot;,&quot;5-9&quot;,&quot;10-14&quot;,&quot;15-19&quot;,&quot;20-24&quot;,&quot;25-29&quot;,&quot;30-34&quot;,&quot;35-39&quot;,&quot;40-44&quot;,&quot;45-49&quot;,&quot;50-54&quot;,&quot;55-59&quot;,&quot;60-64&quot;,&quot;65-69&quot;,&quot;70-74&quot;,&quot;75-79&quot;,&quot;80-84&quot;,&quot;85+&quot;]\"><\/select>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"-13.2700264337236\" data-max=\"-13.2083805379189\" data-scale=\"13\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"8.45020022241045\" data-max=\"8.48932072596067\" data-scale=\"14\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"7\" data-max=\"98\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"13\" data-max=\"258\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"20\" data-max=\"24\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"36\" data-max=\"37.9\" data-scale=\"1\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"14.7226729162911\" data-max=\"414.201183431953\" data-scale=\"14\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"0\" data-max=\"2\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","data":[["6c286a","5fe599","6285c9","893f25","c4e706","275cc7","133ee7","dbebea","788a99","2978ac","57a565","a6c614","c15f36","c97dd9","02d8fd","bd14fc","af9f9a","589e9f","ae96ac","ec8ee4","b799eb","ceed40","9371a9","403057","7fd086","1c1848","959170","64c8ef","a47529","52ea64","92ab68","f81362","6670a5","4c1040","ae50c8","583717","770e5e","1e1825","b013ab","9fcf61","c5bc73","db7b54","38cc4a","cc7393","3789ee","8188cd","c8c030","a81f7d","6b70f0","316781"],[2,4,4,3,5,5,3,7,5,4,4,5,5,9,9,6,6,9,10,6,5,5,8,10,7,8,8,6,5,7,8,8,9,7,9,10,7,8,8,10,7,14,8,8,10,7,9,12,7,8],[null,"2014-05-08","2014-05-04","2014-05-18",null,"2014-05-24","2014-05-23",null,"2014-06-01","2014-05-30","2014-05-28","2014-06-05",null,null,"2014-06-14","2014-06-04",null,"2014-06-11","2014-06-20","2014-06-15","2014-06-27",null,null,null,null,"2014-07-09","2014-06-29",null,"2014-06-13","2014-07-15",null,null,"2014-07-18","2014-07-17","2014-07-20",null,null,null,"2014-07-24",null,"2014-07-27","2014-07-26","2014-07-19",null,"2014-07-26","2014-07-16",null,"2014-08-02",null,"2014-07-22"],["2014-04-27","2014-05-13","2014-05-14","2014-05-21","2014-05-23","2014-05-27","2014-05-27","2014-06-02","2014-06-06","2014-06-06","2014-06-13","2014-06-16","2014-06-17","2014-06-19","2014-06-20","2014-06-20","2014-06-20","2014-06-24","2014-06-25","2014-06-30","2014-07-03","2014-07-07","2014-07-08","2014-07-09","2014-07-11","2014-07-12","2014-07-13","2014-07-14","2014-07-17","2014-07-18","2014-07-19","2014-07-20","2014-07-20","2014-07-20","2014-07-25","2014-07-27","2014-07-29","2014-07-29","2014-07-30","2014-07-30","2014-07-31","2014-07-31","2014-08-01","2014-08-01","2014-08-01","2014-08-02","2014-08-02","2014-08-03","2014-08-03","2014-08-03"],["2014-04-27","2014-05-15","2014-05-14","2014-05-22","2014-05-24","2014-05-28","2014-05-29","2014-06-03","2014-06-07","2014-06-08","2014-06-15","2014-06-18","2014-06-19","2014-06-19","2014-06-20","2014-06-22","2014-06-20","2014-06-26","2014-06-25","2014-07-02","2014-07-05","2014-07-09","2014-07-09","2014-07-11","2014-07-13","2014-07-14","2014-07-13","2014-07-15","2014-07-18","2014-07-20","2014-07-20","2014-07-21","2014-07-22","2014-07-20","2014-07-27","2014-07-28","2014-07-30","2014-07-31","2014-07-30","2014-07-31","2014-08-02","2014-08-01","2014-08-03","2014-08-03","2014-08-02","2014-08-03","2014-08-02","2014-08-04","2014-08-04","2014-08-04"],["2014-05-07",null,"2014-05-17","2014-05-29","2014-06-02","2014-06-07","2014-05-29","2014-06-05","2014-06-25","2014-06-15",null,"2014-06-26","2014-06-28","2014-07-11","2014-07-01","2014-06-27","2014-07-13","2014-06-30","2014-06-27",null,"2014-07-12","2014-07-31","2014-07-20","2014-07-22","2014-07-27","2014-07-14","2014-07-19","2014-07-25","2014-07-26","2014-07-26","2014-08-05","2014-08-07","2014-08-01",null,"2014-08-08","2014-08-06",null,"2014-08-01","2014-08-05","2014-08-05","2014-08-11",null,"2014-08-21","2014-08-09","2014-09-13","2014-08-29","2014-08-11","2014-09-05",null,"2014-08-07"],["Death",null,"Death","Recover",null,"Death","Death",null,"Recover","Death","Death","Recover","Recover","Recover","Death","Death",null,null,"Death","Death","Recover","Recover",null,"Death","Recover","Death","Death","Recover","Death","Death",null,"Death","Death","Recover","Death","Death","Recover","Death","Death","Recover","Death","Death","Recover","Death",null,"Recover",null,"Recover","Death","Death"],["f","m","f","m","m","f","f","m","m","m","m","f","f","m","m","f","f","m","m","m","m","m","f","f","m","f","f","m","m","f","f","m","f","f","f","m","f","f","m","f","f","f","m","f","f","f","f","m","m","m"],[14,12,4,66,18,7,10,7,2,7,11,19,15,19,3,14,32,6,6,11,30,7,1,4,19,0,4,8,41,9,3,19,16,16,5,43,16,16,33,33,26,17,6,2,35,5,22,25,46,24],["years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years"],[14,12,4,66,18,7,10,7,2,7,11,19,15,19,3,14,32,6,6,11,30,7,1,4,19,0,4,8,41,9,3,19,16,16,5,43,16,16,33,33,26,17,6,2,35,5,22,25,46,24],["10-14","10-14","0-4","50-69","15-19","5-9","10-14","5-9","0-4","5-9","10-14","15-19","15-19","15-19","0-4","10-14","30-49","5-9","5-9","10-14","30-49","5-9","0-4","0-4","15-19","0-4","0-4","5-9","30-49","5-9","0-4","15-19","15-19","15-19","5-9","30-49","15-19","15-19","30-49","30-49","20-29","15-19","5-9","0-4","30-49","5-9","20-29","20-29","30-49","20-29"],["10-14","10-14","0-4","65-69","15-19","5-9","10-14","5-9","0-4","5-9","10-14","15-19","15-19","15-19","0-4","10-14","30-34","5-9","5-9","10-14","30-34","5-9","0-4","0-4","15-19","0-4","0-4","5-9","40-44","5-9","0-4","15-19","15-19","15-19","5-9","40-44","15-19","15-19","30-34","30-34","25-29","15-19","5-9","0-4","35-39","5-9","20-24","25-29","45-49","20-24"],["Missing","Other","Missing","Military Hospital","Missing","Central Hospital","Missing","Port Hospital","Port Hospital","Port Hospital","Military Hospital","Other","Missing","Port Hospital","Port Hospital","Port Hospital","Missing","Missing","Port Hospital","Missing","Missing","Port Hospital","St. Mark's Maternity Hospital (SMMH)","Other","Port Hospital","Port Hospital","Central Hospital","Central Hospital","Military Hospital","Missing","Military Hospital","Other","Military Hospital","Other","Port Hospital","Other","Port Hospital","Port Hospital","Missing","Port Hospital","Military Hospital","Military Hospital","Missing","Missing","St. Mark's Maternity Hospital (SMMH)","Port Hospital","Missing","Port Hospital","Missing","Other"],[-13.2311229156957,-13.2157351064963,-13.2205862656383,-13.2228638912441,-13.2143394209926,-13.2369393782451,-13.2230208115547,-13.2164705932244,-13.2128924575825,-13.2206286746001,-13.253989309478,-13.2190654487695,-13.2189533374241,-13.2243437095992,-13.2124311244169,-13.2322364148998,-13.2371313571269,-13.2083835761865,-13.2131457458534,-13.2578516459532,-13.2162953240809,-13.2471655635541,-13.2680671272333,-13.2160179088168,-13.2353020203708,-13.2113470441303,-13.2452992638476,-13.2614705796373,-13.2227293309912,-13.2177946632397,-13.2333516655879,-13.2163318124535,-13.2217866965605,-13.2359603887432,-13.2472895700622,-13.2587625731645,-13.2351591427265,-13.2083805379189,-13.2700264337236,-13.2631399589905,-13.2224162932627,-13.2194851717021,-13.2573683214693,-13.2589430372533,-13.2137356012883,-13.2611950766249,-13.2106014146595,-13.2477515432081,-13.2486407324245,-13.2331787372694],[8.46477606739351,8.46897295100924,8.45056919644254,8.46082377490923,8.48932072596067,8.46916113869591,8.46142781816041,8.48666377289188,8.46852156267174,8.48401630165138,8.45837125340844,8.47737640975659,8.45136291368722,8.47145134147474,8.45344099552146,8.47727846519132,8.48777544809491,8.46320325007363,8.46397733703235,8.45196229052854,8.46395131808455,8.48811520075179,8.473437335922,8.46242233645879,8.46849944119707,8.47982352763317,8.48334624336805,8.45750552360835,8.48480589906514,8.45020022241045,8.46517148129756,8.4630635336683,8.4623972994508,8.47704542384682,8.48450777619227,8.45574180260702,8.46765214132969,8.45570803751877,8.47765318263688,8.4653055523942,8.46186770657403,8.45077238424485,8.4532568143863,8.45415199059547,8.4732571907655,8.46334217568605,8.47793008081529,8.48500469856184,8.48480340615605,8.46382313795279],[null,"f547d6","f9149b","11f8ea",null,"e02f66","76b97a",null,"374728","996f3a","133ee7","3ff1bc",null,null,"e61cb9","db11a9",null,"8b4c1c","02d8fd","be502d","ea3740",null,null,null,null,"3e6957","beb26e",null,"a2086d","64c8ef",null,null,"67be4e","916d0a","26c588",null,null,null,"eae3e8",null,"4af3d1","df7c34","53608c",null,"3b096b","916d0a",null,"a5bda8",null,"d05405"],[null,"other","other","other",null,"other","other",null,"other","other","other","funeral",null,null,"other","other",null,"other","other","other","other",null,null,null,null,"other","funeral",null,"other","other",null,null,"other","other","other",null,null,null,"other",null,"other","other","funeral",null,"other","other",null,"funeral",null,"other"],[71,60,29,98,66,43,50,40,35,42,46,62,50,64,43,57,81,35,44,60,74,52,20,48,57,7,40,57,93,32,31,59,59,52,33,71,51,55,67,72,67,64,30,20,63,45,60,62,74,63],[121,146,78,258,124,114,100,89,55,97,140,143,128,184,66,163,165,112,96,117,178,126,33,54,119,13,57,124,180,96,51,118,130,143,94,206,132,162,193,190,161,147,70,39,187,77,159,190,223,164],[22,22,23,22,22,23,22,21,21,24,23,21,22,22,23,23,22,23,23,21,22,22,21,23,22,23,22,21,24,22,24,22,22,22,22,23,22,21,22,24,22,21,21,21,24,20,20,21,24,23],["no","no","no","no","no","no","no","no",null,"no",null,"no","no",null,"no","no","no","no","no","no","no","no","no","no","no","no",null,"no",null,"no","no","no","no","no",null,"no","no","no","no","no","no","no",null,null,"no",null,"no",null,"no","no"],["no","yes","no","no","no","no","yes","no",null,"no",null,"no","no",null,"no","no","no","no","no","no","no","no","no","no","no","no",null,"no",null,"yes","yes","no","no","no",null,"no","yes","no","no","no","yes","no",null,null,"no",null,"no",null,"no","no"],["yes","no","yes","yes","yes","yes","no","yes",null,"yes",null,"yes","yes",null,"no","no","yes","no","yes","yes","yes","yes","yes","yes","yes","yes",null,"yes",null,"yes","yes","yes","yes","no",null,"no","yes","yes","yes","yes","yes","yes",null,null,"yes",null,"yes",null,"yes","yes"],["no","no","no","no","no","no","no","no",null,"yes",null,"no","no",null,"no","no","no","no","no","no","no","no","no","no","no","no",null,"yes",null,"no","no","no","no","no",null,"no","no","no","no","no","no","no",null,null,"no",null,"no",null,"no","no"],["no","yes","yes","yes","no","no","no","yes",null,"no",null,"no","no",null,"yes","no","no","yes","yes","yes","yes","yes","yes","yes","no","no",null,"no",null,"no","no","yes","no","no",null,"no","yes","no","yes","yes","yes","no",null,null,"yes",null,"no",null,"no","no"],[36.5,37.7,36.3,37.1,37.4,36.9,36.9,37.1,36.6,36,37.1,36.4,37,37.3,37.2,36.7,36.9,37.6,36.2,36.3,36.6,37.9,36.5,36.7,37.4,37.1,36.9,36.6,37.4,37.2,36.7,36.6,36.5,37,37.2,36.2,37.4,37.3,37.6,36.9,36.4,37.3,37.2,37.3,36.4,37.1,37.2,36.3,37,37.1],["12:38","05:39",null,"08:32","10:32","10:57","11:11","16:40","12:53","17:18","07:34",null,"10:30","08:45","12:12","11:23","11:31",null,"15:34",null,"18:07",null,"10:12","13:19","11:26",null,"16:60","09:35","14:47",null,"15:40","16:07","12:28","22:18","15:39","16:47","17:42","05:18","14:32","12:02","05:25","15:36","16:01","16:23","13:35","13:33","18:36","13:36","12:47","11:32"],[48.49395533092,28.1478701444924,47.6660092044707,14.7226729162911,42.9240374609781,33.0871037242228,50,50.4986744097967,115.702479338843,44.6381124455309,23.469387755102,30.3193310186317,30.517578125,18.9035916824197,98.7144168962351,21.4535737137265,29.7520661157025,27.9017857142857,47.7430555555556,43.8308130615823,23.355636914531,32.7538422776518,183.654729109275,164.609053497942,40.2513946755173,414.201183431953,123.114804555248,37.0707596253902,28.7037037037037,34.7222222222222,119.18492887351,42.3728813559322,34.9112426035503,25.4291163382073,37.3472159348121,16.7310773871241,29.2699724517906,20.9571711629325,17.9870600553035,19.9445983379501,25.8477682188187,29.6172890925078,61.2244897959184,131.492439184747,18.0159569904773,75.8981278461798,23.7332384003797,17.1745152354571,14.8806531400189,23.4235574063058],[0,2,0,1,1,1,2,1,1,2,2,2,2,0,0,2,0,2,0,2,2,2,1,2,2,2,0,1,1,2,1,1,2,0,2,1,1,2,0,1,2,1,2,2,1,1,0,1,1,1]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>case_id<\/th>\n      <th>generation<\/th>\n      <th>date_infection<\/th>\n      <th>date_onset<\/th>\n      <th>date_hospitalisation<\/th>\n      <th>date_outcome<\/th>\n      <th>outcome<\/th>\n      <th>gender<\/th>\n      <th>age<\/th>\n      <th>age_unit<\/th>\n      <th>age_years<\/th>\n      <th>age_cat<\/th>\n      <th>age_cat5<\/th>\n      <th>hospital<\/th>\n      <th>lon<\/th>\n      <th>lat<\/th>\n      <th>infector<\/th>\n      <th>source<\/th>\n      <th>wt_kg<\/th>\n      <th>ht_cm<\/th>\n      <th>ct_blood<\/th>\n      <th>fever<\/th>\n      <th>chills<\/th>\n      <th>cough<\/th>\n      <th>aches<\/th>\n      <th>vomit<\/th>\n      <th>temp<\/th>\n      <th>time_admission<\/th>\n      <th>bmi<\/th>\n      <th>days_onset_hosp<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"scrollX":true,"columnDefs":[{"className":"dt-right","targets":[1,8,10,14,15,18,19,20,26,28,29]}],"order":[],"autoWidth":false,"orderClasses":false,"orderCellsTop":true,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-22d2f47b58466a7c28da" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-22d2f47b58466a7c28da">{"x":{"filter":"top","filterHTML":"<tr>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"2\" data-max=\"14\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"date\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"1399161600000\" data-max=\"1406937600000\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"date\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"1398556800000\" data-max=\"1.407024e+12\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"date\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"1398556800000\" data-max=\"1407110400000\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"date\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"1399420800000\" data-max=\"1410566400000\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"0\" data-max=\"66\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"disabled\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"0\" data-max=\"66\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"factor\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"width: 100%; display: none;\">\n      <select multiple=\"multiple\" style=\"width: 100%;\" data-options=\"[&quot;0-4&quot;,&quot;5-9&quot;,&quot;10-14&quot;,&quot;15-19&quot;,&quot;20-29&quot;,&quot;30-49&quot;,&quot;50-69&quot;,&quot;70+&quot;]\"><\/select>\n    <\/div>\n  <\/td>\n  <td data-type=\"factor\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"width: 100%; display: none;\">\n      <select multiple=\"multiple\" style=\"width: 100%;\" data-options=\"[&quot;0-4&quot;,&quot;5-9&quot;,&quot;10-14&quot;,&quot;15-19&quot;,&quot;20-24&quot;,&quot;25-29&quot;,&quot;30-34&quot;,&quot;35-39&quot;,&quot;40-44&quot;,&quot;45-49&quot;,&quot;50-54&quot;,&quot;55-59&quot;,&quot;60-64&quot;,&quot;65-69&quot;,&quot;70-74&quot;,&quot;75-79&quot;,&quot;80-84&quot;,&quot;85+&quot;]\"><\/select>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"-13.2700264337236\" data-max=\"-13.2083805379189\" data-scale=\"13\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"8.45020022241045\" data-max=\"8.48932072596067\" data-scale=\"14\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"7\" data-max=\"98\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"13\" data-max=\"258\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"20\" data-max=\"24\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"36\" data-max=\"37.9\" data-scale=\"1\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"14.7226729162911\" data-max=\"414.201183431953\" data-scale=\"14\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"0\" data-max=\"2\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","data":[["6c286a","5fe599","6285c9","893f25","c4e706","275cc7","133ee7","dbebea","788a99","2978ac","57a565","a6c614","c15f36","c97dd9","02d8fd","bd14fc","af9f9a","589e9f","ae96ac","ec8ee4","b799eb","ceed40","9371a9","403057","7fd086","1c1848","959170","64c8ef","a47529","52ea64","92ab68","f81362","6670a5","4c1040","ae50c8","583717","770e5e","1e1825","b013ab","9fcf61","c5bc73","db7b54","38cc4a","cc7393","3789ee","8188cd","c8c030","a81f7d","6b70f0","316781"],[2,4,4,3,5,5,3,7,5,4,4,5,5,9,9,6,6,9,10,6,5,5,8,10,7,8,8,6,5,7,8,8,9,7,9,10,7,8,8,10,7,14,8,8,10,7,9,12,7,8],[null,"2014-05-08","2014-05-04","2014-05-18",null,"2014-05-24","2014-05-23",null,"2014-06-01","2014-05-30","2014-05-28","2014-06-05",null,null,"2014-06-14","2014-06-04",null,"2014-06-11","2014-06-20","2014-06-15","2014-06-27",null,null,null,null,"2014-07-09","2014-06-29",null,"2014-06-13","2014-07-15",null,null,"2014-07-18","2014-07-17","2014-07-20",null,null,null,"2014-07-24",null,"2014-07-27","2014-07-26","2014-07-19",null,"2014-07-26","2014-07-16",null,"2014-08-02",null,"2014-07-22"],["2014-04-27","2014-05-13","2014-05-14","2014-05-21","2014-05-23","2014-05-27","2014-05-27","2014-06-02","2014-06-06","2014-06-06","2014-06-13","2014-06-16","2014-06-17","2014-06-19","2014-06-20","2014-06-20","2014-06-20","2014-06-24","2014-06-25","2014-06-30","2014-07-03","2014-07-07","2014-07-08","2014-07-09","2014-07-11","2014-07-12","2014-07-13","2014-07-14","2014-07-17","2014-07-18","2014-07-19","2014-07-20","2014-07-20","2014-07-20","2014-07-25","2014-07-27","2014-07-29","2014-07-29","2014-07-30","2014-07-30","2014-07-31","2014-07-31","2014-08-01","2014-08-01","2014-08-01","2014-08-02","2014-08-02","2014-08-03","2014-08-03","2014-08-03"],["2014-04-27","2014-05-15","2014-05-14","2014-05-22","2014-05-24","2014-05-28","2014-05-29","2014-06-03","2014-06-07","2014-06-08","2014-06-15","2014-06-18","2014-06-19","2014-06-19","2014-06-20","2014-06-22","2014-06-20","2014-06-26","2014-06-25","2014-07-02","2014-07-05","2014-07-09","2014-07-09","2014-07-11","2014-07-13","2014-07-14","2014-07-13","2014-07-15","2014-07-18","2014-07-20","2014-07-20","2014-07-21","2014-07-22","2014-07-20","2014-07-27","2014-07-28","2014-07-30","2014-07-31","2014-07-30","2014-07-31","2014-08-02","2014-08-01","2014-08-03","2014-08-03","2014-08-02","2014-08-03","2014-08-02","2014-08-04","2014-08-04","2014-08-04"],["2014-05-07",null,"2014-05-17","2014-05-29","2014-06-02","2014-06-07","2014-05-29","2014-06-05","2014-06-25","2014-06-15",null,"2014-06-26","2014-06-28","2014-07-11","2014-07-01","2014-06-27","2014-07-13","2014-06-30","2014-06-27",null,"2014-07-12","2014-07-31","2014-07-20","2014-07-22","2014-07-27","2014-07-14","2014-07-19","2014-07-25","2014-07-26","2014-07-26","2014-08-05","2014-08-07","2014-08-01",null,"2014-08-08","2014-08-06",null,"2014-08-01","2014-08-05","2014-08-05","2014-08-11",null,"2014-08-21","2014-08-09","2014-09-13","2014-08-29","2014-08-11","2014-09-05",null,"2014-08-07"],["Death",null,"Death","Recover",null,"Death","Death",null,"Recover","Death","Death","Recover","Recover","Recover","Death","Death",null,null,"Death","Death","Recover","Recover",null,"Death","Recover","Death","Death","Recover","Death","Death",null,"Death","Death","Recover","Death","Death","Recover","Death","Death","Recover","Death","Death","Recover","Death",null,"Recover",null,"Recover","Death","Death"],["f","m","f","m","m","f","f","m","m","m","m","f","f","m","m","f","f","m","m","m","m","m","f","f","m","f","f","m","m","f","f","m","f","f","f","m","f","f","m","f","f","f","m","f","f","f","f","m","m","m"],[14,12,4,66,18,7,10,7,2,7,11,19,15,19,3,14,32,6,6,11,30,7,1,4,19,0,4,8,41,9,3,19,16,16,5,43,16,16,33,33,26,17,6,2,35,5,22,25,46,24],["years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years"],[14,12,4,66,18,7,10,7,2,7,11,19,15,19,3,14,32,6,6,11,30,7,1,4,19,0,4,8,41,9,3,19,16,16,5,43,16,16,33,33,26,17,6,2,35,5,22,25,46,24],["10-14","10-14","0-4","50-69","15-19","5-9","10-14","5-9","0-4","5-9","10-14","15-19","15-19","15-19","0-4","10-14","30-49","5-9","5-9","10-14","30-49","5-9","0-4","0-4","15-19","0-4","0-4","5-9","30-49","5-9","0-4","15-19","15-19","15-19","5-9","30-49","15-19","15-19","30-49","30-49","20-29","15-19","5-9","0-4","30-49","5-9","20-29","20-29","30-49","20-29"],["10-14","10-14","0-4","65-69","15-19","5-9","10-14","5-9","0-4","5-9","10-14","15-19","15-19","15-19","0-4","10-14","30-34","5-9","5-9","10-14","30-34","5-9","0-4","0-4","15-19","0-4","0-4","5-9","40-44","5-9","0-4","15-19","15-19","15-19","5-9","40-44","15-19","15-19","30-34","30-34","25-29","15-19","5-9","0-4","35-39","5-9","20-24","25-29","45-49","20-24"],["Missing","Other","Missing","Military Hospital","Missing","Central Hospital","Missing","Port Hospital","Port Hospital","Port Hospital","Military Hospital","Other","Missing","Port Hospital","Port Hospital","Port Hospital","Missing","Missing","Port Hospital","Missing","Missing","Port Hospital","St. Mark's Maternity Hospital (SMMH)","Other","Port Hospital","Port Hospital","Central Hospital","Central Hospital","Military Hospital","Missing","Military Hospital","Other","Military Hospital","Other","Port Hospital","Other","Port Hospital","Port Hospital","Missing","Port Hospital","Military Hospital","Military Hospital","Missing","Missing","St. Mark's Maternity Hospital (SMMH)","Port Hospital","Missing","Port Hospital","Missing","Other"],[-13.2311229156957,-13.2157351064963,-13.2205862656383,-13.2228638912441,-13.2143394209926,-13.2369393782451,-13.2230208115547,-13.2164705932244,-13.2128924575825,-13.2206286746001,-13.253989309478,-13.2190654487695,-13.2189533374241,-13.2243437095992,-13.2124311244169,-13.2322364148998,-13.2371313571269,-13.2083835761865,-13.2131457458534,-13.2578516459532,-13.2162953240809,-13.2471655635541,-13.2680671272333,-13.2160179088168,-13.2353020203708,-13.2113470441303,-13.2452992638476,-13.2614705796373,-13.2227293309912,-13.2177946632397,-13.2333516655879,-13.2163318124535,-13.2217866965605,-13.2359603887432,-13.2472895700622,-13.2587625731645,-13.2351591427265,-13.2083805379189,-13.2700264337236,-13.2631399589905,-13.2224162932627,-13.2194851717021,-13.2573683214693,-13.2589430372533,-13.2137356012883,-13.2611950766249,-13.2106014146595,-13.2477515432081,-13.2486407324245,-13.2331787372694],[8.46477606739351,8.46897295100924,8.45056919644254,8.46082377490923,8.48932072596067,8.46916113869591,8.46142781816041,8.48666377289188,8.46852156267174,8.48401630165138,8.45837125340844,8.47737640975659,8.45136291368722,8.47145134147474,8.45344099552146,8.47727846519132,8.48777544809491,8.46320325007363,8.46397733703235,8.45196229052854,8.46395131808455,8.48811520075179,8.473437335922,8.46242233645879,8.46849944119707,8.47982352763317,8.48334624336805,8.45750552360835,8.48480589906514,8.45020022241045,8.46517148129756,8.4630635336683,8.4623972994508,8.47704542384682,8.48450777619227,8.45574180260702,8.46765214132969,8.45570803751877,8.47765318263688,8.4653055523942,8.46186770657403,8.45077238424485,8.4532568143863,8.45415199059547,8.4732571907655,8.46334217568605,8.47793008081529,8.48500469856184,8.48480340615605,8.46382313795279],[null,"f547d6","f9149b","11f8ea",null,"e02f66","76b97a",null,"374728","996f3a","133ee7","3ff1bc",null,null,"e61cb9","db11a9",null,"8b4c1c","02d8fd","be502d","ea3740",null,null,null,null,"3e6957","beb26e",null,"a2086d","64c8ef",null,null,"67be4e","916d0a","26c588",null,null,null,"eae3e8",null,"4af3d1","df7c34","53608c",null,"3b096b","916d0a",null,"a5bda8",null,"d05405"],[null,"other","other","other",null,"other","other",null,"other","other","other","funeral",null,null,"other","other",null,"other","other","other","other",null,null,null,null,"other","funeral",null,"other","other",null,null,"other","other","other",null,null,null,"other",null,"other","other","funeral",null,"other","other",null,"funeral",null,"other"],[71,60,29,98,66,43,50,40,35,42,46,62,50,64,43,57,81,35,44,60,74,52,20,48,57,7,40,57,93,32,31,59,59,52,33,71,51,55,67,72,67,64,30,20,63,45,60,62,74,63],[121,146,78,258,124,114,100,89,55,97,140,143,128,184,66,163,165,112,96,117,178,126,33,54,119,13,57,124,180,96,51,118,130,143,94,206,132,162,193,190,161,147,70,39,187,77,159,190,223,164],[22,22,23,22,22,23,22,21,21,24,23,21,22,22,23,23,22,23,23,21,22,22,21,23,22,23,22,21,24,22,24,22,22,22,22,23,22,21,22,24,22,21,21,21,24,20,20,21,24,23],["no","no","no","no","no","no","no","no",null,"no",null,"no","no",null,"no","no","no","no","no","no","no","no","no","no","no","no",null,"no",null,"no","no","no","no","no",null,"no","no","no","no","no","no","no",null,null,"no",null,"no",null,"no","no"],["no","yes","no","no","no","no","yes","no",null,"no",null,"no","no",null,"no","no","no","no","no","no","no","no","no","no","no","no",null,"no",null,"yes","yes","no","no","no",null,"no","yes","no","no","no","yes","no",null,null,"no",null,"no",null,"no","no"],["yes","no","yes","yes","yes","yes","no","yes",null,"yes",null,"yes","yes",null,"no","no","yes","no","yes","yes","yes","yes","yes","yes","yes","yes",null,"yes",null,"yes","yes","yes","yes","no",null,"no","yes","yes","yes","yes","yes","yes",null,null,"yes",null,"yes",null,"yes","yes"],["no","no","no","no","no","no","no","no",null,"yes",null,"no","no",null,"no","no","no","no","no","no","no","no","no","no","no","no",null,"yes",null,"no","no","no","no","no",null,"no","no","no","no","no","no","no",null,null,"no",null,"no",null,"no","no"],["no","yes","yes","yes","no","no","no","yes",null,"no",null,"no","no",null,"yes","no","no","yes","yes","yes","yes","yes","yes","yes","no","no",null,"no",null,"no","no","yes","no","no",null,"no","yes","no","yes","yes","yes","no",null,null,"yes",null,"no",null,"no","no"],[36.5,37.7,36.3,37.1,37.4,36.9,36.9,37.1,36.6,36,37.1,36.4,37,37.3,37.2,36.7,36.9,37.6,36.2,36.3,36.6,37.9,36.5,36.7,37.4,37.1,36.9,36.6,37.4,37.2,36.7,36.6,36.5,37,37.2,36.2,37.4,37.3,37.6,36.9,36.4,37.3,37.2,37.3,36.4,37.1,37.2,36.3,37,37.1],["12:38","05:39",null,"08:32","10:32","10:57","11:11","16:40","12:53","17:18","07:34",null,"10:30","08:45","12:12","11:23","11:31",null,"15:34",null,"18:07",null,"10:12","13:19","11:26",null,"16:60","09:35","14:47",null,"15:40","16:07","12:28","22:18","15:39","16:47","17:42","05:18","14:32","12:02","05:25","15:36","16:01","16:23","13:35","13:33","18:36","13:36","12:47","11:32"],[48.49395533092,28.1478701444924,47.6660092044707,14.7226729162911,42.9240374609781,33.0871037242228,50,50.4986744097967,115.702479338843,44.6381124455309,23.469387755102,30.3193310186317,30.517578125,18.9035916824197,98.7144168962351,21.4535737137265,29.7520661157025,27.9017857142857,47.7430555555556,43.8308130615823,23.355636914531,32.7538422776518,183.654729109275,164.609053497942,40.2513946755173,414.201183431953,123.114804555248,37.0707596253902,28.7037037037037,34.7222222222222,119.18492887351,42.3728813559322,34.9112426035503,25.4291163382073,37.3472159348121,16.7310773871241,29.2699724517906,20.9571711629325,17.9870600553035,19.9445983379501,25.8477682188187,29.6172890925078,61.2244897959184,131.492439184747,18.0159569904773,75.8981278461798,23.7332384003797,17.1745152354571,14.8806531400189,23.4235574063058],[0,2,0,1,1,1,2,1,1,2,2,2,2,0,0,2,0,2,0,2,2,2,1,2,2,2,0,1,1,2,1,1,2,0,2,1,1,2,0,1,2,1,2,2,1,1,0,1,1,1]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>case_id<\/th>\n      <th>generation<\/th>\n      <th>date_infection<\/th>\n      <th>date_onset<\/th>\n      <th>date_hospitalisation<\/th>\n      <th>date_outcome<\/th>\n      <th>outcome<\/th>\n      <th>gender<\/th>\n      <th>age<\/th>\n      <th>age_unit<\/th>\n      <th>age_years<\/th>\n      <th>age_cat<\/th>\n      <th>age_cat5<\/th>\n      <th>hospital<\/th>\n      <th>lon<\/th>\n      <th>lat<\/th>\n      <th>infector<\/th>\n      <th>source<\/th>\n      <th>wt_kg<\/th>\n      <th>ht_cm<\/th>\n      <th>ct_blood<\/th>\n      <th>fever<\/th>\n      <th>chills<\/th>\n      <th>cough<\/th>\n      <th>aches<\/th>\n      <th>vomit<\/th>\n      <th>temp<\/th>\n      <th>time_admission<\/th>\n      <th>bmi<\/th>\n      <th>days_onset_hosp<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"scrollX":true,"columnDefs":[{"className":"dt-right","targets":[1,8,10,14,15,18,19,20,26,28,29]}],"order":[],"autoWidth":false,"orderClasses":false,"orderCellsTop":true,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
 </div>
 <div id="clean-data" class="section level3" number="15.2.3">
 <h3>
 <span class="header-section-number">15.2.3</span> Clean data<a class="anchor" aria-label="anchor" href="#clean-data"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb599"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb610"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## make sure that age variable is numeric </span>
 <span class="va">linelist</span> <span class="op">&lt;-</span> <span class="va">linelist</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>age <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">age</span><span class="op">)</span><span class="op">)</span></code></pre></div>
@@ -180,62 +180,54 @@
 </h3>
 <p>You can use the <code>summary</code> function to get information about variables and data sets.</p>
 <p>For a numeric variable it will give you the minimum, median, mean and max as well as the 1st quartile (= 25th percentile) and the 3rd quartile (= 75th percentile)</p>
-<div class="sourceCode" id="cb600"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb611"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## get information about a numeric variable </span>
 <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">linelist</span><span class="op">$</span><span class="va">age</span><span class="op">)</span></code></pre></div>
 <pre><code>##           Min.        1st Qu.         Median           Mean        3rd Qu.           Max.           NA's 
 ##  0.00000000000  6.00000000000 13.00000000000 16.42396551724 24.00000000000 95.00000000000             88</code></pre>
 <p>You can also get an overview of each variable in a whole dataset.</p>
-<div class="sourceCode" id="cb602"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb613"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## get information about each variable in a dataset </span>
 <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">linelist</span><span class="op">)</span></code></pre></div>
-<pre><code>##    case_id            generation            date_infection         date_onset         date_hospitalisation  date_outcome       
-##  Length:5888        Min.   : 0.0000000000   Min.   :2014-03-19   Min.   :2014-04-07   Min.   :2014-04-17   Min.   :2014-04-19  
-##  Class :character   1st Qu.:13.0000000000   1st Qu.:2014-09-06   1st Qu.:2014-09-16   1st Qu.:2014-09-19   1st Qu.:2014-09-26  
-##  Mode  :character   Median :16.0000000000   Median :2014-10-11   Median :2014-10-21   Median :2014-10-23   Median :2014-11-01  
-##                     Mean   :16.5616508152   Mean   :2014-10-22   Mean   :2014-11-01   Mean   :2014-11-03   Mean   :2014-11-12  
-##                     3rd Qu.:20.0000000000   3rd Qu.:2014-12-05   3rd Qu.:2014-12-15   3rd Qu.:2014-12-17   3rd Qu.:2014-12-28  
-##                     Max.   :37.0000000000   Max.   :2015-04-27   Max.   :2015-04-30   Max.   :2015-04-30   Max.   :2015-06-04  
-##                                             NA's   :2087                                                   NA's   :936         
-##    outcome             gender               age                  age_unit           age_years                age_cat    
-##  Length:5888        Length:5888        Min.   : 0.0000000000   Length:5888        Min.   : 0.0000000000   5-9    :1109  
-##  Class :character   Class :character   1st Qu.: 6.0000000000   Class :character   1st Qu.: 6.0000000000   0-4    :1048  
-##  Mode  :character   Mode  :character   Median :13.0000000000   Mode  :character   Median :13.0000000000   20-29  :1014  
-##                                        Mean   :16.4239655172                      Mean   :16.3688074713   10-14  : 955  
-##                                        3rd Qu.:24.0000000000                      3rd Qu.:24.0000000000   30-49  : 780  
-##                                        Max.   :95.0000000000                      Max.   :95.0000000000   (Other): 894  
-##                                        NA's   :88                                 NA's   :88              NA's   :  88  
-##     age_cat5      hospital              lon                      lat                  infector            source         
-##  5-9    :1109   Length:5888        Min.   :-13.2727552093   Min.   :8.44620611741   Length:5888        Length:5888       
-##  0-4    :1048   Class :character   1st Qu.:-13.2515303996   1st Qu.:8.46121793209   Class :character   Class :character  
-##  10-14  : 955   Mode  :character   Median :-13.2290787930   Median :8.46898925059   Mode  :character   Mode  :character  
-##  15-19  : 760                      Mean   :-13.2338063400   Mean   :8.46963750878                                        
-##  20-24  : 574                      3rd Qu.:-13.2166314552   3rd Qu.:8.47954113438                                        
-##  (Other):1354                      Max.   :-13.2052242315   Max.   :8.49174756781                                        
-##  NA's   :  88                                                                                                            
-##      wt_kg              ht_cm                  ct_blood                fever              chills             cough          
-##  Min.   :-16.0000   Min.   :  2.000000000   Min.   :16.0000000000   Length:5888        Length:5888        Length:5888       
-##  1st Qu.: 42.0000   1st Qu.: 91.000000000   1st Qu.:20.0000000000   Class :character   Class :character   Class :character  
-##  Median : 55.0000   Median :129.000000000   Median :22.0000000000   Mode  :character   Mode  :character   Mode  :character  
-##  Mean   : 52.9375   Mean   :124.862432065   Mean   :21.1841032609                                                           
-##  3rd Qu.: 66.0000   3rd Qu.:158.000000000   3rd Qu.:22.0000000000                                                           
-##  Max.   :125.0000   Max.   :299.000000000   Max.   :25.0000000000                                                           
-##                                                                                                                             
-##     aches              vomit                temp               time_admission          bmi                  
-##  Length:5888        Length:5888        Min.   :35.5000000000   Length:5888        Min.   :-7500.0000000000  
-##  Class :character   Class :character   1st Qu.:38.1000000000   Class :character   1st Qu.:   24.7625380043  
-##  Mode  :character   Mode  :character   Median :38.8000000000   Mode  :character   Median :   32.4635466267  
-##                                        Mean   :38.5408088873                      Mean   :   46.3601863799  
-##                                        3rd Qu.:39.2000000000                      3rd Qu.:   49.9961738598  
-##                                        Max.   :40.8000000000                      Max.   : 2098.7654321000  
-##                                        NA's   :127                                                          
-##  days_onset_hosp         
-##  Min.   : 0.00000000000  
-##  1st Qu.: 1.00000000000  
-##  Median : 1.00000000000  
-##  Mean   : 2.01188858696  
-##  3rd Qu.: 3.00000000000  
-##  Max.   :22.00000000000  
+<pre><code>##    case_id            generation            date_infection         date_onset         date_hospitalisation  date_outcome          outcome         
+##  Length:5888        Min.   : 0.0000000000   Min.   :2014-03-19   Min.   :2014-04-07   Min.   :2014-04-17   Min.   :2014-04-19   Length:5888       
+##  Class :character   1st Qu.:13.0000000000   1st Qu.:2014-09-06   1st Qu.:2014-09-16   1st Qu.:2014-09-19   1st Qu.:2014-09-26   Class :character  
+##  Mode  :character   Median :16.0000000000   Median :2014-10-11   Median :2014-10-21   Median :2014-10-23   Median :2014-11-01   Mode  :character  
+##                     Mean   :16.5616508152   Mean   :2014-10-22   Mean   :2014-11-01   Mean   :2014-11-03   Mean   :2014-11-12                     
+##                     3rd Qu.:20.0000000000   3rd Qu.:2014-12-05   3rd Qu.:2014-12-15   3rd Qu.:2014-12-17   3rd Qu.:2014-12-28                     
+##                     Max.   :37.0000000000   Max.   :2015-04-27   Max.   :2015-04-30   Max.   :2015-04-30   Max.   :2015-06-04                     
+##                                             NA's   :2087                                                   NA's   :936                            
+##     gender               age                  age_unit           age_years                age_cat        age_cat5      hospital        
+##  Length:5888        Min.   : 0.0000000000   Length:5888        Min.   : 0.0000000000   5-9    :1109   5-9    :1109   Length:5888       
+##  Class :character   1st Qu.: 6.0000000000   Class :character   1st Qu.: 6.0000000000   0-4    :1048   0-4    :1048   Class :character  
+##  Mode  :character   Median :13.0000000000   Mode  :character   Median :13.0000000000   20-29  :1014   10-14  : 955   Mode  :character  
+##                     Mean   :16.4239655172                      Mean   :16.3688074713   10-14  : 955   15-19  : 760                     
+##                     3rd Qu.:24.0000000000                      3rd Qu.:24.0000000000   30-49  : 780   20-24  : 574                     
+##                     Max.   :95.0000000000                      Max.   :95.0000000000   (Other): 894   (Other):1354                     
+##                     NA's   :88                                 NA's   :88              NA's   :  88   NA's   :  88                     
+##       lon                      lat                  infector            source              wt_kg              ht_cm                  ct_blood            
+##  Min.   :-13.2727552093   Min.   :8.44620611741   Length:5888        Length:5888        Min.   :-16.0000   Min.   :  2.000000000   Min.   :16.0000000000  
+##  1st Qu.:-13.2515303996   1st Qu.:8.46121793209   Class :character   Class :character   1st Qu.: 42.0000   1st Qu.: 91.000000000   1st Qu.:20.0000000000  
+##  Median :-13.2290787930   Median :8.46898925059   Mode  :character   Mode  :character   Median : 55.0000   Median :129.000000000   Median :22.0000000000  
+##  Mean   :-13.2338063400   Mean   :8.46963750878                                         Mean   : 52.9375   Mean   :124.862432065   Mean   :21.1841032609  
+##  3rd Qu.:-13.2166314552   3rd Qu.:8.47954113438                                         3rd Qu.: 66.0000   3rd Qu.:158.000000000   3rd Qu.:22.0000000000  
+##  Max.   :-13.2052242315   Max.   :8.49174756781                                         Max.   :125.0000   Max.   :299.000000000   Max.   :25.0000000000  
+##                                                                                                                                                           
+##     fever              chills             cough              aches              vomit                temp               time_admission    
+##  Length:5888        Length:5888        Length:5888        Length:5888        Length:5888        Min.   :35.5000000000   Length:5888       
+##  Class :character   Class :character   Class :character   Class :character   Class :character   1st Qu.:38.1000000000   Class :character  
+##  Mode  :character   Mode  :character   Mode  :character   Mode  :character   Mode  :character   Median :38.8000000000   Mode  :character  
+##                                                                                                 Mean   :38.5408088873                     
+##                                                                                                 3rd Qu.:39.2000000000                     
+##                                                                                                 Max.   :40.8000000000                     
+##                                                                                                 NA's   :127                               
+##       bmi                   days_onset_hosp         
+##  Min.   :-7500.0000000000   Min.   : 0.00000000000  
+##  1st Qu.:   24.7625380043   1st Qu.: 1.00000000000  
+##  Median :   32.4635466267   Median : 1.00000000000  
+##  Mean   :   46.3601863799   Mean   : 2.01188858696  
+##  3rd Qu.:   49.9961738598   3rd Qu.: 3.00000000000  
+##  Max.   : 2098.7654321000   Max.   :22.00000000000  
 ## </code></pre>
 </div>
 <div id="skimr-package" class="section level3" number="15.3.2">
@@ -243,7 +235,7 @@
 <span class="header-section-number">15.3.2</span> <code>skimr</code> package<a class="anchor" aria-label="anchor" href="#skimr-package"><i class="fas fa-link"></i></a>
 </h3>
 <p>Using the <code>skimr</code> package you can get a more detailed overview of each of the variables in your dataset.</p>
-<div class="sourceCode" id="cb604"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb615"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## get information about each variable in a dataset </span>
 <span class="fu">skim</span><span class="op">(</span><span class="va">linelist</span><span class="op">)</span></code></pre></div>
 <div class="inline-table"><table class="table table-sm">
@@ -710,7 +702,7 @@
 <span class="header-section-number">15.4.1.1</span> <strong>Mean</strong><a class="anchor" aria-label="anchor" href="#mean"><i class="fas fa-link"></i></a>
 </h4>
 <p>Note that this automatically excludes all missing values. If missing values are not excluded, the returned value will be NA (missing). The number of missing values is seen in the Unknown column.</p>
-<div class="sourceCode" id="cb605"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb616"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">linelist</span> <span class="op">%&gt;%</span> 
   <span class="co">## only keep variable of interest</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">age</span><span class="op">)</span> <span class="op">%&gt;%</span> 
@@ -720,7 +712,7 @@
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#airnqrfhmv .gt_table {
+#bkodxpqpzk .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -745,7 +737,7 @@
   border-left-color: #D3D3D3;
 }
 
-#airnqrfhmv .gt_heading {
+#bkodxpqpzk .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -757,7 +749,7 @@
   border-right-color: #D3D3D3;
 }
 
-#airnqrfhmv .gt_title {
+#bkodxpqpzk .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -767,7 +759,7 @@
   border-bottom-width: 0;
 }
 
-#airnqrfhmv .gt_subtitle {
+#bkodxpqpzk .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -777,13 +769,13 @@
   border-top-width: 0;
 }
 
-#airnqrfhmv .gt_bottom_border {
+#bkodxpqpzk .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#airnqrfhmv .gt_col_headings {
+#bkodxpqpzk .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -798,7 +790,7 @@
   border-right-color: #D3D3D3;
 }
 
-#airnqrfhmv .gt_col_heading {
+#bkodxpqpzk .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -818,7 +810,7 @@
   overflow-x: hidden;
 }
 
-#airnqrfhmv .gt_column_spanner_outer {
+#bkodxpqpzk .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -830,15 +822,15 @@
   padding-right: 4px;
 }
 
-#airnqrfhmv .gt_column_spanner_outer:first-child {
+#bkodxpqpzk .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#airnqrfhmv .gt_column_spanner_outer:last-child {
+#bkodxpqpzk .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#airnqrfhmv .gt_column_spanner {
+#bkodxpqpzk .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -850,7 +842,7 @@
   width: 100%;
 }
 
-#airnqrfhmv .gt_group_heading {
+#bkodxpqpzk .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -872,7 +864,7 @@
   vertical-align: middle;
 }
 
-#airnqrfhmv .gt_empty_group_heading {
+#bkodxpqpzk .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -887,15 +879,15 @@
   vertical-align: middle;
 }
 
-#airnqrfhmv .gt_from_md > :first-child {
+#bkodxpqpzk .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#airnqrfhmv .gt_from_md > :last-child {
+#bkodxpqpzk .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#airnqrfhmv .gt_row {
+#bkodxpqpzk .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -914,7 +906,7 @@
   overflow-x: hidden;
 }
 
-#airnqrfhmv .gt_stub {
+#bkodxpqpzk .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -926,7 +918,7 @@
   padding-left: 12px;
 }
 
-#airnqrfhmv .gt_summary_row {
+#bkodxpqpzk .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -936,7 +928,7 @@
   padding-right: 5px;
 }
 
-#airnqrfhmv .gt_first_summary_row {
+#bkodxpqpzk .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -946,7 +938,7 @@
   border-top-color: #D3D3D3;
 }
 
-#airnqrfhmv .gt_grand_summary_row {
+#bkodxpqpzk .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -956,7 +948,7 @@
   padding-right: 5px;
 }
 
-#airnqrfhmv .gt_first_grand_summary_row {
+#bkodxpqpzk .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -966,11 +958,11 @@
   border-top-color: #D3D3D3;
 }
 
-#airnqrfhmv .gt_striped {
+#bkodxpqpzk .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#airnqrfhmv .gt_table_body {
+#bkodxpqpzk .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -979,7 +971,7 @@
   border-bottom-color: #D3D3D3;
 }
 
-#airnqrfhmv .gt_footnotes {
+#bkodxpqpzk .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -993,13 +985,13 @@
   border-right-color: #D3D3D3;
 }
 
-#airnqrfhmv .gt_footnote {
+#bkodxpqpzk .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#airnqrfhmv .gt_sourcenotes {
+#bkodxpqpzk .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1013,46 +1005,46 @@
   border-right-color: #D3D3D3;
 }
 
-#airnqrfhmv .gt_sourcenote {
+#bkodxpqpzk .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#airnqrfhmv .gt_left {
+#bkodxpqpzk .gt_left {
   text-align: left;
 }
 
-#airnqrfhmv .gt_center {
+#bkodxpqpzk .gt_center {
   text-align: center;
 }
 
-#airnqrfhmv .gt_right {
+#bkodxpqpzk .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#airnqrfhmv .gt_font_normal {
+#bkodxpqpzk .gt_font_normal {
   font-weight: normal;
 }
 
-#airnqrfhmv .gt_font_bold {
+#bkodxpqpzk .gt_font_bold {
   font-weight: bold;
 }
 
-#airnqrfhmv .gt_font_italic {
+#bkodxpqpzk .gt_font_italic {
   font-style: italic;
 }
 
-#airnqrfhmv .gt_super {
+#bkodxpqpzk .gt_super {
   font-size: 65%;
 }
 
-#airnqrfhmv .gt_footnote_marks {
+#bkodxpqpzk .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="airnqrfhmv" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><div class="inline-table"><table class="gt_table">
+<div id="bkodxpqpzk" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><div class="inline-table"><table class="gt_table">
 <thead class="gt_col_headings"><tr>
 <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1"><strong>Characteristic</strong></th>
       <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">
@@ -1086,7 +1078,7 @@
 <span class="header-section-number">15.4.1.2</span> <strong>Median</strong><a class="anchor" aria-label="anchor" href="#median"><i class="fas fa-link"></i></a>
 </h4>
 <p>Note that this automatically excludes all missing values. If missing values are not excluded, the returned value will be NA (missing). The number of missing values is seen in the Unknown column).</p>
-<div class="sourceCode" id="cb606"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb617"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">linelist</span> <span class="op">%&gt;%</span> 
   <span class="co">## only keep variable of interest</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">age</span><span class="op">)</span> <span class="op">%&gt;%</span> 
@@ -1096,7 +1088,7 @@
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#ccnpbadkjm .gt_table {
+#lcrnrhfxpp .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -1121,7 +1113,7 @@
   border-left-color: #D3D3D3;
 }
 
-#ccnpbadkjm .gt_heading {
+#lcrnrhfxpp .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1133,7 +1125,7 @@
   border-right-color: #D3D3D3;
 }
 
-#ccnpbadkjm .gt_title {
+#lcrnrhfxpp .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1143,7 +1135,7 @@
   border-bottom-width: 0;
 }
 
-#ccnpbadkjm .gt_subtitle {
+#lcrnrhfxpp .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1153,13 +1145,13 @@
   border-top-width: 0;
 }
 
-#ccnpbadkjm .gt_bottom_border {
+#lcrnrhfxpp .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#ccnpbadkjm .gt_col_headings {
+#lcrnrhfxpp .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1174,7 +1166,7 @@
   border-right-color: #D3D3D3;
 }
 
-#ccnpbadkjm .gt_col_heading {
+#lcrnrhfxpp .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1194,7 +1186,7 @@
   overflow-x: hidden;
 }
 
-#ccnpbadkjm .gt_column_spanner_outer {
+#lcrnrhfxpp .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1206,15 +1198,15 @@
   padding-right: 4px;
 }
 
-#ccnpbadkjm .gt_column_spanner_outer:first-child {
+#lcrnrhfxpp .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#ccnpbadkjm .gt_column_spanner_outer:last-child {
+#lcrnrhfxpp .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#ccnpbadkjm .gt_column_spanner {
+#lcrnrhfxpp .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1226,7 +1218,7 @@
   width: 100%;
 }
 
-#ccnpbadkjm .gt_group_heading {
+#lcrnrhfxpp .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1248,7 +1240,7 @@
   vertical-align: middle;
 }
 
-#ccnpbadkjm .gt_empty_group_heading {
+#lcrnrhfxpp .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1263,15 +1255,15 @@
   vertical-align: middle;
 }
 
-#ccnpbadkjm .gt_from_md > :first-child {
+#lcrnrhfxpp .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#ccnpbadkjm .gt_from_md > :last-child {
+#lcrnrhfxpp .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#ccnpbadkjm .gt_row {
+#lcrnrhfxpp .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1290,7 +1282,7 @@
   overflow-x: hidden;
 }
 
-#ccnpbadkjm .gt_stub {
+#lcrnrhfxpp .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1302,7 +1294,7 @@
   padding-left: 12px;
 }
 
-#ccnpbadkjm .gt_summary_row {
+#lcrnrhfxpp .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1312,7 +1304,7 @@
   padding-right: 5px;
 }
 
-#ccnpbadkjm .gt_first_summary_row {
+#lcrnrhfxpp .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1322,7 +1314,7 @@
   border-top-color: #D3D3D3;
 }
 
-#ccnpbadkjm .gt_grand_summary_row {
+#lcrnrhfxpp .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1332,7 +1324,7 @@
   padding-right: 5px;
 }
 
-#ccnpbadkjm .gt_first_grand_summary_row {
+#lcrnrhfxpp .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1342,11 +1334,11 @@
   border-top-color: #D3D3D3;
 }
 
-#ccnpbadkjm .gt_striped {
+#lcrnrhfxpp .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#ccnpbadkjm .gt_table_body {
+#lcrnrhfxpp .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1355,7 +1347,7 @@
   border-bottom-color: #D3D3D3;
 }
 
-#ccnpbadkjm .gt_footnotes {
+#lcrnrhfxpp .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1369,13 +1361,13 @@
   border-right-color: #D3D3D3;
 }
 
-#ccnpbadkjm .gt_footnote {
+#lcrnrhfxpp .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#ccnpbadkjm .gt_sourcenotes {
+#lcrnrhfxpp .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1389,46 +1381,46 @@
   border-right-color: #D3D3D3;
 }
 
-#ccnpbadkjm .gt_sourcenote {
+#lcrnrhfxpp .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#ccnpbadkjm .gt_left {
+#lcrnrhfxpp .gt_left {
   text-align: left;
 }
 
-#ccnpbadkjm .gt_center {
+#lcrnrhfxpp .gt_center {
   text-align: center;
 }
 
-#ccnpbadkjm .gt_right {
+#lcrnrhfxpp .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#ccnpbadkjm .gt_font_normal {
+#lcrnrhfxpp .gt_font_normal {
   font-weight: normal;
 }
 
-#ccnpbadkjm .gt_font_bold {
+#lcrnrhfxpp .gt_font_bold {
   font-weight: bold;
 }
 
-#ccnpbadkjm .gt_font_italic {
+#lcrnrhfxpp .gt_font_italic {
   font-style: italic;
 }
 
-#ccnpbadkjm .gt_super {
+#lcrnrhfxpp .gt_super {
   font-size: 65%;
 }
 
-#ccnpbadkjm .gt_footnote_marks {
+#lcrnrhfxpp .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="ccnpbadkjm" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><div class="inline-table"><table class="gt_table">
+<div id="lcrnrhfxpp" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><div class="inline-table"><table class="gt_table">
 <thead class="gt_col_headings"><tr>
 <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1"><strong>Characteristic</strong></th>
       <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">
@@ -1462,7 +1454,7 @@
 <span class="header-section-number">15.4.1.3</span> <strong>Range</strong><a class="anchor" aria-label="anchor" href="#range"><i class="fas fa-link"></i></a>
 </h4>
 <p>The range here is the minimum and maximum values for the variable. (see <em>percentiles</em> for interquartile range) Note that this automatically excludes all missing values. If missing values are not excluded, the returned value will be NA (missing). The number of missing values is seen in the Unknown column).</p>
-<div class="sourceCode" id="cb607"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb618"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">linelist</span> <span class="op">%&gt;%</span> 
   <span class="co">## only keep variable of interest</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">age</span><span class="op">)</span> <span class="op">%&gt;%</span> 
@@ -1472,7 +1464,7 @@
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#jwlymwlhxw .gt_table {
+#jbvvyachbg .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -1497,7 +1489,7 @@
   border-left-color: #D3D3D3;
 }
 
-#jwlymwlhxw .gt_heading {
+#jbvvyachbg .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1509,7 +1501,7 @@
   border-right-color: #D3D3D3;
 }
 
-#jwlymwlhxw .gt_title {
+#jbvvyachbg .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1519,7 +1511,7 @@
   border-bottom-width: 0;
 }
 
-#jwlymwlhxw .gt_subtitle {
+#jbvvyachbg .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1529,13 +1521,13 @@
   border-top-width: 0;
 }
 
-#jwlymwlhxw .gt_bottom_border {
+#jbvvyachbg .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#jwlymwlhxw .gt_col_headings {
+#jbvvyachbg .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1550,7 +1542,7 @@
   border-right-color: #D3D3D3;
 }
 
-#jwlymwlhxw .gt_col_heading {
+#jbvvyachbg .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1570,7 +1562,7 @@
   overflow-x: hidden;
 }
 
-#jwlymwlhxw .gt_column_spanner_outer {
+#jbvvyachbg .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1582,15 +1574,15 @@
   padding-right: 4px;
 }
 
-#jwlymwlhxw .gt_column_spanner_outer:first-child {
+#jbvvyachbg .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#jwlymwlhxw .gt_column_spanner_outer:last-child {
+#jbvvyachbg .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#jwlymwlhxw .gt_column_spanner {
+#jbvvyachbg .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1602,7 +1594,7 @@
   width: 100%;
 }
 
-#jwlymwlhxw .gt_group_heading {
+#jbvvyachbg .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1624,7 +1616,7 @@
   vertical-align: middle;
 }
 
-#jwlymwlhxw .gt_empty_group_heading {
+#jbvvyachbg .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1639,15 +1631,15 @@
   vertical-align: middle;
 }
 
-#jwlymwlhxw .gt_from_md > :first-child {
+#jbvvyachbg .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#jwlymwlhxw .gt_from_md > :last-child {
+#jbvvyachbg .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#jwlymwlhxw .gt_row {
+#jbvvyachbg .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1666,7 +1658,7 @@
   overflow-x: hidden;
 }
 
-#jwlymwlhxw .gt_stub {
+#jbvvyachbg .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1678,7 +1670,7 @@
   padding-left: 12px;
 }
 
-#jwlymwlhxw .gt_summary_row {
+#jbvvyachbg .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1688,7 +1680,7 @@
   padding-right: 5px;
 }
 
-#jwlymwlhxw .gt_first_summary_row {
+#jbvvyachbg .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1698,7 +1690,7 @@
   border-top-color: #D3D3D3;
 }
 
-#jwlymwlhxw .gt_grand_summary_row {
+#jbvvyachbg .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1708,7 +1700,7 @@
   padding-right: 5px;
 }
 
-#jwlymwlhxw .gt_first_grand_summary_row {
+#jbvvyachbg .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1718,11 +1710,11 @@
   border-top-color: #D3D3D3;
 }
 
-#jwlymwlhxw .gt_striped {
+#jbvvyachbg .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#jwlymwlhxw .gt_table_body {
+#jbvvyachbg .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1731,7 +1723,7 @@
   border-bottom-color: #D3D3D3;
 }
 
-#jwlymwlhxw .gt_footnotes {
+#jbvvyachbg .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1745,13 +1737,13 @@
   border-right-color: #D3D3D3;
 }
 
-#jwlymwlhxw .gt_footnote {
+#jbvvyachbg .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#jwlymwlhxw .gt_sourcenotes {
+#jbvvyachbg .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1765,46 +1757,46 @@
   border-right-color: #D3D3D3;
 }
 
-#jwlymwlhxw .gt_sourcenote {
+#jbvvyachbg .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#jwlymwlhxw .gt_left {
+#jbvvyachbg .gt_left {
   text-align: left;
 }
 
-#jwlymwlhxw .gt_center {
+#jbvvyachbg .gt_center {
   text-align: center;
 }
 
-#jwlymwlhxw .gt_right {
+#jbvvyachbg .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#jwlymwlhxw .gt_font_normal {
+#jbvvyachbg .gt_font_normal {
   font-weight: normal;
 }
 
-#jwlymwlhxw .gt_font_bold {
+#jbvvyachbg .gt_font_bold {
   font-weight: bold;
 }
 
-#jwlymwlhxw .gt_font_italic {
+#jbvvyachbg .gt_font_italic {
   font-style: italic;
 }
 
-#jwlymwlhxw .gt_super {
+#jbvvyachbg .gt_super {
   font-size: 65%;
 }
 
-#jwlymwlhxw .gt_footnote_marks {
+#jbvvyachbg .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="jwlymwlhxw" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><div class="inline-table"><table class="gt_table">
+<div id="jbvvyachbg" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><div class="inline-table"><table class="gt_table">
 <thead class="gt_col_headings"><tr>
 <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1"><strong>Characteristic</strong></th>
       <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">
@@ -1838,7 +1830,7 @@
 <span class="header-section-number">15.4.1.4</span> <strong>Standard deviation</strong><a class="anchor" aria-label="anchor" href="#standard-deviation"><i class="fas fa-link"></i></a>
 </h4>
 <p>Note that this automatically excludes all missing values. If missing values are not excluded, the returned value will be NA (missing). The number of missing values is seen in the Unknown column).</p>
-<div class="sourceCode" id="cb608"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb619"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">linelist</span> <span class="op">%&gt;%</span> 
   <span class="co">## only keep variable of interest</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">age</span><span class="op">)</span> <span class="op">%&gt;%</span> 
@@ -1848,7 +1840,7 @@
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#tyzizovajj .gt_table {
+#debtgoetxj .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -1873,7 +1865,7 @@
   border-left-color: #D3D3D3;
 }
 
-#tyzizovajj .gt_heading {
+#debtgoetxj .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1885,7 +1877,7 @@
   border-right-color: #D3D3D3;
 }
 
-#tyzizovajj .gt_title {
+#debtgoetxj .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1895,7 +1887,7 @@
   border-bottom-width: 0;
 }
 
-#tyzizovajj .gt_subtitle {
+#debtgoetxj .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1905,13 +1897,13 @@
   border-top-width: 0;
 }
 
-#tyzizovajj .gt_bottom_border {
+#debtgoetxj .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#tyzizovajj .gt_col_headings {
+#debtgoetxj .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1926,7 +1918,7 @@
   border-right-color: #D3D3D3;
 }
 
-#tyzizovajj .gt_col_heading {
+#debtgoetxj .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1946,7 +1938,7 @@
   overflow-x: hidden;
 }
 
-#tyzizovajj .gt_column_spanner_outer {
+#debtgoetxj .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1958,15 +1950,15 @@
   padding-right: 4px;
 }
 
-#tyzizovajj .gt_column_spanner_outer:first-child {
+#debtgoetxj .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#tyzizovajj .gt_column_spanner_outer:last-child {
+#debtgoetxj .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#tyzizovajj .gt_column_spanner {
+#debtgoetxj .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1978,7 +1970,7 @@
   width: 100%;
 }
 
-#tyzizovajj .gt_group_heading {
+#debtgoetxj .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -2000,7 +1992,7 @@
   vertical-align: middle;
 }
 
-#tyzizovajj .gt_empty_group_heading {
+#debtgoetxj .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -2015,15 +2007,15 @@
   vertical-align: middle;
 }
 
-#tyzizovajj .gt_from_md > :first-child {
+#debtgoetxj .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#tyzizovajj .gt_from_md > :last-child {
+#debtgoetxj .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#tyzizovajj .gt_row {
+#debtgoetxj .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2042,7 +2034,7 @@
   overflow-x: hidden;
 }
 
-#tyzizovajj .gt_stub {
+#debtgoetxj .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2054,7 +2046,7 @@
   padding-left: 12px;
 }
 
-#tyzizovajj .gt_summary_row {
+#debtgoetxj .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2064,7 +2056,7 @@
   padding-right: 5px;
 }
 
-#tyzizovajj .gt_first_summary_row {
+#debtgoetxj .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2074,7 +2066,7 @@
   border-top-color: #D3D3D3;
 }
 
-#tyzizovajj .gt_grand_summary_row {
+#debtgoetxj .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2084,7 +2076,7 @@
   padding-right: 5px;
 }
 
-#tyzizovajj .gt_first_grand_summary_row {
+#debtgoetxj .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2094,11 +2086,11 @@
   border-top-color: #D3D3D3;
 }
 
-#tyzizovajj .gt_striped {
+#debtgoetxj .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#tyzizovajj .gt_table_body {
+#debtgoetxj .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2107,7 +2099,7 @@
   border-bottom-color: #D3D3D3;
 }
 
-#tyzizovajj .gt_footnotes {
+#debtgoetxj .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2121,13 +2113,13 @@
   border-right-color: #D3D3D3;
 }
 
-#tyzizovajj .gt_footnote {
+#debtgoetxj .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#tyzizovajj .gt_sourcenotes {
+#debtgoetxj .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2141,46 +2133,46 @@
   border-right-color: #D3D3D3;
 }
 
-#tyzizovajj .gt_sourcenote {
+#debtgoetxj .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#tyzizovajj .gt_left {
+#debtgoetxj .gt_left {
   text-align: left;
 }
 
-#tyzizovajj .gt_center {
+#debtgoetxj .gt_center {
   text-align: center;
 }
 
-#tyzizovajj .gt_right {
+#debtgoetxj .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#tyzizovajj .gt_font_normal {
+#debtgoetxj .gt_font_normal {
   font-weight: normal;
 }
 
-#tyzizovajj .gt_font_bold {
+#debtgoetxj .gt_font_bold {
   font-weight: bold;
 }
 
-#tyzizovajj .gt_font_italic {
+#debtgoetxj .gt_font_italic {
   font-style: italic;
 }
 
-#tyzizovajj .gt_super {
+#debtgoetxj .gt_super {
   font-size: 65%;
 }
 
-#tyzizovajj .gt_footnote_marks {
+#debtgoetxj .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="tyzizovajj" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><div class="inline-table"><table class="gt_table">
+<div id="debtgoetxj" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><div class="inline-table"><table class="gt_table">
 <thead class="gt_col_headings"><tr>
 <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1"><strong>Characteristic</strong></th>
       <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">
@@ -2215,7 +2207,7 @@
 </h4>
 <p>To return percentiles you can type in one value that you would like, or you can type in multiple (e.g. to return the interquartile range).</p>
 <p>Note that this automatically excludes all missing values. If missing values are not excluded, the returned value will be NA (missing). The number of missing values is seen in the Unknown column).</p>
-<div class="sourceCode" id="cb609"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb620"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">linelist</span> <span class="op">%&gt;%</span> 
   <span class="co">## only keep variable of interest</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">age</span><span class="op">)</span> <span class="op">%&gt;%</span> 
@@ -2225,7 +2217,7 @@
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#tjtnfckqrs .gt_table {
+#xnsqjlyjjq .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -2250,7 +2242,7 @@
   border-left-color: #D3D3D3;
 }
 
-#tjtnfckqrs .gt_heading {
+#xnsqjlyjjq .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -2262,7 +2254,7 @@
   border-right-color: #D3D3D3;
 }
 
-#tjtnfckqrs .gt_title {
+#xnsqjlyjjq .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -2272,7 +2264,7 @@
   border-bottom-width: 0;
 }
 
-#tjtnfckqrs .gt_subtitle {
+#xnsqjlyjjq .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -2282,13 +2274,13 @@
   border-top-width: 0;
 }
 
-#tjtnfckqrs .gt_bottom_border {
+#xnsqjlyjjq .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#tjtnfckqrs .gt_col_headings {
+#xnsqjlyjjq .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2303,7 +2295,7 @@
   border-right-color: #D3D3D3;
 }
 
-#tjtnfckqrs .gt_col_heading {
+#xnsqjlyjjq .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2323,7 +2315,7 @@
   overflow-x: hidden;
 }
 
-#tjtnfckqrs .gt_column_spanner_outer {
+#xnsqjlyjjq .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2335,15 +2327,15 @@
   padding-right: 4px;
 }
 
-#tjtnfckqrs .gt_column_spanner_outer:first-child {
+#xnsqjlyjjq .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#tjtnfckqrs .gt_column_spanner_outer:last-child {
+#xnsqjlyjjq .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#tjtnfckqrs .gt_column_spanner {
+#xnsqjlyjjq .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -2355,7 +2347,7 @@
   width: 100%;
 }
 
-#tjtnfckqrs .gt_group_heading {
+#xnsqjlyjjq .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -2377,7 +2369,7 @@
   vertical-align: middle;
 }
 
-#tjtnfckqrs .gt_empty_group_heading {
+#xnsqjlyjjq .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -2392,15 +2384,15 @@
   vertical-align: middle;
 }
 
-#tjtnfckqrs .gt_from_md > :first-child {
+#xnsqjlyjjq .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#tjtnfckqrs .gt_from_md > :last-child {
+#xnsqjlyjjq .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#tjtnfckqrs .gt_row {
+#xnsqjlyjjq .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2419,7 +2411,7 @@
   overflow-x: hidden;
 }
 
-#tjtnfckqrs .gt_stub {
+#xnsqjlyjjq .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2431,7 +2423,7 @@
   padding-left: 12px;
 }
 
-#tjtnfckqrs .gt_summary_row {
+#xnsqjlyjjq .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2441,7 +2433,7 @@
   padding-right: 5px;
 }
 
-#tjtnfckqrs .gt_first_summary_row {
+#xnsqjlyjjq .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2451,7 +2443,7 @@
   border-top-color: #D3D3D3;
 }
 
-#tjtnfckqrs .gt_grand_summary_row {
+#xnsqjlyjjq .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2461,7 +2453,7 @@
   padding-right: 5px;
 }
 
-#tjtnfckqrs .gt_first_grand_summary_row {
+#xnsqjlyjjq .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2471,11 +2463,11 @@
   border-top-color: #D3D3D3;
 }
 
-#tjtnfckqrs .gt_striped {
+#xnsqjlyjjq .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#tjtnfckqrs .gt_table_body {
+#xnsqjlyjjq .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2484,7 +2476,7 @@
   border-bottom-color: #D3D3D3;
 }
 
-#tjtnfckqrs .gt_footnotes {
+#xnsqjlyjjq .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2498,13 +2490,13 @@
   border-right-color: #D3D3D3;
 }
 
-#tjtnfckqrs .gt_footnote {
+#xnsqjlyjjq .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#tjtnfckqrs .gt_sourcenotes {
+#xnsqjlyjjq .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2518,46 +2510,46 @@
   border-right-color: #D3D3D3;
 }
 
-#tjtnfckqrs .gt_sourcenote {
+#xnsqjlyjjq .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#tjtnfckqrs .gt_left {
+#xnsqjlyjjq .gt_left {
   text-align: left;
 }
 
-#tjtnfckqrs .gt_center {
+#xnsqjlyjjq .gt_center {
   text-align: center;
 }
 
-#tjtnfckqrs .gt_right {
+#xnsqjlyjjq .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#tjtnfckqrs .gt_font_normal {
+#xnsqjlyjjq .gt_font_normal {
   font-weight: normal;
 }
 
-#tjtnfckqrs .gt_font_bold {
+#xnsqjlyjjq .gt_font_bold {
   font-weight: bold;
 }
 
-#tjtnfckqrs .gt_font_italic {
+#xnsqjlyjjq .gt_font_italic {
   font-style: italic;
 }
 
-#tjtnfckqrs .gt_super {
+#xnsqjlyjjq .gt_super {
   font-size: 65%;
 }
 
-#tjtnfckqrs .gt_footnote_marks {
+#xnsqjlyjjq .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="tjtnfckqrs" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><div class="inline-table"><table class="gt_table">
+<div id="xnsqjlyjjq" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><div class="inline-table"><table class="gt_table">
 <thead class="gt_col_headings"><tr>
 <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1"><strong>Characteristic</strong></th>
       <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">
@@ -2592,7 +2584,7 @@
 </h4>
 <p>You can combine all of the previously shown elements in one table by choosing which statistics you want to show. To do this you need to tell the function that you want to get a table back by entering the type as “continuous2”.</p>
 <p>Note that this automatically excludes all missing values. If missing values are not excluded, the returned value will be NA (missing). The number of missing values is seen in the Unknown column).</p>
-<div class="sourceCode" id="cb610"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb621"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">linelist</span> <span class="op">%&gt;%</span> 
   <span class="co">## only keep variable of interest</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">age</span><span class="op">)</span> <span class="op">%&gt;%</span> 
@@ -2610,7 +2602,7 @@
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#qpekwzmxeb .gt_table {
+#bojsdsfaea .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -2635,7 +2627,7 @@
   border-left-color: #D3D3D3;
 }
 
-#qpekwzmxeb .gt_heading {
+#bojsdsfaea .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -2647,7 +2639,7 @@
   border-right-color: #D3D3D3;
 }
 
-#qpekwzmxeb .gt_title {
+#bojsdsfaea .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -2657,7 +2649,7 @@
   border-bottom-width: 0;
 }
 
-#qpekwzmxeb .gt_subtitle {
+#bojsdsfaea .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -2667,13 +2659,13 @@
   border-top-width: 0;
 }
 
-#qpekwzmxeb .gt_bottom_border {
+#bojsdsfaea .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#qpekwzmxeb .gt_col_headings {
+#bojsdsfaea .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2688,7 +2680,7 @@
   border-right-color: #D3D3D3;
 }
 
-#qpekwzmxeb .gt_col_heading {
+#bojsdsfaea .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2708,7 +2700,7 @@
   overflow-x: hidden;
 }
 
-#qpekwzmxeb .gt_column_spanner_outer {
+#bojsdsfaea .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2720,15 +2712,15 @@
   padding-right: 4px;
 }
 
-#qpekwzmxeb .gt_column_spanner_outer:first-child {
+#bojsdsfaea .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#qpekwzmxeb .gt_column_spanner_outer:last-child {
+#bojsdsfaea .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#qpekwzmxeb .gt_column_spanner {
+#bojsdsfaea .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -2740,7 +2732,7 @@
   width: 100%;
 }
 
-#qpekwzmxeb .gt_group_heading {
+#bojsdsfaea .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -2762,7 +2754,7 @@
   vertical-align: middle;
 }
 
-#qpekwzmxeb .gt_empty_group_heading {
+#bojsdsfaea .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -2777,15 +2769,15 @@
   vertical-align: middle;
 }
 
-#qpekwzmxeb .gt_from_md > :first-child {
+#bojsdsfaea .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#qpekwzmxeb .gt_from_md > :last-child {
+#bojsdsfaea .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#qpekwzmxeb .gt_row {
+#bojsdsfaea .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2804,7 +2796,7 @@
   overflow-x: hidden;
 }
 
-#qpekwzmxeb .gt_stub {
+#bojsdsfaea .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2816,7 +2808,7 @@
   padding-left: 12px;
 }
 
-#qpekwzmxeb .gt_summary_row {
+#bojsdsfaea .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2826,7 +2818,7 @@
   padding-right: 5px;
 }
 
-#qpekwzmxeb .gt_first_summary_row {
+#bojsdsfaea .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2836,7 +2828,7 @@
   border-top-color: #D3D3D3;
 }
 
-#qpekwzmxeb .gt_grand_summary_row {
+#bojsdsfaea .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2846,7 +2838,7 @@
   padding-right: 5px;
 }
 
-#qpekwzmxeb .gt_first_grand_summary_row {
+#bojsdsfaea .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2856,11 +2848,11 @@
   border-top-color: #D3D3D3;
 }
 
-#qpekwzmxeb .gt_striped {
+#bojsdsfaea .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#qpekwzmxeb .gt_table_body {
+#bojsdsfaea .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2869,7 +2861,7 @@
   border-bottom-color: #D3D3D3;
 }
 
-#qpekwzmxeb .gt_footnotes {
+#bojsdsfaea .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2883,13 +2875,13 @@
   border-right-color: #D3D3D3;
 }
 
-#qpekwzmxeb .gt_footnote {
+#bojsdsfaea .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#qpekwzmxeb .gt_sourcenotes {
+#bojsdsfaea .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2903,46 +2895,46 @@
   border-right-color: #D3D3D3;
 }
 
-#qpekwzmxeb .gt_sourcenote {
+#bojsdsfaea .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#qpekwzmxeb .gt_left {
+#bojsdsfaea .gt_left {
   text-align: left;
 }
 
-#qpekwzmxeb .gt_center {
+#bojsdsfaea .gt_center {
   text-align: center;
 }
 
-#qpekwzmxeb .gt_right {
+#bojsdsfaea .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#qpekwzmxeb .gt_font_normal {
+#bojsdsfaea .gt_font_normal {
   font-weight: normal;
 }
 
-#qpekwzmxeb .gt_font_bold {
+#bojsdsfaea .gt_font_bold {
   font-weight: bold;
 }
 
-#qpekwzmxeb .gt_font_italic {
+#bojsdsfaea .gt_font_italic {
   font-style: italic;
 }
 
-#qpekwzmxeb .gt_super {
+#bojsdsfaea .gt_super {
   font-size: 65%;
 }
 
-#qpekwzmxeb .gt_footnote_marks {
+#bojsdsfaea .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="qpekwzmxeb" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><div class="inline-table"><table class="gt_table">
+<div id="bojsdsfaea" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><div class="inline-table"><table class="gt_table">
 <thead class="gt_col_headings"><tr>
 <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1"><strong>Characteristic</strong></th>
       <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1"><strong>N = 5,888</strong></th>
@@ -2983,7 +2975,7 @@
 </h4>
 <p>Note the argument <code>na.rm = TRUE</code>, which removes missing values from the calculation.<br>
 If missing values are not excluded, the returned value will be NA (missing).</p>
-<div class="sourceCode" id="cb611"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb622"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">linelist</span> <span class="op">%&gt;%</span> 
   <span class="co">## get the mean value of age while excluding missings</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">age</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></code></pre></div>
@@ -2996,7 +2988,7 @@ If missing values are not excluded, the returned value will be NA (missing).</p>
 </h4>
 <p>Note the argument <code>na.rm = TRUE</code>, which removes missing values from the calculation.<br>
 If missing values are not excluded, the returned value will be NA (missing).</p>
-<div class="sourceCode" id="cb613"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb624"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">linelist</span> <span class="op">%&gt;%</span> 
   <span class="co">## get the median value of age while excluding missings</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>median <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/median.html">median</a></span><span class="op">(</span><span class="va">age</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></code></pre></div>
@@ -3009,7 +3001,7 @@ If missing values are not excluded, the returned value will be NA (missing).</p>
 </h4>
 <p>Note the argument <code>na.rm = TRUE</code>, which removes missing values from the calculation.<br>
 If missing values are not excluded, the returned value will be NA (missing).</p>
-<div class="sourceCode" id="cb615"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb626"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">linelist</span> <span class="op">%&gt;%</span> 
   <span class="co">## get the range value of age while excluding missings</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/range.html">range</a></span><span class="op">(</span><span class="va">age</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></code></pre></div>
@@ -3023,7 +3015,7 @@ If missing values are not excluded, the returned value will be NA (missing).</p>
 </h4>
 <p>Note the argument <code>na.rm = TRUE</code>, which removes missing values from the calculation.<br>
 If missing values are not excluded, the returned value will be NA (missing).</p>
-<div class="sourceCode" id="cb617"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb628"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">linelist</span> <span class="op">%&gt;%</span> 
   <span class="co">## get the range value of age while excluding missings</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>sd <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op">(</span><span class="va">age</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></code></pre></div>
@@ -3037,7 +3029,7 @@ If missing values are not excluded, the returned value will be NA (missing).</p>
 <p>To return percentiles you can type in one value that you would like, or you can type in multiple (e.g. to return the interquartile range).</p>
 <p>Note the argument <code>na.rm = TRUE</code>, which removes missing values from the calculation.<br>
 If missing values are not excluded, the returned value will be NA (missing).</p>
-<div class="sourceCode" id="cb619"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb630"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">linelist</span> <span class="op">%&gt;%</span> 
   <span class="co">## get the default percentile values of age while excluding missings </span>
   <span class="co">## these are 0%,  25%,  50%,  75%, 100%</span>
@@ -3048,7 +3040,7 @@ If missing values are not excluded, the returned value will be NA (missing).</p>
 ## 3          13
 ## 4          24
 ## 5          95</code></pre>
-<div class="sourceCode" id="cb621"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb632"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">linelist</span> <span class="op">%&gt;%</span> 
   <span class="co">## get specified percentile values of age while excluding missings </span>
   <span class="co">## these are 0%, 50%,  75%, 98%</span>
@@ -3070,7 +3062,7 @@ which statistics you want to show. In dplyr you will need to use the <code>str_c
 function from <strong>stringr</strong> to combine outputs for the IQR and the range in to one
 cell, separated by a comma.</p>
 <p>Note that this automatically excludes all missing values. If missing values are not excluded, the returned value will be NA (missing). The number of missing values is seen in the Unknown column).</p>
-<div class="sourceCode" id="cb623"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb634"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">linelist</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>
     <span class="co">## get the mean </span>
@@ -3116,7 +3108,7 @@ Note that here, the fever variable is yes/no (dichotomous) and <code>tbl_summary
 automatically only presents the “yes” row.
 To show all levels you could use the type argument to choose categorical,
 e.g. <code><a href="http://www.danieldsjoberg.com/gtsummary//reference/tbl_summary.html">tbl_summary(type = fever ~ "categorical")</a></code>.</p>
-<div class="sourceCode" id="cb625"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb636"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">linelist</span> <span class="op">%&gt;%</span> 
   <span class="co">## only keep the variable interested in</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">fever</span><span class="op">)</span> <span class="op">%&gt;%</span> 
@@ -3126,7 +3118,7 @@ e.g. <code><a href="http://www.danieldsjoberg.com/gtsummary//reference/tbl_summ
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#ksifrrjuzs .gt_table {
+#qcqmqfkzfd .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -3151,7 +3143,7 @@ e.g. <code><a href="http://www.danieldsjoberg.com/gtsummary//reference/tbl_summ
   border-left-color: #D3D3D3;
 }
 
-#ksifrrjuzs .gt_heading {
+#qcqmqfkzfd .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -3163,7 +3155,7 @@ e.g. <code><a href="http://www.danieldsjoberg.com/gtsummary//reference/tbl_summ
   border-right-color: #D3D3D3;
 }
 
-#ksifrrjuzs .gt_title {
+#qcqmqfkzfd .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -3173,7 +3165,7 @@ e.g. <code><a href="http://www.danieldsjoberg.com/gtsummary//reference/tbl_summ
   border-bottom-width: 0;
 }
 
-#ksifrrjuzs .gt_subtitle {
+#qcqmqfkzfd .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -3183,13 +3175,13 @@ e.g. <code><a href="http://www.danieldsjoberg.com/gtsummary//reference/tbl_summ
   border-top-width: 0;
 }
 
-#ksifrrjuzs .gt_bottom_border {
+#qcqmqfkzfd .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#ksifrrjuzs .gt_col_headings {
+#qcqmqfkzfd .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -3204,7 +3196,7 @@ e.g. <code><a href="http://www.danieldsjoberg.com/gtsummary//reference/tbl_summ
   border-right-color: #D3D3D3;
 }
 
-#ksifrrjuzs .gt_col_heading {
+#qcqmqfkzfd .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3224,7 +3216,7 @@ e.g. <code><a href="http://www.danieldsjoberg.com/gtsummary//reference/tbl_summ
   overflow-x: hidden;
 }
 
-#ksifrrjuzs .gt_column_spanner_outer {
+#qcqmqfkzfd .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3236,15 +3228,15 @@ e.g. <code><a href="http://www.danieldsjoberg.com/gtsummary//reference/tbl_summ
   padding-right: 4px;
 }
 
-#ksifrrjuzs .gt_column_spanner_outer:first-child {
+#qcqmqfkzfd .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#ksifrrjuzs .gt_column_spanner_outer:last-child {
+#qcqmqfkzfd .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#ksifrrjuzs .gt_column_spanner {
+#qcqmqfkzfd .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -3256,7 +3248,7 @@ e.g. <code><a href="http://www.danieldsjoberg.com/gtsummary//reference/tbl_summ
   width: 100%;
 }
 
-#ksifrrjuzs .gt_group_heading {
+#qcqmqfkzfd .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -3278,7 +3270,7 @@ e.g. <code><a href="http://www.danieldsjoberg.com/gtsummary//reference/tbl_summ
   vertical-align: middle;
 }
 
-#ksifrrjuzs .gt_empty_group_heading {
+#qcqmqfkzfd .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -3293,15 +3285,15 @@ e.g. <code><a href="http://www.danieldsjoberg.com/gtsummary//reference/tbl_summ
   vertical-align: middle;
 }
 
-#ksifrrjuzs .gt_from_md > :first-child {
+#qcqmqfkzfd .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#ksifrrjuzs .gt_from_md > :last-child {
+#qcqmqfkzfd .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#ksifrrjuzs .gt_row {
+#qcqmqfkzfd .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3320,7 +3312,7 @@ e.g. <code><a href="http://www.danieldsjoberg.com/gtsummary//reference/tbl_summ
   overflow-x: hidden;
 }
 
-#ksifrrjuzs .gt_stub {
+#qcqmqfkzfd .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3332,7 +3324,7 @@ e.g. <code><a href="http://www.danieldsjoberg.com/gtsummary//reference/tbl_summ
   padding-left: 12px;
 }
 
-#ksifrrjuzs .gt_summary_row {
+#qcqmqfkzfd .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -3342,7 +3334,7 @@ e.g. <code><a href="http://www.danieldsjoberg.com/gtsummary//reference/tbl_summ
   padding-right: 5px;
 }
 
-#ksifrrjuzs .gt_first_summary_row {
+#qcqmqfkzfd .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3352,7 +3344,7 @@ e.g. <code><a href="http://www.danieldsjoberg.com/gtsummary//reference/tbl_summ
   border-top-color: #D3D3D3;
 }
 
-#ksifrrjuzs .gt_grand_summary_row {
+#qcqmqfkzfd .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -3362,7 +3354,7 @@ e.g. <code><a href="http://www.danieldsjoberg.com/gtsummary//reference/tbl_summ
   padding-right: 5px;
 }
 
-#ksifrrjuzs .gt_first_grand_summary_row {
+#qcqmqfkzfd .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3372,11 +3364,11 @@ e.g. <code><a href="http://www.danieldsjoberg.com/gtsummary//reference/tbl_summ
   border-top-color: #D3D3D3;
 }
 
-#ksifrrjuzs .gt_striped {
+#qcqmqfkzfd .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#ksifrrjuzs .gt_table_body {
+#qcqmqfkzfd .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -3385,7 +3377,7 @@ e.g. <code><a href="http://www.danieldsjoberg.com/gtsummary//reference/tbl_summ
   border-bottom-color: #D3D3D3;
 }
 
-#ksifrrjuzs .gt_footnotes {
+#qcqmqfkzfd .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -3399,13 +3391,13 @@ e.g. <code><a href="http://www.danieldsjoberg.com/gtsummary//reference/tbl_summ
   border-right-color: #D3D3D3;
 }
 
-#ksifrrjuzs .gt_footnote {
+#qcqmqfkzfd .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#ksifrrjuzs .gt_sourcenotes {
+#qcqmqfkzfd .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -3419,46 +3411,46 @@ e.g. <code><a href="http://www.danieldsjoberg.com/gtsummary//reference/tbl_summ
   border-right-color: #D3D3D3;
 }
 
-#ksifrrjuzs .gt_sourcenote {
+#qcqmqfkzfd .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#ksifrrjuzs .gt_left {
+#qcqmqfkzfd .gt_left {
   text-align: left;
 }
 
-#ksifrrjuzs .gt_center {
+#qcqmqfkzfd .gt_center {
   text-align: center;
 }
 
-#ksifrrjuzs .gt_right {
+#qcqmqfkzfd .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#ksifrrjuzs .gt_font_normal {
+#qcqmqfkzfd .gt_font_normal {
   font-weight: normal;
 }
 
-#ksifrrjuzs .gt_font_bold {
+#qcqmqfkzfd .gt_font_bold {
   font-weight: bold;
 }
 
-#ksifrrjuzs .gt_font_italic {
+#qcqmqfkzfd .gt_font_italic {
   font-style: italic;
 }
 
-#ksifrrjuzs .gt_super {
+#qcqmqfkzfd .gt_super {
   font-size: 65%;
 }
 
-#ksifrrjuzs .gt_footnote_marks {
+#qcqmqfkzfd .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="ksifrrjuzs" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><div class="inline-table"><table class="gt_table">
+<div id="qcqmqfkzfd" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><div class="inline-table"><table class="gt_table">
 <thead class="gt_col_headings"><tr>
 <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1"><strong>Characteristic</strong></th>
       <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">
@@ -3493,7 +3485,7 @@ e.g. <code><a href="http://www.danieldsjoberg.com/gtsummary//reference/tbl_summ
 </h4>
 <p>You can also show multiple variables below each other simply by adding them to
 <code>select</code>.</p>
-<div class="sourceCode" id="cb626"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb637"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">linelist</span> <span class="op">%&gt;%</span> 
   <span class="co">## only keep the variable interested in</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">fever</span>, <span class="va">gender</span><span class="op">)</span> <span class="op">%&gt;%</span> 
@@ -3503,7 +3495,7 @@ e.g. <code><a href="http://www.danieldsjoberg.com/gtsummary//reference/tbl_summ
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#hiagvztpfm .gt_table {
+#wihyrlwyah .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -3528,7 +3520,7 @@ e.g. <code><a href="http://www.danieldsjoberg.com/gtsummary//reference/tbl_summ
   border-left-color: #D3D3D3;
 }
 
-#hiagvztpfm .gt_heading {
+#wihyrlwyah .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -3540,7 +3532,7 @@ e.g. <code><a href="http://www.danieldsjoberg.com/gtsummary//reference/tbl_summ
   border-right-color: #D3D3D3;
 }
 
-#hiagvztpfm .gt_title {
+#wihyrlwyah .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -3550,7 +3542,7 @@ e.g. <code><a href="http://www.danieldsjoberg.com/gtsummary//reference/tbl_summ
   border-bottom-width: 0;
 }
 
-#hiagvztpfm .gt_subtitle {
+#wihyrlwyah .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -3560,13 +3552,13 @@ e.g. <code><a href="http://www.danieldsjoberg.com/gtsummary//reference/tbl_summ
   border-top-width: 0;
 }
 
-#hiagvztpfm .gt_bottom_border {
+#wihyrlwyah .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#hiagvztpfm .gt_col_headings {
+#wihyrlwyah .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -3581,7 +3573,7 @@ e.g. <code><a href="http://www.danieldsjoberg.com/gtsummary//reference/tbl_summ
   border-right-color: #D3D3D3;
 }
 
-#hiagvztpfm .gt_col_heading {
+#wihyrlwyah .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3601,7 +3593,7 @@ e.g. <code><a href="http://www.danieldsjoberg.com/gtsummary//reference/tbl_summ
   overflow-x: hidden;
 }
 
-#hiagvztpfm .gt_column_spanner_outer {
+#wihyrlwyah .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3613,15 +3605,15 @@ e.g. <code><a href="http://www.danieldsjoberg.com/gtsummary//reference/tbl_summ
   padding-right: 4px;
 }
 
-#hiagvztpfm .gt_column_spanner_outer:first-child {
+#wihyrlwyah .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#hiagvztpfm .gt_column_spanner_outer:last-child {
+#wihyrlwyah .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#hiagvztpfm .gt_column_spanner {
+#wihyrlwyah .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -3633,7 +3625,7 @@ e.g. <code><a href="http://www.danieldsjoberg.com/gtsummary//reference/tbl_summ
   width: 100%;
 }
 
-#hiagvztpfm .gt_group_heading {
+#wihyrlwyah .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -3655,7 +3647,7 @@ e.g. <code><a href="http://www.danieldsjoberg.com/gtsummary//reference/tbl_summ
   vertical-align: middle;
 }
 
-#hiagvztpfm .gt_empty_group_heading {
+#wihyrlwyah .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -3670,15 +3662,15 @@ e.g. <code><a href="http://www.danieldsjoberg.com/gtsummary//reference/tbl_summ
   vertical-align: middle;
 }
 
-#hiagvztpfm .gt_from_md > :first-child {
+#wihyrlwyah .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#hiagvztpfm .gt_from_md > :last-child {
+#wihyrlwyah .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#hiagvztpfm .gt_row {
+#wihyrlwyah .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3697,7 +3689,7 @@ e.g. <code><a href="http://www.danieldsjoberg.com/gtsummary//reference/tbl_summ
   overflow-x: hidden;
 }
 
-#hiagvztpfm .gt_stub {
+#wihyrlwyah .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3709,7 +3701,7 @@ e.g. <code><a href="http://www.danieldsjoberg.com/gtsummary//reference/tbl_summ
   padding-left: 12px;
 }
 
-#hiagvztpfm .gt_summary_row {
+#wihyrlwyah .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -3719,7 +3711,7 @@ e.g. <code><a href="http://www.danieldsjoberg.com/gtsummary//reference/tbl_summ
   padding-right: 5px;
 }
 
-#hiagvztpfm .gt_first_summary_row {
+#wihyrlwyah .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3729,7 +3721,7 @@ e.g. <code><a href="http://www.danieldsjoberg.com/gtsummary//reference/tbl_summ
   border-top-color: #D3D3D3;
 }
 
-#hiagvztpfm .gt_grand_summary_row {
+#wihyrlwyah .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -3739,7 +3731,7 @@ e.g. <code><a href="http://www.danieldsjoberg.com/gtsummary//reference/tbl_summ
   padding-right: 5px;
 }
 
-#hiagvztpfm .gt_first_grand_summary_row {
+#wihyrlwyah .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -3749,11 +3741,11 @@ e.g. <code><a href="http://www.danieldsjoberg.com/gtsummary//reference/tbl_summ
   border-top-color: #D3D3D3;
 }
 
-#hiagvztpfm .gt_striped {
+#wihyrlwyah .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#hiagvztpfm .gt_table_body {
+#wihyrlwyah .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -3762,7 +3754,7 @@ e.g. <code><a href="http://www.danieldsjoberg.com/gtsummary//reference/tbl_summ
   border-bottom-color: #D3D3D3;
 }
 
-#hiagvztpfm .gt_footnotes {
+#wihyrlwyah .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -3776,13 +3768,13 @@ e.g. <code><a href="http://www.danieldsjoberg.com/gtsummary//reference/tbl_summ
   border-right-color: #D3D3D3;
 }
 
-#hiagvztpfm .gt_footnote {
+#wihyrlwyah .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#hiagvztpfm .gt_sourcenotes {
+#wihyrlwyah .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -3796,46 +3788,46 @@ e.g. <code><a href="http://www.danieldsjoberg.com/gtsummary//reference/tbl_summ
   border-right-color: #D3D3D3;
 }
 
-#hiagvztpfm .gt_sourcenote {
+#wihyrlwyah .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#hiagvztpfm .gt_left {
+#wihyrlwyah .gt_left {
   text-align: left;
 }
 
-#hiagvztpfm .gt_center {
+#wihyrlwyah .gt_center {
   text-align: center;
 }
 
-#hiagvztpfm .gt_right {
+#wihyrlwyah .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#hiagvztpfm .gt_font_normal {
+#wihyrlwyah .gt_font_normal {
   font-weight: normal;
 }
 
-#hiagvztpfm .gt_font_bold {
+#wihyrlwyah .gt_font_bold {
   font-weight: bold;
 }
 
-#hiagvztpfm .gt_font_italic {
+#wihyrlwyah .gt_font_italic {
   font-style: italic;
 }
 
-#hiagvztpfm .gt_super {
+#wihyrlwyah .gt_super {
   font-size: 65%;
 }
 
-#hiagvztpfm .gt_footnote_marks {
+#wihyrlwyah .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="hiagvztpfm" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><div class="inline-table"><table class="gt_table">
+<div id="wihyrlwyah" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><div class="inline-table"><table class="gt_table">
 <thead class="gt_col_headings"><tr>
 <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1"><strong>Characteristic</strong></th>
       <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">
@@ -3887,7 +3879,7 @@ e.g. <code><a href="http://www.danieldsjoberg.com/gtsummary//reference/tbl_summ
 <p>There are two options to produce a two-by-two table (i.e. comparing two variables).
 One option is to use <code>tbl_cross</code>, however this function only accepts two variables
 at once. The option below with <code>tbl_summary</code> allows more variables.</p>
-<div class="sourceCode" id="cb627"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb638"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">linelist</span> <span class="op">%&gt;%</span> 
   <span class="co">## only keep the variable interested in</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">fever</span>, <span class="va">outcome</span>, <span class="va">gender</span><span class="op">)</span> <span class="op">%&gt;%</span> 
@@ -3900,7 +3892,7 @@ at once. The option below with <code>tbl_summary</code> allows more variables.</
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#qjakfvmbss .gt_table {
+#hticfcpakh .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -3925,7 +3917,7 @@ at once. The option below with <code>tbl_summary</code> allows more variables.</
   border-left-color: #D3D3D3;
 }
 
-#qjakfvmbss .gt_heading {
+#hticfcpakh .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -3937,7 +3929,7 @@ at once. The option below with <code>tbl_summary</code> allows more variables.</
   border-right-color: #D3D3D3;
 }
 
-#qjakfvmbss .gt_title {
+#hticfcpakh .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -3947,7 +3939,7 @@ at once. The option below with <code>tbl_summary</code> allows more variables.</
   border-bottom-width: 0;
 }
 
-#qjakfvmbss .gt_subtitle {
+#hticfcpakh .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -3957,13 +3949,13 @@ at once. The option below with <code>tbl_summary</code> allows more variables.</
   border-top-width: 0;
 }
 
-#qjakfvmbss .gt_bottom_border {
+#hticfcpakh .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#qjakfvmbss .gt_col_headings {
+#hticfcpakh .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -3978,7 +3970,7 @@ at once. The option below with <code>tbl_summary</code> allows more variables.</
   border-right-color: #D3D3D3;
 }
 
-#qjakfvmbss .gt_col_heading {
+#hticfcpakh .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -3998,7 +3990,7 @@ at once. The option below with <code>tbl_summary</code> allows more variables.</
   overflow-x: hidden;
 }
 
-#qjakfvmbss .gt_column_spanner_outer {
+#hticfcpakh .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -4010,15 +4002,15 @@ at once. The option below with <code>tbl_summary</code> allows more variables.</
   padding-right: 4px;
 }
 
-#qjakfvmbss .gt_column_spanner_outer:first-child {
+#hticfcpakh .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#qjakfvmbss .gt_column_spanner_outer:last-child {
+#hticfcpakh .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#qjakfvmbss .gt_column_spanner {
+#hticfcpakh .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -4030,7 +4022,7 @@ at once. The option below with <code>tbl_summary</code> allows more variables.</
   width: 100%;
 }
 
-#qjakfvmbss .gt_group_heading {
+#hticfcpakh .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -4052,7 +4044,7 @@ at once. The option below with <code>tbl_summary</code> allows more variables.</
   vertical-align: middle;
 }
 
-#qjakfvmbss .gt_empty_group_heading {
+#hticfcpakh .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -4067,15 +4059,15 @@ at once. The option below with <code>tbl_summary</code> allows more variables.</
   vertical-align: middle;
 }
 
-#qjakfvmbss .gt_from_md > :first-child {
+#hticfcpakh .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#qjakfvmbss .gt_from_md > :last-child {
+#hticfcpakh .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#qjakfvmbss .gt_row {
+#hticfcpakh .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -4094,7 +4086,7 @@ at once. The option below with <code>tbl_summary</code> allows more variables.</
   overflow-x: hidden;
 }
 
-#qjakfvmbss .gt_stub {
+#hticfcpakh .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -4106,7 +4098,7 @@ at once. The option below with <code>tbl_summary</code> allows more variables.</
   padding-left: 12px;
 }
 
-#qjakfvmbss .gt_summary_row {
+#hticfcpakh .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -4116,7 +4108,7 @@ at once. The option below with <code>tbl_summary</code> allows more variables.</
   padding-right: 5px;
 }
 
-#qjakfvmbss .gt_first_summary_row {
+#hticfcpakh .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -4126,7 +4118,7 @@ at once. The option below with <code>tbl_summary</code> allows more variables.</
   border-top-color: #D3D3D3;
 }
 
-#qjakfvmbss .gt_grand_summary_row {
+#hticfcpakh .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -4136,7 +4128,7 @@ at once. The option below with <code>tbl_summary</code> allows more variables.</
   padding-right: 5px;
 }
 
-#qjakfvmbss .gt_first_grand_summary_row {
+#hticfcpakh .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -4146,11 +4138,11 @@ at once. The option below with <code>tbl_summary</code> allows more variables.</
   border-top-color: #D3D3D3;
 }
 
-#qjakfvmbss .gt_striped {
+#hticfcpakh .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#qjakfvmbss .gt_table_body {
+#hticfcpakh .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -4159,7 +4151,7 @@ at once. The option below with <code>tbl_summary</code> allows more variables.</
   border-bottom-color: #D3D3D3;
 }
 
-#qjakfvmbss .gt_footnotes {
+#hticfcpakh .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -4173,13 +4165,13 @@ at once. The option below with <code>tbl_summary</code> allows more variables.</
   border-right-color: #D3D3D3;
 }
 
-#qjakfvmbss .gt_footnote {
+#hticfcpakh .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#qjakfvmbss .gt_sourcenotes {
+#hticfcpakh .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -4193,46 +4185,46 @@ at once. The option below with <code>tbl_summary</code> allows more variables.</
   border-right-color: #D3D3D3;
 }
 
-#qjakfvmbss .gt_sourcenote {
+#hticfcpakh .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#qjakfvmbss .gt_left {
+#hticfcpakh .gt_left {
   text-align: left;
 }
 
-#qjakfvmbss .gt_center {
+#hticfcpakh .gt_center {
   text-align: center;
 }
 
-#qjakfvmbss .gt_right {
+#hticfcpakh .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#qjakfvmbss .gt_font_normal {
+#hticfcpakh .gt_font_normal {
   font-weight: normal;
 }
 
-#qjakfvmbss .gt_font_bold {
+#hticfcpakh .gt_font_bold {
   font-weight: bold;
 }
 
-#qjakfvmbss .gt_font_italic {
+#hticfcpakh .gt_font_italic {
   font-style: italic;
 }
 
-#qjakfvmbss .gt_super {
+#hticfcpakh .gt_super {
   font-size: 65%;
 }
 
-#qjakfvmbss .gt_footnote_marks {
+#hticfcpakh .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="qjakfvmbss" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><div class="inline-table"><table class="gt_table">
+<div id="hticfcpakh" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><div class="inline-table"><table class="gt_table">
 <thead class="gt_col_headings"><tr>
 <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1"><strong>Characteristic</strong></th>
       <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">
@@ -4300,7 +4292,7 @@ at once. The option below with <code>tbl_summary</code> allows more variables.</
 <span class="header-section-number">15.5.1.4</span> <strong>Three way table</strong><a class="anchor" aria-label="anchor" href="#three-way-table"><i class="fas fa-link"></i></a>
 </h4>
 <p>Producing counts based on three variables (adding a stratifier).</p>
-<div class="sourceCode" id="cb629"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb640"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## TODO: add stratified tables when available </span>
 
 <span class="co"># table_3vars &lt;- table(linelist$fever, linelist$gender, linelist$outcome)</span>
@@ -4322,7 +4314,7 @@ Another option is to use the <strong>janitor</strong> package <a href="http://sf
 </h4>
 <p>Producing counts and proportions for a single variable.
 To see how to do this for multiple variables - <em>reference for-loop section</em>.</p>
-<div class="sourceCode" id="cb630"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb641"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">linelist</span> <span class="op">%&gt;%</span> 
   <span class="co">## count the variable of interest</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">fever</span><span class="op">)</span> <span class="op">%&gt;%</span> 
@@ -4346,7 +4338,7 @@ more like a two-by-two (cross tabulation), using the <strong>tidyr</strong> <cod
 This would be done by adding this to the end of the code blow:
 <code><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html">pivot_wider(names_from = gender, values_from = c(n, percentage))</a></code>
 For more information see the <em>reference pivot section</em>.</p>
-<div class="sourceCode" id="cb632"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb643"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">linelist</span> <span class="op">%&gt;%</span> 
   <span class="co">## do everything by gender </span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">gender</span><span class="op">)</span> <span class="op">%&gt;%</span> 
@@ -4374,7 +4366,7 @@ For more information see the <em>reference pivot section</em>.</p>
 <span class="header-section-number">15.5.2.3</span> <strong>Three way table</strong><a class="anchor" aria-label="anchor" href="#three-way-table-1"><i class="fas fa-link"></i></a>
 </h4>
 <p>Producing counts based on three variables (adding a stratifier).</p>
-<div class="sourceCode" id="cb634"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb645"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">linelist</span> <span class="op">%&gt;%</span> 
   <span class="co">## do everything by gender and outcome </span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">gender</span>, <span class="va">outcome</span><span class="op">)</span> <span class="op">%&gt;%</span> 
@@ -4420,7 +4412,7 @@ It is possible to get p-values corrected for multiple testing by using the
 </h4>
 <p>Compare the difference in means for a continuous variable in two groups.
 For example compare the mean age by patient outcome.</p>
-<div class="sourceCode" id="cb636"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb647"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">linelist</span> <span class="op">%&gt;%</span> 
   <span class="co">## only keep variables of interested</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">age</span>, <span class="va">outcome</span><span class="op">)</span> <span class="op">%&gt;%</span> 
@@ -4437,7 +4429,7 @@ For example compare the mean age by patient outcome.</p>
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#mpuzvaebjx .gt_table {
+#bkxgsbdqao .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -4462,7 +4454,7 @@ For example compare the mean age by patient outcome.</p>
   border-left-color: #D3D3D3;
 }
 
-#mpuzvaebjx .gt_heading {
+#bkxgsbdqao .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -4474,7 +4466,7 @@ For example compare the mean age by patient outcome.</p>
   border-right-color: #D3D3D3;
 }
 
-#mpuzvaebjx .gt_title {
+#bkxgsbdqao .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -4484,7 +4476,7 @@ For example compare the mean age by patient outcome.</p>
   border-bottom-width: 0;
 }
 
-#mpuzvaebjx .gt_subtitle {
+#bkxgsbdqao .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -4494,13 +4486,13 @@ For example compare the mean age by patient outcome.</p>
   border-top-width: 0;
 }
 
-#mpuzvaebjx .gt_bottom_border {
+#bkxgsbdqao .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#mpuzvaebjx .gt_col_headings {
+#bkxgsbdqao .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -4515,7 +4507,7 @@ For example compare the mean age by patient outcome.</p>
   border-right-color: #D3D3D3;
 }
 
-#mpuzvaebjx .gt_col_heading {
+#bkxgsbdqao .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -4535,7 +4527,7 @@ For example compare the mean age by patient outcome.</p>
   overflow-x: hidden;
 }
 
-#mpuzvaebjx .gt_column_spanner_outer {
+#bkxgsbdqao .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -4547,15 +4539,15 @@ For example compare the mean age by patient outcome.</p>
   padding-right: 4px;
 }
 
-#mpuzvaebjx .gt_column_spanner_outer:first-child {
+#bkxgsbdqao .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#mpuzvaebjx .gt_column_spanner_outer:last-child {
+#bkxgsbdqao .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#mpuzvaebjx .gt_column_spanner {
+#bkxgsbdqao .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -4567,7 +4559,7 @@ For example compare the mean age by patient outcome.</p>
   width: 100%;
 }
 
-#mpuzvaebjx .gt_group_heading {
+#bkxgsbdqao .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -4589,7 +4581,7 @@ For example compare the mean age by patient outcome.</p>
   vertical-align: middle;
 }
 
-#mpuzvaebjx .gt_empty_group_heading {
+#bkxgsbdqao .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -4604,15 +4596,15 @@ For example compare the mean age by patient outcome.</p>
   vertical-align: middle;
 }
 
-#mpuzvaebjx .gt_from_md > :first-child {
+#bkxgsbdqao .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#mpuzvaebjx .gt_from_md > :last-child {
+#bkxgsbdqao .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#mpuzvaebjx .gt_row {
+#bkxgsbdqao .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -4631,7 +4623,7 @@ For example compare the mean age by patient outcome.</p>
   overflow-x: hidden;
 }
 
-#mpuzvaebjx .gt_stub {
+#bkxgsbdqao .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -4643,7 +4635,7 @@ For example compare the mean age by patient outcome.</p>
   padding-left: 12px;
 }
 
-#mpuzvaebjx .gt_summary_row {
+#bkxgsbdqao .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -4653,7 +4645,7 @@ For example compare the mean age by patient outcome.</p>
   padding-right: 5px;
 }
 
-#mpuzvaebjx .gt_first_summary_row {
+#bkxgsbdqao .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -4663,7 +4655,7 @@ For example compare the mean age by patient outcome.</p>
   border-top-color: #D3D3D3;
 }
 
-#mpuzvaebjx .gt_grand_summary_row {
+#bkxgsbdqao .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -4673,7 +4665,7 @@ For example compare the mean age by patient outcome.</p>
   padding-right: 5px;
 }
 
-#mpuzvaebjx .gt_first_grand_summary_row {
+#bkxgsbdqao .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -4683,11 +4675,11 @@ For example compare the mean age by patient outcome.</p>
   border-top-color: #D3D3D3;
 }
 
-#mpuzvaebjx .gt_striped {
+#bkxgsbdqao .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#mpuzvaebjx .gt_table_body {
+#bkxgsbdqao .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -4696,7 +4688,7 @@ For example compare the mean age by patient outcome.</p>
   border-bottom-color: #D3D3D3;
 }
 
-#mpuzvaebjx .gt_footnotes {
+#bkxgsbdqao .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -4710,13 +4702,13 @@ For example compare the mean age by patient outcome.</p>
   border-right-color: #D3D3D3;
 }
 
-#mpuzvaebjx .gt_footnote {
+#bkxgsbdqao .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#mpuzvaebjx .gt_sourcenotes {
+#bkxgsbdqao .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -4730,46 +4722,46 @@ For example compare the mean age by patient outcome.</p>
   border-right-color: #D3D3D3;
 }
 
-#mpuzvaebjx .gt_sourcenote {
+#bkxgsbdqao .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#mpuzvaebjx .gt_left {
+#bkxgsbdqao .gt_left {
   text-align: left;
 }
 
-#mpuzvaebjx .gt_center {
+#bkxgsbdqao .gt_center {
   text-align: center;
 }
 
-#mpuzvaebjx .gt_right {
+#bkxgsbdqao .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#mpuzvaebjx .gt_font_normal {
+#bkxgsbdqao .gt_font_normal {
   font-weight: normal;
 }
 
-#mpuzvaebjx .gt_font_bold {
+#bkxgsbdqao .gt_font_bold {
   font-weight: bold;
 }
 
-#mpuzvaebjx .gt_font_italic {
+#bkxgsbdqao .gt_font_italic {
   font-style: italic;
 }
 
-#mpuzvaebjx .gt_super {
+#bkxgsbdqao .gt_super {
   font-size: 65%;
 }
 
-#mpuzvaebjx .gt_footnote_marks {
+#bkxgsbdqao .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="mpuzvaebjx" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><div class="inline-table"><table class="gt_table">
+<div id="bkxgsbdqao" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><div class="inline-table"><table class="gt_table">
 <thead class="gt_col_headings"><tr>
 <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1"><strong>Characteristic</strong></th>
       <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">
@@ -4822,7 +4814,7 @@ For example compare the mean age by patient outcome.</p>
 is to use the Wilcoxon rank sum test and the median (IQR) when comparing two
 groups. However for non-normally distributed data or comparing multiple groups,
 the Kruskal-wallis test is more appropriate.</p>
-<div class="sourceCode" id="cb638"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb649"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">linelist</span> <span class="op">%&gt;%</span> 
   <span class="co">## only keep variables of interested</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">age</span>, <span class="va">outcome</span><span class="op">)</span> <span class="op">%&gt;%</span> 
@@ -4839,7 +4831,7 @@ the Kruskal-wallis test is more appropriate.</p>
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#bltyzvwksg .gt_table {
+#pfadslxfrn .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -4864,7 +4856,7 @@ the Kruskal-wallis test is more appropriate.</p>
   border-left-color: #D3D3D3;
 }
 
-#bltyzvwksg .gt_heading {
+#pfadslxfrn .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -4876,7 +4868,7 @@ the Kruskal-wallis test is more appropriate.</p>
   border-right-color: #D3D3D3;
 }
 
-#bltyzvwksg .gt_title {
+#pfadslxfrn .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -4886,7 +4878,7 @@ the Kruskal-wallis test is more appropriate.</p>
   border-bottom-width: 0;
 }
 
-#bltyzvwksg .gt_subtitle {
+#pfadslxfrn .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -4896,13 +4888,13 @@ the Kruskal-wallis test is more appropriate.</p>
   border-top-width: 0;
 }
 
-#bltyzvwksg .gt_bottom_border {
+#pfadslxfrn .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#bltyzvwksg .gt_col_headings {
+#pfadslxfrn .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -4917,7 +4909,7 @@ the Kruskal-wallis test is more appropriate.</p>
   border-right-color: #D3D3D3;
 }
 
-#bltyzvwksg .gt_col_heading {
+#pfadslxfrn .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -4937,7 +4929,7 @@ the Kruskal-wallis test is more appropriate.</p>
   overflow-x: hidden;
 }
 
-#bltyzvwksg .gt_column_spanner_outer {
+#pfadslxfrn .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -4949,15 +4941,15 @@ the Kruskal-wallis test is more appropriate.</p>
   padding-right: 4px;
 }
 
-#bltyzvwksg .gt_column_spanner_outer:first-child {
+#pfadslxfrn .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#bltyzvwksg .gt_column_spanner_outer:last-child {
+#pfadslxfrn .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#bltyzvwksg .gt_column_spanner {
+#pfadslxfrn .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -4969,7 +4961,7 @@ the Kruskal-wallis test is more appropriate.</p>
   width: 100%;
 }
 
-#bltyzvwksg .gt_group_heading {
+#pfadslxfrn .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -4991,7 +4983,7 @@ the Kruskal-wallis test is more appropriate.</p>
   vertical-align: middle;
 }
 
-#bltyzvwksg .gt_empty_group_heading {
+#pfadslxfrn .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -5006,15 +4998,15 @@ the Kruskal-wallis test is more appropriate.</p>
   vertical-align: middle;
 }
 
-#bltyzvwksg .gt_from_md > :first-child {
+#pfadslxfrn .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#bltyzvwksg .gt_from_md > :last-child {
+#pfadslxfrn .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#bltyzvwksg .gt_row {
+#pfadslxfrn .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -5033,7 +5025,7 @@ the Kruskal-wallis test is more appropriate.</p>
   overflow-x: hidden;
 }
 
-#bltyzvwksg .gt_stub {
+#pfadslxfrn .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -5045,7 +5037,7 @@ the Kruskal-wallis test is more appropriate.</p>
   padding-left: 12px;
 }
 
-#bltyzvwksg .gt_summary_row {
+#pfadslxfrn .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -5055,7 +5047,7 @@ the Kruskal-wallis test is more appropriate.</p>
   padding-right: 5px;
 }
 
-#bltyzvwksg .gt_first_summary_row {
+#pfadslxfrn .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -5065,7 +5057,7 @@ the Kruskal-wallis test is more appropriate.</p>
   border-top-color: #D3D3D3;
 }
 
-#bltyzvwksg .gt_grand_summary_row {
+#pfadslxfrn .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -5075,7 +5067,7 @@ the Kruskal-wallis test is more appropriate.</p>
   padding-right: 5px;
 }
 
-#bltyzvwksg .gt_first_grand_summary_row {
+#pfadslxfrn .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -5085,11 +5077,11 @@ the Kruskal-wallis test is more appropriate.</p>
   border-top-color: #D3D3D3;
 }
 
-#bltyzvwksg .gt_striped {
+#pfadslxfrn .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#bltyzvwksg .gt_table_body {
+#pfadslxfrn .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -5098,7 +5090,7 @@ the Kruskal-wallis test is more appropriate.</p>
   border-bottom-color: #D3D3D3;
 }
 
-#bltyzvwksg .gt_footnotes {
+#pfadslxfrn .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -5112,13 +5104,13 @@ the Kruskal-wallis test is more appropriate.</p>
   border-right-color: #D3D3D3;
 }
 
-#bltyzvwksg .gt_footnote {
+#pfadslxfrn .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#bltyzvwksg .gt_sourcenotes {
+#pfadslxfrn .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -5132,46 +5124,46 @@ the Kruskal-wallis test is more appropriate.</p>
   border-right-color: #D3D3D3;
 }
 
-#bltyzvwksg .gt_sourcenote {
+#pfadslxfrn .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#bltyzvwksg .gt_left {
+#pfadslxfrn .gt_left {
   text-align: left;
 }
 
-#bltyzvwksg .gt_center {
+#pfadslxfrn .gt_center {
   text-align: center;
 }
 
-#bltyzvwksg .gt_right {
+#pfadslxfrn .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#bltyzvwksg .gt_font_normal {
+#pfadslxfrn .gt_font_normal {
   font-weight: normal;
 }
 
-#bltyzvwksg .gt_font_bold {
+#pfadslxfrn .gt_font_bold {
   font-weight: bold;
 }
 
-#bltyzvwksg .gt_font_italic {
+#pfadslxfrn .gt_font_italic {
   font-style: italic;
 }
 
-#bltyzvwksg .gt_super {
+#pfadslxfrn .gt_super {
   font-size: 65%;
 }
 
-#bltyzvwksg .gt_footnote_marks {
+#pfadslxfrn .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="bltyzvwksg" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><div class="inline-table"><table class="gt_table">
+<div id="pfadslxfrn" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><div class="inline-table"><table class="gt_table">
 <thead class="gt_col_headings"><tr>
 <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1"><strong>Characteristic</strong></th>
       <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">
@@ -5222,7 +5214,7 @@ the Kruskal-wallis test is more appropriate.</p>
 </h4>
 <p>Compare the distribution of a continuous variable in two or more groups,
 regardless of whether the data is normally distributed.</p>
-<div class="sourceCode" id="cb640"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb651"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">linelist</span> <span class="op">%&gt;%</span> 
   <span class="co">## only keep variables of interested</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">age</span>, <span class="va">outcome</span><span class="op">)</span> <span class="op">%&gt;%</span> 
@@ -5239,7 +5231,7 @@ regardless of whether the data is normally distributed.</p>
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#dqawtyykdi .gt_table {
+#ngzmjwnbsh .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -5264,7 +5256,7 @@ regardless of whether the data is normally distributed.</p>
   border-left-color: #D3D3D3;
 }
 
-#dqawtyykdi .gt_heading {
+#ngzmjwnbsh .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -5276,7 +5268,7 @@ regardless of whether the data is normally distributed.</p>
   border-right-color: #D3D3D3;
 }
 
-#dqawtyykdi .gt_title {
+#ngzmjwnbsh .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -5286,7 +5278,7 @@ regardless of whether the data is normally distributed.</p>
   border-bottom-width: 0;
 }
 
-#dqawtyykdi .gt_subtitle {
+#ngzmjwnbsh .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -5296,13 +5288,13 @@ regardless of whether the data is normally distributed.</p>
   border-top-width: 0;
 }
 
-#dqawtyykdi .gt_bottom_border {
+#ngzmjwnbsh .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#dqawtyykdi .gt_col_headings {
+#ngzmjwnbsh .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -5317,7 +5309,7 @@ regardless of whether the data is normally distributed.</p>
   border-right-color: #D3D3D3;
 }
 
-#dqawtyykdi .gt_col_heading {
+#ngzmjwnbsh .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -5337,7 +5329,7 @@ regardless of whether the data is normally distributed.</p>
   overflow-x: hidden;
 }
 
-#dqawtyykdi .gt_column_spanner_outer {
+#ngzmjwnbsh .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -5349,15 +5341,15 @@ regardless of whether the data is normally distributed.</p>
   padding-right: 4px;
 }
 
-#dqawtyykdi .gt_column_spanner_outer:first-child {
+#ngzmjwnbsh .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#dqawtyykdi .gt_column_spanner_outer:last-child {
+#ngzmjwnbsh .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#dqawtyykdi .gt_column_spanner {
+#ngzmjwnbsh .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -5369,7 +5361,7 @@ regardless of whether the data is normally distributed.</p>
   width: 100%;
 }
 
-#dqawtyykdi .gt_group_heading {
+#ngzmjwnbsh .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -5391,7 +5383,7 @@ regardless of whether the data is normally distributed.</p>
   vertical-align: middle;
 }
 
-#dqawtyykdi .gt_empty_group_heading {
+#ngzmjwnbsh .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -5406,15 +5398,15 @@ regardless of whether the data is normally distributed.</p>
   vertical-align: middle;
 }
 
-#dqawtyykdi .gt_from_md > :first-child {
+#ngzmjwnbsh .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#dqawtyykdi .gt_from_md > :last-child {
+#ngzmjwnbsh .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#dqawtyykdi .gt_row {
+#ngzmjwnbsh .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -5433,7 +5425,7 @@ regardless of whether the data is normally distributed.</p>
   overflow-x: hidden;
 }
 
-#dqawtyykdi .gt_stub {
+#ngzmjwnbsh .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -5445,7 +5437,7 @@ regardless of whether the data is normally distributed.</p>
   padding-left: 12px;
 }
 
-#dqawtyykdi .gt_summary_row {
+#ngzmjwnbsh .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -5455,7 +5447,7 @@ regardless of whether the data is normally distributed.</p>
   padding-right: 5px;
 }
 
-#dqawtyykdi .gt_first_summary_row {
+#ngzmjwnbsh .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -5465,7 +5457,7 @@ regardless of whether the data is normally distributed.</p>
   border-top-color: #D3D3D3;
 }
 
-#dqawtyykdi .gt_grand_summary_row {
+#ngzmjwnbsh .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -5475,7 +5467,7 @@ regardless of whether the data is normally distributed.</p>
   padding-right: 5px;
 }
 
-#dqawtyykdi .gt_first_grand_summary_row {
+#ngzmjwnbsh .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -5485,11 +5477,11 @@ regardless of whether the data is normally distributed.</p>
   border-top-color: #D3D3D3;
 }
 
-#dqawtyykdi .gt_striped {
+#ngzmjwnbsh .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#dqawtyykdi .gt_table_body {
+#ngzmjwnbsh .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -5498,7 +5490,7 @@ regardless of whether the data is normally distributed.</p>
   border-bottom-color: #D3D3D3;
 }
 
-#dqawtyykdi .gt_footnotes {
+#ngzmjwnbsh .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -5512,13 +5504,13 @@ regardless of whether the data is normally distributed.</p>
   border-right-color: #D3D3D3;
 }
 
-#dqawtyykdi .gt_footnote {
+#ngzmjwnbsh .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#dqawtyykdi .gt_sourcenotes {
+#ngzmjwnbsh .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -5532,46 +5524,46 @@ regardless of whether the data is normally distributed.</p>
   border-right-color: #D3D3D3;
 }
 
-#dqawtyykdi .gt_sourcenote {
+#ngzmjwnbsh .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#dqawtyykdi .gt_left {
+#ngzmjwnbsh .gt_left {
   text-align: left;
 }
 
-#dqawtyykdi .gt_center {
+#ngzmjwnbsh .gt_center {
   text-align: center;
 }
 
-#dqawtyykdi .gt_right {
+#ngzmjwnbsh .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#dqawtyykdi .gt_font_normal {
+#ngzmjwnbsh .gt_font_normal {
   font-weight: normal;
 }
 
-#dqawtyykdi .gt_font_bold {
+#ngzmjwnbsh .gt_font_bold {
   font-weight: bold;
 }
 
-#dqawtyykdi .gt_font_italic {
+#ngzmjwnbsh .gt_font_italic {
   font-style: italic;
 }
 
-#dqawtyykdi .gt_super {
+#ngzmjwnbsh .gt_super {
   font-size: 65%;
 }
 
-#dqawtyykdi .gt_footnote_marks {
+#ngzmjwnbsh .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="dqawtyykdi" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><div class="inline-table"><table class="gt_table">
+<div id="ngzmjwnbsh" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><div class="inline-table"><table class="gt_table">
 <thead class="gt_col_headings"><tr>
 <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1"><strong>Characteristic</strong></th>
       <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">
@@ -5623,7 +5615,7 @@ regardless of whether the data is normally distributed.</p>
 <p>Compare the proportions of a categorical variable in two groups. The default is
 to perform a chi-squared test of independence with continuity correction, but if
 any expected call count is below 5 then a Fisher’s exact test is used.</p>
-<div class="sourceCode" id="cb642"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb653"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">linelist</span> <span class="op">%&gt;%</span> 
   <span class="co">## only keep variables of interested</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">gender</span>, <span class="va">outcome</span><span class="op">)</span> <span class="op">%&gt;%</span> 
@@ -5639,7 +5631,7 @@ any expected call count is below 5 then a Fisher’s exact test is used.</p>
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#zelcfllzzm .gt_table {
+#wlegbthpgv .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -5664,7 +5656,7 @@ any expected call count is below 5 then a Fisher’s exact test is used.</p>
   border-left-color: #D3D3D3;
 }
 
-#zelcfllzzm .gt_heading {
+#wlegbthpgv .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -5676,7 +5668,7 @@ any expected call count is below 5 then a Fisher’s exact test is used.</p>
   border-right-color: #D3D3D3;
 }
 
-#zelcfllzzm .gt_title {
+#wlegbthpgv .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -5686,7 +5678,7 @@ any expected call count is below 5 then a Fisher’s exact test is used.</p>
   border-bottom-width: 0;
 }
 
-#zelcfllzzm .gt_subtitle {
+#wlegbthpgv .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -5696,13 +5688,13 @@ any expected call count is below 5 then a Fisher’s exact test is used.</p>
   border-top-width: 0;
 }
 
-#zelcfllzzm .gt_bottom_border {
+#wlegbthpgv .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#zelcfllzzm .gt_col_headings {
+#wlegbthpgv .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -5717,7 +5709,7 @@ any expected call count is below 5 then a Fisher’s exact test is used.</p>
   border-right-color: #D3D3D3;
 }
 
-#zelcfllzzm .gt_col_heading {
+#wlegbthpgv .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -5737,7 +5729,7 @@ any expected call count is below 5 then a Fisher’s exact test is used.</p>
   overflow-x: hidden;
 }
 
-#zelcfllzzm .gt_column_spanner_outer {
+#wlegbthpgv .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -5749,15 +5741,15 @@ any expected call count is below 5 then a Fisher’s exact test is used.</p>
   padding-right: 4px;
 }
 
-#zelcfllzzm .gt_column_spanner_outer:first-child {
+#wlegbthpgv .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#zelcfllzzm .gt_column_spanner_outer:last-child {
+#wlegbthpgv .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#zelcfllzzm .gt_column_spanner {
+#wlegbthpgv .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -5769,7 +5761,7 @@ any expected call count is below 5 then a Fisher’s exact test is used.</p>
   width: 100%;
 }
 
-#zelcfllzzm .gt_group_heading {
+#wlegbthpgv .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -5791,7 +5783,7 @@ any expected call count is below 5 then a Fisher’s exact test is used.</p>
   vertical-align: middle;
 }
 
-#zelcfllzzm .gt_empty_group_heading {
+#wlegbthpgv .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -5806,15 +5798,15 @@ any expected call count is below 5 then a Fisher’s exact test is used.</p>
   vertical-align: middle;
 }
 
-#zelcfllzzm .gt_from_md > :first-child {
+#wlegbthpgv .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#zelcfllzzm .gt_from_md > :last-child {
+#wlegbthpgv .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#zelcfllzzm .gt_row {
+#wlegbthpgv .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -5833,7 +5825,7 @@ any expected call count is below 5 then a Fisher’s exact test is used.</p>
   overflow-x: hidden;
 }
 
-#zelcfllzzm .gt_stub {
+#wlegbthpgv .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -5845,7 +5837,7 @@ any expected call count is below 5 then a Fisher’s exact test is used.</p>
   padding-left: 12px;
 }
 
-#zelcfllzzm .gt_summary_row {
+#wlegbthpgv .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -5855,7 +5847,7 @@ any expected call count is below 5 then a Fisher’s exact test is used.</p>
   padding-right: 5px;
 }
 
-#zelcfllzzm .gt_first_summary_row {
+#wlegbthpgv .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -5865,7 +5857,7 @@ any expected call count is below 5 then a Fisher’s exact test is used.</p>
   border-top-color: #D3D3D3;
 }
 
-#zelcfllzzm .gt_grand_summary_row {
+#wlegbthpgv .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -5875,7 +5867,7 @@ any expected call count is below 5 then a Fisher’s exact test is used.</p>
   padding-right: 5px;
 }
 
-#zelcfllzzm .gt_first_grand_summary_row {
+#wlegbthpgv .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -5885,11 +5877,11 @@ any expected call count is below 5 then a Fisher’s exact test is used.</p>
   border-top-color: #D3D3D3;
 }
 
-#zelcfllzzm .gt_striped {
+#wlegbthpgv .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#zelcfllzzm .gt_table_body {
+#wlegbthpgv .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -5898,7 +5890,7 @@ any expected call count is below 5 then a Fisher’s exact test is used.</p>
   border-bottom-color: #D3D3D3;
 }
 
-#zelcfllzzm .gt_footnotes {
+#wlegbthpgv .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -5912,13 +5904,13 @@ any expected call count is below 5 then a Fisher’s exact test is used.</p>
   border-right-color: #D3D3D3;
 }
 
-#zelcfllzzm .gt_footnote {
+#wlegbthpgv .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#zelcfllzzm .gt_sourcenotes {
+#wlegbthpgv .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -5932,46 +5924,46 @@ any expected call count is below 5 then a Fisher’s exact test is used.</p>
   border-right-color: #D3D3D3;
 }
 
-#zelcfllzzm .gt_sourcenote {
+#wlegbthpgv .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#zelcfllzzm .gt_left {
+#wlegbthpgv .gt_left {
   text-align: left;
 }
 
-#zelcfllzzm .gt_center {
+#wlegbthpgv .gt_center {
   text-align: center;
 }
 
-#zelcfllzzm .gt_right {
+#wlegbthpgv .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#zelcfllzzm .gt_font_normal {
+#wlegbthpgv .gt_font_normal {
   font-weight: normal;
 }
 
-#zelcfllzzm .gt_font_bold {
+#wlegbthpgv .gt_font_bold {
   font-weight: bold;
 }
 
-#zelcfllzzm .gt_font_italic {
+#wlegbthpgv .gt_font_italic {
   font-style: italic;
 }
 
-#zelcfllzzm .gt_super {
+#wlegbthpgv .gt_super {
   font-size: 65%;
 }
 
-#zelcfllzzm .gt_footnote_marks {
+#wlegbthpgv .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="zelcfllzzm" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><div class="inline-table"><table class="gt_table">
+<div id="wlegbthpgv" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><div class="inline-table"><table class="gt_table">
 <thead class="gt_col_headings"><tr>
 <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1"><strong>Characteristic</strong></th>
       <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">
@@ -6041,7 +6033,7 @@ An easier alternative may be the <code>rstatix</code> package.</p>
 <h4>
 <span class="header-section-number">15.6.2.1</span> T-tests<a class="anchor" aria-label="anchor" href="#t-tests-1"><i class="fas fa-link"></i></a>
 </h4>
-<div class="sourceCode" id="cb644"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb655"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">linelist</span> <span class="op">%&gt;%</span> 
   <span class="co">## only keep variables of interest</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">age</span>, <span class="va">outcome</span><span class="op">)</span> <span class="op">%&gt;%</span> 
@@ -6079,7 +6071,7 @@ An easier alternative may be the <code>rstatix</code> package.</p>
 <h4>
 <span class="header-section-number">15.6.2.2</span> Wilcoxon rank sum test<a class="anchor" aria-label="anchor" href="#wilcoxon-rank-sum-test-1"><i class="fas fa-link"></i></a>
 </h4>
-<div class="sourceCode" id="cb646"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb657"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">linelist</span> <span class="op">%&gt;%</span> 
   <span class="co">## only keep variables of interest</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">age</span>, <span class="va">outcome</span><span class="op">)</span> <span class="op">%&gt;%</span> 
@@ -6123,7 +6115,7 @@ An easier alternative may be the <code>rstatix</code> package.</p>
 <h4>
 <span class="header-section-number">15.6.2.3</span> Kruskal-wallis test<a class="anchor" aria-label="anchor" href="#kruskal-wallis-test-1"><i class="fas fa-link"></i></a>
 </h4>
-<div class="sourceCode" id="cb648"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb659"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">linelist</span> <span class="op">%&gt;%</span> 
   <span class="co">## only keep variables of interest</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">age</span>, <span class="va">outcome</span><span class="op">)</span> <span class="op">%&gt;%</span> 
@@ -6167,7 +6159,7 @@ An easier alternative may be the <code>rstatix</code> package.</p>
 <h4>
 <span class="header-section-number">15.6.2.4</span> Chi-squared test<a class="anchor" aria-label="anchor" href="#chi-squared-test-1"><i class="fas fa-link"></i></a>
 </h4>
-<div class="sourceCode" id="cb650"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb661"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">linelist</span> <span class="op">%&gt;%</span> 
   <span class="co">## do everything by gender </span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">outcome</span><span class="op">)</span> <span class="op">%&gt;%</span> 
@@ -6197,7 +6189,7 @@ manipulate.</p>
 <h4>
 <span class="header-section-number">15.6.3.1</span> T-tests<a class="anchor" aria-label="anchor" href="#t-tests-2"><i class="fas fa-link"></i></a>
 </h4>
-<div class="sourceCode" id="cb652"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb663"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## compare mean age by outcome group with a t-test</span>
 <span class="fu"><a href="https://rdrr.io/r/stats/t.test.html">t.test</a></span><span class="op">(</span><span class="va">age</span> <span class="op">~</span> <span class="va">outcome</span>, data <span class="op">=</span> <span class="va">linelist</span><span class="op">)</span></code></pre></div>
 <pre><code>## 
@@ -6216,7 +6208,7 @@ manipulate.</p>
 <h4>
 <span class="header-section-number">15.6.3.2</span> Wilcoxon rank sum test<a class="anchor" aria-label="anchor" href="#wilcoxon-rank-sum-test-2"><i class="fas fa-link"></i></a>
 </h4>
-<div class="sourceCode" id="cb654"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb665"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## compare age distribution by outcome group with a wilcox test</span>
 <span class="fu"><a href="https://rdrr.io/r/stats/wilcox.test.html">wilcox.test</a></span><span class="op">(</span><span class="va">age</span> <span class="op">~</span> <span class="va">outcome</span>, data <span class="op">=</span> <span class="va">linelist</span><span class="op">)</span></code></pre></div>
 <pre><code>## 
@@ -6230,7 +6222,7 @@ manipulate.</p>
 <h4>
 <span class="header-section-number">15.6.3.3</span> Kruskal-wallis test<a class="anchor" aria-label="anchor" href="#kruskal-wallis-test-2"><i class="fas fa-link"></i></a>
 </h4>
-<div class="sourceCode" id="cb656"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb667"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## compare age distribution by outcome group with a kruskal-wallis test</span>
 <span class="fu"><a href="https://rdrr.io/r/stats/kruskal.test.html">kruskal.test</a></span><span class="op">(</span><span class="va">age</span> <span class="op">~</span> <span class="va">outcome</span>, <span class="va">linelist</span><span class="op">)</span></code></pre></div>
 <pre><code>## 
@@ -6243,7 +6235,7 @@ manipulate.</p>
 <h4>
 <span class="header-section-number">15.6.3.4</span> Chi-squared test<a class="anchor" aria-label="anchor" href="#chi-squared-test-2"><i class="fas fa-link"></i></a>
 </h4>
-<div class="sourceCode" id="cb658"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb669"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## compare the proportions in each group with a chi-squared test</span>
 <span class="fu"><a href="https://rdrr.io/r/stats/chisq.test.html">chisq.test</a></span><span class="op">(</span><span class="va">linelist</span><span class="op">$</span><span class="va">gender</span>, <span class="va">linelist</span><span class="op">$</span><span class="va">outcome</span><span class="op">)</span></code></pre></div>
 <pre><code>## 
@@ -6263,7 +6255,7 @@ manipulate.</p>
 <code>corrr</code> package. It allows you to compute correlations using Pearson, Kendall
 tau or Spearman rho. The package creates a table and also has a function to
 automatically plot the values.</p>
-<div class="sourceCode" id="cb660"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb671"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">correlation_tab</span> <span class="op">&lt;-</span> <span class="va">linelist</span> <span class="op">%&gt;%</span> 
   <span class="co">## pick the numeric variables of interest</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">generation</span>, <span class="va">age</span>, <span class="va">ct_blood</span>, <span class="va">days_onset_hosp</span>, <span class="va">wt_kg</span>, <span class="va">ht_cm</span><span class="op">)</span> <span class="op">%&gt;%</span> 
@@ -6272,7 +6264,7 @@ automatically plot the values.</p>
 <pre><code>## 
 ## Correlation method: 'pearson'
 ## Missing treated using: 'pairwise.complete.obs'</code></pre>
-<div class="sourceCode" id="cb662"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb673"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## remove duplicate entries (the table is mirrored) </span>
 <span class="va">correlation_tab</span> <span class="op">&lt;-</span> <span class="va">correlation_tab</span> <span class="op">%&gt;%</span> 
   <span class="fu">shave</span><span class="op">(</span><span class="op">)</span>
@@ -6289,11 +6281,11 @@ automatically plot the values.</p>
 ## 4 days_onset_hosp    -0.275   0.0214  -0.592           NA      NA        NA
 ## 5 wt_kg              -0.0110  0.832    0.00977          0.0137 NA        NA
 ## 6 ht_cm              -0.0157  0.871    0.00431          0.0198  0.878    NA</code></pre>
-<div class="sourceCode" id="cb664"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb675"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## plot correlations </span>
 <span class="fu">rplot</span><span class="op">(</span><span class="va">correlation_tab</span><span class="op">)</span></code></pre></div>
 <pre><code>## Don't know how to automatically pick scale for object of type noquote. Defaulting to continuous.</code></pre>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-446-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-433-1.png" width="672"></div>
 <!-- ======================================================= -->
 </div>
 <div id="resources-7" class="section level2 tabset tabset-fade tabset-pills" number="15.8">
@@ -6366,7 +6358,7 @@ automatically plot the values.</p>
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>R Handbook for Epidemiologists</strong>" was written by the handbook team. It was last built on 2021-02-14.</p>
+    <p>"<strong>R Handbook for Epidemiologists</strong>" was written by the handbook team. It was last built on 2021-02-19.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
