@@ -1,11 +1,8 @@
 importing-and-exporting
 overview
-packages
+the-rio-package
 here
 importing
-import-from-filepath
-excel-sheet
-select-file-manually
 google-sheets
 websites
 skip-rows
@@ -15,3 +12,4 @@ entry-by-columns
 entry-by-rows
 pasting-from-clipboard
 rdata-files
+export
