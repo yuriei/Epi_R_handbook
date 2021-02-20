@@ -226,719 +226,691 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 <!--chapter:end:new_pages/cat_preview.Rmd-->
 
 
-# Joining & matching datasets {.tabset .tabset-fade}  
-
+# Diagrams {.tabset .tabset-fade}  
 
 <!-- ======================================================= -->
-## Overview {.tabset .tabset-fadehosp_info}
-
+## Overview {.tabset .tabset-fade}
 
 ```{r out.width = c('50%'), fig.show='hold', echo=F}
-knitr::include_graphics(here::here("images", "left-join.gif"))
+knitr::include_graphics(here::here("images", "flow_chart.png"))
+knitr::include_graphics(here::here("images", "sankey_diagram.png"))
 ```
 
-This page describes common "joins" and also probabilistic matching between dataframes.  
+
+This page covers:  
+
+* Flow diagrams using **DiagrammeR**  
+* Alluvial/Sankey diagrams  
+* Event timelines  
+* Dendrogram organizational trees (e.g. of folder contents)  
+* DAGs (Directed Acyclic Graphs)  
+
 
 
 <!-- ======================================================= -->
 ## Preparation {.tabset .tabset-fade}
 
-**Load packages**
-
-```{r}
-pacman::p_load(
-  rio,            # import/export
-  here,           # relative filepaths
-  tidyverse,      # data management/viz
-  RecordLinkage,  # probabilistic matches
-  fastLink        # probabilistic matches
-)
-```
-Because traditional joins (non-probabilistic) can be very specific, requiring exact string matches, you may need to do cleaning on the datasets *prior to* the join (e.g. change spellings, change case to all lower or upper).  
-
-
-**Load data**  
-
-
-Load the data  
-
-```{r, echo=F}
-linelist <- rio::import(here("data", "linelist_cleaned.rds"))
-```
-
-```{r, eval=F}
-linelist <- rio::import("linelist_cleaned.csv")
-```
-
-<!-- ======================================================= -->
-### Datasets {.tabset .tabset-fade}
-In the joining examples, we'll use the following datasets:  
-
-1) A "miniature" version of the `linelist`, containing only the columns `case_id`, `date_onset`, and `hospital`, and only the first 10 rows  
-2) A separate dataframe named `hosp_info`, which contains more details about each hospital  
-
-
-**"miniature" linelist**  
-
-Below is the miniature linelist used for demonstration purposes:  
-
-```{r}
-linelist_mini <- linelist %>%                 # start with original linelist
-  select(case_id, date_onset, hospital) %>%   # select columns
-  head(10)                                    # keep only the first 10 rows
-```
-
-```{r message=FALSE, echo=F}
-DT::datatable(linelist_mini, rownames = FALSE, options = list(pageLength = nrow(linelist_mini)))
-```
-
-**Hospital Information dataframe**  
-
-Below is the separate dataframe with additional information about each hospital.  
-
-```{r, echo = F}
-hosp_info = data.frame(
-  hosp_name     = c("central hospital", "military", "military", "port", "St. Mark's", "ignace", "sisters"),
-  catchment_pop = c(1950280, 40500, 10000, 50280, 12000, 5000, 4200),
-  level  = c("Tertiary", "Secondary", "Primary", "Secondary", "Secondary", "Primary", "Primary")
-)
-```
-
-```{r message=FALSE, echo=F}
-# display the hospital data as a table
-DT::datatable(hosp_info, rownames = FALSE, options = list(pageLength = nrow(hosp_info)))
-```
-
-
-
-
-
-<!-- ======================================================= -->
-### Pre-cleaning {.tabset .tabset-fade}
-
-Because traditional (non-probabilistic) joins are case-sensitive and require exact string matches, we will clean-up the `hosp_info` dataset prior to the joins.  
-
-**Identify differences**  
-
-We need the values of `hosp_name` column in `hosp_info` dataframe to match the values of `hospital` column in the `linelist` dataframe.  
-
-Here are the values in `linelist_mini`:  
-
-```{r}
-unique(linelist_mini$hospital)
-```
-
-and here are the values in `hosp_info`:  
-
-```{r}
-unique(hosp_info$hosp_name)
-```
-
-
-
-**Align matching values**  
-
-We begin by cleaning the values in `hosp_name`. We use logic to code the values in the new column using `case_when()` (LINK). We correct the hospital names that exist in both dataframes, and leave the others as they are (see `TRUE ~ hosp_name`).   
-
-<span style="color: orange;">**_CAUTION:_** Typically, one should create a new column (e.g. `hosp_name_clean`), but for ease of demonstration we show modification of the old column</span>
-
-```{r}
-hosp_info <- hosp_info %>% 
-  mutate(
-    hosp_name = case_when(
-      hosp_name == "military"          ~ "Military Hospital",
-      hosp_name == "port"              ~ "Port Hospital",
-      hosp_name == "St. Mark's"        ~ "St. Mark's Maternity Hospital (SMMH)",
-      hosp_name == "central hospital"  ~ "Central Hospital",
-      TRUE                             ~ hosp_name
-      )
-    )
-```
-
-We now see that the hospital names that appear in both dataframe are aligned. There are some hospitals in `hosp_info` that are not present in `linelist` - we will deal with these later, in the join.  
-
-```{r}
-unique(hosp_info$hosp_name)
-```
-
-If you need to convert to all values UPPER or lower case, use these functions from **stringr**, as shown in the page on characters/strings (LINK).  
-
-`str_to_upper()`  
-`str_to_upper()`  
-`str_to_title()`  
-
-
-
-
-<!-- ======================================================= -->
-## **dplyr** joins {.tabset .tabset-fade}
-
-**dplyr** offers several different joins. Below they are described, with some simple use cases. Many thanks to [https://github.com/gadenbuie](https://github.com/gadenbuie/tidyexplain/tree/master/images) for the moving images!  
-
-
-
-
-<!-- ======================================================= -->
-### General syntax {.tabset .tabset-fade}
-
-
-**General function structure**  
-
-Any of these join commands can be run independently, like below.  
-
-An object is being created, or re-defined: dataframe 2 is being joined to dataframe 1, on the basis of matches between the "ID" column in `df1` and "identifier" column in `df2`. Because this example uses `left_join()`, any rows in `df2` that do not match to `df1` will be dropped.     
-
-```{r, eval=F}
-object <- left_join(df1, df2, by = c("ID" = "identifier"))
-```
-
-The join commands can also be run within a pipe chain. The first dataframe `df1` is known to be the dataframe that is being passed through the pipes. An example is shown below, in context with some additional non-important `mutate()` and `filter()` commands before the join.  
-
-```{r eval=F}
-object <- df1 %>%
-  filter(var1 == 2) %>%        # for demonstration only
-  mutate(lag = day + 7) %>%    # for demonstration only
-  left_join(df1, by = c("ID" = "identifier"))  # join df2 to df1
-```
-
-**Join columns (`by = `)**  
-
-You must specify the columns in each dataset in which the values must match, using the arguemnt `by = `. You have a few options:  
-
-* Specify only one column name (`by = "ID"`) - this only works if this exact column name is present in both dataframes!  
-* Specify the different names (`by = c("ID" = "Identifier")` - use this if the column names are different in the 2 dataframes  
-* Specify multiple columns to match on (`by = c("ID" = "Identifier", "date_onset" = "Date_of_Onset")`) - this will require exact matches on multiple columns for rows to join.  
-
-
-<span style="color: orange;">**_CAUTION:_** Joins are case-specific! Therefore it is useful to convert all values to lowercase or uppercase prior to joining. See the page on characters/strings.</span>
-
-
-
-### 
-
-
-
-<!-- ======================================================= -->
-### Add columns: left & right joins  
-
-**A left or right join is commonly used to add information to a dataframe** - new information is added only to rows that already exist in the baseline dataframe.  
-
-These are common joins in epidemiological work - they are used to add information from one dataset into another. 
-
-*The order of the dataframes is important*.  
-
-* In a *left join*, the *first* (left) dataframe listed is the baseline  
-* In a *right join*, the *second* (right) dataframe listed is the baseline  
-
-**All rows of the baseline dataframe are kept.** Information in the secondary dataframe is joined to the baseline dataframe *only if there is a match via the identifier column(s)*. In addition:  
-* Rows in the secondary dataframe that do not match are dropped.  
-* If there are many baseline rows that match to one row in the secondary dataframe (many-to-one), the baseline information is added to each matching baseline row.  
-* If a baseline row matches to multiple rows in the secondary dataframe (one-to-many), all combinations are given, meaning new rows may be added to your returned dataframe!  
-
-```{r out.width = c('50%'), fig.show='hold', echo=F}
-knitr::include_graphics(here::here("images", "left-join.gif"))
-knitr::include_graphics(here::here("images", "right-join.gif"))
-```
-
-**Example**  
-
-Below is the output of a `left_join()` of `hosp_info` (secondary dataframe)  *into* `linelist_mini` (baseline dataframe). Note the following:  
-
-* All original rows of the baseline dataframe `linelist_mini` are kept  
-* One original row of `linelist_mini` is duplicated ("Military Hospital") because it matched to *two* rows in the secondary dataframe, so both combinations are returned  
-* The join identifier column of the secondary dataset (`hosp_name`) has disappeared because it is redundant with the identifier column in the primary dataset (`hospital`)  
-* When a baseline row did not match to any secondary row (e.g. when `hospital` is "Other" or "Missing"), `NA` fills in the columns from the secondary dataframe  
-* Rows in the secondary dataframe with no match to the baseline dataframe ("sisters" and "ignace") were dropped  
-
-
-```{r, eval=F}
-linelist_mini %>% 
-  left_join(hosp_info, by = c("hospital" = "hosp_name"))
-```
-
-```{r message=FALSE, echo=F}
-linelist_mini %>% 
-  left_join(hosp_info, by = c("hospital" = "hosp_name")) %>% 
-  DT::datatable(rownames = FALSE, options = list(pageLength = 11))
-```
-
-
-
-
-**"Should I use a right join, or a left join?"**  
-Most important is to ask "which dataframe should retain all of its rows?" - use this one as the baseline.
-
-The two commands below achieve the same output - 10 rows of `hosp_info` joined *into* a `linelist_mini` baseline. However, the column order will differ based on whether `hosp_info` arrives from the right (in the left join) or arrives from the left (in the right join). The order of the rows may also shift consequently.   
-
-Also consider whether your use-case is within a pipe chain (`%>%`). If the dataset in the pipes is the baseline, you will likely use a left join to add data to it.  
-
-```{r, eval=F}
-# The two commands below achieve the same data, but with differently ordered rows and columns
-left_join(linelist_mini, hosp_info, by = c("hospital" = "hosp_name"))
-right_join(hosp_info, linelist_mini, by = c("hosp_name" = "hospital"))
-```
-
-```{r message=FALSE, echo=F}
-left_join(linelist_mini, hosp_info, by = c("hospital" = "hosp_name")) %>% 
-  DT::datatable(rownames = FALSE, options = list(pageLength = 11))
-```
-
-```{r message=FALSE, echo=F}
-right_join(hosp_info, linelist_mini, by = c("hosp_name" = "hospital")) %>% 
-  DT::datatable(rownames = FALSE, options = list(pageLength = 11))
-```
-
-
-
-
-<!-- ======================================================= -->
-### Full join  
-
-**A full join is the most *inclusive* of the joins** - it returns all rows from both dataframes.  
-
-If there are any rows present in one and not the other (where no match was found), the dataframe will become wider as `NA` values are added to fill-in. Watch the number of columns and rows carefully and troubleshoot case-sensitivity and exact string matches. 
-
-Adjustment of the "baseline" (first) dataframe will not impact which records are returned, but it will impact the column order, row order, and which identifier column is retained.  
-
-```{r out.width = c('50%'), fig.show='hold', echo=F}
-knitr::include_graphics(here::here("images", "full-join.gif"))
-```
-
-
-**Example**  
-
-Below is the output of a `full_join()` of `hosp_info`  *into* `linelist_mini`. Note the following:  
-
-* All baseline rows (`linelist_mini`) are kept  
-* One baseline row is duplicated ("Military Hospital") because it matched to two secondary rows and both combinations are returned  
-* Only the identifier column from the baseline is kept (`hospital`)  
-* `NA` fills in where baseline rows did not match to secondary rows (`hospital` was "Other" or "Missing"), or the opposite (where `hosp_name` was "ignace" or "sisters")  
-
-
-```{r, eval=F}
-linelist_mini %>% 
-  full_join(hosp_info, by = c("hospital" = "hosp_name"))
-```
-
-```{r message=FALSE, echo=F}
-linelist_mini %>% 
-  full_join(hosp_info, by = c("hospital" = "hosp_name")) %>% 
-  DT::datatable(rownames = FALSE, options = list(pageLength = 13))
-```
-
-
-
-
-
-<!-- ======================================================= -->
-### Inner join  
-
-**An inner join is the most *restrictive* of the joins** - it returns only rows with matches across both dataframes.  
-This means that your original dataset may reduce in number of rows. Adjustment of the "baseline" (first) dataframe will not impact which records are returned, but it will impact the column order, row order, and which identifier column is retained.   
-
-
-```{r out.width = c('50%'), fig.show='hold', echo=F}
-knitr::include_graphics(here::here("images", "inner-join.gif"))
-```
-
-
-**Example**  
-
-Below is the output of an `inner_join()` of `linelist_mini` (baseline) with `hosp_info` (secondary). Note the following:  
-
-* Not all baseline rows are kept (rows where `hospital` is "Missing" or "Other" are removed because had no match in the secondary dataframe  
-* Likewise, secondary rows where `hosp_name` is "sisters" or "ignace" are removed as they have no match in the baseline dataframe  
-* Only the identifier column from the baseline is kept (`hospital`)  
-
-
-```{r, eval=F}
-linelist_mini %>% 
-  inner_join(hosp_info, by = c("hospital" = "hosp_name"))
-```
-
-
-```{r, eval=F}
-hosp_info %>% 
-  inner_join(linelist_mini, by = c("hosp_name" = "hospital"))
-```
-
-
-```{r message=FALSE, echo=F}
-linelist_mini %>% 
-  inner_join(hosp_info, by = c("hospital" = "hosp_name")) %>% 
-  DT::datatable(rownames = FALSE, options = list(pageLength = 12))
-```
-
-
-
-
-
-
-<!-- ======================================================= -->
-### Semi join  
-
-A semi join is a "filtering join" which uses another dataset *not to add rows or columns, but to perform filtering*.  
-A **semi-join keeps all observations in dataframe 1 that have a match in dataframe 2** (but does not add new columns or duplicate any rows with multiple matches). Read more about filtering joins [here](https://towardsdatascience.com/level-up-with-semi-joins-in-r-a068426096e0).  
-
-```{r out.width = c('50%'), fig.show='hold', echo=F}
-knitr::include_graphics(here::here("images", "semi-join.gif"))
-```
-
-The below code would return **0** rows, because the two dataframes are completely different - there are no rows that are in both.  
-
-```{r, eval=F}
-hosp_info %>% 
-  semi_join(linelist_mini, by = c("hosp_name" = "hospital"))
-```
-
-
-
-<!-- ======================================================= -->
-### Anti join  
-
-**The anti join is a "filtering join" that returns rows in dataframe 1 that *do not* have a match in dataframe 2.**  
-
-Read more about filtering joins [here](https://towardsdatascience.com/level-up-with-semi-joins-in-r-a068426096e0).  
-
-Common scenarios for an anti-join include identifying records not present in another dataframe, troubleshooting spelling in a join (catching records that *should have* matched), and examining records that were excluded after another join.  
-
-**As with right_join() and left_join(), the *baseline* dataframe (listed first) is important**. The returned rows are from it only. Notice in the gif below that row in the non-baseline dataframe (purple 4) is not returned even though it does not match.  
-
-```{r out.width = c('50%'), fig.show='hold', echo=F}
-knitr::include_graphics(here::here("images", "anti-join.gif"))
-```
-
-**Simple example**  
-
-For an example, let's find the `hosp_info` hospitals that do not have any cases present in `linelist_mini`. We list `hosp_info` first, as the baseline dataframe. The two hospitals which are not present in `linelist_mini` are returned.  
-
-```{r, eval=F}
-hosp_info %>% 
-  anti_join(linelist_mini, by = c("hosp_name" = "hospital"))
-```
-
-```{r message=FALSE, echo=F}
-hosp_info %>% 
-  anti_join(linelist_mini, by = c("hosp_name" = "hospital")) %>% 
-  DT::datatable(rownames = FALSE, options = list(pageLength = 12))
-```
-
-
-**Example 2**  
-
-For another example, let us say we ran an `inner_join()` between `linelist_mini` and `hosp_info`. This returns only 8 of the original 11 `linelist_mini` records.  
-
-```{r, eval=F}
-linelist_mini %>% 
-  inner_join(hosp_info, by = c("hospital" = "hosp_name"))
-```
-
-```{r message=FALSE, echo=F}
-linelist_mini %>% 
-  inner_join(hosp_info, by = c("hospital" = "hosp_name")) %>% 
-  DT::datatable(rownames = FALSE, options = list(pageLength = 8))
-```
-
-To review the 3 `linelist_mini` records that were excluded in the inner join, we can run an anti-join with `linelist_mini` as the baseline dataframe.  
-
-```{r, eval = F}
-linelist_mini %>% 
-  anti_join(hosp_info, by = c("hospital" = "hosp_name"))
-```
-
-```{r message=FALSE, echo=F}
-linelist_mini %>% 
-  anti_join(hosp_info, by = c("hospital" = "hosp_name")) %>% 
-  DT::datatable(rownames = FALSE, options = list(pageLength = 5))
-```
-
-To see the `hosp_info` records that were excluded in the inner join, we could also run an anti-join with `hosp_info` as the baseline dataframe.  
-
-
-
-
-
-
-<!-- ======================================================= -->
-## Probabalistic matching {.tabset .tabset-fade}
-
-Under construction - TBD
-
-If you do not have a unique identifier common across datasets to join on, consider using a probabilistic matching algorithm. This would find matches between records based on similarity (e.g. Jaro–Winkler string distance, or numeric distance).  Below is a simple example using the package **fastLink** .  
-
 **Load packages**  
 
 ```{r}
 pacman::p_load(
-               tidyverse,      # data manipulation and visualization
-               fastLink        # record matching
+  DiagrammeR,     # for flow diagrams
+  networkD3       # For alluvial/Sankey diagrams
+  )
+```
+
+
+<!-- ======================================================= -->
+## Flow diagrams {.tabset .tabset-fade}
+
+One can use the R package **DiagrammeR** to create charts/flow charts. They can be static, or they can adjust somewhat dynamically based on changes in a dataset.  
+
+**Tools**  
+
+The function `grViz()` is used to create a "Graphviz" diagram. This function accepts a *character string input containing instructions* for making the diagram. Within that string, the instructions are written in a different language, called [DOT](https://graphviz.org/doc/info/lang.html) - it is quite easy to learn the basics.  
+
+**Basic structure**  
+
+1) Open the instructions `grViz("`  
+2) Specify directionality and name of the graph, and open brackets, e.g. `digraph my_flow_chart {`
+3) Graph statement (layout, rank direction)  
+4) Nodes statements (create nodes)
+5) Edges statements (gives links between nodes)  
+6) Close the instructions `}")`  
+
+### Simple examples  
+<h3> Simple examples </h3>
+
+Below are two simple examples  
+
+A very minimal example:  
+
+```{r out.width='50%'}
+# A minimal plot
+DiagrammeR::grViz("digraph {
+  
+graph[layout = dot, rankdir = LR]
+
+a
+b
+c
+
+a -> b -> c
+}")
+```
+
+An example with applied public health context:  
+
+```{r out.width='50%'}
+grViz("                           # All instructions are within a large character string
+digraph surveillance_diagram {    # 'digraph' means 'directional graph', then the graph name 
+  
+  # graph statement
+  #################
+  graph [layout = dot,
+         rankdir = TB,
+         overlap = true,
+         fontsize = 10]
+  
+  # nodes
+  #######
+  node [shape = circle,           # shape = circle
+       fixedsize = true
+       width = 1.3]               # width of circles
+  
+  Primary                         # names of nodes
+  Secondary
+  Tertiary
+
+  # edges
+  #######
+  Primary   -> Secondary [label = 'case transfer']
+  Secondary -> Tertiary [label = 'case transfer']
+}
+")
+```
+
+### Syntax  
+
+**Basic syntax**  
+
+Node names, or edge statements, can be separated with spaces, semicolons, or newlines.  
+
+**Rank direction**  
+
+A plot can be re-oriented to move left-to-right by adjusting the `rankdir` argument within the graph statement. The default is TB (top-to-bottom), but it can be LR (left-to-right), RL, or BT.  
+
+**Node names**  
+
+Node names can be single words, as in the simple example above. To use multi-word names or special characters (e.g. parentheses, dashes), put the node name within single quotes (' '). It may be easier to have a short node name, and assign a *label*, as shown below within brackets [ ]. A label is also necessary to have a newline within the node name - use `\n` in the node label within single quotes, as shown below.  
+
+**Subgroups**  
+Within edge statements, subgroups can be created on either side of the edge with curly brackets ({ }). The edge then applies to all nodes in the bracket - it is a shorthand.  
+
+
+**Layouts**  
+
+* dot (set `rankdir` to either TB, LR, RL, BT, )
+* neato  
+* twopi  
+* circo  
+
+
+**Nodes - editable attributes**  
+
+* `label` (text, in single quotes if multi-word)  
+* `fillcolor` (many possible colors)  
+* `fontcolor`  
+* `alpha` (transparency 0-1)  
+* `shape` (ellipse, oval, diamond, egg, plaintext, point, square, triangle)  
+* `style`  
+* `sides`  
+* `peripheries`  
+* `fixedsize` (h x w)  
+* `height`  
+* `width`  
+* `distortion`  
+* `penwidth` (width of shape border)  
+* `x` (displacement left/right)  
+* `y` (displacement up/down)  
+* `fontname`  
+* `fontsize`  
+* `icon`  
+
+
+**Edges - editable attributes**  
+
+* `arrowsize`  
+* `arrowhead` (normal, box, crow, curve, diamond, dot, inv, none, tee, vee)  
+* `arrowtail`  
+* `dir` (direction, )  
+* `style` (dashed, ...)  
+* `color`  
+* `alpha`  
+* `headport` (text in front of arrowhead)  
+* `tailport` (text in behind arrowtail)  
+* `fontname`  
+* `fontsize`  
+* `fontcolor`  
+* `penwidth` (width of arrow)  
+* `minlen` (minimum length)
+
+**Color names**: hexadecimal values or 'X11' color names, see [here for X11 details](http://rich-iannone.github.io/DiagrammeR/graphviz_and_mermaid.html) 
+
+
+### Complex examples  
+
+The example below expands on the surveillance_diagram, adding complex node names, grouped edges, colors and styling
+
+
+```
+DiagrammeR::grViz("               # All instructions are within a large character string
+digraph surveillance_diagram {    # 'digraph' means 'directional graph', then the graph name 
+  
+  # graph statement
+  #################
+  graph [layout = dot,
+         rankdir = TB,            # layout top-to-bottom
+         fontsize = 10]
+  
+
+  # nodes (circles)
+  #################
+  node [shape = circle,           # shape = circle
+       fixedsize = true
+       width = 1.3]                      
+  
+  Primary   [label = 'Primary\nFacility'] 
+  Secondary [label = 'Secondary\nFacility'] 
+  Tertiary  [label = 'Tertiary\nFacility'] 
+  SC        [label = 'Surveillance\nCoordination',
+             fontcolor = darkgreen] 
+  
+  # edges
+  #######
+  Primary   -> Secondary [label = 'case transfer',
+                          fontcolor = red,
+                          color = red]
+  Secondary -> Tertiary [label = 'case transfer',
+                          fontcolor = red,
+                          color = red]
+  
+  # grouped edge
+  {Primary Secondary Tertiary} -> SC [label = 'case reporting',
+                                      fontcolor = darkgreen,
+                                      color = darkgreen,
+                                      style = dashed]
+}
+")
+```
+
+
+```{r out.width='50%', echo=F}
+DiagrammeR::grViz("               # All instructions are within a large character string
+digraph surveillance_diagram {    # 'digraph' means 'directional graph', then the graph name 
+  
+  # graph statement
+  #################
+  graph [layout = dot,
+         rankdir = TB,            # layout top-to-bottom
+         fontsize = 10]
+  
+
+  # nodes (circles)
+  #################
+  node [shape = circle,           # shape = circle
+       fixedsize = true
+       width = 1.3]                      
+  
+  Primary   [label = 'Primary\nFacility'] 
+  Secondary [label = 'Secondary\nFacility'] 
+  Tertiary  [label = 'Tertiary\nFacility'] 
+  SC        [label = 'Surveillance\nCoordination',
+             fontcolor = darkgreen] 
+  
+  # edges
+  #######
+  Primary   -> Secondary [label = 'case transfer',
+                          fontcolor = red,
+                          color = red]
+  Secondary -> Tertiary [label = 'case transfer',
+                          fontcolor = red,
+                          color = red]
+  
+  # grouped edge
+  {Primary Secondary Tertiary} -> SC [label = 'case reporting',
+                                      fontcolor = darkgreen,
+                                      color = darkgreen,
+                                      style = dashed]
+}
+")
+```
+
+**Sub-graph clusters**  
+
+To group nodes into boxed clusters, put them within the same named subgraph (`subgraph name {}`). To have each subgraph identified within a bounding box, begin the name of the subgraph with "cluster", as shown with the 4 boxes below.  
+
+```
+DiagrammeR::grViz("             # All instructions are within a large character string
+digraph surveillance_diagram {  # 'digraph' means 'directional graph', then the graph name 
+  
+  # graph statement
+  #################
+  graph [layout = dot,
+         rankdir = TB,            
+         overlap = true,
+         fontsize = 10]
+  
+
+  # nodes (circles)
+  #################
+  node [shape = circle,                  # shape = circle
+       fixedsize = true
+       width = 1.3]                      # width of circles
+  
+  subgraph cluster_passive {
+    Primary   [label = 'Primary\nFacility'] 
+    Secondary [label = 'Secondary\nFacility'] 
+    Tertiary  [label = 'Tertiary\nFacility'] 
+    SC        [label = 'Surveillance\nCoordination',
+               fontcolor = darkgreen] 
+  }
+  
+  # nodes (boxes)
+  ###############
+  node [shape = box,                     # node shape
+        fontname = Helvetica]            # text font in node
+  
+  subgraph cluster_active {
+    Active [label = 'Active\nSurveillance']; 
+    HCF_active [label = 'HCF\nActive Search']
+  }
+  
+  subgraph cluster_EBD {
+    EBS [label = 'Event-Based\nSurveillance (EBS)']; 
+    'Social Media'
+    Radio
+  }
+  
+  subgraph cluster_CBS {
+    CBS [label = 'Community-Based\nSurveillance (CBS)'];
+    RECOs
+  }
+
+  
+  # edges
+  #######
+  {Primary Secondary Tertiary} -> SC [label = 'case reporting']
+
+  Primary   -> Secondary [label = 'case transfer',
+                          fontcolor = red]
+  Secondary -> Tertiary [label = 'case transfer',
+                          fontcolor = red]
+  
+  HCF_active -> Active
+  
+  {'Social Media'; Radio} -> EBS
+  
+  RECOs -> CBS
+}
+")
+
+```
+
+
+```{r out.width='120%', echo=F}
+DiagrammeR::grViz("             # All instructions are within a large character string
+digraph surveillance_diagram {  # 'digraph' means 'directional graph', then the graph name 
+  
+  # graph statement
+  #################
+  graph [layout = dot,
+         rankdir = TB,            
+         overlap = true,
+         fontsize = 10]
+  
+
+  # nodes (circles)
+  #################
+  node [shape = circle,                  # shape = circle
+       fixedsize = true
+       width = 1.3]                      # width of circles
+  
+  subgraph cluster_passive {
+    Primary   [label = 'Primary\nFacility'] 
+    Secondary [label = 'Secondary\nFacility'] 
+    Tertiary  [label = 'Tertiary\nFacility'] 
+    SC        [label = 'Surveillance\nCoordination',
+               fontcolor = darkgreen] 
+  }
+  
+  # nodes (boxes)
+  ###############
+  node [shape = box,                     # node shape
+        fontname = Helvetica]            # text font in node
+  
+  subgraph cluster_active {
+    Active [label = 'Active\nSurveillance']; 
+    HCF_active [label = 'HCF\nActive Search']
+  }
+  
+  subgraph cluster_EBD {
+    EBS [label = 'Event-Based\nSurveillance (EBS)']; 
+    'Social Media'
+    Radio
+  }
+  
+  subgraph cluster_CBS {
+    CBS [label = 'Community-Based\nSurveillance (CBS)'];
+    RECOs
+  }
+
+  
+  # edges
+  #######
+  {Primary Secondary Tertiary} -> SC [label = 'case reporting']
+
+  Primary   -> Secondary [label = 'case transfer',
+                          fontcolor = red]
+  Secondary -> Tertiary [label = 'case transfer',
+                          fontcolor = red]
+  
+  HCF_active -> Active
+  
+  {'Social Media'; Radio} -> EBS
+  
+  RECOs -> CBS
+}
+")
+
+```
+
+
+**node shapes**  
+
+The example below, borrowed from [this tutorial](http://rich-iannone.github.io/DiagrammeR/), shows applied node shapes, and shows a shorthand for serial edge connections  
+
+```{r out.width='75%'}
+DiagrammeR::grViz("digraph {
+
+graph [layout = dot, rankdir = LR]
+
+# define the global styles of the nodes. We can override these in box if we wish
+node [shape = rectangle, style = filled, fillcolor = Linen]
+
+data1 [label = 'Dataset 1', shape = folder, fillcolor = Beige]
+data2 [label = 'Dataset 2', shape = folder, fillcolor = Beige]
+process [label =  'Process \n Data']
+statistical [label = 'Statistical \n Analysis']
+results [label= 'Results']
+
+# edge definitions with the node IDs
+{data1 data2}  -> process -> statistical -> results
+}")
+```
+
+
+### Outputs  
+
+How to handle and save outputs  
+
+* Outputs will appear in RStudio's Viewer pane, by default in the lower-right alongside Files, Plots, Packages, and Help.  
+* To export you can "Save as image" or "Copy to clipboard" from the Viewer. The graphic will adjust to the specified size.  
+
+
+
+
+### Parameterized figures  
+<h3> Parameterized figures </h3>
+
+"Parameterized figures: A great benefit of designing figures within R is that we are able to connect the figures directly with our analysis by reading R values directly into our flowcharts. For example, suppose you have created a filtering process which removes values after each stage of a process, you can have a figure show the number of values left in the dataset after each stage of your process. To do this we, you can use the @@X symbol directly within the figure, then refer to this in the footer of the plot using [X]:, where X is the a unique numeric index. Here is a basic example:"  
+https://mikeyharper.uk/flowcharts-in-r-using-diagrammer/
+
+```{r, eval=F}
+# Define some sample data
+data <- list(a=1000, b=800, c=600, d=400)
+
+
+DiagrammeR::grViz("
+digraph graph2 {
+
+graph [layout = dot]
+
+# node definitions with substituted label text
+node [shape = rectangle, width = 4, fillcolor = Biege]
+a [label = '@@1']
+b [label = '@@2']
+c [label = '@@3']
+d [label = '@@4']
+
+a -> b -> c -> d
+
+}
+
+[1]:  paste0('Raw Data (n = ', data$a, ')')
+[2]: paste0('Remove Errors (n = ', data$b, ')')
+[3]: paste0('Identify Potential Customers (n = ', data$c, ')')
+[4]: paste0('Select Top Priorities (n = ', data$d, ')')
+")
+
+```
+
+
+Much of the above is adapted from the tutorial [at this site](https://mikeyharper.uk/flowcharts-in-r-using-diagrammer/)  
+
+Other more in-depth tutorial: http://rich-iannone.github.io/DiagrammeR/
+
+
+
+### CONSORT diagram  
+
+https://scriptsandstatistics.wordpress.com/2017/12/22/how-to-draw-a-consort-flow-diagram-using-r-and-graphviz/
+
+Note above is out of date via DiagrammeR
+
+
+
+
+<!-- ======================================================= -->
+## Alluvial/Sankey Diagrams {.tabset .tabset-fade}
+
+### Preparation  
+
+**Load packages**  
+
+```{r}
+pacman::p_load(networkD3)
+```
+
+### Plotting from dataset  
+
+Plotting the connections in a dataset  
+
+
+https://www.r-graph-gallery.com/321-introduction-to-interactive-sankey-diagram-2.html
+
+Counts of age category and hospital, relabled as target and source, respectively.  
+
+```{r}
+# counts by hospital and age category
+links <- linelist %>% 
+  select(hospital, age_cat) %>%
+  count(hospital, age_cat) %>% 
+  rename(source = hospital,
+         target = age_cat)
+```
+
+
+```{r message=FALSE, echo=F}
+DT::datatable(head(links, 30), rownames = FALSE, filter="top", options = list(pageLength = 5, scrollX=T))
+```
+
+Now formalize the nodes list, and adjust the ID columns to be numbers instead of labels:  
+
+
+```{r}
+# The unique node names
+nodes <- data.frame(
+  name=c(as.character(links$source), as.character(links$target)) %>% 
+    unique()
+  )
+
+# match to numbers, not names
+links$IDsource <- match(links$source, nodes$name)-1 
+links$IDtarget <- match(links$target, nodes$name)-1
+```
+
+Now plot the Sankey diagram:  
+
+```{r}
+
+# plot
+######
+p <- sankeyNetwork(Links = links,
+                   Nodes = nodes,
+                   Source = "IDsource",
+                   Target = "IDtarget",
+                   Value = "n",
+                   NodeID = "name",
+                   units = "TWh",
+                   fontSize = 12,
+                   nodeWidth = 30)
+p
+```
+
+
+
+Here is an example where the patient Outome is included as well. Note in the data management step how we bind rows of counts of hospital -> outcome, using the same column names.   
+
+```{r}
+# counts by hospital and age category
+links <- linelist %>% 
+  select(hospital, age_cat) %>%
+  mutate(age_cat = stringr::str_glue("Age {age_cat}")) %>% 
+  count(hospital, age_cat) %>% 
+  rename(source = age_cat,
+         target = hospital) %>% 
+  bind_rows(
+    linelist %>% 
+      select(hospital, outcome) %>% 
+      count(hospital, outcome) %>% 
+      rename(source = hospital,
+             target = outcome)
+  )
+
+# The unique node names
+nodes <- data.frame(
+  name=c(as.character(links$source), as.character(links$target)) %>% 
+    unique()
+  )
+
+# match to numbers, not names
+links$IDsource <- match(links$source, nodes$name)-1 
+links$IDtarget <- match(links$target, nodes$name)-1
+
+# plot
+######
+p <- sankeyNetwork(Links = links,
+                   Nodes = nodes,
+                   Source = "IDsource",
+                   Target = "IDtarget",
+                   Value = "n",
+                   NodeID = "name",
+                   units = "TWh",
+                   fontSize = 12,
+                   nodeWidth = 30)
+p
+
+```
+
+
+https://www.displayr.com/sankey-diagrams-r/
+
+Timeline Sankey - LTFU from cohort... application/rejections... etc.
+
+
+<!-- ======================================================= -->
+## Event timelines {.tabset .tabset-fade}
+
+To make a timeline showing specific events, you can use the `vistime` package.
+
+See this [vignette](https://cran.r-project.org/web/packages/vistime/vignettes/vistime-vignette.html#ex.-2-project-planning)
+
+```{r}
+# load package
+pacman::p_load(vistime,  # make the timeline
+               plotly    # for interactive visualization
                )
 ```
 
-
-
 ```{r, echo=F}
-# make datasets
+# reference: https://cran.r-project.org/web/packages/vistime/vignettes/vistime-vignette.html#ex.-2-project-planning
 
-cases <- tribble(
-  ~gender, ~first,      ~middle,     ~last,        ~yr,   ~mon, ~day, ~district,
-  "M",     "Amir",      NA,          "Khan",       1989,  11,   22,   "River",
-  "M",     "Anthony",   "B.",        "Smith",      1970, 09, 19,      "River", 
-  "F",     "Marialisa", "Contreras", "Rodrigues",  1972, 04, 15,      "River",
-  "F",     "Elizabeth", "Casteel",   "Chase",      1954, 03, 03,      "City",
-  "M",     "Jose",      "Sanchez",   "Lopez",      1996, 01, 06,      "City",
-  "F",     "Cassidy",   "Jones",      "Davis",     1980, 07, 20,      "City",
-  "M",     "Michael",   "Murphy",     "O'Calaghan",1969, 04, 12,      "Rural", 
-  "M",     "Oliver",    "Laurent",    "De Bordow" , 1971, 02, 04,     "River",
-  "F",      "Blessing",  NA,          "Adebayo",   1955,  02, 14,     "Rural",
-
-)
-
-results <- tribble(
-  ~gender,  ~first,     ~middle,     ~last,          ~yr, ~mon, ~day, ~district, ~result,
-  "M",      "Amir",     NA,          "Khan",         1989, 11,   22,  "River", "positive",
-  "M",      "Tony",   "B",         "Smith",          1970, 09,   19,  "River", "positive",
-  "F",      "Maria",    "Contreras", "Rodriguez",    1972, 04,   15,  "Cty",   "negative",
-  "F",      "Betty",    "Castel",   "Chase",        1954,  03,   30,  "City",  "positive",
-  "F",      "Andrea",   NA,          "Kumaraswamy",  2001, 01,   05,  "Rural", "positive",      
-  "F",      "Caroline", NA,          "Wang",         1988, 12,   11,  "Rural", "negative",
-  "F",      "Trang",    NA,          "Nguyen",       1981, 06,   10,  "Rural", "positive",
-  "M",      "Olivier" , "Laurent",   "De Bordeaux",  NA,   NA,   NA,  "River", "positive",
-  "M",      "Mike",     "Murphy",    "O'Callaghan",  1969, 04,   12,  "Rural", "negative",
-  "F",      "Cassidy",  "Jones",     "Davis",        1980, 07,   02,  "City",  "positive",
-  "M",      "Mohammad", NA,          "Ali",          1942, 01,   17,  "City",  "negative",
-  NA,       "Jose",     "Sanchez",   "Lopez",        1995, 01,   06,  "City",  "negative",
-  "M",      "Abubakar", NA,          "Abullahi",     1960, 01,   01,  "River", "positive",
-  "F",      "Maria",    "Salinas",   "Contreras",    1955, 03,   03,  "River", "positive"
-  )
-
+data <- read.csv(text="event, group, start, end, color
+                       Event 1, Group A,2020-01-22,2020-01-22, #90caf9
+                       Event 1, Group B,2020-01-23,2020-01-23, #90caf9
+                       Event 1, Group C,2020-01-23,2020-01-23, #1565c0
+                       Event 1, Group D,2020-01-25,2020-01-25, #f44336
+                       Event 1, Group E,2020-01-25,2020-01-25, #90caf9
+                       Event 1, Group F,2020-01-26,2020-01-26, #8d6e63
+                       Event 1, Group G,2020-01-27,2020-01-27, #1565c0
+                       Event 1, Group H,2020-01-27,2020-01-27, #90caf9
+                       Event 1, Group I,2020-01-27,2020-01-27,#90a4ae
+                       Event 2, Group A,2020-01-28,2020-01-28,#fc8d62
+                       Event 2, Group C,2020-01-28,2020-01-28, #6a3d9a
+                       Event 2, Group J,2020-01-28,2020-01-28, #90caf9
+                       Event 2, Group J,2020-01-28,2020-01-28, #fc8d62
+                       Event 2, Group J,2020-01-28,2020-01-28, #1565c0
+")
 ```
 
-Here are two small example datasets that we will use to demonstrate the probabilistic matching:  
-
-**`cases`** is our "baseline" dataframe containing patients who are awaiting test results.  
-
+Here is the events dataset we begin with:  
 
 ```{r message=FALSE, echo=F}
-# display the hospital data as a table
-DT::datatable(cases, rownames = FALSE, options = list(pageLength = nrow(cases)))
+DT::datatable(data, rownames = FALSE, filter="top", options = list(pageLength = 5, scrollX=T))
 ```
 
-**`test_results`** has more records, and contains column `result`, which we want to add to `cases` based on probabilistic matching of records.  
-
-```{r message=FALSE, echo=F}
-# display the hospital data as a table
-DT::datatable(results, rownames = FALSE, options = list(pageLength = nrow(results)))
-```
-
-### Probabilistic matching  
-
-The `fastLink()` function from the **fastLink** package can be used to apply a matching algorithm. Here are some of the useful functions:  
-
-* Define the two dataframes as `dfA` and `dfB`  
-* Give all column names to be used for matching to `varnames = ` - these columns must exist in both `dfA` and `dfB`.  
-* Give columns names to be evaluated on string "distance" to `stringdist.match = `. They must also be in `varnames`.  
-* Give the names of columns to be evaluated on numeric matching to `numeric.match = `. They must also be in `varnames`.  
-* Missing values are ignored  
-* By default, each row in either dataframe is matched to at most one row in the other dataframe. If you want to see all the evaluated matches, set `dedupe.matches = FALSE`. The deduplication is done using Winkler's linear assignment solution (see function help for details).  
-
-*Tip: split one date column into three separate numeric columns using `day()`, `month()`, and `year()` from **lubridate** package*  
-
-The default threshold for matches is 0.94 (`threshold.match = `) but you can adjust it higher or lower. If you define the threshold, consider that higher thresholds could yield more false-negatives (rows that do not match which actually should match) and likewise a lower threshold could yield more false-positive matches.  
-
-Below, the data are matched on string distance across the name and district columns, and on numeric distance for year, month, and day of birth. A threshold of 95% probability is set.  
 
 
 ```{r}
-fl_output <- fastLink::fastLink(
-  dfA = cases,
-  dfB = results,
-  varnames = c("gender", "first", "middle", "last", "yr", "mon", "day", "district"),
-  stringdist.match = c("first", "middle", "last", "district"),
-  numeric.match = c("yr", "mon", "day"),
-  threshold.match = 0.95)
-```
+p <- vistime(data)    # apply vistime
 
-**Review matches**  
+library(plotly)
 
-The object returned from `fastLink()` is of class `list`, so it actually contains several dataframes within it. One of these dataframes is `matches`, which contains the links.  
+# step 1: transform into a list
+pp <- plotly_build(p)
 
-When `matches` is printed, you see two column vectors: the pairs of row numbers (also called "rownames") in `dfA` and in `dfB` representing the best matches. If a row number from `dfA` is missing, then no match was found in dfB at the specified match threshold.    
+# step 2: Marker size
+for(i in 1:length(pp$x$data)){
+  if(pp$x$data[[i]]$mode == "markers") pp$x$data[[i]]$marker$size <- 10
+}
 
-```{r}
-# print matches
-matches <- fl_output$matches
-matches
-```
-
-Things to note:  
-
-* Matches occurred despite slight differences in name spelling and dates of birth:  
-  * "Tony" matched to "Anthony"  
-  * "Maria" matched to "Marialisa"  
-  * "Betty" matched to "Elizabeth"  
-  * "Olivier Laurent De Bordeaux" matched to "Oliver Laurent De Bordow" (missing date of birth ignored)  
-* One row from `dfA` ("Blessing Adebayo") had no good match, row number 9 is not present in `matches`.  
+# step 3: text size
+for(i in 1:length(pp$x$data)){
+  if(pp$x$data[[i]]$mode == "text") pp$x$data[[i]]$textfont$size <- 10
+}
 
 
+# step 4: text position
+for(i in 1:length(pp$x$data)){
+  if(pp$x$data[[i]]$mode == "text") pp$x$data[[i]]$textposition <- "right"
+}
 
-
-**Join based on the probabilistic matches**  
-
-To use these matches to join `results` to `cases`, one strategy is:  
-
-1) Use `left_join()` to join `matches` to `cases` (matching rownames in `cases` to "inds.a" in `match`)  
-2) Then use another `left_join()` to join `results` to `cases` (matching the newly-acquired "inds.b" in `cases` to rownames in `results``)  
-
-Before the joins, we should clean the three datasets:  
-
-* Both `dfA` and `dfB` should have their row numbers ("rowname") converted to a proper column  
-* Both the columns in `match` are converted to class character, so they can be joined to the character rownames  
-
-```{r}
-# Clean data prior to joining
-#############################
-
-# convert cases rownames to a column 
-cases_clean <- cases %>% rownames_to_column()
-
-# convert test_results rownames to a column
-results_clean <- results %>% rownames_to_column()  
-
-# convert all columns in matches dataset to character, so they can be joined to the rownames
-matches_clean <- matches %>%
-  mutate(across(everything(), as.character))
-
-
-
-# Join matches to dfA, then add dfB
-###################################
-# column "inds.b" is added to dfA
-complete <- left_join(cases_clean, matches_clean, by = c("rowname" = "inds.a"))
-
-# column(s) from dfB are added 
-complete <- left_join(complete, results_clean, by = c("inds.b" = "rowname"))
-```
-
-As performed using the code above, the resulting dataframe `complete` will contain *all* columns from both `cases` and `results`. Many will be appended with suffixes ".x" and ".y", because the column names would otherwise be duplicated.  
-
-```{r message=FALSE, echo=F}
-DT::datatable(complete, rownames = FALSE, options = list(pageLength = nrow(complete)))
-```
-
-Alternatively, before joining you can use `select()` on `results` so that it contains only rownames and any columns that you want to add to `cases` (e.g. the column `result`).  
-
-```{r}
-cases_clean <- cases %>% rownames_to_column()
-
-results_clean <- results %>%
-  rownames_to_column() %>% 
-  select(rowname, result)    # select only certain columns 
-
-matches_clean <- matches %>%
-  mutate(across(everything(), as.character))
-
-# joins
-complete <- left_join(cases_clean, matches_clean, by = c("rowname" = "inds.a"))
-complete <- left_join(complete, results_clean, by = c("inds.b" = "rowname"))
-```
-
-
-```{r message=FALSE, echo=F}
-DT::datatable(complete, rownames = FALSE, options = list(pageLength = nrow(complete)))
-```
-
-
-If you want to subset either dataset to only the rows that matched, you can use the codes below:  
-
-```{r}
-cases_matched <- cases[matches$inds.a,]  # Rows in cases that matched to a row in results
-results_matched <- results[matches$inds.b,]  # Rows in results that matched to a row in cases
-```
-
-Or, to see only the rows that did **not** match:  
-
-```{r}
-cases_not_matched <- cases[!rownames(cases) %in% matches$inds.a,]  # Rows in cases that did NOT match to a row in results
-results_not_matched <- results[!rownames(results) %in% matches$inds.b,]  # Rows in results that did NOT match to a row in cases
-```
-
-
-### Probabilistic deduplication  
-
-Probabilistic matching can be used to deduplicate a dataset as well. See the page on deduplication for many methods of deduplication.  
-
-Here we begin with the `cases` dataset, but with 2 rows that are likely duplicates (not 100% duplicates): "Tony" with "Anthony", and "Marialisa Rodrigues" with "Maria Rodriguez".  
-
-```{r, echo=F}
-## Add duplicates
-#cases_dup <- rbind(cases, cases[sample(1:nrow(cases), 3, replace = FALSE),])
-
-cases_dup <- tribble(
-  ~gender, ~first,      ~middle,     ~last,        ~yr,   ~mon, ~day, ~district,
-  "M",     "Amir",      NA,          "Khan",       1989,  11,   22,   "River",
-  "M",     "Anthony",   "B.",        "Smith",      1970, 09, 19,      "River", 
-  "F",     "Marialisa", "Contreras", "Rodrigues",  1972, 04, 15,      "River",
-  "F",     "Elizabeth", "Casteel",   "Chase",      1954, 03, 03,      "City",
-  "M",     "Jose",      "Sanchez",   "Lopez",      1996, 01, 06,      "City",
-  "F",     "Cassidy",   "Jones",      "Davis",     1980, 07, 20,      "City",
-  "M",     "Michael",   "Murphy",     "O'Calaghan",1969, 04, 12,      "Rural", 
-  "M",     "Oliver",    "Laurent",    "De Bordow" , 1971, 02, 04,     "River",
-  "F",      "Blessing",  NA,          "Adebayo",   1955,  02, 14,     "Rural",
-  
-  "M",     "Tony",   "B.",        "Smith",         1970, 09, 19,      "River", 
-  "F",     "Maria",  "Contreras", "Rodriguez",     1972, 04, 15,      "River",
-)
+#print
+pp
 
 ```
 
-```{r message=FALSE, echo=F}
-DT::datatable(cases_dup, rownames = FALSE, options = list(pageLength = nrow(cases_dup)))
-```
-Below we run the same `fastLink()` command as before, but the dataframe is compared to itself. When the two datasets are identical, the function assumes you want to deduplicate.  
 
-```{r}
-## Run fastLink on the same dataset
-dedupe_output <- fastLink(
-  dfA = cases_dup,
-  dfB = cases_dup,
-  varnames = c("gender", "first", "middle", "last", "yr", "mon", "day", "district")
-)
-```
 
-`fl.out` must be of class `fastLink.dedupe`, or in other words, the result of either `fastLink()` or matchesLink().  
+<!-- ======================================================= -->
+## DAGs {.tabset .tabset-fade}
 
-Now, you can review the potential duplicates with `getMatches()`. Provide the dataset for both `dfA` and `dfB`, and provide the output of the `fastLink()` function to `fl.out`.  
+You can build a DAG manually using the **DiagammeR** package and DOT language, as described in another tab. Alternatively, there are packages like **ggdag** and **daggity**
 
-```{r}
-## Run getMatches
-cases_dedupe <- getMatches(
-  dfA = cases_dup,
-  dfB = cases_dup,
-  fl.out = dedupe_output)
-```
+https://cran.r-project.org/web/packages/ggdag/vignettes/intro-to-dags.html
 
-See the left-most column, which indicates the duplicate IDs - the final two rows are identified as being likely duplicates of rows 2 and 3.  
-
-```{r message=FALSE, echo=F}
-DT::datatable(cases_dedupe, rownames = FALSE, options = list(pageLength = nrow(cases_dedupe)))
-```
-
-To return the rows which are likely duplicates:  
-
-```{r}
-cases_dedupe %>% 
-  count(dedupe.ids) %>% 
-  filter(n > 1)
-```
-
-And to inspect the whole rows of the likely duplicates, put the row number in this command:  
-
-```{r}
-# displays row 2 and all likely duplicates of it
-cases_dedupe[cases_dedupe$dedupe.ids == 2,]   
-```
-
+https://www.r-bloggers.com/2019/08/causal-inference-with-dags-in-r/#:~:text=In%20a%20DAG%20all%20the,for%20drawing%20and%20analyzing%20DAGs.
 
 
 
@@ -946,12 +918,7 @@ cases_dedupe[cases_dedupe$dedupe.ids == 2,]
 <!-- ======================================================= -->
 ## Resources {.tabset .tabset-fade}
 
-The [dplyr page on joins](https://dplyr.tidyverse.org/reference/join.html)  
-
-See this vignette on [fastLink](https://github.com/kosukeimai/fastLink) at the package's Github page  
-Publication describing methodolgy of [fastLink](https://imai.fas.harvard.edu/research/files/linkage.pdf)  
-
-Publication describing [RecordLinkage package](https://journal.r-project.org/archive/2010/RJ-2010-017/RJ-2010-017.pdf)
+Links to other online tutorials or resources.
 
 
 
@@ -988,5 +955,5 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 #count_data <- rio::import(here::here("data", "facility_count_data.rds"))
 ```
 
-<!--chapter:end:new_pages/matching_joining.Rmd-->
+<!--chapter:end:new_pages/diagrams.Rmd-->
 
