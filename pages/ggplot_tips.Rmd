@@ -97,15 +97,92 @@ ggplot(data = linelist_cleaned, mapping = aes(x = age, fill = outcome)) +
 ```
 
 
+There are a huge number of different geoms that can be used, and they are all used with similar attribute names. While not exhaustive, some of the shapes that can be used are:
+
+  1. Histograms - `geom_histogram()`
+  2. Barcharts - `geom_bar()`
+  3. Boxplots - `geom_boxplot()`
+  4. Dot plots (for scatterplots or with discrete variables) - `geom_point()`
+  5. Line graphs - `geom_line()` or `geom_path()`
+  6. Trend lines - `geom_smooth()`
+
+You can also add straight lines to your plot with `geom_hline()` (horizontal), `geom_vline()` (vertical) or `geom_abline()` (with a specified y intercept and slope)
+
+There is much more detail we could show here, but we'll finish with an example that ties these concepts together by plotting the time between onset and hospitalisation by age with a scatterplot
+  
+```{r, eval = TRUE, cache.vars = TRUE}
+
+# calculate our delay variable
+
+linelist_cleaned <- linelist_cleaned %>%
+  mutate(days_onset_to_hosp = date_hospitalisation - date_onset)
+
+# set up the plot and define key variables
+# colour is the outcome
+delay_plot <- ggplot(data = linelist_cleaned,
+                     aes(x = age_years, y = days_onset_to_hosp, col = outcome)) +
+  # define aspects of the geom that are NOT included specific to variables
+  # other attributes are inherited
+  geom_point(size = 1, alpha = 0.5) +
+  # add a trend line
+  # use a linear method
+  geom_smooth(method = "lm") +
+  # add nicer labels
+  labs(x = "age", y = "onset to hospitalsiation (days)",
+       title = "Onset to hospitalisation by age")
+
+delay_plot
+
+```
+
+This looks ok, but we could make the theme a little nicer. `ggplot2` comes with some preset themes that can be used to change the theme of the plot. We can also edit themes of the plot with extreme detail with the `theme()` function. For example, we can update this plot like this:
+
+```{r, eval = TRUE}
+
+delay_plot + 
+  # set the theme to classic
+  theme_classic() +
+  # further edit the theme to move the legend position
+  theme(legend.position = "bottom")
+
+```
+
 <!-- ======================================================= -->
 ## Preparation {.tabset .tabset-fade .tabset-pills}
 
-Keep the title of this section as "Preparation".  
-Data preparation steps such as:  
+When preparing data to plot, it is best to make the data adhere to tidyverse standards as much as possible. This is expanded on much more in previous sections. 
 
-* Loading dataset  
-* Adding or changing variables  
-* melting, pivoting, grouping, etc.   
+Some simple ways we can prepare our data to make it better for plotting can often include making the contents of the data better for display - this does not necessarily mean its better for data manipulation! For example, we can replace `NA` values in a character column with the string "Unknown", or clean some variables so that their "data friendly" with underscores etc are changed to normal text. Here are some examples of this in action:
+
+```{r, eval = FALSE}
+linelist_cleaned <- linelist_cleaned %>%
+  # make display version of columns with more friendly names
+  mutate(
+    # f to Male, f to Female, NA to Unknown
+    gender_disp = case_when(gender == "m" ~ "Male",
+                            gender == "f" ~ "Female",
+                            is.na(gender) ~ "Unknown"),
+    # replace NA with unknown for outcome
+    outcome_disp = replace_na(outcome, "Unknown")
+  )
+
+
+```
+
+
+
+As a matter of data structure, we often also want to pivot our data into *longer* formats, which will allow us to use a set of variables as a single variable. For example, if we wanted to show the number of cases with specific symptoms, we are limited by the fact that each symptom is a specific column. We can pivot this to a longer format like this:
+
+```{r, eval = F}
+
+linelist_sym <- linelist_cleaned %>%
+  pivot_longer(cols = c("fever", "chills", "cough", "aches", "vomit"),
+               names_to = "symptom_name",
+               values_to = "symptom_is_present")
+
+```
+
+We could then use new dataframe in an upcoming plot. Note that this format is not very useful for other operations, and should just be used for the plot it was made for. However, users should endeavour to use these practices as much as possible for the base dataset, as they are more tidyverse compliant, and will make working with the data easier.
 
 <!-- ======================================================= -->
 ### sub-tab 1 {.tabset .tabset-fade .tabset-pills}
