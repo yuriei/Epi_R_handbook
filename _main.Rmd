@@ -37,41 +37,29 @@ knitr::include_graphics(here::here("images", "R Handbook Logo.png"))
 <!-- ======================================================= -->
 ## About this handbook {-}
 
-This is a free open-access R reference guide intended for applied epidemiologists.  
+**This is a free open-access R reference book for applied epidemiologists and public health practitioners.**  
 
 **This book strives to:**  
 
 * Serve as a quick reference guide - not a textbook  
 * Address common epidemiological problems via task-centered examples  
 * Be accessible in settings with limited technical support and low internet-connectivity (downloadable version)  
-* Contain clear and simple language, with step-by-step instructions and many comments  
+* Contain clear and simple language, with step-by-step instructions and helpful code annotation  
 * Be a living document, growing and adapting to new best practices  
 
 **What gaps does this book address?**  
 
-* Many epidemiologists do not have formal training in R or data science, or are transitioning to R from SAS, STATA, or other statistical software.  
+* Many epidemiologists lack formal R training or are transitioning from SAS, STATA, or other statistical software.  
 * The R universe changes frequently - there should be a place for best practice code catered toward the common epidemiologist user.  
-* Epidemiologists often must read dozens of online forum pages for answers, most of which are not epidemiology-oriented.  
+* Epidemiologists often search dozens of online forums for answers, most of which are not epidemiology-oriented.  
 * Some epidemiologists work in low internet-connectivity environments and have limited technical support.  
 
 **How is this different than other R books?**  
 
-This handbook is written by epidemiologists, for epidemiologists. Examples are taken from lived experience in local, national, academic, and emergency settings. The book is also offered in a download-able format for to bring into settings with unreliable internet. 
-In addition to core R concepts and tools, this book covers:  
+* This handbook is written by epidemiologists, for epidemiologists. It is **not** an approved product of any specific organization. Examples and techniques are adapted from the authors lived experience in local, national, academic, and emergency settings.  
+* The book is offered in a download-able format for settings with unreliable internet.  
+* In addition to core R skills this book uses epidemiology-centered examples to cover tasks like *epidemic curves, transmission chains and epidemic modeling, age and sex pyramids, age and sex standardization, probabilistic matching of records, outbreak detection methods, survey analysis, causal diagrams, survival analysis, GIS basics, phylogenetic trees, missing data imputation, automated routine reports with Rmarkdown*, etc...  
 
-* epidemic curves  
-* transmission chains and epidemic modeling  
-* age and sex pyramids  
-* age and sex standardization  
-* probabilistic matching of records on name similarity, age, sex, birthdate, etc.  
-* outbreak detection methods  
-* survey analysis  
-* causal diagrams  
-* survival analysis  
-* GIS basics  
-* phylogenetic trees  
-* missing data imputation  
-* automated routine reports with Rmarkdown  
 
 
 <!-- ======================================================= -->
@@ -102,11 +90,11 @@ This handbook is a collaborative team production. It has been conceived, written
 
 Here are the team members:  
 
-**Editor-in-Chief:** 
+**Editor-in-Chief:** Neale Batra 
 
-**Editorial core team:**  ...(list)...  
+**Editorial core team:** Alex Spina, Amrish Baidjoe, Henry Laurenson-Schafer, Finlay Campbell, Pat Keating  
 
-**Authors:** ...(list)...
+**Authors** *(in order of contributions)*: Neale Batra, Alex Spina, Paula Blomquist, Finlay Campbell, Henry Laurenson-Schafer, Isaac Florence, Natalie Fischer, Daniel Molling, Liza Coyer, Jonny Polonski, Yurie Izawa, Sara Hollis  
 
 **Reviewers:** ...(list)...  
 
@@ -115,27 +103,22 @@ Here are the team members:
 
 ### Funding and programmatic support {-}  
 
-Training Programs in Epidemiology and Public Health Interventions Network ([TEPHINET](https://www.tephinet.org/))  
+The handbook received funding via a COVID-19 emergency capacity-building grant from Training Programs in Epidemiology and Public Health Interventions Network ([TEPHINET](https://www.tephinet.org/)).  
 
-EPIET Alumni Network ([EAN](https://epietalumni.net/))  
-
-
-
-
-### Data sources {-}  
-
-The linelist used in much of the handbook is adapted from the *simulated* Ebola outbreak linelist in the **outbreaks** package  
+Programmatic support was provided by the EPIET Alumni Network ([EAN](https://epietalumni.net/)).  
 
 
 
 ### Inspiration {-}  
 
+The multitude of tutorials and vignettes that provided foundational knowledge for development of handbook content are credited within their respective pages.  
+
+More generally, the following sources provided inspiration and laid the groundwork for this handbook:  
 [The "R4Epis" project](https://r4epis.netlify.app/) (a collaboration between MSF and RECON)  
 [R Epidemics Consortium (RECON)](https://www.repidemicsconsortium.org/)  
 [R for Data Science book (R4DS)](https://r4ds.had.co.nz/)  
 [bookdown: Authoring Books and Technical Documents with R Markdown](https://bookdown.org/yihui/bookdown/)  
-Other specific tutorials and vignettes are credited in their relevant pages  
-
+[Netlify](https://www.netlify.com) hosts this website  
 
 ### Image credits {-}  
 
@@ -151,7 +134,9 @@ Logo: [CDC Public Health Image library](https://phil.cdc.gov/), [R Graph Gallery
 
 ### License and Terms of Use {-}  
 
-This handbook is **not** an approved product of any specific organization. Although we strive for accuracy, we provide no guarantee of the content in this book.  
+This handbook is **not** an approved product of any specific organization.  
+
+Although we strive for accuracy, we provide no guarantee of the content in this book.  
 
 This book is licensed under a [Creative Commons license](https://creativecommons.org/licenses/) TBD... 
 
@@ -335,12 +320,10 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 
 # Datasets used
 
-Here the datasets used in this handbook will be described and will be downloadable  
+Data used in this handbook are either simulated or publicly available. All can be accessed from the ["data" folder](https://github.com/nsbatra/Epi_R_handbook/tree/master/data) of our Github repository.  
 
-* Linelist (...)
-* Aggregated case counts (...)  
-* GIS shapefile (...)  
-* modeling dataset? (...)
+The case linelist used throughout much of the handbook is a *simulated* Ebola outbreak dataset from the **outbreaks** package.  
+
 ```{r include=FALSE, cache=FALSE}
 
 # clear workspace
@@ -415,9 +398,7 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 <!-- ======================================================= -->
 ## Overview
 
-**This section is not meant as a comprehensive "learn basic R" tutorial**. However, it does cover some of the fundamentals that can be useful for reference or for refreshing your memory. 
-
-See the tab on recommended training for more comprehensive tutorials.  
+**This page is not intended to be a comprehensive "learn R" tutorial**. However, it does cover some fundamentals that can be useful for reference or for refreshing your memory. See the section on recommended training for more comprehensive tutorials.  
 
 ```{r, echo=F}
 # import the cleaned ebola linelist
@@ -436,17 +417,17 @@ R is free to use! There is a strong ethic in the community of free and open-sour
 
 **Reproducibility**  
 
-Conducting your data management and analysis through a programming language (compared to Excel or other primarily manual tool) enhances **reproducibility**, makes **error-detection** easier, and eases your workload.  
+Conducting your data management and analysis through a programming language (compared to Excel or another primarily point-click/manual tool) enhances **reproducibility**, makes **error-detection** easier, and eases your workload.  
 
 **Community**  
 
-The broad R community is enormous and collaborative. New packages and tools are developed daily, and vetted by the community. Perhaps the largest organization of R users is [R-Ladies](https://rladies.org/), which likely has a chapter near you.   
+The R community of users is enormous and collaborative. New packages and tools to address real-life problems are developed daily, and vetted by the community of users. As one example, [R-Ladies](https://rladies.org/) is a worldwide organization whose mission is to promote gender diversity in the R community, and is one of the largest organizations of R users. It likely has a chapter near you!  
 
 
 
 
 <!-- ======================================================= -->
-## Installation {#install  }
+## Installation {#install}
 
 **How to install R**  
 
@@ -458,20 +439,31 @@ Visit this website [https://rstudio.com/products/rstudio/download/](https://rstu
 
 **How to update R and RStudio**  
 
+Your version of R is printed to the R Console at start-up. You can also run `sessionInfo()`.  
 
-**Other things you may need to install:**  
+To update R, go to the website mentioned above and re-install R. Alternatively, you can use the **installr** package (on Windows) by running `installr::updateR()`. This will open dialog boxes to help you download the latest R version and update your packages to the new R version. More details can be found in the **installr** [documentation](https://www.r-project.org/nosvn/pandoc/installr.html).  
+
+Be aware that the old R version will still exist in your computer. You can temporarily run an older version (older "installation") of R by clicking "Tools" -> "Global Options" in RStudio and choosing an R version. This can be useful if you want to use a package that has not been updated to work on the newest version of R.  
+
+
+
+To update RStudio, you can go to the website above and re-download RStudio. Another option is to click "Help" -> "Check for Updates" within RStudio, but this may not show the very latest updates.  
+
+
+### Other software you *may* need to install {-} 
 
 * TinyTeX (*for compiling an RMarkdown document to PDF*)  
 * Pandoc  (*for compiling RMarkdown documents*)  
 * RTools  (*for building packages for R*)  
+* phantomjs (*for saving still images of animated networks, such as transmission chains*)  
 
 
-### TinyTex { }
+#### TinyTex {-}  
 
 TinyTex is a custom LaTeX distribution, useful when trying to produce PDFs from R.  
-See [https://yihui.org/tinytex/](https://yihui.org/tinytex/)  
+See [https://yihui.org/tinytex/](https://yihui.org/tinytex/) for more informaton.  
 
-To install from R:  
+To install TinyTex from R:  
 
 ```{r, eval=F}
 install.packages('tinytex')
@@ -480,16 +472,22 @@ tinytex::install_tinytex()
 ```
 
 
-### Pandoc { }
+#### Pandoc {-}
 
-Pandoc is a document converter, a separate software from R. **It comes bundled with RStudio.** It helps the process of converting Rmarkdown documents to formats like .pdf and adding complex functionality.  
+Pandoc is a document converter, a separate software from R. **It comes bundled with RStudio and should not need to be downloaded.** It helps the process of converting Rmarkdown documents to formats like .pdf and adding complex functionality.  
 
 
-### RTools { }
+#### RTools {-}  
 
 RTools is a collection of software for building packages for R
 
 Install from this website: [https://cran.r-project.org/bin/windows/Rtools/](https://cran.r-project.org/bin/windows/Rtools/)  
+
+
+#### phantomjs {-}  
+
+This is often used to take "screenshots" of webpages. For example when you make a transmission chain with **epicontacts** package, an HTML file is produced that is interactive and dynamic. If you want a static image, if can be useful to use the [**webshot**](https://wch.github.io/webshot/articles/intro.html) package to automate this process. This will require the external program "phantomjs". You can install phantomjs via the **webshot** package with the command `webshot::install_phantomjs()`.  
+
 
 
 
@@ -498,7 +496,7 @@ Install from this website: [https://cran.r-project.org/bin/windows/Rtools/](http
 ## RStudio {#rstudio  }
 
 
-### RStudio Orientation
+### RStudio Orientation {-}
 **First, open RStudio.** As their icons can look very similar, be sure you are opening *RStudio* and not R.  
 
 
@@ -533,13 +531,15 @@ This pane, by default the upper-right, is most often used to see brief summaries
 
 In Stata, this is most similar to Variables Manager window.
 
+This pane also contains *History* where can see commands that you can previously. It also has a "Tutorial" tab where you can complete interactive R tutorials if you have the **learnr** package installed.  
+
 
 **Plots, Packages, and Help Pane**  
 The lower-right pane includes several tabs including plots (display of graphics including maps), help, a file library, and available R packages (including installation/update options).  
 
 This pane contains the Stata equivalents of the Plots Manager and Project Manager windows.
 
-### RStudio settings  
+### RStudio settings {-}  
 
 Change RStudio settings and appearance in the *Tools* drop-down menu, by selecting *Global Options*. There you can change the default settings, including appearance/background color.  
 
@@ -550,36 +550,36 @@ knitr::include_graphics(here::here("images", "RStudio_tools_options.png"))
 
 
 <!-- ======================================================= -->
-## Scripts {#scripts  }
+## Scripts {#scripts}
 
 Scripts are a fundamental part of programming. Storing your code in a script (vs. typing in the console) has many advantages:  
 
-* Reproducibility  
-* Version control  
-* Commenting  
+* Reproducibility - so that other can know exactly what you did (and what you might have done wrong!)  
+* Version control - so you can track changes made by yourself or colleagues  
+* Commenting/annotation - to explain to your colleagues what you have done  
 
 
 <!-- ======================================================= -->
-### Rmarkdown {#rmd  }
+### R markdown {-}
 
-Rmarkdown is a type of script in which the script itself *becomes* a document (PDF, Word, HTML, Powerpoint, etc.). See the handbook page on Rmarkdown documents.  
+Rmarkdown is a type of script in which the script itself *becomes* a document (PDF, Word, HTML, Powerpoint, etc.). See the handbook page on [R Markdown] documents.  
 
 
 <!-- ======================================================= -->
-### R notebooks {#rnotebooks  }
+### R notebooks {-}
 
 There is no difference between writing in a Rmarkdown vs an R notebook. However the execution of the document differs slightly. See this [site](http://uc-r.github.io/r_notebook) for more details.
 
 <!-- ======================================================= -->
-### R Shiny {#shinyscripts  }
+### Shiny {-}
 
-Shiny apps are contained within one script, which must be named `app.R`. This file has three components:  
+Shiny apps/websites are contained within one script, which must be named `app.R`. This file has three components:  
 
 1) A user interface (ui)  
 2) A server function  
 3) A call to the `shinyApp` function  
 
-See the handbook page on Shiny basics, or this online tutorial: [Shiny tutorial](https://shiny.rstudio.com/tutorial/written-tutorial/lesson1/)
+See the handbook page on [Shiny and dashboards], or this online tutorial: [Shiny tutorial](https://shiny.rstudio.com/tutorial/written-tutorial/lesson1/)
 
 *In older times, the above file was split into two files (`ui.R` and `server.R`)*
 
@@ -602,20 +602,20 @@ The working directory appears in grey text at the top of the RStudio Console pan
 
 
 <!-- ======================================================= -->
-### Filepaths  
+### Filepaths {-}  
 
 Perhaps the most common source of frustration for an R beginner on a Windows machine - typing in a filepath to import data.  
 
 1) Use **here** - Avoid these problems altogether by using relative pathways from the root of an R project that uses the **here** package. See the **here** tab in this Basics page for more details.  
 
-2) **Slashes** - If typing in a filepath, beware the direction of the slashes. Enter them using *forward slashes* to separate components ("data/provincial.csv"). For Windows users, the default way that filepaths are displayed and copied is with *backslashes* ("\\") - so this means you must go change the direction of each slash. Or just use **here** and an R project as noted above.  
+2) **Slash direction** - *If typing in a filepath, beware the direction of the slashes.* Enter them using *forward slashes* to separate components ("data/provincial.csv"). For Windows users, the default way that filepaths are displayed and copied is with *backslashes* ("\\") - so this means you must go change the direction of each slash. Or just use **here** and an R project as noted above.  
 
-3) Avoid using "absolute" paths - these are "full address" paths that direct to the same place regardless of the user's working directory. For example:  
+3) Avoid using "absolute" paths - these are "full address" paths that direct to the same place regardless of the user's working directory. For example, **avoid this**:  
 
 ```
 C:/Users/Name/Document/Analytic Software/R/Projects/Analysis2019/data/March2019.csv  
 ```
-This path **will break** if the script is sent to someone on another computer! Instead, consider using an R project and having the filepath begin at that root directory (i.e. the working directory of the R project).  
+This path above *could break* if the script is sent to someone on another computer! Instead, consider using an R project and having the filepath begin at that root directory (i.e. the working directory of the R project).  
 
 One possible exception is if working in a larger organization where you need to pull data from across several networked drives and don't have permission to re-save the data in your R project. This can get tenuous, but it may be best to use these full absolute filepaths.  
 
@@ -623,7 +623,7 @@ One possible exception is if working in a larger organization where you need to 
 
 
 <!-- ======================================================= -->
-### Set by command
+### Set by command {-}
 
 Use the command `setwd()` with the filepath in quotations, for example: `setwd("C:/Documents/R Files")`
 
@@ -640,7 +640,7 @@ knitr::opts_knit$set(root.dir = 'desired/filepath/here')
 
 
 <!-- ======================================================= -->
-### Set Manually
+### Set manually {-}
 
 Setting your working directory manually (point-and-click)  
 
@@ -648,16 +648,16 @@ From RStudio click: Session / Set Working Directory / Choose Directory (you will
 
 
 <!-- ======================================================= -->
-### In an R project
+### Within an R project {-}
 
-If you are working in an R project, your working directory will by default be the root folder. This is convenient to maximize with the **here** package (LINK).  
+If you are working in an R project, your working directory will by default be the root folder. This is convenient to maximize with the **here** package.  
 
 
 
 
 
 <!-- ======================================================= -->
-## Objects {#objects  }
+## Objects {#objects}
 
 Everything in R is an object. These sections will explain:  
 
@@ -685,15 +685,15 @@ You can think of the assignment operator `<-` as the words "is defined as". Assi
  
 **object_name**  <-  **value** (or process/calculation that produce a value)
 
-> **EXAMPLE:** You may want to record the current epidemiological reporting week as an object for reference in later code. In this example, the object `reporting_week` is created when it is assigned the character value `"2018-W10"` (the quote marks make these a character value).  
-The object `reporting_week` will then appear in the RStudio Environment pane (upper-right) and can be referenced in later commands.  
+> **EXAMPLE:** You may want to record the current epidemiological reporting week as an object for reference in later code. In this example, the object `current_week` is created when it is assigned the character value `"2018-W10"` (the quote marks make these a character value).  
+The object `current_week` will then appear in the RStudio Environment pane (upper-right) and can be referenced in later commands.  
 
 
 See the R commands and their output in the boxes below. 
 
 ```{r basics_objects_assignment}
-reporting_week <- "2018-W10"   # this command creates the object reporting_week by assigning it a value
-reporting_week                 # this command prints the current value of reporting_week object in the console
+current_week <- "2018-W10"   # this command creates the object current_week by assigning it a value
+current_week                 # this command prints the current value of current_week object in the console
 ```
 
 <span style="color: black;">**_NOTE:_** Note the `[1]` in the R console output is simply indicating that you are viewing the first item of the output</span>
@@ -701,16 +701,17 @@ reporting_week                 # this command prints the current value of report
 
 <span style="color: orange;">**_CAUTION:_** **An object's value can be over-written** at any time by running an assignment command to re-define its value. Thus, the **order of the commands run is very important**.</span>
 
-The following command will re-define the value of `reporting_week`: 
+The following command will re-define the value of `current_week`: 
 
 ```{r basics_objects_reassignment}
-reporting_week <- "2018-W51"   # assigns a NEW value to the object reporting_week
-reporting_week                 # prints the current value of reporting_week in the console
+current_week <- "2018-W51"   # assigns a NEW value to the object current_week
+current_week                 # prints the current value of current_week in the console
 ```
 
-**Datasets are also objects ("dataframes") and must be assigned names when they are imported.**  
 
-In the code below, the object `linelist` is created and assigned the value of a CSV file imported with the **rio** package.  
+**Dataset**  
+
+Datasets are also objects (typically "dataframes") and must be assigned names when they are imported. In the code below, the object `linelist` is created and assigned the value of a CSV file imported with the **rio** package and its `import()` function.  
 
 ```{r basics_objects_dataframes, eval=FALSE}
 # linelist is created and assigned the value of the imported CSV file
@@ -728,7 +729,7 @@ You can read more about importing and exporting datasets with the section on [im
  
 
 <!-- ======================================================= -->
-### Object structure {#objectstructure}  
+### Object structure {-}  
 
 **Objects can be a single piece of data (e.g. `my_number <- 24`), or they can consist of structured data.**  
 
@@ -744,16 +745,15 @@ In epidemiology (and particularly field epidemiology), you will *most commonly* 
 
 Common structure | Explanation | Example
 ------------------- | ------------------------------------ | ------------------------  
-Vectors | A container for a sequence of singular objects, all of the same class (e.g. numeric, character). | **"Variables" (columns) in data frames are vectors** (e.g. the variable `age_years`).  
+Vectors | A container for a sequence of singular objects, all of the same class (e.g. numeric, character). | **"Variables" (columns) in data frames are vectors** (e.g. the column `age_years`).  
 Data Frames | Vectors (e.g. columns) that are bound together that all have the same number of rows. | `linelist` is a data frame.  
 
-Note that to create a vector that "stands alone", or is not part of a data frame (such as a list of location names), the function `c()` is often used:  
-
+Note that to create a vector that "stands alone", or is not part of a data frame (such as a list of location names), the function `c()` is often used: 
 `list_of_names <- c("Ruhengeri", "Gisenyi", "Kigali", "Butare")`  
 
 
 <!-- ======================================================= -->
-### Object classes  {#objectclasses}
+### Object classes  {-}
 
 All the objects stored in R have a *class* which tells R how to handle the object. There are many possible classes, but common ones include:
 
@@ -766,6 +766,8 @@ Factor | These are vectors that have a **specified order** or hierarchy of value
 Date | **Once R is told that certain data are Dates**, these data can be manipulated and displayed in special ways. See the page on Dates for more information. | 2018-04-12 or 15/3/1954 or Wed 4 Jan 1980  
 Logical | Values must be one of the two special values TRUE or FALSE (note these are **not** "TRUE" and "FALSE" in quotation marks) | TRUE or FALSE  
 data.frame | A data frame is how R stores a **typical dataset**. It consists of vectors (columns) of data bound together, that all have the same number of observations (rows). | The example AJS dataset named `linelist_raw` contains 68 variables with 300 observations (rows) each.  
+list | A list is like vector, but holds other objects that can be other different classes | A list could hold a single number, and a dataframe, and a vector, and even another list within it!  
+
 
 **You can test the class of an object by feeding it to the function `class()`**. Note: you can reference a specific column within a dataset using the `$` notation to separate the name of the dataset and the name of the column.
 
@@ -805,19 +807,18 @@ Here is [more online material on classes and data structures in R](https://swcar
 <!-- ======================================================= -->
 ### Columns/Variables (`$`) {#dollarsign}  
 
-A column in a dataframe is known as a "vector", or a sequence of values that must all the same class
-**Vectors within a data frame (variables in a dataset) can be called, referenced, or created using the `$` symbol.** The `$` symbol connects the name of the column to the name of its data frame. The `$` symbol must be used, otherwise R will not know where to look for or create the column.  
+A column in a dataframe is technically a "vector", or a sequence of values that must all be the same class (either character, numeric, logical, etc).  
 
-In this handbook, we use the word "column" instead of "variable".  
+**Columns within a data frame can be called, referenced, extracted, and created using the `$` symbol.** The `$` symbol connects the name of the column to the name of its data frame. In this handbook, we try to use the word "column" instead of "variable".  
 
 
 ```{r basics_objects_call, eval=F}
 # Retrieve the length of the vector age_years
-length(linelist$age) # (age is a variable in the linelist data frame)
+length(linelist$age) # (age is a column in the linelist data frame)
 
 ```
 
-By typing the name of the data frame followed by `$` you will also see a list of all variables in the data frame. You can scroll through them using your arrow key, select one with your Enter key, and avoid spelling mistakes!  
+By typing the name of the dataframe followed by `$` you will also see a drop-down menu of all columns in the data frame. You can scroll through them using your arrow key, select one with your Enter key, and avoid spelling mistakes!  
 
 ```{r basics_objects_callGIF, out.width = "100%", fig.align = "center"}
 knitr::include_graphics(here::here("images", "Calling_Names.gif"))
@@ -825,14 +826,14 @@ knitr::include_graphics(here::here("images", "Calling_Names.gif"))
 
 
 
-<span style="color: darkgreen;">**_ADVANCED TIP:_** Some more complex objects (e.g. an `epicontacts` object may have multiple levels which can be accessed through multiple dollar signs. For example `epicontacts$linelist$date_onset`) .</span>
+<span style="color: darkgreen;">**_ADVANCED TIP:_** Some more complex objects (e.g. a list, or an `epicontacts` object) may have multiple levels which can be accessed through multiple dollar signs. For example `epicontacts$linelist$date_onset`</span>
 
 
 
 <!-- ======================================================= -->
 ### Access/index with brackets (`[]`) {#brackets}  
 
-You may need to view parts of objects, also called "indexing", which is often done using the square brackets `[ ]`. Note: using `$` on a dataframe to access a column is also a type of indexing.  
+You may need to view parts of objects, also called "indexing", which is often done using the square brackets `[ ]`. Ssing `$` on a dataframe to access a column is also a type of indexing.  
 
 ```{r}
 my_vector <- c("a", "b", "c", "d", "e", "f")  # define the vector
@@ -845,14 +846,14 @@ Square brackets also work to return specific parts of an returned output, such a
 # All of the summary
 summary(linelist$age)
 
-#Just one part
+# Just one part of the summary
 summary(linelist$age)[2]  
 ```
 
 To view specific rows and columns of a dataset, you can do this using the syntax `dataframe[rows, columns]`:  
 
 ```{r basics_objects_access, eval=F}
-# View a specific row (2) from dataset, with all columns
+# View a specific row (2) from dataset, with all columns (don't forget the comma!)
 linelist[2,]
 
 # View all rows, but just one column
@@ -879,10 +880,10 @@ View(linelist[2:20, "date_onset"])
 new_table <- linelist[2:20, c("date_onset")] 
 ```
 
-When indexing an object of class **list**, single brackets always return with with class list, even if only a single object is returned. Double brackets, however, can be used to access a single element and return a different class than list.  
+When indexing an object of class **list**, single brackets always return with class list, even if only a single object is returned. Double brackets, however, can be used to access a single element and return a different class than list.  
 Brackets can also be written after one another, as demonstrated below.  
 
-This [visual explanation with pepper shakers](https://r4ds.had.co.nz/vectors.html#lists-of-condiments) is humorous and helpful.
+This [visual explanation of lists indexing, with pepper shakers](https://r4ds.had.co.nz/vectors.html#lists-of-condiments) is humorous and helpful.
 
 ```{r}
 # define demo list
@@ -896,8 +897,11 @@ my_list <- list(
     city   = c("Andover", "Hamilton", "El Paso")
     )
   )
+```
 
+Now we extract, using various methods:  
 
+```{r}
 my_list[1] # this returns the element in class "list"
 
 my_list[[1]] # this is a character vector
@@ -913,7 +917,7 @@ my_list[[2]][1] # This returns the first column ("street") of the address datafr
 
 
 <!-- ======================================================= -->
-### Remove objects  
+### Remove objects {-} 
 
 You can remove individual objects by putting the name in the `rm()` function (no quote marks):  
 
@@ -929,31 +933,27 @@ rm(list = ls(all = TRUE))
 
 
 <!-- ======================================================= -->
-## Functions {#functions  }
-
+## Functions  
 
 This section on functions explains:  
 
 * What a function is and how they work  
 * What arguments are  
-* What packages are  
 * How to get help understanding a function  
 
 
 <!-- ======================================================= -->
 ### Simple functions  
 
-**A function is like a machine that receives inputs, does some action with those inputs, and produces an output.**  
-What the output is depends on the function.    
+**A function is like a machine that receives inputs, does some action with those inputs, and produces an output.** What the output is depends on the function.    
 
-**Functions typically operate upon some object placed within the function's parentheses**. 
-For example, the function `sqrt()` calculates the square root of a number:  
+**Functions typically operate upon some object placed within the function's parentheses**. For example, the function `sqrt()` calculates the square root of a number:  
 
 ```{r basics_function_sqrt}
 sqrt(49)
 ```
 
-Functions can also be applied to variables in a dataset. For example, when the function `summary()` is applied to the numeric variable `age` in the dataset `linelist` ([what's the `$` symbol?](#objects)), the output is a summary of the variable's numeric and missing values.
+The object provided to a function also can be a column in a dataset. For example, when the function `summary()` is applied to the numeric column `age` in the dataset `linelist`, the output is a summary of the columns's numeric and missing values.
 
 ```{r basics_functions_summary}
 summary(linelist$age)
@@ -968,29 +968,38 @@ summary(linelist$age)
 
 Functions often ask for several inputs, called ***arguments***, located within the parentheses of the function, usually separated by commas. 
 
-* Some arguments are required for the function to work correctly, others are optional.  
-* Optional arguments have default settings if they are not specified.
-* Arguments can take character, numeric, logical (TRUE/FALSE), and other inputs.  
+* Some arguments are required for the function to work correctly, others are optional  
+* Optional arguments have default settings  
+* Arguments can take character, numeric, logical (TRUE/FALSE), and other inputs  
 
+Here is a fictional function, called `oven_bake()`, as an example of a typical function. It takes an input object (e.g. a dataset, or in this example "dough") and performs operations on it as specified by additional arguments (`minutes = ` and `temperature = `). The output can be printed to the console, or saved as an object using the assignment operator `<-`.  
 
 ```{r basics_functions_image, echo=F, out.width = "75%", fig.align = "center"}
 knitr::include_graphics(here::here("images", "Function_Bread_Example.png"))
 ```
 
 
-**For example**, this `age_pyramid()` command produces an age pyramid graphic based on defined age groups and a binary split column, such as `gender`. The function is given three arguments within the parentheses, separated by commas. The values supplied to the arguments establish `linelist` as the data frame to use, `age_cat5` as the column to count, and `gender` as the binary column to use for splitting the pyramid by color.
+**For example**, the `age_pyramid()` command below produces an age pyramid plot based on defined age groups and a binary split column, such as `gender`. The function is given three arguments within the parentheses, separated by commas. The values supplied to the arguments establish `linelist` as the dataframe to use, `age_cat5` as the column to count, and `gender` as the binary column to use for splitting the pyramid by color.
 
 ```{r basics_functions_arguments, include=FALSE, results='hide', message=FALSE, warning=FALSE, eval=T}
 ## create an age group variable by specifying categorical breaks
 linelist$age_group <- cut(linelist$age, breaks = c(0, 5, 10, 15, 20, 30, 45, 60))
 ```
 
-<span style="color: black;">**_NOTE:_** For this example, linelist comes with a pre-created column called "age_cat5". To learn how to create new variable see [that section of this handbook](#newvars) </span>
-
-
-```{r basics_functions_pyramid, message=FALSE, warning=FALSE, eval=T, out.width = "75%", out.height="75%"}
-# Creates an age pyramid by specifying the dataframe, age group variable, and a variable to split the pyramid
+```{r message=FALSE, warning=FALSE, eval=T, out.width = "75%", out.height="75%"}
+# Create an age pyramid
 apyramid::age_pyramid(data = linelist, age_group = "age_cat5", split_by = "gender")
+```
+
+The above command can be equivalently written as below, with newlines. This can be easier to read and to write `# comments`. To run this command you can highlight the entire command, or just place your cursor in the first line and then press Ctrl and Enter keys simultaneously.  
+
+```{r message=FALSE, warning=FALSE, eval=T, out.width = "75%", out.height="75%"}
+# Create an age pyramid
+apyramid::age_pyramid(
+  data = linelist,        # case linelist
+  age_group = "age_cat5", # age group column
+  split_by = "gender"     # two sides to pyramid
+  )
 ```
 
 The first half of an argument assignment (e.g. `data = `) does not need to be specified if the arguments are written in a specific order (specified in the function's documentation). The below code produces the exact same pyramid as above, because the function expects the argument order: data frame, `age_group` variable, `split_by` variable.  
@@ -1006,11 +1015,17 @@ apyramid::age_pyramid(linelist, "age_cat5", "gender")
 * Specify the two colors to use (`pal = ` is short for "palette" and is supplied with a vector of two color names. See the [objects](#objectstructure) page for how the function `c()` makes a vector)  
 
 
-<span style="color: black;">**_NOTE:_** For arguments specified with an equals symbol (e.g. `coltotals = ...`), their order among the arguments is not important (must still be within the parentheses and separated by commas).</span>
+<span style="color: black;">**_NOTE:_** For arguments that you specify with both parts of the argument (e.g. `proportiona = TRUE`), their order among all the arguments does not matter.</span>
 
 
 ```{r message=FALSE, warning=FALSE, out.width = "75%", out.height="75%"}
-apyramid::age_pyramid(linelist, "age_cat5", "gender", proportional = TRUE, pal = c("orange", "purple"))
+apyramid::age_pyramid(
+  linelist,                    # use case linelist
+  "age_cat5",                  # age group column
+  "gender",                    # split by gender
+  proportional = TRUE,         # percents instead of counts
+  pal = c("orange", "purple")  # colors
+  )
 ```
 
 
@@ -1028,14 +1043,16 @@ apyramid::age_pyramid(linelist, "age_cat5", "gender", proportional = TRUE, pal =
 
 An R package is a shareable bundle of code and documentation that contains pre-defined functions. Users in the R community develop and share packages all the time, so chances are likely that a solution exists for you! You will install and use hundreds of packages in your use of R.  
 
-On installation, R contains **"base"** functions that perform common elementary tasks. But many R users create specialized functions, which are verified by the R community and which you can download as a **package** for your own use. In this handbook, package names are written in **bold**. One of the more challenging aspects of R is that there are often many functions or packages to choose from to complete a given task.  
+On installation, R contains **"base"** packages and functions that perform common elementary tasks. But many R users create specialized functions, which are verified by the R community and which you can download as a **package** for your own use. In this handbook, package names are written in **bold**. One of the more challenging aspects of R is that there are often many functions or packages to choose from to complete a given task.  
 
 
-**Install packages**  
+### Install and load {-}  
 
 *Functions* are contained within **packages** which can be downloaded ("installed") to your computer from the internet. Once a package is downloaded, you access its functions by loading the package with the `library()` command at the beginning of each R session.
 
-Think of R as your personal library: When you download a package your library gains a book of functions, but each time you want to use a function in that book, you must borrow that book from your library.  
+Think of R as your personal library: When you download a package, your library gains a new book of functions, but each time you want to use a function in that book, you must borrow that book from your library.  
+
+Your library is a folder on your computer with all your packages. Find out where R is installed in your computer, and look for a folder called "win-library". For example: `R\win-library\4.0` (the 4.0 is the R version - you'll have a different library for each R version you've downloaded).  
 
 
 **CRAN**  
@@ -1051,7 +1068,7 @@ To use a package, 2 steps must be implemented:
 1) The package must be **installed** (once), *and*  
 2) The package must be **loaded** (each R session)  
 
-The basic function for installing a package is `install.packages()`, where the name of the package is provided *in quotes*. This can also be accomplished point-and-click by going to the RStudio "Packages" pane and clicking "Install". 
+The basic function for installing a package is `install.packages()`, where the name of the package is provided *in quotes*. This can also be accomplished point-and-click by going to the RStudio "Packages" pane and clicking "Install" and typing the package name. Note all this is case-sensitive. 
 
 ```{r, eval=F}
 install.packages("tidyverse")
@@ -1063,26 +1080,23 @@ The basic function to **load** a package for use (after it has been installed) i
 library(tidyverse)
 ```
 
+To check whether a package in installed or loaded, you can view the Packages pane in RStudio. If the package is installed, it is shown there with version number. If the box is checked, it is loaded for the current session. 
 
 
 **Using pacman**  
 
 This handbook uses the package **pacman** (abbreviation for "package manager"), which offers the useful function `p_load()`. This function combines the above two steps into one -  it *installs and/or loads packages*, depending on what is needed. If the package has not yet been installed, it will attempt to install from CRAN, and then load it.  
 
-Below, we load some of the packages used in this R basics page:  
+Below, we load three of the packages often used in this R basics page:  
 
 ```{r}
 pacman::p_load(tidyverse, rio, here)
 ```
 
-The function `p_isinstalled()` will test whether packages are installed already.  
-
-
-
 
 **Install from github**
 
-Sometimes, you need to install the *development version* of a package, from a github repository. You can use `p_load_gh()` from **pacman** (this function is a wrapper around `install_github()` from **devtools**).  
+Sometimes, you need to install the *development version* of a package, from a Github repository. You can use `p_load_gh()` from **pacman** (this function is a "wrapper" around (it uses) `install_github()` from **devtools** package).  
 
 The first name listed in the quotation marks is the Github ID of the repository owner, and after the slash is the name of the repository. If you want to install from a branch other than the main/master branch, add it after an "@".  
 
@@ -1093,9 +1107,12 @@ p_install_gh("reconhub/epicontacts")
 
 # load development version of package which you had downloaded from github repository
 p_load_gh("reconhub/epicontacts")
+
+# install development version of package, but not the main branch
+p_install_gh("reconhub/epicontacts@timeline")
 ```
 
-Read more about **pacman** [here](http://trinker.github.io/pacman/vignettes/Introduction_to_pacman.html)
+Read more about **pacman** in this [online vignette](http://trinker.github.io/pacman/vignettes/Introduction_to_pacman.html)
 
 
 **Install from ZIP or TAR**
@@ -1119,21 +1136,24 @@ install_local("~/Downloads/dplyr-master.zip")
 Option 2:  
 
 ```{r, eval=F}
-install.packages(path_to_source, repos = NULL, type="source")
+install.packages(filepath_to_source, repos = NULL, type="source")
 
+# like this: 
 install.packages("~/Downloads/dplyr-master.zip", repos=NULL, type="source")
 ```
 
 
+### Update packages {-}  
+
+You can update packages by re-installing them. You can also click the green "Update" button in your RStudio Packages pane to see which packages have new versions to install. Be aware that your old code may need to be updated if there is a major revision to how a function works!  
 
 
-**Delete packages**
-
+### Delete packages {-}
 Use `p_delete()` from **pacman**, or `remove.packages()` from **base** R. Alternatively, go find the folder which contains your library and manually delete the folder.
 
 
 
-**Dependencies**  
+### Dependencies {-}  
 
 Packages often depend on other packages to work. These are called dependencies. If a dependency fails to install, then the package depending on it may also fail to install.  
 
@@ -1141,11 +1161,25 @@ See the dependencies of a package with `p_depends()`, and see which packages dep
 
 
 
-**Masked functions**  
+
+### Code syntax {-}  
+
+For clarity in this handbook, functions are usually preceded by the name of their package using the `::` symbol in the following way: `package_name::function_name()`  
+
+Once a package is loaded for a session, this explicit style is not necessary. One can just use `function_name()`. However writing the package name is useful when a function name is common and may exist in multiple packages (e.g. `plot()`). Writing the package name will also load the package if it is not already loaded. 
+
+```{r eval=FALSE}
+# This command uses the package "rio" and its function "import()" to import a dataset
+linelist <- rio::import("linelist.xlsx", which = "Sheet1")
+```
+
+
+
+### Masked functions {-}  
 
 It is not uncommon that two or more packages contain the same function name. For example, the package **dplyr** has a `filter()` function, but so does the package **stats**. The default `filter()` function depends on the order these packages are first loaded in the R session - the later one will be the default for the command `filter()`. 
 
-You can check the order in your Environment pane of R Studio - click the drop-down for "Global Environment" and see the order of the packages. Functions from packages *lower* on that drop-down list will mask functions of the same name in packages that appear highest in the drop-down list. When first loading a package, R will warn you in the console if masking is occurring, but this can be easy to miss.  
+You can check the order in your Environment pane of R Studio - click the drop-down for "Global Environment" and see the order of the packages. Functions from packages *lower* on that drop-down list will mask functions of the same name in packages that appear higher in the drop-down list. When first loading a package, R will warn you in the console if masking is occurring, but this can be easy to miss.  
 
 ```{r out.width = "50%", fig.align = "center", echo=F}
 knitr::include_graphics(here::here("images", "masking_functions.png"))
@@ -1154,38 +1188,23 @@ knitr::include_graphics(here::here("images", "masking_functions.png"))
 Here are ways you can fix masking:  
 
 1) Specify the package name in the command. For example, use `dplyr::filter()`  
-2) Re-arrange the order in which the packages are loaded (e.g. within `library()` or `p_load()`), and start a new R session  
+2) Re-arrange the order in which the packages are loaded (e.g. within `p_load()`), and start a new R session  
 
 
 
 
-**Detach / unload**  
+### Detach / unload {-}  
 
-To detach a package, use this command, with the correct package name:  
+To detach (unload) a package, use this command, with the correct package name:  
 
 ```{r, eval=F}
 detach(package:PACKAGE_NAME_HERE, unload=TRUE)
 ```
 
+Note that this may not resolve masking.  
 
 
-**Packages in code**  
-
-For clarity in this handbook, functions are usually preceeded by the name of their package using the `::` symbol in the following way:  
-`package_name::function_name()`  
-
-Once a package is loaded for a session, this explicit style is not necessary. One can just use `function_name()`. However giving the package name is useful when a function name is common and may exist in multiple packages (e.g. `plot()`).  
-Using the package name will also load the package if it is not already loaded.
- 
-```{r eval=FALSE}
-# This command uses the package "rio" and its function "import()" to import a dataset
-linelist <- rio::import("linelist.xlsx", which = "Sheet1")
-```
-
-
-
-
-**Installing older versions of packages**  
+### Instal older version {-}  
 
 See this [guide](https://support.rstudio.com/hc/en-us/articles/219949047-Installing-older-versions-of-packages)  
 
@@ -1194,7 +1213,7 @@ See this [guide](https://support.rstudio.com/hc/en-us/articles/219949047-Install
 
 
 
-**Function help**  
+### Function help {-}  
 
 To read more about a function, you can search for it in the Help tab of the lower-right RStudio. You can also run a command like  `?thefunctionname` (put the name of the function after a question mark) and the Help page will appear in the Help pane. Finally, try searching online for resources.  
 
@@ -1204,28 +1223,28 @@ To read more about a function, you can search for it in the Help tab of the lowe
 <!-- ======================================================= -->
 <!-- ======================================================= -->
 <!-- ======================================================= -->
-## Piping (`%>%`) {#piping }
+## Piping (`%>%`) {-}
 
 **Two general approaches to working with objects are:**  
 
-1) **Tidyverse/piping** - sends an object from function to function - emphasizes the *action*, not the object  
-2) **Define intermediate objects** - emphasis the object, as it is re-defined again and again  
+1) **Pipes/tidyverse** - pipes send an object from function to function - emphasis is on the *action*, not the object  
+2) **Define intermediate objects** - an object is re-defined again and again - emphasis is on the object  
 
 
 <!-- ======================================================= -->
-### **Pipes** 
+### **Pipes** {-}
 
 **Simply explained, the pipe operator (`%>%`) passes an intermediate output from one function to the next.**  
 You can think of it as saying "then". Many functions can be linked together with `%>%`.  
 
 * **Piping emphasizes a sequence of actions, not the object the actions are being performed on**  
-* Best when a sequence of actions must be performed on one object  
+* Pipes are best when a sequence of actions must be performed on one object  
 * Pipes come from the package **magrittr**, which is automatically included in packages **dplyr** and **tidyverse**
-* Makes code more clean and easier to read, intuitive
+* Pipes can make code more clean and easier to read, more intuitive
 
 Read more on this approach in the tidyverse [style guide](https://style.tidyverse.org/pipes.html)  
 
-Example:
+Here is a fake example for comparison, using fictional functions to "bake a cake". First, the pipe method:  
 
 ```{r piping_example_pipe, eval=F}
 # A fake example of how to bake a care using piping syntax
@@ -1234,8 +1253,12 @@ cake <- flour %>%       # to define cake, start with flour, and then...
   left_join(eggs) %>%   # add eggs
   left_join(oil) %>%    # add oil
   left_join(water) %>%  # add water
-  mix_together(utensil = spoon, minutes = 2) %>%                # mix together
-  bake(degrees = 350, system = "fahrenheit", minutes = 35) %>%  # bake
+  mix_together(         # mix together
+    utensil = spoon,
+    minutes = 2) %>%    
+  bake(degrees = 350,   # bake
+       system = "fahrenheit",
+       minutes = 35) %>%  
   let_cool()            # let it cool down
 ```
 
@@ -1251,7 +1274,7 @@ This is an "assignment pipe" from the **magritter** package, which pipes an obje
 
 
 <!-- ======================================================= -->
-### Define intermediate objects
+### Define intermediate objects {-}
 
 This approach to changing objects/dataframes may be better if:  
 
@@ -1262,13 +1285,12 @@ This approach to changing objects/dataframes may be better if:
 **Risks:**  
 
 * Creating new objects for each step means creating lots of objects. If you use the wrong one you might not realize it!  
-*Naming all the objects can be confusing  
+* Naming all the objects can be confusing  
 * Errors may not be easily detectable  
 
 Either name each intermediate object, or overwrite the original, or combine all the functions together. All come with their own risks.  
 
-Below are some examples:  
-
+Below is the same fake "cake" example as above, but using this style:  
 
 ```{r piping_example_redefine, eval=F}
 # a fake example of how to bake a cake using this method (defining intermediate objects)
@@ -1283,17 +1305,16 @@ cake <- bake(batter_4, degrees = 350, system = "fahrenheit", minutes = 35)
 cake <- let_cool(cake)
 ```
 
-Combine all functions together - also difficult to read  
+Combine all functions together - this is difficult to read:  
 
-```{r piping_example_wide, eval=F}
+```{r eval=F}
 # an example of combining/nesting mutliple functions together - difficult to read
 cake <- let_cool(bake(mix_together(batter_3, utensil = spoon, minutes = 2), degrees = 350, system = "fahrenheit", minutes = 35))
 ```
 
 
-
 <!-- ======================================================= -->
-## Key operators and functions {#operators  }
+## Key operators and functions {#operators}
 
 This section details operators in R, such as:  
 
@@ -1307,34 +1328,44 @@ This section details operators in R, such as:
 
 
 <!-- ======================================================= -->
-### Assignment operators  
+### Assignment operators {-}  
 
 **`<-`**  
 
-The basic assignment operator in R is `<-`. Such that `object_name <- value` (see R Basics tab on "Defining an Object").  
+The basic assignment operator in R is `<-`. Such that `object_name <- value`.  
 This assignment operator can also be written as `=`. We advise use of `<-` for general R use.  
-We also advise surrounding operators with spaces, for readability.  
+We also advise surrounding such operators with spaces, for readability.  
 
 
 **`<<-`**  
 
-If writing functions (LINK TO PAGE), or using R in an interactive way with sourced scripts (LINK TO PAGE), then you may need to use this assignment operator `<<-` (**base** R). This operator is used to define an object in a higher 'parent' R `Environment` (LINK to tab on R environments). Also see this [online reference](https://stat.ethz.ch/R-manual/R-devel/library/base/html/assignOps.html).
+If [Writing functions], or using R in an interactive way with sourced scripts, then you may need to use this assignment operator `<<-` (from **base** R). This operator is used to define an object in a higher 'parent' R Environment. See this [online reference](https://stat.ethz.ch/R-manual/R-devel/library/base/html/assignOps.html).
 
 
 **`%<>%`**  
 
-This is an "assignment pipe" from the **magritter** package, which pipes an object forward and also re-defines the object. It must be the first pipe operator in the chain. It is shorthand, so `object %<>% function() %>% function()` is the same as `object <- object %>% function() %>% function()`.  
+This is an "assignment pipe" from the **magrittr** package, which pipes an object forward and *also re-defines the object*. It must be the first pipe operator in the chain. It is shorthand, as shown below in two equivalent examples:  
 
+```{r, eval=F}
+linelist <- linelist %>% 
+  mutate(age_months = age_years * 12)
+```  
+
+The above is equivalent to the below:  
+
+```{r, eval=F}
+linelist %<>% mutate(age_months = age_years * 12)
+```
 
 **`%<+%`**
 
-Used to add data to phylogenetic trees with the **ggtree** package. See the (LINK TO PAGE) or this online [resource book](https://yulab-smu.top/treedata-book/).  
+This is used to add data to phylogenetic trees with the **ggtree** package. See the page on [Phylogenetic trees] or this online [resource book](https://yulab-smu.top/treedata-book/).  
 
 
  
 
 <!-- ======================================================= -->
-### Relational and logical operators  
+### Relational and logical operators {-}  
 
 **Relational operators compare values** and are often used when defining new variables and subsets of datasets. Here are the common relational operators in R:  
 
@@ -1346,7 +1377,7 @@ Greater than            |`>`          |`4 > 2`       |`TRUE`
 Less than               |`<`          |`4 < 2`       |`FALSE`
 Greater than or equal to|`>=`         |`6 >= 4`      |`TRUE`
 Less than or equal to   |`<=`         |`6 <= 4`      |`FALSE`
-Value is missing        |`is.na()`    |`is.na(7)`    |`FALSE` (see section on missing values)
+Value is missing        |`is.na()`    |`is.na(7)`    |`FALSE` (see page on [Missing data])
 Value is not missing    |`!is.na()`   |`!is.na(7)`   |`TRUE`
 
 **Logical operators, such as AND and OR, are often used to connect relational operators and create more complicated criteria**. Complex statements might require parentheses ( ) for grouping and order of application.  
@@ -1355,26 +1386,26 @@ Function   |Operator
 -----------|------------------------
 AND        |`&`
 OR         |`|` (vertical bar)
-Parentheses|`( )` Used to group criteria together and clarify order
+Parentheses|`( )` Used to group criteria together and clarify order  of operations
 
 
 For example, below, we have a linelist with two variables we want to use to create our case definition, `hep_e_rdt`, a test result and `other_cases_in_hh`, which will tell us if there are other cases in the household. The command below uses the function `case_when()` to create the new variable `case_def` such that:
 
-```{r basics_operators_casewhen, eval=FALSE}
-linelist_cleaned <- linelist_cleaned %>%
+```{r eval=FALSE}
+linelist_cleaned <- linelist %>%
   mutate(case_def = case_when(
-    is.na(hep_e_rdt) & is.na(other_cases_in_hh)           ~ NA_character_,
-    hep_e_rdt == "Positive"                               ~ "Confirmed",
-    hep_e_rdt != "Positive" & other_cases_in_hh == "Yes"  ~ "Probable",
-    TRUE                                                  ~ "Suspected"
+    is.na(rdt_result) & is.na(other_case_in_home)            ~ NA_character_,
+    rdt_result == "Positive"                                 ~ "Confirmed",
+    rdt_result != "Positive" & other_cases_in_home == "Yes"  ~ "Probable",
+    TRUE                                                     ~ "Suspected"
   ))
 ```
 
 Criteria in example above               | Resulting value in new variable "case_def"
 ----------------------------------------|-------------------------------------
-If the value for variables `hep_e_rdt` and `other_cases_in_hh` are missing | `NA` (missing)  
-If the value in `hep_e_rdt` is "Positive" | "Confirmed"  
-If the value in `hep_e_rdt` is NOT "Positive" AND the value in `other_cases_in_hh` is "Yes" | "Probable"  
+If the value for variables `rdt_result` and `other_cases_in_home` are missing | `NA` (missing)  
+If the value in `rdt_result` is "Positive" | "Confirmed"  
+If the value in `rdt_result` is NOT "Positive" AND the value in `other_cases_in_home` is "Yes" | "Probable"  
 If one of the above criteria are not met | "Suspected"  
 
 
@@ -1382,7 +1413,7 @@ If one of the above criteria are not met | "Suspected"
 
  
 <!-- ======================================================= -->
-### Missing values
+### Missing values {-}
 
 **In R, missing values are represented by the special value `NA` (a "reserved" value)** (capital letters N and A - not in quotation marks). If you import data that records missing data in another way (e.g. 99, "Missing", or .), you may want to re-code those values to `NA`.
   
@@ -1412,11 +1443,11 @@ More detail on the difference between `NA` and `NULL` is [here](https://www.r-bl
 
 
 <!-- ======================================================= -->
-### Mathematics and statistics  
+### Mathematics and statistics {-}  
 
 All the operators and functions in this page is automatically available using **base** R.  
 
-#### Mathematical operators  
+#### Mathematical operators {-} 
 
 These are often used to perform addition, division, to create new columns, etc. Below are common mathematical operators in R. Whether you put spaces around the operators is not important.  
 
@@ -1432,7 +1463,7 @@ order of operations| ( )
 
 
 
-#### Mathematical functions
+#### Mathematical functions {-}
 
 Objective          |Function
 -------------------|-------------
@@ -1444,8 +1475,14 @@ absolute value     | abs(x)
 square root        | sqrt(x)
 exponent           | exponent(x)
 natural logarithm  | log(x)
+log base 10        | log10(x)
+log base 2         | log2(x)
 
-<span style="color: red;">**_DANGER:_** `round()` uses "banker's rounding" which rounds up from a .5 only if the upper number is even. Use `round_half_up()` from **janitor** to consistently round halves up to the nearest whole number. See [this](https://cran.r-project.org/web/packages/janitor/vignettes/janitor.html#explore-records-with-duplicated-values-for-specific-combinations-of-variables-with-get_dupes) </span>  
+
+
+#### Rounding {-}  
+
+<span style="color: red;">**_DANGER:_** `round()` uses "banker's rounding" which rounds up from a .5 only if the upper number is even. Use `round_half_up()` from **janitor** to consistently round halves up to the nearest whole number. See [this explanation](https://cran.r-project.org/web/packages/janitor/vignettes/janitor.html#explore-records-with-duplicated-values-for-specific-combinations-of-variables-with-get_dupes) </span>  
 
 ```{r}
 # use the appropriate rounding function for your work
@@ -1472,6 +1509,11 @@ maximum value            | max(x, na.rm=T)
 range of numeric values  | range(x, na.rm=T)
 summmary**               | summary(x)
 
+Notes:  
+
+* `quantile()`: `x` is the numeric vector to examine, and `probs = ` is a numeric vector with probabilities within 0 and 1.0, e.g `c(0.5, 0.8, 0.85)`
+* `summary()`: gives a summary on a numeric vector including mean, median, and common percentiles  
+
 <span style="color: red;">**_DANGER:_** If providing a vector of numbers to one of the above functions, be sure to wrap the numbers within `c()` .</span>
 
 ```{r}
@@ -1481,8 +1523,7 @@ mean(1, 6, 12, 10, 5, 0)    # !!! INCORRECT !!!
 mean(c(1, 6, 12, 10, 5, 0)) # CORRECT
 ```
 
-* `quantile()`: x is the numeric vector to examine, and probs is a numeric vector with probabilities within 0 and 1.0, e.g `c(0.5, 0.8, 0.85)`
-** `summary()`: gives a summary on a numeric vector including mean, median, and common percentiles
+
 
 
 
@@ -1494,23 +1535,26 @@ Objective                   |Function            |Example
 create a sequence           | seq(from, to, by)  |`seq(1, 10, 2)`
 repeat x, n times           | rep(x, ntimes)     |`rep(1:3, 2)` or `rep(c("a", "b", "c"), 3)` 
 subdivide a numeric vector  | cut(x, n)          |`cut(linelist$age, 5)`
+take a random sample        | sample(x, size)    |`sample(linelist$id, size = 5, replace = TRUE)`
 
 
 
 
 <!-- ======================================================= -->
-### `%in%`  
+### `%in%` {-}  
 
-A very useful operator for matching values, and quickly assessing if a value is within a vector or dataframe.   
+A very useful operator for matching values, and for quickly assessing if a value is within a vector or dataframe.   
 
 ```{r}
 my_vector <- c("a", "b", "c", "d")
+```
 
+```{r}
 "a" %in% my_vector
 "h" %in% my_vector
 ```
 
-To ask if a value is **not** `%in%`, put an exclamation mark (!) **in front** of the logic statement:  
+To ask if a value is **not** `%in%` a vector, put an exclamation mark (!) **in front** of the logic statement:  
 
 ```{r}
 # to negate, put an exclamation in front
@@ -1518,12 +1562,30 @@ To ask if a value is **not** `%in%`, put an exclamation mark (!) **in front** of
 !"h" %in% my_vector
 ```
 
-`%in%` is very useful when using the **dplyr** function `case_when()` to recode values in a column. For example:  
+`%in%` is very useful when using the **dplyr** function `case_when()`. You can define a vector previously, and then reference it later. For example:  
 
 ```{r eval=F}
+affirmative <- c("1", "Yes", "YES", "yes", "y", "Y", "oui", "Oui", "Si")
+
 linelist <- linelist %>% 
-  mutate(hospital = case_when(
-    hospital %in% c("St. Fr.", "Saint Francis") ~ "St. Francis")) # convert to correct spelling
+  mutate(child_hospitaled = case_when(
+    hospitalized %in% affirmative & age < 18 ~ "Hospitalized Child",
+    TRUE                                      ~ "Not"))
+```
+
+Note: If you want to detect a partial string, perhaps using `str_detect()` from **stringr**, it will not accept a character vector like `c("1", "Yes", "yes", "y")`. Instead, it must be given a *regular expression* - one condensed string with OR bars, such as "1|Yes|yes|y". For example, `str_detect(hospitalized, "1|Yes|yes|y")`. See the page on [Characters and strings] for more information.  
+
+You can convert a character vector to a named regular expression with this command:  
+
+```{r}
+affirmative <- c("1", "Yes", "YES", "yes", "y", "Y", "oui", "Oui", "Si")
+affirmative
+
+# condense to 
+affirmative_str_search <- paste0(affirmative, collapse = "|")  # option with base R
+affirmative_str_search <- str_c(affirmative, collapse = "|")   # option with stringr package
+
+affirmative_str_search
 ```
 
 
@@ -1533,26 +1595,24 @@ linelist <- linelist %>%
 
 
 
+
 <!-- ======================================================= -->
 <!-- ======================================================= -->
 <!-- ======================================================= -->
-## Errors & Warnings { }
+## Errors & Warnings  
 
 This section explains:  
 
-* General syntax for writing R code  
+* The difference between errors and warnings  
+* General syntax tips for writing R code  
 * Code assists  
-* the difference between errors and warnings  
 
-Common errors and warnings and their solutions can be found in X section (TODO).
-See the handbook page on common errors and warnings.  
-
-
+Common errors and warnings and troubleshooting tips can be found in the page on [Errors and warnings].  
 
 
 
 <!-- ======================================================= -->
-### Error versus Warning  
+### Error versus Warning {-}
 
 When a command is run, the R Console may show you warning or error messages in red text.  
 
@@ -1570,7 +1630,7 @@ If all else fails, copy the error message into Google along with some key terms 
 
 
 <!-- ======================================================= -->
-### General syntax tips
+### General syntax tips {-}
 
 A few things to remember when writing commands in R, to avoid errors and warnings:  
 
@@ -1581,29 +1641,60 @@ A few things to remember when writing commands in R, to avoid errors and warning
 
 
 <!-- ======================================================= -->
-### Code assists  
+### Code assists {-}  
 
 Any script (RMarkdown or otherwise) will give clues when you have made a mistake. For example, if you forgot to write a comma where it is needed, or to close a parentheses, RStudio will raise a flag on that line, on the right side of the script, to warn you.  
 
-(/images/Warnings_and_Errors.png)
 
 
 
 
 
-<!-- ======================================================= -->
-<!-- ======================================================= -->
-<!-- ======================================================= -->
-## Recommended training { }
 
 <!-- ======================================================= -->
-### Cheatsheets
+<!-- ======================================================= -->
+<!-- ======================================================= -->
+## Recommended training and help  
+
+
+### Resources within RStudio {-}  
+
+**Help documentation**  
+
+Search the RStudio "Help" tab for documentation on packages and specific functions. This is within the pane that also contains Files, Plots, and Packages (typically in the lower-right pane). As a shortcut, you can also type the name of a package or function into the R console after a question-mark to open the relevant Help page. For example:  `?filter`  or `?diagrammeR`.  
+
+**Interactive tutorials**  
+
+RStudio has built-in interative tutorials via the **learnr** package. If this package is installed, you can go through these tutorials via the "Tutorial" tab in the upper-right RStudio pane (which also contains Environment and History tabs).  
+
+
+
+### Cheatsheets {-}
 
 This is an online R resource specifically for [Excel users](https://jules32.github.io/r-for-excel-users/vlookup.html)  
 
+There are many cheatsheets available on the [RStudio website](https://rstudio.com/resources/cheatsheets/), for example:  
 
-<!-- ======================================================= -->
-### Courses
+* Factors with **forcats** package  
+* Dates and times with **lubridate** package  
+* Strings with **stringr** pacage  
+* "apply" functions with **purrr** package  
+* Data import cheatsheet  
+* Data transformation cheatsheet with **dplyr** package  
+* R Markdown  
+* Shiny  
+* Data viz with **ggplot2** package  
+* Cartography  
+* **leaflet** package
+* Python with R (**reticulate** package)  
+
+
+### Free online books {-}  
+
+A definitive text is the [R for Data Science](https://r4ds.had.co.nz/) book by Garrett Grolemund and Hadley Wickham
+
+
+### Courses {-}
 
 
 
@@ -1647,46 +1738,97 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 <!-- ======================================================= -->
 ## Overview
 
-Introduction to importing data
+Here we describe ways to import and export data:  
+
+* The **rio** package to import/export  
+* The **here** package to locate files  
+  * Relative versus absolute filepaths  
+* Excel sheets  
+* Google sheets 
+* Websites  
+* Skipping rows  
+* Exporting/saving  
 
 
 <!-- ======================================================= -->
-## Packages {}  
+## The **rio** package {}  
 
-The key package we recommend for importing many types of data is: **rio**. **rio** offers the useful function `import()` which can import many types of files into R.  
+The package we recommend for importing data is: **rio**. **rio** utilizes the file extension (e.g. .xlsx, .csv, .rds, etc.) to import or export the file correctly.  
 
-The alternative to using **rio** would be to use functions from several other packages that are specific to a type of file (e.g. `read.csv()`, `read.xlsx()`, etc.). While these alternatives can be difficult to remember, always using `rio::import()` is relatively easy. 
+The alternative to using **rio** would be to use functions from many other packages that are specific to a type of file (e.g. `read.csv()`, `read.xlsx()`, etc.). These alternatives can be difficult to remember, whereas using `import()` from **rio** is relatively easy.  
 
-Optionally, the package **here** can be used in conjunction with **rio**. It locates files on your computer via *relative pathways*, usually within the context of an [R project](#rprojects).  Relative pathways are relative from a designated folder location, so that pathways listed in R code will not break when the script is run on a different computer.
+Below is a table, taken from the **rio** online [vignette](https://cran.r-project.org/web/packages/rio/vignettes/rio.html). It shows for each type of data: the file extension that is expected, the packages it uses to import or export the data (so you can look up specific arguments, if needed), and whether this functionality is included in the default installed version of **rio**.  
 
-This code chunk shows the loading of packages for importing data. 
 
-```{r import_packages}
-# Checks if package is installed, installs if necessary, and loads package for current session
-pacman::p_load(rio, here)
+Format                     | Typical Extension | Import Package    | Export Package     | Installed by Default
+---------------------------|-------------------|-------------------|--------------------|---------------------
+Comma-separated data | .csv | data.table | data.table |	Yes
+Pipe-separated data |	.psv | data.table | data.table | Yes
+Tab-separated data| .tsv | data.table | data.table | Yes
+SAS | .sas7bdat | haven | haven | Yes
+SPSS | .sav | haven | haven | Yes
+Stata | .dta | haven | haven | Yes
+SAS | XPORT | .xpt | haven | haven | Yes
+SPSS Portable | .por | haven | | Yes
+Excel | .xls | readxl | | Yes
+Excel | .xlsx | readxl | openxlsx | Yes
+R syntax | .R	| base | base | Yes
+Saved R objects | .RData, .rda | base | base | Yes
+Serialized R objects | .rds | base | base | Yes
+Epiinfo | .rec | foreign | | Yes
+Minitab | .mtp | foreign | | Yes
+Systat | .syd |	foreign | | Yes
+“XBASE” | database files | .dbf | foreign | foreign | Yes
+Weka Attribute-Relation File Format | .arff | foreign | foreign | Yes
+Data Interchange Format | .dif | utils | | Yes
+Fortran data | no recognized extension | utils | | Yes
+Fixed-width format data | .fwf | utils | utils | Yes
+gzip comma-separated data | .csv.gz | utils | utils | Yes
+CSVY (CSV + YAML metadata header) | .csvy | csvy | csvy | No
+EViews | .wf1 |hexView | | No
+Feather R/Python interchange format | .feather | feather | feather | No
+Fast Storage | .fst | fst |	fst | No
+JSON | .json | jsonlite | jsonlite | No
+Matlab | .mat | rmatio | rmatio | No
+OpenDocument Spreadsheet | .ods | readODS | readODS | No
+HTML Tables | .html | xml2 | xml2 | No
+Shallow XML documents | .xml | xml2 | xml2 | No
+YAML | .yml | yaml | yaml	| No
+Clipboard	default is tsv | |  clipr | clipr | No
 
-```
+
+You can read more about the **rio** package [in this online vignette](https://rdrr.io/cran/rio/f/vignettes/rio.Rmd)
 
 
 
 <!-- ======================================================= -->
 ## Relative filepaths (`here()`) {#here}
 
-*Relative filepaths* differ from static filepaths in that they are *relative from a [R project](#rproject) root directory*. 
+*Relative filepaths* differ from static filepaths in that they are *relative from a specific directory location*.  
 For example:  
 
 * **A static filepath**: `import("C:/Users/nsbatra/My Documents/R files/epiproject/data/linelists/ebola_linelist.xlsx")`  
   * Specific fixed path
-  * Useful if multiple users are running a script hosted on a network drive
+  * Useful if calling a file in a distant directory, or if multiple users are running a script hosted on a network drive
 * **A relative filepath**: `import(here("data", "linelists", "ebola_linelist.xlsx"))`  
   * Path is given in relation to a directory  
   * Best if working within an R project  
-  
+
+
+The package **here** can be used, often in conjunction with **rio** for importing or exporting. **here** locates files on your computer via *relative pathways*, usually within the context of [R projects]. Relative pathways are relative from a designated folder location, so that pathways listed in R code will not break when the script is run on a different computer.
+
+This code chunk shows the loading of packages for importing data. 
+
+```{r import_packages}
+# Checks if package is installed, installs if necessary, and loads package for current session
+pacman::p_load(rio, here)
+```
+
 Use the package **here** and its function `here()` to implement relative pathways.
 
-`here()` works best within [R projects](#rprojects). When the **here** package is first loaded (`library(here)`), it places a small file called "here" in the top-level folder of your R project as a "benchmark" or "anchor" for all other files in the project.  
+`here()` works best within [R projects](#rprojects). When the **here** package is first loaded, it places a small file called "here" in the root-level folder of your R project as a "benchmark" or "anchor" for all other files in the project.  
 
-Thus, in your script, if you want to import or reference a file saved in your R project’s folders, you use the function `here()` to tell R where the file is ***in relation to that benchmark***. **here** relative filepaths can be used for both importing and exporting/saving data.  
+Thus, in your script, if you want to import or reference a file saved in your R project’s folders, you use the function `here()` to tell R where the file is ***in relation to that benchmark***. These relative filepaths can be used for both importing and exporting/saving data.  
 
 
 If you are unsure where “here” is set to, run the function `here()` with the empty brackets:
@@ -1696,30 +1838,30 @@ If you are unsure where “here” is set to, run the function `here()` with the
 here::here()
 ```
 
-Below is an example of importing the file “fluH7N9_China_2013.csv” which is located in the benchmark “here” folder. All you have to do is provide the name of the file in quotes (with the appropriate ending).
+Below is an example of importing the file “linelist.xlsx” which is located in the benchmark “here” folder. All you have to do is provide the name of the file in quotes (with the appropriate ending).
 
 ```{r import_here_one, eval=F}
-linelist <- import(here("fluH7N9_China_2013.csv"))
+linelist <- import(here("linelist_raw.xlsx"))
 ```
 
 If the file is within a subfolder - let’s say a “data” folder - write these folder names in quotes, separated by commas, as below:
 
 ```{r import_here_mutiple, eval=F}
-linelist <- import(here("data", "fluH7N9_China_2013.csv"))
+linelist <- import(here("data", "linelist.xlsx"))
 ```
 
-Using the `here()` command produces a character filepath, which can then processed by the `import()` function.
+Using the `here()` command produces a character filepath, which is then processed by the `import()` function.
 
-```{r import_here_path, eval=F}
+```{r}
 # the filepath
-here("data", "fluH7N9_China_2013.csv")
-
-# the filepath is given to the import() function
-linelist <- import(here("data", "fluH7N9_China_2013.csv"))
+here("data", "linelist.xlsx")
 ```
 
 
-<span style="color: black;">**_NOTE:_** You can still import a specific sheet of an excel file as noted in the Excel tab. The `here()` command only supplies the filepath.</span>
+```{r, eval=F}
+# the filepath is given to the import() function
+linelist <- import(here("data", "linelist.xlsx"))
+```
 
 
 
@@ -1731,64 +1873,41 @@ When you import a dataset, you are doing the following:
 1. Creating a new, named data frame object in your R environment  
 2. *Defining the new object* **as** *the imported dataset*  
 
-The function `import()` from the package **rio** makes it easy to import many types of data files.
-
-```{r, eval=F}
-# An example:
-#############
-library(rio)                                                     # ensure package rio is loaded for use
-
-# New object is defined as the imported data
-my_csv_data <- import("linelist.csv")                            # importing a csv file
-
-my_Excel_data <- import("observations.xlsx", which = "February") # import an Excel file
-```
-
-`import()` uses the file’s extension (e.g. .xlsx, .csv, .dta, etc.) to appropriately import the file. Any optional arguments specific to the filetype can be supplied as well.  
-
-You can read more about the **rio** package [in this online vignette](https://rdrr.io/cran/rio/f/vignettes/rio.Rmd)
-
-https://cran.r-project.org/web/packages/rio/readme/README.html
-
-<span style="color: orange;">**_CAUTION:_** In the example above, the datasets are assumed to be located in the *working directory*, or the same folder as the script.</span>  
-
-TO DO
-
-**import a specific range of cells**
-**skip rows, in excel and csv**
-**rio table of functions used for import/export/convert**
-https://cran.r-project.org/web/packages/rio/vignettes/rio.html
-**other useful function to know as backup**
-EpiInfo
-SAS
-STATA
-Google Spreadsheets
-R files
-
-
 
 <!-- ======================================================= -->
-### Import from filepath {}  
+### Import from filepath {-}  
 
-A filepath can be provided in full (as below) or as a *relative filepath* (see next tab). Providing a full filepath can be fast and may be the best if referencing files from a shared/network drive).  
-
-The function `import()` (from the package **rio**) accepts a filepath in quotes. A few things to note:  
+The function `import()` (from the package **rio**) accepts a filepath within quotation marks. A few things to note:  
 
 * Slashes must be forward slashes, as in the code shown. This is *NOT* the default for Windows filepaths.  
-* Filepaths that begin with double slashes (e.g. "//...") will likely **not be recognized by R** and will produce an error. Consider moving these files to a "named" or "lettered" drive that begins with a letter (e.g. "J:" or "C:"). See the section on using Network Drive for more details on this issue.
+* Filepaths that begin with double slashes (e.g. "//...") will likely **not be recognized by R** and will produce an error. Consider moving these files to a "named" or "lettered" drive that begins with a letter (e.g. "J:" or "C:"). See the section on using Network Drive for more details on this issue.  
+* Do not worry about slash direction if using relative filepaths with **here** 
 
-```{r import_filepath, eval=F}
-# A demonstration showing how to import a specific Excel sheet
-my_data <- rio::import("C:/Users/Neale/Documents/my_excel_file.xlsx")
+With absolute filepath:  
+
+```{r eval=F}
+# Absolute pathway
+p_load(rio)                                                      
+my_data <- import("C:/Users/Timothy/Documents/cancer project/data/clean/survival_data.xlsx")
 ```
 
+With relative filepath:  
+
+```{r eval=F}
+# Absolute pathway
+p_load(rio)                                                 
+my_data <- import(here("data", "clean", "survival_data.xlsx")
+```
+
+
+
+
 <!-- ======================================================= -->
-### Excel sheet {}
+### Excel sheet {-}
 
 If importing a specific **sheet** from an Excel file, include the sheet name in the `which = ` argument of `import()`. For example:  
 
-```{r import_sheet, eval=F}
-# A demonstration showing how to import a specific Excel sheet
+```{r eval=F}
 my_data <- rio::import("my_excel_file.xlsx", which = "Sheetname")
 ```
 
@@ -1799,8 +1918,13 @@ If using the `here()` method to provide a relative pathway to `import()`, you ca
 linelist_raw <- import(here("data", "linelists", "linelist.xlsx"), which = "Sheet1")`  
 ```
 
+
+
+
+
+
 <!-- ======================================================= -->
-### Select file manually {}
+### Select file manually {-}
 
 You can import data manually via one of these methods:  
 
@@ -1809,10 +1933,11 @@ You can import data manually via one of these methods:
 * To hard-code manual selection, use the *base R* command `file.choose()` (leaving the parentheses empty) to trigger appearance of a **pop-up window** that allows the user to manually select the file from their computer. For example:  
 
 ```{r import_choose, eval=F}
-# A demonstration showing manual selection of a file. When this command is run, a POP-UP window should appear. 
+# Manual selection of a file.
+# When this command is run, a POP-UP window should appear. 
 # The filepath of the selected file will be supplied to the import() command.
 
-my_data <- rio::import(file.choose())
+my_data <- import(file.choose())
 ```
 
 <span style="color: darkgreen;">**_TIP:_** The **pop-up window** may appear BEHIND your RStudio window.</span>
@@ -1853,7 +1978,7 @@ Here are some other helpful online tutorials: [basic importing tutorial](https:/
 <!-- ======================================================= -->
 ## Websites {}
 
-Scraping data from a website - TBD
+Scraping data from a website - TBD - Under construction
 
 
 
@@ -1861,16 +1986,14 @@ Scraping data from a website - TBD
 <!-- ======================================================= -->
 ## Skip rows  
 
-Sometimes, you may want to avoid importing a row of data (e.g. the column names, which are row 1).  
-you can do this with the argument `skip = ` if using `import()` from the **rio** package on a .xlsx or .csv file. Provide the number of rows you want to skip.  
-
+Sometimes, you may want to avoid importing a row of data. You can do this with the argument `skip = ` if using `import()` from **rio** on a .xlsx or .csv file. Provide the number of rows you want to skip. 
 
 
 ```{r, eval=F}
 linelist_raw <- import("linelist_raw.xlsx", skip = 1)  # does not import header row
 ```
 
-Unfortunately `skip = ` only accepts one integer value, *not* a range (e.g. "2:10"). To skip import of specific rows that are not consecutive from the top, consider importing multiple times and using `bind_rows()` from **dplyr**. See the example below of skipping only row 2.  
+Unfortunately `skip = ` only accepts one integer value, *not* a range (e.g. "2:10" does not work). To skip import of specific rows that are not consecutive from the top, consider importing multiple times and using `bind_rows()` from **dplyr**. See the example below of skipping only row 2.  
 
 
 
@@ -1921,26 +2044,32 @@ This situation can be problematic because it can result in all columns being imp
 2) Import the data again, skipping the first *two* rows (header and second rows)  
 3) Bind the correct names onto the reduced dataframe
 
-The exact arguments used to bind the correct column names depends on the type of data file (.csv, .tsv, .xlsx, etc.). If using **rio**'s `import()` function, understand which function **rio** uses to import your data, and then give the appropriate argument to skip lines and/or designate the column names. See the handbook page on importing data (LINK) for details on **rio**.  
+The exact arguments used to bind the correct column names depends on the type of data file (.csv, .tsv, .xlsx, etc.). If using **rio**'s `import()` function, understand which function **rio** uses to import your data, and then give the appropriate argument to skip lines and/or designate the column names.  
 
 **For Excel files:**  
 
 ```{r, eval=F}
-# For excel files (remove 2nd row)
+# import first time; store the column names
 linelist_raw_names <- import("linelist_raw.xlsx") %>% names()  # save true column names
 
-# import, skip row 2, assign to col_names =
-linelist_raw <- import("linelist_raw.xlsx", skip = 2, col_names = linelist_raw_names) 
+# import second time; skip row 2, and assign column names to argument col_names =
+linelist_raw <- import("linelist_raw.xlsx",
+                       skip = 2,
+                       col_names = linelist_raw_names
+                       ) 
 ```
 
 **For CSV files:**  
 
 ```{r, eval=F}
-# For csv files
+# import first time; sotre column names
 linelist_raw_names <- import("linelist_raw.csv") %>% names() # save true column names
 
-# note argument is 'col.names ='
-linelist_raw <- import("linelist_raw.csv", skip = 2, col.names = linelist_raw_names) 
+# note argument for csv files is 'col.names = '
+linelist_raw <- import("linelist_raw.csv",
+                       skip = 2,
+                       col.names = linelist_raw_names
+                       ) 
 ```
 
 **Backup option** - changing column names as a separate command
@@ -1950,17 +2079,37 @@ linelist_raw <- import("linelist_raw.csv", skip = 2, col.names = linelist_raw_na
 colnames(linelist_raw) <- linelist_raw_names
 ```
 
-Bonus! If you do have a second row that is a data dictionary, you can easily create a proper data dictionary from it using the `gather()` command from the **tidyr** package.  
-source: https://alison.rbind.io/post/2018-02-23-read-multiple-header-rows/
+Bonus! If you do have a second row that is a data dictionary, you can easily create a proper data dictionary from it. See this [vignette](https://alison.rbind.io/post/2018-02-23-read-multiple-header-rows/)  
 
-TO DO
-```{r, eval=F}
-library(tidyr)
-stickers_dict <- import("linelist_raw.xlsx") %>% 
-  clean_names() %>% 
-  gather(variable_name, variable_description)
-stickers_dict
+
+### Make a data dictionary {-}  
+
+Bonus! If you do have a second row that is a data dictionary, you can easily create a proper data dictionary from it. This tip is adapted from this [post](source: https://alison.rbind.io/post/2018-02-23-read-multiple-header-rows/).  
+
+
+```{r}
+dict <- linelist_2headers %>%             # begin: linelist with dictionary as first row
+  head(1) %>%                             # keep only column names and first dictionary row                
+  pivot_longer(cols = everything(),       # pivot all columns to long format
+               names_to = "Column",       # assign new column names
+               values_to = "Description")
 ```
+
+
+```{r message=FALSE, echo=F}
+DT::datatable(dict, rownames = FALSE, filter="top", options = list(pageLength = 4, scrollX=T) )
+```
+
+
+
+### Combine two header rows {-}  
+
+In some cases, you may want to combine two header rows into one. This command will define the column names as the combination (pasting together) of the existing column names with the value underneath in the first row. Replace "df" with the name of your dataset.  
+
+```{r, eval=F}
+names(df) <- paste(names(df), df[1, ], sep = "_")
+```
+
 
 
 
@@ -2019,7 +2168,7 @@ DT::datatable(manual_entry_rows)
 ```
 
 
-**OR ADD ROWS dplyr**  TO DO
+
 
 ### Pasting from clipboard  
 
@@ -2049,6 +2198,42 @@ If you have a list and you want it to be imported with the original structure (e
 ```{r, eval=F}
 rio::import_list("my_list_of_lists.Rdata")
 ```
+
+
+
+
+<!-- ======================================================= -->
+## Export {}  
+
+With **rio**, you can use the `export()` function in a very similar way to `import()`. First give the name of the R object you want to save (e.g. `linelist`) and then in quote the filepath including name and file extension. For example:  
+
+```{r, eval=F}
+export(linelist, "my_linelist.xlsx") # will save to working directory
+```
+
+You could save the same dataframe as a .csv, and to a folder specified by **here** relative pathway:  
+
+```{r, eval=F}
+export(linelist, here("data","clean", "my_linelist.csv")
+```
+
+### RDS files {-}
+
+You can also export/save R dataframes as .rds files. The convenient thing about these is that classes of columns are retained, so you have less cleaning to do when importing than with an Excel or even a CSV file. 
+
+```{r, eval=F}
+export(linelist, here("data","clean", "my_linelist.rds")
+```
+
+
+
+
+<!-- ======================================================= -->
+## Saving plots {} 
+
+How to save plots, such as those created by `ggplot()` is discussed in the [ggplot tips] page. In brief, run `ggsave("my_plot_filepath_and_name.png")` after printing your plot.  
+
+How to save a network graph, such as a transmission tree, is addressed in the page on [Transmission chains]. 
 ```{r include=FALSE, cache=FALSE}
 
 # clear workspace
@@ -2172,9 +2357,10 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 
 # Suggested packages
 
-Below is a long list of suggested packages for common epidemiological work in R. You can copy this code and use `#` symbols to invalidate any packages you do not want.  
+Below is a long list of suggested packages for common epidemiological work in R. You can copy this code and use `#` symbols to remove any packages you do not want.  
 
-* Packages included within others are indicated by an indent and hash, as seen under **tidyverse**. Install **pacman** package first, before running the below, with `install.packages("pacman)`.  
+* Packages that included when installing/loading another package are indicated by an indent and hash. For example as seen under **tidyverse**.  
+* Install **pacman** package first, before running the below, with `install.packages("pacman")`.  
 
 Also, consider using the package **conflicted** to manage conflicts and masking of functions.  
 
@@ -2185,6 +2371,9 @@ Also, consider using the package **conflicted** to manage conflicts and masking 
 
 pacman::p_load(
      
+     # learning R
+     learnr,
+        
      # project and file management
      here,
      rio,
@@ -2211,19 +2400,22 @@ pacman::p_load(
      epicontacts,
      
      # plots - general
-     cowplot,
-     RColorBrewer
+     #ggplot2,         # included in tidyverse
+     cowplot,          # combining plots
+     RColorBrewer      # color scales
      
      # plots - specific types
      DiagrammeR,
      incidence,
      
      # gis
-     
+     sf,               # to manage spatial data using a Simple Feature format
+     tmap,             # to produce simple maps, works for both interactive and static maps
+     OpenStreetMap,    # to add OSM basemap in ggplot map
      
      # routine reports  
-     rmarkdown,
-     reportfactory,
+     rmarkdown,        # produce PDFs, Word Documents, Powerpoints, and HTML files
+     reportfactory,    # Auto-organization of Rmarkdown outputs
      
      # tables
      knitr,
@@ -2352,18 +2544,19 @@ Here are some of the functions described in this page:
 <!-- ======================================================= -->
 ## Cleaning pipeline
 
+**This page proceeds through typical cleaning steps, adding them sequentially to a cleaning pipe chain.**
+
 In epidemiological analysis and data processing, cleaning steps are often performed linked together, sequentially. In R this often manifests as a cleaning "pipeline", where *the raw dataset is passed or "piped" from one cleaning step to another*.  
 
-The chain utilizes **dplyr** verbs and the **magrittr** pipe operator (see handbook page on **dplyr** and tidyverse coding style (LINK HERE). The pipe begins with the "raw" data (`linelist_raw`) and ends with a "clean" dataset (`linelist`).  
+The chain often utilizes **dplyr** verb functions and the **magrittr** pipe operator `%>%`. The pipe begins with the "raw" data (`linelist_raw`) and ends with a "clean" dataset (`linelist`).  
 
 In a cleaning pipeline the order of the steps is important. Cleaning steps might include:  
 
 * Importing of data  
 * Column names cleaned or changed  
-* Rows filtered, added, or de-duplicated  
-* Columns selected, added, transformed, or re-ordered  
-* Values re-coded, cleaned, or grouped  
-
+* De-duplication  
+* Column creation and transformation (e.g. re-coding or cleaning values)  
+* Rows filtered or added  
 
 
 
@@ -2393,9 +2586,17 @@ pacman::p_load(
 <!-- ======================================================= -->
 ## Import data  
 
+### Import {-}  
+
 Here we import the raw .xlsx dataset using the `import()` function from the package **rio**, and save it as the dataframe `linelist_raw`. If your dataset is large and takes a long time to import, it can be useful to have the import command be separate from the pipe chain and the "raw" saved as a distinct file. This also allows easy comparison between the original and cleaned versions.  
 
-See the page on importing data for more details. (LINK HERE TO IMPORT PAGE)
+See the page on [Importing and exporting] data for more details and unusual situations, including:  
+
+* Skipping the import of certain rows  
+* Dealing with a second row that is a data dictionary  
+* Importing from Google sheets   
+
+
 
 ```{r, echo=F, message=F}
 # HIDDEN FROM READER
@@ -2413,129 +2614,17 @@ You can view the first 50 rows of the the original "raw" dataset below:
 # display the linelist data as a table
 DT::datatable(head(linelist_raw,50), rownames = FALSE, filter="top", options = list(pageLength = 5, scrollX=T) )
 ```
+### Review {-}  
 
+You can use the package **skimr** and its function `skim()` to get an overview of the entire dataframe (see page on [Descriptive analysis]).  
 
-### Skip import of rows  
-
-Sometimes, you may want to avoid importing a row of data (e.g. the column names, which are row 1).  
-you can do this with the argument `skip = ` if using `import()` from the **rio** package on a .xlsx or .csv file. Provide the number of rows you want to skip.  
-
-
-
-```{r, eval=F}
-linelist_raw <- import("linelist_raw.xlsx", skip = 1)  # does not import header row
-```
-
-Unfortunately `skip = ` only accepts one integer value, *not* a range (e.g. "2:10"). To skip import of specific rows that are not consecutive from the top, consider importing multiple times and using `bind_rows()` from **dplyr**. See the example below of skipping only row 2.  
-
-
-
-### Remove a second header row  
-
-Your data may have a *second* row of data, for example it may have a "data dictionary" row that looks like this:  
-
-```{r, echo=F}
-# HIDDEN FROM READER
-####################
-# Create second header row of "data dictionary" and insert into row 2. Save as new dataframe.
-linelist_2headers <- linelist_raw %>%  
-        clean_names() %>% 
-        rename(date_infection       = infection_date,
-           date_hospitalisation = hosp_date,
-           date_outcome         = date_of_outcome) %>% 
-        mutate(across(everything(), as.character)) %>% 
-        add_row(.before = 1,
-                row_num = "000",
-                case_id = "case identification number assigned by MOH",
-                generation = "transmission chain generation number",
-                date_infection = "estimated date of infection, mm/dd/yyyy",
-                date_onset = "date of symptom onset, YYYY-MM-DD",
-                date_hospitalisation = "date of initial hospitalization, mm/dd/yyyy",
-                date_outcome = "date of outcome status determination",
-                outcome = "either 'Death' or 'Recovered' or 'Unknown'",
-                gender = "either 'm' or 'f' or 'unknown'",
-                hospital = "Name of hospital of first admission",
-                lon = "longitude of residence, approx",
-                lat = "latitude of residence, approx",
-                infector = "case_id of infector",
-                source = "context of known transmission event",
-                age = "age number",
-                age_unit = "age unit, either 'years' or 'months' or 'days'",
-                fever = "presence of fever on admission, either 'yes' or 'no'",
-                chills = "presence of chills on admission, either 'yes' or 'no'",
-                cough = "presence of cough on admission, either 'yes' or 'no'",
-                aches = "presence of aches on admission, either 'yes' or 'no'",
-                vomit = "presence of vomiting on admission, either 'yes' or 'no'",
-                time_admission = "time of hospital admission HH:MM")
-```
-
-
-```{r message=FALSE, echo=F}
-# display the linelist data as a table
-DT::datatable(head(linelist_2headers, 5), rownames = FALSE, filter="top", options = list(pageLength = 4, scrollX=T) )
-```
-
-This situation can be problematic because it can result in all columns being imported as class "character", even if they are numbers or another class. To solve this, you will likely need to import the data twice.  
-
-1) Import the data in order to store the correct column names  
-2) Import the data again, skipping the first *two* rows (header and second rows)  
-3) Bind the correct names onto the reduced dataframe
-
-The exact arguments used to bind the correct column names depends on the type of data file (.csv, .tsv, .xlsx, etc.). If using **rio**'s `import()` function, understand which function **rio** uses to import your data, and then give the appropriate argument to skip lines and/or designate the column names. See the handbook page on importing data (LINK) for details on **rio**.  
-
-**For Excel files:**  
-
-```{r, eval=F}
-# For excel files (remove 2nd row)
-linelist_raw_names <- import("linelist_raw.xlsx") %>% names()  # save true column names
-
-# import, skip row 2, assign to col_names =
-linelist_raw <- import("linelist_raw.xlsx", skip = 2, col_names = linelist_raw_names) 
-```
-
-**For CSV files:**  
-
-```{r, eval=F}
-# For csv files
-linelist_raw_names <- import("linelist_raw.csv") %>% names() # save true column names
-
-# note argument is 'col.names ='
-linelist_raw <- import("linelist_raw.csv", skip = 2, col.names = linelist_raw_names) 
-```
-
-**Backup option** - changing column names as a separate command
-
-```{r, eval=F}
-# assign/overwrite headers using the base 'colnames()' function
-colnames(linelist_raw) <- linelist_raw_names
-```
-
-
-### Create a data dictionary  
-
-Bonus! If you do have a second row that is a data dictionary, you can easily create a proper data dictionary from it using the `gather()` command from the **tidyr** package. This tip is adapted from this [post](source: https://alison.rbind.io/post/2018-02-23-read-multiple-header-rows/).  
-
+Scroll to the right to see that histograms of each numeric column are included.  
 
 ```{r}
-dict <- linelist_2headers %>%             # begin: linelist with dictionary as first row
-  head(1) %>%                             # keep only column names and first dictionary row                
-  pivot_longer(cols = everything(),       # pivot all columns to long format
-               names_to = "Column",       # assign new column names
-               values_to = "Description")
+skimr::skim(linelist_raw)
 ```
 
-```{r message=FALSE, echo=F}
-# display the linelist data as a table
-DT::datatable(dict, rownames = FALSE, filter="top", options = list(pageLength = 4, scrollX=T) )
-```
-
-### Combine two header rows  
-
-In some cases, you may want to combine two header rows into one. This command will define the column names as the combination (pasting together) of the existing column names with the value underneath in the first row. Replace "df" with the name of your dataset.  
-
-```{r, eval=F}
-names(df) <- paste(names(df), df[1, ], sep = "_")
-```
+ 
 
 
 
@@ -2546,19 +2635,18 @@ names(df) <- paste(names(df), df[1, ], sep = "_")
 <!-- ======================================================= -->
 ## Column names {.tabset .tabset-fade } 
 
-Column names are used very often so they must have "clean" syntax. We suggest the following:  
+Column names are used very often, so they must have "clean" syntax. We suggest the following:  
 
 * Short names
-* No spaces (replaced with underscores (_), 
+* No spaces (replace with underscores _ , 
 * No unusual characters (&, #, <, >, ...)  
 * Similar style nomenclature (e.g. all date columns named like **date_**onset, **date_**report, **date_**death...)  
 
-The columns names of `linelist_raw` are below. We can see that:  
+The columns names of `linelist_raw` are printed below using `names()` from **base** R. We can see that:  
 
-* Some contain spaces  
+* Some names contain spaces  
 * Different naming patterns are used for dates ('date onset' vs. 'infection date')  
-* There must have been a *merged header* across the two last columns in the .xlsx - to resolve this, `import()` used the name of the first of the two columns ("merged_header"), and assigned the second column the name "...28", as it was then empty (and is the 28th column)  
-
+* There must have been a *merged header* across the two last columns in the .xlsx. We know this because the name of two merged columns ("merged_header") was applied to the first one, and the second column was assigned a placeholder  name "...28", as it was then empty and is the 28th column.  
 
 ```{r}
 names(linelist_raw)
@@ -2567,7 +2655,7 @@ names(linelist_raw)
 Note: For a column name that include spaces, surround the name with back-ticks, for example: linelist$\`infection date\`. note that on your keyboard, the back-tick (`) is different from the single quotation mark (').  
 
 
-### Automatic name cleaning  
+### Automatic cleaning {-}  
 
 The function `clean_names()` from the package **janitor** standardizes column names and makes them unique by doing the following:  
 
@@ -2591,7 +2679,7 @@ names(linelist)
 <span style="color: black;">**_NOTE:_** The last column name "...28" was changed to "x28".</span>
 
 
-### Manual name cleaning  
+### Manual name cleaning {-}  
 
 Re-naming columns manually is often necessary. Below, re-naming is performed using the `rename()` function from the **dplyr** package, as part of a pipe chain. `rename()` uses the style "NEW = OLD", the new column name is given before the old column name.  
 
@@ -2646,7 +2734,7 @@ linelist_raw %>%
 
 
 
-### Other name challenges  
+### Other challenges {-}  
 
 
 #### Empty Excel column names {-} 
@@ -2655,7 +2743,7 @@ If you importing an Excel sheet with a missing column name, depending on the imp
 
 
 
-#### Merged Excel column names {-}  
+#### Merged Excel column names and cells {-}  
 
 Merged cells in an Excel file are a common occurrence when receiving data from field level. Merged cells can be nice for human reading of data, but cause many problems for machine reading of data. R cannot accommodate merged cells. 
 
@@ -2685,21 +2773,21 @@ linelist_raw <- openxlsx::readWorkbook("linelist_raw.xlsx", fillMergedCells = TR
 <!-- ======================================================= -->
 ## Select or re-order columns {.tabset .tabset-fade } 
 
-Often the first step of cleaning data is selecting the columns you want to work with, and to set their order in the dataframe. In a **dplyr** chain of verbs, this is done with `select()`.  
+Use `select()` to select the columns you want to retain, and their order in the dataframe. 
 
 <span style="color: orange;">**_CAUTION:_** In the examples below, `linelist` is modified with `select()` but not over-written. New column names are only displayed for purpose of example.</span>
 
-**Here are all the column names in the linelist:**
+**Here are ALL the column names in the linelist:**
 
 ```{r}
 names(linelist)
 ```
 
-### Keep columns  
+### Keep columns {-}  
 
 **Select only the columns you want to remain**  
 
-Put their names in the `select()` command, with no quotation marks. They will appear in the order you provide.  
+Put their names in the `select()` command, with no quotation marks. They will appear in the order you provide. Note that if you include a column that does not exist, R will return an error (see `any_of` below if you want no error in this situation).  
 
 ```{r}
 # linelist dataset is piped through select() command, and names() prints just the column names
@@ -2711,14 +2799,14 @@ linelist %>%
 
 
 
-### Helper functions  
+### Helper functions {-}  
 
 Helper functions and operators exist to make it easy to specify columns.  
 
-For example, if you want to re-order the columns, `everything()` is useful to signify all other columns not yet mentions. The command below pulls columns `date_onset` and `date_hospitalisation` to the beginning:  
+For example, if you want to re-order the columns, `everything()` is useful to signify all other columns not yet mentioned. The command below pulls columns `date_onset` and `date_hospitalisation` to the beginning:  
 
 ```{r}
-# move case_id, date_onset, date_hospitalisation, and gender to beginning
+# move date_onset and date_hospitalisation to beginning
 linelist %>% 
   select(date_onset, date_hospitalisation, everything()) %>% 
   names()
@@ -2733,8 +2821,8 @@ As well as `everything()` here are other helpers functions that work *within* `s
 * `ends_with()`   - matches to a specified suffix. Example: `select(ends_with("_end"))`  
 * `contains()`    - columns containing a character string. Example: `select(contains("time"))` 
 * `matches()`     - to apply a regular expression (regex). Example: `select(contains("[pt]al"))`  
-* `num_range()`   - 
-* `any_of()`      - matches if column is named. Useful if the name might not exist. Example: `select(any_of(date_onset, date_death, cardiac_arrest))`  
+* `num_range()`   - a numerical range like x01, x02, x03  
+* `any_of()`      - matches IF column is named. Useful if the name might not exist. Example: `select(any_of(date_onset, date_death, cardiac_arrest))`  
 
 In addition, use normal operators such as `c()` to list several columns, `:` for consecutive columns, `!` for opposite, `&` for AND, and `|` for OR.  
 
@@ -2757,7 +2845,7 @@ linelist %>%
   names()
 ```
 
-The function `matches()` works similarly to `contains()` but can be provided a regular expression (LINK), such as multiple strings separated by OR bars within the parentheses:  
+The function `matches()` works similarly to `contains()` but can be provided a regular expression (see page on [Characters and strings]), such as multiple strings separated by OR bars within the parentheses:  
 
 ```{r}
 # searched for multiple character matches
@@ -2768,25 +2856,26 @@ linelist %>%
 
 <span style="color: orange;">**_CAUTION:_** If a column name that you specifically provide does not exist in the data, it can return an error and stop your code. Consider using `any_of()` to cite columns that may or may not exist, especially useful in negative (remove) selections.</span>
 
+Only one of these columns exists, but no error is produced and the code continues. 
 ```{r}
 linelist %>% 
-  select(any_of(c("village_origin", "village_detection", "village_residence", "village_travel"))) %>% 
+  select(any_of(c("date_onset", "village_origin", "village_detection", "village_residence", "village_travel"))) %>% 
   names()
 ```
 
 
 
-### Remove columns  
+### Remove columns {-} 
 
 **Indicate which columns to remove** by placing a minus symbol "-" in front of the column name (e.g. `select(-outcome)`), or a vector of column names (as below). All other columns will be retained. 
 
 ```{r}
 linelist %>% 
-  select(-c(date_onset, fever:vomit)) %>% # remove onset and all symptom columns
+  select(-c(date_onset, fever:vomit)) %>% # remove onset and all from fever to vomit
   names()
 ```
 
-### Standalone  
+### Standalone {-}
 
 `select()` can also be used as an independent command (not in a pipe chain). In this case, the first argument is the original dataframe to be operated upon.  
 
@@ -2800,9 +2889,9 @@ names(linelist_age)
 
 
 
-**Add to the pipe chain**  
+#### Add to the pipe chain {-}  
 
-In the linelist, there are a few columns we do not need: `row_num`, `merged_header`, and `x28`. Remove them by adding a `select()` command to the cleaning pipe chain:  
+In the `linelist_raw`, there are a few columns we do not need: `row_num`, `merged_header`, and `x28`. Remove them by adding a `select()` command to the cleaning pipe chain:  
 
 ```{r}
 # CLEANING 'PIPE' CHAIN (starts with raw data and pipes it through cleaning steps)
@@ -2837,10 +2926,9 @@ linelist <- linelist_raw %>%
 ## Deduplication
 
 
-See the handbook page on de-duplications (LINK). Only a very simple de-duplication is addressed here.  
+See the handbook page on [De-duplication]. Only a very simple de-duplication example is presented here.  
 
-The package **dplyr** offers the `distinct()` function to reduce the dataframe to only unique rows - removing rows that are 100% duplicates.  
-We just add the simple command `distinct()` to the pipe chain:  
+The package **dplyr** offers the `distinct()` function to reduce the dataframe to only unique rows - removing rows that are 100% duplicates. We just add the simple command `distinct()` to the pipe chain:  
 
 We begin with `r nrow(linelist)` rows in `linelist`. 
 
@@ -2849,7 +2937,7 @@ linelist <- linelist %>%
   distinct()
 ```
 
-After de-duplication there are `r nrow(linelist)` rows. 
+After de-duplication there are `r nrow(linelist)` rows. So there were rows that were 100% duplicates of other rows.  
 
 Below, the `distinct()` command is added to the cleaning pipe chain:
 
@@ -2895,7 +2983,7 @@ linelist <- linelist_raw %>%
 
 
 
-### New columns {.tabset .tabset-fade}
+### New columns {-}
 
 The most basic `mutate()` command to create a new column might look like this. It creates a new column `new_col` where the value in every row is 10.  
 
@@ -2904,7 +2992,7 @@ linelist <- linelist %>%
   mutate(new_col = 10)
 ```
 
-You can also reference values in other columns, to perform calculations. For example below the Body Mass Index (BMI) is calculated from height and weight using the formula BMI = kg/m^2.  
+You can also reference values in other columns, to perform calculations. For example below the Body Mass Index (BMI) is calculated using the formula BMI = kg/m^2, using column `ht_cm` and column `wt_kg`.  
 
 ```{r}
 linelist <- linelist %>% 
@@ -2915,11 +3003,12 @@ If creating multiple new columns, separate each with a comma and new line. Below
 
 ```{r}
 linelist <- linelist %>%                       
-  mutate(new_var_dup    = case_id,             # new column = duplicate/copy another existing column
-         new_var_static = 7,                   # new column = all values the same
-         new_var_static = new_var_static + 5,  # you can overwrite a column, and it can be a calculation using other variables
-         new_var_paste  = stringr::str_glue("{hospital} on ({date_hospitalisation})") # new column = pasting together values from other columns
-         ) 
+  mutate(
+    new_var_dup    = case_id,             # new column = duplicate/copy another existing column
+    new_var_static = 7,                   # new column = all values the same
+    new_var_static = new_var_static + 5,  # you can overwrite a column, and it can be a calculation using other variables
+    new_var_paste  = stringr::str_glue("{hospital} on ({date_hospitalisation})") # new column = pasting together values from other columns
+    ) 
 ```
 
 ***Scroll to the right to see the new columns (first 50 rows shown):***  
@@ -2941,55 +3030,7 @@ linelist <- linelist %>%
 
 
 
-### Add or transform columns using **base** R  
-
-To define a new column (or re-define a column) using **base** R, just use the assignment operator as below.
-Remember that when using **base** R you must specify the dataframe before writing the column name (e.g. `dataframe$column`). Here are two dummy examples:  
-
-```{r, eval=F}
-linelist$old_var <- linelist$old_var + 7
-linelist$new_var <- linelist$old_var + linelist$age
-```
-
-
-
-#### Add to pipe chain  
-
-**Below, a new column is added to the pipe chain.**  
-
-```{r}
-# CLEANING 'PIPE' CHAIN (starts with raw data and pipes it through cleaning steps)
-##################################################################################
-
-# begin cleaning pipe chain
-###########################
-linelist <- linelist_raw %>%
-    
-    # standardize column name syntax
-    janitor::clean_names() %>% 
-    
-    # manually re-name columns
-           # NEW name             # OLD name
-    rename(date_infection       = infection_date,
-           date_hospitalisation = hosp_date,
-           date_outcome         = date_of_outcome) %>% 
-    
-    # remove column
-    select(-c(row_num, merged_header, x28)) %>% 
-  
-    # de-duplicate
-    distinct() %>% 
-  
-    # ABOVE ARE UPSTREAM CLEANING STEPS ALREADY DISCUSSED
-    ###################################################
-    # add new column
-    mutate(bmi = wt_kg / (ht_cm/100)^2)    
-```
-
-
-
-
-### Convert column class {.tabset .tabset-fade}
+### Convert column class {-}
   
 Often you will need to set the correct class for a column. There are ways to set column class during the import commands, but often this is often cumbersome. See section on [object classes](#objectclasses) to learn more about converting the class of objects, including columns.  
 
@@ -3031,11 +3072,202 @@ Dates can be especially difficult! The date values must all be in the same forma
 
 
 
+### Grouped data {-}  
+
+If your dataframe is already *grouped* (see page on [Grouping data]), `mutate()` may behave differently than if the dataframe is not grouped. Any summarizing functions, like `mean()`, `median()`, `max()`, etc. will be based on only the grouped rows, not all the rows.     
+
+```{r, eval=F}
+# age normalized to mean of ALL rows
+linelist %>% 
+  select(case_id, age, hospital) %>% 
+  mutate(age_norm = age / mean(age, na.rm=T))
+
+# age normalized to mean of hospital group
+linelist %>% 
+  select(case_id, age, hospital) %>% 
+  group_by(hospital) %>% 
+  mutate(age_norm = age / mean(age, na.rm=T))
+```
+
+Read more about using mutate on grouped dataframes in this [tidyverse mutate documentation](https://dplyr.tidyverse.org/reference/mutate.html).  
+
+
+
+### Across columns {-}
+
+
+Often to write concise code you want to apply the same transformation to multiple columns at once. A transformation can be applied to multiple variables at once using the `across()` function from the package **dplyr** (contained within **tidyverse** package).  
+
+`across()` can be used with any **dplyr** verb, but commonly with as `mutate()`, `filter()`, or `summarise()`. 
+`across()` allows you to specify which columns you want a function to apply to. To specify the columns, you can name them indvidually, or use helped functions.  
+
+Here the transformation `as.character()` is applied to specific columns named within `across()`. Note that functions in `across()` are written *without* their parentheses ( )    
+
+```{r, eval=F}
+linelist <- linelist %>% 
+  mutate(across(c(temp, ht_cm, wt_kg), as.character))
+```
+
+There are helpers available to assist you in specifying columns:  
+
+* `everything()`  - all other columns not mentioned  
+* `last_col()`    - the last column  
+* `where()`       - applies a function to all columns and selects those which are TRUE  
+* `starts_with()` - matches to a specified prefix. Example: `select(starts_with("date"))`
+* `ends_with()`   - matches to a specified suffix. Example: `select(ends_with("_end"))`  
+* `contains()`    - columns containing a character string. Example: `select(contains("time"))` 
+* `matches()`     - to apply a regular expression (regex). Example: `select(contains("[pt]al"))`  
+* `num_range()`   - 
+* `any_of()`      - matches if column is named. Useful if the name might not exist. Example: `any_of(date_onset, date_death, cardiac_arrest)`  
+
+Here is an example of how one would change **all columns** to character class:  
+
+```{r, eval=F}
+#to change all columns to character class
+linelist <- linelist %>% 
+  mutate(across(everything(), as.character))
+```
+
+Columns where the name contains the string "date" (note placement of commas and parentheses):  
+
+```{r, eval=F}
+#to change all columns to character class
+linelist <- linelist %>% 
+  mutate(across(contains("date"), as.character))
+```
+
+Below, we want to mutate the columns where they are class POSIXct (a datetime class that shows timestamps) - where the function `is.POSIXct()` evaluates to `TRUE`. Then we want to apply the function `is.Date()` to of these column to convert them to class Date.  
+
+```{r, eval=F}
+linelist <- linelist %>% 
+  mutate(across(where(lubridate::is.POSIXct), as.Date))
+```
+
+* Note that within `across()` we also use the function `where()`  
+* Note that is.POSIXct is from the package **lubridate**. Other similar functions (`is.character()`, `is.numeric()`, and `is.logical()`) are from **base R**  
+
+
+
+Here are a few online resources on using `across()`: [creator Hadley Wickham's thoughts/rationale](https://www.tidyverse.org/blog/2020/04/dplyr-1-0-0-colwise/)
 
 
 
 
-## Re-code values  {.tabset .tabset-fade}
+### `coalesce()` {-}  
+
+This **dplyr** function finds the first non-missing value at each position. 
+
+Say you have two vectors, one for village of detection and another for village of residence. You can use coalesce to pick the first non-missing value for each index:  
+
+```{r}
+village_detection <- c("a", "b", NA,  NA)
+village_residence <- c("a", "c", "a", "d")
+
+coalesce(village_detection, village_residence)
+```
+
+If you provide dataframe columns, for each row it will fill the value with the first non-missing value in the columns you provided.
+
+```{r, eval=F}
+linelist <- linelist %>% 
+  mutate(village = coalesce(village_detection, village_residence))
+```
+
+For more complicated row-wise calculations, see the section on Row-wise calculations.  
+
+
+
+### Cumulative math {-}
+
+If you a column to reflect the cumulative sum/mean/min/max etc as assessed down the rows of a dataframe, use the following functions:  
+
+`cumsum()` returns the cumulative sum, as shown below:  
+
+```{r}
+sum(c(2,4,15,10))     # returns only one number
+cumsum(c(2,4,15,10))  # returns the cumulative sum at each step
+```
+
+This can be used in a dataframe when making a new column. For example, to calculate the cumulative number of cases per day in an outbreak, consider code like this:  
+
+```{r}
+cumulative_case_counts <- linelist %>% 
+  count(date_onset) %>%           # count of rows per day   
+  mutate(                         
+    cumulative_cases = cumsum(n)  # new column of the cumulative sum at that row
+    )
+```
+
+Below the first 10 rows:  
+
+```{r}
+head(cumulative_case_counts, 10)
+```
+
+See the page on [Epidemic curves] for how to plot cumulative incidence with the epicurve.  
+
+See also:  
+cumsum(), cummean(), cummin(), cummax(), cumany(), cumall()  
+
+
+
+
+### Using **base** R {-}  
+
+To define a new column (or re-define a column) using **base** R, just use the assignment operator as below.
+Remember that when using **base** R you must specify the dataframe before writing the column name (e.g. `dataframe$column`). Here are two dummy examples:  
+
+```{r, eval=F}
+linelist$old_var <- linelist$old_var + 7
+linelist$new_var <- linelist$old_var + linelist$age
+```
+
+
+
+
+#### Add to pipe chain {-}  
+
+**Below, a new column is added to the pipe chain and some classes are converted.**  
+
+```{r}
+# CLEANING 'PIPE' CHAIN (starts with raw data and pipes it through cleaning steps)
+##################################################################################
+
+# begin cleaning pipe chain
+###########################
+linelist <- linelist_raw %>%
+    
+    # standardize column name syntax
+    janitor::clean_names() %>% 
+    
+    # manually re-name columns
+           # NEW name             # OLD name
+    rename(date_infection       = infection_date,
+           date_hospitalisation = hosp_date,
+           date_outcome         = date_of_outcome) %>% 
+    
+    # remove column
+    select(-c(row_num, merged_header, x28)) %>% 
+  
+    # de-duplicate
+    distinct() %>% 
+  
+    # ABOVE ARE UPSTREAM CLEANING STEPS ALREADY DISCUSSED
+    ###################################################
+    # add new column
+    mutate(bmi = wt_kg / (ht_cm/100)^2) %>% 
+  
+    # convert class of columns
+    mutate(across(contains("date"), as.Date), 
+           generation = as.numeric(generation),
+           age        = as.numeric(age)) 
+```
+
+
+
+
+
+## Re-code values
 
 Here are a few scenarios where you need to re-code (change) values:  
 
@@ -3046,11 +3278,11 @@ Here are a few scenarios where you need to re-code (change) values:
 
 
 
-### Re-code specific values {-}  
+### Specific values {-}  
 
 To change values manually you can use the `recode()` function within the `mutate()` function. 
 
-Imagine there is a nonsensical date in the data: you could fix the date in the source data, or, you could write the change into the cleaning pipeline via `mutate()` and `recode()`.  
+Imagine there is a nonsensical date in the data (e.g. "2014-14-15"): you could fix the date in the source data, or, you could write the change into the cleaning pipeline via `mutate()` and `recode()`.  
 
 ```{r, eval=F}
 # fix incorrect values                   # old value       # new value
@@ -3098,7 +3330,7 @@ table(linelist$hospital, useNA = "always")
 
 
 
-### Re-code missing values {-} 
+### Missing values {-} 
 
 **dplyr** offers two special function for handling missing values:  
 
@@ -3136,18 +3368,16 @@ linelist <- linelist %>%
 
 
 
+### By logic {-}
 
-<!-- ======================================================= -->
-### Re-code by logic {.tabset .tabset-fade}
-
-These tabs demonstrate re-coding values in a column using logic and conditions:  
+Below is demonstrated how to re-code values in a column using logic and conditions:  
 
 * Using `replace()`, `ifelse()` and `if_else()` for simple logic
 * Using `case_when()` for more complex logic  
 
 
 
-### Re-code with simple logic {-}  
+### Simple logic {-}  
 
 
 #### `replace()` {-}  
@@ -3160,7 +3390,8 @@ One common situation is **changing one value in one row, using an unique row ide
 
 ```{r, eval=F}
 # Example: change gender of one specific observation to "Female" 
-mutate(gender = replace(gender, case_id == "2195", "Female")
+linelist <- linelist %>% 
+  mutate(gender = replace(gender, case_id == "2195", "Female")
 ```
 
 The equivalent command using **base** R syntax and the indexing brackets `[ ]` is below. It reads as "Change the value of the dataframe `linelist`'s column `gender` (for the rows where `linelist`'s column `case_id` has the value  '2195') to 'Female' ".   
@@ -3179,7 +3410,7 @@ Another tool for simple logical re-coding is `ifelse()` and its partner `if_else
 These commands are simplified versions of an `if` and `else` programming statement (LINK). The general syntax is:  
 `ifelse(condition, value to return if condition evaluates to TRUE, value to return if condition evaluates to FALSE)` 
 
-Below, the column `source_known` is defined (or re-defined). Its value in a given row is "known" if the row's value in column `source` is *not* missing. If the value in `source` *is* missing, then the value in `source_known` is "unknown".  
+Below, the column `source_known` is defined (or re-defined). Its value in a given row is set to "known" if the row's value in column `source` is *not* missing. If the value in `source` *is* missing, then the value in `source_known` is set to "unknown".  
 
 ```{r, eval=F}
 linelist <- linelist %>% 
@@ -3189,31 +3420,32 @@ linelist <- linelist %>%
 `if_else()` is a special version from **dplyr** that handles dates. Note that if the 'true' value is a date, the 'false' value must also qualify a date, hence using the special character `NA_real_` instead of just `NA`.
 
 ```{r, eval=F}
+# Create a date of death column, which is NA if patient has not died.
 linelist <- linelist %>% 
   mutate(date_death = if_else(outcome == "Death", date_outcome, NA_real_))
 ```
 
 **Avoid stringing together many ifelse commands... use `case_when()` instead!** `case_when()` is much easier to read and you'll make fewer errors.  
 
-```{r, fig.align = "center", echo=F}
+```{r, fig.align = "center", out.width = "100%", echo=F}
 knitr::include_graphics(here::here("images", "ifelse bad.png"))
 ```
 
-Outside of a dataframe, if you want to have an object used in your code switch its value based on criteria, consider using `switch()` from **base** R. For example if... TO DO. See the section on using `switch()` in the page on R interactive console.
+Outside of the context of a dataframe, if you want to have an object used in your code switch its value based on criteria, consider using `switch()` from **base** R. See the section on using `switch()` in the page on R interactive console.
 
 
 
 
-### Re-code with complex logic {-}  
+### Complex logic {-}  
 
 Use **dplyr**'s `case_when()` if you need to use complex logic statements to re-code values. There are important differences from `recode()` in syntax and logic order!  
 
 `case_when()` commands have a Right-Hand Side (RHS) and a Left-Hand Side (LHS) separated by a "tilde" `~`. The logic criteria are in the LHS and the pursuant value is on the RHS. Statements are separated by commas. It is important to note that:  
 
 * Statements are evaluated in the order written - from top-to-bottom. Thus it is best to write the most specific criteria first, and the most general last.  
-* End with `TRUE` on the LHS, which signifies any other value that did not meet any of the previous critera  
-* The values on the RHS must all be the same class - numeric, character, logical, etc.  
-  * To assign `NA`, you may need to use special values such as `NA_character`, `NA_real` (for numeric or POSIX), and `as.Date(NA)`  
+* End with `TRUE` on the LHS, which signifies any row value that did not meet any of the previous criteria  
+* The values on the RHS must all be the same class - either numeric, character, logical, etc.  
+  * To assign `NA`, you may need to use special values such as `NA_character_`, `NA_real_` (for numeric or POSIX), and `as.Date(NA)`  
   
 Below we utilize the columns `age` and `age_unit` to create a column `age_years`:  
 
@@ -3230,18 +3462,16 @@ linelist <- linelist %>%
 
 
 
-
-<!-- ======================================================= -->
-### Re-code with a cleaning dictionary
+### Cleaning dictionary {-}
 
 Use the package **linelist** to clean a linelist with a *cleaning dictionary*.  
 
 1) Import a cleaning dictionary with 3 columns:  
     * A "from" column (the incorrect value)  
     * A "to" column (the correct value)  
-    * A column specifying the column for the changes to be applied (*or `.global` to apply to all columns)  
+    * A column specifying the column for the changes to be applied (or ".global" to apply to all columns)  
 
-```{r, fig.align = "center", echo=F}
+```{r, fig.align = "center", out.width = "100%", echo=F}
 knitr::include_graphics(here::here("images", "cleaning_dict.png"))
 ```
 
@@ -3250,7 +3480,7 @@ cleaning_dict <- rio::import(here("data", "cleaning_dict.csv"))
 ```
 
 ```{r, eval=F}
-cleaning_dict <- rio::import("cleaning_dict.csv")
+cleaning_dict <- import("cleaning_dict.csv")
 ```
 
 2) Store names of any columns that you want to "protect" from the changes. They must be provided to `clean_data()` as a numeric or logical vector, so you will see use of `names(.)` in the command below (the dot means the dataframe).  
@@ -3259,21 +3489,22 @@ cleaning_dict <- rio::import("cleaning_dict.csv")
 protected_cols <- c("case_id", "source")
 ```
 
-3) Run `clean_data()` specifying the cleaning dictionary, and the third column name
+3) Run `clean_data()`, specifying the cleaning dictionary
 
 ```{r}
 linelist <- linelist %>% 
   linelist::clean_data(
     wordlists = cleaning_dict,
-    spelling_vars = "col",       #defaults to 3rd column in dict, if not specified
+    spelling_vars = "col",       # dict column containing column names, defaults to 3rd column in dict
     protect = names(.) %in% protected_cols
   )
 ```
+
 Scroll too see how values have changed - particularly `gender` (lowercase to uppercase), and all the symptoms columns have been transformed from yes/no to 1/0.  
 
 ```{r message=FALSE, echo=F}
 # display the linelist data as a table
-DT::datatable(head(linelist_raw,50), rownames = FALSE, filter="top", options = list(pageLength = 5, scrollX=T) )
+DT::datatable(head(linelist,50), rownames = FALSE, filter="top", options = list(pageLength = 5, scrollX=T) )
 ```
 
 
@@ -3282,59 +3513,13 @@ DT::datatable(head(linelist_raw,50), rownames = FALSE, filter="top", options = l
 
 Note that your column names in the cleaning dictionary must correspond to the names at this point in your cleaning script. `clean_data()` itself also implements a column name cleaning function similar to `clean_names()` from **janitor** that standardizes column names prior to applying the dictionary.  
 
-See this [online reference](https://www.repidemicsconsortium.org/linelist/reference/clean_data.html) for more details.
-
-
-
-
-### Mutate on grouped values {-}  
-
-If your dataframe is already *grouped* (LINK to grouping page), `mutate()` may behave differently than if the dataframe is not grouped. Any summarizing functions, like `mean()`, `median()`, `max()`, etc. will be based on only the grouped rows, not all the rows.     
-
-```{r, eval=F}
-# age normalized to mean of ALL rows
-linelist %>% 
-  select(case_id, age, hospital) %>% 
-  mutate(age_norm = age / mean(age, na.rm=T))
-
-# age normalized to mean of hospital group
-linelist %>% 
-  select(case_id, age, hospital) %>% 
-  group_by(hospital) %>% 
-  mutate(age_norm = age / mean(age, na.rm=T))
-```
-
-Read more about using mutate on grouped dataframes: https://dplyr.tidyverse.org/reference/mutate.html
+See this [online reference for the linelist package](https://www.repidemicsconsortium.org/linelist/reference/clean_data.html) for more details.
 
 
 
 
 
-## Other transformations  
-
-
-### Special re-coding tools  
-
-
-`coalesce()`  
-
-This **dplyr** function finds the first non-missing value at each position. So, you provide it with columns and for each row it will fill the value with the first non-missing value in the columns you provided.  
-
-For example, you might use `this`coalesce()` create a "location" variable from hypothetical variables "patient_residence" and "reporting_jurisdiction", where you prioritize patient residence information, if it exists.  
-
-```{r, eval=F}
-linelist <- linelist %>% 
-  mutate(location = coalesce(patient_residence, reporting_jurisdiction))
-```
-
-
-cumsum(), cummean(), cummin(), cummax(), cumany(), cumall(),  
-
-
-
-
-
-### Add to pipe chain {-}  
+#### Add to pipe chain {-}  
 
 **Below, some new columns and column transformations are added to the pipe chain.**  
 
@@ -3405,7 +3590,7 @@ linelist <- linelist_raw %>%
 <!-- ======================================================= -->
 <!-- ======================================================= -->
 <!-- ======================================================= -->
-## Numeric categories {#num_cats .tabset .tabset-fade}
+## Numeric categories {#num_cats}
 
 
 Here we describe some special approaches for creating numeric categories. Common examples include age categories, groups of lab values, etc. Here we will discuss:  
@@ -3415,7 +3600,8 @@ Here we describe some special approaches for creating numeric categories. Common
 * `case_when()`  
 * quantile breaks  
 
-Sometimes, numeric variables will import as class "character". This occurs if there are non-numeric characters in some of the values, for example an entry of "2 months" for age, or (depending on your R locale settings) if a comma is used in the decimals place (e.g. "4,5" to mean four and one half years).  
+
+### Review distribution {-}
 
 For this example we will create an `age_cat` column using the `age_years` column.  
 
@@ -3424,7 +3610,7 @@ For this example we will create an `age_cat` column using the `age_years` column
 class(linelist$age_years)
 ```
 
-First, examine the distribution of your data, to make appropriate cut-points. See the page on Plotting Continuous Data (LINK).  
+First, examine the distribution of your data, to make appropriate cut-points. See the page on how to [Plot continuous data].  
 
 ```{r, out.height='50%'}
 # examine the distribution
@@ -3435,36 +3621,31 @@ hist(linelist$age_years)
 summary(linelist$age_years, na.rm=T)
 ```
 
+<span style="color: orange;">**_CAUTION:_** Sometimes, numeric variables will import as class "character". This occurs if there are non-numeric characters in some of the values, for example an entry of "2 months" for age, or (depending on your R locale settings) if a comma is used in the decimals place (e.g. "4,5" to mean four and one half years)..</span>
+
 
 <!-- ======================================================= -->
-### `age_categories()`  
+### `age_categories()` {-}
 
-With the **epikit** package, you can use the `age_categories()` function to easily categorize and label numeric columns (note: this function can be applied to non-age numeric variables too). The output is an ordered factor. 
+With the **epikit** package, you can use the `age_categories()` function to easily categorize and label numeric columns (note: this function can be applied to non-age numeric variables too). Of note: *the output is an ordered factor.* 
 
+Here are the required inputs:  
 
-Here are the *optional* arguments demonstrated below:  
-
-* `lower = ` Default is 0). The lowest number you want considered.  
-* `upper = ` The highest number you want considered.  
-* `by = `    The number of years between groups.  
-* `separator = ` Default is "-". Character between ages in labels.  
-* `ceiling = ` Default FALSE. If TRUE, the highest break value is a ceiling and a category "XX+" is not included. Any values above highest break or `upper` (if defined) are categorized as `NA`.  
-
-See the function's Help page for more details (enter `?age_categories` in the R console). 
+* A numeric vector (column)  
+* The `breakers = ` - a numeric vector of break points for the new groups  
 
 First, the most simple example:  
 
 ```{r}
 # Simple example
 ################
-library(epikit)
+pacman::p_load(epikit)
 
 linelist <- linelist %>% 
   mutate(
     age_cat = age_categories(
       age_years,
-      breakers = c(0, 5, 10, 15, 20, 30, 40, 50, 60, 70)
-      ))
+      breakers = c(0, 5, 10, 15, 20, 30, 40, 50, 60, 70)))
 
 # show table
 table(linelist$age_cat, useNA = "always")
@@ -3486,6 +3667,10 @@ table(linelist$age_cat, useNA = "always")
 ```
 
 
+You can adjust how the labels are displayed with `separator = `. The default is "-"  
+
+You can adjust the upper cut-off of values allowed to be included in a group. Use `ceiling = `, the default is FALSE. If TRUE, the highest break value is a "ceiling" and a category "XX+" is not included. Any values above highest break value or `upper` (if defined) are categorized as `NA`. Below is an example with `ceiling = TRUE`, so that there is no category of XX+ and values above 70 (the highest break value) are assigned as NA.  
+
 ```{r}
 # With ceiling set to TRUE
 ##########################
@@ -3500,9 +3685,31 @@ linelist <- linelist %>%
 table(linelist$age_cat, useNA = "always")
 ```
 
+Alternatively, instead of `breakers = `, you can provide all of `lower = `, `upper = `, and `by = `:  
+
+* `lower = ` The lowest number you want considered - default is 0  
+* `upper = ` The highest number you want considered  
+* `by = `    The number of years between groups  
+
+```{r}
+linelist <- linelist %>% 
+  mutate(
+    age_cat = age_categories(
+      age_years, 
+      lower = 0,
+      upper = 100,
+      by = 10))
+
+# show table
+table(linelist$age_cat, useNA = "always")
+```
+
+
+See the function's Help page for more details (enter `?age_categories` in the R console). 
+
 
 <!-- ======================================================= -->
-### `cut()` {#cut .tabset .tabset-fade}
+### `cut()` {-}
 
 You can also use the **base** R function `cut()`, which creates categories from a numeric column. The differences from `age_categories()` are:  
 
@@ -3585,8 +3792,7 @@ table(linelist$age_cat, useNA = "always")
 
 **Add labels**  
 
-As these are manually written, be very careful to ensure they are accurate! Check your work using cross-tabulation, as described below.  
-Below is the same code as above, with manual labels added.  
+As these are manually written, be very careful to ensure they are accurate! Check your work using cross-tabulation, as described below. Below is the same code as above, with manual labels added.  
 
 ```{r class.source = 'fold-show'}
 linelist <- linelist %>% 
@@ -3659,7 +3865,7 @@ If the above seems cumbersome, consider using `age_categories()` instead, as des
 
 **Make breaks and labels**  
 
-For a fast way to make breaks and labels manually, use something like below. See the page on using seq() and rep() and c() TO DO
+For a fast way to make breaks and labels manually, use something like below. See the [R Basics] page for references on `seq()` and `rep()`.  
 
 ```{r, eval=F}
 # Make break points from 0 to 90 by 5
@@ -3674,7 +3880,15 @@ age_labels
 length(age_seq) == length(age_labels)
 ```
 
-Make breaks from `quantile()`. This is from the **stats** package with comes in **base** R.  
+
+Read more about `cut()` in its Help page by entering `?cut` in the R console.  
+
+
+
+
+### Quantile breaks {-}  
+
+Make breaks from `quantile()`. This is from the **stats** package which comes in **base** R.  
 
 ```{r}
 age_quantiles <- quantile(linelist$age_years, c(0, .25, .50, .75, .90, .95), na.rm=T)
@@ -3685,52 +3899,59 @@ age_quantiles <- unname(age_quantiles)
 age_quantiles
 ```
 
-Read more about `cut()` in its Help page by entering `?cut` in the R console.  
+You can then use these as break points in `age_categories()` or `cut()`.  
 
 
 
 
 <!-- ======================================================= -->
-### `case_when()`
+### `case_when()` {-}
 
 The dplyr function `case_when()` can also be used to create numeric categories.  
 
 * Allows explicit setting of break point inclusion/exclusion  
 * Allows designation of label for `NA` values in one step  
-* More complicated code, *arguably* more prone to error  
+* More complicated code  
 * Allow more flexibility to include other variables in the logic  
 
-**If using `case_when()` please review the proper use, as logic and order of assignment are important understand to avoid errors.**
+**If using `case_when()` please review the proper use as described earlier in this page, as logic and order of assignment are important understand to avoid errors.**
 
-<span style="color: orange;">**_CAUTION:_** In `case_when()` all right-hand side values must be of the same class. Thus, if your categories are character values (e.g. "20-30 years") then any designated outcome for `NA` age values must also be character ("Missing", or the special `NA_character_` instead of `NA`).</span>
+<span style="color: orange;">**_CAUTION:_** In `case_when()` all right-hand side values must be of the same class. Thus, if your categories are character values (e.g. "20-30 years") then any designated outcome for `NA` age values must also be character (either "Missing", or the special `NA_character_` instead of `NA`).</span>
 
 You will need to designate the column as a factor (by wrapping `case_when()` in the function `factor()`) and provide the ordering of the factor levels using the `levels = ` argument *after* the close of the `case_when()` function. When using `cut()`, the factor and ordering of levels is done automatically.  
 
 
 ```{r}
 linelist <- linelist %>% 
-  mutate(age_cat = factor(case_when(
-          # provide the case_when logic and outcomes
-          age_years >= 0 & age_years < 5     ~ "0-4",          # logic by age_year value
-          age_years >= 5 & age_years < 10    ~ "5-9",
-          age_years >= 10 & age_years < 15   ~ "10-14",
-          age_years >= 15 & age_years < 20   ~ "15-19",
-          age_years >= 20 & age_years < 30   ~ "20-29",
-          age_years >= 30 & age_years < 50   ~ "30-49",
-          age_years >= 50 & age_years < 70   ~ "50-69",
-          age_years >= 45 & age_years <= 100 ~ "70-100",
-          is.na(age_years)                   ~ "Missing",  # if age_years is missing
-          TRUE                               ~ "Check value"   # catch-all alarm to trigger review
-          ), levels = c("0-4","5-9", "10-14", "15-19", "20-29", "30-49", "50-69", "70-100", "Missing", "Check value"))
-         )
+  mutate(
+    age_cat = factor(case_when(
+      # provide the case_when logic and outcomes
+      age_years >= 0 & age_years < 5     ~ "0-4",          
+      age_years >= 5 & age_years < 10    ~ "5-9",
+      age_years >= 10 & age_years < 15   ~ "10-14",
+      age_years >= 15 & age_years < 20   ~ "15-19",
+      age_years >= 20 & age_years < 30   ~ "20-29",
+      age_years >= 30 & age_years < 50   ~ "30-49",
+      age_years >= 50 & age_years < 70   ~ "50-69",
+      age_years >= 45 & age_years <= 100 ~ "70-100",
+      is.na(age_years)                   ~ "Missing",      # if age_years is missing
+      TRUE                               ~ "Check value"), # trigger for review
+      
+      # define the levels order for factor()
+      levels = c("0-4","5-9", "10-14",
+                 "15-19", "20-29", "30-49",
+                 "50-69", "70-100", "Missing", "Check value")))
+```
 
+And now view the results with a table of the new column:  
 
+```{r}
 table(linelist$age_cat, useNA = "always")
 ```
 
 
 
-### Add to pipe chain  
+### Add to pipe chain {-}  
 
 Below, code to create two categorical age columns is added to the cleaning pipe chain:  
 
@@ -3813,18 +4034,24 @@ Remember that each column must contain values of only one class (either characte
 
 ```{r, eval=F}
 linelist <- linelist %>% 
-  add_row(row_num = 666, case_id = "abc", generation = 4, `infection date` = as.Date("2020-10-10"), .before = 2)
+  add_row(row_num = 666,
+          case_id = "abc",
+          generation = 4,
+          `infection date` = as.Date("2020-10-10"),
+          .before = 2)
 ```
 
-use .before and .after. .before = 3 will put it before the 3rd row. Default is to add it to the end. columns not specified will be let empty.
-  The new row number may look strange ("...23") but the row numbers have changed. So if using the command twice examine/test carefully.
+Use `.before` and `.after.` to place the row you want to add. `.before = 3` will put the new row before the 3rd row. The default behavior is to add the row to the end. Columns not specified will be left empty.  
 
-If your class is off you will see an error like this: Error: Can't combine `..1$infection date` <date> and `..2$infection date` <character>.
-(for a date value remember to wrap the date in the function`as.Date()` like `as.Date("2020-10-10")`)
+The new *row number* may look strange ("...23") but the row numbers in the pre-existing rows *have* changed. So if using the command twice, examine/test the insertion carefully.
 
+If a class you provide is off you will see an error like this:  
 
+```
+Error: Can't combine ..1$infection date <date> and ..2$infection date <character>.
+```
 
-
+(when inserting a row with a date value, remember to wrap the date in the function `as.Date()` like `as.Date("2020-10-10")`).
 
 
 
@@ -3840,10 +4067,10 @@ If your class is off you will see an error like this: Error: Can't combine `..1$
 
 A typical early cleaning step is to filter the dataframe for specific rows using the **dplyr** verb `filter()`. Within `filter()`, give the logic that must be `TRUE` for a row in the dataset to be kept. 
 
-The tabs below show how to filter rows based on simple and complex logical conditions, and how to filter/subset rows as a stand-alone command and with **base** R
+Below is shown how to filter rows based on simple and complex logical conditions, and how to filter/subset rows as a stand-alone command and with **base** R
 
 <!-- ======================================================= -->
-### A simple `filter()`  
+### Simple `filter()` {-} 
 
 This simple example re-defines the dataframe `linelist` as itself, having filtered the rows to meet a logical condition. **Only the rows where the logical statement within the parentheses is `TRUE` are kept.**  
 
@@ -3861,7 +4088,7 @@ After the filter is applied, the number of rows in `linelist` is `r nrow(linelis
 
 
 <!-- ======================================================= -->
-### A complex `filter()` 
+### Complex `filter()` {-} 
 
 A more complex example using `filter()`:  
 
@@ -3876,7 +4103,7 @@ hist(linelist$date_onset, breaks = 50)
 
 #### How filters handle missing numeric and date values {-}  
 
-Can we just filter by `date_onset` to rows after June 2013? **Caution! Applying the code `filter(date_onset > as.Date("2013-06-01")))` would accidentally remove any rows in the later epidemic with a missing date of onset!**  
+Can we just filter by `date_onset` to rows after June 2013? **Caution! Applying the code `filter(date_onset > as.Date("2013-06-01")))` would remove any rows in the later epidemic with a missing date of onset!**  
 
 <span style="color: red;">**_DANGER:_** Filtering to greater than (>) or less than (<) a date or number can remove any rows with missing values (`NA`)! This is because `NA` is treated as infinitely large and small.</span>
 
@@ -3891,7 +4118,7 @@ table(Hospital  = linelist$hospital,                     # hospital name
       useNA     = "always")                              # show missing values
 ```
 
-What other criteria can we filter on to remove the first outbreak from the dataset? We see that:  
+What other criteria can we filter on to remove the first outbreak (in 2012 & 2013) from the dataset? We see that:  
 
 * The first epidemic occurred at Hospital A, Hospital B, and that there were also 10 cases at Port Hospital.  
 * Hospitals A & B did *not* have cases in the second epidemic, but Port Hospital did.  
@@ -3929,7 +4156,7 @@ Multiple statements can be included within one filter command (separated by comm
 
 
 
-### Filter stand-alone command  
+### Standalone {-}  
 
 Filtering can also be done as a stand-alone command (not part of a pipe chain). Like other **dplyr** verbs, in this case the first argument must be the dataset itself.  
 
@@ -3952,7 +4179,7 @@ linelist <- linelist[!is.na(case_id), ]
 
 
 
-### Filter to quickly review observations  
+### Quickly review records {-} 
 
 This **base** R syntax can be handy when you want to quickly view a subset of rows and columns. Use the **base** R `View()` command (note the capital "V") around the [] subset you want to see. The result will appear as a dataframe in your RStudio viewer panel. For example, if I want to review onset and hospitalization dates of 3 specific cases:  
 
@@ -3980,7 +4207,7 @@ View(linelist %>%
 
 
 
-### Add to pipe chain  
+#### Add to pipe chain {-}  
 
 
 ```{r}
@@ -4064,84 +4291,22 @@ linelist <- linelist_raw %>%
 <!-- ======================================================= -->
 <!-- ======================================================= -->
 <!-- ======================================================= -->
-## rowwise() **dplyr()**
+## Row-wise calculations  
 
-https://cran.r-project.org/web/packages/dplyr/vignettes/rowwise.html
+If you want to perform a calculation within a row, you can use `rowwise()` from **dplyr**. See the vignette on [row-wise calculations](https://cran.r-project.org/web/packages/dplyr/vignettes/rowwise.html)
 
+For example, this code applies `rowwise()` and then creates a new column that sums the number of symptoms per case:  
 
-```{r eval=F}
-
+```{r, eval=F}
 linelist <- linelist %>%
   rowwise() %>%
   mutate(num_symptoms = sum(c(fever, chills, cough, aches, vomit) == "yes"))
-
 ```
 
 
 
 
 
-
-
-<!-- ======================================================= -->
-<!-- ======================================================= -->
-<!-- ======================================================= -->
-## Transformations across multiple columns
-
-
-Often to write concise code you want to apply the same transformation to multiple columns at once. A transformation can be applied to multiple variables at once using the `across()` function from the package **dplyr** (contained within **tidyverse** package).  
-
-`across()` can be used with any **dplyr** verb, but commonly with as `mutate()`, `filter()`, or `summarise()`. 
-`across()` allows you to specify which columns you want a function to apply to. To specify the columns, you can name them indvidually, or use helped functions.  
-
-Here the transformation `as.character()` is applied to specific columns named within `across()`. Note that functions in `across()` are written *without* their parentheses ( )    
-
-```{r, eval=F}
-linelist <- linelist %>% 
-  mutate(across(c(temp, ht_cm, wt_kg), as.character))
-```
-
-There are helpers available to assist you in specifying columns:  
-
-* `everything()`  - all other columns not mentioned  
-* `last_col()`    - the last column  
-* `where()`       - applies a function to all columns and selects those which are TRUE  
-* `starts_with()` - matches to a specified prefix. Example: `select(starts_with("date"))`
-* `ends_with()`   - matches to a specified suffix. Example: `select(ends_with("_end"))`  
-* `contains()`    - columns containing a character string. Example: `select(contains("time"))` 
-* `matches()`     - to apply a regular expression (regex). Example: `select(contains("[pt]al"))`  
-* `num_range()`   - 
-* `any_of()`      - matches if column is named. Useful if the name might not exist. Example: `select(any_of(date_onset, date_death, cardiac_arrest))`  
-
-Here is an example of how one would change **all columns** to character class:  
-
-```{r, eval=F}
-#to change all columns to character class
-linelist <- linelist %>% 
-  mutate(across(everything(), as.character))
-```
-
-Columns where the name contains the string "date" (note placement of commas and parentheses):  
-
-```{r, eval=F}
-#to change all columns to character class
-linelist <- linelist %>% 
-  mutate(across(contains("date"), as.character))
-```
-
-Below, we want to mutate the columns where they are class POSIXct (a datetime class that shows timestamps) - where the function `is.POSIXct()` evaluates to `TRUE`. Then we want to apply the function `is.Date()` to of these column to convert them to class Date.  
-
-```{r, eval=F}
-linelist <- linelist %>% 
-  mutate(across(where(lubridate::is.POSIXct), as.Date))
-```
-
-* Note that within `across()` we also use the function `where()`  
-* Note that is.POSIXct is from the package **lubridate**. Other similar functions (`is.character()`, `is.numeric()`, and `is.logical()`) are from **base R**  
-
-
-
-Here are a few online resources on using `across()`: [creator Hadley Wickham's thoughts/rationale](https://www.tidyverse.org/blog/2020/04/dplyr-1-0-0-colwise/)
 
 
 
@@ -6469,7 +6634,7 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 <!--chapter:end:new_pages/matching_joining.Rmd-->
 
 
-# Characters/strings {.tabset .tabset-fade}  
+# Characters and strings {.tabset .tabset-fade}  
 
 
 <!-- ======================================================= -->
@@ -14176,6 +14341,77 @@ See the handbook page on ggplot tips for details on how to make a second axis.
 
 
 
+
+## Cumulative Incidence {-}
+
+
+If beginning with a case linelist, create a new column containing the cumulative number of cases per day in an outbreak using `cumsum()` from **base** R:    
+
+```{r}
+cumulative_case_counts <- linelist %>% 
+  count(date_onset) %>%                # count of rows per day   
+  mutate(                         
+    cumulative_cases = cumsum(n)       # new column of the cumulative number of rows at each date
+    )
+
+cumulative_case_counts
+```
+
+This cumulative column can then be plotted:
+
+```{r}
+plot_cumulative <- ggplot()+
+  geom_line(
+    data = cumulative_case_counts,
+    aes(x = date_onset, y = cumulative_cases),
+    size = 2,
+    color = "blue")
+
+plot_cumulative
+```
+
+
+It can also be overlaid onto the epicurve, with dual-axis:
+
+```{r}
+pacman::p_load(cowplot)
+
+plot_cases <- ggplot()+
+  geom_histogram(          
+    data = linelist,
+    aes(x = date_onset),
+    binwidth = 1)+
+  labs(
+    y = "Daily cases",
+    x = "Date of symptom onset"
+  )+
+  theme_cowplot()
+
+
+plot_cumulative <- ggplot()+
+  geom_line(
+    data = cumulative_case_counts,
+    aes(x = date_onset, y = cumulative_cases),
+    size = 2,
+    color = "blue")+
+  scale_y_continuous(
+    position = "right")+
+  labs(x = "",
+       y = "Cumulative cases")+
+  theme_cowplot()+
+  theme(
+    axis.line.x = element_blank(),
+    axis.text.x = element_blank(),
+    axis.title.x = element_blank(),
+    axis.ticks = element_blank())
+```
+
+```{r}
+aligned_plots <- align_plots(plot_cases, plot_cumulative, align="hv", axis="tblr")
+ggdraw(aligned_plots[[1]]) + draw_plot(aligned_plots[[2]])
+```
+
+
 <!-- ======================================================= -->
 ## Resources {.tabset .tabset-fade}
 
@@ -14221,7 +14457,7 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 <!--chapter:end:new_pages/epicurves.Rmd-->
 
 
-# Plotting continuous data {.tabset .tabset-fade}  
+# Plot continuous data {.tabset .tabset-fade}  
 
 For appropriate plotting of continuous data, e.g. age, clinical measurements, distance, etc. 
 
@@ -14521,7 +14757,7 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 
 <!--chapter:end:new_pages/plot_continuous.Rmd-->
 
-# Plotting categorical variables  {.tabset .tabset-fade}  
+# Plot categorical data  {.tabset .tabset-fade}  
 
 For appropriate plotting of categorical data, e.g. the distribution of sex, symptoms, ethnic group, etc. 
 
@@ -18808,7 +19044,7 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 <!--chapter:end:new_pages/cat_advanced.Rmd-->
 
 
-# Errors & Warnings {.tabset .tabset-fade}  
+# Errors & warnings {.tabset .tabset-fade}  
 
 <!-- ======================================================= -->
 ## Overview {.tabset .tabset-fade}
@@ -19482,7 +19718,7 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 <!--chapter:end:new_pages/rmarkdown.Rmd-->
 
 
-# Shiny basics {.tabset .tabset-fade}  
+# Shiny and dashboards {.tabset .tabset-fade}  
 
 The Page title should be succinct. Consider adding a tag with no spaces into the curly brackets, such as below. This can be used for internal links within the handbook. 
 `{#title_tag .tabset .tabset-fade}`  

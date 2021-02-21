@@ -9,13 +9,9 @@
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.2"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.6/header-attrs.js"></script><script src="libs/jquery-3.5.1/jquery-3.5.1.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.5.3/bootstrap.min.css" rel="stylesheet">
 <script src="libs/bootstrap-4.5.3/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.2.3.9000/tabs.js"></script><script src="libs/bs3compat-0.2.3.9000/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
-<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script><link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet">
-<script src="libs/datatables-binding-0.15/datatables.js"></script><link href="libs/dt-core-1.10.20/css/jquery.dataTables.min.css" rel="stylesheet">
-<link href="libs/dt-core-1.10.20/css/jquery.dataTables.extra.css" rel="stylesheet">
-<script src="libs/dt-core-1.10.20/js/jquery.dataTables.min.js"></script><link href="libs/nouislider-7.0.10/jquery.nouislider.min.css" rel="stylesheet">
-<script src="libs/nouislider-7.0.10/jquery.nouislider.min.js"></script><link href="libs/selectize-0.12.0/selectize.bootstrap3.css" rel="stylesheet">
-<script src="libs/selectize-0.12.0/selectize.min.js"></script><link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet">
-<script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script><script src="https://cdn.jsdelivr.net/autocomplete.js/0/autocomplete.jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/mark.js@8.11.1/dist/mark.min.js"></script><!-- CSS --><link rel="stylesheet" href="style_bs4.css">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script><link href="libs/vis-4.20.1/vis.css" rel="stylesheet">
+<script src="libs/vis-4.20.1/vis.min.js"></script><script src="libs/visNetwork-binding-2.0.9/visNetwork.js"></script><link href="libs/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/autocomplete.js/0/autocomplete.jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/mark.js@8.11.1/dist/mark.min.js"></script><!-- CSS --><link rel="stylesheet" href="style_bs4.css">
 </head>
 <body data-spy="scroll" data-target="#toc">
 
@@ -39,7 +35,7 @@
         <ul class="book-toc list-unstyled">
 <li><a class="active" href="index.html">Welcome - THIS IS A DRAFT</a></li>
 <li class="book-part">Preview pages</li>
-<li><a class="" href="epidemicmodels.html"><span class="header-section-number">1</span> Epidemic modeling</a></li>
+<li><a class="" href="transmission-chains.html"><span class="header-section-number">1</span> Transmission chains</a></li>
 </ul>
 
         <div class="book-extra">
@@ -55,7 +51,7 @@
 <div id="about-this-handbook" class="section level2 unnumbered">
 <h2>About this handbook<a class="anchor" aria-label="anchor" href="#about-this-handbook"><i class="fas fa-link"></i></a>
 </h2>
-<p>This is a free open-access R reference guide intended for applied epidemiologists.</p>
+<p><strong>This is a free open-access R reference book for applied epidemiologists and public health practitioners.</strong></p>
 <p><strong>This book strives to:</strong></p>
 <ul>
 <li>Serve as a quick reference guide - not a textbook<br>
@@ -64,49 +60,27 @@
 </li>
 <li>Be accessible in settings with limited technical support and low internet-connectivity (downloadable version)<br>
 </li>
-<li>Contain clear and simple language, with step-by-step instructions and many comments<br>
+<li>Contain clear and simple language, with step-by-step instructions and helpful code annotation<br>
 </li>
 <li>Be a living document, growing and adapting to new best practices</li>
 </ul>
 <p><strong>What gaps does this book address?</strong></p>
 <ul>
-<li>Many epidemiologists do not have formal training in R or data science, or are transitioning to R from SAS, STATA, or other statistical software.<br>
+<li>Many epidemiologists lack formal R training or are transitioning from SAS, STATA, or other statistical software.<br>
 </li>
 <li>The R universe changes frequently - there should be a place for best practice code catered toward the common epidemiologist user.<br>
 </li>
-<li>Epidemiologists often must read dozens of online forum pages for answers, most of which are not epidemiology-oriented.<br>
+<li>Epidemiologists often search dozens of online forums for answers, most of which are not epidemiology-oriented.<br>
 </li>
 <li>Some epidemiologists work in low internet-connectivity environments and have limited technical support.</li>
 </ul>
 <p><strong>How is this different than other R books?</strong></p>
-<p>This handbook is written by epidemiologists, for epidemiologists. Examples are taken from lived experience in local, national, academic, and emergency settings. The book is also offered in a download-able format for to bring into settings with unreliable internet.
-In addition to core R concepts and tools, this book covers:</p>
 <ul>
-<li>epidemic curves<br>
+<li>This handbook is written by epidemiologists, for epidemiologists. It is <strong>not</strong> an approved product of any specific organization. Examples and techniques are adapted from the authors lived experience in local, national, academic, and emergency settings.<br>
 </li>
-<li>transmission chains and epidemic modeling<br>
+<li>The book is offered in a download-able format for settings with unreliable internet.<br>
 </li>
-<li>age and sex pyramids<br>
-</li>
-<li>age and sex standardization<br>
-</li>
-<li>probabilistic matching of records on name similarity, age, sex, birthdate, etc.<br>
-</li>
-<li>outbreak detection methods<br>
-</li>
-<li>survey analysis<br>
-</li>
-<li>causal diagrams<br>
-</li>
-<li>survival analysis<br>
-</li>
-<li>GIS basics<br>
-</li>
-<li>phylogenetic trees<br>
-</li>
-<li>missing data imputation<br>
-</li>
-<li>automated routine reports with Rmarkdown</li>
+<li>In addition to core R skills this book uses epidemiology-centered examples to cover tasks like <em>epidemic curves, transmission chains and epidemic modeling, age and sex pyramids, age and sex standardization, probabilistic matching of records, outbreak detection methods, survey analysis, causal diagrams, survival analysis, GIS basics, phylogenetic trees, missing data imputation, automated routine reports with Rmarkdown</em>, etc…</li>
 </ul>
 <!-- ======================================================= -->
 </div>
@@ -139,28 +113,23 @@ In addition to core R concepts and tools, this book covers:</p>
 </h3>
 <p>This handbook is a collaborative team production. It has been conceived, written, and edited by epidemiologists and public health practitioners from around the world, who have drawn upon their experiences within a constellation of organizations including local/state/provincial/national health departments and ministries, the World Health Organization (WHO), MSF (Medecins sans frontiers / Doctors without Borders), UNHCR, WFP, hospital systems, and academic institutions.</p>
 <p>Here are the team members:</p>
-<p><strong>Editor-in-Chief:</strong></p>
-<p><strong>Editorial core team:</strong> …(list)…</p>
-<p><strong>Authors:</strong> …(list)…</p>
+<p><strong>Editor-in-Chief:</strong> Neale Batra</p>
+<p><strong>Editorial core team:</strong> Alex Spina, Amrish Baidjoe, Henry Laurenson-Schafer, Finlay Campbell, Pat Keating</p>
+<p><strong>Authors</strong> <em>(in order of contributions)</em>: Neale Batra, Alex Spina, Paula Blomquist, Finlay Campbell, Henry Laurenson-Schafer, Isaac Florence, Natalie Fischer, Daniel Molling, Liza Coyer, Jonny Polonski, Yurie Izawa, Sara Hollis</p>
 <p><strong>Reviewers:</strong> …(list)…</p>
 <p><strong>Advisers</strong> …(list)…</p>
 </div>
 <div id="funding-and-programmatic-support" class="section level3 unnumbered">
 <h3>Funding and programmatic support<a class="anchor" aria-label="anchor" href="#funding-and-programmatic-support"><i class="fas fa-link"></i></a>
 </h3>
-<p>Training Programs in Epidemiology and Public Health Interventions Network (<a href="https://www.tephinet.org/">TEPHINET</a>)</p>
-<p>EPIET Alumni Network (<a href="https://epietalumni.net/">EAN</a>)</p>
-</div>
-<div id="data-sources" class="section level3 unnumbered">
-<h3>Data sources<a class="anchor" aria-label="anchor" href="#data-sources"><i class="fas fa-link"></i></a>
-</h3>
-<p>The linelist used in much of the handbook is adapted from the <em>simulated</em> Ebola outbreak linelist in the <strong>outbreaks</strong> package</p>
+<p>The handbook received funding via a COVID-19 emergency capacity-building grant from Training Programs in Epidemiology and Public Health Interventions Network (<a href="https://www.tephinet.org/">TEPHINET</a>).</p>
+<p>Programmatic support was provided by the EPIET Alumni Network (<a href="https://epietalumni.net/">EAN</a>).</p>
 </div>
 <div id="inspiration" class="section level3 unnumbered">
 <h3>Inspiration<a class="anchor" aria-label="anchor" href="#inspiration"><i class="fas fa-link"></i></a>
 </h3>
-<p><a href="https://r4epis.netlify.app/">The “R4Epis” project</a> (a collaboration between MSF and RECON)<br><a href="https://www.repidemicsconsortium.org/">R Epidemics Consortium (RECON)</a><br><a href="https://r4ds.had.co.nz/">R for Data Science book (R4DS)</a><br><a href="https://bookdown.org/yihui/bookdown/">bookdown: Authoring Books and Technical Documents with R Markdown</a><br>
-Other specific tutorials and vignettes are credited in their relevant pages</p>
+<p>The multitude of tutorials and vignettes that provided foundational knowledge for development of handbook content are credited within their respective pages.</p>
+<p>More generally, the following sources provided inspiration and laid the groundwork for this handbook:<br><a href="https://r4epis.netlify.app/">The “R4Epis” project</a> (a collaboration between MSF and RECON)<br><a href="https://www.repidemicsconsortium.org/">R Epidemics Consortium (RECON)</a><br><a href="https://r4ds.had.co.nz/">R for Data Science book (R4DS)</a><br><a href="https://bookdown.org/yihui/bookdown/">bookdown: Authoring Books and Technical Documents with R Markdown</a><br><a href="https://www.netlify.com">Netlify</a> hosts this website</p>
 </div>
 <div id="image-credits" class="section level3 unnumbered">
 <h3>Image credits<a class="anchor" aria-label="anchor" href="#image-credits"><i class="fas fa-link"></i></a>
@@ -171,7 +140,8 @@ Other specific tutorials and vignettes are credited in their relevant pages</p>
 <div id="license-and-terms-of-use" class="section level3 unnumbered">
 <h3>License and Terms of Use<a class="anchor" aria-label="anchor" href="#license-and-terms-of-use"><i class="fas fa-link"></i></a>
 </h3>
-<p>This handbook is <strong>not</strong> an approved product of any specific organization. Although we strive for accuracy, we provide no guarantee of the content in this book.</p>
+<p>This handbook is <strong>not</strong> an approved product of any specific organization.</p>
+<p>Although we strive for accuracy, we provide no guarantee of the content in this book.</p>
 <p>This book is licensed under a <a href="https://creativecommons.org/licenses/">Creative Commons license</a> TBD…</p>
 
 </div>
@@ -182,7 +152,7 @@ Other specific tutorials and vignettes are credited in their relevant pages</p>
 
 <div class="chapter-nav">
 <div class="empty"></div>
-<div class="next"><a href="epidemicmodels.html"><span class="header-section-number">1</span> Epidemic modeling</a></div>
+<div class="next"><a href="transmission-chains.html"><span class="header-section-number">1</span> Transmission chains</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
@@ -194,7 +164,6 @@ Other specific tutorials and vignettes are credited in their relevant pages</p>
 <a class="nav-link" href="#acknowledgements">Acknowledgements</a><ul class="nav navbar-nav">
 <li><a class="nav-link" href="#contributors">Contributors</a></li>
 <li><a class="nav-link" href="#funding-and-programmatic-support">Funding and programmatic support</a></li>
-<li><a class="nav-link" href="#data-sources">Data sources</a></li>
 <li><a class="nav-link" href="#inspiration">Inspiration</a></li>
 <li><a class="nav-link" href="#image-credits">Image credits</a></li>
 <li><a class="nav-link" href="#license-and-terms-of-use">License and Terms of Use</a></li>
@@ -220,7 +189,7 @@ Other specific tutorials and vignettes are credited in their relevant pages</p>
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>R Handbook for Epidemiologists</strong>" was written by the handbook team. It was last built on 2021-02-19.</p>
+    <p>"<strong>R Handbook for Epidemiologists</strong>" was written by the handbook team. It was last built on 2021-02-20.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

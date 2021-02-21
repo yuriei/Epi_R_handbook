@@ -60,7 +60,7 @@
 <li><a class="" href="missing-data.html"><span class="header-section-number">9</span> Missing data</a></li>
 <li><a class="" href="grouping-data.html"><span class="header-section-number">10</span> Grouping data</a></li>
 <li><a class="" href="joining-data.html"><span class="header-section-number">11</span> Joining data</a></li>
-<li><a class="" href="charactersstrings.html"><span class="header-section-number">12</span> Characters/strings</a></li>
+<li><a class="" href="characters-and-strings.html"><span class="header-section-number">12</span> Characters and strings</a></li>
 <li><a class="" href="de-duplication.html"><span class="header-section-number">13</span> De-duplication</a></li>
 <li><a class="" href="iteration-and-loops.html"><span class="header-section-number">14</span> Iteration and loops</a></li>
 <li class="book-part">Analysis</li>
@@ -78,8 +78,8 @@
 <li class="book-part">Data Vizualization</li>
 <li><a class="" href="ggplot-tips.html"><span class="header-section-number">26</span> ggplot tips</a></li>
 <li><a class="" href="epidemic-curves.html"><span class="header-section-number">27</span> Epidemic curves</a></li>
-<li><a class="" href="plotting-continuous-data.html"><span class="header-section-number">28</span> Plotting continuous data</a></li>
-<li><a class="" href="plotting-categorical-variables.html"><span class="header-section-number">29</span> Plotting categorical variables</a></li>
+<li><a class="" href="plot-continuous-data.html"><span class="header-section-number">28</span> Plot continuous data</a></li>
+<li><a class="" href="plot-categorical-data.html"><span class="header-section-number">29</span> Plot categorical data</a></li>
 <li><a class="" href="tables.html"><span class="header-section-number">30</span> Tables</a></li>
 <li><a class="" href="age-pyramids.html"><span class="header-section-number">31</span> Age pyramids</a></li>
 <li><a class="" href="diagrams.html"><span class="header-section-number">32</span> Diagrams</a></li>
@@ -89,12 +89,12 @@
 <li><a class="" href="phylogenetic-trees.html"><span class="header-section-number">36</span> Phylogenetic trees</a></li>
 <li><a class="" href="interactive-plots.html"><span class="header-section-number">37</span> Interactive plots</a></li>
 <li class="book-part">Advanced</li>
-<li><a class="" href="errors-warnings-1.html"><span class="header-section-number">38</span> Errors &amp; Warnings</a></li>
+<li><a class="" href="errors-warnings-1.html"><span class="header-section-number">38</span> Errors &amp; warnings</a></li>
 <li><a class="" href="advanced-rstudio.html"><span class="header-section-number">39</span> Advanced RStudio</a></li>
 <li><a class="" href="relational-databases.html"><span class="header-section-number">40</span> Relational databases</a></li>
 <li><a class="" href="routine-reports.html"><span class="header-section-number">41</span> Routine reports</a></li>
-<li><a class="" href="r-markdown.html"><span class="header-section-number">42</span> R Markdown</a></li>
-<li><a class="" href="shiny-basics.html"><span class="header-section-number">43</span> Shiny basics</a></li>
+<li><a class="" href="r-markdown-1.html"><span class="header-section-number">42</span> R Markdown</a></li>
+<li><a class="" href="shiny-and-dashboards.html"><span class="header-section-number">43</span> Shiny and dashboards</a></li>
 <li><a class="" href="collaboration.html"><span class="header-section-number">44</span> Collaboration</a></li>
 <li><a class="" href="writing-functions.html"><span class="header-section-number">45</span> Writing functions</a></li>
 <li><a class="" href="r-on-network-drives.html"><span class="header-section-number">46</span> R on network drives</a></li>
@@ -110,67 +110,75 @@
 <h1>
 <span class="header-section-number">6</span> Suggested packages<a class="anchor" aria-label="anchor" href="#suggested-packages"><i class="fas fa-link"></i></a>
 </h1>
-<p>Below is a long list of suggested packages for common epidemiological work in R. You can copy this code and use <code>#</code> symbols to invalidate any packages you do not want.</p>
+<p>Below is a long list of suggested packages for common epidemiological work in R. You can copy this code and use <code>#</code> symbols to remove any packages you do not want.</p>
 <ul>
-<li>Packages included within others are indicated by an indent and hash, as seen under <strong>tidyverse</strong>. Install <strong>pacman</strong> package first, before running the below, with <code>install.packages("pacman)</code>.</li>
+<li>Packages that included when installing/loading another package are indicated by an indent and hash. For example as seen under <strong>tidyverse</strong>.<br>
+</li>
+<li>Install <strong>pacman</strong> package first, before running the below, with <code><a href="https://rdrr.io/r/utils/install.packages.html">install.packages("pacman")</a></code>.</li>
 </ul>
 <p>Also, consider using the package <strong>conflicted</strong> to manage conflicts and masking of functions.</p>
-<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="suggested-packages.html#cb103-1" aria-hidden="true" tabindex="-1"></a><span class="co"># List of common &amp; useful epidemiology R packages  </span></span>
-<span id="cb103-2"><a href="suggested-packages.html#cb103-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb103-3"><a href="suggested-packages.html#cb103-3" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(</span>
-<span id="cb103-4"><a href="suggested-packages.html#cb103-4" aria-hidden="true" tabindex="-1"></a>     </span>
-<span id="cb103-5"><a href="suggested-packages.html#cb103-5" aria-hidden="true" tabindex="-1"></a>     <span class="co"># project and file management</span></span>
-<span id="cb103-6"><a href="suggested-packages.html#cb103-6" aria-hidden="true" tabindex="-1"></a>     here,</span>
-<span id="cb103-7"><a href="suggested-packages.html#cb103-7" aria-hidden="true" tabindex="-1"></a>     rio,</span>
-<span id="cb103-8"><a href="suggested-packages.html#cb103-8" aria-hidden="true" tabindex="-1"></a>     </span>
-<span id="cb103-9"><a href="suggested-packages.html#cb103-9" aria-hidden="true" tabindex="-1"></a>     <span class="co"># package install and management</span></span>
-<span id="cb103-10"><a href="suggested-packages.html#cb103-10" aria-hidden="true" tabindex="-1"></a>     pacman,</span>
-<span id="cb103-11"><a href="suggested-packages.html#cb103-11" aria-hidden="true" tabindex="-1"></a>     renv,</span>
-<span id="cb103-12"><a href="suggested-packages.html#cb103-12" aria-hidden="true" tabindex="-1"></a>     remotes</span>
-<span id="cb103-13"><a href="suggested-packages.html#cb103-13" aria-hidden="true" tabindex="-1"></a>     </span>
-<span id="cb103-14"><a href="suggested-packages.html#cb103-14" aria-hidden="true" tabindex="-1"></a>     <span class="co"># General data management</span></span>
-<span id="cb103-15"><a href="suggested-packages.html#cb103-15" aria-hidden="true" tabindex="-1"></a>     tidyverse,</span>
-<span id="cb103-16"><a href="suggested-packages.html#cb103-16" aria-hidden="true" tabindex="-1"></a>          <span class="co">#dplyr,</span></span>
-<span id="cb103-17"><a href="suggested-packages.html#cb103-17" aria-hidden="true" tabindex="-1"></a>          <span class="co">#tidyr,</span></span>
-<span id="cb103-18"><a href="suggested-packages.html#cb103-18" aria-hidden="true" tabindex="-1"></a>          <span class="co">#ggplot2,</span></span>
-<span id="cb103-19"><a href="suggested-packages.html#cb103-19" aria-hidden="true" tabindex="-1"></a>     linelist,</span>
-<span id="cb103-20"><a href="suggested-packages.html#cb103-20" aria-hidden="true" tabindex="-1"></a>     lubridate,</span>
-<span id="cb103-21"><a href="suggested-packages.html#cb103-21" aria-hidden="true" tabindex="-1"></a>     naniar,</span>
-<span id="cb103-22"><a href="suggested-packages.html#cb103-22" aria-hidden="true" tabindex="-1"></a>     </span>
-<span id="cb103-23"><a href="suggested-packages.html#cb103-23" aria-hidden="true" tabindex="-1"></a>     <span class="co"># statistics  </span></span>
-<span id="cb103-24"><a href="suggested-packages.html#cb103-24" aria-hidden="true" tabindex="-1"></a>     gtsummary,</span>
-<span id="cb103-25"><a href="suggested-packages.html#cb103-25" aria-hidden="true" tabindex="-1"></a>     </span>
-<span id="cb103-26"><a href="suggested-packages.html#cb103-26" aria-hidden="true" tabindex="-1"></a>     </span>
-<span id="cb103-27"><a href="suggested-packages.html#cb103-27" aria-hidden="true" tabindex="-1"></a>     <span class="co"># epidemic modeling</span></span>
-<span id="cb103-28"><a href="suggested-packages.html#cb103-28" aria-hidden="true" tabindex="-1"></a>     epicontacts,</span>
-<span id="cb103-29"><a href="suggested-packages.html#cb103-29" aria-hidden="true" tabindex="-1"></a>     </span>
-<span id="cb103-30"><a href="suggested-packages.html#cb103-30" aria-hidden="true" tabindex="-1"></a>     <span class="co"># plots - general</span></span>
-<span id="cb103-31"><a href="suggested-packages.html#cb103-31" aria-hidden="true" tabindex="-1"></a>     cowplot,</span>
-<span id="cb103-32"><a href="suggested-packages.html#cb103-32" aria-hidden="true" tabindex="-1"></a>     RColorBrewer</span>
-<span id="cb103-33"><a href="suggested-packages.html#cb103-33" aria-hidden="true" tabindex="-1"></a>     </span>
-<span id="cb103-34"><a href="suggested-packages.html#cb103-34" aria-hidden="true" tabindex="-1"></a>     <span class="co"># plots - specific types</span></span>
-<span id="cb103-35"><a href="suggested-packages.html#cb103-35" aria-hidden="true" tabindex="-1"></a>     DiagrammeR,</span>
-<span id="cb103-36"><a href="suggested-packages.html#cb103-36" aria-hidden="true" tabindex="-1"></a>     incidence,</span>
-<span id="cb103-37"><a href="suggested-packages.html#cb103-37" aria-hidden="true" tabindex="-1"></a>     </span>
-<span id="cb103-38"><a href="suggested-packages.html#cb103-38" aria-hidden="true" tabindex="-1"></a>     <span class="co"># gis</span></span>
-<span id="cb103-39"><a href="suggested-packages.html#cb103-39" aria-hidden="true" tabindex="-1"></a>     </span>
-<span id="cb103-40"><a href="suggested-packages.html#cb103-40" aria-hidden="true" tabindex="-1"></a>     </span>
-<span id="cb103-41"><a href="suggested-packages.html#cb103-41" aria-hidden="true" tabindex="-1"></a>     <span class="co"># routine reports  </span></span>
-<span id="cb103-42"><a href="suggested-packages.html#cb103-42" aria-hidden="true" tabindex="-1"></a>     rmarkdown,</span>
-<span id="cb103-43"><a href="suggested-packages.html#cb103-43" aria-hidden="true" tabindex="-1"></a>     reportfactory,</span>
-<span id="cb103-44"><a href="suggested-packages.html#cb103-44" aria-hidden="true" tabindex="-1"></a>     </span>
-<span id="cb103-45"><a href="suggested-packages.html#cb103-45" aria-hidden="true" tabindex="-1"></a>     <span class="co"># tables</span></span>
-<span id="cb103-46"><a href="suggested-packages.html#cb103-46" aria-hidden="true" tabindex="-1"></a>     knitr,</span>
-<span id="cb103-47"><a href="suggested-packages.html#cb103-47" aria-hidden="true" tabindex="-1"></a>     DT,</span>
-<span id="cb103-48"><a href="suggested-packages.html#cb103-48" aria-hidden="true" tabindex="-1"></a>     </span>
-<span id="cb103-49"><a href="suggested-packages.html#cb103-49" aria-hidden="true" tabindex="-1"></a>     <span class="co"># phylogenetics  </span></span>
-<span id="cb103-50"><a href="suggested-packages.html#cb103-50" aria-hidden="true" tabindex="-1"></a>     ggtree,</span>
-<span id="cb103-51"><a href="suggested-packages.html#cb103-51" aria-hidden="true" tabindex="-1"></a>     ape,</span>
-<span id="cb103-52"><a href="suggested-packages.html#cb103-52" aria-hidden="true" tabindex="-1"></a>     </span>
-<span id="cb103-53"><a href="suggested-packages.html#cb103-53" aria-hidden="true" tabindex="-1"></a>     <span class="co"># interactive</span></span>
-<span id="cb103-54"><a href="suggested-packages.html#cb103-54" aria-hidden="true" tabindex="-1"></a>     plotly,</span>
-<span id="cb103-55"><a href="suggested-packages.html#cb103-55" aria-hidden="true" tabindex="-1"></a>     shiny,</span>
-<span id="cb103-56"><a href="suggested-packages.html#cb103-56" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb118-1"><a href="suggested-packages.html#cb118-1" aria-hidden="true" tabindex="-1"></a><span class="co"># List of common &amp; useful epidemiology R packages  </span></span>
+<span id="cb118-2"><a href="suggested-packages.html#cb118-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb118-3"><a href="suggested-packages.html#cb118-3" aria-hidden="true" tabindex="-1"></a>pacman<span class="sc">::</span><span class="fu">p_load</span>(</span>
+<span id="cb118-4"><a href="suggested-packages.html#cb118-4" aria-hidden="true" tabindex="-1"></a>     </span>
+<span id="cb118-5"><a href="suggested-packages.html#cb118-5" aria-hidden="true" tabindex="-1"></a>     <span class="co"># learning R</span></span>
+<span id="cb118-6"><a href="suggested-packages.html#cb118-6" aria-hidden="true" tabindex="-1"></a>     learnr,</span>
+<span id="cb118-7"><a href="suggested-packages.html#cb118-7" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb118-8"><a href="suggested-packages.html#cb118-8" aria-hidden="true" tabindex="-1"></a>     <span class="co"># project and file management</span></span>
+<span id="cb118-9"><a href="suggested-packages.html#cb118-9" aria-hidden="true" tabindex="-1"></a>     here,</span>
+<span id="cb118-10"><a href="suggested-packages.html#cb118-10" aria-hidden="true" tabindex="-1"></a>     rio,</span>
+<span id="cb118-11"><a href="suggested-packages.html#cb118-11" aria-hidden="true" tabindex="-1"></a>     </span>
+<span id="cb118-12"><a href="suggested-packages.html#cb118-12" aria-hidden="true" tabindex="-1"></a>     <span class="co"># package install and management</span></span>
+<span id="cb118-13"><a href="suggested-packages.html#cb118-13" aria-hidden="true" tabindex="-1"></a>     pacman,</span>
+<span id="cb118-14"><a href="suggested-packages.html#cb118-14" aria-hidden="true" tabindex="-1"></a>     renv,</span>
+<span id="cb118-15"><a href="suggested-packages.html#cb118-15" aria-hidden="true" tabindex="-1"></a>     remotes</span>
+<span id="cb118-16"><a href="suggested-packages.html#cb118-16" aria-hidden="true" tabindex="-1"></a>     </span>
+<span id="cb118-17"><a href="suggested-packages.html#cb118-17" aria-hidden="true" tabindex="-1"></a>     <span class="co"># General data management</span></span>
+<span id="cb118-18"><a href="suggested-packages.html#cb118-18" aria-hidden="true" tabindex="-1"></a>     tidyverse,</span>
+<span id="cb118-19"><a href="suggested-packages.html#cb118-19" aria-hidden="true" tabindex="-1"></a>          <span class="co">#dplyr,</span></span>
+<span id="cb118-20"><a href="suggested-packages.html#cb118-20" aria-hidden="true" tabindex="-1"></a>          <span class="co">#tidyr,</span></span>
+<span id="cb118-21"><a href="suggested-packages.html#cb118-21" aria-hidden="true" tabindex="-1"></a>          <span class="co">#ggplot2,</span></span>
+<span id="cb118-22"><a href="suggested-packages.html#cb118-22" aria-hidden="true" tabindex="-1"></a>     linelist,</span>
+<span id="cb118-23"><a href="suggested-packages.html#cb118-23" aria-hidden="true" tabindex="-1"></a>     lubridate,</span>
+<span id="cb118-24"><a href="suggested-packages.html#cb118-24" aria-hidden="true" tabindex="-1"></a>     naniar,</span>
+<span id="cb118-25"><a href="suggested-packages.html#cb118-25" aria-hidden="true" tabindex="-1"></a>     </span>
+<span id="cb118-26"><a href="suggested-packages.html#cb118-26" aria-hidden="true" tabindex="-1"></a>     <span class="co"># statistics  </span></span>
+<span id="cb118-27"><a href="suggested-packages.html#cb118-27" aria-hidden="true" tabindex="-1"></a>     gtsummary,</span>
+<span id="cb118-28"><a href="suggested-packages.html#cb118-28" aria-hidden="true" tabindex="-1"></a>     </span>
+<span id="cb118-29"><a href="suggested-packages.html#cb118-29" aria-hidden="true" tabindex="-1"></a>     </span>
+<span id="cb118-30"><a href="suggested-packages.html#cb118-30" aria-hidden="true" tabindex="-1"></a>     <span class="co"># epidemic modeling</span></span>
+<span id="cb118-31"><a href="suggested-packages.html#cb118-31" aria-hidden="true" tabindex="-1"></a>     epicontacts,</span>
+<span id="cb118-32"><a href="suggested-packages.html#cb118-32" aria-hidden="true" tabindex="-1"></a>     </span>
+<span id="cb118-33"><a href="suggested-packages.html#cb118-33" aria-hidden="true" tabindex="-1"></a>     <span class="co"># plots - general</span></span>
+<span id="cb118-34"><a href="suggested-packages.html#cb118-34" aria-hidden="true" tabindex="-1"></a>     <span class="co">#ggplot2,         # included in tidyverse</span></span>
+<span id="cb118-35"><a href="suggested-packages.html#cb118-35" aria-hidden="true" tabindex="-1"></a>     cowplot,          <span class="co"># combining plots</span></span>
+<span id="cb118-36"><a href="suggested-packages.html#cb118-36" aria-hidden="true" tabindex="-1"></a>     RColorBrewer      <span class="co"># color scales</span></span>
+<span id="cb118-37"><a href="suggested-packages.html#cb118-37" aria-hidden="true" tabindex="-1"></a>     </span>
+<span id="cb118-38"><a href="suggested-packages.html#cb118-38" aria-hidden="true" tabindex="-1"></a>     <span class="co"># plots - specific types</span></span>
+<span id="cb118-39"><a href="suggested-packages.html#cb118-39" aria-hidden="true" tabindex="-1"></a>     DiagrammeR,</span>
+<span id="cb118-40"><a href="suggested-packages.html#cb118-40" aria-hidden="true" tabindex="-1"></a>     incidence,</span>
+<span id="cb118-41"><a href="suggested-packages.html#cb118-41" aria-hidden="true" tabindex="-1"></a>     </span>
+<span id="cb118-42"><a href="suggested-packages.html#cb118-42" aria-hidden="true" tabindex="-1"></a>     <span class="co"># gis</span></span>
+<span id="cb118-43"><a href="suggested-packages.html#cb118-43" aria-hidden="true" tabindex="-1"></a>     sf,               <span class="co"># to manage spatial data using a Simple Feature format</span></span>
+<span id="cb118-44"><a href="suggested-packages.html#cb118-44" aria-hidden="true" tabindex="-1"></a>     tmap,             <span class="co"># to produce simple maps, works for both interactive and static maps</span></span>
+<span id="cb118-45"><a href="suggested-packages.html#cb118-45" aria-hidden="true" tabindex="-1"></a>     OpenStreetMap,    <span class="co"># to add OSM basemap in ggplot map</span></span>
+<span id="cb118-46"><a href="suggested-packages.html#cb118-46" aria-hidden="true" tabindex="-1"></a>     </span>
+<span id="cb118-47"><a href="suggested-packages.html#cb118-47" aria-hidden="true" tabindex="-1"></a>     <span class="co"># routine reports  </span></span>
+<span id="cb118-48"><a href="suggested-packages.html#cb118-48" aria-hidden="true" tabindex="-1"></a>     rmarkdown,        <span class="co"># produce PDFs, Word Documents, Powerpoints, and HTML files</span></span>
+<span id="cb118-49"><a href="suggested-packages.html#cb118-49" aria-hidden="true" tabindex="-1"></a>     reportfactory,    <span class="co"># Auto-organization of Rmarkdown outputs</span></span>
+<span id="cb118-50"><a href="suggested-packages.html#cb118-50" aria-hidden="true" tabindex="-1"></a>     </span>
+<span id="cb118-51"><a href="suggested-packages.html#cb118-51" aria-hidden="true" tabindex="-1"></a>     <span class="co"># tables</span></span>
+<span id="cb118-52"><a href="suggested-packages.html#cb118-52" aria-hidden="true" tabindex="-1"></a>     knitr,</span>
+<span id="cb118-53"><a href="suggested-packages.html#cb118-53" aria-hidden="true" tabindex="-1"></a>     DT,</span>
+<span id="cb118-54"><a href="suggested-packages.html#cb118-54" aria-hidden="true" tabindex="-1"></a>     </span>
+<span id="cb118-55"><a href="suggested-packages.html#cb118-55" aria-hidden="true" tabindex="-1"></a>     <span class="co"># phylogenetics  </span></span>
+<span id="cb118-56"><a href="suggested-packages.html#cb118-56" aria-hidden="true" tabindex="-1"></a>     ggtree,</span>
+<span id="cb118-57"><a href="suggested-packages.html#cb118-57" aria-hidden="true" tabindex="-1"></a>     ape,</span>
+<span id="cb118-58"><a href="suggested-packages.html#cb118-58" aria-hidden="true" tabindex="-1"></a>     </span>
+<span id="cb118-59"><a href="suggested-packages.html#cb118-59" aria-hidden="true" tabindex="-1"></a>     <span class="co"># interactive</span></span>
+<span id="cb118-60"><a href="suggested-packages.html#cb118-60" aria-hidden="true" tabindex="-1"></a>     plotly,</span>
+<span id="cb118-61"><a href="suggested-packages.html#cb118-61" aria-hidden="true" tabindex="-1"></a>     shiny,</span>
+<span id="cb118-62"><a href="suggested-packages.html#cb118-62" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 
 </div>
 
@@ -201,7 +209,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>R Handbook for Epidemiologists</strong>" was written by the handbook team. It was last built on 2021-02-19.</p>
+    <p>"<strong>R Handbook for Epidemiologists</strong>" was written by the handbook team. It was last built on 2021-02-20.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
