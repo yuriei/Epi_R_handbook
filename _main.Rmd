@@ -43,7 +43,7 @@ knitr::include_graphics(here::here("images", "R Handbook Logo.png"))
 
 * Serve as a quick reference guide - not a textbook  
 * Address common epidemiological problems via task-centered examples  
-* Be accessible in settings with limited technical support and low internet-connectivity (downloadable version)  
+* Be accessible in settings with limited technical support and low internet-connectivity ([link to downloadable version](https://github.com/nsbatra/Epi_R_handbook/tree/master/offline_long))  
 * Contain clear and simple language, with step-by-step instructions and helpful code annotation  
 * Be a living document, growing and adapting to new best practices  
 
@@ -59,6 +59,7 @@ knitr::include_graphics(here::here("images", "R Handbook Logo.png"))
 * This handbook is written by epidemiologists, for epidemiologists. It is **not** an approved product of any specific organization. Examples and techniques are adapted from the authors lived experience in local, national, academic, and emergency settings.  
 * The book is offered in a download-able format for settings with unreliable internet.  
 * In addition to core R skills this book uses epidemiology-centered examples to cover tasks like *epidemic curves, transmission chains and epidemic modeling, age and sex pyramids, age and sex standardization, probabilistic matching of records, outbreak detection methods, survey analysis, causal diagrams, survival analysis, GIS basics, phylogenetic trees, missing data imputation, automated routine reports with Rmarkdown*, etc...  
+
 
 
 
@@ -210,7 +211,7 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 
 <!--chapter:end:new_pages/cat_about_book.Rmd-->
 
-# Style and editorial notes {.tabset .tabset-fade}
+# Style and editorial notes { }
 
 
 ## Style  
@@ -4382,9 +4383,9 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 <!-- ======================================================= -->
 ## Overview
 
-Working with dates in `R` is notoriously difficult when compared to other object classes. `R` often interprets dates as character objects - this means they cannot be used for general date operations such as making time series and calculating time intervals. To make matters more difficult, there are many date formats, some of which can be confused for other formats. Luckily, dates can be wrangled easily with practice, and with a set of helpful packages.
+Working with dates in R is notoriously difficult when compared to other object classes. R often interprets dates as character objects - this means they cannot be used for general date operations such as making time series and calculating time intervals. To make matters more difficult, there are many date formats, some of which can be confused for other formats. Luckily, dates can be wrangled easily with practice, and with a set of helpful packages.
 
-Dates in `R` are their own class of object - the `Date` class. It should be noted that there is also a class that stores objects with date *and* time. Date time objects are formally referred to as  and/or `POSIXt`, `POSIXct`, and/or `POSIXlt` classes (the difference isn't important). These objects are informally referred to as *datetime* classes.
+Dates in R are their own class of object - the `Date` class. It should be noted that there is also a class that stores objects with date *and* time. Date time objects are formally referred to as  and/or `POSIXt`, `POSIXct`, and/or `POSIXlt` classes (the difference isn't important). These objects are informally referred to as *datetime* classes.
 
 You can get the system date or system datetime by doing the following:
 
@@ -4397,9 +4398,9 @@ Sys.time()
 
 ```
 
-* It is important to make R recognize when a variable contains dates.  
+* It is important to make R recognize when a column contains dates.  
 * Dates are an object class and can be tricky to work with.  
-* Here we present several ways to convert date variables to Date class.  
+* Here we present several ways to convert date columns to Date class.  
 
 
 <!-- ======================================================= -->
@@ -4407,7 +4408,7 @@ Sys.time()
 
 The following packages are recommended for working with dates:  
 
-```{r dates_packages}
+```{r dates_packages, warning=F, message=F}
 # Checks if package is installed, installs if necessary, and loads package for current session
 
 pacman::p_load(aweek,      # flexibly converts dates to weeks, and vis-versa
@@ -4421,21 +4422,28 @@ pacman::p_load(aweek,      # flexibly converts dates to weeks, and vis-versa
 
 
 <!-- ======================================================= -->
-## Converting objects to Date class
+## Convert to Date class
 
-The standard, **base** R function to convert an object or variable to class Date is `as.Date()` (note capitalization).  
+### `as.Date()` {-}  
 
-`as.Date()` requires that the user *specify the ***existing*** format of the date*, so it can understand, convert, and store each element (day, month, year, etc.) correctly. [Read more online about `as.Date()`](https://www.stat.berkeley.edu/~s133/dates.html).  
+The standard, **base** R function to convert an object or column to class Date is `as.Date()` (note capitalization).  
 
-**If used on a variable, `as.Date()` therefore requires that all the character date values be in the same format before converting.** If your data are messy, try cleaning them or consider using `guess_dates()` from the **linelist** package.  
+`as.Date()` requires that the user *specify the **existing** format of the date*, so it can understand, convert, and store each element (day, month, year, etc.) correctly. [Read more online about `as.Date()`](https://www.stat.berkeley.edu/~s133/dates.html).  
 
-It can be easiest to first convert the variable to character class, and then convert to date class:  
+**If used on a column, `as.Date()` therefore requires that all the character date values be in the same format before converting.** If your data are messy, try cleaning them manually or consider using `guess_dates()` from the **linelist** package.  
 
-  1. Turn the variable into character values using the function `as.character()`
+It can be easiest to first convert the column to character class, and then convert to date class:  
+
+  1. Turn the column into character values using the function `as.character()`
 ```{r eval=F}
-linelist_cleaned$date_of_onset <- as.character(linelist_cleaned$date_of_onset)
+# With pipes
+linelist <- linelist %>% 
+  mutate(date_onset = as.character(date_onset))
+
+# In base R
+linelist$date_onset <- as.character(linelist$date_onset)
 ```
-  2. Convert the variable from character values into date values, using the function `as.Date()`  
+  2. Convert the column from character values into date values, using the function `as.Date()`  
   (note the capital "D")  
   + Within the `as.Date()` function, you must use the `format=` argument to tell R the *current* format of the date components - which characters refer to the month, the day, and the year, and how they are separated. If your values are already in one of R's standard date formats (YYYY-MM-DD or YYYY/MM/DD) the `format=` argument is not necessary.  
     
@@ -4450,31 +4458,55 @@ linelist_cleaned$date_of_onset <- as.character(linelist_cleaned$date_of_onset)
          %Y = 4-digit year  (e.g. 1989)  
 
 For example, if your character dates are in the format DD/MM/YYYY, like "24/04/1968", then your command to turn the values into dates will be as below. **Putting the format in quotation marks is necessary.**  
+
 ```{r eval=F}
-linelist_cleaned$date_of_onset <- as.Date(linelist_cleaned$date_of_onset, format = "%d/%m/%Y")
+# Using pipes
+linelist <- linelist %>% 
+  mutate(date_onset = as.Date(date_of_onset, format = "%d/%m/%Y"))
+
+# Using base R
+linelist$date_onset <- as.Date(linelist$date_of_onset, format = "%d/%m/%Y"))
 ```
+
 <span style="color: darkgreen;">**_TIP:_** The `format =` argument is *not* telling R the format you want the dates to be, but rather how to identify the date parts as they are *before* you run the command.</span>  
 
 <span style="color: darkgreen;">**_TIP:_**Be sure that in the `format =` argument you use the *date-part separator* (e.g. /, -, or space) that is present in your dates.</span>  
 
+Once the values are in class Date, R will by default display them in the standard format, which is YYYY-MM-DD.
 
-Conveting character objects to dates can be made *far* easier by using the lubridate package. The `lubridate` package is a `tidyverse` package designed to make working with dates and time more simple and consistent than in base R. For these reasons, `lubridate` is often considered the gold-standard package for dates and time, and is recommended whenever working with them.
 
-The `lubridate` package provides a number of different helper functions designed to convert character objects to dates in an intuitive, and more lenient way than specifying the format in `as.Date()`. These functions are specific to the rough date format, but allow for a variety of separators, and synonyms for dates (e.g. 01 vs Jan vs January) - they are named after abbreviations of date formats. 
+
+### **lubridate** {-}  
+
+Conveting character objects to dates can be made *far* easier by using the **lubridate** package. This is a `tidyverse` package designed to make working with dates and time more simple and consistent than in base R. For these reasons, **lubridate** is often considered the gold-standard package for dates and time, and is recommended whenever working with them.
+
+The **lubridate** package provides several different helper functions designed to convert character objects to dates in an intuitive, and more lenient way than specifying the format in `as.Date()`. These functions are specific to the rough date format, but allow for a variety of separators, and synonyms for dates (e.g. 01 vs Jan vs January) - they are named after abbreviations of date formats. 
 
 
 ```{r, eval = T}
-# load packages 
-library(lubridate)
+# install/load lubridate 
+pacman::p_load(lubridate)
+```
 
+The `ymd()` function flexibly converts date values supplied as **year, then month, then day**.  
+
+```{r}
 # read date in year-month-day format
 ymd("2020-10-11")
 ymd("20201011")
+```
 
+The `mdy()` function flexibly converts date values supplied as **month, then day, then year**.  
+
+```{r}
 # read date in month-day-year format
 mdy("10/11/2020")
 mdy("Oct 11 20")
+```
 
+The `dmy()` function flexibly converts date values supplied as **day, then month, then year**.  
+
+```{r}
 # read date in day-month-year format
 dmy("11 10 2020")
 dmy("11 October 2020")
@@ -4486,128 +4518,176 @@ dmy("11 October 2020")
 <!-- linelist_cleaned$date_of_onset <- as.Date(as.character(linelist_cleaned$date_of_onset), format = "%d/%m/%Y") -->
 <!-- ``` -->
 
-If using [piping](#piping) and the tidyverse, the converting a character column to dates might look like this:  
+If using [piping](#piping) and the tidyverse, the converting a character column to dates with lubridate might look like this:  
 
 ```{r, eval=F}
-linelist_cleaned <- linelist_cleaned %>%
-  mutate(date_of_onset = lubridate::dmy(date_of_onset))
+linelist <- linelist %>%
+  mutate(date_onset = lubridate::dmy(date_onset))
 ```
 
-Once complete, you can run a command to verify the class of the variable
+Once complete, you can run a command to verify the class of the column
 ```{r, eval=F}
-# Check the class of the variable
-class(linelist_cleaned$date_of_onset)  
+# Check the class of the column
+class(linelist$date_onset)  
 ```
 
 Once the values are in class Date, R will by default display them in the standard format, which is YYYY-MM-DD.
 
+
+
+
 <!-- ======================================================= -->
-## Converting to `datetime` classes
+## Convert to `datetime` classes
 
-As previously mentioned, R also supports a `datetime` class - a variable that contains date **and** time information. As with the `Date` class, these often need to be converted from `character` objects to `datetime` objects. 
+As previously mentioned, R also supports a `datetime` class - a column that contains date **and** time information. As with the `Date` class, these often need to be converted from `character` objects to `datetime` objects. 
 
-A standard `datetime` object is formatted with the date first, which is followed by a time component - for example  _01 Jan 2020, 16:30_. As with dates, there are many ways this can be formatted, and there are numerous levels of precision (hours, minutes, seconds) that can be supplied. Luckily, lubridate helper functions also exist to help convert these strings to `datetime` objects. These functions are the same as the date helper functions, with `_h` (only hours supplied), `_hm` (hours and minutes supplied), or `_hms` (hours, minutes, and seconds supplied) appended to the end (e.g. `dmy_hms()`). These can be used as shown:
+A standard `datetime` object is formatted with the date first, which is followed by a time component - for example  _01 Jan 2020, 16:30_. As with dates, there are many ways this can be formatted, and there are numerous levels of precision (hours, minutes, seconds) that can be supplied.  
 
-```{r, eval = TRUE}
+Luckily, **lubridate** helper functions also exist to help convert these strings to `datetime` objects. These functions are extensions of the date helper functions, with `_h` (only hours supplied), `_hm` (hours and minutes supplied), or `_hms` (hours, minutes, and seconds supplied) appended to the end (e.g. `dmy_hms()`). These can be used as shown:
 
-# convert datetime with only hours to datetime object
+Convert datetime with only hours to datetime object  
+
+```{r}
 ymd_h("2020-01-01 16hrs")
 ymd_h("2020-01-01 4PM")
+```
 
+Convert datetime with hours and minutes to datetime object  
 
-# convert datetime with hours and minutes to datetime object
+```{r}
 dmy_hm("Jan 1st 2020 16:20")
+```
 
-# convert datetime with hours, minutes, and seconds to datetime object
+Convert datetime with hours, minutes, and seconds to datetime object  
+
+```{r}
 mdy_hms("01 January 20, 16:20:40")
-# you can supply time zone but it is ignored
+```
+
+You can supply time zone but it is ignored. See section later in this page on time zones.  
+
+```{r}
 mdy_hms("01 January 20, 16:20:40 PST")
 
 ```
 
-When working with a linelist, time and date columns can be combined to create a datetime column using these functions:
+When working with a dataframe, time and date columns can be combined to create a datetime column using `str_glue()` from **stringr** package and an appropriate **lubridate** function:
 
 ```{r, eval = FALSE}
-# time_admission is a variable in hours:minutes
-linelist_cleaned <- linelist_cleaned %>%
-  # assume that when time of admission is not given, it the median admission time
+# packages
+pacman::p_load(tidyverse, lubridate, stringr)
+
+# time_admission is a column in hours:minutes
+linelist <- linelist %>%
+  
+  # when time of admission is not given, assign the median admission time
   mutate(
     time_admission_clean = ifelse(
       is.na(time_admission),
       median(time_admission),
       time_admission
   ) %>%
-  # use paste0 to combine two columns to create a character vector, and use ymd_hm() to convert to datetime
+  
+    # use str_glue() to combine two columns to create a character column
+    # and then use ymd_hm() to convert to datetime
   mutate(
-    date_time_of_admission = paste0(
-      date_hospitalisation, time_admission_clean, sep = " "
-    ) %>% ymd_hm()
+    date_time_of_admission = str_glue("{date_hospitalisation} {time_admission_clean}") %>% 
+      ymd_hm()
   )
 
 ```
+
+
 <!-- ======================================================= -->
-## lubridate  
+## Working with dates   
 
 `lubridate` can also be used for a variety of other functions, such as **extracting aspects of a date/datetime**, **performing date arithmetic**, or **calculating date intervals**
 
+Here we define a date to use for the examples:  
+
 ```{r, eval = T}
-  # extract the month from this date
+# create object of class Date
+example_date <- ymd("2020-03-01")
+```
+
+
+```{r}
+# extract the month and year from this date
+month(example_date)  # month number
+year(example_date)   # year
+day(example_date)    # day (number)
+wday(example_date)   # day number of the week (1-7)
+```
+
+You can also extract time components from a `datetime` object or column. This can be useful if you want to view the distribution of admission times.  
+
+```{r, eval=F}
+example_datetime <- ymd_hm("2020-03-01 14:45")
+
+hour(example_datetime)     # extract hour
+minute(example_datetime)   # extract minute
+second(example_datetime)   # extract second
+```
+
+
+You can retrieve epiweeks with `epiweek()` from **lubridate**:  
+
+```{r}
+# get the epiweek of this date (this will be expanded later)
+epiweek(example_date)
+```
+
+### Date math {-}  
+
+```{r}
+# add 3 days to this date
+example_date + days(3)
   
-  example_date <- ymd("2020-03-01")
-  
-  # extract the month and year from this date
-  month(example_date)
-  year(example_date)
-  
-  # get the epiweek of this date (this will be expanded later)
-  epiweek(example_date)
-  # get the day of the week for this date (this will be expanded later)
-  wday(example_date)
-  
-  # add 3 days to this date
-  example_date + days(3)
-  
-  # add 7 weeks and subtract two days from this date
-  example_date + weeks(7) - days(2)
-  
-  
-  # find the interval between this date and Feb 20 2020 
-  
-  example_date - ymd("2020-02-20")
-  
+# add 7 weeks and subtract two days from this date
+example_date + weeks(7) - days(2)
+```
+
+### Date intervals {-}  
+
+```{r}
+# find the interval between this date and Feb 20 2020 
+example_date - ymd("2020-02-20")
 ```
 
 This can all be brought together to work with data - for example:
 
 ```{r, eval = F}
-library(lubridate)
+pacman::p_load(lubridate, tidyverse)   # load packages
 
-linelist_cleaned <- linelist_cleaned %>%
-    # convert date of onset from character to date objects by specifying dmy format
-    mutate(date_of_onset = dmy(date_of_onset),
-           date_of_hospitalisation = dmy(date_of_hospitalisation)) %>%
-    # filter out all cases without onset in march
-    filter(month(date_of_onset) == 3) %>%
-    # find the difference in days between onset and hospitalisation
-    mutate(onset_to_hosp_days = date_of_hospitalisation - date_of_onset)
-
+linelist <- linelist %>%
+  
+  # convert date of onset from character to date objects by specifying dmy format
+  mutate(date_onset = dmy(date_onset),
+         date_hospitalisation = dmy(date_hospitalisation)) %>%
+  
+  # filter out all cases without onset in march
+  filter(month(date_onset) == 3) %>%
+    
+  # find the difference in days between onset and hospitalisation
+  mutate(onset_to_hosp_days = date_hospitalisation - date_of_onset)
 ```
 
 
 
 <!-- ======================================================= -->
-## `guess_dates()` 
+## Messy dates  
 
-**The function `guess_dates()` attempts to read a "messy" date variable containing dates in many different formats and convert the dates to a standard format.** You can [read more online about `guess_dates()`](https://www.repidemicsconsortium.org/linelist/reference/guess_dates.html), which is in the **linelist** package.
+The function `guess_dates()` from the **linelist** package attempts to read a "messy" date column containing dates in many different formats and convert the dates to a standard format. You can [read more online about `guess_dates()`](https://www.repidemicsconsortium.org/linelist/reference/guess_dates.html). If `guess_dates()` is not yet available on CRAN for R 4.0.2, try install via `pacman::p_load_gh("reconhub/linelist")`.
 
->**For example:** `guess_dates` would see the following dates "03 Jan 2018", "07/03/1982", and "08/20/85" and convert them in the class Date to: 2018-01-03, 1982-03-07, and 1985-08-20.  
+For example `guess_dates` would see a vector of the following character dates "03 Jan 2018", "07/03/1982", and "08/20/85" and convert them to class Date as: `2018-01-03`, `1982-03-07`, and `1985-08-20`.  
 
-```{r, eval = F}
-linelist::guess_dates(c("03 Jan 2018", "07/03/1982", "08/20/85")) # guess_dates() not yet available on CRAN for R 4.0.2
-                                                                  # try install via devtools::install_github("reconhub/linelist")
+```{r, eval = T}
+linelist::guess_dates(c("03 Jan 2018",
+                        "07/03/1982",
+                        "08/20/85"))
 ```
 
-*Some optional arguments for `guess_dates()` that you might include are:*  
+Some optional arguments for `guess_dates()` that you might include are:  
 
 * `error_tolerance` - The proportion of entries which cannot be identified as dates to be tolerated (defaults to 0.1 or 10%)
 * `last_date` - the last valid date (defaults to current date)  
@@ -4615,11 +4695,13 @@ linelist::guess_dates(c("03 Jan 2018", "07/03/1982", "08/20/85")) # guess_dates(
 
 
 ```{r eval = FALSE}
-# An example using guess_dates on the variable dtdeath
-data_cleaned <- data %>% 
+# An example using guess_dates on the column dater_onset
+linelist <- linelist %>%                 # the dataset is called linelist
   mutate(
-    dtdeath = linelist::guess_dates(
-      dtdeath, error_tolerance = 0.1, first_date = "2016-01-01"
+    date_onset = linelist::guess_dates(  # the guess_dates() from package "linelist"
+      date_onset,
+      error_tolerance = 0.1,
+      first_date = "2016-01-01"
     )
 ```
 
@@ -4627,9 +4709,9 @@ data_cleaned <- data %>%
 <!-- ======================================================= -->
 ## Excel Dates
 
-Excel stores dates as the number of days since December 30, 1899. If the dataset you imported from Excel shows dates as numbers or characters like "41369"... use the `as.Date()` or `as_date()` function to convert, but **instead of supplying a format as above, supply an origin date**. This will not work if the excel date is read as a character type, so be sure to ensure the date is a numeric class (or convert it to one)!
+Excel stores dates as the number of days since December 30, 1899. If the dataset you imported from Excel shows dates as numbers or characters like "41369"... use the `as.Date()` or **lubridate**'s `as_date()` function to convert, but **instead of supplying a format as above, supply an origin date**. This will not work if the excel date is read as a character type, so be sure to ensure the date is a numeric class (or convert it to one)!
 
-<span style="color: black;">**_NOTE:_** You should provide the origin date in R's default date format (`"YYYY-MM-DD"`).</span>
+<span style="color: black;">**_NOTE:_** You should provide the origin date in R's default date format ("YYYY-MM-DD").</span>
 
 
 ```{r, eval = FALSE}
@@ -4638,14 +4720,16 @@ library(dplyr)
 
 # An example of providing the Excel 'origin date' when converting Excel number dates
 data_cleaned <- data %>% 
-  mutate(date_of_onset = as_date(as.double(date_of_onset), origin = "1899-12-30"))
+  mutate(date_onset = as_date(as.double(date_onset), origin = "1899-12-30")) # convert to numeric, then convert to date
 ```
 
 
 <!-- ======================================================= -->
-## How dates are displayed  
+## Date display  
 
-Once dates are the correct class, you often want them to display differently (e.g. in a plot, graph, or table). For example, to display as "Monday 05 Jan" instead of 2018-01-05. You can do this with the function `format()`, which works in a similar way as `as.Date()`. Read more [in this online tutorial](https://www.statmethods.net/input/dates.html). Remember that the output from `format()` is a character type, so is generally used for display purposes only!
+Once dates are the correct class, you often want them to display differently (e.g. in a plot, graph, or table). For example, to display as "Monday 05 Jan" instead of 2018-01-05. You can do this with the **base** R function `format()`, which works in a similar way as `as.Date()`. Read more [in this online tutorial](https://www.statmethods.net/input/dates.html).  
+
+Remember that the output from `format()` is a character type, so is generally used for display purposes only!
 
 %d = Day # (of the month e.g. 16, 17, 18...)
 %a = abbreviated weekday (Mon, Tues, Wed, etc.)  
@@ -4678,19 +4762,19 @@ paste0(
 ```
 
 <!-- ======================================================= -->
-## Calculating distance between dates
+## Calculate distance between dates
 
 The difference between dates can be calculated by:  
   
   
-1. Correctly formating *both* date variable as class date (see instructions above)  
-2. Creating a new variable that is defined as one date variable subtracted from the other
+1. Correctly formating *both* date column as class date (see instructions above)  
+2. Creating a new column that is defined as one date column subtracted from the other
 3. Converting the result to numeric class (default is class "datediff"). This ensures that subsequent mathematical calculations can be performed.  
 
 
 ```{r, eval = TRUE}
 
-# define variables as date classes
+# define columns as date classes
 date_of_onset <- ymd("2020-03-16")
 date_lab_confirmation <- ymd("2020-03-20")
 
@@ -4724,7 +4808,7 @@ med_days_outcome <- median(linelist_delay$dats_onset_to_outcome, na.rm = T)
 
 When data is present in different time time zones, it can often be important to standardise this data in a unified time zone. This can present a further challenge, as the time zone component of data must be coded manually in most cases.
 
-In R, each *datetime* object has a timezone component. By default, all datetime objects will carry the local time zone for the computer being used - this is generally specific to a *location* rather than a named timezone, as time zones will often change in locations due to daylight savings time. It is not possible to accurately compensate for time zones without a time component of a date, as the event a date variable represents cannot be attributed to a specific time, and therefore time shifts measured in hours cannot be reasonably accounted for.
+In R, each *datetime* object has a timezone component. By default, all datetime objects will carry the local time zone for the computer being used - this is generally specific to a *location* rather than a named timezone, as time zones will often change in locations due to daylight savings time. It is not possible to accurately compensate for time zones without a time component of a date, as the event a date column represents cannot be attributed to a specific time, and therefore time shifts measured in hours cannot be reasonably accounted for.
 
 To deal with time zones, there are a number of helper functions in lubridate that can be used to change the time zone of a datetime object from the local time zone to a different time zone. Time zones are set by attributing a valid tz database time zone to the datetime object. A list of these can be found here - if the location you are using data from is not on this list, nearby large cities in the time zone are available and serve the same purpose. 
 
@@ -4732,14 +4816,14 @@ https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 
 
 ```{r}
-# assign the current time to a variable
+# assign the current time to a column
 time_now <- Sys.time()
 time_now
 
-# use with_tz() to assign a new timezone to the variable, while CHANGING the clock time
+# use with_tz() to assign a new timezone to the column, while CHANGING the clock time
 time_london_real <- with_tz(time_now, "Europe/London")
 
-# use force_tz() to assign a new timezone to the variable, while KEEPING the clock time
+# use force_tz() to assign a new timezone to the column, while KEEPING the clock time
 time_london_local <- force_tz(time_now, "Europe/London")
 
 
@@ -4752,8 +4836,8 @@ time_london_real - time_london_local
 This may seem largely abstract, and is often not needed if the user isn't working across time zones. One simple example of its implementation is:
 
 ```{r, eval = FALSE}
-# TODO add when time variable is here
-# set the time variable to time zone for ebola outbreak 
+# TODO add when time column is here
+# set the time column to time zone for ebola outbreak 
 
 # "Africa/Lubumbashi" is the time zone for eastern DRC/Kivu Nord
 
@@ -4805,7 +4889,7 @@ You can also use the package **aweek** to set epidemiological weeks. You can rea
 <!-- ======================================================= -->
 ## Dates in Epicurves 
 
-See the section on [epicurves](#epicurves).
+See the section on [Epidemic curves].
 
 
 <!-- ======================================================= -->
@@ -4863,10 +4947,17 @@ You can read more about `lead()` and `lag()` in the documentation [here](https:/
 <!-- ======================================================= -->
 ## Dates miscellaneous  
 
-* `Sys.Date( )` returns the current date of your computer  
-* `Sys.Time()` returns the current time of your computer
-* `date()` returns the current date and time.  
+* `Sys.Date( )` from **base** R returns the current date of your computer  
+* `Sys.Time()` from **base** R returns the current time of your computer
+* `date()` from **lubridate** returns the current date and time.  
 
+<!-- ======================================================= -->
+## Resources  
+
+**lubridate** [tidyverse page](https://lubridate.tidyverse.org/)  
+**lubridate** RStudio [cheatsheet](https://rawgit.com/rstudio/cheatsheets/master/lubridate.pdf)  
+R for Data Science page on [dates and times](https://r4ds.had.co.nz/dates-and-times.html)  
+[Online tutorial](https://www.statmethods.net/input/dates.html)
 
 
 ```{r include=FALSE, cache=FALSE}
@@ -4904,7 +4995,7 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 <!--chapter:end:new_pages/dates.Rmd-->
 
 
-# Missing data {.tabset .tabset-fade}
+# Missing data { }
 
 ```{r, out.width=c("50%"), echo=F}
 knitr::include_graphics(here::here("images", "missingness.png"))
@@ -4912,7 +5003,7 @@ knitr::include_graphics(here::here("images", "missingness_overview.png"))
 ```
 
 <!-- ======================================================= -->
-## Overview {.tabset .tabset-fade}
+## Overview { }
 
 This page will cover:  
 
@@ -4927,7 +5018,7 @@ This page will cover:
 
 
 <!-- ======================================================= -->
-## Preparation {.tabset .tabset-fade}
+## Preparation { }
 
 **Load packages**  
 
@@ -4952,7 +5043,7 @@ linelist <- rio::import("linelist_cleaned.rds")
 
 
 <!-- ======================================================= -->
-## Useful functions {.tabset .tabset-fade}
+## Useful functions { }
 
 The following are useful functions when assessing or handling missing values:  
 
@@ -4993,7 +5084,7 @@ mean(my_vector, na.rm = TRUE)
 
 
 <!-- ======================================================= -->
-## Assess missingness in a dataframe {.tabset .tabset-fade}
+## Assess missingness in a dataframe { }
 
 You can use the package **naniar** to assess and visualize missingness.  
 
@@ -5152,7 +5243,7 @@ ggplot(data = outcome_missing)+
 
 
 <!-- ======================================================= -->
-## Filter out rows with missing values {.tabset .tabset-fade}
+## Filter out rows with missing values { }
 
 To quickly remove rows with missing values, use the **dplyr** function `drop_na()`.  
 
@@ -5183,7 +5274,7 @@ linelist %>%
 
 
 <!-- ======================================================= -->
-## Handling `NA` in `ggplot()` {.tabset .tabset-fade}
+## Handling `NA` in `ggplot()` { }
 
 It is often wise to report the number of values excluded from a plot in a caption. Below is an example:  
 
@@ -5206,7 +5297,7 @@ Sometimes, it can be easier to save the value as an object in commands before th
 
 
 <!-- ======================================================= -->
-## Imputation {.tabset .tabset-fade}
+## Imputation { }
 
 
 Sometimes, when analyzing your data, it will be important to "fill in the gaps" and impute missing data While you can always simply analyze a dataset after removing all missing values, this can cause problems in many ways. Here are two examples: 
@@ -5305,7 +5396,7 @@ Here we used the mice default method of imputation, which is Predictive Mean Mat
 
 
 <!-- ======================================================= -->
-## Resources {.tabset .tabset-fade}
+## Resources { }
 
 Vignette on the [naniar package](https://cran.r-project.org/web/packages/naniar/vignettes/getting-started-w-naniar.html)
 
@@ -5345,7 +5436,7 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 <!--chapter:end:new_pages/missing_data.Rmd-->
 
 
-# Grouping data {.tabset .tabset-fade}  
+# Grouping data { }  
      
 This page reviews how to group and aggregate data for descriptive analysis. It makes use of tidyverse packages for common and easy-to-use functions. 
 
@@ -5353,7 +5444,7 @@ This page reviews how to group and aggregate data for descriptive analysis. It m
 
 
 <!-- ======================================================= -->
-## Overview {.tabset .tabset-fade .tabset-pills}
+## Overview {  }
 
 Grouping data is a core component of data management and analysis. Grouped data can be plotted, or summarised by group (whether by time period, place, or a relevant categorical variable). Functions from the **dplyr** package (part of the **tidyverse**) make grouping and subsequent operations quite easy.  
 
@@ -5374,7 +5465,7 @@ This page will how to perform these grouping operations using
 
 
 <!-- ======================================================= -->
-## Preparation {.tabset .tabset-fade .tabset-pills}
+## Preparation {  }
      
 **Load packages**  
      
@@ -5411,7 +5502,7 @@ DT::datatable(head(linelist,50), rownames = FALSE, filter="top", options = list(
 
 
 <!-- ======================================================= -->
-## Grouping {.tabset .tabset-fade .tabset-pills}
+## Grouping {  }
      
 The function `group_by()` from **dplyr** groups the rows by the unique values in the specified columns. Each unique value contitutes a group (or unique combination of values, if multiple grouping columns are specified). Subsequent changes to the dataset or calculations can then be performed within the context of each unique group.  
 
@@ -5804,7 +5895,7 @@ If you do not want these grouping columns, use `ungroup()` first.
 
 
 <!-- ======================================================= -->
-## Base R {.tabset .tabset-fade .tabset-pills}
+## Base R {  }
 
 Here we briefly demonstrate grouping data with the **base** R function `aggregate()`
 
@@ -5814,7 +5905,7 @@ TO DO
 
 
 <!-- ======================================================= -->
-## Resources {.tabset .tabset-fade .tabset-pills}
+## Resources {  }
 
 Here are some useful resources for more information:
 *https://github.com/rstudio/cheatsheets/blob/master/data-transformation.pdf
@@ -5864,11 +5955,11 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 <!--chapter:end:new_pages/grouping.Rmd-->
 
 
-# Joining data {.tabset .tabset-fade}  
+# Joining data { }  
 
 
 <!-- ======================================================= -->
-## Overview {.tabset .tabset-fadehosp_info}
+## Overview { hosp_info}
 
 
 ```{r out.width = c('50%'), fig.show='hold', echo=F}
@@ -5879,7 +5970,7 @@ This page describes common "joins" and also probabilistic matching between dataf
 
 
 <!-- ======================================================= -->
-## Preparation {.tabset .tabset-fade}
+## Preparation { }
 
 **Load packages**
 
@@ -5909,7 +6000,7 @@ linelist <- rio::import("linelist_cleaned.csv")
 ```
 
 <!-- ======================================================= -->
-### Datasets {.tabset .tabset-fade}
+### Datasets { }
 In the joining examples, we'll use the following datasets:  
 
 1) A "miniature" version of the `linelist`, containing only the columns `case_id`, `date_onset`, and `hospital`, and only the first 10 rows  
@@ -5952,7 +6043,7 @@ DT::datatable(hosp_info, rownames = FALSE, options = list(pageLength = nrow(hosp
 
 
 <!-- ======================================================= -->
-### Pre-cleaning {.tabset .tabset-fade}
+### Pre-cleaning { }
 
 Because traditional (non-probabilistic) joins are case-sensitive and require exact string matches, we will clean-up the `hosp_info` dataset prior to the joins.  
 
@@ -6009,7 +6100,7 @@ If you need to convert to all values UPPER or lower case, use these functions fr
 
 
 <!-- ======================================================= -->
-## **dplyr** joins {.tabset .tabset-fade}
+## **dplyr** joins { }
 
 **dplyr** offers several different joins. Below they are described, with some simple use cases. Many thanks to [https://github.com/gadenbuie](https://github.com/gadenbuie/tidyexplain/tree/master/images) for the moving images!  
 
@@ -6017,7 +6108,7 @@ If you need to convert to all values UPPER or lower case, use these functions fr
 
 
 <!-- ======================================================= -->
-### General syntax {.tabset .tabset-fade}
+### General syntax { }
 
 
 **General function structure**  
@@ -6298,7 +6389,7 @@ To see the `hosp_info` records that were excluded in the inner join, we could al
 
 
 <!-- ======================================================= -->
-## Probabalistic matching {.tabset .tabset-fade}
+## Probabalistic matching { }
 
 Under construction - TBD
 
@@ -6587,7 +6678,7 @@ cases_dedupe[cases_dedupe$dedupe.ids == 2,]
 
 
 <!-- ======================================================= -->
-## Resources {.tabset .tabset-fade}
+## Resources { }
 
 The [dplyr page on joins](https://dplyr.tidyverse.org/reference/join.html)  
 
@@ -6634,11 +6725,11 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 <!--chapter:end:new_pages/matching_joining.Rmd-->
 
 
-# Characters and strings {.tabset .tabset-fade}  
+# Characters and strings { }  
 
 
 <!-- ======================================================= -->
-## Overview {.tabset .tabset-fade}
+## Overview { }
 
 
 This tab demonstrates use of the **stringr** package to evaluate and manage character (strings).  
@@ -6660,7 +6751,7 @@ https://cran.r-project.org/web/packages/stringr/vignettes/stringr.html)
 
 
 <!-- ======================================================= -->
-## Preparation {.tabset .tabset-fade}
+## Preparation { }
 
 Install or load the **stringr** package.  
 
@@ -6680,7 +6771,7 @@ A reference sheet for **stringr** functions can be found [here](https://evoldyn.
 
 
 <!-- ======================================================= -->
-## Handle by position {.tabset .tabset-fade}
+## Handle by position { }
 
 
 ### Extract by character position  
@@ -6782,7 +6873,7 @@ Alternatively, use `nchar()` from **base** R
 
 
 <!-- ======================================================= -->
-## Unite, split, and arrange {.tabset .tabset-fade}
+## Unite, split, and arrange { }
 
 
 This section covers:  
@@ -7103,7 +7194,7 @@ It is common to see **base** R functions `paste()` and `paste0()`, which concate
 
 
 <!-- ======================================================= -->
-## Adjust length {.tabset .tabset-fade}
+## Adjust length { }
 
 
 ### Pad  
@@ -7214,7 +7305,7 @@ cat(str_wrap(pt_course, 40))
 
 
 <!-- ======================================================= -->
-## Change case {.tabset .tabset-fade}
+## Change case { }
 
 Often one must alter the case/capitalization of a string value, for example names of jursidictions. Use `str_to_upper()`, `str_to_upper()`, and `str_to_title()`, as shown below:  
 
@@ -7252,7 +7343,7 @@ str_to_sentence("the patient must be transported")
 
 
 <!-- ======================================================= -->
-## Patterns {.tabset .tabset-fade}
+## Patterns { }
 
 Many **stringr** functions work to detect, locate, extract, match, replace, and split based on a specified *pattern*.  
 
@@ -7492,7 +7583,7 @@ str_count(occupations, regex("teach|prof|tutor", ignore_case = TRUE))
 
 
 <!-- ======================================================= -->
-## Regex and special characters {.tabset .tabset-fade} 
+## Regex and special characters { } 
 
 Regular expressions, or "regex", is a concise language for describing patterns in strings.
 
@@ -7682,7 +7773,7 @@ Also see this [tutorial](https://towardsdatascience.com/a-gentle-introduction-to
 
 
 <!-- ======================================================= -->
-## Resources {.tabset .tabset-fade}
+## Resources { }
 
 A reference sheet for **stringr** functions can be found [here](https://evoldyn.gitlab.io/evomics-2018/ref-sheets/R_strings.pdf)
 
@@ -7727,14 +7818,14 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 <!--chapter:end:new_pages/character_regex.Rmd-->
 
 
-# De-duplication {.tabset}  
+# De-duplication {}  
 
 ```{r, out.width=c("50%"), echo=F}
 knitr::include_graphics(here::here("images", "deduplication2.png"))
 ```
 
 <!-- ======================================================= -->
-## Overview {.tabset }
+## Overview { }
 
 This page covers the following subjects:  
 
@@ -7744,7 +7835,7 @@ This page covers the following subjects:
 
 
 <!-- ======================================================= -->
-## Preparation {.tabset }
+## Preparation { }
 
 
 **Load packages**  
@@ -7797,7 +7888,7 @@ DT::datatable(obs, rownames = FALSE, options = list(pageLength = nrow(obs), scro
 
 
 <!-- ======================================================= -->
-## Deduplication {.tabset }
+## Deduplication { }
 
 
 This tab uses the dataset from the Preparation tab to describe how to review and remove duplicate rows in a dataframe. It also show how to handle duplicate elements in a vector.  
@@ -7966,7 +8057,7 @@ To evaluate only columns `name` and `purpose` for duplicates: `df[!duplicated(df
 
 
 <!-- ======================================================= -->
-## Slicing {.tabset }
+## Slicing { }
 
 
 To "slice" a dataframe is useful in de-duplication if you have multiple rows per functional group (e.g. per "person") and you only want to analyze one or some of them. Think of slicing a filter on the rows, by row number/position. 
@@ -8144,7 +8235,7 @@ obs %>%
 
 
 <!-- ======================================================= -->
-## Roll-up values {.tabset }
+## Roll-up values { }
 
 
 This tab describes:  
@@ -8294,7 +8385,7 @@ See the page on joining datasets for an explanation on this method (LINK). The s
 
 
 <!-- ======================================================= -->
-## Resources {.tabset }
+## Resources { }
 
 Much of the information in this page is adapted from these resources and vignettes online:  
 
@@ -8339,7 +8430,7 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 <!--chapter:end:new_pages/deduplication.Rmd-->
 
 
-# Iteration and loops {.tabset .tabset-fade}  
+# Iteration and loops { }  
 
 
 
@@ -8348,7 +8439,7 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 
 
 <!-- ======================================================= -->
-## Preparation {.tabset .tabset-fade .tabset-pills}
+## Preparation {  }
 
 
 **Load packages**  
@@ -8385,7 +8476,7 @@ DT::datatable(head(linelist, 50), rownames = FALSE, filter="top", options = list
 
 
 <!-- ======================================================= -->
-## *for loops* {.tabset .tabset-fade .tabset-pills}
+## *for loops* {  }
 
 As an epidemiologist, it is a common need to repeat analyses on sub-groups (e.g. jurisdictions or sub-populations). Iterating with a *for loop* is one method to automate this process.  
 
@@ -8502,7 +8593,7 @@ for (row in 1:nrow(linelist)){
 
 
 <!-- ======================================================= -->
-## **purrr** {.tabset .tabset-fade}
+## **purrr** { }
 
 TO DO - Under construction  
 
@@ -8528,13 +8619,13 @@ A purrr [tutorial](https://jennybc.github.io/purrr-tutorial/index.html )
 
 
 <!-- ======================================================= -->
-## apply functions {.tabset .tabset-fade}
+## apply functions { }
 
 
 
 
 <!-- ======================================================= -->
-## Resources {.tabset .tabset-fade}
+## Resources { }
 
 
 
@@ -8609,11 +8700,11 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 
 <!--chapter:end:new_pages/cat_analysis.Rmd-->
 
-# Descriptive analysis {.tabset .tabset-fade}
+# Descriptive analysis { }
 
 <!-- ======================================================= -->
 
-## Overview {.tabset .tabset-fade .tabset-pills}
+## Overview {  }
 
 This tab demonstrates the use of **gtsummary** and **dplyr** to produce descriptive statistics.
 
@@ -8629,7 +8720,7 @@ This tab demonstrates the use of **gtsummary** and **dplyr** to produce descript
 
 <!-- ======================================================= -->
 
-## Preparation {.tabset .tabset-fade .tabset-pills}
+## Preparation {  }
 
 
 
@@ -8683,7 +8774,7 @@ linelist <- linelist %>%
 
 <!-- ======================================================= -->
 
-## Browse data {.tabset .tabset-fade .tabset-pills}
+## Browse data {  }
 
 
 
@@ -8720,7 +8811,7 @@ skim(linelist)
 
 <!-- ======================================================= -->
 
-## Summary Statistics {#summarystats .tabset .tabset-fade .tabset-pills}
+## Summary Statistics {#summarystats   }
 
 ### `gtsummary` package
 
@@ -8936,7 +9027,7 @@ linelist %>%
 
 <!-- ======================================================= -->
 
-## Frequency/cross-tabs {.tabset .tabset-fade .tabset-pills}
+## Frequency/cross-tabs {  }
 
 ### `gtsummary` package
 
@@ -9070,7 +9161,7 @@ linelist %>%
 
 <!-- ======================================================= -->
 
-## Statistical tests {.tabset .tabset-fade .tabset-pills}
+## Statistical tests {  }
 
 ### `gtsummary` package
 
@@ -9358,7 +9449,7 @@ chisq.test(linelist$gender, linelist$outcome)
 
 <!-- ======================================================= -->
 
-## Correlations {.tabset .tabset-fade .tabset-pills}
+## Correlations {  }
 
 Correlation between numeric variables can be investigated using the tidyverse 
 `corrr` package. It allows you to compute correlations using Pearson, Kendall
@@ -9387,7 +9478,7 @@ rplot(correlation_tab)
 
 <!-- ======================================================= -->
 
-## Resources {.tabset .tabset-fade .tabset-pills}
+## Resources {  }
 
 Much of the information in this page is adapted from these resources and vignettes online:  
 
@@ -9429,11 +9520,11 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 
 <!--chapter:end:new_pages/descriptive_statistics.Rmd-->
 
-# Simple statistical tests {.tabset .tabset-fade}
+# Simple statistical tests { }
 
 <!-- ======================================================= -->
 
-## Overview {.tabset .tabset-fade .tabset-pills}
+## Overview {  }
 
 This tab demonstrates the use of **gtstummary** and regression packages to 
 look at associations between variables (e.g. odds ratios, risk ratios and hazard
@@ -9447,7 +9538,7 @@ ratios)
 
 <!-- ======================================================= -->
 
-## Preparation {.tabset .tabset-fade .tabset-pills}
+## Preparation {  }
 
 
 ### Packages
@@ -9530,7 +9621,7 @@ linelist <- linelist %>%
 
 <!-- ======================================================= -->
 
-## Univariate {.tabset .tabset-fade .tabset-pills}
+## Univariate {  }
 
 There are two options for doing univariate analysis. 
 You can use the `gtsummary` package or you can use the individual regression 
@@ -9538,7 +9629,7 @@ functions available in `base` together with the `broom` package.
 
 <!-- ======================================================= -->
 
-### `gtsummary` package {.tabset .tabset-fade .tabset-pills}
+### `gtsummary` package {  }
 
 ```{r odds_gt}
 
@@ -9564,7 +9655,7 @@ univ_tab
 
 <!-- ======================================================= -->
 
-### `base` {.tabset .tabset-fade .tabset-pills}
+### `base` {  }
 
 Using the `glm` function from the **stats** package (part of base R), you can 
 produce odds ratios. 
@@ -9673,7 +9764,7 @@ univ_tab_base <- map(explanatory_vars,
 
 <!-- ======================================================= -->
 
-## Stratified {.tabset .tabset-fade .tabset-pills}
+## Stratified {  }
 
 Stratified analysis is currently still being worked on for `gtsummary`, 
 this page will be updated in due course. 
@@ -9681,19 +9772,19 @@ this page will be updated in due course.
 
 <!-- ======================================================= -->
 
-### `gtsummary` package {.tabset .tabset-fade .tabset-pills}
+### `gtsummary` package {  }
 
 TODO
 
 <!-- ======================================================= -->
 
-### `base` {.tabset .tabset-fade .tabset-pills}
+### `base` {  }
 
 TODO
 
 <!-- ======================================================= -->
 
-## Multivariable {.tabset .tabset-fade .tabset-pills}
+## Multivariable {  }
 
 For multivariable analysis you can use a combination there is not much difference 
 between using `gtsummary` or `broom` to present the data. 
@@ -9723,7 +9814,7 @@ final_mv_reg <- mv_reg %>%
 
 <!-- ======================================================= -->
 
-### `gtsummary` package {.tabset .tabset-fade .tabset-pills}
+### `gtsummary` package {  }
 
 The `gtsummary` package provides the `tbl_regression` function, which will 
 take the outputs from a regression (`glm` in this case) and produce an easy 
@@ -9745,7 +9836,7 @@ tbl_merge(
 
 <!-- ======================================================= -->
 
-### `base` {.tabset .tabset-fade .tabset-pills}
+### `base` {  }
 
 ```{r mv_regression_base}
 
@@ -9776,7 +9867,7 @@ left_join(univ_tab_base, mv_tab_base, by = "term") %>%
 
 <!-- ======================================================= -->
 
-## Forest plot {.tabset .tabset-fade .tabset-pills}
+## Forest plot {  }
 
 This section shows how to produce a plot with the outputs of your regression.
 There are two options, you can build a plot yourself using `ggplot2` or use a 
@@ -9785,7 +9876,7 @@ package called
 
 <!-- ======================================================= -->
 
-### `ggplot2` package {.tabset .tabset-fade .tabset-pills}
+### `ggplot2` package {  }
 
 ```{r ggplot_forest}
 
@@ -9806,7 +9897,7 @@ mv_tab_base %>%
 
 <!-- ======================================================= -->
 
-### `easystats` packages {.tabset .tabset-fade .tabset-pills}
+### `easystats` packages {  }
 
 The alternative if you do not want to decide all of the different things required
 for a `ggplot`, is to use a combination of `easystats` packages. 
@@ -9826,7 +9917,7 @@ final_mv_reg %>%
 
 <!-- ======================================================= -->
 
-## Resources {.tabset .tabset-fade .tabset-pills}
+## Resources {  }
 
 Much of the information in this page is adapted from these resources and vignettes online:  
 
@@ -9869,16 +9960,16 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 <!--chapter:end:new_pages/stat_tests.Rmd-->
 
 
-# Standardization {.tabset .tabset-fade}  
+# Standardization { }  
 
 This page will show you two ways to standardize an outcome, such as hospitalizations or mortality, by characteristics such as age and sex. 
 
 * Using **dsr** package 
 * Using **PHEindicatormethods** package
-`{#title_tag .tabset .tabset-fade}`
+`{#title_tag  }`
 
 <!-- ======================================================= -->
-## Overview {.tabset .tabset-fade .tabset-pills}
+## Overview {  }
 
 There are two main ways to standardize: direct and indirect standardization.
 Let's say we would like to standardize mortality by age and sex for country A and country B, and compare the standardized rates between these countries.
@@ -9887,7 +9978,7 @@ Let's say we would like to standardize mortality by age and sex for country A an
 * For indirect standardization, you only need to know the total number of deaths and the age- and sex structure of each country. This option is therefore feasible if age- and sex-specific mortality rates or population numbers are not available. Indirect standardization is furthermore preferable in case of small numbers per stratum, as estimates in direct standardization would be influenced by substantial sampling variation. 
 
 <!-- ======================================================= -->
-## Preparation {.tabset .tabset-fade .tabset-pills}
+## Preparation {  }
 <h2> Preparation </h2>
 
 To show how standardization is done, we will use the `country_demographics` (country A) and `country_demographics_2` (country B) datasets, by age (in 5 year categories) and sex (female, male). We will add our own fictitious mortality data to these datasets. To make the dataset ready for use, we will perform the following steps:
@@ -9903,7 +9994,7 @@ Alternatively, instead of just adding mortality numbers per stratum, you may hav
 We also need a reference population, the standard population. There are several standard populations available, for the purpose of this exercise we will use the `world_standard_population_by_sex`. The World standard population is based on the populations of 46 countries and was developed in 1960. I found the website of the NHS Schotland quite informative on the European Standard Population, World Standard Population and Scotland Standard Population: https://www.opendata.nhs.scot/dataset/standard-populations
 
 <!-- ======================================================= -->
-### Load packages {.tabset .tabset-fade .tabset-pills}
+### Load packages {  }
 
 <span style="color: orange;">**_CAUTION:_** If you have a newer version of R, the **dsr** package cannot be directly downloaded as it is archived. However, it is still available from the CRAN archive. You can install and use this one. </span>
 
@@ -9940,7 +10031,7 @@ pacman::p_load(rio,       # to import data
 ```
 
 <!-- ======================================================= -->
-### Load data {.tabset .tabset-fade .tabset-pills}
+### Load data {  }
 
 ```{r}
 # Country A
@@ -9959,7 +10050,7 @@ standard_pop_data <- rio::import(here::here("data", "world_standard_population_b
 ```
 
 <!-- ======================================================= -->
-### One row per stratum {.tabset .tabset-fade .tabset-pills}
+### One row per stratum {  }
 
 We need datasets with one row per stratum, while the current `all_countries` object has males and females listed on the same row.
 
@@ -9983,7 +10074,7 @@ poptable_countries <- poptable_countries %>% mutate(AgeGroup = gsub("\\+", "", A
 ```
 
 <!-- ======================================================= -->
-### Add mortality numbers {.tabset .tabset-fade .tabset-pills}
+### Add mortality numbers {  }
 
 We currently do not have number of deaths for each of the strata in our `poptable_countries` dataset, so we will need to add these. For the purpose of this analysis, we will add fictional data. Alternatively, 
 ```{r}
@@ -10012,7 +10103,7 @@ poptable_countries <- poptable_countries %>% arrange(Country, AgeGroup, Sex)
 <span style="color: orange;">**_CAUTION:_** NB. If you have few deaths per stratum, use 10-, or 15-year categories, instead of 5-year categories for age, or combine categories</span>
 
 <!-- ======================================================= -->
-### Prepare reference population {.tabset .tabset-fade .tabset-pills}
+### Prepare reference population {  }
 
 The values of the column `AgeGroup` from the `standard_pop_data` contain the word "years" and "plus", while those of the `poptable_country` do not. We will have to remove this string to make it match.
 
@@ -10043,7 +10134,7 @@ countries_alldata <- left_join(poptable_countries, standard_pop, by=c("AgeGroup"
 ```
 
 <!-- ======================================================= -->
-## **dsr** package {.tabset .tabset-fade .tabset-pills}
+## **dsr** package {  }
  
 <h2> Calculating and comparing directly standardized rates using the **dsr** package </h2>
 
@@ -10052,7 +10143,7 @@ Remember, we made 1) the `poptable_countries` object, which is a population tabl
 The **dsr** package allows you to calculate and compare directly standardized rates (no indirectly standardized rates!).
 
 <!-- ======================================================= -->
-### Standardized rates {.tabset .tabset-fade .tabset-pills}
+### Standardized rates {  }
 
 ```{r}
 # Calculate rates per country directly standardized for age and sex
@@ -10074,7 +10165,7 @@ knitr::kable(mortality_rate) # show mortality rate before and after direct stand
 Here, we see that while country A had a lower crude mortality rate than country B, it has a higher standardized rate after direct age and sex standardization.
 
 <!-- ======================================================= -->
-### Standardized rate ratios {.tabset .tabset-fade .tabset-pills}
+### Standardized rate ratios {  }
 
 ```{r}
 # Calculate RR
@@ -10097,7 +10188,7 @@ knitr::kable(mortality_rr)
 The standardized mortality rate is 1.22 times higher in country A compared to country B (95% CI 1.17-1.27).
 
 <!-- ======================================================= -->
-### Standardized rate difference {.tabset .tabset-fade .tabset-pills}
+### Standardized rate difference {  }
 
 ```{r}
 # Calculate RD
@@ -10120,12 +10211,12 @@ knitr::kable(mortality_rd)
 Country A has 4.24 additional deaths per 100.000 population (95% CI 3.24-5.24) compared to country A.
 
 <!-- ======================================================= -->
-## **PHEindicatormethods** package {.tabset .tabset-fade .tabset-pills}
+## **PHEindicatormethods** package {  }
 
 Another way of calculating standardized rates is with the **PHEindicatormethods** package. This package allows you to calculate directly as well as indirectly standardized rates. We need the reference (standard) population as well as the country-specific mortality and population data in one object, which we have made earlier: `countries_alldata`.
 
 <!-- ======================================================= -->
-### Directly standardized rates {.tabset .tabset-fade .tabset-pills}
+### Directly standardized rates {  }
 
 ```{r}
 # Calculate rates per country directly standardized for age and sex
@@ -10140,7 +10231,7 @@ knitr::kable(mortality_rate_phe)
 ```
 
 <!-- ======================================================= -->
-## Resources {.tabset .tabset-fade .tabset-pills}
+## Resources {  }
 
 <span style="color: darkgreen;">**_TIP:_** If you would like to see another reproducible example than listed in this Handbook, please go to https://mran.microsoft.com/snapshot/2020-02-12/web/packages/dsr/vignettes/dsr.html.</span>
 
@@ -10181,14 +10272,14 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 <!--chapter:end:new_pages/standardization.Rmd-->
 
 
-# Moving averages {.tabset .tabset-fade}  
+# Moving averages { }  
 
 ```{r, out.width=c("50%"), echo=F}
 knitr::include_graphics(here::here("images", "moving_avg_epicurve.png"))
 ```
 
 <!-- ======================================================= -->
-## Overview {.tabset .tabset-fade .tabset-pills}
+## Overview {  }
 
 This page will cover methods to calculate and visualize moving averages, for:  
 
@@ -10199,7 +10290,7 @@ This page will cover methods to calculate and visualize moving averages, for:
 
 
 <!-- ======================================================= -->
-## Preparation {.tabset .tabset-fade .tabset-pills}
+## Preparation {  }
 
 **Load packages**  
 
@@ -10213,7 +10304,7 @@ pacman::p_load(
 
 
 <!-- ======================================================= -->
-## Calculate-then-display {.tabset .tabset-fade .tabset-pills}
+## Calculate-then-display {  }
 
 Using the package **slider** to calculate a moving average in a dataframe, prior to any plotting.  
 
@@ -10285,7 +10376,7 @@ ggplot(data = ll_counts_7day, aes(x = date_onset)) +
 
 
 <!-- ======================================================= -->
-## Calculate on-the-fly {.tabset .tabset-fade .tabset-pills}
+## Calculate on-the-fly {  }
 
 TBD - **tidyquant**
 
@@ -10309,7 +10400,7 @@ per_pos_plot_county <- ggplot(data = filter(tests_per_county),
 
 
 <!-- ======================================================= -->
-## Resources {.tabset .tabset-fade .tabset-pills}
+## Resources {  }
 
 
 See the helpful online [vignette for the **slider** package](https://cran.r-project.org/web/packages/slider/vignettes/slider.html)  
@@ -10353,13 +10444,13 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 <!--chapter:end:new_pages/moving_average.Rmd-->
 
 
-# Outbreak detection {.tabset .tabset-fade}  
+# Outbreak detection { }  
 
 The Page title should be succinct. Consider adding a tag with no spaces into the curly brackets, such as below. This can be used for internal links within the handbook. 
-`{#title_tag .tabset .tabset-fade}`
+`{#title_tag  }`
 
 <!-- ======================================================= -->
-## Overview {.tabset .tabset-fade .tabset-pills}
+## Overview {  }
 
 Endemic corridor analysis
 Detecting spikes in syndromic/routine surveillance
@@ -10374,7 +10465,7 @@ This tab should include:
 
 
 <!-- ======================================================= -->
-## Preparation {.tabset .tabset-fade .tabset-pills}
+## Preparation {  }
 
 Keep the title of this section as "Preparation".  
 Data preparation steps such as:  
@@ -10384,48 +10475,48 @@ Data preparation steps such as:
 * melting, pivoting, grouping, etc.   
 
 <!-- ======================================================= -->
-### sub-tab 1 {.tabset .tabset-fade .tabset-pills}
+### sub-tab 1 {  }
 
 Can be used to separate major steps of data preparation. Re-name as needed
 
 
 <!-- ======================================================= -->
-### sub-tab 2 {.tabset .tabset-fade .tabset-pills}
+### sub-tab 2 {  }
 
 Can be used to separate major steps of data preparation. Re-name as needed.
 
 
 
 <!-- ======================================================= -->
-## Option 1 {.tabset .tabset-fade .tabset-pills}
+## Option 1 {  }
 
 This tab can be renamed. 
 This tab should demonstrate execution of the task using recommended package/approach. For example, using a package customized for this task where the execution is simple and fast but perhaps less customizable. For example using *incidence* package to create an epicurve.
 
 
 <!-- ======================================================= -->
-### Option 1 sub-tab {.tabset .tabset-fade .tabset-pills}
+### Option 1 sub-tab {  }
 
 Sub-tabs if necessary. Re-name as needed.
 
 
 
 <!-- ======================================================= -->
-## Option 2 {.tabset .tabset-fade .tabset-pills}
+## Option 2 {  }
 
 This tab can be re-named. 
 This tab should demonstrate execution of the task a more standard/core package (e.g. ggplot2, or base R) that allows for more flexibility in the output or more package stability. For example, showing how to create an epicurve using *ggplot2*. 
 
 
 <!-- ======================================================= -->
-### Option 2 sub-tab {.tabset .tabset-fade .tabset-pills}
+### Option 2 sub-tab {  }
 
 Sub-tabs if necessary. Re-name as needed.
 
 
 
 <!-- ======================================================= -->
-## Resources {.tabset .tabset-fade .tabset-pills}
+## Resources {  }
 
 This tab should stay with the name "Resources".
 Links to other online tutorials or resources.
@@ -10581,11 +10672,11 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 <!--chapter:end:new_pages/time_series.Rmd-->
 
 
-# Epidemic modeling {.tabset .tabset-fade}  
+# Epidemic modeling { }  
 
 
 <!-- ======================================================= -->
-## Overview {.tabset .tabset-fade .tabset-pills}
+## Overview {  }
 
 There exists a growing body of tools for epidemic modelling that lets us conduct
 fairly complex analyses with minimal effort. This section will provide an
@@ -10693,7 +10784,7 @@ plot(epinow_res)
 ```
 
 <!-- ======================================================= -->
-## Preparation {.tabset .tabset-fade .tabset-pills}
+## Preparation {  }
 
 We will use two different methods and packages for R<sub>t</sub> estimation,
 namely **EpiNow** and **EpiEstim**, as well as the **projections** package for
@@ -10723,7 +10814,7 @@ linelist <- rio::import("linelist_cleaned.xlsx")
 
 
 <!-- ======================================================= -->
-## Estimating R<sub>t</sub> {.tabset .tabset-fade .tabset-pills}
+## Estimating R<sub>t</sub> {  }
 
 ### EpiNow2 vs. EpiEstim
 
@@ -11278,7 +11369,7 @@ ggplot() +
 ```
 
 <!-- ======================================================= -->
-## Projecting incidence {.tabset .tabset-fade .tabset-pills}
+## Projecting incidence {  }
 
 ### EpiNow2
 
@@ -11528,7 +11619,7 @@ DT::datatable(
 
 
 <!-- ======================================================= -->
-## Resources {.tabset .tabset-fade .tabset-pills}
+## Resources {  }
 
 * [Here is the paper](https://www.sciencedirect.com/science/article/pii/S1755436519300350) describing
   the methodology implemented in **EpiEstim**.
@@ -11660,61 +11751,24 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 <!--chapter:end:new_pages/modeling.Rmd-->
 
 
-# Survey analysis {.tabset .tabset-fade}  
+# Survey analysis { }  
 
 UNDER CONSTRUCTION
 
 <!-- ======================================================= -->
-## Overview {.tabset .tabset-fade .tabset-pills}
-
-Keep the title of this section as "Overview".  
-This tab should include:  
-
-* Textual overview of the purpose of this page  
-* Small image showing outputs   
-
-
+## Overview {  }
 
 <!-- ======================================================= -->
-## Preparation {.tabset .tabset-fade .tabset-pills}
-
-Keep the title of this section as "Preparation".  
-Data preparation steps such as:  
-
-* Loading dataset  
-* Adding or changing variables  
-* melting, pivoting, grouping, etc.   
+## Preparation {  }
 
 <!-- ======================================================= -->
-### sub-tab 1 {.tabset .tabset-fade .tabset-pills}
-
-Can be used to separate major steps of data preparation. Re-name as needed
-
+## Weighting {  }
 
 <!-- ======================================================= -->
-### sub-tab 2 {.tabset .tabset-fade .tabset-pills}
-
-Can be used to separate major steps of data preparation. Re-name as needed.
-
-
+## Random selection {  }
 
 <!-- ======================================================= -->
-## From data frame {.tabset .tabset-fade .tabset-pills}
-
-<!-- ======================================================= -->
-## Overview {.tabset .tabset-fade .tabset-pills}
-
-<!-- ======================================================= -->
-## Weighting {.tabset .tabset-fade .tabset-pills}
-
-<!-- ======================================================= -->
-## Random selection {.tabset .tabset-fade .tabset-pills}
-
-<!-- ======================================================= -->
-## Resources {.tabset .tabset-fade .tabset-pills}
-
-This tab should stay with the name "Resources".
-Links to other online tutorials or resources.
+## Resources {  }
 
 
 
@@ -11754,15 +11808,15 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 <!--chapter:end:new_pages/survey_analysis.Rmd-->
 
 
-# Survival analysis {.tabset .tabset-fade}  
+# Survival analysis { }  
 
 UNDER CONSTRUCTION  
 
 The Page title should be succinct. Consider adding a tag with no spaces into the curly brackets, such as below. This can be used for internal links within the handbook. 
-`{#title_tag .tabset .tabset-fade}`
+`{#title_tag  }`
 
 <!-- ======================================================= -->
-## Overview {.tabset .tabset-fade .tabset-pills}
+## Overview {  }
 
 Keep the title of this section as "Overview".  
 This tab should include:  
@@ -11773,7 +11827,7 @@ This tab should include:
 
 
 <!-- ======================================================= -->
-## Preparation {.tabset .tabset-fade .tabset-pills}
+## Preparation {  }
 
 Keep the title of this section as "Preparation".  
 Data preparation steps such as:  
@@ -11784,35 +11838,35 @@ Data preparation steps such as:
 
 
 <!-- ======================================================= -->
-## Option 1 {.tabset .tabset-fade .tabset-pills}
+## Option 1 {  }
 
 This tab can be renamed. 
 This tab should demonstrate execution of the task using recommended package/approach. For example, using a package customized for this task where the execution is simple and fast but perhaps less customizable. For example using *incidence* package to create an epicurve.
 
 
 <!-- ======================================================= -->
-### Option 1 sub-tab {.tabset .tabset-fade .tabset-pills}
+### Option 1 sub-tab {  }
 
 Sub-tabs if necessary. Re-name as needed.
 
 
 
 <!-- ======================================================= -->
-## Option 2 {.tabset .tabset-fade .tabset-pills}
+## Option 2 {  }
 
 This tab can be re-named. 
 This tab should demonstrate execution of the task a more standard/core package (e.g. ggplot2, or base R) that allows for more flexibility in the output or more package stability. For example, showing how to create an epicurve using *ggplot2*. 
 
 
 <!-- ======================================================= -->
-### Option 2 sub-tab {.tabset .tabset-fade .tabset-pills}
+### Option 2 sub-tab {  }
 
 Sub-tabs if necessary. Re-name as needed.
 
 
 
 <!-- ======================================================= -->
-## Resources {.tabset .tabset-fade .tabset-pills}
+## Resources {  }
 
 This tab should stay with the name "Resources".
 Links to other online tutorials or resources.
@@ -11852,11 +11906,11 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 
 <!--chapter:end:new_pages/survival_analysis.Rmd-->
 
-# GIS basics {.tabset .tabset-fade}  
+# GIS basics { }  
 
 
 <!-- ======================================================= -->
-## Overview {.tabset .tabset-fade .tabset-pills}
+## Overview {  }
 
 Spatial aspects of your data can provide a lot of insights into the situation of the outbreak to answer questions such as: 
 
@@ -11888,7 +11942,7 @@ knitr::include_graphics(here::here("images", "gis_hf_catchment.png"))
 
 
 <!-- ======================================================= -->
-## Preparation {.tabset .tabset-fade .tabset-pills}
+## Preparation {  }
 
 **Load packages**  
 First, load the packages required for this analysis:  
@@ -11960,7 +12014,7 @@ sle_hf <-
 
 
 <!-- ======================================================= -->
-## Plotting coordinates {.tabset .tabset-fade .tabset-pills}
+## Plotting coordinates {  }
 
 The easiest way to plot the XY coordinates (points) is to draw a map directly from the sf object which we created in the preparation section.
 
@@ -11985,7 +12039,7 @@ tm_shape(linelist_sf) + tm_dots(size=0.08, col='blue')
 
 
 <!-- ======================================================= -->
-## polygons and shapefiles {.tabset .tabset-fade .tabset-pills}
+## polygons and shapefiles {  }
 
 Choropleth maps can be useful to visualize your data by pre-defined area usually by administrative unit or health area for outbreak response to be able to target resources for specific area high incidence rates for example.
 
@@ -12086,7 +12140,7 @@ tm_shape(case_adm3_sf) +
 ```
 
 <!-- ======================================================= -->
-## Time series heatmap {.tabset .tabset-fade .tabset-pills}
+## Time series heatmap {  }
 
 We can also look at the combination of time and space by facetting the heatmaps.
 
@@ -12137,7 +12191,7 @@ OpenStreetMap::autoplot.OpenStreetMap(map.latlon)+
 
 
 <!-- ======================================================= -->
-## Health facility catchment area {.tabset .tabset-fade .tabset-pills}
+## Health facility catchment area {  }
 
 It might be useful to know where the health facilities are located in relation to the disease hot spots.
 
@@ -12230,7 +12284,7 @@ tm_view(set.view = c(-13.2284,8.4699, 13), set.zoom.limits = c(13,14))
 
 
 <!-- ======================================================= -->
-## Resources {.tabset .tabset-fade .tabset-pills}
+## Resources {  }
 
 * R Simple Features and sf package
 https://cran.r-project.org/web/packages/sf/vignettes/sf1.html
@@ -12314,20 +12368,20 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 <!--chapter:end:new_pages/cat_data_viz.Rmd-->
 
 
-# ggplot tips {.tabset .tabset-fade}  
+# ggplot tips { }  
 
 UNDER CONSTRUCTION  
 
 https://www.tidyverse.org/blog/2018/07/ggplot2-3-0-0/
 
 <!-- ======================================================= -->
-## Overview {.tabset .tabset-fade .tabset-pills}
+## Overview {  }
 
 Embed ggplot cheatsheet
 
 
 <!-- ======================================================= -->
-## Preparation {.tabset .tabset-fade .tabset-pills}
+## Preparation {  }
 
 Keep the title of this section as "Preparation".  
 Data preparation steps such as:  
@@ -12338,14 +12392,14 @@ Data preparation steps such as:
 
 
 <!-- ======================================================= -->
-## Highlighting {.tabset .tabset-fade .tabset-pills}
+## Highlighting {  }
 
 highlighting one line among many etc
 gghighlight
 
 
 <!-- ======================================================= -->
-## Faceting {.tabset .tabset-fade .tabset-pills}
+## Faceting {  }
 http://www.cookbook-r.com/Graphs/Facets_(ggplot2)/#modifying-facet-label-text
 labellers
 https://ggplot2.tidyverse.org/reference/labellers.html
@@ -12353,27 +12407,27 @@ facet_wrap vs. facet_grid
 Using option `label_wrap_gen` in facet_wrap to have multiple strip lines
 
 <!-- ======================================================= -->
-## Dual axes {.tabset .tabset-fade .tabset-pills}
+## Dual axes {  }
 Cowplot
 Complicated method (% 100 * ...)
 
 <!-- ======================================================= -->
-## Smart Labeling {.tabset .tabset-fade .tabset-pills}
+## Smart Labeling {  }
 ggrepel
 
 <!-- ======================================================= -->
-## Time axes {.tabset .tabset-fade .tabset-pills}
+## Time axes {  }
 
 
 <!-- ======================================================= -->
-## Dual axes {.tabset .tabset-fade .tabset-pills}
+## Dual axes {  }
 
 
 <!-- ======================================================= -->
-## Adding shapes {.tabset .tabset-fade .tabset-pills}
+## Adding shapes {  }
 
 <!-- ======================================================= -->
-## Animations {.tabset .tabset-fade .tabset-pills}
+## Animations {  }
 
 
 
@@ -12412,11 +12466,11 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 <!--chapter:end:new_pages/ggplot_tips.Rmd-->
 
 
-# Epidemic curves {.tabset .tabset-fade}  
+# Epidemic curves { }  
 
 
 <!-- ======================================================= -->
-## Overview {.tabset .tabset-fade}
+## Overview { }
 
 
 
@@ -12578,7 +12632,7 @@ for (Col in DateCols) {     # open loop. iterate for each name in vector DateCol
 
 
 <!-- ======================================================= -->
-## `incidence` package {.tabset .tabset-fade}
+## `incidence` package { }
 
 Below are tabs on making quick epicurves using the **incidence** package  
 
@@ -12592,7 +12646,7 @@ https://cran.r-project.org/web/packages/incidence/vignettes/customize_plot.html#
 
 
 <!-- ======================================================= -->
-### Intro {.tabset .tabset-fade}
+### Intro { }
 
 **2 steps are requires to plot an epicurve with the *incidence* package:**  
 
@@ -12660,7 +12714,7 @@ plot(epi_month)+  labs(title = "Months")
 
 
 <!-- ======================================================= -->
-### Modifications {.tabset .tabset-fade}
+### Modifications { }
 
 The **incidence** package enables modifications in the following ways:  
 
@@ -12712,7 +12766,7 @@ plot(central_outbreak) + labs(title = "Weekly case incidence at Central Hospital
 ```
 
 
-#### Date-axis labels/gridlines {.tabset .tabset-fade} 
+#### Date-axis labels/gridlines { } 
 
 <span style="color: darkgreen;">**_TIP:_** Remember that date-axis **labels** are independent from the aggregation of the data into bars</span>
 
@@ -13061,7 +13115,7 @@ To facet the plot by a variable (make "small multiples"), see the tab on epicurv
 
 
 <!-- ======================================================= -->
-## `ggplot()` {.tabset .tabset-fade}
+## `ggplot()` { }
 
 Below are tabs on using the **ggplot2** package to produce epicurves from a linelist dataset.
 
@@ -13081,7 +13135,7 @@ library(tidyverse)
 
 
 <!-- ======================================================= -->
-### Intro {.tabset .tabset-fade}
+### Intro { }
 
 To produce an epicurve with `ggplot()` there are three main elements:  
 
@@ -13213,7 +13267,7 @@ ggplot(central_data, aes(x = date_onset)) +
 
 
 <!-- ======================================================= -->
-### Modifications {.tabset .tabset-fade}
+### Modifications { }
 
 
 #### Modify axes  
@@ -14242,7 +14296,7 @@ daily_counts <- linelist %>%
 
 
 <!-- ======================================================= -->
-## Aggregated data {.tabset .tabset-fade}
+## Aggregated data { }
 
 
 Often instead of a linelist, you begin with aggregated counts from facilities, districts, etc. You can make an epicurve from `ggplot()` but the code will be slightly different. The incidence package does not support aggregate data.
@@ -14330,7 +14384,7 @@ ggplot(data = count_data_weekly,
 ```
 
 <!-- ======================================================= -->
-## Dual-axis {.tabset .tabset-fade}  
+## Dual-axis { }  
 
 Although there are fierce discussions about the validity of this within the data visualization community, many supervisors want to see an epicurve or similar chart with a percent overlaid with a second axis.
 
@@ -14353,8 +14407,12 @@ cumulative_case_counts <- linelist %>%
   mutate(                         
     cumulative_cases = cumsum(n)       # new column of the cumulative number of rows at each date
     )
+```
 
-cumulative_case_counts
+The first 10 rows are shown below:  
+
+```{r}
+head(cumulative_case_counts, 10)
 ```
 
 This cumulative column can then be plotted:
@@ -14413,7 +14471,7 @@ ggdraw(aligned_plots[[1]]) + draw_plot(aligned_plots[[2]])
 
 
 <!-- ======================================================= -->
-## Resources {.tabset .tabset-fade}
+## Resources { }
 
 Links to other online tutorials or resources.
 
@@ -14457,12 +14515,12 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 <!--chapter:end:new_pages/epicurves.Rmd-->
 
 
-# Plot continuous data {.tabset .tabset-fade}  
+# Plot continuous data { }  
 
 For appropriate plotting of continuous data, e.g. age, clinical measurements, distance, etc. 
 
 <!-- ======================================================= -->
-## Overview {.tabset .tabset-fade }
+## Overview {  }
 <h2> Overview </h2>
 
 As usual, R has built-in functions for quick visualisations, such as the `boxplot()` or `plot` functions. You can opt to install additional packages with more functionality - this is often recommended for presentation-ready visualisations. For this we recommend `ggplot2`. 
@@ -14513,7 +14571,7 @@ ggplot(data = linelist,
 
 
 <!-- ======================================================= -->
-## Preparation {.tabset .tabset-fade }
+## Preparation {  }
 <h2> Preparation </h2>
 
 Preparation includes loading the relevant packages, namely `ggplot2`, (```install.packages("ggplot2")``` if needed), and ensuring your data is the correct class and format. For the examples in this section, we use the simulated Ebola linelist, focusing on the continuous variables `age`, `ct_blood` (CT values), and `days_onset_hosp` (difference between onset date and hospitalisation).
@@ -14528,7 +14586,7 @@ linelist <- linelist %>%
 ```
 
 <!-- ======================================================= -->
-## Plotting with base graphics {.tabset .tabset-fade }
+## Plotting with base graphics {  }
 <h2> In-built graphics package </h2>
 
 **Plotting one continuous variable**
@@ -14598,7 +14656,7 @@ plot(linelist$days_onset_hosp, linelist$ct_blood)
 ```
 
 <!-- ======================================================= -->
-## Plotting with ggplot {.tabset .tabset-fade }
+## Plotting with ggplot {  }
 <h2> Plotting with ggplot() </h2>
 
 **Code syntax**
@@ -14715,7 +14773,7 @@ ggplot(data = linelist %>% filter(!is.na(gender) & !is.na(outcome)), # filter re
 
 
 <!-- ======================================================= -->
-## Resources {.tabset .tabset-fade }
+## Resources {  }
 <h2> Resources </h2>
 
 There is a huge amount of help online, especially with ggplot. see:
@@ -14757,13 +14815,13 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 
 <!--chapter:end:new_pages/plot_continuous.Rmd-->
 
-# Plot categorical data  {.tabset .tabset-fade}  
+# Plot categorical data  { }  
 
 For appropriate plotting of categorical data, e.g. the distribution of sex, symptoms, ethnic group, etc. 
 
 
 <!-- ======================================================= -->
-## Overview {.tabset .tabset-fade }
+## Overview {  }
 <h2> Overview </h2>
 
 In this section we cover use of R's built-in functions or functions from the `ggplot2` package to visualise discrete/categorical data. The additional functionality of ggplot2 compared to R means we recommend it for presentation-ready visualisations. 
@@ -14785,7 +14843,7 @@ ggplot(linelist) +
 
 
 <!-- ======================================================= -->
-## Preparation {.tabset .tabset-fade }
+## Preparation {  }
 <h2> Preparation </h2>
 
 Preparation includes loading the relevant packages, namely `ggplot2`, (```install.packages("ggplot2")``` if needed), and ensuring your data is the correct class and format. 
@@ -14828,7 +14886,7 @@ Or using other data management packages such as dplyr
 ```
 
 <!-- ======================================================= -->
-## Plotting with base graphics {.tabset .tabset-fade }
+## Plotting with base graphics {  }
 <h2> In-built graphics package </h2>
 
 **Bar plots**
@@ -14850,7 +14908,7 @@ barplot(outcome_nbar2, legend.text=TRUE, main = "B) Outcomes by gender") # Speci
 
 
 <!-- ======================================================= -->
-## Plotting with ggplot {.tabset .tabset-fade }
+## Plotting with ggplot {  }
 <h2> Plotting with ggplot() </h2>
 
 **Code syntax**
@@ -14960,7 +15018,7 @@ We can also use faceting to create futher mini-graphs, as detailed in the contin
 
 
 <!-- ======================================================= -->
-## Resources {.tabset .tabset-fade }
+## Resources {  }
 <h2> Resources </h2>
 
 There is a huge amount of help online, especially with ggplot. see:
@@ -15003,12 +15061,12 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 <!--chapter:end:new_pages/plot_discrete.Rmd-->
 
 
-# Tables {.tabset .tabset-fade}  
+# Tables { }  
 
 This section demonstrates how to create publication-ready tables, which can be inserted directly into shareable documents, including R Markdown outputs. 
 
 <!-- ======================================================= -->
-## Overview {.tabset .tabset-fade .tabset-pills}
+## Overview {  }
 
 We build on previous sections on basic statistics and creating summary tables (e.g. using `dplyr` and `gtsummary` and show how to create publication-read tables. The primary package we use is flextable, which is compatible with multiple R Markdown formats, including html and word documents. 
 
@@ -15063,7 +15121,7 @@ add_header_row(.,
 
 
 <!-- ======================================================= -->
-## Preparation {.tabset .tabset-fade .tabset-pills}
+## Preparation {  }
 
 Using packages discussed in other sections such as `gtsummary` and `dplyr`, create a table with the content of interest, with the correct columns and rows. 
 
@@ -15096,7 +15154,7 @@ library(flextable)
 
 
 <!-- ======================================================= -->
-## Basic flextable {.tabset .tabset-fade .tabset-pills}
+## Basic flextable {  }
 
 **Creating a flextable**
 
@@ -15234,7 +15292,7 @@ ftable
 
 
 <!-- ======================================================= -->
-## Conditional flextable formatting {.tabset .tabset-fade .tabset-pills}
+## Conditional flextable formatting {  }
 
 We can  highlight all values in a column that meet a certain rule, e.g. where more than 55% of cases died. 
 
@@ -15258,7 +15316,7 @@ ftable %>%
 ```
 
 <!-- ======================================================= -->
-## Saving your table {.tabset .tabset-fade .tabset-pills}
+## Saving your table {  }
 
 You can export the tables to Word, PowerPoint or HTML or as an image (PNG) files. To do this, one of the following functions is used:
 
@@ -15285,7 +15343,7 @@ print(ftable, preview = "pptx") # Powerpoint example
 ```
 
 <!-- ======================================================= -->
-## Resources {.tabset .tabset-fade .tabset-pills}
+## Resources {  }
 
 The full flextable explanation is here: https://ardata-fr.github.io/flextable-book/
 
@@ -15324,7 +15382,7 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 <!--chapter:end:new_pages/tables.Rmd-->
 
 
-# Age pyramids {.tabset .tabset-fade}  
+# Age pyramids {}  
 
 Age pyramids can be useful to show patterns by age group. They can show gender, or the distribution of other characteristics.  
 These tabs demonstrate how to produce age pyramids using:  
@@ -15336,7 +15394,7 @@ These tabs demonstrate how to produce age pyramids using:
 
 
 <!-- ======================================================= -->
-## Overview {.tabset .tabset-fade}
+## Overview {}
 
 ```{r, out.width = c('50%', '50%'), fig.show='hold', echo=F}
 knitr::include_graphics(here::here("images", "pop_pyramid_baseline.png"))
@@ -15356,7 +15414,7 @@ Here we offer a quick approach through the **apyramid** package:
 
 
 <!-- ======================================================= -->
-## Preparation {.tabset .tabset-fade}
+## Preparation {}
 
 For this tab we use the `linelist` dataset that is cleaned in the Cleaning tab.  
 
@@ -15403,7 +15461,7 @@ table(linelist$age_cat5, useNA = "always")
 
 
 <!-- ======================================================= -->
-## **apyramid** package {.tabset .tabset-fade}
+## **apyramid** package {}
 
 The package **apyramid** allows you to quickly make an age pyramid. For more nuanced situations, see the tab on using `ggplot()` to make age pyramids. You can read more about the **apyramid** package in its Help page by entering `?age_pyramid` in your R console. 
 
@@ -15524,7 +15582,7 @@ Note in the above, that the factor order of "m" and "f" is different (pyramid re
 
 
 <!-- ======================================================= -->
-## `ggplot()` {.tabset .tabset-fade}
+## `ggplot()` {}
 
 Using `ggplot()` to build your age pyramid allows for more flexibility, but requires more effort and understanding of how `ggplot()` works. It is also easier to accidentally make mistakes.  
 
@@ -15533,7 +15591,7 @@ Using `ggplot()` to build your age pyramid allows for more flexibility, but requ
 
 
 <!-- ======================================================= -->
-### Constructing the plot {.tabset .tabset-fade} 
+### Constructing the plot {} 
 
 First, understand that to make such a pyramid using `ggplot()` the approach is to:
 
@@ -15822,7 +15880,7 @@ ggplot()+  # default x-axis is age in years;
 
 
 <!-- ======================================================= -->
-## Likert scale {.tabset .tabset-fade}
+## Likert scale {}
 
 The techniques used to make a population pyramid with `ggplot()` can also be used to make plots of Likert-scale survey data.  
 
@@ -15963,7 +16021,7 @@ ggplot()+
 
 
 <!-- ======================================================= -->
-## Resources {.tabset .tabset-fade}
+## Resources {}
 
 This tab should stay with the name "Resources".
 Links to other online tutorials or resources.
@@ -16004,10 +16062,10 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 <!--chapter:end:new_pages/age_pyramid.Rmd-->
 
 
-# Diagrams {.tabset .tabset-fade}  
+# Diagrams { }  
 
 <!-- ======================================================= -->
-## Overview {.tabset .tabset-fade}
+## Overview { }
 
 ```{r out.width = c('50%'), fig.show='hold', echo=F}
 knitr::include_graphics(here::here("images", "flow_chart.png"))
@@ -16026,7 +16084,7 @@ This page covers:
 
 
 <!-- ======================================================= -->
-## Preparation {.tabset .tabset-fade}
+## Preparation { }
 
 **Load packages**  
 
@@ -16039,7 +16097,7 @@ pacman::p_load(
 
 
 <!-- ======================================================= -->
-## Flow diagrams {.tabset .tabset-fade}
+## Flow diagrams { }
 
 One can use the R package **DiagrammeR** to create charts/flow charts. They can be static, or they can adjust somewhat dynamically based on changes in a dataset.  
 
@@ -16490,7 +16548,7 @@ Note above is out of date via DiagrammeR
 
 
 <!-- ======================================================= -->
-## Alluvial/Sankey Diagrams {.tabset .tabset-fade}
+## Alluvial/Sankey Diagrams { }
 
 ### Preparation  
 
@@ -16608,7 +16666,7 @@ Timeline Sankey - LTFU from cohort... application/rejections... etc.
 
 
 <!-- ======================================================= -->
-## Event timelines {.tabset .tabset-fade}
+## Event timelines { }
 
 To make a timeline showing specific events, you can use the `vistime` package.
 
@@ -16682,7 +16740,7 @@ pp
 
 
 <!-- ======================================================= -->
-## DAGs {.tabset .tabset-fade}
+## DAGs { }
 
 You can build a DAG manually using the **DiagammeR** package and DOT language, as described in another tab. Alternatively, there are packages like **ggdag** and **daggity**
 
@@ -16694,7 +16752,7 @@ https://www.r-bloggers.com/2019/08/causal-inference-with-dags-in-r/#:~:text=In%2
 
 
 <!-- ======================================================= -->
-## Resources {.tabset .tabset-fade}
+## Resources { }
 
 Links to other online tutorials or resources.
 
@@ -16736,10 +16794,10 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 <!--chapter:end:new_pages/diagrams.Rmd-->
 
 
-# Combination analysis {.tabset .tabset-fade}  
+# Combination analysis { }  
 
 <!-- ======================================================= -->
-## Overview {.tabset .tabset-fade .tabset-pills}
+## Overview {  }
 
 
 This analysis plots the frequency of different **combinations** of values/responses. In this example, we plot the frequency of symptom combinations.  
@@ -16801,7 +16859,7 @@ UpSetR::upset(
 
 
 <!-- ======================================================= -->
-## Preparation {.tabset .tabset-fade .tabset-pills}
+## Preparation {  }
 
 ```{r}
 pacman::p_load(tidyverse,
@@ -16869,7 +16927,7 @@ DT::datatable(linelist_sym, rownames = FALSE, filter="top", options = list(pageL
 
 
 <!-- ======================================================= -->
-## `ggupset` {.tabset .tabset-fade .tabset-pills}
+## `ggupset` {  }
 
 Load required package to make the plot (**ggupset**)
 
@@ -16900,7 +16958,7 @@ More information on **ggupset** can be found [online](https://rdrr.io/cran/ggups
 
 
 <!-- ======================================================= -->
-## `UpSetR` {.tabset .tabset-fade .tabset-pills}
+## `UpSetR` {  }
 The **UpSetR** package allows more customization, but it more difficult to execute:
 
 https://github.com/hms-dbmi/UpSetR  *read this*
@@ -16959,7 +17017,7 @@ UpSetR::upset(
 
 
 <!-- ======================================================= -->
-## Resources {.tabset .tabset-fade .tabset-pills}
+## Resources {  }
 
 This tab should stay with the name "Resources".
 Links to other online tutorials or resources.
@@ -17000,11 +17058,11 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 <!--chapter:end:new_pages/combination_analysis.Rmd-->
 
 
-# Heatmaps & density plots {.tabset .tabset-fade}  
+# Heatmaps & density plots { }  
 
 
 <!-- ======================================================= -->
-## Overview {.tabset .tabset-fade}
+## Overview { }
 
 Heatmaps can be useful when tracking reporting metrics across many facilities/jurisdictions over time
 
@@ -17120,7 +17178,7 @@ OpenStreetMap::autoplot.OpenStreetMap(map.latlon)+
 ```
 
 <!-- ======================================================= -->
-## Preparation {.tabset .tabset-fade}
+## Preparation { }
 
 **Load packages**  
 
@@ -17134,7 +17192,7 @@ pacman::p_load(tidyverse,       # data manipulation and visualization
 
 
 <!-- ======================================================= -->
-## Reporting metrics over time {.tabset .tabset-fade}
+## Reporting metrics over time { }
 
 Often in public health, an objective is to assess trends over time for many entities (facilities, jurisdictions, etc.). One way to visualize trends over time from many entities is a heatmap where the x-axis is time and the y-axis are the many entities.  
 
@@ -17218,7 +17276,7 @@ agg_weeks <- facility_count_data %>%
 
 
 <!-- ======================================================= -->
-### Create heatmap {.tabset .tabset-fade}
+### Create heatmap { }
 
 
 The `ggplot()` is make using `geom_tile()`:  
@@ -17386,7 +17444,7 @@ ggplot(agg_weeks,
 ```
 
 <!-- ======================================================= -->
-## GIS heatmaps {.tabset .tabset-fade}
+## GIS heatmaps { }
 
 Contoured heatmap of cases over a basemap  
 
@@ -17430,7 +17488,7 @@ OpenStreetMap::autoplot.OpenStreetMap(map.latlon)+
 https://www.rdocumentation.org/packages/OpenStreetMap/versions/0.3.4/topics/autoplot.OpenStreetMap
 
 <!-- ======================================================= -->
-## Resources {.tabset .tabset-fade}
+## Resources { }
 
 This tab should stay with the name "Resources".
 Links to other online tutorials or resources.
@@ -17472,11 +17530,11 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 <!--chapter:end:new_pages/heatmaps.Rmd-->
 
 
-# Transmission chains {.tabset .tabset-fade}
+# Transmission chains { }
 
 
 <!-- ======================================================= -->
-## Overview {.tabset .tabset-fade .tabset-pills}
+## Overview {  }
 
 The primary tool to handle, analyse and visualise transmission chains and contact
 tracing data is the package **epicontacts**, developed by the folks at
@@ -17546,7 +17604,7 @@ plot(
 ```
 
 <!-- ======================================================= -->
-## Preparation {.tabset .tabset-fade .tabset-pills}
+## Preparation {  }
 
 ### Packages and data 
 
@@ -17640,7 +17698,7 @@ epic
 ```
 
 <!-- ======================================================= -->
-## Handling {.tabset .tabset-fade .tabset-pills}
+## Handling {  }
 
 ### Subsetting
 
@@ -17723,7 +17781,7 @@ length(get_id(epic, "common"))
 ```
 
 <!-- ======================================================= -->
-## Visualization {.tabset .tabset-fade .tabset-pills}
+## Visualization {  }
 
 ### Basic plotting
 
@@ -18075,7 +18133,7 @@ plot(
 ```
 
 <!-- ======================================================= -->
-## Analysis {.tabset .tabset-fade .tabset-pills}
+## Analysis {  }
 
 ### Summarising
 
@@ -18179,7 +18237,7 @@ mean(deg_both)
 ```
 
 <!-- ======================================================= -->
-## Resources {.tabset .tabset-fade .tabset-pills}
+## Resources {  }
 
 The
 [epicontacts page](https://www.repidemicsconsortium.org/epicontacts/index.html)
@@ -18223,12 +18281,12 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 <!--chapter:end:new_pages/transmission_chains.Rmd-->
 
 
-# Phylogenetic trees {.tabset .tabset-fade}  
+# Phylogenetic trees { }  
 
 
 <!-- ======================================================= -->
 
-## Overview {.tabset .tabset-fade .tabset-pills}
+## Overview {  }
 
 <h2> Overview </h2> 
 
@@ -18262,7 +18320,7 @@ scale_color_brewer(name = "Continent",  # name of your color scheme (will show u
 
 <!-- ======================================================= -->
 
-## Preparation {.tabset .tabset-fade .tabset-pills}
+## Preparation {  }
 
 <h2> Preparation </h2> 
 
@@ -18324,7 +18382,7 @@ We are ready to go!
 
 <!-- ======================================================= -->
 
-## Simple tree visualization {.tabset .tabset-fade .tabset-pills}
+## Simple tree visualization {  }
 
 <h2> Simple tree visualization </h2> 
 
@@ -18377,7 +18435,7 @@ ggsave(here::here("example_tree_circular_1.png"), width = 12, height = 14)
 
 <!-- ======================================================= -->
 
-## Manipulation of phylogenetic trees {.tabset .tabset-fade .tabset-pills}
+## Manipulation of phylogenetic trees {  }
 
 <h2> Manipulation of phylogenetic trees  </h2> 
 
@@ -18513,7 +18571,7 @@ Our observation points towards an import of strains from Asia, which then circul
 
 <!-- ======================================================= -->
 
-## More complex trees: adding heatmaps of sample data {.tabset .tabset-fade .tabset-pills}
+## More complex trees: adding heatmaps of sample data {  }
 
 <h2> More complex trees </h2>
 
@@ -18677,7 +18735,7 @@ h5
 
 
 <!-- ======================================================= -->
-## Resources {.tabset .tabset-fade .tabset-pills}
+## Resources {  }
 
 http://hydrodictyon.eeb.uconn.edu/eebedia/index.php/Ggtree# Clade_Colors
 https://bioconductor.riken.jp/packages/3.2/bioc/vignettes/ggtree/inst/doc/treeManipulation.html
@@ -18720,7 +18778,7 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 <!--chapter:end:new_pages/phylogenetic_trees.Rmd-->
 
 
-# Interactive plots {.tabset .tabset-fade}  
+# Interactive plots { }  
 
 Data visualisation is increasingly required to be interrogable by the audience. Consequently creating interactive plots are becoming common. There are several ways to include these but the two most important are {*plotly*} and {*shiny*}. 
 
@@ -18729,7 +18787,7 @@ Data visualisation is increasingly required to be interrogable by the audience. 
 
 
 <!-- ======================================================= -->
-## Overview {.tabset .tabset-fade .tabset-pills}
+## Overview {  }
 
 Making plots interactive can sound more difficult than it turns out to be, thanks to some fantastic tools.
 
@@ -18762,7 +18820,7 @@ p %>%
 ```
 
 <!-- ======================================================= -->
-## Preparation {.tabset .tabset-fade .tabset-pills}
+## Preparation {  }
 
 In the example you saw a very basic epicurve that had been transformed to bbe interactive using the fantastic {**ggplot2**} - {**plotly**} integrations. So to start, make a basic chart of your own:
 
@@ -18798,7 +18856,7 @@ linelist <- linelist %>%
 ```
   
 <!-- ======================================================= -->
-## Plot {.tabset .tabset-fade .tabset-pills}
+## Plot {  }
 Make into a plot
 ```{r plot_show, eval=F}
 p <- linelist %>% 
@@ -18826,7 +18884,7 @@ p %>%
 ```
   
 <!-- ======================================================= -->
-## Modifications {.tabset .tabset-fade .tabset-pills}
+## Modifications {  }
 When exporting in an Rmarkdown generated HTML (like this book!) you want to make the plot as small as possible (with no negative side effects in most cases). For this, just add add this line:
 ```{r plot_tidyshow, eval=F}
 p <- p %>% 
@@ -18845,7 +18903,7 @@ p <- p %>%
 ```
 
 <!-- ======================================================= -->
-## Example {.tabset .tabset-fade .tabset-pills}
+## Example {  }
 
 Earlier you saw `#TODO link to heatmaps` how to make heatmaps, and they are just as easy to make interactive.
 ```{r example2, eval=T, echo=F}
@@ -18905,7 +18963,7 @@ metrics_plot %>%
 ```
 
 <!-- ======================================================= -->
-## Maps - preparation {.tabset .tabset-fade .tabset-pills}
+## Maps - preparation {  }
 
 You can even make interactive maps! However, they're slightly trickier. Although {**plotly**} works well with `ggplot2::geom_sf` in RStudio, when you try to include it's outputs in Rmarkdown HTML files (like this book), it doesn't work well.  
   
@@ -18948,7 +19006,7 @@ geoJSON$features <- purrr::map(.x = geoJSON$features, give_id)
 ```
 
 <!-- ======================================================= -->
-## Maps - plot {.tabset .tabset-fade .tabset-pills}
+## Maps - plot {  }
 
 ```{r, echo=T, eval=T, out.width=c('95%'), out.height=c('500px'),warning=F}
 plotly::plot_ly() %>% 
@@ -18969,7 +19027,7 @@ plotly::plot_ly() %>%
 ```
 
 <!-- ======================================================= -->
-## Resources {.tabset .tabset-fade .tabset-pills}
+## Resources {  }
 
 Plotly is not just for R, but also works well with Python (and really any data science language as it's built in JavaScript). You can read more about it on the [plotly website](https://plotly.com/r/)
 
@@ -19044,10 +19102,10 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 <!--chapter:end:new_pages/cat_advanced.Rmd-->
 
 
-# Errors & warnings {.tabset .tabset-fade}  
+# Errors & warnings { }  
 
 <!-- ======================================================= -->
-## Overview {.tabset .tabset-fade}
+## Overview { }
 
 This page lists common errors and suggests solutions for troubleshooting them
 
@@ -19116,7 +19174,7 @@ Can't add x object ... Have a `+` at the end of a ggplot command that you need t
 
 
 <!-- ======================================================= -->
-## Resources {.tabset .tabset-fade}
+## Resources { }
 
 
 https://www.r-bloggers.com/2016/06/common-r-programming-errors-faced-by-beginners/
@@ -19157,10 +19215,10 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 <!--chapter:end:new_pages/errors_warnings.Rmd-->
 
 
-# Advanced RStudio {.tabset .tabset-fade}  
+# Advanced RStudio { }  
 
 <!-- ======================================================= -->
-## Overview {.tabset .tabset-fade .tabset-pills}
+## Overview {  }
 
 rprofiles
 
@@ -19174,7 +19232,7 @@ This tab should include:
 
 
 <!-- ======================================================= -->
-## Preparation {.tabset .tabset-fade .tabset-pills}
+## Preparation {  }
 
 Keep the title of this section as "Preparation".  
 Data preparation steps such as:  
@@ -19184,48 +19242,48 @@ Data preparation steps such as:
 * melting, pivoting, grouping, etc.   
 
 <!-- ======================================================= -->
-### sub-tab 1 {.tabset .tabset-fade .tabset-pills}
+### sub-tab 1 {  }
 
 Can be used to separate major steps of data preparation. Re-name as needed
 
 
 <!-- ======================================================= -->
-### sub-tab 2 {.tabset .tabset-fade .tabset-pills}
+### sub-tab 2 {  }
 
 Can be used to separate major steps of data preparation. Re-name as needed.
 
 
 
 <!-- ======================================================= -->
-## Option 1 {.tabset .tabset-fade .tabset-pills}
+## Option 1 {  }
 
 This tab can be renamed. 
 This tab should demonstrate execution of the task using recommended package/approach. For example, using a package customized for this task where the execution is simple and fast but perhaps less customizable. For example using *incidence* package to create an epicurve.
 
 
 <!-- ======================================================= -->
-### Option 1 sub-tab {.tabset .tabset-fade .tabset-pills}
+### Option 1 sub-tab {  }
 
 Sub-tabs if necessary. Re-name as needed.
 
 
 
 <!-- ======================================================= -->
-## Option 2 {.tabset .tabset-fade .tabset-pills}
+## Option 2 {  }
 
 This tab can be re-named. 
 This tab should demonstrate execution of the task a more standard/core package (e.g. ggplot2, or base R) that allows for more flexibility in the output or more package stability. For example, showing how to create an epicurve using *ggplot2*. 
 
 
 <!-- ======================================================= -->
-### Option 2 sub-tab {.tabset .tabset-fade .tabset-pills}
+### Option 2 sub-tab {  }
 
 Sub-tabs if necessary. Re-name as needed.
 
 
 
 <!-- ======================================================= -->
-## Resources {.tabset .tabset-fade .tabset-pills}
+## Resources {  }
 
 This tab should stay with the name "Resources".
 Links to other online tutorials or resources.
@@ -19267,14 +19325,14 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 
 <!--chapter:end:new_pages/rstudio_advanced.Rmd-->
 
-# Relational databases {.tabset .tabset-fade}  
+# Relational databases { }  
 
 The Page title should be succinct. Consider adding a tag with no spaces into the curly brackets, such as below. This can be used for internal links within the handbook. 
-`{#title_tag .tabset .tabset-fade}`  
+`{#title_tag  }`  
 
 
 <!-- ======================================================= -->
-## Overview {.tabset .tabset-fade .tabset-pills}
+## Overview {  }
 
 Keep the title of this section as "Overview".  
 This tab should include:  
@@ -19285,7 +19343,7 @@ This tab should include:
 
 
 <!-- ======================================================= -->
-## Preparation {.tabset .tabset-fade .tabset-pills}
+## Preparation {  }
 
 Keep the title of this section as "Preparation".  
 Data preparation steps such as:  
@@ -19295,48 +19353,48 @@ Data preparation steps such as:
 * melting, pivoting, grouping, etc.   
 
 <!-- ======================================================= -->
-### sub-tab 1 {.tabset .tabset-fade .tabset-pills}
+### sub-tab 1 {  }
 
 Can be used to separate major steps of data preparation. Re-name as needed
 
 
 <!-- ======================================================= -->
-### sub-tab 2 {.tabset .tabset-fade .tabset-pills}
+### sub-tab 2 {  }
 
 Can be used to separate major steps of data preparation. Re-name as needed.
 
 
 
 <!-- ======================================================= -->
-## Option 1 {.tabset .tabset-fade .tabset-pills}
+## Option 1 {  }
 
 This tab can be renamed. 
 This tab should demonstrate execution of the task using recommended package/approach. For example, using a package customized for this task where the execution is simple and fast but perhaps less customizable. For example using *incidence* package to create an epicurve.
 
 
 <!-- ======================================================= -->
-### Option 1 sub-tab {.tabset .tabset-fade .tabset-pills}
+### Option 1 sub-tab {  }
 
 Sub-tabs if necessary. Re-name as needed.
 
 
 
 <!-- ======================================================= -->
-## Option 2 {.tabset .tabset-fade .tabset-pills}
+## Option 2 {  }
 
 This tab can be re-named. 
 This tab should demonstrate execution of the task a more standard/core package (e.g. ggplot2, or base R) that allows for more flexibility in the output or more package stability. For example, showing how to create an epicurve using *ggplot2*. 
 
 
 <!-- ======================================================= -->
-### Option 2 sub-tab {.tabset .tabset-fade .tabset-pills}
+### Option 2 sub-tab {  }
 
 Sub-tabs if necessary. Re-name as needed.
 
 
 
 <!-- ======================================================= -->
-## Resources {.tabset .tabset-fade .tabset-pills}
+## Resources {  }
 
 This tab should stay with the name "Resources".
 Links to other online tutorials or resources.
@@ -19379,14 +19437,14 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 <!--chapter:end:new_pages/relational_databases.Rmd-->
 
 
-# Routine reports { .tabset .tabset-fade}  
+# Routine reports {  }  
 
 The Page title should be succinct. Consider adding a tag with no spaces into the curly brackets, such as below. This can be used for internal links within the handbook. 
-`{#title_tag .tabset .tabset-fade}`  
+`{#title_tag  }`  
 
 
 <!-- ======================================================= -->
-## Overview {.tabset .tabset-fade .tabset-pills}
+## Overview {  }
 
 Keep the title of this section as "Overview".  
 This tab should include:  
@@ -19397,7 +19455,7 @@ This tab should include:
 
 
 <!-- ======================================================= -->
-## Preparation {.tabset .tabset-fade .tabset-pills}
+## Preparation {  }
 
 Keep the title of this section as "Preparation".  
 Data preparation steps such as:  
@@ -19407,48 +19465,48 @@ Data preparation steps such as:
 * melting, pivoting, grouping, etc.   
 
 <!-- ======================================================= -->
-### sub-tab 1 {.tabset .tabset-fade .tabset-pills}
+### sub-tab 1 {  }
 
 Can be used to separate major steps of data preparation. Re-name as needed
 
 
 <!-- ======================================================= -->
-### sub-tab 2 {.tabset .tabset-fade .tabset-pills}
+### sub-tab 2 {  }
 
 Can be used to separate major steps of data preparation. Re-name as needed.
 
 
 
 <!-- ======================================================= -->
-## Option 1 {.tabset .tabset-fade .tabset-pills}
+## Option 1 {  }
 
 This tab can be renamed. 
 This tab should demonstrate execution of the task using recommended package/approach. For example, using a package customized for this task where the execution is simple and fast but perhaps less customizable. For example using *incidence* package to create an epicurve.
 
 
 <!-- ======================================================= -->
-### Option 1 sub-tab {.tabset .tabset-fade .tabset-pills}
+### Option 1 sub-tab {  }
 
 Sub-tabs if necessary. Re-name as needed.
 
 
 
 <!-- ======================================================= -->
-## Option 2 {.tabset .tabset-fade .tabset-pills}
+## Option 2 {  }
 
 This tab can be re-named. 
 This tab should demonstrate execution of the task a more standard/core package (e.g. ggplot2, or base R) that allows for more flexibility in the output or more package stability. For example, showing how to create an epicurve using *ggplot2*. 
 
 
 <!-- ======================================================= -->
-### Option 2 sub-tab {.tabset .tabset-fade .tabset-pills}
+### Option 2 sub-tab {  }
 
 Sub-tabs if necessary. Re-name as needed.
 
 
 
 <!-- ======================================================= -->
-## Resources {.tabset .tabset-fade .tabset-pills}
+## Resources {  }
 
 This tab should stay with the name "Resources".
 Links to other online tutorials or resources.
@@ -19489,19 +19547,19 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 
 <!--chapter:end:new_pages/reportfactory.Rmd-->
 
-# R Markdown {.tabset .tabset-fade}  
+# R Markdown { }  
 
 R Markdown is a fantastic tool for creating automated, reproducible, and share-worthy outputs. It can generate static or interactive outputs, in the form of html, word, pdf, powerpoint, and others. 
 
 <!-- ======================================================= -->
-## Overview {.tabset .tabset-fade .tabset-pills}
+## Overview {  }
 
 Using markdown will allow you easily recreate an entire formatted document, including tables/figures/text, using new data (e.g. daily surveillance reports) and/or subsets of data (e.g. reports for specific geographies). 
 
 This guide will go through the basics. See 'resources' tab for further info.
 
 <!-- ======================================================= -->
-## Preparation {.tabset .tabset-fade .tabset-pills}
+## Preparation {  }
 
 **Background to Markdown**
 
@@ -19521,7 +19579,9 @@ The R Studio website describes how these all link in together (https://rmarkdown
 >
 >This may sound complicated, but R Markdown makes it extremely simple by encapsulating all of the above processing into a single render function. Better still, RStudio includes a “Knit” button that enables you to render an .Rmd and preview it using a single click or keyboard shortcut.
 
-![](../images/markdown/0_rmd.png)
+```{r out.width = "100%", fig.align = "center", echo=F}
+knitr::include_graphics(here::here("images", "markdown/0_rmd.png"))
+```
 
 **Installation**
 
@@ -19548,14 +19608,15 @@ Because R Markdown can run into pandoc issues when running on a shared network d
 
 
 <!-- ======================================================= -->
-## The R Markdown file {.tabset .tabset-fade .tabset-pills}
+## The R Markdown file {  }
 
 An R Markdown document looks like and can be edited just like a standard R script, in R Studio. However, it contains more than just the usual R code and hashed comments. There are three basic components:
 
 **1. Metadata**: This is referred to as the ‘YAML metadata’ and is at the top of the R Markdown document between two ‘- - -‘s. It will tell your Rmd file what type of output to produce, formatting preferences, and other metadata sucsh as document title, author, and date. There are other uses not mentioned here (but referred to in ‘Producing an output’). Note that indentation matters. 
 
-![](../images/markdown/1_yaml.png)
-
+```{r out.width = "100%", fig.align = "center", echo=F}
+knitr::include_graphics(here::here("images", "markdown/1_yaml.png"))
+```
 **2. Text**: This is the narrative of your document, including the titles. It is written in the markdown language, used across many different programmes. This means you can add basic formatting, for instance:
 
 * `_text_` or `*text*` to _italicise_
@@ -19568,7 +19629,9 @@ The actual appearance of the font can be set by using specific templates (specif
 
 You can also include minimal R code within backwards ticks, for within-text values. See example below.
 
-![](../images/markdown/2_text.png)
+```{r out.width = "100%", fig.align = "center", echo=F}
+knitr::include_graphics(here::here("images", "markdown/2_text.png"))
+```
 
 **3. Code chunks**: This is where the R code goes, for the actual data management and visualisation. To note:
 These ‘chunks’ will appear to have a slightly different background colour from the narrative part of the document. 
@@ -19582,10 +19645,12 @@ Some notes about the content of the squiggly brackets:
 *	It can include other options too, but many of these can be configured with point-and-click using the setting buttons at the top right of the chunk. Here, you can specify which parts of the chunk you want the rendered document to include, namely the code, the outputs, and the warnings. This will come out as written preferences within the squiggly brackets, e.g. ‘echo=FALSE’ if you specify you want to ‘Show output only’. 
 
 There are also two arrows at the top right of each chunk, which are useful to run code within a chunk, or all code in prior chunks. 
-![](../images/markdown/3_chunk.png)
 
+```{r out.width = "100%", fig.align = "center", echo=F}
+knitr::include_graphics(here::here("images", "markdown/3_chunk.png"))
+```
 <!-- ======================================================= -->
-## Producing an output {.tabset .tabset-fade .tabset-pills}
+## Producing an output {  }
 
 **General notes**
 
@@ -19593,7 +19658,7 @@ Everything used by this markdown must be referenced within the Rmd file. For ins
 
 **A single or test run from within R Markdown**
 
-To render a single document, for instance if you are testing it or if you only need to produce one rendered document at a time, you can do it from within the open R Markdown file. Click the ![](../images/markdown/4_knitbutton.png) button at the top of the document. 
+To render a single document, for instance if you are testing it or if you only need to produce one rendered document at a time, you can do it from within the open R Markdown file. Click the "knit" button" at the top of the document. 
 
 The 'R Markdown' tab will start processing to show you the overall progress, and a complete document will automatically open when complete. This document will also be saved in the same folder as your markdown, and with the same file name aside from the file extension. This is obviously not ideal for version control, as you will then rename the file yourself.
 
@@ -19626,7 +19691,7 @@ rmarkdown::render(("rmd_reports/create_report.Rmd"),
 You may want some dynamic information to be included in the markdown itself. This is addressed in the next section. 
 
 <!-- ======================================================= -->
-## Parametrised reports {.tabset .tabset-fade .tabset-pills}
+## Parametrised reports {  }
 
 Parameterised reports are the next step so that the content of the R Markdown itself can also be dynamic. For example, the title can change according to the subgeography you are running, and the data can filter to that subgeography of interest. 
 
@@ -19638,7 +19703,9 @@ Let's say you want to run the markdown to produce a report with surveillance dat
   
 For instance (simplified version which does not include setup code such as library/data loading):
 
-![](../images/markdown/5_parameterized.png)
+```{r out.width = "100%", fig.align = "center", echo=F}
+knitr::include_graphics(here::here("images", "markdown/5_parameterized.png"))
+```
 
 You can change the content by editing the YAML as needed, or set up a loop in a separate script to iterate through the areas. As with the previous section, you can set up the folders as well. 
 
@@ -19673,7 +19740,7 @@ rmarkdown::render(here("rmd_reports/create_report.Rmd"),
 
 
 <!-- ======================================================= -->
-## Resources {.tabset .tabset-fade .tabset-pills}
+## Resources {  }
 
 Further information can be found via:
 
@@ -19718,14 +19785,14 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 <!--chapter:end:new_pages/rmarkdown.Rmd-->
 
 
-# Shiny and dashboards {.tabset .tabset-fade}  
+# Shiny and dashboards { }  
 
 The Page title should be succinct. Consider adding a tag with no spaces into the curly brackets, such as below. This can be used for internal links within the handbook. 
-`{#title_tag .tabset .tabset-fade}`  
+`{#title_tag  }`  
 
 
 <!-- ======================================================= -->
-## Overview {.tabset .tabset-fade .tabset-pills}
+## Overview {  }
 
 Keep the title of this section as "Overview".  
 This tab should include:  
@@ -19736,7 +19803,7 @@ This tab should include:
 
 
 <!-- ======================================================= -->
-## Preparation {.tabset .tabset-fade .tabset-pills}
+## Preparation {  }
 
 Keep the title of this section as "Preparation".  
 Data preparation steps such as:  
@@ -19746,48 +19813,48 @@ Data preparation steps such as:
 * melting, pivoting, grouping, etc.   
 
 <!-- ======================================================= -->
-### sub-tab 1 {.tabset .tabset-fade .tabset-pills}
+### sub-tab 1 {  }
 
 Can be used to separate major steps of data preparation. Re-name as needed
 
 
 <!-- ======================================================= -->
-### sub-tab 2 {.tabset .tabset-fade .tabset-pills}
+### sub-tab 2 {  }
 
 Can be used to separate major steps of data preparation. Re-name as needed.
 
 
 
 <!-- ======================================================= -->
-## flexdashboard {.tabset .tabset-fade .tabset-pills}
+## flexdashboard {  }
 
 This tab can be renamed. 
 This tab should demonstrate execution of the task using recommended package/approach. For example, using a package customized for this task where the execution is simple and fast but perhaps less customizable. For example using *incidence* package to create an epicurve.
 
 
 <!-- ======================================================= -->
-### Option 1 sub-tab {.tabset .tabset-fade .tabset-pills}
+### Option 1 sub-tab {  }
 
 Sub-tabs if necessary. Re-name as needed.
 
 
 
 <!-- ======================================================= -->
-## Option 2 {.tabset .tabset-fade .tabset-pills}
+## Option 2 {  }
 
 This tab can be re-named. 
 This tab should demonstrate execution of the task a more standard/core package (e.g. ggplot2, or base R) that allows for more flexibility in the output or more package stability. For example, showing how to create an epicurve using *ggplot2*. 
 
 
 <!-- ======================================================= -->
-### Option 2 sub-tab {.tabset .tabset-fade .tabset-pills}
+### Option 2 sub-tab {  }
 
 Sub-tabs if necessary. Re-name as needed.
 
 
 
 <!-- ======================================================= -->
-## Resources {.tabset .tabset-fade .tabset-pills}
+## Resources {  }
 
 This tab should stay with the name "Resources".
 Links to other online tutorials or resources.
@@ -19829,13 +19896,13 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 <!--chapter:end:new_pages/shiny_basics.Rmd-->
 
 
-# Collaboration {.tabset .tabset-fade}  
+# Collaboration { }  
 
 The Page title should be succinct. Consider adding a tag with no spaces into the curly brackets, such as below. This can be used for internal links within the handbook. 
-`{#title_tag .tabset .tabset-fade}`
+`{#title_tag  }`
 
 <!-- ======================================================= -->
-## Overview {.tabset .tabset-fade .tabset-pills}
+## Overview {  }
 
 * Package management  
 * Using Github and R  
@@ -19959,7 +20026,7 @@ See chapters 10 and 11 of [this tutorial](https://happygitwithr.com/credential-c
 
 
 <!-- ======================================================= -->
-## Resources {.tabset .tabset-fade .tabset-pills}
+## Resources {  }
 
 This tab should stay with the name "Resources".
 Links to other online tutorials or resources.
@@ -20000,13 +20067,13 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 <!--chapter:end:new_pages/collaboration.Rmd-->
 
 
-# Writing functions {.tabset .tabset-fade}  
+# Writing functions { }  
 
 The Page title should be succinct. Consider adding a tag with no spaces into the curly brackets, such as below. This can be used for internal links within the handbook. 
-`{#title_tag .tabset .tabset-fade}`
+`{#title_tag  }`
 
 <!-- ======================================================= -->
-## Overview {.tabset .tabset-fade .tabset-pills}
+## Overview {  }
 
 Keep the title of this section as "Overview".  
 This tab should include:  
@@ -20017,7 +20084,7 @@ This tab should include:
 
 
 <!-- ======================================================= -->
-## Preparation {.tabset .tabset-fade .tabset-pills}
+## Preparation {  }
 
 Keep the title of this section as "Preparation".  
 Data preparation steps such as:  
@@ -20027,48 +20094,48 @@ Data preparation steps such as:
 * melting, pivoting, grouping, etc.   
 
 <!-- ======================================================= -->
-### sub-tab 1 {.tabset .tabset-fade .tabset-pills}
+### sub-tab 1 {  }
 
 Can be used to separate major steps of data preparation. Re-name as needed
 
 
 <!-- ======================================================= -->
-### sub-tab 2 {.tabset .tabset-fade .tabset-pills}
+### sub-tab 2 {  }
 
 Can be used to separate major steps of data preparation. Re-name as needed.
 
 
 
 <!-- ======================================================= -->
-## Option 1 {.tabset .tabset-fade .tabset-pills}
+## Option 1 {  }
 
 This tab can be renamed. 
 This tab should demonstrate execution of the task using recommended package/approach. For example, using a package customized for this task where the execution is simple and fast but perhaps less customizable. For example using *incidence* package to create an epicurve.
 
 
 <!-- ======================================================= -->
-### Option 1 sub-tab {.tabset .tabset-fade .tabset-pills}
+### Option 1 sub-tab {  }
 
 Sub-tabs if necessary. Re-name as needed.
 
 
 
 <!-- ======================================================= -->
-## Option 2 {.tabset .tabset-fade .tabset-pills}
+## Option 2 {  }
 
 This tab can be re-named. 
 This tab should demonstrate execution of the task a more standard/core package (e.g. ggplot2, or base R) that allows for more flexibility in the output or more package stability. For example, showing how to create an epicurve using *ggplot2*. 
 
 
 <!-- ======================================================= -->
-### Option 2 sub-tab {.tabset .tabset-fade .tabset-pills}
+### Option 2 sub-tab {  }
 
 Sub-tabs if necessary. Re-name as needed.
 
 
 
 <!-- ======================================================= -->
-## Resources {.tabset .tabset-fade .tabset-pills}
+## Resources {  }
 
 This tab should stay with the name "Resources".
 Links to other online tutorials or resources.
@@ -20111,13 +20178,13 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 <!--chapter:end:new_pages/writing_functions.Rmd-->
 
 
-# R on network drives {.tabset .tabset-fade}  
+# R on network drives { }  
 
  
 
 
 <!-- ======================================================= -->
-## Overview {.tabset .tabset-fade .tabset-pills}
+## Overview {  }
 
 Using R on network or "company" shared drives can be extremely frustrating. This page contains approaches, common errors, and suggestions on troubleshooting, including for the particularly delicate situations involving Rmarkdown.  
 
@@ -20130,7 +20197,7 @@ Using R on network or "company" shared drives can be extremely frustrating. This
 
 
 <!-- ======================================================= -->
-## Preparation {.tabset .tabset-fade .tabset-pills}
+## Preparation {  }
 
 
 **Using R on Network Drives: Overarching principles**  
@@ -20165,7 +20232,7 @@ find.package("rmarkdown", lib.loc = NULL, quiet = FALSE, verbose = getOption("ve
 
 
 <!-- ======================================================= -->
-## Troubleshooting common errors {.tabset .tabset-fade .tabset-pills}
+## Troubleshooting common errors {  }
 
 
 **"Failed to compile...tex in rmarkdown"**  
@@ -20272,7 +20339,7 @@ Try removing... /../.../00LOCK (directory)
 
 
 <!-- ======================================================= -->
-## Resources {.tabset .tabset-fade .tabset-pills}
+## Resources {  }
 
 This tab should stay with the name "Resources".
 Links to other online tutorials or resources.
@@ -20315,18 +20382,18 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 <!--chapter:end:new_pages/network_drives.Rmd-->
 
 
-# Directory interactions {.tabset .tabset-fade}  
+# Directory interactions { }  
 
 
 <!-- ======================================================= -->
-## Overview {.tabset .tabset-fade .tabset-pills}
+## Overview {  }
 
 Saving files, deleting files, creating folders, interacting with files in a folder, etc
 Overwriting files in Excel
 
 
 <!-- ======================================================= -->
-## Preparation {.tabset .tabset-fade .tabset-pills}
+## Preparation {  }
 
 Keep the title of this section as "Preparation".  
 Data preparation steps such as:  
@@ -20336,48 +20403,48 @@ Data preparation steps such as:
 * melting, pivoting, grouping, etc.   
 
 <!-- ======================================================= -->
-### sub-tab 1 {.tabset .tabset-fade .tabset-pills}
+### sub-tab 1 {  }
 
 Can be used to separate major steps of data preparation. Re-name as needed
 
 
 <!-- ======================================================= -->
-### sub-tab 2 {.tabset .tabset-fade .tabset-pills}
+### sub-tab 2 {  }
 
 Can be used to separate major steps of data preparation. Re-name as needed.
 
 
 
 <!-- ======================================================= -->
-## Option 1 {.tabset .tabset-fade .tabset-pills}
+## Option 1 {  }
 
 This tab can be renamed. 
 This tab should demonstrate execution of the task using recommended package/approach. For example, using a package customized for this task where the execution is simple and fast but perhaps less customizable. For example using *incidence* package to create an epicurve.
 
 
 <!-- ======================================================= -->
-### Option 1 sub-tab {.tabset .tabset-fade .tabset-pills}
+### Option 1 sub-tab {  }
 
 Sub-tabs if necessary. Re-name as needed.
 
 
 
 <!-- ======================================================= -->
-## Option 2 {.tabset .tabset-fade .tabset-pills}
+## Option 2 {  }
 
 This tab can be re-named. 
 This tab should demonstrate execution of the task a more standard/core package (e.g. ggplot2, or base R) that allows for more flexibility in the output or more package stability. For example, showing how to create an epicurve using *ggplot2*. 
 
 
 <!-- ======================================================= -->
-### Option 2 sub-tab {.tabset .tabset-fade .tabset-pills}
+### Option 2 sub-tab {  }
 
 Sub-tabs if necessary. Re-name as needed.
 
 
 
 <!-- ======================================================= -->
-## Resources {.tabset .tabset-fade .tabset-pills}
+## Resources {  }
 
 This tab should stay with the name "Resources".
 Links to other online tutorials or resources.
