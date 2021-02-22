@@ -178,11 +178,26 @@ As a matter of data structure, we often also want to pivot our data into *longer
 linelist_sym <- linelist_cleaned %>%
   pivot_longer(cols = c("fever", "chills", "cough", "aches", "vomit"),
                names_to = "symptom_name",
-               values_to = "symptom_is_present")
+               values_to = "symptom_is_present") %>%
+  mutate(symptom_is_present = replace_na(symptom_is_present, "unknown"))
 
 ```
 
-We could then use new dataframe in an upcoming plot. Note that this format is not very useful for other operations, and should just be used for the plot it was made for. However, users should endeavour to use these practices as much as possible for the base dataset, as they are more tidyverse compliant, and will make working with the data easier.
+We could then use new dataframe in an upcoming plot:
+
+```{r, eval = T}
+
+symp_plot <- ggplot(symp_plot, aes(x = symptom_name, fill = symptom_is_present)) +
+  # show as a portion of all
+  geom_bar(stat = "fill")
+
+symp_plot
+```
+Note that this format is not very useful for other operations, and should just be used for the plot it was made for. However, users should endeavour to use these practices as much as possible for the base dataset, as they are more tidyverse compliant, and will make working with the data easier.
+
+
+
+
 
 <!-- ======================================================= -->
 ### sub-tab 1 {.tabset .tabset-fade .tabset-pills}
@@ -196,6 +211,44 @@ Can be used to separate major steps of data preparation. Re-name as needed
 Can be used to separate major steps of data preparation. Re-name as needed.
 
 
+
+<!-- ======================================================= -->
+## Colour schemes {.tabset .tabset-fade .tabset-pills}
+
+One thing that can initially be difficult to understand with `ggplot2` is control of colour schemes when passing colour or fill as a variable rather than defining them explicitly within a geom. There are a few simple tricks that can be used to achieve this however. Remember that when setting colours, you can use colour names (as long as they are recognised) like `"red"`, or a specific hex colour such as `"#ff0505"`.
+
+One of the most useful tricks is using manual scaling functions to explicity define colours. These are functions with the syntax `scale_xxx_manual()` (e.g. `scale_colour_manual()`). In this function you can explicitly define which colours map to which factor using the `values` argument. You can control the legend title with the `name` argument, and the order of factors with `breaks`. 
+
+If you want predefined palettes, you can use the `scale_xxx_brewer` or `scale_xxx_viridis_y` functions. The brewer functions can draw from colorbrewer.org palettes, and the viridis functions can draw from viridis (colourblind friendly!) palettes. Remember to define if the palette is discrete, continuous, or binned by specifying this at the end of the function (e.g. discrete is `scale_xxx_viridis_d`)
+
+We can see this by using the symptom plot we made in the previous section:
+```{r,eval = TRUE} 
+
+symp_plot +
+  scale_fill_manual(
+    values = c("yes" = "black",
+               "no" = "white",
+               "unknown" = "grey"),
+    breaks = c("yes", "no", "unknown"),
+    # legend has no title
+    name = ""
+  )
+
+symp_plot +
+  scale_fill_viridis_d(
+    breaks = c("yes", "no", "unknown"),
+    name = ""
+  )
+
+
+```
+*work with the symptom example*
+
+unnamed variable - pass as a string in aes(), and define colour later
+
+
+
+*something about changing order of discrete variables*
 
 <!-- ======================================================= -->
 ## Highlighting {.tabset .tabset-fade .tabset-pills}
@@ -215,6 +268,24 @@ ggrepel
 
 <!-- ======================================================= -->
 ## Time axes {.tabset .tabset-fade .tabset-pills}
+
+Working with time axes in ggplot can seem daunting, but is made very easy with a few key functions. Remember that when working with time or date that you should ensure that the correct variables are formatted as date or datetime class - see the _working with dates_ section for more information on this.
+
+The single most useful set of functions for working with dates in `ggplot2` are the scale functions (`scale_x_date()`, `scale_x_datetime()`, and their cognate y-axis functions). These functions let you define how often you have axis labels, and how to format axis labels. To find out how to format dates, see the _working with dates_ section again! Use the `date_breaks` and `date_labels` arguments to specify how dates should look:
+
+
+```{r, eval = T}
+# make epi curve by date of onset when available
+ggplot(linelist_cleaned, aes(x = date_onset)) +
+  geom_bar(stat = "count") +
+  scale_x_date(
+    # 1 break every 1 month
+    date_breaks = "1 months",
+    # labels should show month then date
+    date_labels = "%b %d"
+  )
+
+```
 
 
 <!-- ======================================================= -->
