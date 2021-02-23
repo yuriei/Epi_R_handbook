@@ -69,7 +69,7 @@
 <li><a class="" href="standardization.html"><span class="header-section-number">17</span> Standardization</a></li>
 <li><a class="" href="moving-averages.html"><span class="header-section-number">18</span> Moving averages</a></li>
 <li><a class="" href="outbreak-detection.html"><span class="header-section-number">19</span> Outbreak detection</a></li>
-<li><a class="" href="time-series-analysis.html"><span class="header-section-number">20</span> Time series analysis</a></li>
+<li><a class="" href="time-series-and-outbreak-detection.html"><span class="header-section-number">20</span> Time series and outbreak detection</a></li>
 <li><a class="" href="epidemic-modeling.html"><span class="header-section-number">21</span> Epidemic modeling</a></li>
 <li><a class="" href="modeling.html"><span class="header-section-number">22</span> Modeling</a></li>
 <li><a class="" href="survey-analysis.html"><span class="header-section-number">23</span> Survey analysis</a></li>
@@ -838,8 +838,9 @@ Brackets can also be written after one another, as demonstrated below.</p>
 <!-- ======================================================= -->
 </div>
 </div>
-<div id="piping" class="section level2 unnumbered">
-<h2>Piping (<code>%&gt;%</code>)<a class="anchor" aria-label="anchor" href="#piping"><i class="fas fa-link"></i></a>
+<div id="piping" class="section level2" number="3.10">
+<h2>
+<span class="header-section-number">3.10</span> Piping (<code>%&gt;%</code>)<a class="anchor" aria-label="anchor" href="#piping"><i class="fas fa-link"></i></a>
 </h2>
 <p><strong>Two general approaches to working with objects are:</strong></p>
 <ol style="list-style-type: decimal">
@@ -925,9 +926,9 @@ This is an “assignment pipe” from the <strong>magritter</strong> package, wh
 <!-- ======================================================= -->
 </div>
 </div>
-<div id="operators" class="section level2" number="3.10">
+<div id="operators" class="section level2" number="3.11">
 <h2>
-<span class="header-section-number">3.10</span> Key operators and functions<a class="anchor" aria-label="anchor" href="#operators"><i class="fas fa-link"></i></a>
+<span class="header-section-number">3.11</span> Key operators and functions<a class="anchor" aria-label="anchor" href="#operators"><i class="fas fa-link"></i></a>
 </h2>
 <p>This section details operators in R, such as:</p>
 <ul>
@@ -1226,9 +1227,9 @@ We also advise surrounding such operators with spaces, for readability.</p>
 <code class="sourceCode R"><span class="fu">janitor</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/janitor/man/round_half_up.html">round_half_up</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2.5</span>, <span class="fl">3.5</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] 3 4</code></pre>
 </div>
-<div id="statistical-functions" class="section level4" number="3.10.0.1">
+<div id="statistical-functions" class="section level4" number="3.11.0.1">
 <h4>
-<span class="header-section-number">3.10.0.1</span> Statistical functions:<a class="anchor" aria-label="anchor" href="#statistical-functions"><i class="fas fa-link"></i></a>
+<span class="header-section-number">3.11.0.1</span> Statistical functions:<a class="anchor" aria-label="anchor" href="#statistical-functions"><i class="fas fa-link"></i></a>
 </h4>
 <p><span style="color: orange;"><strong><em>CAUTION:</em></strong> The functions below will by default include missing values in calculations. Missing values will result in an output of NA, unless the argument <code>na.rm=TRUE</code> is specified</span></p>
 <div class="inline-table"><table class="table table-sm">
@@ -1292,9 +1293,9 @@ We also advise surrounding such operators with spaces, for readability.</p>
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">6</span>, <span class="fl">12</span>, <span class="fl">10</span>, <span class="fl">5</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span> <span class="co"># CORRECT</span></code></pre></div>
 <pre><code>## [1] 5.666667</code></pre>
 </div>
-<div id="other-useful-functions" class="section level4" number="3.10.0.2">
+<div id="other-useful-functions" class="section level4" number="3.11.0.2">
 <h4>
-<span class="header-section-number">3.10.0.2</span> Other useful functions:<a class="anchor" aria-label="anchor" href="#other-useful-functions"><i class="fas fa-link"></i></a>
+<span class="header-section-number">3.11.0.2</span> Other useful functions:<a class="anchor" aria-label="anchor" href="#other-useful-functions"><i class="fas fa-link"></i></a>
 </h4>
 <div class="inline-table"><table class="table table-sm">
 <colgroup>
@@ -1382,9 +1383,9 @@ We also advise surrounding such operators with spaces, for readability.</p>
 <!-- ======================================================= -->
 </div>
 </div>
-<div id="errors-warnings" class="section level2" number="3.11">
+<div id="errors-warnings" class="section level2" number="3.12">
 <h2>
-<span class="header-section-number">3.11</span> Errors &amp; Warnings<a class="anchor" aria-label="anchor" href="#errors-warnings"><i class="fas fa-link"></i></a>
+<span class="header-section-number">3.12</span> Errors &amp; Warnings<a class="anchor" aria-label="anchor" href="#errors-warnings"><i class="fas fa-link"></i></a>
 </h2>
 <p>This section explains:</p>
 <ul>
@@ -1434,9 +1435,9 @@ We also advise surrounding such operators with spaces, for readability.</p>
 <!-- ======================================================= -->
 </div>
 </div>
-<div id="recommended-training-and-help" class="section level2" number="3.12">
+<div id="recommended-training-and-help" class="section level2" number="3.13">
 <h2>
-<span class="header-section-number">3.12</span> Recommended training and help<a class="anchor" aria-label="anchor" href="#recommended-training-and-help"><i class="fas fa-link"></i></a>
+<span class="header-section-number">3.13</span> Recommended training and help<a class="anchor" aria-label="anchor" href="#recommended-training-and-help"><i class="fas fa-link"></i></a>
 </h2>
 <div id="resources-within-rstudio" class="section level3 unnumbered">
 <h3>Resources within RStudio<a class="anchor" aria-label="anchor" href="#resources-within-rstudio"><i class="fas fa-link"></i></a>
@@ -1553,13 +1554,13 @@ We also advise surrounding such operators with spaces, for readability.</p>
 </ul>
 </li>
 <li>
-<a class="nav-link" href="#piping">Piping (%&gt;%)</a><ul class="nav navbar-nav">
+<a class="nav-link" href="#piping"><span class="header-section-number">3.10</span> Piping (%&gt;%)</a><ul class="nav navbar-nav">
 <li><a class="nav-link" href="#pipes">Pipes</a></li>
 <li><a class="nav-link" href="#define-intermediate-objects">Define intermediate objects</a></li>
 </ul>
 </li>
 <li>
-<a class="nav-link" href="#operators"><span class="header-section-number">3.10</span> Key operators and functions</a><ul class="nav navbar-nav">
+<a class="nav-link" href="#operators"><span class="header-section-number">3.11</span> Key operators and functions</a><ul class="nav navbar-nav">
 <li><a class="nav-link" href="#assignment-operators">Assignment operators</a></li>
 <li><a class="nav-link" href="#relational-and-logical-operators">Relational and logical operators</a></li>
 <li><a class="nav-link" href="#missing-values">Missing values</a></li>
@@ -1568,14 +1569,14 @@ We also advise surrounding such operators with spaces, for readability.</p>
 </ul>
 </li>
 <li>
-<a class="nav-link" href="#errors-warnings"><span class="header-section-number">3.11</span> Errors &amp; Warnings</a><ul class="nav navbar-nav">
+<a class="nav-link" href="#errors-warnings"><span class="header-section-number">3.12</span> Errors &amp; Warnings</a><ul class="nav navbar-nav">
 <li><a class="nav-link" href="#error-versus-warning">Error versus Warning</a></li>
 <li><a class="nav-link" href="#general-syntax-tips">General syntax tips</a></li>
 <li><a class="nav-link" href="#code-assists">Code assists</a></li>
 </ul>
 </li>
 <li>
-<a class="nav-link" href="#recommended-training-and-help"><span class="header-section-number">3.12</span> Recommended training and help</a><ul class="nav navbar-nav">
+<a class="nav-link" href="#recommended-training-and-help"><span class="header-section-number">3.13</span> Recommended training and help</a><ul class="nav navbar-nav">
 <li><a class="nav-link" href="#resources-within-rstudio">Resources within RStudio</a></li>
 <li><a class="nav-link" href="#cheatsheets">Cheatsheets</a></li>
 <li><a class="nav-link" href="#free-online-books">Free online books</a></li>
@@ -1598,7 +1599,7 @@ We also advise surrounding such operators with spaces, for readability.</p>
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>R Handbook for Epidemiologists</strong>" was written by the handbook team. It was last built on 2021-02-22.</p>
+    <p>"<strong>R Handbook for Epidemiologists</strong>" was written by the handbook team. It was last built on 2021-02-23.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
@@ -1606,6 +1607,18 @@ We also advise surrounding such operators with spaces, for readability.</p>
   </div>
 
 </div></div>
-</footer>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
 </html>

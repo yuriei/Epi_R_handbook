@@ -69,7 +69,7 @@
 <li><a class="" href="standardization.html"><span class="header-section-number">17</span> Standardization</a></li>
 <li><a class="" href="moving-averages.html"><span class="header-section-number">18</span> Moving averages</a></li>
 <li><a class="" href="outbreak-detection.html"><span class="header-section-number">19</span> Outbreak detection</a></li>
-<li><a class="" href="time-series-analysis.html"><span class="header-section-number">20</span> Time series analysis</a></li>
+<li><a class="" href="time-series-and-outbreak-detection.html"><span class="header-section-number">20</span> Time series and outbreak detection</a></li>
 <li><a class="" href="epidemic-modeling.html"><span class="header-section-number">21</span> Epidemic modeling</a></li>
 <li><a class="" href="modeling.html"><span class="header-section-number">22</span> Modeling</a></li>
 <li><a class="" href="survey-analysis.html"><span class="header-section-number">23</span> Survey analysis</a></li>
@@ -111,8 +111,18 @@
 <span class="header-section-number">2</span> Datasets used<a class="anchor" aria-label="anchor" href="#datasets-used"><i class="fas fa-link"></i></a>
 </h1>
 <p>Data used in this handbook are either simulated or publicly available. All can be accessed from the <a href="https://github.com/nsbatra/Epi_R_handbook/tree/master/data">“data” folder</a> of our Github repository.</p>
-<p>The case linelist used throughout much of the handbook is a <em>simulated</em> Ebola outbreak dataset from the <strong>outbreaks</strong> package.</p>
-
+<ul>
+<li><p>The case linelist used throughout much of the handbook is a <em>simulated</em> Ebola outbreak dataset from the <strong>outbreaks</strong> package.</p></li>
+<li>
+<p>Aggregated data (…)</p>
+<ul>
+<li>Campylobacter cases reported in Germany 2002-2011. Available from <strong>surveillance</strong> package</li>
+<li>Climate data (temperature in degrees celsius and rain fail in millimetres) in Germany 2002-2011. Downloaded from the EU Copernicus satellite reanalysis dataset using the <strong>ecmwfr</strong> package.<br>
+</li>
+</ul>
+</li>
+<li><p>GIS shapefile (…)</p></li>
+</ul>
 </div>
 
 
@@ -142,7 +152,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>R Handbook for Epidemiologists</strong>" was written by the handbook team. It was last built on 2021-02-22.</p>
+    <p>"<strong>R Handbook for Epidemiologists</strong>" was written by the handbook team. It was last built on 2021-02-23.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
@@ -150,6 +160,18 @@
   </div>
 
 </div></div>
-</footer>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
 </html>

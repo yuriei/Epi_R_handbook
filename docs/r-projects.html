@@ -69,7 +69,7 @@
 <li><a class="" href="standardization.html"><span class="header-section-number">17</span> Standardization</a></li>
 <li><a class="" href="moving-averages.html"><span class="header-section-number">18</span> Moving averages</a></li>
 <li><a class="" href="outbreak-detection.html"><span class="header-section-number">19</span> Outbreak detection</a></li>
-<li><a class="" href="time-series-analysis.html"><span class="header-section-number">20</span> Time series analysis</a></li>
+<li><a class="" href="time-series-and-outbreak-detection.html"><span class="header-section-number">20</span> Time series and outbreak detection</a></li>
 <li><a class="" href="epidemic-modeling.html"><span class="header-section-number">21</span> Epidemic modeling</a></li>
 <li><a class="" href="modeling.html"><span class="header-section-number">22</span> Modeling</a></li>
 <li><a class="" href="survey-analysis.html"><span class="header-section-number">23</span> Survey analysis</a></li>
@@ -111,10 +111,40 @@
 <span class="header-section-number">5</span> R projects<a class="anchor" aria-label="anchor" href="#r-projects"><i class="fas fa-link"></i></a>
 </h1>
 <p>An R project enables your work to be bundled in a self-contained, self-sufficient folder associated with a working directory. The project can include all the relevant data files, figures/outputs, scripts, and history, and can be shared.</p>
-<!-- ======================================================= -->
-<div id="creating-an-r-project" class="section level2" number="5.1">
+<div id="optimal-use" class="section level2" number="5.1">
 <h2>
-<span class="header-section-number">5.1</span> Creating an R project<a class="anchor" aria-label="anchor" href="#creating-an-r-project"><i class="fas fa-link"></i></a>
+<span class="header-section-number">5.1</span> Optimal use<a class="anchor" aria-label="anchor" href="#optimal-use"><i class="fas fa-link"></i></a>
+</h2>
+<p>An common, efficient, and trouble-free way to use R is to combine these 3 elements. Each is described in the sections below.</p>
+<ol style="list-style-type: decimal">
+<li>
+<strong>An R project</strong>
+<ul>
+<li>Self-contained working environment with folders for data, scripts, outputs, etc.<br>
+</li>
+</ul>
+</li>
+<li>The <strong>here</strong> package for relative filepaths
+<ul>
+<li>Filepaths are written in relation to the root/base folder of the R project</li>
+<li>No need to troubleshoot working directory<br>
+</li>
+<li>Filepaths become more simple, less error-prone, and portable across computers<br>
+</li>
+</ul>
+</li>
+<li>The <strong>rio</strong> for importing/exporting
+<ul>
+<li>
+<code>import()</code> and <code>export()</code> handle almost any kind of file by reading the existing or desired file extension (e.g. .csv, .xlsx, .png)</li>
+</ul>
+</li>
+</ol>
+<!-- ======================================================= -->
+</div>
+<div id="creating-an-r-project" class="section level2" number="5.2">
+<h2>
+<span class="header-section-number">5.2</span> Creating an R project<a class="anchor" aria-label="anchor" href="#creating-an-r-project"><i class="fas fa-link"></i></a>
 </h2>
 <p>To create an R project, select “New Project” from the File menu.</p>
 <ul>
@@ -124,14 +154,12 @@
 </li>
 <li>If you want to clone a Github repository, select the third option “Version Control” and then “Git”. See the page on R and Github for further details.</li>
 </ul>
-<div class="inline-figure"><img src="images/create_project.png" width="100%" style="display: block; margin: auto;"></div>
+<div class="inline-figure"><img src="images/create_project.png" width="75%" style="display: block; margin: auto;"></div>
 <p>The R project you create will come in the form of a folder containing a <em>.Rproj</em> file. This file is a shortcut and likely the primary way you will open your project. You can also open a project by selecting “Open Project” from the File menu. Alternatively on the far upper right side of RStudio you will see an R project icon and a drop-down menu of available R projects.</p>
 <p>To exit from an R project, either open a new project, or close the project (File - Close Project).</p>
-</div>
-<div id="settings" class="section level2" number="5.2">
-<h2>
-<span class="header-section-number">5.2</span> Settings<a class="anchor" aria-label="anchor" href="#settings"><i class="fas fa-link"></i></a>
-</h2>
+<div id="settings" class="section level3 unnumbered">
+<h3>Settings<a class="anchor" aria-label="anchor" href="#settings"><i class="fas fa-link"></i></a>
+</h3>
 <p>It is generally advised that you start RStudio each time with a “clean slate” - that is, with nothing preserved from a previous session or workspace. This will mean that your objects and results will not persist session-to-session (you must re-create them by running your scripts). However, this will force you to write better scripts and will avoid significant pain in the long run. To do this, do the following:</p>
 <ul>
 <li>Select “Project Options” from the Tools menu.<br>
@@ -139,12 +167,46 @@
 <li>In the “General” tab, set RStudio to <strong>not</strong> restore .RData into workspace at startup, and to <strong>not</strong> save workspace to .RData on exit.</li>
 </ul>
 </div>
-<div id="organization" class="section level2" number="5.3">
-<h2>
-<span class="header-section-number">5.3</span> Organization<a class="anchor" aria-label="anchor" href="#organization"><i class="fas fa-link"></i></a>
-</h2>
+<div id="organization" class="section level3 unnumbered">
+<h3>Organization<a class="anchor" aria-label="anchor" href="#organization"><i class="fas fa-link"></i></a>
+</h3>
 <p>It is common to have subfolders in your project. Consider having folders such as “data”, “scripts”, “figures”, “presentations”… also consider a version control system. It could be something as simple as having dates on the names of scripts (e.g. “transmission_analysis_2020-10-03.R”) and having a header at the top of each script with a description, tags, change log, and author list.</p>
 <p>One tip is that you can search across an entire project or folder using the “Find in Files” tool (Edit menu). It can search and even replace strings across multiple files.</p>
+</div>
+<div id="switch-projects" class="section level3 unnumbered">
+<h3>Switch projects<a class="anchor" aria-label="anchor" href="#switch-projects"><i class="fas fa-link"></i></a>
+</h3>
+<p>To switch between projects, click the R project icon and drop-down menu at the very top-right of RStudio. You will see options to Close Project, Open Project, and a list of recent projects.</p>
+<div class="inline-figure"><img src="images/Rproject_dropdown.png" width="110%" style="display: block; margin: auto;"></div>
+</div>
+</div>
+<div id="examples" class="section level2" number="5.3">
+<h2>
+<span class="header-section-number">5.3</span> Examples<a class="anchor" aria-label="anchor" href="#examples"><i class="fas fa-link"></i></a>
+</h2>
+<p><strong>here</strong> implements <em>relative pathways</em> for any import/export you do (datasets, plots, etc). No more hassle with long filepaths or working directies. Read more about the <strong>here</strong> package in the <a href="importing-and-exporting.html#importing-and-exporting">Importing and exporting</a> page.</p>
+<p>To use <strong>here</strong> within an R project:</p>
+<ol style="list-style-type: decimal">
+<li>Begin your R project<br>
+</li>
+<li>Install and/or load the package <strong>here</strong><br>
+</li>
+<li>Run <code>here()</code> to see where the root folder is (should be the root of the R project)<br>
+</li>
+<li>All export/import commands can now use <code>here()</code> to create the filepath<br>
+</li>
+<li>Remember to load <strong>here</strong> with <code>p_load()</code> or <code><a href="https://rdrr.io/r/base/library.html">library()</a></code>
+</li>
+</ol>
+<p>Here are some examples of import/export/saving using <code>here()</code>:</p>
+<p>Importing <code>linelist.xlsx</code> from the “data” folder in the R project</p>
+<div class="sourceCode" id="cb118"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">linelist</span> <span class="op">&lt;-</span> <span class="fu">import</span><span class="op">(</span><span class="fu">here</span><span class="op">(</span><span class="st">"data"</span>, <span class="st">"linelist.xlsx"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<p>Exporting the R object <code>linelist</code> as “my_linelist.rds” in “clean” folder within the “data” folder in the R project.</p>
+<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="r-projects.html#cb119-1" aria-hidden="true" tabindex="-1"></a><span class="fu">export</span>(linelist, <span class="fu">here</span>(<span class="st">"data"</span>,<span class="st">"clean"</span>, <span class="st">"my_linelist.rds"</span>)</span></code></pre></div>
+<p>And for saving the most recently printed plot as “epicurve_2021-02-15.png” within the “epicurves” folder in “outputs” folder in the R project.</p>
+<div class="sourceCode" id="cb120"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">ggsave</span><span class="op">(</span><span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"outputs"</span>, <span class="st">"epicurves"</span>, <span class="st">"epicurve_2021-02-15.png"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <!-- ======================================================= -->
 </div>
 <div id="resources" class="section level2" number="5.4">
@@ -162,9 +224,15 @@
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
 <li><a class="nav-link" href="#r-projects"><span class="header-section-number">5</span> R projects</a></li>
-<li><a class="nav-link" href="#creating-an-r-project"><span class="header-section-number">5.1</span> Creating an R project</a></li>
-<li><a class="nav-link" href="#settings"><span class="header-section-number">5.2</span> Settings</a></li>
-<li><a class="nav-link" href="#organization"><span class="header-section-number">5.3</span> Organization</a></li>
+<li><a class="nav-link" href="#optimal-use"><span class="header-section-number">5.1</span> Optimal use</a></li>
+<li>
+<a class="nav-link" href="#creating-an-r-project"><span class="header-section-number">5.2</span> Creating an R project</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#settings">Settings</a></li>
+<li><a class="nav-link" href="#organization">Organization</a></li>
+<li><a class="nav-link" href="#switch-projects">Switch projects</a></li>
+</ul>
+</li>
+<li><a class="nav-link" href="#examples"><span class="header-section-number">5.3</span> Examples</a></li>
 <li><a class="nav-link" href="#resources"><span class="header-section-number">5.4</span> Resources</a></li>
 </ul>
 
@@ -182,7 +250,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>R Handbook for Epidemiologists</strong>" was written by the handbook team. It was last built on 2021-02-22.</p>
+    <p>"<strong>R Handbook for Epidemiologists</strong>" was written by the handbook team. It was last built on 2021-02-23.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
@@ -190,6 +258,18 @@
   </div>
 
 </div></div>
-</footer>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
 </html>

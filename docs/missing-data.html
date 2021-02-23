@@ -69,7 +69,7 @@
 <li><a class="" href="standardization.html"><span class="header-section-number">17</span> Standardization</a></li>
 <li><a class="" href="moving-averages.html"><span class="header-section-number">18</span> Moving averages</a></li>
 <li><a class="" href="outbreak-detection.html"><span class="header-section-number">19</span> Outbreak detection</a></li>
-<li><a class="" href="time-series-analysis.html"><span class="header-section-number">20</span> Time series analysis</a></li>
+<li><a class="" href="time-series-and-outbreak-detection.html"><span class="header-section-number">20</span> Time series and outbreak detection</a></li>
 <li><a class="" href="epidemic-modeling.html"><span class="header-section-number">21</span> Epidemic modeling</a></li>
 <li><a class="" href="modeling.html"><span class="header-section-number">22</span> Modeling</a></li>
 <li><a class="" href="survey-analysis.html"><span class="header-section-number">23</span> Survey analysis</a></li>
@@ -137,13 +137,13 @@
 <span class="header-section-number">9.2</span> Preparation<a class="anchor" aria-label="anchor" href="#preparation"><i class="fas fa-link"></i></a>
 </h2>
 <p><strong>Load packages</strong></p>
-<div class="sourceCode" id="cb325"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb326"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span>
   <span class="va">tidyverse</span>,
   <span class="va">rio</span>
 <span class="op">)</span></code></pre></div>
 <p><strong>Load data</strong></p>
-<div class="sourceCode" id="cb326"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb327"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">linelist</span> <span class="op">&lt;-</span> <span class="fu">rio</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/rio/man/import.html">import</a></span><span class="op">(</span><span class="st">"linelist_cleaned.rds"</span><span class="op">)</span></code></pre></div>
 <!-- ======================================================= -->
 </div>
@@ -155,26 +155,26 @@
 <p><strong><code><a href="https://rdrr.io/r/base/NA.html">is.na()</a></code> and <code>!is.na()</code></strong></p>
 <p>To identify missing values use <code><a href="https://rdrr.io/r/base/NA.html">is.na()</a></code> or its opposite (with <code><a href="https://rdrr.io/r/base/Logic.html">!</a></code> in front). Both are from <strong>base</strong> R.<br>
 These return a logical vector (<code>TRUE</code> or <code>FALSE</code>). Remember that you can <code><a href="https://rdrr.io/r/base/sum.html">sum()</a></code> the resulting vector to count the number <code>TRUE</code>, e.g. <code><a href="https://rdrr.io/r/base/sum.html">sum(is.na(linelist$date_outcome))</a></code>.</p>
-<div class="sourceCode" id="cb327"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb328"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">my_vector</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">4</span>, <span class="fl">56</span>, <span class="cn">NA</span>, <span class="fl">5</span>, <span class="cn">NA</span>, <span class="fl">22</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">my_vector</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] FALSE FALSE FALSE  TRUE FALSE  TRUE FALSE</code></pre>
-<div class="sourceCode" id="cb329"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb330"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">my_vector</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1]  TRUE  TRUE  TRUE FALSE  TRUE FALSE  TRUE</code></pre>
 <p><strong><code><a href="https://rdrr.io/r/stats/na.fail.html">na.omit()</a></code></strong></p>
 <p>This function, if applied to a dataframe, will remove rows with <em>any</em> missing values. It is also from <strong>base</strong> R.<br>
 If applied to a vector, it will remove <code>NA</code> values from the vector it is applied to. For example:</p>
-<div class="sourceCode" id="cb331"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb332"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html">na.omit</a></span><span class="op">(</span><span class="va">my_vector</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] 88</code></pre>
 <p><strong><code>na.rm = TRUE</code></strong></p>
 <p>Often a mathematical function will by default <em>include</em> <code>NA</code> in calculations, which results in the function returning <code>NA</code> (this is designed intentionally, to make you aware that you have missing data).<br>
 You can usually avoid this by removing missing values from the calculation, by including the argument <code>na.rm = TRUE</code> (na.rm stands for “remove <code>NA</code>”).</p>
-<div class="sourceCode" id="cb333"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb334"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">my_vector</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] NA</code></pre>
-<div class="sourceCode" id="cb335"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb336"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">my_vector</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] 17.6</code></pre>
 <!-- ======================================================= -->
@@ -184,7 +184,7 @@ You can usually avoid this by removing missing values from the calculation, by i
 <span class="header-section-number">9.4</span> Assess missingness in a dataframe<a class="anchor" aria-label="anchor" href="#assess-missingness-in-a-dataframe"><i class="fas fa-link"></i></a>
 </h2>
 <p>You can use the package <strong>naniar</strong> to assess and visualize missingness.</p>
-<div class="sourceCode" id="cb337"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb338"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span><span class="va">naniar</span><span class="op">)</span></code></pre></div>
 <div id="statistics" class="section level3" number="9.4.1">
 <h3>
@@ -192,14 +192,14 @@ You can usually avoid this by removing missing values from the calculation, by i
 </h3>
 <p>Some basic missingness functions from <strong>naniar</strong> include:</p>
 <p>The percent of all values that are missing</p>
-<div class="sourceCode" id="cb338"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb339"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">pct_miss</span><span class="op">(</span><span class="va">linelist</span><span class="op">)</span>  <span class="co"># also see n_miss() for counts</span></code></pre></div>
 <pre><code>## [1] 6.616848</code></pre>
 <p>These two functions return the percent of rows with any missing values, or that are entirely complete, respectively. Note that "" or " " will register as non-missing.</p>
-<div class="sourceCode" id="cb340"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb341"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">pct_miss_case</span><span class="op">(</span><span class="va">linelist</span><span class="op">)</span>   <span class="co"># also see n_complete() for counts</span></code></pre></div>
 <pre><code>## [1] 68.63111</code></pre>
-<div class="sourceCode" id="cb342"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb343"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">pct_complete_case</span><span class="op">(</span><span class="va">linelist</span><span class="op">)</span> <span class="co"># see n_complete</span></code></pre></div>
 <pre><code>## [1] 31.36889</code></pre>
 </div>
@@ -208,13 +208,13 @@ You can usually avoid this by removing missing values from the calculation, by i
 <span class="header-section-number">9.4.2</span> Visualizing missingness<a class="anchor" aria-label="anchor" href="#visualizing-missingness"><i class="fas fa-link"></i></a>
 </h3>
 <p>The <code>gg_miss_var()</code> function will tell you the number missing in each column. You can add a bare column name to the argument <code>facet =</code> if desired to see the plot by groups. By default, counts are shown instead of percents (<code>show_pct = FALSE</code>). You can also add labs as a normal ggplot with <code>+labs()</code>.</p>
-<div class="sourceCode" id="cb344"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">gg_miss_var</span><span class="op">(</span><span class="va">linelist</span>, show_pct <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-225-1.png" width="672"></div>
-<p>You can use <code>vis_miss()</code> to visualize the dataframe as a heatmap, showing whether each value is missing or not:</p>
 <div class="sourceCode" id="cb345"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">gg_miss_var</span><span class="op">(</span><span class="va">linelist</span>, show_pct <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-229-1.png" width="672"></div>
+<p>You can use <code>vis_miss()</code> to visualize the dataframe as a heatmap, showing whether each value is missing or not:</p>
+<div class="sourceCode" id="cb346"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">vis_miss</span><span class="op">(</span><span class="va">linelist</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-226-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-230-1.png" width="672"></div>
 </div>
 <div id="explore-and-visualize-missingness-relationships" class="section level3" number="9.4.3">
 <h3>
@@ -223,25 +223,25 @@ You can usually avoid this by removing missing values from the calculation, by i
 <p>How do you visualize something that is not there??? By default, ggplot removes points with missing values from plots.</p>
 <p><strong>naniar</strong> offers a solution via <code>geom_miss_point()</code>. When creating a scatterplot of two columns, records with one of the values missing and the other present are shown by setting the missing values to 10% lower than the lowest value in the column, and coloring them distinctly.<br>
 In the scatterplot below, the red dots are records where the value for one column is present but the value for the other column is missing.</p>
-<div class="sourceCode" id="cb346"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb347"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span>
   <span class="va">linelist</span>, 
   <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">age_years</span>,             
       y <span class="op">=</span> <span class="va">temp</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>     <span class="co"># column to show missingness</span>
   <span class="fu">geom_miss_point</span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-227-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-231-1.png" width="672"></div>
 <p>To assess missingness in the dataframe by another column, consider <code>gg_miss_fct()</code>, which returns a heatmap of percent missingness in the dataframe by a factor/categorical (or date) column:</p>
-<div class="sourceCode" id="cb347"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">gg_miss_fct</span><span class="op">(</span><span class="va">linelist</span>, <span class="va">age_cat5</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-228-1.png" width="672"></div>
-<p>This function can also be used on date column to neat effect:</p>
 <div class="sourceCode" id="cb348"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">gg_miss_fct</span><span class="op">(</span><span class="va">linelist</span>, <span class="va">age_cat5</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-232-1.png" width="672"></div>
+<p>This function can also be used on date column to neat effect:</p>
+<div class="sourceCode" id="cb349"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">gg_miss_fct</span><span class="op">(</span><span class="va">linelist</span>, <span class="va">date_onset</span><span class="op">)</span></code></pre></div>
 <pre><code>## Warning: Removed 29 rows containing missing values (geom_tile).</code></pre>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-229-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-233-1.png" width="672"></div>
 <p><strong>“Shadow” columns</strong></p>
 <p>Another way to visualize missingness in one column by values in a second column is using the “shadow” that <strong>naniar</strong> can create. Essentially, <code>bind_shadow()</code> creates a binary <code>NA</code>/not <code>NA</code> column for every column, and adds all these columns to the dataset (doubling the number of columns). See below:</p>
-<div class="sourceCode" id="cb350"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb351"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">shadowed_linelist</span> <span class="op">&lt;-</span> <span class="va">linelist</span> <span class="op">%&gt;%</span> 
   <span class="fu">bind_shadow</span><span class="op">(</span><span class="op">)</span>
 
@@ -257,15 +257,15 @@ In the scatterplot below, the red dots are records where the value for one colum
 ## [49] "wt_kg_NA"                "ht_cm_NA"                "ct_blood_NA"             "fever_NA"                "chills_NA"               "cough_NA"               
 ## [55] "aches_NA"                "vomit_NA"                "temp_NA"                 "time_admission_NA"       "bmi_NA"                  "days_onset_hosp_NA"</code></pre>
 <p>These “shadow” columns can be used to plot the density of proportion of values that are missing by another column X. For example, the plot below shows the proportion of records missing <code>days_onset_hosp</code> (number of days from symptom onset to hospitalisation), by that record’s value in <code>date_hospitalisation</code>. Essentially, you are plot the density of the x-axis column, but stratify the results (<code>color =</code>) by a shadow column of interest. This analysis works best if the x-axis is numeric or date column.</p>
-<div class="sourceCode" id="cb352"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb353"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span>
   <span class="va">shadowed_linelist</span>,                   <span class="co"># dataframe with shadow columns</span>
   <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">date_hospitalisation</span>,        <span class="co"># numeric or date column</span>
       colour <span class="op">=</span> <span class="va">age_years_NA</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>        <span class="co"># shadow column of interest</span>
   <span class="fu">geom_density</span><span class="op">(</span><span class="op">)</span>                       <span class="co"># plots the density curves</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-231-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-235-1.png" width="672"></div>
 <p>You can also use these “shadow” columns to stratify a statistical summary, as shown below:</p>
-<div class="sourceCode" id="cb353"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb354"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">linelist</span> <span class="op">%&gt;%</span>
   <span class="fu">bind_shadow</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>                <span class="co"># create the shows cols</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">date_outcome_NA</span><span class="op">)</span> <span class="op">%&gt;%</span>    <span class="co"># shadow col for stratifying</span>
@@ -285,7 +285,7 @@ In the scatterplot below, the red dots are records where the value for one colum
 </li>
 </ol>
 <p>Below, we take the linelist, add a new column for week, group the data by week, and then calculate the percent of that week’s records where the value is missing. (note: if you want % of 7 days the calculation would be slightly different).</p>
-<div class="sourceCode" id="cb355"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb356"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">outcome_missing</span> <span class="op">&lt;-</span> <span class="va">linelist</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>week <span class="op">=</span> <span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="http://lubridate.tidyverse.org/reference/round_date.html">floor_date</a></span><span class="op">(</span><span class="va">date_onset</span>, <span class="st">"week"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>   <span class="co"># create new week column</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">week</span><span class="op">)</span> <span class="op">%&gt;%</span>                                             <span class="co"># group the rows by week</span>
@@ -301,7 +301,7 @@ In the scatterplot below, the red dots are records where the value for one colum
   <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer</a></span><span class="op">(</span><span class="op">-</span><span class="va">week</span>, names_to <span class="op">=</span> <span class="st">"statistic"</span><span class="op">)</span> <span class="op">%&gt;%</span>         <span class="co"># pivot all columns except week, to long format for ggplot</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_detect.html">str_detect</a></span><span class="op">(</span><span class="va">statistic</span>, <span class="st">"_p_"</span><span class="op">)</span><span class="op">)</span>                  <span class="co"># keep only the proportion values</span></code></pre></div>
 <p>Then we plot the proportion missing as a line, by week</p>
-<div class="sourceCode" id="cb356"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb357"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">outcome_missing</span><span class="op">)</span><span class="op">+</span>
     <span class="fu">geom_line</span><span class="op">(</span>
       <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">week</span>, y <span class="op">=</span> <span class="va">value</span>, group <span class="op">=</span> <span class="va">statistic</span>, color <span class="op">=</span> <span class="va">statistic</span><span class="op">)</span>,
@@ -319,7 +319,7 @@ In the scatterplot below, the red dots are records where the value for one colum
     legend.position <span class="op">=</span> <span class="st">"bottom"</span>
   <span class="op">)</span></code></pre></div>
 <pre><code>## Warning: Removed 2 row(s) containing missing values (geom_path).</code></pre>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-234-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-238-1.png" width="672"></div>
 <!-- ======================================================= -->
 </div>
 </div>
@@ -329,18 +329,18 @@ In the scatterplot below, the red dots are records where the value for one colum
 </h2>
 <p>To quickly remove rows with missing values, use the <strong>dplyr</strong> function <code>drop_na()</code>.</p>
 <p>The original <code>linelist</code> has <code><a href="https://rdrr.io/r/base/nrow.html">nrow(linelist)</a></code> rows. The adjusted number of rows is shown below:</p>
-<div class="sourceCode" id="cb358"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb359"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">linelist</span> <span class="op">%&gt;%</span> 
   <span class="fu">drop_na</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>     <span class="co"># remove rows with ANY missing values</span>
   <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p>Additionally you can specify columns to evaluate for missingness:</p>
-<div class="sourceCode" id="cb359"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb360"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">linelist</span> <span class="op">%&gt;%</span> 
   <span class="fu">drop_na</span><span class="op">(</span><span class="va">date_onset</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="co"># remove rows missing date_onset </span>
   <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] 5647</code></pre>
 <p>Multiple columns can be specified one after the other, or using this standard syntax:</p>
-<div class="sourceCode" id="cb361"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb362"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">linelist</span> <span class="op">%&gt;%</span> 
   <span class="fu">drop_na</span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">contains</a></span><span class="op">(</span><span class="st">"date"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="co"># remove rows missing values in any "date" column </span>
   <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
@@ -358,7 +358,7 @@ In the scatterplot below, the red dots are records where the value for one colum
 </li>
 <li>Note that if multiple column would contribute to values not being plotted (e.g. age or sex if those are reflected in the plot), then you must filter on those columns as well to correctly calculate the number not shown.</li>
 </ul>
-<div class="sourceCode" id="cb363"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb364"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">labs</span><span class="op">(</span>
   title <span class="op">=</span> <span class="st">"Weekly case incidence, by gender"</span>,
   y <span class="op">=</span> <span class="st">"Weekly case incidence"</span>,
@@ -395,7 +395,7 @@ In the scatterplot below, the red dots are records where the value for one colum
 </h3>
 <p>Some useful packages for imputing missing data are Mmisc, missForest (which uses random forests to impute missing data), and mice (Multivariate Imputation by Chained Equations). For this section we’ll just use the mice package, which implements a variety of techniques. The maintainer of the mice package has published an online book about imputing missing data that goes into more detail here (<a href="https://stefvanbuuren.name/fimd/" class="uri">https://stefvanbuuren.name/fimd/</a>).</p>
 <p>Here is the code to load the mice package:</p>
-<div class="sourceCode" id="cb364"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb365"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span><span class="va">mice</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="mean-imputation" class="section level3" number="9.7.3">
@@ -403,10 +403,10 @@ In the scatterplot below, the red dots are records where the value for one colum
 <span class="header-section-number">9.7.3</span> Mean Imputation<a class="anchor" aria-label="anchor" href="#mean-imputation"><i class="fas fa-link"></i></a>
 </h3>
 <p>Sometimes if you are doing a simple analysis or you have strong reason to think you can assume MCAR, you can simply set missing numerical values to the mean of that variable. Perhaps we can assume that missing temperature measurements in our dataset were either MCAR or were just normal values. Here is the code to create a new variable that replaces missing temperature values with the mean temperature value in our dataset. However, in many situations replacing data with the mean can lead to bias, so be careful.</p>
-<div class="sourceCode" id="cb365"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb366"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">linelist</span> <span class="op">=</span> <span class="va">linelist</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>temp_replace_na_with_mean <span class="op">=</span> <span class="fu">replace_na</span><span class="op">(</span><span class="va">temp</span>, <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">temp</span>, na.rm <span class="op">=</span> <span class="cn">T</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>You could also do a similar process for replacing categorical data with a specific value. For our dataset, imagine you knew that all observations with a missing value for their outcome (which can be “Death” or “Recover”) were actually people that died (note: this is not actually true for this dataset):</p>
-<div class="sourceCode" id="cb366"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb367"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">linelist</span> <span class="op">=</span> <span class="va">linelist</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>outcome_replace_na_with_death <span class="op">=</span> 
                                  <span class="fu">replace_na</span><span class="op">(</span><span class="va">outcome</span>, <span class="st">"Death"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 </div>
@@ -415,12 +415,12 @@ In the scatterplot below, the red dots are records where the value for one colum
 <span class="header-section-number">9.7.4</span> Regression imputation<a class="anchor" aria-label="anchor" href="#regression-imputation"><i class="fas fa-link"></i></a>
 </h3>
 <p>A somewhat more advanced method is to use some sort of statistical model to predict what a missing value is likely to be and replace it with the predicted value. Here is an example of creating predicted values for all the observations where temperature is missing, but age and fever are not using simple linear regression using fever status, and age in years as predictors. In practice you’d want to use a better model than this sort of simple approach.</p>
-<div class="sourceCode" id="cb367"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb368"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">simple_temperature_model_fit</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">temp</span> <span class="op">~</span> <span class="va">fever</span> <span class="op">+</span> <span class="va">age_years</span>, data <span class="op">=</span> <span class="va">linelist</span><span class="op">)</span>
 <span class="va">predictions_for_missing_temps</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">simple_temperature_model_fit</span>,
                                         newdata <span class="op">=</span> <span class="va">linelist</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">temp</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="co">#using our simple temperature model to predict values just for the observations where temp is missing</span></code></pre></div>
 <p>Or, using the same modeling approach through the mice package to create imputed values for the missing temperature observations:</p>
-<div class="sourceCode" id="cb368"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb369"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">model_dataset</span> <span class="op">=</span> <span class="va">linelist</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">temp</span>, <span class="va">fever</span>, <span class="va">age_years</span><span class="op">)</span>
 <span class="va">temp_imputed_values</span> <span class="op">=</span> <span class="fu">mice</span><span class="op">(</span><span class="va">model_dataset</span>, method <span class="op">=</span> <span class="st">"norm.predict"</span>, seed <span class="op">=</span> <span class="fl">1</span>, m <span class="op">=</span> <span class="fl">1</span>, print <span class="op">=</span> <span class="cn">F</span><span class="op">)</span><span class="op">$</span><span class="va">imp</span><span class="op">$</span><span class="va">temp</span></code></pre></div>
@@ -443,10 +443,10 @@ In the scatterplot below, the red dots are records where the value for one colum
 <p>Then, once you have created these new imputed datasets, you can apply then apply whatever statistical model or analysis you were planning to do for each of these new imputed datasets and pool the results of these models together. This works very well to reduce bias in both MCAR and many MAR settings and often results in more accurate standard error estimates.</p>
 <p>Here is an example of applying the Multiple Imputation process to predict temperature in our linelist dataset using a age and fever status (our simplified model_dataset from above):
 [Note from Daniel: this is not a very good model example and I’ll change it later]</p>
-<div class="sourceCode" id="cb370"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb371"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">multiple_imputation</span> <span class="op">=</span> <span class="fu">mice</span><span class="op">(</span><span class="va">model_dataset</span>, seed <span class="op">=</span> <span class="fl">1</span>, m <span class="op">=</span> <span class="fl">10</span>, print <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="co">#imputing missing values for all variables in our model_dataset, and creating 10 new imputed datasets</span></code></pre></div>
 <pre><code>## Warning: Number of logged events: 1</code></pre>
-<div class="sourceCode" id="cb372"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb373"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">model_fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">multiple_imputation</span>, <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">temp</span> <span class="op">~</span> <span class="va">age_years</span> <span class="op">+</span> <span class="va">fever</span><span class="op">)</span><span class="op">)</span>
 <span class="fu">base</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="fu">mice</span><span class="fu">::</span><span class="fu"><a href="https://amices.org/mice/reference/pool.html">pool</a></span><span class="op">(</span><span class="va">model_fit</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>##          term     estimate    std.error   statistic       df   p.value
@@ -512,7 +512,7 @@ In the scatterplot below, the red dots are records where the value for one colum
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>R Handbook for Epidemiologists</strong>" was written by the handbook team. It was last built on 2021-02-22.</p>
+    <p>"<strong>R Handbook for Epidemiologists</strong>" was written by the handbook team. It was last built on 2021-02-23.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
@@ -520,6 +520,18 @@ In the scatterplot below, the red dots are records where the value for one colum
   </div>
 
 </div></div>
-</footer>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
 </html>

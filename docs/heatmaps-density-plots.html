@@ -69,7 +69,7 @@
 <li><a class="" href="standardization.html"><span class="header-section-number">17</span> Standardization</a></li>
 <li><a class="" href="moving-averages.html"><span class="header-section-number">18</span> Moving averages</a></li>
 <li><a class="" href="outbreak-detection.html"><span class="header-section-number">19</span> Outbreak detection</a></li>
-<li><a class="" href="time-series-analysis.html"><span class="header-section-number">20</span> Time series analysis</a></li>
+<li><a class="" href="time-series-and-outbreak-detection.html"><span class="header-section-number">20</span> Time series and outbreak detection</a></li>
 <li><a class="" href="epidemic-modeling.html"><span class="header-section-number">21</span> Epidemic modeling</a></li>
 <li><a class="" href="modeling.html"><span class="header-section-number">22</span> Modeling</a></li>
 <li><a class="" href="survey-analysis.html"><span class="header-section-number">23</span> Survey analysis</a></li>
@@ -117,7 +117,7 @@
 </h2>
 <p>Heatmaps can be useful when tracking reporting metrics across many facilities/jurisdictions over time</p>
 <p>For example, the image below shows % of weekdays that data was received from each facility, week-by-week:</p>
-<p><img src="_main_files/figure-html/unnamed-chunk-678-1.png" width="50%"><img src="_main_files/figure-html/unnamed-chunk-678-2.png" width="50%"></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-684-1.png" width="50%"><img src="_main_files/figure-html/unnamed-chunk-684-2.png" width="50%"></p>
 <!-- ======================================================= -->
 </div>
 <div id="preparation-26" class="section level2" number="34.2">
@@ -125,7 +125,7 @@
 <span class="header-section-number">34.2</span> Preparation<a class="anchor" aria-label="anchor" href="#preparation-26"><i class="fas fa-link"></i></a>
 </h2>
 <p><strong>Load packages</strong></p>
-<div class="sourceCode" id="cb1114"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1185"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span><span class="va">tidyverse</span>,       <span class="co"># data manipulation and visualization</span>
                <span class="va">rio</span>,             <span class="co"># importing data </span>
                <span class="va">OpenStreetMap</span>,   <span class="co"># optional - basemaps</span>
@@ -154,15 +154,15 @@
 <span class="header-section-number">34.3.1.1</span> Load and view<a class="anchor" aria-label="anchor" href="#load-and-view"><i class="fas fa-link"></i></a>
 </h4>
 <p>Below are the first 30 rows of these data:</p>
-<div id="htmlwidget-440177c35de58030e59a" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-440177c35de58030e59a">{"x":{"filter":"top","filterHTML":"<tr>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"date\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"1560124800000\" data-max=\"1560470400000\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"disabled\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"disabled\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"integer\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"0\" data-max=\"36\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"integer\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"0\" data-max=\"36\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"integer\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"0\" data-max=\"62\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"integer\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"0\" data-max=\"134\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"integer\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"1\" data-max=\"23\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","data":[["Facility 1","Facility 2","Facility 3","Facility 4","Facility 5","Facility 6","Facility 6","Facility 5","Facility 5","Facility 5","Facility 7","Facility 8","Facility 9","Facility 10","Facility 11","Facility 12","Facility 13","Facility 14","Facility 15","Facility 16","Facility 17","Facility 18","Facility 19","Facility 19","Facility 20","Facility 21","Facility 19","Facility 22","Facility 23","Facility 23"],["2019-06-13","2019-06-13","2019-06-13","2019-06-13","2019-06-13","2019-06-13","2019-06-12","2019-06-12","2019-06-11","2019-06-10","2019-06-13","2019-06-13","2019-06-13","2019-06-13","2019-06-13","2019-06-13","2019-06-13","2019-06-13","2019-06-13","2019-06-13","2019-06-13","2019-06-13","2019-06-13","2019-06-12","2019-06-13","2019-06-13","2019-06-11","2019-06-13","2019-06-13","2019-06-14"],["2019-06-14","2019-06-14","2019-06-14","2019-06-14","2019-06-14","2019-06-14","2019-06-14","2019-06-14","2019-06-14","2019-06-14","2019-06-14","2019-06-14","2019-06-14","2019-06-14","2019-06-14","2019-06-14","2019-06-14","2019-06-14","2019-06-14","2019-06-14","2019-06-14","2019-06-14","2019-06-14","2019-06-14","2019-06-14","2019-06-14","2019-06-14","2019-06-14","2019-06-14","2019-06-14"],["North","North","North","North","North","North","North","North","North","North","North","North","North","North","North","North","North","North","North","North","North","North","North","North","North","North","North","North","North","North"],["Spring","Bolo","Dingo","Bolo","Bolo","Dingo","Dingo","Bolo","Bolo","Bolo","Spring","Bolo","Spring","Bolo","Spring","Dingo","Bolo","Dingo","Barnard","Barnard","Barnard","Bolo","Bolo","Bolo","Barnard","Bolo","Bolo","Bolo","Dingo","Dingo"],[11,11,8,16,9,3,4,15,11,19,12,7,27,0,17,36,0,5,6,9,4,7,12,4,14,28,5,11,8,8],[12,10,5,16,2,1,0,14,11,15,7,1,8,10,15,36,0,1,3,9,4,0,2,7,9,18,3,4,7,7],[23,5,5,17,6,4,3,13,13,15,13,20,18,24,28,62,0,10,2,16,1,6,18,41,14,5,24,13,16,16],[46,26,18,49,17,8,7,42,35,49,32,28,53,34,60,134,0,16,11,34,9,13,32,52,37,51,32,28,31,31],[1,2,3,4,5,6,6,5,5,5,7,8,9,10,11,12,13,14,15,16,17,18,19,19,20,21,19,22,23,23]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>location_name<\/th>\n      <th>data_date<\/th>\n      <th>submitted_date<\/th>\n      <th>Province<\/th>\n      <th>District<\/th>\n      <th>malaria_rdt_0-4<\/th>\n      <th>malaria_rdt_5-14<\/th>\n      <th>malaria_rdt_15<\/th>\n      <th>malaria_tot<\/th>\n      <th>newid<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"scrollX":true,"columnDefs":[{"className":"dt-right","targets":[5,6,7,8,9]}],"order":[],"autoWidth":false,"orderClasses":false,"orderCellsTop":true,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-db7ec85a7818df6c30da" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-db7ec85a7818df6c30da">{"x":{"filter":"top","filterHTML":"<tr>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"date\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"1560124800000\" data-max=\"1560470400000\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"disabled\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"disabled\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"integer\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"0\" data-max=\"36\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"integer\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"0\" data-max=\"36\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"integer\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"0\" data-max=\"62\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"integer\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"0\" data-max=\"134\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"integer\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"1\" data-max=\"23\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","data":[["Facility 1","Facility 2","Facility 3","Facility 4","Facility 5","Facility 6","Facility 6","Facility 5","Facility 5","Facility 5","Facility 7","Facility 8","Facility 9","Facility 10","Facility 11","Facility 12","Facility 13","Facility 14","Facility 15","Facility 16","Facility 17","Facility 18","Facility 19","Facility 19","Facility 20","Facility 21","Facility 19","Facility 22","Facility 23","Facility 23"],["2019-06-13","2019-06-13","2019-06-13","2019-06-13","2019-06-13","2019-06-13","2019-06-12","2019-06-12","2019-06-11","2019-06-10","2019-06-13","2019-06-13","2019-06-13","2019-06-13","2019-06-13","2019-06-13","2019-06-13","2019-06-13","2019-06-13","2019-06-13","2019-06-13","2019-06-13","2019-06-13","2019-06-12","2019-06-13","2019-06-13","2019-06-11","2019-06-13","2019-06-13","2019-06-14"],["2019-06-14","2019-06-14","2019-06-14","2019-06-14","2019-06-14","2019-06-14","2019-06-14","2019-06-14","2019-06-14","2019-06-14","2019-06-14","2019-06-14","2019-06-14","2019-06-14","2019-06-14","2019-06-14","2019-06-14","2019-06-14","2019-06-14","2019-06-14","2019-06-14","2019-06-14","2019-06-14","2019-06-14","2019-06-14","2019-06-14","2019-06-14","2019-06-14","2019-06-14","2019-06-14"],["North","North","North","North","North","North","North","North","North","North","North","North","North","North","North","North","North","North","North","North","North","North","North","North","North","North","North","North","North","North"],["Spring","Bolo","Dingo","Bolo","Bolo","Dingo","Dingo","Bolo","Bolo","Bolo","Spring","Bolo","Spring","Bolo","Spring","Dingo","Bolo","Dingo","Barnard","Barnard","Barnard","Bolo","Bolo","Bolo","Barnard","Bolo","Bolo","Bolo","Dingo","Dingo"],[11,11,8,16,9,3,4,15,11,19,12,7,27,0,17,36,0,5,6,9,4,7,12,4,14,28,5,11,8,8],[12,10,5,16,2,1,0,14,11,15,7,1,8,10,15,36,0,1,3,9,4,0,2,7,9,18,3,4,7,7],[23,5,5,17,6,4,3,13,13,15,13,20,18,24,28,62,0,10,2,16,1,6,18,41,14,5,24,13,16,16],[46,26,18,49,17,8,7,42,35,49,32,28,53,34,60,134,0,16,11,34,9,13,32,52,37,51,32,28,31,31],[1,2,3,4,5,6,6,5,5,5,7,8,9,10,11,12,13,14,15,16,17,18,19,19,20,21,19,22,23,23]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>location_name<\/th>\n      <th>data_date<\/th>\n      <th>submitted_date<\/th>\n      <th>Province<\/th>\n      <th>District<\/th>\n      <th>malaria_rdt_0-4<\/th>\n      <th>malaria_rdt_5-14<\/th>\n      <th>malaria_rdt_15<\/th>\n      <th>malaria_tot<\/th>\n      <th>newid<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"scrollX":true,"columnDefs":[{"className":"dt-right","targets":[5,6,7,8,9]}],"order":[],"autoWidth":false,"orderClasses":false,"orderCellsTop":true,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
 </div>
-<div id="packages-5" class="section level4" number="34.3.1.2">
+<div id="packages-6" class="section level4" number="34.3.1.2">
 <h4>
-<span class="header-section-number">34.3.1.2</span> Packages<a class="anchor" aria-label="anchor" href="#packages-5"><i class="fas fa-link"></i></a>
+<span class="header-section-number">34.3.1.2</span> Packages<a class="anchor" aria-label="anchor" href="#packages-6"><i class="fas fa-link"></i></a>
 </h4>
 <p>The packages we will use are:</p>
-<div class="sourceCode" id="cb1115"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1186"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span><span class="va">tidyverse</span>, <span class="co"># ggplot and data manipulation</span>
                <span class="va">rio</span>,       <span class="co"># importing data</span>
                <span class="va">aweek</span><span class="op">)</span>     <span class="co"># manage weeks</span></code></pre></div>
@@ -205,7 +205,7 @@
 </li>
 <li>The dataframe is joined (<code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">right_join()</a></code>) to a comprehensive list of all possible facility-week combinations, to make the dataset complete. The matrix of all possible combinations is created by applying <code>expand()</code> to those two columns of the dataframe as it is at that moment in the pipe chain (represented by “.”). Because a <code><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">right_join()</a></code> is used, all rows in the <code>expand()</code> dataframe are kept, and added to agg_weeks if necessary. These new rows appear with <code>NA</code> (missing) summarized values.</li>
 </ol>
-<div class="sourceCode" id="cb1116"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1187"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Create weekly summary dataset</span>
 <span class="va">agg_weeks</span> <span class="op">&lt;-</span> <span class="va">facility_count_data</span> <span class="op">%&gt;%</span> 
   
@@ -257,7 +257,7 @@
 <h4>
 <span class="header-section-number">34.3.2.1</span> Basic<a class="anchor" aria-label="anchor" href="#basic"><i class="fas fa-link"></i></a>
 </h4>
-<div class="sourceCode" id="cb1117"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1188"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">agg_weeks</span>,
        <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu">aweek</span><span class="fu">::</span><span class="fu"><a href="https://www.repidemicsconsortium.org/aweek/reference/date2week.html">week2date</a></span><span class="op">(</span><span class="va">week</span><span class="op">)</span>,            <span class="co"># transformed to date class</span>
            y <span class="op">=</span> <span class="va">location_name</span>,
@@ -294,7 +294,7 @@
        title <span class="op">=</span> <span class="st">"Percent of days per week that facility reported data"</span>,
        subtitle <span class="op">=</span> <span class="st">"District health facilities, April-May 2019"</span>,
        caption <span class="op">=</span> <span class="st">"7-day weeks beginning on Mondays."</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-683-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-689-1.png" width="672"></div>
 <!-- ======================================================= -->
 </div>
 <div id="ordered-y-axis" class="section level4" number="34.3.2.2">
@@ -302,12 +302,12 @@
 <span class="header-section-number">34.3.2.2</span> Ordered y-axis<a class="anchor" aria-label="anchor" href="#ordered-y-axis"><i class="fas fa-link"></i></a>
 </h4>
 <p>If you want to order the y-axis facilities by something, convert them to class Factor and provide the order. Below, the order is set based on the total number of reporting days filed by the facility across the whole timespan:</p>
-<div class="sourceCode" id="cb1118"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1189"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">facility_order</span> <span class="op">&lt;-</span> <span class="va">agg_weeks</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">location_name</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>tot_reports <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">n_days_reported</span>, na.rm<span class="op">=</span><span class="cn">T</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">tot_reports</span><span class="op">)</span> <span class="co"># ascending order</span></code></pre></div>
-<div class="sourceCode" id="cb1119"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1190"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">as.tibble</span><span class="op">(</span><span class="va">facility_order</span><span class="op">)</span></code></pre></div>
 <pre><code>## Warning: `as.tibble()` is deprecated as of tibble 2.0.0.
 ## Please use `as_tibble()` instead.
@@ -333,11 +333,11 @@
 ## 14 Facility 58            53
 ## 15 Facility 28            75</code></pre>
 <p>Now use the above vector (<code>facility_order$location_name</code>) to be the order of the factor levels of location_name in the dataset <code>agg_weeks</code>:</p>
-<div class="sourceCode" id="cb1122"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1193"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">agg_weeks</span> <span class="op">&lt;-</span> <span class="va">agg_weeks</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>location_name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">location_name</span>, levels <span class="op">=</span> <span class="va">facility_order</span><span class="op">$</span><span class="va">location_name</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>And now the data are re-plotted, with location_name being an ordered factor:</p>
-<div class="sourceCode" id="cb1123"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1194"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">agg_weeks</span>,
        <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu">aweek</span><span class="fu">::</span><span class="fu"><a href="https://www.repidemicsconsortium.org/aweek/reference/date2week.html">week2date</a></span><span class="op">(</span><span class="va">week</span><span class="op">)</span>,            <span class="co"># transformed to date class</span>
            y <span class="op">=</span> <span class="va">location_name</span>,
@@ -374,7 +374,7 @@
        title <span class="op">=</span> <span class="st">"Percent of days per week that facility reported data"</span>,
        subtitle <span class="op">=</span> <span class="st">"District health facilities, April-May 2019"</span>,
        caption <span class="op">=</span> <span class="st">"7-day weeks beginning on Mondays."</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-687-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-693-1.png" width="672"></div>
 <!-- ======================================================= -->
 </div>
 <div id="display-values" class="section level4" number="34.3.2.3">
@@ -385,7 +385,7 @@
 <ul>
 <li>Note the fillowing code added <code>geom_text(aes(label=p_days_reported))+</code>. In the aesthetic <code><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes()</a></code> of the <code><a href="https://ggplot2.tidyverse.org/reference/geom_tile.html">geom_tile()</a></code> the argument <code>label</code> (what to show) is set to the same numeric column used to create the color gradient.</li>
 </ul>
-<div class="sourceCode" id="cb1124"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1195"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">agg_weeks</span>,
        <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu">aweek</span><span class="fu">::</span><span class="fu"><a href="https://www.repidemicsconsortium.org/aweek/reference/date2week.html">week2date</a></span><span class="op">(</span><span class="va">week</span><span class="op">)</span>,            <span class="co"># transformed to date class</span>
            y <span class="op">=</span> <span class="va">location_name</span>,
@@ -424,7 +424,7 @@
        title <span class="op">=</span> <span class="st">"Percent of days per week that facility reported data"</span>,
        subtitle <span class="op">=</span> <span class="st">"District health facilities, April-May 2019"</span>,
        caption <span class="op">=</span> <span class="st">"7-day weeks beginning on Mondays."</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-688-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-694-1.png" width="672"></div>
 <!-- ======================================================= -->
 </div>
 </div>
@@ -440,7 +440,7 @@
 <li>Plot the cases from <code>linelist</code> using the latitude and longitude</li>
 </ol>
 <p><a href="http://data-analytics.net/cep/Schedule_files/geospatial.html" class="uri">http://data-analytics.net/cep/Schedule_files/geospatial.html</a></p>
-<div class="sourceCode" id="cb1125"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1196"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span><span class="va">OpenStreetMap</span><span class="op">)</span>
 
 <span class="co"># Fit basemap by range of lat/long coordinates. Choose tile type</span>
@@ -469,7 +469,7 @@
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Longitude"</span>,
        y <span class="op">=</span> <span class="st">"Latitude"</span>,
        title <span class="op">=</span> <span class="st">"Distribution of simulated cases"</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-689-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-695-1.png" width="672"></div>
 <p><a href="https://www.rdocumentation.org/packages/OpenStreetMap/versions/0.3.4/topics/autoplot.OpenStreetMap" class="uri">https://www.rdocumentation.org/packages/OpenStreetMap/versions/0.3.4/topics/autoplot.OpenStreetMap</a></p>
 <!-- ======================================================= -->
 </div>
@@ -515,7 +515,7 @@ Links to other online tutorials or resources.</p>
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>R Handbook for Epidemiologists</strong>" was written by the handbook team. It was last built on 2021-02-22.</p>
+    <p>"<strong>R Handbook for Epidemiologists</strong>" was written by the handbook team. It was last built on 2021-02-23.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
@@ -523,6 +523,18 @@ Links to other online tutorials or resources.</p>
   </div>
 
 </div></div>
-</footer>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 </body>
 </html>
