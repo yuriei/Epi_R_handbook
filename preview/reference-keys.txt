@@ -1,8 +1,0 @@
-gis-basics
-overview
-preparation
-plotting-coordinates
-polygons-and-shapefiles
-time-series-heatmap
-health-facility-catchment-area
-resources

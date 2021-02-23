@@ -45,7 +45,7 @@
 
       <nav aria-label="Table of contents"><h2>Table of contents</h2>
         <ul class="book-toc list-unstyled">
-<li><a class="" href="index.html">Welcome</a></li>
+<li><a class="" href="index.html">Welcome - THIS IS A DRAFT</a></li>
 <li class="book-part">About this book</li>
 <li><a class="" href="style-and-editorial-notes.html"><span class="header-section-number">1</span> Style and editorial notes</a></li>
 <li><a class="" href="datasets-used.html"><span class="header-section-number">2</span> Datasets used</a></li>
@@ -59,7 +59,7 @@
 <li><a class="" href="working-with-dates.html"><span class="header-section-number">8</span> Working with dates</a></li>
 <li><a class="" href="missing-data.html"><span class="header-section-number">9</span> Missing data</a></li>
 <li><a class="" href="grouping-data.html"><span class="header-section-number">10</span> Grouping data</a></li>
-<li><a class="" href="joining-matching-datasets.html"><span class="header-section-number">11</span> Joining &amp; matching datasets</a></li>
+<li><a class="" href="joining-data.html"><span class="header-section-number">11</span> Joining data</a></li>
 <li><a class="" href="charactersstrings.html"><span class="header-section-number">12</span> Characters/strings</a></li>
 <li><a class="" href="de-duplication.html"><span class="header-section-number">13</span> De-duplication</a></li>
 <li><a class="" href="iteration-and-loops.html"><span class="header-section-number">14</span> Iteration and loops</a></li>
@@ -70,7 +70,7 @@
 <li><a class="" href="moving-averages.html"><span class="header-section-number">18</span> Moving averages</a></li>
 <li><a class="" href="outbreak-detection.html"><span class="header-section-number">19</span> Outbreak detection</a></li>
 <li><a class="" href="time-series-analysis.html"><span class="header-section-number">20</span> Time series analysis</a></li>
-<li><a class="" href="epidemicmodels.html"><span class="header-section-number">21</span> Epidemic modeling</a></li>
+<li><a class="" href="epidemic-modeling.html"><span class="header-section-number">21</span> Epidemic modeling</a></li>
 <li><a class="" href="modeling.html"><span class="header-section-number">22</span> Modeling</a></li>
 <li><a class="" href="survey-analysis.html"><span class="header-section-number">23</span> Survey analysis</a></li>
 <li><a class="" href="survival-analysis-1.html"><span class="header-section-number">24</span> Survival analysis</a></li>
@@ -139,7 +139,7 @@ Overview
 <pre><code>## Warning: Removed 88 rows containing non-finite values (stat_boxplot).</code></pre>
 <pre><code>## Warning: Removed 88 rows containing non-finite values (stat_ydensity).</code></pre>
 <pre><code>## Warning: Removed 88 rows containing missing values (geom_point).</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-574-1.png" width="50%"><img src="_main_files/figure-html/unnamed-chunk-574-2.png" width="50%"><img src="_main_files/figure-html/unnamed-chunk-574-3.png" width="50%"><img src="_main_files/figure-html/unnamed-chunk-574-4.png" width="50%"></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-543-1.png" width="50%"><img src="_main_files/figure-html/unnamed-chunk-543-2.png" width="50%"><img src="_main_files/figure-html/unnamed-chunk-543-3.png" width="50%"><img src="_main_files/figure-html/unnamed-chunk-543-4.png" width="50%"></p>
 <!-- ======================================================= -->
 </div>
 <div id="preparation-19" class="section level2 tabset tabset-fade" number="28.2">
@@ -151,7 +151,7 @@ Preparation
 <a class="anchor" aria-label="anchor" href="#preparation-19"><i class="fas fa-link"></i></a>
 </h2>
 <p>Preparation includes loading the relevant packages, namely <code>ggplot2</code>, (<code><a href="https://rdrr.io/r/utils/install.packages.html">install.packages("ggplot2")</a></code> if needed), and ensuring your data is the correct class and format. For the examples in this section, we use the simulated Ebola linelist, focusing on the continuous variables <code>age</code>, <code>ct_blood</code> (CT values), and <code>days_onset_hosp</code> (difference between onset date and hospitalisation).</p>
-<div class="sourceCode" id="cb861"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb879"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span>
 
@@ -169,7 +169,7 @@ In-built graphics package
 </h2>
 <p><strong>Plotting one continuous variable</strong></p>
 <p>The in-built graphics package comes with the boxplot() function, allowing straight-forward visualisation of a continuous variable for the whole dataset (A below) or within different groups (B and C below). Note how with C, <code>outcome</code> and <code>gender</code> are written as <code>outcome*gender</code> such that the boxplots are for the four combinations of the two columns.</p>
-<div class="sourceCode" id="cb862"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb880"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># For total population</span>
 <span class="fu">graphics</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/graphics/boxplot.html">boxplot</a></span><span class="op">(</span><span class="va">linelist</span><span class="op">$</span><span class="va">age</span>,
                   main <span class="op">=</span> <span class="st">"A) One boxplot() for total dataset"</span><span class="op">)</span> <span class="co"># Plot title</span>
@@ -184,14 +184,14 @@ In-built graphics package
 <span class="fu">graphics</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/graphics/boxplot.html">boxplot</a></span><span class="op">(</span><span class="va">age</span> <span class="op">~</span> <span class="va">outcome</span><span class="op">*</span><span class="va">gender</span>,
                   data <span class="op">=</span> <span class="va">linelist</span>, <span class="co"># Here 'data' is specified so no need to write 'linelist$age' in line above.</span>
                   main <span class="op">=</span> <span class="st">"C) boxplot() by crossed groups"</span><span class="op">)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-576-1.png" width="33%"><img src="_main_files/figure-html/unnamed-chunk-576-2.png" width="33%"><img src="_main_files/figure-html/unnamed-chunk-576-3.png" width="33%"></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-545-1.png" width="33%"><img src="_main_files/figure-html/unnamed-chunk-545-2.png" width="33%"><img src="_main_files/figure-html/unnamed-chunk-545-3.png" width="33%"></p>
 <p>Some further options with <code><a href="https://rdrr.io/r/graphics/boxplot.html">boxplot()</a></code> shown below are:</p>
 <ul>
 <li>Boxplot width proportional to sample size (A)</li>
 <li>Violin plots, with notched representing the median and x around it (B)</li>
 <li>Horizontal (C)</li>
 </ul>
-<div class="sourceCode" id="cb863"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb881"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Varying width by sample size </span>
 <span class="fu">graphics</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/graphics/boxplot.html">boxplot</a></span><span class="op">(</span><span class="va">linelist</span><span class="op">$</span><span class="va">age</span> <span class="op">~</span> <span class="va">linelist</span><span class="op">$</span><span class="va">outcome</span>,
                   varwidth <span class="op">=</span> <span class="cn">TRUE</span>, <span class="co"># width varying by sample size</span>
@@ -213,13 +213,13 @@ In-built graphics package
         col<span class="op">=</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"gold"</span>,<span class="st">"darkgreen"</span><span class="op">)</span><span class="op">)</span>,
         main<span class="op">=</span><span class="st">"C) Horizontal boxplot()"</span>,
         xlab<span class="op">=</span><span class="st">"Suppliment and Dose"</span><span class="op">)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-577-1.png" width="33%"><img src="_main_files/figure-html/unnamed-chunk-577-2.png" width="33%"><img src="_main_files/figure-html/unnamed-chunk-577-3.png" width="33%"></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-546-1.png" width="33%"><img src="_main_files/figure-html/unnamed-chunk-546-2.png" width="33%"><img src="_main_files/figure-html/unnamed-chunk-546-3.png" width="33%"></p>
 <p><strong>Plotting two continuous variables</strong></p>
 <p>Using base R, we can visualise the relationship between two continuous variables with the <code>plot</code> function.</p>
 <p>We see that higher CT values are associated with a smaller time difference between onset date and hospitalisation. Note that the points look aligned as they are rounded values.</p>
-<div class="sourceCode" id="cb864"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb882"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">linelist</span><span class="op">$</span><span class="va">days_onset_hosp</span>, <span class="va">linelist</span><span class="op">$</span><span class="va">ct_blood</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-578-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-547-1.png" width="672"></div>
 <!-- ======================================================= -->
 </div>
 <div id="plotting-with-ggplot" class="section level2 tabset tabset-fade" number="28.4">
@@ -260,7 +260,7 @@ Plotting with ggplot()
 <p>For more see section on <a href="#ggplottips">ggplot tips</a>).</p>
 <p><strong>Plotting one continuous variable</strong></p>
 <p>Below is code for creating <strong>box plots</strong>, to show the distribution of CT values of Ebola patients in an entire dataset and by sub group. Note that for the subgroup breakdowns, the ‘NA’ values are also removed using dplyr, otherwise ggplot plots the age distribution for ‘NA’ as a separate boxplot.</p>
-<div class="sourceCode" id="cb866"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb884"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># A) Simple boxplot of one numeric variable</span>
 <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">linelist</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">ct_blood</span><span class="op">)</span><span class="op">)</span><span class="op">+</span>  <span class="co"># only y variable given (no x variable)</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span><span class="op">)</span><span class="op">+</span>
@@ -272,9 +272,9 @@ Plotting with ggplot()
            x <span class="op">=</span> <span class="va">outcome</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>      <span class="co"># group variable</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"gold"</span><span class="op">)</span><span class="op">+</span>   <span class="co"># create the boxplot and specify colour</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span><span class="op">(</span><span class="st">"B) ggplot() boxplot by gender"</span><span class="op">)</span>      <span class="co"># main title</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-579-1.png" width="50%"><img src="_main_files/figure-html/unnamed-chunk-579-2.png" width="50%"></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-548-1.png" width="50%"><img src="_main_files/figure-html/unnamed-chunk-548-2.png" width="50%"></p>
 <p>Below is code for creating <strong>violin plots</strong> (<code>geom_violin</code>) and <strong>jitter plots</strong> (<code>geom_jitter</code>) to show age distributions. One can specify that the ‘fill’ or ’color’is also determined by the data, thereby inserting these options within the <code>aes</code> bracket.</p>
-<div class="sourceCode" id="cb867"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb885"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># A) Violin plot by group</span>
 <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">linelist</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">outcome</span><span class="op">)</span><span class="op">)</span>, 
        <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">age</span>,         <span class="co"># numeric variable</span>
@@ -283,7 +283,7 @@ Plotting with ggplot()
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_violin.html">geom_violin</a></span><span class="op">(</span><span class="op">)</span><span class="op">+</span>                            <span class="co"># create the violin plot</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span><span class="op">(</span><span class="st">"A) ggplot() violin plot by gender"</span><span class="op">)</span>      <span class="co"># main title</span></code></pre></div>
 <pre><code>## Warning: Removed 64 rows containing non-finite values (stat_ydensity).</code></pre>
-<div class="sourceCode" id="cb869"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb887"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># B) Jitter plot by group</span>
 <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">linelist</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">outcome</span><span class="op">)</span><span class="op">)</span>, 
        <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">age</span>,         <span class="co"># numeric variable</span>
@@ -292,7 +292,7 @@ Plotting with ggplot()
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_jitter.html">geom_jitter</a></span><span class="op">(</span><span class="op">)</span><span class="op">+</span>                            <span class="co"># create the violin plot</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span><span class="op">(</span><span class="st">"B) ggplot() violin plot by gender"</span><span class="op">)</span>      <span class="co"># main title</span></code></pre></div>
 <pre><code>## Warning: Removed 64 rows containing missing values (geom_point).</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-580-1.png" width="50%"><img src="_main_files/figure-html/unnamed-chunk-580-2.png" width="50%"></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-549-1.png" width="50%"><img src="_main_files/figure-html/unnamed-chunk-549-2.png" width="50%"></p>
 <p>To examine further subgroups, one can ‘facet’ the graph. This means the plot will be recreased within specified subgroups. One can use:</p>
 <ul>
 <li>
@@ -300,7 +300,7 @@ Plotting with ggplot()
 <li>
 <code><a href="https://ggplot2.tidyverse.org/reference/facet_grid.html">facet_grid()</a></code> - this is suited to seeing subgroups for particular combinations of discrete variables. See plot B below.</li>
 </ul>
-<div class="sourceCode" id="cb871"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb889"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># A) Facet by one variable</span>
 <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">linelist</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">gender</span><span class="op">)</span> <span class="op">&amp;</span> <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">outcome</span><span class="op">)</span><span class="op">)</span>, <span class="co"># filter retains non-missing gender/outcome</span>
        <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">age</span>, x <span class="op">=</span> <span class="va">outcome</span>, fill<span class="op">=</span><span class="va">outcome</span><span class="op">)</span><span class="op">)</span><span class="op">+</span>
@@ -314,9 +314,9 @@ Plotting with ggplot()
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span><span class="op">)</span><span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span><span class="op">(</span><span class="st">"A) A ggplot() boxplot by gender and outcome"</span><span class="op">)</span><span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_grid.html">facet_grid</a></span><span class="op">(</span><span class="va">outcome</span><span class="op">~</span><span class="va">gender</span><span class="op">)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-581-1.png" width="50%"><img src="_main_files/figure-html/unnamed-chunk-581-2.png" width="50%"></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-550-1.png" width="50%"><img src="_main_files/figure-html/unnamed-chunk-550-2.png" width="50%"></p>
 <p>To turn the plot horizontal, flip the coordinates with <code>coord_flip</code>.</p>
-<div class="sourceCode" id="cb872"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb890"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># By subgroup</span>
 <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">linelist</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">gender</span><span class="op">)</span> <span class="op">&amp;</span> <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">outcome</span><span class="op">)</span><span class="op">)</span>, <span class="co"># filter retains non-missing gender/outcome</span>
        <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">age</span>, x <span class="op">=</span> <span class="va">outcome</span>, fill<span class="op">=</span><span class="va">outcome</span><span class="op">)</span><span class="op">)</span><span class="op">+</span>
@@ -324,17 +324,17 @@ Plotting with ggplot()
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span><span class="op">(</span><span class="st">"B) A horizontal ggplot() boxplot by gender and outcome"</span><span class="op">)</span><span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="va">gender</span><span class="op">~</span><span class="va">.</span>, ncol<span class="op">=</span><span class="fl">1</span><span class="op">)</span> <span class="op">+</span> 
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_flip.html">coord_flip</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-582-1.png" width="100%"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-551-1.png" width="100%"></div>
 <p><strong>Plotting two continuous variables</strong></p>
 <p>Following similar syntax, <code>geom_point</code> will allow one to plot two continuous variables against eachother in a <strong>scatter plot</strong>. Here we again use <code>facet_grid</code> to show the relationship between two continuous variables in the linelist. We see that higher CT values are associated with a smaller time difference between onset date and hospitalisation.</p>
-<div class="sourceCode" id="cb873"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb891"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># By subgroup</span>
 <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">linelist</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">gender</span><span class="op">)</span> <span class="op">&amp;</span> <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">outcome</span><span class="op">)</span><span class="op">)</span>, <span class="co"># filter retains non-missing gender/outcome</span>
        <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">days_onset_hosp</span>, x <span class="op">=</span> <span class="va">ct_blood</span><span class="op">)</span><span class="op">)</span><span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span><span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span><span class="op">(</span><span class="st">"A horizontal ggplot() boxplot by gender and outcome"</span><span class="op">)</span><span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_grid.html">facet_grid</a></span><span class="op">(</span><span class="va">gender</span><span class="op">~</span><span class="va">outcome</span><span class="op">)</span> </code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-583-1.png" width="100%"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-552-1.png" width="100%"></div>
 <!-- ======================================================= -->
 </div>
 <div id="resources-18" class="section level2 tabset tabset-fade" number="28.5">
@@ -395,7 +395,7 @@ Resources
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>R Handbook for Epidemiologists</strong>" was written by the handbook team. It was last built on 2021-02-13.</p>
+    <p>"<strong>R Handbook for Epidemiologists</strong>" was written by the handbook team. It was last built on 2021-02-19.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
