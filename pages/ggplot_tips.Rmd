@@ -291,6 +291,43 @@ ggplot(linelist_cleaned, aes(x = date_onset)) +
 <!-- ======================================================= -->
 ## Dual axes {.tabset .tabset-fade .tabset-pills}
 
+A secondary y-axis is often a requested addition to a `ggplot2` graph. Unfortunately, secondary axes are not well supported in the `ggplot` syntax. For this reason, you're fairly limited in terms of what can be shown with a secondary axis - the second axis has to be a direct transformation of the secondary axis. 
+
+Differences in axis values will be purely cosmetic - if you want to show two different variables on one graph, with different y-axis scales for each variable, this will not work without some work behind the scenes. To obtain this effect, you will have to transform one of your variables in the data, and apply the same transformation *in reverse* when specifying the axis labels. Based on this, you can either specify the transformation explicitly (e.g. variable a is around 10x as large as variable b) or calculate it in the code (e.g. what is the ratio between the maximum values of each dataset).
+
+
+The syntax for adding a secondary axis is very straightforward! When calling a `scale_xxx_xxx()` function (e.g. `scale_y_continuous()`), use the `sec.axis` argument to call the `sec_axis()` function. The `trans` argument in this function allows you to specify the label transformation for the axis - provide this in standard tidyverse syntax. 
+
+For example, if we want to show the number of positive RDTs in the malaria dataset for facility 1, showing 0-4 year olds and all cases on chart:
+
+
+```{r, eval = T}
+malaria_data <- read_rds(here::here("data", "facility_count_data.rds")) %>%
+  filter(location_name == "Facility 1")
+
+# calculate the ratio between malaria_rdt_0-4 and malaria_tot 
+
+tf_ratio <- max(malaria_data$malaria_tot, na.rm = T) / max(malaria_data$`malaria_rdt_0-4`, na.rm = T)
+
+# transform the values in the dataset
+
+malaria_data_f1 <- malaria_data %>%
+  mutate(malaria_rdt_0_4_tf = `malaria_rdt_0-4` * tf_ratio) %>%
+  
+
+# plot the graph with dual axes
+
+ggplot(malaria_data, aes(x = data_date)) +
+  geom_path(aes(x = malaria_tot, col = "Total cases")) +
+  geom_path(aes(x = malaria_rdt_0_4_tf, col = "Cases: 0-4 years old")) +
+  scale_y_continuous(
+    name = "Total cases",
+    sec.axis = sec_axis(trans = ~ . / tf_ratio, name = "Cases: 0-4 years old")
+  )
+  
+
+
+```
 
 <!-- ======================================================= -->
 ## Adding shapes {.tabset .tabset-fade .tabset-pills}
