@@ -431,6 +431,30 @@ The R community of users is enormous and collaborative. New packages and tools t
 
 
 
+## Coming to R  
+
+This section is under construction - TBD  
+
+
+### From STATA {-}  
+
+https://www.princeton.edu/~otorres/RStata.pdf
+https://clanfear.github.io/Stata_R_Equivalency/docs/r_stata_commands.html
+
+gen to mutate
+variable labels not commonly used in R
+
+
+### From SAS {-}  
+
+
+
+
+### From SPSS {-}
+
+
+
+
 
 <!-- ======================================================= -->
 ## Installation {#install}
@@ -493,7 +517,6 @@ Install from this website: [https://cran.r-project.org/bin/windows/Rtools/](http
 #### phantomjs {-}  
 
 This is often used to take "screenshots" of webpages. For example when you make a transmission chain with **epicontacts** package, an HTML file is produced that is interactive and dynamic. If you want a static image, if can be useful to use the [**webshot**](https://wch.github.io/webshot/articles/intro.html) package to automate this process. This will require the external program "phantomjs". You can install phantomjs via the **webshot** package with the command `webshot::install_phantomjs()`.  
-
 
 
 
@@ -724,7 +747,7 @@ Datasets are also objects (typically "dataframes") and must be assigned names wh
 linelist <- rio::import("my_linelist.csv")
 ```
 
-You can read more about importing and exporting datasets with the section on [importing data](#importdata).
+You can read more about importing and exporting datasets with the section on [Import and export].
 
 <span style="color: orange;">**_CAUTION:_** A quick note on naming of objects:</span>
 
@@ -1739,7 +1762,7 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 
 <!--chapter:end:new_pages/basics.Rmd-->
 
-# Importing and exporting {}
+# Import and export {}
 
 <!-- ======================================================= -->
 ## Overview
@@ -2293,6 +2316,9 @@ An common, efficient, and trouble-free way to use R is to combine these 3 elemen
      - Filepaths become more simple, less error-prone, and portable across computers  
 3) The **rio** for importing/exporting  
      - `import()` and `export()` handle almost any kind of file by reading the existing or desired file extension (e.g. .csv, .xlsx, .png)  
+     - See the page on [Import and export] of data for more informaton  
+     
+
 
 
 
@@ -2339,7 +2365,7 @@ One tip is that you can search across an entire project or folder using the "Fin
 
 To switch between projects, click the R project icon and drop-down menu at the very top-right of RStudio. You will see options to Close Project, Open Project, and a list of recent projects.  
 
-```{r out.width = "110%", fig.align = "center", echo=F}
+```{r out.width = "100%", fig.align = "center", echo=F}
 knitr::include_graphics(here::here("images", "Rproject_dropdown.png"))
 ```
 
@@ -2440,32 +2466,39 @@ Also, consider using the package **conflicted** to manage conflicts and masking 
 pacman::p_load(
      
      # learning R
-     learnr,
+     learnr,  # interactive tutorials in RStudio
         
      # project and file management
-     here,
-     rio,
+     here,    # filepaths relative to root project folder
+     rio,     # import/export of data
      
      # package install and management
-     pacman,
-     renv,
-     remotes
+     pacman,  # package install/load
+     renv,    # managing versions of packages in collaborative groups
+     remotes  # install from github
      
      # General data management
-     tidyverse,
+     tidyverse,    # includes many packages for tidy data wrangling and presentation
           #dplyr,
           #tidyr,
           #ggplot2,
-     linelist,
-     lubridate,
-     naniar,
+     linelist,     # cleaning linelists
+     lubridate,    # working with dates
+     naniar,       # assessing missing data
      
      # statistics  
-     gtsummary,
+     gtsummary,    # making descriptive and statistical tables
      
      
      # epidemic modeling
-     epicontacts,
+     epicontacts,  # Analysing transmission networks
+     EpiNow2,      # Rt estimation
+     EpiEstim,     # Rt estimation
+     projections,  # Incidence projections
+     incidence,    # Handling incidence data
+     epitrix,      # Useful epi functions
+     distcrete,    # Discrete delay distributions
+     
      
      # plots - general
      #ggplot2,         # included in tidyverse
@@ -2473,8 +2506,8 @@ pacman::p_load(
      RColorBrewer      # color scales
      
      # plots - specific types
-     DiagrammeR,
-     incidence,
+     DiagrammeR,       # diagrams using DOT language
+     incidence,        # epidemic curves
      
      # gis
      sf,               # to manage spatial data using a Simple Feature format
@@ -2486,16 +2519,17 @@ pacman::p_load(
      reportfactory,    # Auto-organization of Rmarkdown outputs
      
      # tables
-     knitr,
-     DT,
+     knitr,            # report generation, kable() for html tables
+     DT,               # HTML tables
+     gt,               # HTML tables
      
      # phylogenetics  
-     ggtree,
-     ape,
+     ggtree,           # visualization and annotation of trees
+     ape,              # analysis of phylogenetics and evolution
      
      # interactive
-     plotly,
-     shiny,
+     plotly,           # interactive graphics
+     shiny,            # interactive web apps  
 )
 
 
@@ -2720,7 +2754,9 @@ The columns names of `linelist_raw` are printed below using `names()` from **bas
 names(linelist_raw)
 ```
 
-Note: For a column name that include spaces, surround the name with back-ticks, for example: linelist$\`infection date\`. note that on your keyboard, the back-tick (`) is different from the single quotation mark (').  
+<span style="color: black;">**_NOTE:_** For a column name that include spaces, surround the name with back-ticks, for example: linelist$`` `r '\x60infection date\x60'` ``. note that on your keyboard, the back-tick (`) is different from the single quotation mark (').</span>
+
+
 
 
 ### Automatic cleaning {-}  
@@ -2807,7 +2843,7 @@ linelist_raw %>%
 
 #### Empty Excel column names {-} 
 
-If you importing an Excel sheet with a missing column name, depending on the import function used, R will likely create a column name with a value like "...1" or "...2". You can clean these names manually by referencing their position number (see example above), or their name (`linelist_raw$...1`).  
+If you are importing an Excel sheet with a missing column name, depending on the import function used, R will likely create a column name with a value like "...1" or "...2". You can clean these names manually by referencing their position number (see example above), or their name (`linelist_raw$...1`).  
 
 
 
@@ -3048,7 +3084,7 @@ linelist <- linelist_raw %>%
 
 **The verb `mutate()` is used to add a new column, or to modify an existing one.** Below is an example of creating a new columns with `mutate()`. The syntax is: `mutate(new_column_name = value or transformation)`  
 
-
+In Stata, this is similar to the command `generate`, but R's `mutate()` can also be used to modify an existing column.  
 
 
 ### New columns {-}
@@ -3204,7 +3240,7 @@ linelist <- linelist %>%
   mutate(across(contains("date"), as.character))
 ```
 
-Below, we want to mutate the columns where they are class POSIXct (a datetime class that shows timestamps) - where the function `is.POSIXct()` evaluates to `TRUE`. Then we want to apply the function `is.Date()` to of these column to convert them to class Date.  
+Below, we want to mutate the columns where they are class POSIXct (a datetime class that shows timestamps) - where the function `is.POSIXct()` evaluates to `TRUE`. Then we want to apply the function `as.Date()` to of these column to convert them to class Date.  
 
 ```{r, eval=F}
 linelist <- linelist %>% 
@@ -3247,7 +3283,7 @@ For more complicated row-wise calculations, see the section on Row-wise calculat
 
 ### Cumulative math {-}
 
-If you a column to reflect the cumulative sum/mean/min/max etc as assessed down the rows of a dataframe, use the following functions:  
+If you want a column to reflect the cumulative sum/mean/min/max etc as assessed down the rows of a dataframe, use the following functions:  
 
 `cumsum()` returns the cumulative sum, as shown below:  
 
@@ -4179,6 +4215,8 @@ Can we just filter by `date_onset` to rows after June 2013? **Caution! Applying 
 #### Design the filter {-}  
 
 Examine a cross-tabulation to make sure we exclude only the correct rows:  
+*(See the page on [Working with dates] for more information on the package **lubridate**)*.  
+
 
 ```{r}
 table(Hospital  = linelist$hospital,                     # hospital name
@@ -5059,6 +5097,404 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 ```
 
 <!--chapter:end:new_pages/dates.Rmd-->
+
+# Factors {}
+
+<!-- ======================================================= -->
+## Overview
+ 
+Under construction - TBD  
+
+
+In R, *factors* allow for ordered categorical data. A column can be converted from class numeric, categorical, or even logical to class *factor*. In this case, the values are stored as *ordered integer **levels***, and can display with assigned *labels*.  
+
+In a column of class *factor*:  
+
+* the possible values are restricted - values not already defined as levels are rejected  
+* values are ordered, which impacts how they display in tables and plots  
+
+Most of this page will use functions from the package **forcats** (a short name for "For categorical variables"). 
+
+*Factors are useful in statistical modeling, which allows integer values such as 1/0 to be evaluated categorically and not continuously.*  
+
+
+
+<!-- ======================================================= -->
+## Preparation  
+
+**Load packages**  
+
+Below are the packages used in this page
+
+```{r}
+pacman::p_load(
+  rio,           # import/export
+  here,          # filepaths
+  lubridate,     # working with dates
+  forcats,       # factors
+  tidyverse      # data mgmt and viz
+  )
+```
+
+
+
+**Load data**  
+
+In this page we demonstrate using the `linelist` loaded below with `import()` (see page on [Import and Export]).  
+
+```{r}
+# import the linelist into R
+linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
+```
+
+
+```{r, eval=F}
+# fake import the linelist
+linelist <- rio::import("linelist_cleaned.xlsx")
+```
+
+
+
+
+
+<!-- ======================================================= -->
+## Preparation  
+
+We begin in a common epidemiological scenario - the creation of a categorical column. In this case, we use the existing column `time_admission` (in format "HH:MM") to classify hospital admissions into either morning, afternoon, evening, or night.  
+
+1) The `time_admission` is converted to a time class with `strptime()` from **base** R, and then the `hour` is extracted with the **lubridate** function `hour()`  
+2) The **dplyr** function `case_when()` is used to apply logical criteria on each row, resulting in values for the new column `time_period`  
+
+```{r, eval=F, echo=F}
+# linelist <- linelist %>% 
+#   mutate(hour = hour(strptime(time_admission, format = "%H:%M"))) %>% 
+#   mutate(time_period = case_when(
+#     hour > 06 & hour < 12 ~ "Morning",
+#     hour >= 12 & hour < 17 ~ "Afternoon",
+#     hour >= 17 & hour < 21 ~ "Evening",
+#     hour >=21 | hour <= 6 ~ "Night"))
+```
+
+```{r}
+linelist <- linelist %>% 
+  mutate(delay = case_when(
+    days_onset_hosp < 2                        ~ "<2 days",
+    days_onset_hosp >= 2 & days_onset_hosp < 5 ~ "2-5 days",
+    days_onset_hosp >= 5                       ~ ">5 days",
+    is.na(days_onset_hosp)                     ~ NA_character_,
+    TRUE                                       ~ "Check me"))  
+```
+
+This is a column of character categorical values, but is **not** yet classified as a factor. Thus, in a frequency table, we see that the values appear in a default alphabetical order - an order that does not make much intuitive sense:  
+
+```{r}
+table(linelist$delay, useNA = "always")
+```
+
+Likewise, if we make a bar plot the values also appear in this order from the bottom:    
+This probably does not make sense to show.  
+
+```{r, warning=F, message=F}
+ggplot(data = linelist, aes(x = delay))+
+  geom_bar()+
+  theme_classic()
+```
+
+## Convert to factor  
+
+To initially convert a column to class *factor*, use the **base** R function `factor()`. Below the dataframe `linelist` is modified such that the column `time_period` is converted to a factor.    
+
+```{r}
+linelist <- linelist %>%
+  mutate(delay = factor(delay))
+```
+
+Unless specified, the levels will still be in alphabetic (or numeric) order. Use the **base** R function `levels()` to see how the levels of `time_period` are ordered. Note that `NA` is not a factor level.  
+
+```{r}
+levels(linelist$delay)
+```
+
+
+## Adjust level order  
+
+Using the package **forcats**, there are several functions to adjust the order of a factor's levels: 
+
+* Use `fct_relevel()` to *manually* adjust the order  
+* Use `fct_infreq()` to reorder by frequency (highest to lowest)  
+* Use `fct_inorder()` to reorder by order of appearance in the data  
+* Use `fct_reorder()` to reorder by another column (e.g. order time_period levels by their row's median delay to admission)  
+* Use `fct_rev()` to reverse the existing order  
+* Use `fct_reorder2()` to reorder by the final values when plotted with two other columns  
+
+
+These functions can be applied outside of a plot to re-define the column, or within a plot to affect just one specific plot.  
+ 
+
+
+
+### Examples {-}  
+
+
+**`fct_relevel()`**  
+
+This function is used to manually assign factor levels. If desired, you can write all the levels in the desired order. However, it is not necessary to specify the order of *all* levels - you can adjust the order only certain levels using the `after = ` argument.  
+
+Here are examples of redefining the column, with mew order of levels:  
+
+```{r}
+# re-define level order
+linelist <- linelist %>% 
+  mutate(delay = fct_relevel(delay, c("<2 days", "2-5 days", ">5 days")))
+
+
+# using base R 
+linelist$delay <- fct_relevel(linelist$delay, c("<2 days", "2-5 days", ">5 days"))
+```
+
+
+Alternatively, you can adjust the levels of a factor from *within* a plot, and the re-ordering of the levels will only apply within the plot. Below, you can see how the specified order begins from the bottom to the top. The missing value `NA` are at the end.  
+
+
+```{r, warning=F, message=F}
+ggplot(data = linelist, aes(x = fct_relevel(delay, c("<2 days", "2-5 days", ">5 days", "Missing"))))+
+  geom_bar()
+```
+
+Note how the default x-axis label is now quite complicated - you can overwrite this with the `labs()` in ggplot.  
+
+
+
+
+**`fct_infreq()`**  
+
+To order by frequency that the value appears in the data, use `fct_infreq()`. Any missing values (`NA`) will automatically be included at the end.  
+
+You can reverse the order by wrapping with `fct_rev()`, like this: `fct_rev(fct_infreq(time_period))`.
+
+```{r, out.width = c('50%', '50%', '50%'), fig.show='hold', warning=F, message=F}
+# ordered by frequency
+ggplot(data = linelist, aes(x = fct_infreq(delay)))+
+  geom_bar()+
+  labs(x = "Delay onset to admission (days)")
+
+# reversed frequency
+ggplot(data = linelist, aes(x = fct_rev(fct_infreq(delay))))+
+  geom_bar()+
+  labs(x = "Delay onset to admission (days)")
+```
+
+
+
+
+**`fct_reorder()`**  
+
+Use this function to order the levels by another column. For example, to order boxplots showing delay *by the median CT value of each delay group*.  
+
+In the examples below, the x-axis if delay group, and the y = axis is CT value. The boxplots are also colored by delay group.  
+
+In the first example, the baseline order of the levels applies (as set earlier in this page) - they increase incrementally updward by delay.  
+In the second example, the x-axis column has been wrapped in `fct_reorder()`, with the column `ct_blood` as the second argument. The default is order `delay` by the *median* `ct_value`. An alternative function can be supplied, e.g. "mean", or "max".  
+
+Note there are no explicit grouping steps required prior to the `ggplot()` - the grouping and calculations are all done internally.  
+
+```{r, warning=F, message=F}
+# boxplots ordered by original factor levels
+ggplot(data = linelist)+
+  geom_boxplot(
+    aes(x = delay,
+        y = ct_blood, 
+        fill = delay))+
+  labs(x = "Delay onset to admission (days)",
+       title = "Ordered by increasing delay (original factor levels)")+
+  theme_classic()+
+  theme(legend.position = "none")
+
+
+# boxplots ordered by median CT value
+ggplot(data = linelist)+
+  geom_boxplot(
+    aes(x = fct_reorder(delay, ct_blood, "median"),
+        y = ct_blood,
+        fill = delay))+
+  labs(x = "Delay onset to admission (days)",
+       title = "Ordered by median CT value in group")+
+  theme_classic()+
+  theme(legend.position = "none")
+```
+
+
+
+**`fct_reorder2()`**  
+
+Use this function to order the *legend colors* by the vertical order of groups at the "end" of the plot. For example, if you have lines showing case counts by hospital over time, you can apply `fct_reorder2()` to the `color = ` argument within `aes()`, such that the vertical order of hospitals appearing in the legend aligns with the order of lines at the terminal end of the plot. Read more in the [function documentation](https://forcats.tidyverse.org/reference/fct_reorder.html).  
+
+```{r, warning=F, message=F}
+linelist %>%         # begin with the linelist            
+  count(             # summarise so n = counts of rows by epiweek and by hospital
+    epiweek = lubridate::floor_date(date_onset, "week"),  # create and group by epiweeks
+    hospital         # also group by hospital
+    ) %>% 
+  
+  ggplot()+           # start plot
+  geom_line(          # make lines
+    aes(x = epiweek,  # x-axis epiweek
+        y = n,        # height in number of rows
+        color = fct_reorder2(hospital, epiweek, n)))+ # grouped by hospital and colors ordered by n value at end of plot
+  labs(color = "Hospital")  # change legend title
+```
+
+
+
+
+
+
+
+**`fct_lump()`**
+
+To "lump" together many low-frequency levels into an "Other" group, you can use this function. Do one of the following:  
+
+* Set `n = ` argument as the number of groups you want to keep. All other values will combine into "Other".  
+* set `prop = ` argument as the proportion above which you want to keep. All other values will combine into "Other".  
+
+You can also change the label for "Other" by using `other_level = `. Below, all but the two most-frequent hospitals are combined into "Other hospitals".  
+
+```{r, warning=F, message=F}
+ggplot(data = linelist)+
+  geom_bar(aes(x = fct_lump(hospital,    # column for x-axis
+                            n = 2,       # keep two most-frequent levels
+                            other_level = "Other hospitals"))) # label for "Other" group
+```
+
+You can also use `fct_other()` to manually assign factor levels to an "Other" group. Below, all `hospital` values aside from "Port Hospital" and "Central Hospital" are combined into "Other".  
+
+You can use the arguments `keep = `, or `drop = `, and can change the label of "Other" with `other_label = `.  
+
+```{r}
+linelist %>% 
+  mutate(hospital = fct_other(hospital, keep = c("Port Hospital", "Central Hospital"))) %>% 
+  select(hospital) %>% 
+  table()
+
+```
+
+
+**Missing values**  
+
+If you have `NA` values in your column, you can easily convert them to a named value such as "Missing" with `fct_explicit_na()`, as performed below temporarily on the column `delay`:  
+
+```{r}
+linelist %>% 
+  mutate(delay = fct_explicit_na(delay, na_level = "Missing")) %>% 
+  select(delay) %>% 
+  table(useNA = "always")
+```
+
+
+
+
+
+## Edit labels  
+
+Adjust the factor labels with `fct_recode()`. remember that these do not change the underlying values, only their labels.  
+Below, the labels of the factor column `delay` (grouped days from onset to admission) are edited:  
+
+The old labels:  
+
+```{r}
+table(linelist$delay, useNA = "always")
+```
+
+Now the labels are changed, using syntax `fct_recode(column, "new" = "old","new" = "old", "new" = "old")`. Remember that `NA` is not a formal level unless changed (e.g. with `fct_explicit_na()` as shown above).  
+
+```{r}
+linelist <- linelist %>% 
+  mutate(delay = fct_recode(delay,
+                            "Less than 2 days" = "<2 days",
+                            "2 to 5 days"      = "2-5 days",
+                            "More than 5 days" = ">5 days"))
+
+table(linelist$delay)
+```
+
+
+## Add/drop levels  
+
+If you have a factor and want to add levels (regardless of whether there are any rows with those values), use `fct_expand()`.  
+
+See how if we classify "hospital" as a factor, and then try to change the values, an error is returned:  
+
+```{r}
+linelist <- linelist %>% 
+  mutate(hospital = factor(hospital))
+
+levels(linelist$hospital)
+```
+
+Now we can add the level "University Hospital":  
+
+```{r}
+linelist <- linelist %>% 
+  mutate(hospital = fct_expand(hospital, "University Hospital"))
+
+levels(linelist$hospital)
+```
+
+
+### Epiweeks {-}  
+
+TBD - under construction  
+
+Epiweeks produced by **aweek** will appear as an ordered factor 
+
+```{r, eval=F}
+a <- linelist %>% 
+  mutate(epiweek = aweek::date2week(date_onset, ))
+
+
+a <- linelist %>% 
+  mutate(epiweek = factor(lubridate::isoweek(date_onset)))
+
+levels(a$epiweek)
+```
+
+<!-- ======================================================= -->
+## Resources {} 
+
+R for Data Science page on [factors](https://r4ds.had.co.nz/factors.html).  
+```{r include=FALSE, cache=FALSE}
+
+# clear workspace
+rm(list = ls(all = TRUE))
+
+# clear all packages except base
+#lapply(names(sessionInfo()$loadedOnly), require, character.only = TRUE)
+#invisible(lapply(paste0('package:', names(sessionInfo()$otherPkgs)), detach, character.only=TRUE, unload=TRUE, force=TRUE))
+
+# to ensure that tidyverse packages prevail
+filter <- dplyr::filter
+select <- dplyr::select
+summarise <- dplyr::summarise
+summary <- base::summary
+
+#load core packages
+pacman::p_load(
+     rio,
+     here,
+     DT,
+     stringr,
+     lubridate,
+     tidyverse
+)
+
+# import the cleaned ebola linelist
+linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
+
+# import the count data - facility level
+#count_data <- rio::import(here::here("data", "facility_count_data.rds"))
+```
+
+<!--chapter:end:new_pages/factors.Rmd-->
 
 
 # Missing data { }
@@ -7489,12 +7925,30 @@ This command returns the number of occupations which contain any one of the sear
 sum(str_detect(occupations, occupation_med_frontline))
 ```
 
+
+
 **Base R string search functions**  
 
 The **base** function `grepl()` works similarly to `str_detect()`, in that it searches for matches to a pattern and returns a logical vector. The basic syntax is `grepl(pattern, strings_to_search, ignore.case = FALSE, ...)`. One advantage is that the `ignore.case` argument is easier to write (there is no need to involve `regex()` function).  
 
 Likewise, the **base** functions `sub()` and `gsub()` act similarly to `str_replace()`. Their basic syntax is: `gsub(pattern, replacement, strings_to_search, ignore.case = FALSE)`. `sub()` will replace the first instance of the pattern, whereas `gsub()` will replace all instances of the pattern.  
 
+
+#### Convert commas to periods {-}  
+
+Here is an example of using `gsub()` to convert commas to periods in a vector of numbers. This could be useful if your data come from much of the world other from the United States or Great Britain.  
+
+The inner `gsub()` which acts first on `lengths` is converting any periods to no space "". The period character "." has to be "escaped" with two slashes to actually signify a period, because "." in regex means "any character". Then, the result (with only commas) is passed to the outer `gsub()` in which commas are replaced by periods.   
+
+```{r, eval=F}
+lengths <- c("2.454,56", "1,2", "6.096,5")
+
+as.numeric(gsub(pattern = ",",                # find commas     
+                replacement = ".",            # replace with periods
+                x = gsub("\\.", "", lengths)  # vector with other periods removed (periods escaped)
+                )
+           )                                  # convert outcome to numeric
+```
 
 
 
@@ -10347,11 +10801,10 @@ knitr::include_graphics(here::here("images", "moving_avg_epicurve.png"))
 <!-- ======================================================= -->
 ## Overview {  }
 
-This page will cover methods to calculate and visualize moving averages, for:  
+This page will cover two methods to calculate and visualize moving averages:  
 
-
-**To see a moving average for an epicurve, see the page on epicurves (LINK)**  
-
+1) Calculate, then display  
+2) Calculate within a `ggplot()` command  
 
 
 
@@ -10364,7 +10817,7 @@ This page will cover methods to calculate and visualize moving averages, for:
 pacman::p_load(
   tidyverse,      # for data management and viz
   slider,         # for calculating moving averages
-  tidyquant,      # for calculating moving averages on-the-fly in ggplot
+  tidyquant       # for calculating moving averages within ggplot
 )
 ```
 
@@ -10372,104 +10825,251 @@ pacman::p_load(
 <!-- ======================================================= -->
 ## Calculate-then-display {  }
 
-Using the package **slider** to calculate a moving average in a dataframe, prior to any plotting.  
+Use the package **slider** to calculate a moving average in a dataframe prior to plotting.  
 
-In this approach, the moving average is calculated in the dataset prior to plotting:  
+The **slider()** package provides several "sliding window" functions to compute rolling averages, cumulative sums, rolling regressions, etc. It treats a dataframe as a vector of rows, allowing iteration row-wise over a dataframe.   
 
-* Within `mutate()`, a new column is created to hold the average. `slide_index()` from **slider** package is used as shown below.  
-* In the `ggplot()`, a `geom_line()` is added after the histogram, reflecting the moving average.  
+Here are some of the common functions:  
 
-See the helpful online [vignette for the **slider** package](https://cran.r-project.org/web/packages/slider/vignettes/slider.html)  
-
-
-
-* Can assign `.before = Inf` to achieve cumulative averages from the first row  
-* Use `slide()` in simple cases  
-* Use `slide_index()` to designate a date column as an index, so that dates which do not appear in the dataframe are still included in the window  
-  * `.before`, `.after` TODO  
-  * `.complete` TODO  
-  * 
+* `slide_dbl()` - iterates through a numeric column performing an operation using a sliding window  
+  * `slide_sum()` - rolling sum shortcut  
+  * `slide_mean()` - rolling average shortcut  
+* `slide_index_dbl()` - applies the rolling window using a separate index column (useful if using dates or there are missing rows)  
 
 
-First we count the number of cases reported each day. Note that `count()` is appropriate if the data are in a linelist format (one row per case) - if starting with aggregated counts you will need to follow a different approach (e.g. `summarize()` - see page on Summarizing data).  
+**Core arguments**  
+
+* `.x`, the first argument by default, is the vector to iterate over and to apply the function to  
+* `.f`, the second argument by default, either:  
+  * A function, written without parentheses, like `mean`, or  
+  * A formula, which will be converted into a function. For example `~ .x - mean(.x)` will return the result of the current value minus the mean of the window's value  
+  
+* For more details see this [reference material](https://davisvaughan.github.io/slider/reference/slide.html)
+
+
+
+**Window size**  
+
+Specify the size of the window by using either `.before`, `.after`, or both arguments:   
+
+* `.before = ` - Provide an integer  
+* `.after = ` - Provide an integer  
+* `.complete = ` - Set this to `TRUE` if you only want calculation performed on complete windows  
+
+For example, to achieve a 7-day window including the current value and the six previous, use `.before = 6`. To achieve a "centered" window provide the same number to both `.before = ` and `.after = `.    
+
+**Expanding window**  
+
+To achieve *cumulative* operations, set the `.before = ` argument to `Inf`. This will conduct the operation on the current value and all coming before.  
+
+
+
+
+### Rolling operations {-}  
+
+Use `slide_dbl()`, which is made specifically to slide across a numeric vector.  
+
+To calculate the rolling mean of delay from onset to hospital admission (`days_onset_hosp` column):  
+
+```{r}
+rolled <- linelist %>%
+  
+  select(                             # select only some columns, for visibility
+    case_id,                     
+    date_onset,
+    days_onset_hosp) %>% 
+  
+  mutate(
+    delay_roll = slider::slide_dbl(   # define column delay_roll 
+      .x        = days_onset_hosp,    # apply function to delays column
+      .f        = mean,               # use mean()
+      .before   = 2,                  # use value and 2 previous values
+      .complete = TRUE))              # only use windows that have all three values present
+
+```
+
+```{r, echo = F}
+DT::datatable(rolled, rownames = FALSE, options = list(pageLength = 15, scrollX=T) )
+```
+
+
+
+**Grouped data**  
+
+You will see differences if your data are grouped and you have set `.compete = TRUE` (windows with missing values are not calculated). As on ungrouped data, when `.complete = TRUE`, the first rows will not return a value until the window is complete. However the change between groups acts as a hard barrier and these empty rows will re-occur. See handbook page on [Grouping data]).  
+
+```{r}
+grouped_roll <- linelist %>%
+  
+  select(                             # select only some columns, for visibility
+    case_id,                     
+    date_onset,
+    days_onset_hosp) %>%  
+  
+  group_by(                           # group by month of onset 
+    month = lubridate::month(date_onset)) %>%
+  
+  mutate(                             # rolling mean, as before  
+    delay_roll_month = slider::slide_dbl(
+      .x = days_onset_hosp,
+      .f = mean,
+      .before = 2,
+      .complete = TRUE
+      )
+    )
+```
+
+You see the difference below from above when the month of June begins:  
+
+```{r, echo=F}
+DT::datatable(grouped_roll, rownames = FALSE, options = list(pageLength = 15, scrollX=T) )
+```
+
+<span style="color: red;">**_DANGER:_** If you get an error saying *"slide() was deprecated in tsibble 0.9.0 and is now defunct. Please use slider::slide() instead."*, it means that the `slide()` function from the **tsibble** package is masking the `slide()` function from **slider** package. Fix this by specifying the package in the command, such as `slider::slide_dbl()`.</span>
+
+
+
+### Indexed rolling  {-}  
+
+Often when conducting rolling operations *by date* (common with epidemiological linelists), we can encounter problems like:  
+
+* Dates are missing from the dataframe, but should be included in a window  
+
+To solve this, use `slide_index()` from **slider**. It uses a separate column as an *index* for the rolling window. If this column is a date, it will know which dates are not present in the data and account for them. Below is an example to return a 7-day rolloing average of new cases reported per day:  
+
+* First we count the number of cases reported each day with `count()` from **dplyr** (see page on [Grouping data]).  
 
 ```{r}
 # make dataset of daily counts and 7-day moving average
-#######################################################
-ll_counts_7day <- linelist %>% 
-  count(date_onset, name = "new_cases") %>%    # count cases by date, new column is named "new_cases"
+counts_7day <- linelist %>% 
+  
+  # get counts
+  count(
+    date_onset,        # count rows per unique onset_date
+    name = "new_cases" # name of new column
+    ) %>%
+  
+  # remove counts with missing onset_date
   filter(!is.na(date_onset))
 ```
 
-The new dataset now looks like this:  
+The new dataset now looks like this. Note how some days are not present (no cases on those days). A simple `slide_dbl()` would incorrectly include the first seven rows in the first window.    
 
-```{r}
-DT::datatable(ll_counts_7day, rownames = FALSE, options = list(pageLength = 6, scrollX=T) )
+```{r, echo=F}
+DT::datatable(counts_7day, rownames = FALSE, options = list(pageLength = 6, scrollX=T) )
 ```
 
-Next, we create a new column that is the 7-day average. We are using the function `slide_index()` from **slider** specifically because we recognize that *there are missing days* in the above dataframe, and they must be accounted for. To do this, we set a our "index" (`.i` argument) as `the column `date_onset`. Since `date_onset` is a column of class Date, the function recognizes and when calculating it counts the days that do not appear in the dataframe. If you were to use another **slider** function like `slide()`, this indexing would not occur.  
-
-Also not that the 7-day window, in this example, is achieved with the argument `.before = 6`. In this way the window is the day and 6 days preceding. If you want the window to be different (centered or following) use `.after` in conjunction.  
-
+We use the function `slide_index()` specifically because we recognize that *there are missing days* in the above dataframe, and they must be accounted for when creating windows of time. We set our "index" column (`.i` argument) as the column `date_onset`. Because `date_onset` is a column of class Date, the function accounts for the days that do not appear in the dataframe. For the arguments `.before` and `.after` we can use integers, or use **lubridate** functions like `days()` and `months()`.  
 
 ```{r}
-## calculate the average number of cases in the preceding 7 days
-ll_counts_7day <- ll_counts_7day %>% 
+## calculate 7-day rolling average, accounting for missing days
+rolling <- counts_7day %>% 
   mutate(
-    avg_7day = slider::slide_index_dbl(    # create new column
+    avg_7day = slider::slide_index_dbl(  # create new column
         new_cases,                       # calculate avg based on value in new_cases column
         .i = date_onset,                 # index column is date_onset, so non-present dates are included in 7day window 
         .f = ~mean(.x, na.rm = TRUE),    # function is mean() with missing values removed
-        .before = 6,                     # window is the day and 6-days before
+        .before = days(6),               # window is the day and 6-days before
         .complete = TRUE))               # fills in first days with NA
 ```
 
+You can see below that the time windows account for days that do not appear in the data.  
 
-Step 2 is plotting the 7-day average, in this case shown on top of the underlying daily data.    
+```{r, echo=F}
+DT::datatable(rolling, rownames = FALSE, options = list(pageLength = 6, scrollX=T) )
+```
+
+We can now plot the linelist, with the 7-day moving average overlaid. If needed, see the page on [ggplot tips].    
+
+```{r, warning = F, message=F}
+ggplot(data = rolling, aes(x = date_onset))+
+  geom_histogram(         # plot histogram of daily cases
+    aes(y = new_cases),
+    fill   ="#92a8d1",    # bar color
+    stat   = "identity",  # height = value
+    colour = "#92a8d1")+  # color around bars
+  geom_line(              # overlay line
+    aes(y = avg_7day),    # use 7-day average column
+    color="red",         
+    size = 1) +           # line thickness  
+  scale_x_date(           # x-axis by months
+    date_breaks = "1 month",
+    date_labels = '%d/%m',
+    expand = c(0,0)) +
+  scale_y_continuous(
+    expand = c(0,0),
+    limits = c(0, NA)) + 
+  labs(
+    x="",
+    y ="Number of confirmed cases")+ 
+  theme_minimal() 
+```
+
+
+
+If you rolling average by months, you can use **lubridate** to group the data by month, and then apply `slide_index_dbl()` as below shown for a three-month rolling average:  
 
 ```{r}
-ggplot(data = ll_counts_7day, aes(x = date_onset)) +
-    geom_histogram(aes(y = new_cases), fill="#92a8d1", stat = "identity", position = "stack", colour = "#92a8d1")+ 
-    geom_line(aes(y = avg_7day), color="red", size = 1) + 
-    scale_x_date(
-      date_breaks = "1 month",
-      date_labels = '%d/%m',
-      expand = c(0,0)) +
-    scale_y_continuous(expand = c(0,0), limits = c(0, NA)) + 
-    labs(x="", y ="Number of confirmed cases")+ 
-    theme_minimal() 
+ll_months <- linelist %>%
+  mutate(
+    month_onset = floor_date(date_onset, "month")) %>% 
+  count(month_onset) %>% 
+  filter(!is.na(month_onset)) %>% 
+  mutate(
+    monthly_roll = slider::slide_index_dbl(
+      n,                                # calculate avg based on value in new_cases column
+      .i = month_onset,                 # index column is date_onset, so non-present dates are included in 7day window 
+      .f = ~mean(.x, na.rm = TRUE),     # function is mean() with missing values removed
+      .before = months(2),              # window is the day and 6-days before
+      .complete = TRUE))                # fills in first days with NA
+  
 ```
+
+
 
 
 <!-- ======================================================= -->
-## Calculate on-the-fly {  }
+## Calculate within `ggplot()`) {  }
 
-TBD - **tidyquant**
+The package **tidyquant** offers another approach to calculating moving averages - this time from *within* a `ggplot()` command itself.  
 
+Below the `linelist` data are counted by date of onset, and this is plotted as a faded line (`alpha` < 1). Overlaid on top is a line created with `geom_ma()`, with a window of 7 days (`n = 7`) with specified color and thickness.  
 
-```{r, eval=F}
-per_pos_plot_county <- ggplot(data = filter(tests_per_county),
-       aes(x = DtSpecimenCollect_Final, y = prop_pos))+
-  geom_line(size = 1, alpha = 0.2)+  # plot raw values
-  tidyquant::geom_ma(n=7, size = 2)+ # plot moving average
-  theme_minimal_hgrid()+
-  coord_cartesian(xlim = c(as.Date("2020-03-15"), Sys.Date()), ylim = c(0, 15))+
-  labs(title    = "COUNTY-WIDE TESTING PERCENT POSITIVE",
-       subtitle = "Daily and 7-day moving average",
-       y        = "Percent Positive",
-       x        = "Date Specimen Collected")+
-  theme_text_size+
-  theme(axis.text = element_text(face = "bold", size = 14),
-        panel.background = element_rect(fill = "khaki")
-        )
+By default `geom_ma()` uses a simple moving average (`ma_fun = "SMA"`), but other types can be specified, such as:  
+
+* "EMA" - exponential moving average (more weight to recent observations)  
+* "WMA" - weighted moving average (`wts` are used to weight observations in the moving average)  
+* Others can be found in the function documentation  
+
+```{r}
+linelist %>% 
+  count(date_onset) %>%                 # count cases per day
+  filter(!is.na(date_onset)) %>%        # remove cases missing onset date
+  ggplot(aes(x = date_onset, y = n))+   # start ggplot
+    geom_line(                          # plot raw values
+      size = 1,
+      alpha = 0.2                       # semi-transparent line
+      )+             
+    tidyquant::geom_ma(                 # plot moving average
+      n = 7,           
+      size = 1,
+      color = "blue")+ 
+  theme_minimal()                       # simple background
 ```
 
+See this [vignette](https://cran.r-project.org/web/packages/tidyquant/vignettes/TQ04-charting-with-tidyquant.html) for more details on the options available within **tidyquant**.  
 
 <!-- ======================================================= -->
 ## Resources {  }
 
 
 See the helpful online [vignette for the **slider** package](https://cran.r-project.org/web/packages/slider/vignettes/slider.html)  
+
+The **slider** [github page](https://github.com/DavisVaughan/slider)
+
+A **slider** [vignette](https://davisvaughan.github.io/slider/articles/slider.html)  
+
+[tidyquant vignette](https://cran.r-project.org/web/packages/tidyquant/vignettes/TQ04-charting-with-tidyquant.html)
 
 If your use case requires that you “skip over” weekends and even holidays, you might like **almanac** package.
 
@@ -10962,7 +11562,7 @@ See the **moving averages** page for more detail.
 counts <- counts %>% 
      ## create the ma_4w variable 
      ## slide over each row of the case variable
-     mutate(ma_4wk = slide_dbl(case, 
+     mutate(ma_4wk = slider::slide_dbl(case, 
                                ## for each row calculate the name
                                ~ mean(.x, na.rm = TRUE),
                                ## use the four previous weeks
@@ -13190,95 +13790,6 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 <!--chapter:end:new_pages/epidemic_models.Rmd-->
 
 
-# Modeling {.tabset .tabset-fade}  
-
-
-<!-- ======================================================= -->
-## Overview {.tabset .tabset-fade .tabset-pills}
-
-UNDER CONSTRUCTION
-
-
-
-<!-- ======================================================= -->
-## Preparation {.tabset .tabset-fade .tabset-pills}
-
-Keep the title of this section as "Preparation".  
-Data preparation steps such as:  
-
-* Loading dataset  
-* Adding or changing variables  
-* melting, pivoting, grouping, etc.   
-
-
-
-<!-- ======================================================= -->
-## Overview {.tabset .tabset-fade .tabset-pills}
-Tidymodels
-
-<!-- ======================================================= -->
-## Logistic Regression {.tabset .tabset-fade .tabset-pills}
-
-
-<!-- ======================================================= -->
-## Multi-level modeling Regression {.tabset .tabset-fade .tabset-pills}
-
-
-<!-- ======================================================= -->
-## Survival analysis {.tabset .tabset-fade .tabset-pills}
-
-
-<!-- ======================================================= -->
-## Multi-stage Markov models {.tabset .tabset-fade .tabset-pills}
-
-Liza Coyer TODO this? logitudinal data 
-
-
-<!-- ======================================================= -->
-## Tables of model results {.tabset .tabset-fade .tabset-pills}
-
-
-<!-- ======================================================= -->
-## Causal diagrams {.tabset .tabset-fade .tabset-pills}
-
-
-
-
-```{r include=FALSE, cache=FALSE}
-
-# clear workspace
-rm(list = ls(all = TRUE))
-
-# clear all packages except base
-#lapply(names(sessionInfo()$loadedOnly), require, character.only = TRUE)
-#invisible(lapply(paste0('package:', names(sessionInfo()$otherPkgs)), detach, character.only=TRUE, unload=TRUE, force=TRUE))
-
-# to ensure that tidyverse packages prevail
-filter <- dplyr::filter
-select <- dplyr::select
-summarise <- dplyr::summarise
-summary <- base::summary
-
-#load core packages
-pacman::p_load(
-     rio,
-     here,
-     DT,
-     stringr,
-     lubridate,
-     tidyverse
-)
-
-# import the cleaned ebola linelist
-linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
-
-# import the count data - facility level
-#count_data <- rio::import(here::here("data", "facility_count_data.rds"))
-```
-
-<!--chapter:end:new_pages/modeling.Rmd-->
-
-
 # Survey analysis { }  
 
 UNDER CONSTRUCTION
@@ -13902,21 +14413,148 @@ UNDER CONSTRUCTION
 
 https://www.tidyverse.org/blog/2018/07/ggplot2-3-0-0/
 
+graph gallery
+
 <!-- ======================================================= -->
 ## Overview {  }
 
-Embed ggplot cheatsheet
+
 
 
 <!-- ======================================================= -->
 ## Preparation {  }
 
-Keep the title of this section as "Preparation".  
-Data preparation steps such as:  
 
-* Loading dataset  
-* Adding or changing variables  
-* melting, pivoting, grouping, etc.   
+
+
+<!-- ======================================================= -->
+## Intro to `ggplot()`
+
+
+
+
+
+<!-- ======================================================= -->
+## Common geoms  
+
+
+
+<!-- ======================================================= -->
+## Facets/small-multiples  
+
+http://www.cookbook-r.com/Graphs/Facets_(ggplot2)/#modifying-facet-label-text
+labellers
+https://ggplot2.tidyverse.org/reference/labellers.html
+facet_wrap vs. facet_grid
+Using option `label_wrap_gen` in facet_wrap to have multiple strip lines
+labels and colors of strips
+
+
+<!-- ======================================================= -->
+## Ordering  
+
+fct_reorder, na.rm=T median
+fct_infreq
+https://forcats.tidyverse.org/reference/fct_reorder.html
+https://forcats.tidyverse.org/reference/fct_inorder.html
+https://cmdlinetips.com/2019/02/how-to-reorder-a-boxplot-in-r/
+https://rstudio-pubs-static.s3.amazonaws.com/268470_afbfbdcbc6394f89a00a689b866684b4.html
+
+gapminder %>%
+  filter(year == 2007) %>%
+  group_by(continent) %>%
+  summarize(md = median(pop)) %>%
+  mutate(continent = fct_reorder(continent, md)) %>%
+  ggplot(aes(continent, md)) +
+  geom_col()
+ 
+https://www.r-graph-gallery.com/267-reorder-a-variable-in-ggplot2.html
+Legend order
+https://stackoverflow.com/questions/38425908/reverse-stacking-order-without-affecting-legend-order-in-ggplot2-bar-charts
+
+
+
+
+
+<!-- ======================================================= -->
+## Titles and Labels  
+
+ggtitle
+labs()
+Axis text vertical adjustment
+rotation
+Labellers
+
+
+<!-- ======================================================= -->
+## Background
+
+limit range with limit() and coord_cartesian(), ylim(), or scale_x_continuous()
+theme_classic()
+
+
+<!-- ======================================================= -->
+## Axes
+scale_x_
+scale_y_
+expand = c(0,0)
+coord_flip()
+tick marks
+See epicurves page for dealing with date breaks etc.
+
+
+
+
+
+<!-- ======================================================= -->
+## Theme  
+
+Caption alignment
+https://stackoverflow.com/questions/64701500/left-align-ggplot-caption
+
+
+
+<!-- ======================================================= -->
+## Legends  
+
+remove
+remove title
+using fill = or color = in labs()
+flip order / don't flip order
+move location
+color?    theme(legend.title = element_text(colour="chocolate", size=16, face="bold"))+ scale_color_discrete(name="This color is\ncalled chocolate!?")
+Color of boxes behind points in legend 
+     theme(legend.key=element_rect(fill='pink'))   or use fill = NA to remove them. http://zevross.com/blog/2014/08/04/beautiful-plotting-in-r-a-ggplot2-cheatsheet-3/ 
+Change size of symbols in legend only guides(colour = guide_legend(override.aes = list(size=4)))
+
+
+Turn off a layer in the legend
+geom_text(data=nmmaps, aes(date, temp, label=round(temp)), size=4)
+geom_text(data=nmmaps, aes(date, temp, label=round(temp), size=4), show_guide=FALSE)
+
+Force a legend even if there is no aes(). 
+ggplot(nmmaps, aes(x=date, y=o3))+
+     geom_line(aes(color="Important line"))+
+     geom_point(aes(color="My points"))
+Control the shape in the legend with guides - a list with linetype and shape
+ggplot(nmmaps, aes(x=date, y=o3))+geom_line(aes(color="Important line"))+
+   geom_point(aes(color="Point values"))+
+  scale_colour_manual(name='', values=c('Important line'='grey', 'Point values'='red'), guide='legend') +
+  guides(colour = guide_legend(override.aes = list(linetype=c(1,0)
+                                                      , shape=c(NA, 16))))
+http://zevross.com/blog/2014/08/04/beautiful-plotting-in-r-a-ggplot2-cheatsheet-3/
+<!-- ======================================================= -->
+## Colors {  }
+
+
+
+
+
+
+<!-- ======================================================= -->
+## Smart Labeling {  }
+ggrepel
+
 
 
 <!-- ======================================================= -->
@@ -13926,39 +14564,34 @@ highlighting one line among many etc
 gghighlight
 
 
-<!-- ======================================================= -->
-## Faceting {  }
-http://www.cookbook-r.com/Graphs/Facets_(ggplot2)/#modifying-facet-label-text
-labellers
-https://ggplot2.tidyverse.org/reference/labellers.html
-facet_wrap vs. facet_grid
-Using option `label_wrap_gen` in facet_wrap to have multiple strip lines
 
-<!-- ======================================================= -->
-## Dual axes {  }
-Cowplot
-Complicated method (% 100 * ...)
-
-<!-- ======================================================= -->
-## Smart Labeling {  }
-ggrepel
 
 <!-- ======================================================= -->
 ## Time axes {  }
 
 
+
+
 <!-- ======================================================= -->
 ## Dual axes {  }
+
+### Cowplot {-}
 
 
 <!-- ======================================================= -->
 ## Adding shapes {  }
 
+
+
 <!-- ======================================================= -->
 ## Animations {  }
 
+## Resources 
 
+ggplot cheatsheet
+https://r4ds.had.co.nz/factors.html
 
+http://zevross.com/blog/2014/08/04/beautiful-plotting-in-r-a-ggplot2-cheatsheet-3/
 ```{r include=FALSE, cache=FALSE}
 
 # clear workspace
@@ -15924,7 +16557,7 @@ See the handbook page on ggplot tips for details on how to make a second axis.
 
 
 
-## Cumulative Incidence {-}
+## Cumulative Incidence {}
 
 
 If beginning with a case linelist, create a new column containing the cumulative number of cases per day in an outbreak using `cumsum()` from **base** R:    
@@ -15945,7 +16578,7 @@ head(cumulative_case_counts, 10)
 
 This cumulative column can then be plotted:
 
-```{r}
+```{r, warning=F, message=F}
 plot_cumulative <- ggplot()+
   geom_line(
     data = cumulative_case_counts,
@@ -15959,7 +16592,7 @@ plot_cumulative
 
 It can also be overlaid onto the epicurve, with dual-axis:
 
-```{r}
+```{r, warning=F, message=F}
 pacman::p_load(cowplot)
 
 plot_cases <- ggplot()+

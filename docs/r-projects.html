@@ -51,29 +51,29 @@
 <li><a class="" href="datasets-used.html"><span class="header-section-number">2</span> Datasets used</a></li>
 <li class="book-part">Basics</li>
 <li><a class="" href="r-basics.html"><span class="header-section-number">3</span> R Basics</a></li>
-<li><a class="" href="importing-and-exporting.html"><span class="header-section-number">4</span> Importing and exporting</a></li>
+<li><a class="" href="import-and-export.html"><span class="header-section-number">4</span> Import and export</a></li>
 <li><a class="active" href="r-projects.html"><span class="header-section-number">5</span> R projects</a></li>
 <li><a class="" href="suggested-packages.html"><span class="header-section-number">6</span> Suggested packages</a></li>
 <li class="book-part">Data Management</li>
 <li><a class="" href="cleaning-data.html"><span class="header-section-number">7</span> Cleaning data</a></li>
 <li><a class="" href="working-with-dates.html"><span class="header-section-number">8</span> Working with dates</a></li>
-<li><a class="" href="missing-data.html"><span class="header-section-number">9</span> Missing data</a></li>
-<li><a class="" href="grouping-data.html"><span class="header-section-number">10</span> Grouping data</a></li>
-<li><a class="" href="joining-data.html"><span class="header-section-number">11</span> Joining data</a></li>
-<li><a class="" href="characters-and-strings.html"><span class="header-section-number">12</span> Characters and strings</a></li>
-<li><a class="" href="de-duplication.html"><span class="header-section-number">13</span> De-duplication</a></li>
-<li><a class="" href="iteration-and-loops.html"><span class="header-section-number">14</span> Iteration and loops</a></li>
+<li><a class="" href="factors.html"><span class="header-section-number">9</span> Factors</a></li>
+<li><a class="" href="missing-data.html"><span class="header-section-number">10</span> Missing data</a></li>
+<li><a class="" href="grouping-data.html"><span class="header-section-number">11</span> Grouping data</a></li>
+<li><a class="" href="joining-data.html"><span class="header-section-number">12</span> Joining data</a></li>
+<li><a class="" href="characters-and-strings.html"><span class="header-section-number">13</span> Characters and strings</a></li>
+<li><a class="" href="de-duplication.html"><span class="header-section-number">14</span> De-duplication</a></li>
+<li><a class="" href="iteration-and-loops.html"><span class="header-section-number">15</span> Iteration and loops</a></li>
 <li class="book-part">Analysis</li>
-<li><a class="" href="descriptive-analysis.html"><span class="header-section-number">15</span> Descriptive analysis</a></li>
-<li><a class="" href="simple-statistical-tests.html"><span class="header-section-number">16</span> Simple statistical tests</a></li>
-<li><a class="" href="standardization.html"><span class="header-section-number">17</span> Standardization</a></li>
-<li><a class="" href="moving-averages.html"><span class="header-section-number">18</span> Moving averages</a></li>
-<li><a class="" href="outbreak-detection.html"><span class="header-section-number">19</span> Outbreak detection</a></li>
-<li><a class="" href="time-series-and-outbreak-detection.html"><span class="header-section-number">20</span> Time series and outbreak detection</a></li>
-<li><a class="" href="epidemic-modeling.html"><span class="header-section-number">21</span> Epidemic modeling</a></li>
-<li><a class="" href="modeling.html"><span class="header-section-number">22</span> Modeling</a></li>
+<li><a class="" href="descriptive-analysis.html"><span class="header-section-number">16</span> Descriptive analysis</a></li>
+<li><a class="" href="simple-statistical-tests.html"><span class="header-section-number">17</span> Simple statistical tests</a></li>
+<li><a class="" href="standardization.html"><span class="header-section-number">18</span> Standardization</a></li>
+<li><a class="" href="moving-averages.html"><span class="header-section-number">19</span> Moving averages</a></li>
+<li><a class="" href="outbreak-detection.html"><span class="header-section-number">20</span> Outbreak detection</a></li>
+<li><a class="" href="time-series-and-outbreak-detection.html"><span class="header-section-number">21</span> Time series and outbreak detection</a></li>
+<li><a class="" href="epidemic-modeling.html"><span class="header-section-number">22</span> Epidemic modeling</a></li>
 <li><a class="" href="survey-analysis.html"><span class="header-section-number">23</span> Survey analysis</a></li>
-<li><a class="" href="survival-analysis-1.html"><span class="header-section-number">24</span> Survival analysis</a></li>
+<li><a class="" href="survival-analysis.html"><span class="header-section-number">24</span> Survival analysis</a></li>
 <li><a class="" href="gis-basics.html"><span class="header-section-number">25</span> GIS basics</a></li>
 <li class="book-part">Data Vizualization</li>
 <li><a class="" href="ggplot-tips.html"><span class="header-section-number">26</span> ggplot tips</a></li>
@@ -136,7 +136,9 @@
 <li>The <strong>rio</strong> for importing/exporting
 <ul>
 <li>
-<code>import()</code> and <code>export()</code> handle almost any kind of file by reading the existing or desired file extension (e.g. .csv, .xlsx, .png)</li>
+<code>import()</code> and <code>export()</code> handle almost any kind of file by reading the existing or desired file extension (e.g. .csv, .xlsx, .png)<br>
+</li>
+<li>See the page on <a href="import-and-export.html#import-and-export">Import and export</a> of data for more informaton</li>
 </ul>
 </li>
 </ol>
@@ -177,14 +179,14 @@
 <h3>Switch projects<a class="anchor" aria-label="anchor" href="#switch-projects"><i class="fas fa-link"></i></a>
 </h3>
 <p>To switch between projects, click the R project icon and drop-down menu at the very top-right of RStudio. You will see options to Close Project, Open Project, and a list of recent projects.</p>
-<div class="inline-figure"><img src="images/Rproject_dropdown.png" width="110%" style="display: block; margin: auto;"></div>
+<div class="inline-figure"><img src="images/Rproject_dropdown.png" width="100%" style="display: block; margin: auto;"></div>
 </div>
 </div>
 <div id="examples" class="section level2" number="5.3">
 <h2>
 <span class="header-section-number">5.3</span> Examples<a class="anchor" aria-label="anchor" href="#examples"><i class="fas fa-link"></i></a>
 </h2>
-<p><strong>here</strong> implements <em>relative pathways</em> for any import/export you do (datasets, plots, etc). No more hassle with long filepaths or working directies. Read more about the <strong>here</strong> package in the <a href="importing-and-exporting.html#importing-and-exporting">Importing and exporting</a> page.</p>
+<p><strong>here</strong> implements <em>relative pathways</em> for any import/export you do (datasets, plots, etc). No more hassle with long filepaths or working directies. Read more about the <strong>here</strong> package in the [Importing and exporting] page.</p>
 <p>To use <strong>here</strong> within an R project:</p>
 <ol style="list-style-type: decimal">
 <li>Begin your R project<br>
@@ -218,7 +220,7 @@
 </div>
 </div>
   <div class="chapter-nav">
-<div class="prev"><a href="importing-and-exporting.html"><span class="header-section-number">4</span> Importing and exporting</a></div>
+<div class="prev"><a href="import-and-export.html"><span class="header-section-number">4</span> Import and export</a></div>
 <div class="next"><a href="suggested-packages.html"><span class="header-section-number">6</span> Suggested packages</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
@@ -250,7 +252,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>R Handbook for Epidemiologists</strong>" was written by the handbook team. It was last built on 2021-02-23.</p>
+    <p>"<strong>R Handbook for Epidemiologists</strong>" was written by the handbook team. It was last built on 2021-02-25.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
