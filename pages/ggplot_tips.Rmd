@@ -253,14 +253,61 @@ unnamed variable - pass as a string in aes(), and define colour later
 <!-- ======================================================= -->
 ## Highlighting {.tabset .tabset-fade .tabset-pills}
 
-highlighting one line among many etc
-gghighlight
+Highlighting specific elements in a chart is a useful way to draw attention to a specific instance of a variable while also providing information on the dispersion of the full dataset. While this is not easily done in base `ggplot2`, there is an external package that can help to do this known as `gghighlight`. This is easy to use within the ggplot syntax.
+
+The `gghighlight` package uses the `gghighlight()` function to achieve this effect. To use this function, supply a logical statement to the function - this can have quite flexible outcomes, but here we'll show an example of the age distribution of cases in our linelist, highlighting them by outcome.
+
+```{r, eval = T}
+# load gghighlight
+library(gghighlight)
+
+
+# replace NA values with unknown in the outcome variable
+linelist_cleaned <- linelist_cleaned %>%
+  mutate(outcome = replace_na(outcome, "Unknown"))
+
+# produce a histogram of all cases by age
+ggplot(linelist_cleaned, 
+       aes(x = age_years, fill = outcome)) +
+  geom_histogram() + 
+  # highlight instances where the patient has died.
+  gghighlight::gghighlight(outcome == "Death")
+
+
+```
+
+This also works well with faceting functions - it allows the user to produce facet plots with the background data highlighted that doesn't apply to the facet!
+
+```{r, eval = T}
+
+# produce a histogram of all cases by age
+ggplot(linelist_cleaned, 
+       aes(x = age_years, fill = outcome)) +
+  geom_histogram() + 
+  # highlight instances where the patient has died.
+  gghighlight::gghighlight() +
+  facet_wrap(~outcome)
+
+
+```
 
 
 <!-- ======================================================= -->
-## Dual axes {.tabset .tabset-fade .tabset-pills}
-Cowplot
-Complicated method (% 100 * ...)
+## Changing the order of discrete variables
+Changing the order that discrete variables appear in is often difficult to understand for people who are new to `ggplot2` graphs. It's easy to understand how to do this however once you understand how `ggplot2` handles discrete variables under the hood. Generally speaking, if a discrete varaible is used, it is automatically converted to a `factor` type - which orders factors by alphabetical order by default. To handle this, you simply have to reorder the factor levels to reflect the order you would like them to appear in the chart. For more detailed information on how to reorder `factor` objects, see the factor section of the guide. 
+
+We can look at a common example using age groups - by default the 5-9 age group will be placed in the middle of the age groups (given alphabetical order), but we can move it behind the 0-4 age group of the chart by releveling the factors.
+
+```{r, eval = T}
+
+ggplot(linelist_cleaned,
+       # relevel the factor within the ggplot call (can do externally as well)
+       aes(x = forcats::fct_relvel(age_cat5, "5-9", after = 1))) +
+  geom_histogram() +
+  labs(x = "Age group", y = "Number of hospitalisations")
+
+
+```
 
 <!-- ======================================================= -->
 ## Smart Labeling {.tabset .tabset-fade .tabset-pills}
