@@ -43,7 +43,7 @@ knitr::include_graphics(here::here("images", "R Handbook Logo.png"))
 
 * Serve as a quick reference guide - not a textbook  
 * Address common epidemiological problems via task-centered examples  
-* Be accessible in settings with limited technical support and low internet-connectivity ([link to downloadable version](https://github.com/nsbatra/Epi_R_handbook/tree/master/offline_long))  
+* Be accessible in settings with low internet-connectivity ([link to downloadable version](https://github.com/nsbatra/Epi_R_handbook/tree/master/offline_long))  
 * Contain clear and simple language, with step-by-step instructions and helpful code annotation  
 * Be a living document, growing and adapting to new best practices  
 
@@ -87,13 +87,13 @@ If you have suggestions or want to contribute content, please post an issue or s
 
 ### Contributors {-}  
 
-This handbook is a collaborative team production. It has been conceived, written, and edited by epidemiologists and public health practitioners from around the world, who have drawn upon their experiences within a constellation of organizations including local/state/provincial/national health departments and ministries, the World Health Organization (WHO), MSF (Medecins sans frontiers / Doctors without Borders), UNHCR, WFP, hospital systems, and academic institutions.
+This handbook has been conceived, written, and edited by a collaboration of epidemiologists and public health practitioners from around the world who have drawn upon their experiences within a constellation of organizations including local/state/provincial/national health departments and ministries, the World Health Organization (WHO), MSF (Medecins sans frontiers / Doctors without Borders), hospital systems, and academic institutions.
 
 Here are the team members:  
 
 **Editor-in-Chief:** Neale Batra 
 
-**Editorial core team:** Alex Spina, Amrish Baidjoe, Henry Laurenson-Schafer, Finlay Campbell, Pat Keating  
+**Core team:** Alex Spina, Amrish Baidjoe, Henry Laurenson-Schafer, Finlay Campbell, Pat Keating  
 
 **Authors** *(in order of contributions)*: Neale Batra, Alex Spina, Paula Blomquist, Finlay Campbell, Henry Laurenson-Schafer, Isaac Florence, Natalie Fischer, Daniel Molling, Liza Coyer, Jonny Polonski, Yurie Izawa, Sara Hollis  
 
@@ -124,12 +124,10 @@ More generally, the following sources provided inspiration and laid the groundwo
 ### Image credits {-}  
 
 
-Logo: [CDC Public Health Image library](https://phil.cdc.gov/), [R Graph Gallery](https://www.r-graph-gallery.com/)  
-
+Logo (US CDC Public Health Image Library):  
 [2013 Yemen looking for mosquito breeding sites](https://phil.cdc.gov/Details.aspx?pid=19623)  
 [Ebola virus](https://phil.cdc.gov/Details.aspx?pid=23186)  
 [Survey in Rajasthan](https://phil.cdc.gov/Details.aspx?pid=19838)  
-[Network](https://www.r-graph-gallery.com/257-input-formats-for-network-charts.html)  
 
 
 
@@ -217,16 +215,16 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 ## Style  
 
 
-### Text style
+### Package and function names {-}
 
-
-**Package and function names**  
 
 Package names are written in bold (e.g. **dplyr**) and functions are written like this: `mutate()`. Packages referenced either in text or within code like this: `dplyr::mutate()`  
 
 
 
-**Types of notes**  
+### Types of notes {-}  
+
+Here are the types of notes you may encounter in the handbook:  
 
 <span style="color: black;">**_NOTE:_** This is a note</span>
 
@@ -238,15 +236,14 @@ Package names are written in bold (e.g. **dplyr**) and functions are written lik
 
 
 
-### **tidyverse**  
+### Coding style {-}  
 
-This handbook generally uses **tidyverse** R coding style. Read more [here](https://www.tidyverse.org/)
+This handbook generally uses **tidyverse** R coding style. Read more at the [tidyverse website](https://www.tidyverse.org/).
 
 
+In the handbook, we frequently utilize new lines in our code, making it appear "long". We do this to offer more comments, make it easier to read on a narrow screen (no sideways scrolling needed), and to be clear which arguments belong to which function. Generally, R is not affected by such new lines.  
 
-### Code readability  
-
-We chose to frequently write code on new lines, in order to offer more understandable comments. As a result, code that *could* be written like this:  
+As a result, code that *could* be written like this:  
 
 ```{r, eval=F}
 obs %>% 
@@ -254,7 +251,7 @@ obs %>%
   slice_max(date, n = 1, with_ties = F) # if there's a tie (of date), take the first row
 ```
 
-...is often written like this:  
+...is written like this:  
 
 ```{r, eval=F}
 obs %>% 
@@ -280,6 +277,7 @@ Below, we track significant editorial decisions around package and function choi
 Subject           |     Considered      |   Outcome & date    |    Brief rationale   
 ----------------- | --------------------|---------------------|--------------------------------------------------    
 Epiweeks          | aweek, lubridate    | lubridate, Dec 2020 | consistency, package maintenance prospects  
+ggplot labels     | labs(), ggtitle(), ylab(), xlab() | labs(), Feb 2021 | All labels in one function/one place |
    
 
 
@@ -1506,6 +1504,16 @@ exponent           | exponent(x)
 natural logarithm  | log(x)
 log base 10        | log10(x)
 log base 2         | log2(x)
+
+
+
+#### Scientific notation {-}
+
+To turn off scientific notation in your R session, run this command:  
+
+```{r, eval=F}
+options(scipen=999)
+```
 
 
 
@@ -5496,448 +5504,344 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 <!--chapter:end:new_pages/factors.Rmd-->
 
 
-# Missing data { }
-
-```{r, out.width=c("50%"), echo=F}
-knitr::include_graphics(here::here("images", "missingness.png"))
-knitr::include_graphics(here::here("images", "missingness_overview.png"))
-```
-
 <!-- ======================================================= -->
-## Overview { }
+<!-- ======================================================= -->
+<!-- ======================================================= -->
+# Pivoting data {}
 
-This page will cover:  
+When manipulating data, *pivoting* can be understood to refer to one of two processes:  
 
-1) Useful functions for assessing missingness  
-2) Assess missingness in a dataframe  
-3) Filter out rows with missingness  
-3) Plotting missingness over time  
-4) Handling how `NA` is displayed in plots  
-5) Imputation  
+1. the creation of *pivot tables*, which are tables "... of statistics that summarize the data of a more extensive table (such as from a database, spreadsheet, or business intelligence program). This summary might include sums, averages, or other statistics, which the pivot table groups together in a meaningful way... They arrange and rearrange (or "pivot") statistics in order to draw attention to useful information. This leads to finding figures and facts quickly making them integral to data analysis." see [wiki](https://en.wikipedia.org/wiki/Pivot_table#).  
+2. The conversion of a table from **long** to **wide** format, or vice versa. 
 
+**In this page, we will focus on the latter definition.** The former is a crucial step in data analysis, and is covered elsewhere in the [Grouping data] and [Descriptive statistics] pages. 
 
 
 
 <!-- ======================================================= -->
-## Preparation { }
+## Wide-to-long {}
 
-**Load packages**  
+Transforming a dataset from wide to long ([image source](https://d33wubrfki0l68.cloudfront.net/3aea19108d39606bbe49981acda07696c0c7fcd8/2de65/images/tidy-9.png))
 
-```{r}
-pacman::p_load(
-  rio,           # import/export
-  tidyverse,     # data mgmt and viz
-  naniar         # assess and visualize missingness
-)
+```{r, warning=F, message=F, echo=F}
+knitr::include_graphics(here::here("images", "pivot_longer.png"))
 ```
 
-**Load data**  
+
+<!-- ======================================================= -->
+### Data {-}
+
+Data are often entered and stored in a format that might be useful for presentation, but not for analysis. Let us take the `count_data` dataset as an example, which is stored in a "wide" format, which means that each column is a variable and each row an observation. This is useful for presenting the information in a table or for entering data (e.g. in Excel) from case report forms. However, these typically needs to be transformed to "long" format in order to analyse and visualise.
+
 
 ```{r, echo=F}
-linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
+count_data <- rio::import(here::here("data", "facility_count_data.rds"))
 ```
-
 
 ```{r, eval=F}
-linelist <- rio::import("linelist_cleaned.rds")
+count_data <- import("facility_count_data.rds")
 ```
 
+
+```{r, echo=F}
+DT::datatable(count_data, rownames = FALSE, filter="top", options = list(pageLength = 5, scrollX=T) )
+```
+
+Each observation in this dataset refers to the malaria counts at one of 65 facilities on a given date, ranging from `r count_data$data_date %>% min()` to `r count_data$data_date %>% max()`. These facilties are located in one `Province` (North) and four `District`s (Spring, Bolo, Dingo, and Barnard). The dataset provides the overall counts of malaria, as well as age-specific counts in each of three age groups - <4 years, 5-14 years, and 15 years and older.
+
+Visualising the overall malaria counts over time poses no difficulty with the data in it's current format:
+
+```{r, warning=F, message=F}
+ggplot(count_data) +
+  geom_col(aes(x = data_date, y = malaria_tot))
+```
+
+However, what if we wanted to display the relative contributions of each age group to this total count? In this case, we need to ensure that the variable of interest (age group), appears in the dataset in a single column that can be passed to `{ggplot2}`'s "aesthetics" (`aes()`) function.
+
+---
+**Consider also using the common problem whereby data are stored with dates as the columns, as in the example dataset `tidyr::table4a`**
+
+```{r}
+tidyr::table4a
+```
 
 
 <!-- ======================================================= -->
-## Useful functions { }
+### `pivot_longer()` {-}
 
-The following are useful **base** R functions when assessing or handling missing values:  
+First, let's begin by loading our packages and converting `count_data` to a tibble for easy printing:
 
+```{r, warning=F, message=F}
+pacman::p_load(tidyverse)
 
-**`is.na()` and `!is.na()`**  
+# Convert count_data to `tibble` for better printing
+count_data <- 
+  count_data %>% 
+  as_tibble() 
 
-Use `is.na()`to identify missing values, or use its opposite (with `!` in front) to identify non-missing values. These both return a logical value (`TRUE` or `FALSE`). Remember that you can `sum()` the resulting vector to count the number `TRUE`, e.g. `sum(is.na(linelist$date_outcome))`.    
+count_data
+```
+
+Next, we want to use `{tidyr}`'s `pivot_longer()` function to convert the wide dataset to a long format, converting the four columns with data on malaria counts to two new columns: one which captures the variable *name* and one which captures the *values* from the cells. Since these four variables all begin with the prefix `malaria_`, we can make use of the handy function `starts_with()`. 
 
 ```{r}
-my_vector <- c(1, 4, 56, NA, 5, NA, 22)
-is.na(my_vector)
-!is.na(my_vector)
-sum(is.na(my_vector))
+df_long <- 
+  count_data %>% 
+  pivot_longer(
+    cols = starts_with("malaria_")
+  )
+
+df_long
 ```
 
-
-**`na.omit()`**  
-
-This function, if applied to a dataframe, will remove rows with *any* missing values. It is also from **base** R.  
-If applied to a vector, it will remove `NA` values from the vector it is applied to. For example:  
+However, we could also have specified the columns by position: 
 
 ```{r}
-sum(na.omit(my_vector))
+count_data %>% 
+  pivot_longer(
+    cols = 6:9
+  )
 ```
 
-
-**`na.rm = TRUE`**  
-
-In R, most mathematical functions will by default *include* `NA` in calculations, *which results in the function returning `NA`*. This is designed intentionally, in order to make you aware that you have missing data.  
-
-You can avoid this by removing missing values from the calculation, by including the argument `na.rm = TRUE` (na.rm stands for "remove `NA`").  
+or by named range:
 
 ```{r}
-mean(my_vector)
-
-mean(my_vector, na.rm = TRUE)
+count_data %>% 
+  pivot_longer(
+    cols = `malaria_rdt_0-4`:malaria_tot
+  )
 ```
 
+Notice that the newly created dataframe (`df_long`) has more rows (12,152 vs 3,038); it has become *longer*. In fact, it is precisely four times as long, because each row in the original dataset now represents four rows in df_long, one for each of the malaria count observations (<4y, 5-14y, 15y+, and total).
 
-
-<!-- ======================================================= -->
-## Assess missingness in a dataframe { }
-
-You can use the package **naniar** to assess and visualize missingness in the dataframe `linelist`.  
+In addition to becoming longer, the new dataset has fewer columns (8 vs 10), as the data previously stored in four columns (those beginning with the prefix `malaria_`) is now stored in two. These two columns are given the default names of `name` and `value`, but we can override these defaults to provide more meaningful names, which can help remember what is stored within, using the `names_to` and `values_to` arguments. Let's use the names `age_group` and `count`:
 
 ```{r}
-# install and/or load package
-pacman::p_load(naniar)
+df_long <- 
+  count_data %>% 
+  pivot_longer(
+    cols = starts_with("malaria_"),
+    names_to = "age_group",
+    values_to = "counts"
+  )
+
+df_long
 ```
 
-### Statistics {-}
+We can now pass this new dataset to `{ggplot2}` to display the malaria counts by age group:
 
-To find the percent of all values that are missing use `pct_miss()`. Use `n_miss()` to get the number of missing values.  
-
-```{r}
-pct_miss(linelist)
+```{r, warning=F, message=F}
+ggplot(df_long) +
+  geom_col(
+    aes(x = data_date, y = counts, fill = age_group)
+  )
 ```
 
-The two functions below return the percent of rows with any missing value, or that are entirely complete, respectively. Reember that `NA` means missing, and that ``""` or `" "` will register as non-missing.  
+Have a look at the plot - what is wrong here? We have encountered a common problem - we have also included the total counts from the `malaria_tot` column, so the magnitude of each bar in the plot is twice as high as it should be. 
 
-```{r}
-pct_miss_case(linelist)   # also see n_complete() for counts
+We can handle this in a number of ways. We could simply filter it from the dataset we pass to `{ggplot2}`:
 
-pct_complete_case(linelist) # see n_complete
+```{r, warning=F, message=F}
+df_long %>% 
+  filter(age_group != "malaria_tot") %>% 
+  ggplot() +
+  geom_col(
+    aes(x = data_date, y = counts, fill = age_group)
+  )
 ```
 
+Alternatively, we could have excluded this variable when we ran `pivot_longer`, thereby maintaining it in the dataset as a separate variable:
 
-
-### Visualizing missingness {-}  
-
-The `gg_miss_var()` function will show you the number of missing values in each column. You can add a bare column name to the argument `facet = ` if desired to see the plot by groups. By default, counts are shown instead of percents (`show_pct = FALSE`). You can also add labs as a normal ggplot with `+labs()`.  
-
-
-```{r}
-gg_miss_var(linelist, show_pct = TRUE)
-```
-
-You can use `vis_miss()` to visualize the dataframe as a heatmap, showing whether each value is missing or not. As usual, you can also `select()` certain columns from the dataframe and the provide that to the function.    
-
-```{r}
-vis_miss(linelist)
-```
-
-
-### Explore and visualize missingness relationships {-} 
-
-How do you visualize something that is not there??? By default, ggplot removes points with missing values from plots.  
-
-**naniar** offers a solution via `geom_miss_point()`. When creating a scatterplot of two columns, records with one of the values missing and the other present are shown by setting the missing values to 10% lower than the lowest value in the column, and coloring them distinctly.  
-
-In the scatterplot below, the red dots are records where the value for one column is present but the value for the other column is missing.  
-
-
-```{r}
-ggplot(
-  linelist, 
-  aes(x = age_years,             
-      y = temp)) +     # column to show missingness
-  geom_miss_point()
-```
-
-To assess missingness in the dataframe *stratified by another column*, consider `gg_miss_fct()`, which returns a heatmap of percent missingness in the dataframe by a factor/categorical (or date) column:  
-
-```{r}
-gg_miss_fct(linelist, age_cat5)
-```
-
-
-This function can also be used with a date column to see missingness over time:  
-
-```{r}
-gg_miss_fct(linelist, date_onset)
-```
-
-
-
-
-### "Shadow" columns {-}
-
-Another way to visualize missingness in one column by values in a second column is using the "shadow" that **naniar** can create. `bind_shadow()` creates a binary `NA`/not `NA` column for every existing column, and binds all these new columns to the original dataset with the appendix "_NA". This doubles the number of columns - see below:  
-
-
-```{r}
-shadowed_linelist <- linelist %>% 
-  bind_shadow()
-
-names(shadowed_linelist)
-```
-
-These "shadow" columns can be used to plot the density of proportion of values that are missing, by any another column X. For example, the plot below shows the proportion of records missing `days_onset_hosp` (number of days from symptom onset to hospitalisation), by that record's value in `date_hospitalisation`. Essentially, you are plotting the density of the x-axis column, but stratifying the results (`color = `) by a shadow column of interest. This analysis works best if the x-axis is a numeric or date column.  
-
-
-```{r, message = F}
-ggplot(
-  shadowed_linelist,                   # dataframe with shadow columns
-  aes(x = date_hospitalisation,        # numeric or date column
-      colour = age_years_NA)) +        # shadow column of interest
-  geom_density()                       # plots the density curves
-```
-
-You can also use these "shadow" columns to stratify a statistical summary, as shown below:
-
-```{r}
-linelist %>%
-  bind_shadow() %>%                # create the shows cols
-  group_by(date_outcome_NA) %>%    # shadow col for stratifying
-  summarise_at(.vars = c("age_years"),                        # variable of interest for calculations
-               .funs = c("mean", "sd", "var", "min", "max"),  # stats to calculate
-               na.rm = TRUE)       # other arguments for the stat calculations
-```
-
-
-An alternative way to plot the proportion of values in one column, including missingness, is given below. It does *not* involve **naniar**. This example shows percent of weekly observations that are missing in a column):  
-
-1) Aggregate the data into a useful time unit (days, weeks, etc.), summarizing the proportion of observations with `NA` (and any other values of interest)  
-2) Plot the proportion missing as a line using `ggplot()`  
-
-Below, we take the linelist, add a new column for week, group the data by week, and then calculate the percent of that week's records where the value is missing. (note: if you want % of 7 days the calculation would be slightly different).  
-
-```{r}
-outcome_missing <- linelist %>%
-  mutate(week = lubridate::floor_date(date_onset, "week")) %>%   # create new week column
-  group_by(week) %>%                                             # group the rows by week
-  summarize(                                                     # summarize each week
-    n_obs = n(),                                                     # number of records
-    
-    outcome_missing = sum(is.na(outcome) | outcome == ""),       # number of records missing the value
-    outcome_p_miss  = outcome_missing / n_obs,                   # proportion of records missing the value
-  
-    outcome_dead    = sum(outcome == "Death", na.rm=T),          # number of records as dead
-    outcome_p_dead  = outcome_dead / n_obs) %>%                  # proportion of records as dead
-  
-  tidyr::pivot_longer(-week, names_to = "statistic") %>%         # pivot all columns except week, to long format for ggplot
-  filter(stringr::str_detect(statistic, "_p_"))                  # keep only the proportion values
-```
-
-Then we plot the proportion missing as a line, by week
-
-```{r, message=F, warning=F}
-ggplot(data = outcome_missing)+
-    geom_line(
-      aes(x = week, y = value, group = statistic, color = statistic),
-      size = 2,
-      stat = "identity")+
-    labs(title = "Weekly outcomes",
-         x = "Week",
-         y = "Proportion of weekly records") + 
-     scale_color_discrete(
-       name = "",
-       labels = c("Died", "Missing outcome"))+
-    scale_y_continuous(breaks = c(seq(0,1,0.1)))+
-  theme_minimal()+
-  theme(
-    legend.position = "bottom"
+```{r, warning=F, message=F}
+count_data %>% 
+  pivot_longer(
+    cols = `malaria_rdt_0-4`:malaria_rdt_15,
+    names_to = "age_group",
+    values_to = "counts"
+  ) %>% 
+  ggplot() +
+  geom_col(
+    aes(x = data_date, y = counts, fill = age_group)
   )
 ```
 
 
 
 <!-- ======================================================= -->
-## Filter out rows with missing values { }
+## Long-to-wide {}
 
-To quickly remove rows with missing values, use the **dplyr** function `drop_na()`.  
+Transforming a dataset from long to wide ([image source](https://d33wubrfki0l68.cloudfront.net/8350f0dda414629b9d6c354f87acf5c5f722be43/bcb84/images/tidy-8.png))
 
-The original `linelist` has `r `nrow(linelist)` rows. The adjusted number of rows is shown below:  
-
-```{r}
-linelist %>% 
-  drop_na() %>%     # remove rows with ANY missing values
-  nrow()
+```{r, warning=F, message=F, echo=F}
+knitr::include_graphics(here::here("images", "pivot_wider.png"))
 ```
 
-You can specify to drop rows with missingness in certain columns:  
+
+
+In some instances, we may wish to convert a dataset to a wider format. For this, we can use the `pivot_wider()` function.
+
+A typical use case is when we want to transform the results of an analysis into a format which is more digestible for the reader. Typically, we are transforming a dataset in which the observations are spread over multiple rows to one in which each observation occupies a single row.
+
+This introduces the useful topic of "tidy data", in which each variable has it's own column, each observation has it's own row, and each value has it's own cell. More about this topic can be found here https://r4ds.had.co.nz/tidy-data.html. 
+
+### Data {-}
+
+Let us use the `linelist` dataset. Suppose that we want to know the counts of individuals in the different age groups, by sex:
 
 ```{r}
-linelist %>% 
-  drop_na(date_onset) %>% # remove rows missing date_onset 
-  nrow()
+linelist <- 
+  linelist %>% 
+  as_tibble()
+  
+df_wide <- 
+  linelist %>% 
+  count(age_cat, gender)
 ```
 
-Multiple columns can be specified one after the other, or using this standard syntax:  
+This gives us a long dataset that is great for visualisation, but not ideal for presentation in a table:
 
 ```{r}
-linelist %>% 
-  drop_na(contains("date")) %>% # remove rows missing values in any "date" column 
-  nrow()
+ggplot(df_wide) +
+  geom_col(aes(x = age_cat, y = n, fill = gender))
 ```
 
+### Pivot wider {-}  
+
+Therefore, we can use `pivot_wider()` to put this into a better format for inclusion as tables in our reports. The argument `names_from` specifies the column *from* which to generate the new column *names*, while the argument `values_from` specifies the column *from* which to take the *values* to populate the cells:
+
+```{r}
+table_wide <- 
+  df_wide %>% 
+  pivot_wider(
+    names_from = gender,
+    values_from = n
+  )
+
+table_wide
+```
+
+This table is much nicer for inclusion in our reports:
+
+```{r}
+table_wide %>% 
+  janitor::adorn_totals(c("row", "col")) %>% # adds a total row and column
+  knitr::kable() %>% 
+  kableExtra::row_spec(row = 9, bold = TRUE) %>% 
+  kableExtra::column_spec(column = 5, bold = TRUE) 
+```
 
 
 <!-- ======================================================= -->
-## Handling `NA` in `ggplot()` { }
+## Fill {}
 
-It is often wise to report the number of values excluded from a plot in a caption. Below is an example:  
-
-In `ggplot()`, you can add `labs()` and within it a `caption = `. In the caption, you can use `str_glue()` from **stringr** package to paste values together into a sentence dynamically so they will adjust to the data. An example is below:  
-
-* Note the use of `\n` for a new line.  
-* Note that if multiple column would contribute to values not being plotted (e.g. age or sex if those are reflected in the plot), then you must filter on those columns as well to correctly calculate the number not shown.  
-
-```{r, eval=F}
-labs(
-  title = "",
-  y = "",
-  x = "",
-  caption  = stringr::str_glue(
-  "n = {nrow(central_data)} from Central Hospital;
-  {nrow(central_data %>% filter(is.na(date_onset)))} cases missing date of onset and not shown."))  
-```
-
-Sometimes, it can be easier to save the string as an object in commands prior to the `ggplot()` command, and simply reference the named string object within the `str_glue()`.  
-
+Filling in missing data
 
 <!-- ======================================================= -->
-## `NA` in factors { }
+### Data {-}
 
-If your column of interest is a factor, use `fct_explicit_na()` from the **forcats** package to convert `NA` values to a character value. By default the character value is "(Missing)" but this can be adjusted via the `na_level =` arguement.   
+In some situations after a `pivot`, and more commonly after a `bind`, we are left with gaps in some cells that we would like to fill. For example, take two datasets, each with observations for the measurement number, the name of the facility, and the case count at that time. However, the second dataset also has a variable `Year`. When we perform a `bind_rows()` to join the two datasets together, the `Year` variable is filled with `NA` for those rows where there was no prior information (i.e. the first dataset):
+
 
 ```{r}
-pacman::p_load(forcats)   # load package
+df1 <- 
+  tibble::tribble(
+       ~Measurement, ~Facility, ~Cases,
+                  1,  "Hosp 1",     66,
+                  2,  "Hosp 1",     26,
+                  3,  "Hosp 1",      8,
+                  1,  "Hosp 2",     71,
+                  2,  "Hosp 2",     62,
+                  3,  "Hosp 2",     70,
+                  1,  "Hosp 3",     47,
+                  2,  "Hosp 3",     70,
+                  3,  "Hosp 3",     38,
+       )
 
-linelist <- linelist %>% 
-  mutate(gender = fct_explicit_na(gender, na_level = "Missing"))
+df1 
 
-levels(linelist$gender)
+df2 <- 
+  tibble::tribble(
+    ~Year, ~Measurement, ~Facility, ~Cases,
+     2000,            1,  "Hosp 4",     82,
+     2001,            2,  "Hosp 4",     87,
+     2002,            3,  "Hosp 4",     46
+  )
+
+df2
+
+df_combined <- 
+  bind_rows(df1, df2) %>% 
+  arrange(Measurement, Facility)
+
+df_combined
+
 ```
-
-
 
 <!-- ======================================================= -->
-## Imputation { }
+### `fill()` {-}
 
-
-Sometimes, when analyzing your data, it will be important to "fill in the gaps" and impute missing data While you can always simply analyze a dataset after removing all missing values, this can cause problems in many ways. Here are two examples: 
-
-1) By removing all observations with missing values or variables with a large amount of missing data, you might reduce your power or ability to do some types of analysis. For example, as we discovered earlier, only a small fraction of the observations in our linelist dataset have no missing data across all of our variables. If we removed the majority of our dataset we'd be losing a lot of information! And, most of our variables have some amount of missing data--for most analysis it's probably not reasonable to drop every variable that has a lot of missing data either.
-
-2) Depending on why your data is missing, analysis of only non-missing data might lead to biased or misleading results. For example, as we learned earlier we are missing data for some patients about whether they've had some important symptoms like fever or cough. But, as one possibility, maybe that information wasn't recorded for people that just obviously weren't very sick. In that case, if we just removed these observations we'd be excluding some of the healthiest people in our dataset and that might really bias any results.
-
-It's important to think about why your data might be missing in addition to seeing how much is missing. Doing this can help you decide how important it might be to impute missing data, and also which method of imputing missing data might be best in your situation.
-
-### Types of missing data
-
-Here are three general types of missing data:
-
-1) **Missing Completely at Random** (MCAR). This means that there is no relationship between the probability of data being missing and any of the other variables in your data. The probability of being missing is the same for all cases This is a rare situation. But, if you have strong reason to believe your data is MCAR analyzing only non-missing data without imputing won't bias your results (although you may lose some power). [TODO: consider discussing statistical tests for MCAR]
-
-2) **Missing at Random** (MAR). This name is actually a bit misleading as MAR means that your data is missing in a systematic, predictable way based on the other information you have. For example, maybe every observation in our dataset with a missing value for fever was actually not recorded because every patient with chills and and aches was just assumed to have a fever so their temperature was never taken. If true, we could easily predict that every missing observation with chills and aches has a fever as well and use this information to impute our missing data. In practice, this is more of a spectrum. Maybe if a patient had both chills and aches they were more likely to have a fever as well if they didn't have their temperature taken, but not always. This is still predictable even if it isn't perfectly predictable. This is a common type of missing data 
-
-3) **Missing not at Random** (MNAR). Sometimes, this is also called **Not Missing at Random** (NMAR). This assumes that the probability of a value being missing is NOT systematic or predictable using the other information we have but also isn't missing randomly. In this situation data is missing for unknown reasons or for reasons you don't have any information about. For example, in our dataset maybe information on age is missing because some very elderly patients either don't know or refuse to say how old they are. In this situation, missing data on age is related to the value itself (and thus isn't random) and isn't predictable based on the other information we have. MNAR is complex and often the best way of dealing with this is to try to collect more data or information about why the data is missing rather than attempt to impute it. 
-
-In general, imputing MCAR data is often fairly simple, while MNAR is very challenging if not impossible. Many of the common data imputation methods assume MAR. 
-
-### Useful packages
-
-Some useful packages for imputing missing data are Mmisc, missForest (which uses random forests to impute missing data), and mice (Multivariate Imputation by Chained Equations). For this section we'll just use the mice package, which implements a variety of techniques. The maintainer of the mice package has published an online book about imputing missing data that goes into more detail here (https://stefvanbuuren.name/fimd/).  
-
-Here is the code to load the mice package:
+In this case, `Year` is a useful variable to include, particularly if we want to explore trends over time. Therefore, we use `fill()` to *fill* in those empty cells, by specifying the column to fill and the direction (in this case **up**):
 
 ```{r}
-pacman::p_load(mice)
+df_combined %>% 
+  fill(Year, .direction = "up")
 ```
 
-### Mean Imputation
-
-Sometimes if you are doing a simple analysis or you have strong reason to think you can assume MCAR, you can simply set missing numerical values to the mean of that variable. Perhaps we can assume that missing temperature measurements in our dataset were either MCAR or were just normal values. Here is the code to create a new variable that replaces missing temperature values with the mean temperature value in our dataset. However, in many situations replacing data with the mean can lead to bias, so be careful.
+We can rearrange the data so that we would need to fill in a downward direction:
 
 ```{r}
-linelist <- linelist %>%
-  mutate(temp_replace_na_with_mean = replace_na(temp, mean(temp, na.rm = T)))
+df_combined <- 
+  df_combined %>% 
+  arrange(Measurement, desc(Facility))
+
+df_combined
+
+df_combined <- 
+  df_combined %>% 
+  fill(Year, .direction = "down")
+
+df_combined
 ```
 
-You could also do a similar process for replacing categorical data with a specific value. For our dataset, imagine you knew that all observations with a missing value for their outcome (which can be "Death" or "Recover") were actually people that died (note: this is not actually true for this dataset):
+This dataset is now useful for plotting:
 
 ```{r}
-linelist <- linelist %>%
-  mutate(outcome_replace_na_with_death = replace_na(outcome, "Death"))
+ggplot(df_combined) +
+  aes(Year, Cases, fill = Facility) +
+  geom_col()
 ```
 
-### Regression imputation
-
-A somewhat more advanced method is to use some sort of statistical model to predict what a missing value is likely to be and replace it with the predicted value. Here is an example of creating predicted values for all the observations where temperature is missing, but age and fever are not, using simple linear regression using fever status and age in years as predictors. In practice you'd want to use a better model than this sort of simple approach.
-
-```{r, warning=F, message=F}
-simple_temperature_model_fit <- lm(temp ~ fever + age_years, data = linelist)
-
-#using our simple temperature model to predict values just for the observations where temp is missing
-predictions_for_missing_temps <- predict(simple_temperature_model_fit,
-                                        newdata = linelist %>% filter(is.na(temp))) 
-```
-
-Or, using the same modeling approach through the mice package to create imputed values for the missing temperature observations:
+But less useful for presenting in a table, so let's practice converting this long, untidy dataframe into a wider, tidy dataframe:
 
 ```{r}
-model_dataset <- linelist %>%
-  select(temp, fever, age_years)  
-
-temp_imputed <- mice(model_dataset,
-                            method = "norm.predict",
-                            seed = 1,
-                            m = 1,
-                            print = F)
-
-temp_imputed_values <- temp_imputed$imp$temp
-
+df_combined %>% 
+  pivot_wider(
+    id_cols = c(Facility, Year, Cases),
+    names_from = "Year",
+    values_from = "Cases"
+  ) %>% 
+  arrange(Facility) %>% 
+  janitor::adorn_totals(c("row", "col")) %>% 
+  knitr::kable() %>% 
+  kableExtra::row_spec(row = 5, bold = TRUE) %>% 
+  kableExtra::column_spec(column = 5, bold = TRUE) 
 ```
 
-
-This is the same type of approach by some more advanced methods like using the missForest package to replace missing data with predicted values. In that case, the prediction model is a random forest instead of a linear regression. You can use other types of models to do this as well. However, while this approach works well under MCAR you should be a bit careful if you believe MAR or MNAR more accurately describes your situation. The quality of your imputation will depend on how good your prediction model is and even with a very good model the variability of your imputed data may be underestimated. 
-
-### LOCF and BOCF
-
-Last observation carried forward (LOCF) and baseline observation carried forward (BOCF) are  imputation methods for time series/longitudinal data. The idea is to take the previous observed value as a replacement for the missing data. When multiple values are missing in succession, the method searches for the last observed value.
-
-[TO BE COMPLETED]
-
-### Multiple Imputation
-
-The online book we mentioned earlier by the author of the mice package (https://stefvanbuuren.name/fimd/) contains a detailed explanation of multiple imputation and why you'd want to use it. But, here is a basic explanation of the method:
-
-When you do multiple imputation, you create multiple datasets with the missing values imputed to plausible data values (depending on your research data you might want to create more or less of these imputed datasets, but the mice package sets the default number to 5). The difference is that rather than a single, specific value each imputed value is drawn from an estimated distribution (so it includes some randomness). As a result, each of these datasets will have slightly different different imputed values (however, the non-missing data will be the same in each of these imputed datasets). You still use some sort of predictive model to do the imputation in each of these new datasets (mice has many options for prediction methods including *Predictive Mean Matching*, *logistic regression*, and *random forest*) but the mice package can take care of many of the modeling details. 
-
-Then, once you have created these new imputed datasets, you can apply then apply whatever statistical model or analysis you were planning to do for each of these new imputed datasets and pool the results of these models together. This works very well to reduce bias in both MCAR and many MAR settings and often results in more accurate standard error estimates.
-
-Here is an example of applying the Multiple Imputation process to predict temperature in our linelist dataset using a age and fever status (our simplified model_dataset from above):
-[Note from Daniel: this is not a very good model example and I'll change it later]
+N.B. In this case, we had to specify to only include the three variables `Facility`, `Year`, and `Cases` as the additional variable `Measurement` would interfere with the creation of the table:
 
 ```{r}
-# imputing missing values for all variables in our model_dataset, and creating 10 new imputed datasets
-multiple_imputation = mice(
-  model_dataset,
-  seed = 1,
-  m = 10,
-  print = FALSE) 
-
-model_fit <- with(multiple_imputation, lm(temp ~ age_years + fever))
-
-base::summary(mice::pool(model_fit))
+df_combined %>% 
+  pivot_wider(
+    names_from = "Year",
+    values_from = "Cases"
+  ) %>% 
+  knitr::kable()
 ```
 
-Here we used the mice default method of imputation, which is Predictive Mean Matching. We then used these imputed datasets to separately estimate and then pool results from simple linear regressions on each of these datasets. There are many details we've glossed over and many settings you can adjust during the Multiple Imputation process while using the mice package. For example, you won't always have numerical data and might need to use other imputation methods (you can still use the mice package for many other types of data and methods). But, for a more robust analysis when missing data is a significant concern, Multiple Imputation is good solution that isn't always much more work than doing a complete case analysis. 
+## Resources  
 
+Here is a helpful [tutorial](https://datacarpentry.org/r-socialsci/03-dplyr-tidyr/index.html)
 
-
-
-
-<!-- ======================================================= -->
-## Resources { }
-
-Vignette on the [naniar package](https://cran.r-project.org/web/packages/naniar/vignettes/getting-started-w-naniar.html)
-
-Gallery of [missing value visualizations](https://cran.r-project.org/web/packages/naniar/vignettes/naniar-visualisation.html)
 ```{r include=FALSE, cache=FALSE}
 
 # clear workspace
@@ -5970,7 +5874,7 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 #count_data <- rio::import(here::here("data", "facility_count_data.rds"))
 ```
 
-<!--chapter:end:new_pages/missing_data.Rmd-->
+<!--chapter:end:new_pages/pivoting.Rmd-->
 
 
 # Grouping data { }  
@@ -8998,6 +8902,483 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 <!--chapter:end:new_pages/deduplication.Rmd-->
 
 
+# Missing data { }
+
+```{r, out.width=c("50%"), echo=F}
+knitr::include_graphics(here::here("images", "missingness.png"))
+knitr::include_graphics(here::here("images", "missingness_overview.png"))
+```
+
+<!-- ======================================================= -->
+## Overview { }
+
+This page will cover:  
+
+1) Useful functions for assessing missingness  
+2) Assess missingness in a dataframe  
+3) Filter out rows with missingness  
+3) Plotting missingness over time  
+4) Handling how `NA` is displayed in plots  
+5) Imputation  
+
+
+
+
+<!-- ======================================================= -->
+## Preparation { }
+
+**Load packages**  
+
+```{r}
+pacman::p_load(
+  rio,           # import/export
+  tidyverse,     # data mgmt and viz
+  naniar         # assess and visualize missingness
+)
+```
+
+**Load data**  
+
+```{r, echo=F}
+linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
+```
+
+
+```{r, eval=F}
+linelist <- rio::import("linelist_cleaned.rds")
+```
+
+
+
+<!-- ======================================================= -->
+## Useful functions { }
+
+The following are useful **base** R functions when assessing or handling missing values:  
+
+
+**`is.na()` and `!is.na()`**  
+
+Use `is.na()`to identify missing values, or use its opposite (with `!` in front) to identify non-missing values. These both return a logical value (`TRUE` or `FALSE`). Remember that you can `sum()` the resulting vector to count the number `TRUE`, e.g. `sum(is.na(linelist$date_outcome))`.    
+
+```{r}
+my_vector <- c(1, 4, 56, NA, 5, NA, 22)
+is.na(my_vector)
+!is.na(my_vector)
+sum(is.na(my_vector))
+```
+
+
+**`na.omit()`**  
+
+This function, if applied to a dataframe, will remove rows with *any* missing values. It is also from **base** R.  
+If applied to a vector, it will remove `NA` values from the vector it is applied to. For example:  
+
+```{r}
+sum(na.omit(my_vector))
+```
+
+
+**`na.rm = TRUE`**  
+
+In R, most mathematical functions will by default *include* `NA` in calculations, *which results in the function returning `NA`*. This is designed intentionally, in order to make you aware that you have missing data.  
+
+You can avoid this by removing missing values from the calculation, by including the argument `na.rm = TRUE` (na.rm stands for "remove `NA`").  
+
+```{r}
+mean(my_vector)
+
+mean(my_vector, na.rm = TRUE)
+```
+
+
+
+<!-- ======================================================= -->
+## Assess missingness in a dataframe { }
+
+You can use the package **naniar** to assess and visualize missingness in the dataframe `linelist`.  
+
+```{r}
+# install and/or load package
+pacman::p_load(naniar)
+```
+
+### Statistics {-}
+
+To find the percent of all values that are missing use `pct_miss()`. Use `n_miss()` to get the number of missing values.  
+
+```{r}
+pct_miss(linelist)
+```
+
+The two functions below return the percent of rows with any missing value, or that are entirely complete, respectively. Reember that `NA` means missing, and that ``""` or `" "` will register as non-missing.  
+
+```{r}
+pct_miss_case(linelist)   # also see n_complete() for counts
+
+pct_complete_case(linelist) # see n_complete
+```
+
+
+
+### Visualizing missingness {-}  
+
+The `gg_miss_var()` function will show you the number of missing values in each column. You can add a bare column name to the argument `facet = ` if desired to see the plot by groups. By default, counts are shown instead of percents (`show_pct = FALSE`). You can also add labs as a normal ggplot with `+labs()`.  
+
+
+```{r}
+gg_miss_var(linelist, show_pct = TRUE)
+```
+
+You can use `vis_miss()` to visualize the dataframe as a heatmap, showing whether each value is missing or not. As usual, you can also `select()` certain columns from the dataframe and the provide that to the function.    
+
+```{r}
+vis_miss(linelist)
+```
+
+
+### Explore and visualize missingness relationships {-} 
+
+How do you visualize something that is not there??? By default, ggplot removes points with missing values from plots.  
+
+**naniar** offers a solution via `geom_miss_point()`. When creating a scatterplot of two columns, records with one of the values missing and the other present are shown by setting the missing values to 10% lower than the lowest value in the column, and coloring them distinctly.  
+
+In the scatterplot below, the red dots are records where the value for one column is present but the value for the other column is missing.  
+
+
+```{r}
+ggplot(
+  linelist, 
+  aes(x = age_years,             
+      y = temp)) +     # column to show missingness
+  geom_miss_point()
+```
+
+To assess missingness in the dataframe *stratified by another column*, consider `gg_miss_fct()`, which returns a heatmap of percent missingness in the dataframe by a factor/categorical (or date) column:  
+
+```{r}
+gg_miss_fct(linelist, age_cat5)
+```
+
+
+This function can also be used with a date column to see missingness over time:  
+
+```{r}
+gg_miss_fct(linelist, date_onset)
+```
+
+
+
+
+### "Shadow" columns {-}
+
+Another way to visualize missingness in one column by values in a second column is using the "shadow" that **naniar** can create. `bind_shadow()` creates a binary `NA`/not `NA` column for every existing column, and binds all these new columns to the original dataset with the appendix "_NA". This doubles the number of columns - see below:  
+
+
+```{r}
+shadowed_linelist <- linelist %>% 
+  bind_shadow()
+
+names(shadowed_linelist)
+```
+
+These "shadow" columns can be used to plot the density of proportion of values that are missing, by any another column X. For example, the plot below shows the proportion of records missing `days_onset_hosp` (number of days from symptom onset to hospitalisation), by that record's value in `date_hospitalisation`. Essentially, you are plotting the density of the x-axis column, but stratifying the results (`color = `) by a shadow column of interest. This analysis works best if the x-axis is a numeric or date column.  
+
+
+```{r, message = F}
+ggplot(
+  shadowed_linelist,                   # dataframe with shadow columns
+  aes(x = date_hospitalisation,        # numeric or date column
+      colour = age_years_NA)) +        # shadow column of interest
+  geom_density()                       # plots the density curves
+```
+
+You can also use these "shadow" columns to stratify a statistical summary, as shown below:
+
+```{r}
+linelist %>%
+  bind_shadow() %>%                # create the shows cols
+  group_by(date_outcome_NA) %>%    # shadow col for stratifying
+  summarise_at(.vars = c("age_years"),                        # variable of interest for calculations
+               .funs = c("mean", "sd", "var", "min", "max"),  # stats to calculate
+               na.rm = TRUE)       # other arguments for the stat calculations
+```
+
+
+An alternative way to plot the proportion of values in one column, including missingness, is given below. It does *not* involve **naniar**. This example shows percent of weekly observations that are missing in a column):  
+
+1) Aggregate the data into a useful time unit (days, weeks, etc.), summarizing the proportion of observations with `NA` (and any other values of interest)  
+2) Plot the proportion missing as a line using `ggplot()`  
+
+Below, we take the linelist, add a new column for week, group the data by week, and then calculate the percent of that week's records where the value is missing. (note: if you want % of 7 days the calculation would be slightly different).  
+
+```{r}
+outcome_missing <- linelist %>%
+  mutate(week = lubridate::floor_date(date_onset, "week")) %>%   # create new week column
+  group_by(week) %>%                                             # group the rows by week
+  summarize(                                                     # summarize each week
+    n_obs = n(),                                                     # number of records
+    
+    outcome_missing = sum(is.na(outcome) | outcome == ""),       # number of records missing the value
+    outcome_p_miss  = outcome_missing / n_obs,                   # proportion of records missing the value
+  
+    outcome_dead    = sum(outcome == "Death", na.rm=T),          # number of records as dead
+    outcome_p_dead  = outcome_dead / n_obs) %>%                  # proportion of records as dead
+  
+  tidyr::pivot_longer(-week, names_to = "statistic") %>%         # pivot all columns except week, to long format for ggplot
+  filter(stringr::str_detect(statistic, "_p_"))                  # keep only the proportion values
+```
+
+Then we plot the proportion missing as a line, by week
+
+```{r, message=F, warning=F}
+ggplot(data = outcome_missing)+
+    geom_line(
+      aes(x = week, y = value, group = statistic, color = statistic),
+      size = 2,
+      stat = "identity")+
+    labs(title = "Weekly outcomes",
+         x = "Week",
+         y = "Proportion of weekly records") + 
+     scale_color_discrete(
+       name = "",
+       labels = c("Died", "Missing outcome"))+
+    scale_y_continuous(breaks = c(seq(0,1,0.1)))+
+  theme_minimal()+
+  theme(
+    legend.position = "bottom"
+  )
+```
+
+
+
+<!-- ======================================================= -->
+## Filter out rows with missing values { }
+
+To quickly remove rows with missing values, use the **dplyr** function `drop_na()`.  
+
+The original `linelist` has `r `nrow(linelist)` rows. The adjusted number of rows is shown below:  
+
+```{r}
+linelist %>% 
+  drop_na() %>%     # remove rows with ANY missing values
+  nrow()
+```
+
+You can specify to drop rows with missingness in certain columns:  
+
+```{r}
+linelist %>% 
+  drop_na(date_onset) %>% # remove rows missing date_onset 
+  nrow()
+```
+
+Multiple columns can be specified one after the other, or using this standard syntax:  
+
+```{r}
+linelist %>% 
+  drop_na(contains("date")) %>% # remove rows missing values in any "date" column 
+  nrow()
+```
+
+
+
+<!-- ======================================================= -->
+## Handling `NA` in `ggplot()` { }
+
+It is often wise to report the number of values excluded from a plot in a caption. Below is an example:  
+
+In `ggplot()`, you can add `labs()` and within it a `caption = `. In the caption, you can use `str_glue()` from **stringr** package to paste values together into a sentence dynamically so they will adjust to the data. An example is below:  
+
+* Note the use of `\n` for a new line.  
+* Note that if multiple column would contribute to values not being plotted (e.g. age or sex if those are reflected in the plot), then you must filter on those columns as well to correctly calculate the number not shown.  
+
+```{r, eval=F}
+labs(
+  title = "",
+  y = "",
+  x = "",
+  caption  = stringr::str_glue(
+  "n = {nrow(central_data)} from Central Hospital;
+  {nrow(central_data %>% filter(is.na(date_onset)))} cases missing date of onset and not shown."))  
+```
+
+Sometimes, it can be easier to save the string as an object in commands prior to the `ggplot()` command, and simply reference the named string object within the `str_glue()`.  
+
+
+<!-- ======================================================= -->
+## `NA` in factors { }
+
+If your column of interest is a factor, use `fct_explicit_na()` from the **forcats** package to convert `NA` values to a character value. By default the character value is "(Missing)" but this can be adjusted via the `na_level =` arguement.   
+
+```{r}
+pacman::p_load(forcats)   # load package
+
+linelist <- linelist %>% 
+  mutate(gender = fct_explicit_na(gender, na_level = "Missing"))
+
+levels(linelist$gender)
+```
+
+
+
+<!-- ======================================================= -->
+## Imputation { }
+
+
+Sometimes, when analyzing your data, it will be important to "fill in the gaps" and impute missing data While you can always simply analyze a dataset after removing all missing values, this can cause problems in many ways. Here are two examples: 
+
+1) By removing all observations with missing values or variables with a large amount of missing data, you might reduce your power or ability to do some types of analysis. For example, as we discovered earlier, only a small fraction of the observations in our linelist dataset have no missing data across all of our variables. If we removed the majority of our dataset we'd be losing a lot of information! And, most of our variables have some amount of missing data--for most analysis it's probably not reasonable to drop every variable that has a lot of missing data either.
+
+2) Depending on why your data is missing, analysis of only non-missing data might lead to biased or misleading results. For example, as we learned earlier we are missing data for some patients about whether they've had some important symptoms like fever or cough. But, as one possibility, maybe that information wasn't recorded for people that just obviously weren't very sick. In that case, if we just removed these observations we'd be excluding some of the healthiest people in our dataset and that might really bias any results.
+
+It's important to think about why your data might be missing in addition to seeing how much is missing. Doing this can help you decide how important it might be to impute missing data, and also which method of imputing missing data might be best in your situation.
+
+### Types of missing data
+
+Here are three general types of missing data:
+
+1) **Missing Completely at Random** (MCAR). This means that there is no relationship between the probability of data being missing and any of the other variables in your data. The probability of being missing is the same for all cases This is a rare situation. But, if you have strong reason to believe your data is MCAR analyzing only non-missing data without imputing won't bias your results (although you may lose some power). [TODO: consider discussing statistical tests for MCAR]
+
+2) **Missing at Random** (MAR). This name is actually a bit misleading as MAR means that your data is missing in a systematic, predictable way based on the other information you have. For example, maybe every observation in our dataset with a missing value for fever was actually not recorded because every patient with chills and and aches was just assumed to have a fever so their temperature was never taken. If true, we could easily predict that every missing observation with chills and aches has a fever as well and use this information to impute our missing data. In practice, this is more of a spectrum. Maybe if a patient had both chills and aches they were more likely to have a fever as well if they didn't have their temperature taken, but not always. This is still predictable even if it isn't perfectly predictable. This is a common type of missing data 
+
+3) **Missing not at Random** (MNAR). Sometimes, this is also called **Not Missing at Random** (NMAR). This assumes that the probability of a value being missing is NOT systematic or predictable using the other information we have but also isn't missing randomly. In this situation data is missing for unknown reasons or for reasons you don't have any information about. For example, in our dataset maybe information on age is missing because some very elderly patients either don't know or refuse to say how old they are. In this situation, missing data on age is related to the value itself (and thus isn't random) and isn't predictable based on the other information we have. MNAR is complex and often the best way of dealing with this is to try to collect more data or information about why the data is missing rather than attempt to impute it. 
+
+In general, imputing MCAR data is often fairly simple, while MNAR is very challenging if not impossible. Many of the common data imputation methods assume MAR. 
+
+### Useful packages
+
+Some useful packages for imputing missing data are Mmisc, missForest (which uses random forests to impute missing data), and mice (Multivariate Imputation by Chained Equations). For this section we'll just use the mice package, which implements a variety of techniques. The maintainer of the mice package has published an online book about imputing missing data that goes into more detail here (https://stefvanbuuren.name/fimd/).  
+
+Here is the code to load the mice package:
+
+```{r}
+pacman::p_load(mice)
+```
+
+### Mean Imputation
+
+Sometimes if you are doing a simple analysis or you have strong reason to think you can assume MCAR, you can simply set missing numerical values to the mean of that variable. Perhaps we can assume that missing temperature measurements in our dataset were either MCAR or were just normal values. Here is the code to create a new variable that replaces missing temperature values with the mean temperature value in our dataset. However, in many situations replacing data with the mean can lead to bias, so be careful.
+
+```{r}
+linelist <- linelist %>%
+  mutate(temp_replace_na_with_mean = replace_na(temp, mean(temp, na.rm = T)))
+```
+
+You could also do a similar process for replacing categorical data with a specific value. For our dataset, imagine you knew that all observations with a missing value for their outcome (which can be "Death" or "Recover") were actually people that died (note: this is not actually true for this dataset):
+
+```{r}
+linelist <- linelist %>%
+  mutate(outcome_replace_na_with_death = replace_na(outcome, "Death"))
+```
+
+### Regression imputation
+
+A somewhat more advanced method is to use some sort of statistical model to predict what a missing value is likely to be and replace it with the predicted value. Here is an example of creating predicted values for all the observations where temperature is missing, but age and fever are not, using simple linear regression using fever status and age in years as predictors. In practice you'd want to use a better model than this sort of simple approach.
+
+```{r, warning=F, message=F}
+simple_temperature_model_fit <- lm(temp ~ fever + age_years, data = linelist)
+
+#using our simple temperature model to predict values just for the observations where temp is missing
+predictions_for_missing_temps <- predict(simple_temperature_model_fit,
+                                        newdata = linelist %>% filter(is.na(temp))) 
+```
+
+Or, using the same modeling approach through the mice package to create imputed values for the missing temperature observations:
+
+```{r}
+model_dataset <- linelist %>%
+  select(temp, fever, age_years)  
+
+temp_imputed <- mice(model_dataset,
+                            method = "norm.predict",
+                            seed = 1,
+                            m = 1,
+                            print = F)
+
+temp_imputed_values <- temp_imputed$imp$temp
+
+```
+
+
+This is the same type of approach by some more advanced methods like using the missForest package to replace missing data with predicted values. In that case, the prediction model is a random forest instead of a linear regression. You can use other types of models to do this as well. However, while this approach works well under MCAR you should be a bit careful if you believe MAR or MNAR more accurately describes your situation. The quality of your imputation will depend on how good your prediction model is and even with a very good model the variability of your imputed data may be underestimated. 
+
+### LOCF and BOCF
+
+Last observation carried forward (LOCF) and baseline observation carried forward (BOCF) are  imputation methods for time series/longitudinal data. The idea is to take the previous observed value as a replacement for the missing data. When multiple values are missing in succession, the method searches for the last observed value.
+
+[TO BE COMPLETED]
+
+### Multiple Imputation
+
+The online book we mentioned earlier by the author of the mice package (https://stefvanbuuren.name/fimd/) contains a detailed explanation of multiple imputation and why you'd want to use it. But, here is a basic explanation of the method:
+
+When you do multiple imputation, you create multiple datasets with the missing values imputed to plausible data values (depending on your research data you might want to create more or less of these imputed datasets, but the mice package sets the default number to 5). The difference is that rather than a single, specific value each imputed value is drawn from an estimated distribution (so it includes some randomness). As a result, each of these datasets will have slightly different different imputed values (however, the non-missing data will be the same in each of these imputed datasets). You still use some sort of predictive model to do the imputation in each of these new datasets (mice has many options for prediction methods including *Predictive Mean Matching*, *logistic regression*, and *random forest*) but the mice package can take care of many of the modeling details. 
+
+Then, once you have created these new imputed datasets, you can apply then apply whatever statistical model or analysis you were planning to do for each of these new imputed datasets and pool the results of these models together. This works very well to reduce bias in both MCAR and many MAR settings and often results in more accurate standard error estimates.
+
+Here is an example of applying the Multiple Imputation process to predict temperature in our linelist dataset using a age and fever status (our simplified model_dataset from above):
+[Note from Daniel: this is not a very good model example and I'll change it later]
+
+```{r}
+# imputing missing values for all variables in our model_dataset, and creating 10 new imputed datasets
+multiple_imputation = mice(
+  model_dataset,
+  seed = 1,
+  m = 10,
+  print = FALSE) 
+
+model_fit <- with(multiple_imputation, lm(temp ~ age_years + fever))
+
+base::summary(mice::pool(model_fit))
+```
+
+Here we used the mice default method of imputation, which is Predictive Mean Matching. We then used these imputed datasets to separately estimate and then pool results from simple linear regressions on each of these datasets. There are many details we've glossed over and many settings you can adjust during the Multiple Imputation process while using the mice package. For example, you won't always have numerical data and might need to use other imputation methods (you can still use the mice package for many other types of data and methods). But, for a more robust analysis when missing data is a significant concern, Multiple Imputation is good solution that isn't always much more work than doing a complete case analysis. 
+
+
+
+
+
+<!-- ======================================================= -->
+## Resources { }
+
+Vignette on the [naniar package](https://cran.r-project.org/web/packages/naniar/vignettes/getting-started-w-naniar.html)
+
+Gallery of [missing value visualizations](https://cran.r-project.org/web/packages/naniar/vignettes/naniar-visualisation.html)
+```{r include=FALSE, cache=FALSE}
+
+# clear workspace
+rm(list = ls(all = TRUE))
+
+# clear all packages except base
+#lapply(names(sessionInfo()$loadedOnly), require, character.only = TRUE)
+#invisible(lapply(paste0('package:', names(sessionInfo()$otherPkgs)), detach, character.only=TRUE, unload=TRUE, force=TRUE))
+
+# to ensure that tidyverse packages prevail
+filter <- dplyr::filter
+select <- dplyr::select
+summarise <- dplyr::summarise
+summary <- base::summary
+
+#load core packages
+pacman::p_load(
+     rio,
+     here,
+     DT,
+     stringr,
+     lubridate,
+     tidyverse
+)
+
+# import the cleaned ebola linelist
+linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
+
+# import the count data - facility level
+#count_data <- rio::import(here::here("data", "facility_count_data.rds"))
+```
+
+<!--chapter:end:new_pages/missing_data.Rmd-->
+
+
 # Iteration and loops { }  
 
 
@@ -11701,11 +12082,11 @@ model <- glm_nb_model(
   case_int ~
     ## use epiweek to account for the trend
     epiweek +
-    ## use the furier terms to account for seasonality
+    ## use the fourier terms to account for seasonality
     fourier)
 
 ## fit your model using the counts dataset
-fitted_model <- fit(model, counts)
+fitted_model <- trending::fit(model, counts)
 
 ## calculate confidence intervals and prediction intervals 
 observed <- predict(fitted_model)
@@ -11895,7 +12276,7 @@ model <- glm_nb_model(
     )
 
 ## fit your model using the counts dataset
-fitted_model <- fit(model, counts)
+fitted_model <- trending::fit(model, counts)
 
 ## calculate confidence intervals and prediction intervals 
 observed <- predict(fitted_model)
@@ -12124,7 +12505,7 @@ pred_data <- pluck(dat, 1) %>%
   select(case_int, epiweek, fourier)
 
 # fit model 
-fitted_model <- fit(model, fitting_data)
+fitted_model <- trending::fit(model, fitting_data)
 
 # get confint and estimates for fitted data
 observed <- fitted_model %>% 
@@ -12325,7 +12706,7 @@ forecasts <- purrr::map(unique(case_roll$.id),
   pred_data <- pluck(dat, 1)
   
   # fit model 
-  fitted_model <- fit(model, fitting_data)
+  fitted_model <- trending::fit(model, fitting_data)
   
   # forecast with data want to predict with 
   forecasts <- fitted_model %>% 
@@ -12615,7 +12996,7 @@ model <- glm_nb_model(
     )
 
 ## fit your model using the counts dataset
-fitted_model <- fit(model, counts)
+fitted_model <- trending::fit(model, counts)
 
 ## calculate confidence intervals and prediction intervals 
 observed <- predict(fitted_model)
@@ -13882,14 +14263,16 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 <!-- ======================================================= -->
 ## Overview {  }
 
-Spatial aspects of your data can provide a lot of insights into the situation of the outbreak to answer questions such as: 
+Spatial aspects of your data can provide a lot of insights into the situation of the outbreak, and to answer questions such as: 
 
 * Where are the current disease hotspots?
-* How the hotspots have changed over time?
-* How is the access to health facility? Any improvements are needed?
+* How have the hotspots have changed over time?
+* How is the access to health facilities? Are any improvements needed?
 
 In this section, we will explore basic spatial data visualization methods using **tmap** and **ggplot2** packages.
 We will also walk through some of the basic spatial data management and querying methods with the **sf** package.
+
+Here are some example outputs:  
 
 **Choropleth map**  
 
@@ -13897,13 +14280,13 @@ We will also walk through some of the basic spatial data management and querying
 knitr::include_graphics(here::here("images", "gis_choropleth.png"))
 ```
 
-**Density heatmap**  
+**Case density heatmap**  
 
 ```{r, fig.align = "center", echo=F}
 knitr::include_graphics(here::here("images", "gis_heatmap.png"))
 ```
 
-**Health facility catchment area**
+**Health facility catchment areas**
 
 ```{r, fig.align = "center", echo=F}
 knitr::include_graphics(here::here("images", "gis_hf_catchment.png"))
@@ -13914,343 +14297,686 @@ knitr::include_graphics(here::here("images", "gis_hf_catchment.png"))
 <!-- ======================================================= -->
 ## Preparation {  }
 
-**Load packages**  
+### Load packages {-}  
+
 First, load the packages required for this analysis:  
 
-
 ```{r}
-pacman::p_load(rio,       # to import data
-               here,      # to locate files
-               tidyverse, # to clean, handle, and plot the data (includes ggplot2 package)
-               sf,  # to manage spatial data using a Simple Feature format
-               tmap,# to produce simple maps, works for both interactive and static maps
-               janitor, # to clean column names
-               OpenStreetMap # to add OSM basemap in ggplot map
-               )   
+pacman::p_load(
+  rio,          # to import data
+  here,         # to locate files
+  tidyverse,    # to clean, handle, and plot the data (includes ggplot2 package)
+  sf,           # to manage spatial data using a Simple Feature format
+  tmap,         # to produce simple maps, works for both interactive and static maps
+  janitor,      # to clean column names
+  OpenStreetMap # to add OSM basemap in ggplot map
+  ) 
+                  
 ```
 
-**Sample case data**
 
-```{r}
-# import aggregated case counts of disease X
+
+### Sample case data {-}
+
+For demonstration purposes, we will work with a random sample of 1000 cases from the `linelist` dataframe (computationally, working with fewer cases is easier to display in this handbook).    
+
+First we import the dataframe using `import()` (see page on [Import and export]). It could be an Excel spreadsheet .xlsx, .csv, or in this case .rds which is an R data file.  
+
+
+```{r, echo=F}
+# import clean case linelist
 linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))  
-linelist <- linelist[sample(nrow(linelist), 1000),]
-
-# Create sf object
-linelist_sf <- 
-     linelist %>%
-     st_as_sf(coords = c("lon", "lat"), crs = 4326)
-
 ```
 
+```{r, eval=F}
+# import clean case linelist
+linelist <- import("linelist_cleaned.xlsx")  
+```
+
+Next we select a random sample of 1000 rows using `sample()` from **base** R.   
+
+```{r}
+# generate 1000 random row numbers, from the number of rows in linelist
+sample_rows <- sample(nrow(linelist), 1000)
+
+# subset linelist to keep only the sample rows, and all columns
+linelist <- linelist[sample_rows,]
+```
+
+Now we want to convert this `linelist` which is class dataframe, to an object of class "sf" (spatial features). Given that the linelist has two columns "lon" and "lat" representing the longitude and latitude of each case's residence, this will be easy.  
+
+We use the package **sf** (spatial features) and its function `st_as_sf()` to create the new object we call `linelist_sf`. This new object look essentially the same as the linelist, but the columns `lon` and `lat` have been designated as coordinate columns, and a coordinate reference system (CRS) has been assigned for when the points are displayed.   
+
+```{r}
+# Create sf object
+linelist_sf <- linelist %>%
+     sf::st_as_sf(coords = c("lon", "lat"), crs = 4326)
+```
+
+
+
+
+### Admin boundary shapefiles {-}  
 
 **Sierra Leone: Admin boundary shapefiles**  
-Data downloaded from HDX:
-https://data.humdata.org/dataset/sierra-leone-all-ad-min-level-boundaries
+
+In advance, we have downloaded all administrative boundaries for Sierra Leone from the Humanitarian Data Exchange (HDX) [website here](https://data.humdata.org/dataset/sierra-leone-all-ad-min-level-boundaries).  
+
+Now we are going to do the following to save the Admin Level 3 shapefile in R:  
+
+1) Import the shapefile  
+2) Clean the column names  
+3) Filter rows to keep only areas of interest  
+
+To import a shapefile we use the `read_sf()` function from **sf**. It is provided the filepath via `here()`. - in this case the file is within our R project in the "Data" and "shp" subfolders, with filename "sle_adm3.shp" (see pages on [Import and export] and [R projects] for more information).  
 
 ```{r}
-# ADM3 level
-sle_adm3 <- 
-  sf::read_sf(here::here("data/shp", "sle_adm3.shp")) %>% janitor::clean_names() %>%
-  filter(admin2name %in% c("Western Area Urban", "Western Area Rural"))
-
+sle_adm3_raw <- sf::read_sf(here::here("data", "shp", "sle_adm3.shp"))
 ```
 
 
+Next we use `clean_names()` from the **janitor** package to standardize the column names of the shapefile. We also use `filter()` to keep only the rows with admin2name of "Western Area Urban" or "Western Area Rural".    
+
+```{r}
+# ADM3 level clean
+sle_adm3 <- sle_adm3_raw %>%
+  janitor::clean_names() %>% # standardize column names
+  filter(admin2name %in% c("Western Area Urban", "Western Area Rural")) # filter to keep certain areas
+```
+
+Below you can see the how the shapefile looks after import and cleaning. *Scroll to the right* to see how there are columns with admin level 0 (country), admin level 1, admin level 2, and finally admin level 3. Each level has a character name and a pcode unique identifier code. The pcode expands with each increasing admin level e.g. SL (Sierra Leone) -> SL04 (Western) -> SL0410 (Western Area Rural) -> SL040101 (Koya Rural).  
+
+```{r message=FALSE, echo=F}
+# display the shapefile as a table
+DT::datatable(head(sle_adm3, 50), rownames = FALSE, options = list(pageLength = 5, scrollX=T) )
+```
+
+
+
+### Population data {-}  
+
 **Sierra Leone: Population by ADM3**  
-Data downloaded from HDX:
-https://data.humdata.org/dataset/sierra-leone-population
+
+Again, we import data that we have downloaded from HDX (link [here](https://data.humdata.org/dataset/sierra-leone-population)). This time we use `import()` to load the .csv file. We also pass the imported file to `clean_names()` to standardize the column names.   
 
 ```{r}
 # Population by ADM3
-sle_adm3_pop <- 
-     read.csv(here::here("data/population", "sle_admpop_adm3_2020.csv")) %>% janitor::clean_names()
+sle_adm3_pop <- rio::import(here::here("data/population", "sle_admpop_adm3_2020.csv")) %>%
+  janitor::clean_names()
+```
+
+Here is what the populaton file looks like. Scroll to the right to see how each jurisdiction has columns with `male` population, `female` populaton, `total` population, and the population break-down in columns by age group.  
+
+```{r message=FALSE, echo=F}
+# display the population as a table
+DT::datatable(head(sle_adm3_pop, 50), rownames = FALSE, options = list(pageLength = 5, scrollX=T) )
 ```
 
 
 
+
+
+### Health Facilities {-}
+
 **Sierra Leone: Health facility data from OpenStreetMap**  
-Data downloaded from HDX:
-https://data.humdata.org/dataset/hotosm_sierra_leone_health_facilities
+
+Again we have downloaded the locations of health facilities from HDX [here](https://data.humdata.org/dataset/hotosm_sierra_leone_health_facilities).  
+
+We import their shapefile with `read_sf()`, again clean the column names, and then filter to keep only the points tagged as either "hospital", "clinic", or "doctors".  
 
 
 ```{r}
 # OSM health facility shapefile
-sle_hf <- 
-        sf::read_sf(here::here("data/shp", "sle_hf.shp")) %>%
-        janitor::clean_names() %>%
-        filter(amenity %in% c("hospital", "clinic", "doctors"))
+sle_hf <- sf::read_sf(here::here("data/shp", "sle_hf.shp")) %>% 
+  janitor::clean_names() %>%
+  filter(amenity %in% c("hospital", "clinic", "doctors"))
 ```
+
+Here is the resulting dataframe here - *scroll right* to see the facility name and coordinates.  
+
+```{r message=FALSE, echo=F}
+# display the population as a table
+DT::datatable(head(sle_hf, 50), rownames = FALSE, options = list(pageLength = 5, scrollX=T) )
+```
+
+
+
 
 
 <!-- ======================================================= -->
 ## Plotting coordinates {  }
 
-The easiest way to plot the XY coordinates (points) is to draw a map directly from the sf object which we created in the preparation section.
+The easiest way to plot X-Y coordinates (longitude/latitude, points) is to draw them as points directly from the `linelist_sf` object which we created in the preparation section.
 
-**tmap** offers simple mapping capabilities for both static (*plot* mode) and interactive (*view* mode) with just a few lines of codes.
-
-This blog provides a good comparison among different mapping options in R.
-https://rstudio-pubs-static.s3.amazonaws.com/324400_69a673183ba449e9af4011b1eeb456b9.html
+The package **tmap** offers simple mapping capabilities for both static ("plot" mode) and interactive ("view" mode) with just a few lines of code. The **tmap** syntax is similar to that of *ggplot2**, such that commands are added to each other with `+`. Read more detail in this [vignette](https://cran.r-project.org/web/packages/tmap/vignettes/tmap-getstarted.html). 
 
 
-```{r}
-tmap_mode("plot") # or "plot"
-#tm_shape(sle_adm3, bbox = st_bbox(linelist_sf)) +
-tm_shape(sle_adm3, bbox = c(-13.3,8.43, -13.2,8.5)) +
+1) set the **tmap** mode. In this case we will use "plot" mode, which produces static outputs.  
+
+```{r, warning = F, message=F}
+tmap_mode("plot") # choose either "view" or "plot"
+```
+
+Below, the points are plotted alone.`tm_shape()` is provided with the `linelist_sf` objects. We then add points via `tm_dots()`, specifying the size and color. Because `linelist_sf` is an sf object, we have already designated the two columns that contain the lat/long coordinates and the coordinate reference system (CRS): 
+
+
+```{r, warning = F, message=F}
+# Just the cases (points)
+tm_shape(linelist_sf) + tm_dots(size=0.08, col='blue')
+```
+
+Alone, the points do not tell us much. So we should also map the administrative boundaries:  
+
+Again we use `tm_shape()` (see [documentation](https://www.rdocumentation.org/packages/tmap/versions/3.3/topics/tm_shape)) but instead of providing the case points shapefile, we provide the administrative boundary shapefile (polygons).  
+
+With the `bbox = ` argument (bbox stands for "bounding box") we can specify the coordinate boundaries. First we show the map display without `bbox`, and then with it.  
+
+```{r, out.width = c('50%', '50%'), fig.show='hold', warning=F, message=F}
+# Just the administrative boundaries (polygons)
+tm_shape(sle_adm3) +               # admin boundaries shapefile
+  tm_polygons(col = "#F7F7F7") +   # show polygons in light grey
+  tm_borders(col = "#000000",      # show borders with color and line weight
+             lwd = 2) +
+  tm_text("admin3name")            # column text to display for each polygon
+
+
+# Same as above, but with zoom from bounding box
+tm_shape(sle_adm3,
+         bbox = c(-13.3, 8.43,    # corner
+                  -13.2, 8.5)) +  # corner
   tm_polygons(col = "#F7F7F7") +
   tm_borders(col = "#000000", lwd = 2) +
-  tm_text("admin3name") +
-tm_shape(linelist_sf) + tm_dots(size=0.08, col='blue') 
-
+  tm_text("admin3name")
 
 ```
+
+
+And now both points and polygons together:  
+
+```{r, warning=F, message=FALSE}
+# All together
+tm_shape(sle_adm3, bbox = c(-13.3, 8.43, -13.2, 8.5)) +
+  tm_polygons(col = "#F7F7F7") +
+  tm_borders(col = "#000000", lwd = 2) +
+  tm_text("admin3name")+
+tm_shape(linelist_sf) +
+  tm_dots(size=0.08, col='blue') 
+```
+
+
+To read a good comparison of mapping options in R, see this [blog post](https://rstudio-pubs-static.s3.amazonaws.com/324400_69a673183ba449e9af4011b1eeb456b9.html).  
+
 
 
 
 <!-- ======================================================= -->
-## polygons and shapefiles {  }
-
-Choropleth maps can be useful to visualize your data by pre-defined area usually by administrative unit or health area for outbreak response to be able to target resources for specific area high incidence rates for example.
-
-The current linelist data does not contain any information about the administrative units.
-Although it is ideal to store such information during the initial data collection phase, we can also assign administrative units to individual cases based on their spatial relationships (i.e. point intersects with a polygon).
-
-**sf** package offers various methods for spatial joins.
-See more documentation about the st_join method and spatial join types here: 
-https://r-spatial.github.io/sf/reference/geos_binary_pred.html
+## Spatial joins {}
 
 
+
+
+### Points in polygon {-}
 **Spatial assign administrative units to cases**
-First spatially intersect our case locations (points) with the ADM3 boundaries (polygons)
 
-```{r}
-linelist_adm <- 
-     linelist_sf %>%
-     sf::st_join(sle_adm3,   join = st_intersects) %>%
-     select(names(linelist_sf), admin3name, admin3pcod)
+The case linelist does not contain any information about the administrative units of the cases. Although it is ideal to collect such information during the initial data collection phase, we can also assign administrative units to individual cases based on their spatial relationships (i.e. point intersects with a polygon).  
 
-# Now you will see the ADM3 names attached to each case
-linelist_adm %>% select(case_id, admin3name)
+The **sf** package offers various methods for spatial joins. See more documentation about the st_join method and spatial join types in this [reference](https://r-spatial.github.io/sf/reference/geos_binary_pred.html).  
 
+Below, we will spatially intersect our case locations (points) with the ADM3 boundaries (polygons):  
+
+1) Begin with the linelist (points)  
+2) Spatial join to the boundaries, setting the type of join at "st_intersects"  
+3) Use `select()` to keep only certain of the new administrative boundary columns  
+
+```{r, warning=F, message=F}
+linelist_adm <- linelist_sf %>%
+  
+  # join the administrative boundary file to the linelist, based on spatial intersection
+  sf::st_join(sle_adm3,   join = st_intersects)
 ```
 
+All the columns from `sle_adms` have been added to the linelist! Each case now has columns detailing it's administrative units. For this example, we only want to keep two of the new columns, so we `select()` the old column names and just the two additional of interest:  
 
+```{r, warning=F, message=F}
+linelist_adm <- linelist_sf %>%
+  
+  # join the administrative boundary file to the linelist, based on spatial intersection
+  sf::st_join(sle_adm3, join = st_intersects) %>% 
+  
+  # Keep the old column names and two new admin ones of interest
+  select(names(linelist_sf), admin3name, admin3pcod)
+```
 
-Case counts by ADM3
+Below, just for display purposes you can see the first ten cases and that their admin level 3 (ADM3) jurisdictions that have been attached, based on where the point spatially intersected with the polygon shapes.    
 
-```{r}
-case_adm3 <-
-     linelist_adm %>% as_tibble() %>%
-     #filter(!is.na(admin3pcod)) %>%
-     group_by(admin3pcod, admin3name) %>%
-     summarise(cases = n()) %>%
-     arrange(desc(cases))
+```{r, warning=F, message=F}
+# Now you will see the ADM3 names attached to each case
+linelist_adm %>% select(case_id, admin3name, admin3pcod)
+```
 
+Now we can describe our cases by administrative unit - something we were not able to do before the spatial join!  
+
+```{r, warning=F, message=F}
+# Make new dataframe containing counts of cases by administrative unit
+case_adm3 <- linelist_adm %>%          # begin with linelist with new admin cols
+  as_tibble() %>%                      # convert to tibble for better display
+  group_by(admin3pcod, admin3name) %>% # group by admin unit, both by name and pcode 
+  summarise(cases = n()) %>%           # summarize and count rows
+  arrange(desc(cases))                     # arrange in descending order
 
 case_adm3
+```
 
+We can also create a bar plot of case counts by administrative unit.  
+
+In this example, we begin the `ggplot()` with the `linelist_adm`, so that we can apply factor functions like `fct_infreq()` which orders the bars by frequency (see page on [Factors] for tips).  
+
+```{r, warning=F, message=F}
+ggplot(
+  data = linelist_adm,                       # begin with linelist containing admin unit info
+  aes(x = fct_rev(fct_infreq(admin3name))))+ # x-axis is admin units, ordered by frequency (reversed)
+  geom_bar()+                                # create bars, height is number of rows
+  coord_flip()+                              # flip X and Y axes for easier reading of adm units
+  theme_classic()+                           # simplify background
+  labs(                                      # titles and labels
+    x = "Admin level 3",
+    y = "Number of cases",
+    title = "Number of cases, by adminstative unit",
+    caption = "As determined by a spatial join, from 1000 randomly sampled cases from linelist"
+  )
 ```
 
 
-**Choropleth mapping**
-Now that we have the administrative unit names assigned to all cases, we can start mapping the case counts by area (choropleth maps).
+<!-- ======================================================= -->
+### Nearest neighbor {-}
+
+**Finding the nearest health facility / catchment area**  
+
+It might be useful to know where the health facilities are located in relation to the disease hot spots.
+
+We can use the *st_nearest_feature* join method from the `st_join()` function (**sf** package) to visualize the closest health facility to individual cases.  
+
+1) We begin with the shapefile linelist `linelist_sf`  
+2) We spatially join with `sle_hf`, which is the locations of health facilities and clinics (points)  
+
+```{r, warning=F, message=F}
+# Closest health facility to each case
+linelist_sf_hf <- linelist_sf %>%                  # begin with linelist shapefile  
+  st_join(sle_hf, join = st_nearest_feature) %>%   # data from nearest clinic joined to case data 
+  select(case_id, osm_id, name, amenity)           # keep columns of interest, including id, name, type, and geometry of healthcare facility
+
+```
+
+We can see below (first 50 rows) that the each case now has data on the nearest clinic/hospital  
+
+```{r message=FALSE, echo=F}
+DT::datatable(head(linelist_sf_hf, 50), rownames = FALSE, options = list(pageLength = 5, scrollX=T) )
+```
+
+
+We can see that "Den Clinic" is the closest health facility for about ~30% of the cases.
+
+```{r}
+# Count cases by health facility
+hf_catchment <- linelist_sf_hf %>%    # begin with linelist including nearest clinic data
+  as.data.frame() %>%                 # convert from shapefile to dataframe
+  group_by(name) %>%                  # group by name of clinic
+  summarise(case_n = n()) %>%         # count number of rows per clinic 
+  arrange(desc(case_n))               # arrange in descending order
+
+hf_catchment                          # print to console
+```
+
+To visualize the results, we can use **tmap** - this time interactive mode for easier viewing  
+
+```{r, warning=F, message=F}
+tmap_mode("view")   # set tmap mode to interactive  
+
+# plot the cases and clinic points 
+tm_shape(linelist_sf_hf) +            # plot cases
+  tm_dots(size=0.08, col='name') +    # cases colored by closest clinic
+tm_shape(sle_hf) +                    # plot clinic facilities  
+  tm_dots(size=0.3, col='red') +      # red large dots
+  tm_text("name") +                   # overlay with name of facility
+tm_view(set.view = c(-13.2284, 8.4699, 13), # adjust zoom (center coords, zoom)
+        set.zoom.limits = c(13,14))
+```
+
+
+### Buffers {-} 
+
+We can also explore how many cases are located within 2.5km (~30 mins) walking distance from the closest health facility.
+
+*Note: For more accurate distance calculations, it is better to re-project your sf object to the respective local map projection system such as UTM (Earth projected onto a planar surface). In this example, for simplicity we will stick to the World Geodetic System (WGS84) Geograhpic coordinate system (Earth represented in a spherical / round surface, therefore the units are in decimal degrees). We will use a general conversion of: 1 decimal degree = ~111km.*  
+
+
+See more information about map projections and coordinate systems at this [esri article](https://www.esri.com/arcgis-blog/products/arcgis-pro/mapping/gcs_vs_pcs/).  
+
+
+**First**, create a circular buffer with a radius of ~2.5km around each health facility. This is done with the function `st_buffer()` from **tmap**. Because the units of the map is lat/long decimal degrees, that is how "0.02" is interpreted. If your map coordinate system is in meters, the number must be provided in meters.  
+
+```{r, warning=F, message=F}
+sle_hf_2k <- sle_hf %>%
+  st_buffer(dist=0.02)       # decimal degrees translating to approximately 2.5km 
+```
+
+Below we plot the buffer zones themselves:  
+
+```{r, warning=F, message=F}
+tmap_mode("plot")
+# buffers
+tm_shape(sle_hf_2k) +
+  tm_borders(col = "red", lwd = 2)
+```
+
+
+**Second*, we intersect these buffers with the cases (points) using `st_join()` and the join type of *st_intersects*. That is, the data from the buffers are joined to the points that they intersect with. 
+
+```{r, warning=F, message=F}
+# Intersect the cases with the buffers
+linelist_sf_hf_2k <- linelist_sf_hf %>%
+  st_join(sle_hf_2k, join = st_intersects, left = TRUE) %>%
+  filter(osm_id.x==osm_id.y | is.na(osm_id.y)) %>%
+  select(case_id, osm_id.x, name.x, amenity.x, osm_id.y)
+```
+
+Now we can count the results: `r nrow(linelist_sf_hf_2k[is.na(linelist_sf_hf_2k$osm_id.y),])` out of 1000 cases did not intersect with any buffer (that value is missing), and so live more than 30 mins walk from the nearest health facility.
+
+```{r}
+linelist_sf_hf_2k %>% 
+  filter(is.na(osm_id.y)) %>% # empty column - did not join to any buffer
+  nrow()
+```
+
+We can visualize the results such that cases that did not intersect with any buffer appear in red.  
+
+```{r, fig.width = 5, fig.height = 3, warning=F, message=F}
+tmap_mode("view")
+
+# cases
+tm_shape(linelist_sf_hf) +
+  tm_dots(size=0.08, col='name') +
+# buffers
+tm_shape(sle_hf_2k) +
+  tm_borders(col = "red", lwd = 2) +
+
+# cases outside buffers
+tm_shape(linelist_sf_hf_2k %>%  filter(is.na(osm_id.y))) +
+  tm_dots(size=0.1, col='red') +
+tm_view(set.view = c(-13.2284,8.4699, 13), set.zoom.limits = c(13,14))
+```
+
+
+### Other spatial joins {-}  
+
+Alternative values for argument `join` include (from the [documentation](https://r-spatial.github.io/sf/reference/st_join.html))
+
+* st_contains_properly  
+* st_contains  
+* st_covered_by  
+* st_covers  
+* st_crosses  
+* st_disjoint  
+* st_equals_exact  
+* st_equals  
+* st_is_within_distance  
+* st_nearest_feature  
+* st_overlaps  
+* st_touches  
+* st_within  
+
+
+
+
+
+## Choropleth maps {}  
+
+
+Choropleth maps can be useful to visualize your data by pre-defined area, usually administrative unit or health area. In outbreak response this can help to target resource allocation for specific areas with high incidence rates, for example.
+
+Now that we have the administrative unit names assigned to all cases (see section on spatial joins, above), we can start mapping the case counts by area (choropleth maps).
 
 Since we also have population data by ADM3, we can add this information to the *case_adm3* table created previously.
 
+We begin with the dataframe created in the previous step `case_adm3`, which is a summary table of each administrative unit and its number of cases.  
+
+1) The populaton data `sle_adm3_pop` are joined using a `left_join()` from **dplyr** on the basis of common values across column `admin3pcod` in the `case_adm3` dataframe, and column `adm_pcode` in the `sle_adm3_pop` dataframe. See page on [Joining data]).  
+2) `select()` is applied to the new dataframe, to keep only the useful columns - `total` is total population  
+3) Cases per 10,000 populaton is calculated as a new column with `mutate()`  
+
+
 ```{r}
 # Add population data and calculate cases per 10K population
-case_adm3 <-
-     case_adm3 %>%
-     left_join(sle_adm3_pop, by=c("admin3pcod"="adm3_pcode")) %>%
-     select(names(case_adm3), total) %>%
-     mutate(case_10kpop = round(cases/total * 10000, 3))
+case_adm3 <- case_adm3 %>% 
+     left_join(sle_adm3_pop,                             # add columns from pop dataset
+               by = c("admin3pcod" = "adm3_pcode")) %>%  # join based on common values across these two columns
+     select(names(case_adm3), total) %>%                 # keep only important columns, including total population
+     mutate(case_10kpop = round(cases/total * 10000, 3)) # make new column with case rate per 10000, rounded to 3 decimals
 
-case_adm3
-
+case_adm3                                                # print to console for viewing
 ```
 
+Join this table with the ADM3 polygons shapefile for mapping
 
-Join this table with the ADM3 polygons for mapping
-
-```{r}
-# Add population data and calculate cases per 10K population
-case_adm3_sf <-
-        case_adm3 %>%
-        left_join(sle_adm3, by="admin3pcod") %>%
-        select(objectid, admin3pcod, admin3name=admin3name.x, admin2name, admin1name,
-               cases, total, case_10kpop, geometry) %>%
-        st_as_sf()
+```{r, warning=F, message=F}
+case_adm3_sf <- case_adm3 %>%                 # begin with cases & rate by admin unit
+  left_join(sle_adm3, by="admin3pcod") %>%    # join to shapefile data by common column
+  select(objectid, admin3pcod,                # keep only certain columns of interest
+         admin3name = admin3name.x,           # clean name of one column
+         admin2name, admin1name,
+         cases, total, case_10kpop,
+         geometry) %>%                        # keep geometry so polygons can be plotted
+  st_as_sf()                                  # convert to shapefile
 
 ```
 
 
 Mapping the results
 
-```{r}
-# Number of cases
-tmap_mode("plot")
-tm_shape(case_adm3_sf) + 
-        tm_polygons("cases") +
-        tm_text("admin3name")
+```{r, message=F, warning=F}
+# tmap mode
+tmap_mode("plot")               # view static map
 
+# plot polygons
+tm_shape(case_adm3_sf) + 
+        tm_polygons("cases") +  # color by number of cases column
+        tm_text("admin3name")   # name display
 ```
 
+We can also map the incidence rates  
 
-```{r}
+
+```{r, warning=F, message=F}
 # Cases per 10K population
-tmap_mode("plot")
-tm_shape(case_adm3_sf) + 
-        tm_polygons("case_10kpop",
-                    breaks=c(0, 10, 50, 100),
-                    palette = "Purples"
-                    ) +
-        tm_text("admin3name")
+tmap_mode("plot")             # static viewing mode
+
+# plot
+tm_shape(case_adm3_sf) +                # plot plygons
+  tm_polygons("case_10kpop",            # color by column containing case rate
+              breaks=c(0, 10, 50, 100), # define break points for colors
+              palette = "Purples"       # use a purple color palette
+              ) +
+  tm_text("admin3name")                 # display text
 
 ```
+
+
+
+
+
+
 
 <!-- ======================================================= -->
-## Time series heatmap {  }
+## Basemaps { }
 
-We can also look at the combination of time and space by facetting the heatmaps.
+### OpenStreetMap {-} 
 
-Set parameters for the basemap using the **OpenStreetMap** package.
+Below we describe how to achieve a basemap using OpenStreetMap features. Alternative methods include using **ggmap** which requires free registration with Google ([details](https://www.earthdatascience.org/courses/earth-analytics/lidar-raster-data-r/ggmap-basemap/)).  
 
-```{r, warning = F, message=F}
+First we load the **OpenStreetMap** package, from which we will get our basemap.  
+
+Then, we create the object `map`, which we define using the function `openmap()` from **OpenStreetMap** package ([documentation](https://www.rdocumentation.org/packages/OpenStreetMap/versions/0.3.4/topics/openmap)). We provide the following:  
+
+* `upperLeft` and `lowerRight` Two coordinate pairs specifying the limits of the basemap tile  
+  * In this case we've put in the max and min from the linelist rows, so the map will respond dynamically to the data  
+* `zoom = ` (if null it is determined automatically)  
+* `type =` which type of basemap - we have listed several possibilities here and the code is currently using the first one (`[1]`) "osm"  
+* `mergeTiles = ` we chose TRUE so the basetiles are all merged into one
+
+
+```{r, message=FALSE, warning=FALSE}
+# load package
+pacman::p_load(OpenStreetMap)
 
 # Fit basemap by range of lat/long coordinates. Choose tile type
-map <- openmap(c(max(linelist$lat, na.rm=T), max(linelist$lon, na.rm=T)),  # limits of tile
-               c(min(linelist$lat, na.rm=T), min(linelist$lon, na.rm=T)),
-               zoom = NULL,
-               type = c("osm", "stamen-toner", "stamen-terrain","stamen-watercolor", "esri","esri-topo")[1],
-               mergeTiles = TRUE)
+map <- openmap(
+  upperLeft = c(max(linelist$lat, na.rm=T), max(linelist$lon, na.rm=T)),   # limits of basemap tile
+  lowerRight = c(min(linelist$lat, na.rm=T), min(linelist$lon, na.rm=T)),
+  zoom = NULL,
+  type = c("osm", "stamen-toner", "stamen-terrain","stamen-watercolor", "esri","esri-topo")[1])
+```
 
+If we plot this basemap right now, using `autoplot.OpenStreetMap()` from **OpenStreetMap** package, you see that the units on the axes are not latitude/longitude coordinates. It is using a different coordinate system. To correctly display the case residences (which are stored in lat/long), this must be changed.  
+
+```{r, warning=F, message=F}
+autoplot.OpenStreetMap(map)
+```
+Thus, we want to convert the map to latitude/longitude with the `openproj()` function from **OpenStreetMap** package. We provide the basemap `map` and also provide the Coordinate Reference System (CRS) we want. We do this by providing the "proj.4" character string for the WGS 1984 projection, but you can provide the CRS in other ways as well. (see [this page](https://www.earthdatascience.org/courses/earth-analytics/spatial-data-r/understand-epsg-wkt-and-other-crs-definition-file-types/) to better understand what a proj.4 string is)  
+
+```{r, warning=F, message=F}
 # Projection WGS84
-map.latlon <- openproj(map, projection = "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs")
-
+map_latlon <- openproj(map, projection = "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs")
 ```
 
+Now when we create the plot we see that along the axes are latitude and longitude coordinate. The coordinate system has been converted. Now our cases will plot correctly if overlaid!  
+
+```{r, warning=F, message=F}
+# Plot map. Must use "autoplot" in order to work with ggplot
+autoplot.OpenStreetMap(map_latlon)
+```
+
+See the tutorials [here](http://data-analytics.net/cep/Schedule_files/geospatial.html) and [here](https://www.rdocumentation.org/packages/OpenStreetMap/versions/0.3.4/topics/autoplot.OpenStreetMap) for more info.  
 
 
-**Heatmap by month of onset**
 
-```{r}
-# Extract month of onset
-linelist$date_onset_ym <- format(linelist$date_onset, "%Y-%m")
- 
-# Simply facet above map by month of onset
+
+
+## Contoured density heatmaps {}
+
+Below we describe how to achieve a contoured density heatmap of cases, over a basemap, beginning with a linelist (one row per case).  
+
+1) Create basemap tile from OpenStreetMap, as described above  
+2) Plot the cases from `linelist` using the latitude and longitude columns  
+3) Convert the points to a density heatmap with `stat_density_2d()` from **ggplot2**, 
+
+
+When we have a basemap with lat/long coordinates, we can plot our cases on top using the lat/long coordinates of their residence. 
+
+Building on the function `autoplot.OpenStreetMap()` to create the basemap, **ggplot2** functions will easily add on top, as shown with `geom_point()` below:  
+
+```{r, warning=F, message=F}
 # Plot map. Must be autoplotted to work with ggplot
-OpenStreetMap::autoplot.OpenStreetMap(map.latlon)+
-       # Density tiles  
-       ggplot2::stat_density_2d(aes(x = lon,
-                                    y = lat,
-                                    fill = ..level..,
-                                    alpha=..level..),
-                              bins = 10,
-                                geom = "polygon",
-                                contour_var = "count",
-                                data = linelist %>% filter(date_onset>='2014-08-01' & date_onset<='2015-01-31'),
-                                show.legend = F) +
-       #scale_fill_gradient(low = "black", high = "red")+
-       labs(x = "Longitude",
-            y = "Latitude",
-            title = "Distribution of simulated cases by month of onset") +
-       facet_wrap(~ date_onset_ym, ncol = 3)
+autoplot.OpenStreetMap(map_latlon)+                 # begin with the basemap
+  geom_point(                                       # add xy points from linelist lon and lat columns 
+    data = linelist,                                
+    aes(x = lon, y = lat),
+    size = 1, 
+    alpha = 0.5,
+    show.legend = FALSE) +                          # drop legend entirely
+  labs(x = "Longitude",                             # titles & labels
+       y = "Latitude",
+       title = "Cumulative cases")
 
 ```
+The map above might be difficult to interpret, especially with the points overlapping. So you can instead plot a 2d density map using the **ggplot2** function `stat_density_2d()`. You are still using the linelist lat/lon coordinates, but a 2D kernel density estimation is performed and the results are displayed with contour lines - like a topographical map. Read the full [documentation here](https://ggplot2.tidyverse.org/reference/geom_density_2d.html).  
+
+
+```{r, warning=F, message=F}
+# begin with the basemap
+autoplot.OpenStreetMap(map_latlon)+
+  
+  # add the density plot
+  ggplot2::stat_density_2d(
+        data = linelist,
+        aes(
+          x = lon,
+          y = lat,
+          fill = ..level..,
+          alpha = ..level..),
+        bins = 10,
+        geom = "polygon",
+        contour_var = "count",
+        show.legend = F) +                          
+  
+  # specify color scale
+  scale_fill_gradient(low = "black", high = "red")+
+  
+  # labels 
+  labs(x = "Longitude",
+       y = "Latitude",
+       title = "Distribution of cumulative cases")
+
+```
+
+
+
 
 
 <!-- ======================================================= -->
-## Health facility catchment area {  }
+### Time series heatmap {}
 
-It might be useful to know where the health facilities are located in relation to the disease hot spots.
+The density heatmap above shows *cumulative cases*. We can examine the outbreak over time and space by faceting the heatmap based on the *month of symptom onset*, as derived from the linelist.  
+
+We begin in the `linelist`, creating a new column with the Year and Month of onset. The `format()` function from **base** R changes how a date is displayed. In this case we want "YYYY-MM".  
+
+```{r, warning=F, message=F}
+# Extract month of onset
+linelist <- linelist %>% 
+  mutate(date_onset_ym = format(date_onset, "%Y-%m"))
+
+# Examine the values 
+table(linelist$date_onset_ym, useNA = "always")
+```
+
+Now, we simply introduce facetting via **ggplot2** to the density heatmap. `facet_wrap()` is applied, using the new column as rows. We set the number of facet columns to 3 for clarity.  
 
 
-**Finding the nearest health facility**
-We can use the *st_nearest_feature* method from the **sf** package to assign the cloest health facility to individual cases.
+```{r, warning=F, message=F}
+# packages
+pacman::p_load(OpenStreetMap, tidyverse)
 
-
-```{r}
-# Closet health facility to each case
-linelist_sf_hf <-
-        linelist_sf %>%
-        st_join(sle_hf,   join = st_nearest_feature) %>%
-        select(case_id, osm_id, name, amenity)
+# begin with the basemap
+autoplot.OpenStreetMap(map_latlon)+
+  
+  # add the density plot
+  ggplot2::stat_density_2d(
+        data = linelist,
+        aes(
+          x = lon,
+          y = lat,
+          fill = ..level..,
+          alpha = ..level..),
+        bins = 10,
+        geom = "polygon",
+        contour_var = "count",
+        show.legend = F) +                          
+  
+  # specify color scale
+  scale_fill_gradient(low = "black", high = "red")+
+  
+  # labels 
+  labs(x = "Longitude",
+       y = "Latitude",
+       title = "Distribution of cumulative cases")+
+  
+  # facet the plot by month-year of onset
+  facet_wrap(~ date_onset_ym, ncol = 4)               
 
 ```
 
-We can see that "Den Clinic" is the closest health facility for about ~30% of the cases.
-
-```{r}
-# Group cases by health facility
-hf_catchment <-
-        linelist_sf_hf %>% as.data.frame() %>%
-        group_by(name) %>%
-        summarise(case_n = n()) %>%
-        arrange(desc(case_n))
-
-hf_catchment
-```
-
-Visualizing the results on the map
-
-```{r, fig.width = 5, fig.height = 3}
-tmap_mode("view")
-tm_shape(linelist_sf_hf) + tm_dots(size=0.08, col='name') +
-        tm_shape(sle_hf) + tm_dots(size=0.3, col='red') + tm_text("name") +
-tm_view(set.view = c(-13.2284,8.4699, 13), set.zoom.limits = c(13,14))
-```
 
 
-**Cases within 30 mins Walking distance from the closest health facility**
 
-We can also explore how many cases are located within 2.5km (~30 mins) walking distance from the closest health facility.
-
-Note: 
-For more accurate distance calculations, it is better to re-project your sf object to the respective local map projection system such as UTM (Earth projected onto a planar surface). 
-In this example, for simplicity we will stick to the World Geodetic System (WGS84) Geograhpic coordinate system (Earth represented in a spherical / round surface, therefore the units are in decimal degrees). We will use a general conversion of: 1 decimal degree = ~111km.
-
-See more information about map projections and coordinate systems:
-https://www.esri.com/arcgis-blog/products/arcgis-pro/mapping/gcs_vs_pcs/
-
-
-First create a circular buffer with a radius of ~2.5km aroudn each health facility
-
-```{r}
-sle_hf_2k <-
-        sle_hf %>%
-        st_buffer(dist=0.02) # approximately 2.5km 
-```
-
-Intersect this with the cases
-
-```{r}
-# Intersect the cases with the buffers
-linelist_sf_hf_2k <-
-        linelist_sf_hf %>%
-        st_join(sle_hf_2k, join = st_intersects, left = TRUE) %>%
-        filter(osm_id.x==osm_id.y | is.na(osm_id.y)) %>%
-        select(case_id, osm_id.x, name.x, amenity.x, osm_id.y)
-```
-
-Count the results
-
-202 out of 1000 cases (20.2%, shown in red dots in the map below) live more than 30 mins away from the nearest health facility)
-
-```{r}
-nrow(linelist_sf_hf_2k)
-nrow(linelist_sf_hf_2k[is.na(linelist_sf_hf_2k$osm_id.y),])
-```
-
-Visualize the results
-
-```{r, fig.width = 5, fig.height = 3}
-tmap_mode("view")
-tm_shape(linelist_sf_hf) + tm_dots(size=0.08, col='name') +
-        tm_shape(sle_hf_2k) + tm_borders(col = "red", lwd = 2) +
-        tm_shape(linelist_sf_hf_2k[is.na(linelist_sf_hf_2k$osm_id.y),]) +tm_dots(size=0.1, col='red') +
-tm_view(set.view = c(-13.2284,8.4699, 13), set.zoom.limits = c(13,14))
-```
 
 
 <!-- ======================================================= -->
@@ -19389,124 +20115,25 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 <!--chapter:end:new_pages/combination_analysis.Rmd-->
 
 
-# Heatmaps & density plots { }  
+# Heatmaps { }  
 
 
-<!-- ======================================================= -->
-## Overview { }
+Heatmaps can be useful visualizations. Below we demonstrate two examples:  
 
-Heatmaps can be useful when tracking reporting metrics across many facilities/jurisdictions over time
+* Creating a visual matrix of transmission events by age ("who infected whom")  
+* Tracking reporting metrics across many facilities/jurisdictions over time  
 
-For example, the image below shows % of weekdays that data was received from each facility, week-by-week:  
 
-```{r echo=F, fig.show='hold', message=FALSE, warning=FALSE, out.width=c('50%','50%')}
-linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
-facility_count_data <- rio::import(here::here("data", "facility_count_data.rds"))
-pacman::p_load(aweek, tidyverse)
-```
+```{r, out.width = c('50%', '50%'), fig.show='hold', warning=F, message=F, echo=F}
+knitr::include_graphics(here::here("images", "transmission_matrix.png"))
 
-```{r, message=FALSE, warning=FALSE, echo=F}
-# Create weekly summary dataset
-###############################
-agg_weeks <- facility_count_data %>% 
-  
-  # filter the data as appropriate
-  filter(District == "Spring",
-         data_date < as.Date("2019-06-01")) %>% 
-  
-  # Create week column from data_date
-  mutate(week = aweek::date2week(data_date,
-                                 start_date = "Monday",
-                                 floor_day = TRUE,
-                                 factor = TRUE)) %>% 
-  # Group into facility-weeks
-  group_by(location_name, week, .drop = F) %>%
-  
-  # Create summary column on the grouped data
-  summarize(n_days          = 7,                                          # 7 days per week           
-            n_reports       = dplyr::n(),                                 # number of reports received per week (could be >7)
-            malaria_tot     = sum(malaria_tot, na.rm = T),                # total malaria cases reported
-            n_days_reported = length(unique(data_date)),                  # number of unique days reporting per week
-            p_days_reported = round(100*(n_days_reported / n_days))) %>%  # percent of days reporting
-  
-  # Ensure every possible facility-week combination appears in the data
-  right_join(tidyr::expand(., week, location_name))    # "." represents the dataset at that moment in the pipe chain
+knitr::include_graphics(here::here("images", "heat_tile.png"))
+
 ```
 
 
-```{r echo=F, fig.show='hold', message=FALSE, warning=FALSE, out.width=c('50%','50%')}
-# METRICS PLOT
-##############
-ggplot(agg_weeks,
-       aes(x = aweek::week2date(week),            # transformed to date class
-           y = location_name,
-           fill = p_days_reported))+
-  # tiles
-  geom_tile(colour="white")+                      # white gridlines
-  
-  scale_fill_gradient(low = "orange", high = "darkgreen", na.value = "grey80")+
-  scale_x_date(expand = c(0,0),
-               date_breaks = "2 weeks",
-               date_labels = "%d\n%b")+
-  
-  # aesthetic themes
-  theme_minimal()+                                  # simplify background
-  theme(
-    legend.title = element_text(size=12, face="bold"),
-    legend.text  = element_text(size=10, face="bold"),
-    legend.key.height = grid::unit(1,"cm"),         # height of legend key
-    legend.key.width  = grid::unit(0.6,"cm"),       # width of legend key
-    
-    axis.text.x = element_text(size=12),
-    axis.text.y = element_text(vjust=0.2),
-    axis.ticks = element_line(size=0.4),
-    axis.title = element_text(size=12, face="bold"),
-    
-    plot.title = element_text(hjust=0,size=14,face="bold"),
-    plot.caption = element_text(hjust = 0, face = "italic")
-    )+
-  
-  # plot labels
-  labs(x = "Week",
-       y = "Facility name",
-       fill = "Reporting\nperformance (%)", # legend title
-       title = "Percent of days per week that facility reported data",
-       subtitle = "District health facilities, April-May 2019",
-       caption = "7-day weeks beginning on Mondays.")
 
-################
-# DENSITY MAP
-################
-pacman::p_load(OpenStreetMap)
 
-# Fit basemap by range of lat/long coordinates. Choose tile type
-map <- openmap(c(max(linelist$lat, na.rm=T), max(linelist$lon, na.rm=T)),  # limits of tile
-               c(min(linelist$lat, na.rm=T), min(linelist$lon, na.rm=T)),
-               zoom = NULL,
-               type = c("osm", "stamen-toner", "stamen-terrain","stamen-watercolor", "esri","esri-topo")[1],
-               mergeTiles = TRUE)
-
-# Projection WGS84
-map.latlon <- openproj(map, projection = "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs")
-
-# Plot map. Must be autoplotted to work with ggplot
-OpenStreetMap::autoplot.OpenStreetMap(map.latlon)+
-  # Density tiles  
-  ggplot2::stat_density_2d(aes(x = lon,
-        y = lat,
-        fill = ..level..,
-        alpha =..level..),
-    bins = 10,
-    geom = "polygon",
-    contour_var = "count",
-    data = linelist,
-    show.legend = F) +
-  scale_fill_gradient(low = "black", high = "red")+
-  labs(x = "Longitude",
-       y = "Latitude",
-       caption = "OpenStreetMap base tile",
-       title = "Distribution density of simulated cases")
-```
 
 <!-- ======================================================= -->
 ## Preparation { }
@@ -19514,61 +20141,217 @@ OpenStreetMap::autoplot.OpenStreetMap(map.latlon)+
 **Load packages**  
 
 ```{r}
-pacman::p_load(tidyverse,       # data manipulation and visualization
-               rio,             # importing data 
-               OpenStreetMap,   # optional - basemaps
-               aweek
-               )
+pacman::p_load(
+  tidyverse,       # data manipulation and visualization
+  rio,             # importing data 
+  lubridate        # working with dates
+  )
 ```
+
+**Datasets**  
+
+This page utilizes the case linelist for the transmission matrix section, and a separate dataset of daily malaria case counts by facility for the metrics tracking section. They are loaded and cleaned in their individual sections.  
+
+
+
+
+
+
+
+## Transmission matrix  
+
+Heat tiles can be useful to visualize matrices. One example is to display "who-infected-whom" in an outbreak. This assumes that you have information on transmission events in your linelist.  
+
+We begin from the case linelist:  
+
+* There is one row per case  
+* There is a column that contains the case_id of the infector, who is also a case in the linelist  
+
+The first 50 rows of the linelist are shown below for demonstration:  
+
+
+```{r, echo=F}
+linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
+```
+
+We load the case `linelist`  
+
+```{r, eval=F}
+linelist <- import("linelist_cleaned.xlsx")
+```
+
+
+```{r message=FALSE, echo=F}
+# display the population as a table
+DT::datatable(head(linelist, 50), rownames = FALSE, options = list(pageLength = 5, scrollX=T) )
+```
+
+
+**Objective**: We need to achieve a "long"-style dataframe that contains the frequency of transmission events between each age category. This will take several data manuipulation steps to achieve.  
+
+To begin, we create a dataframe of the cases and their ages, called `case_ages`. The first rows are displayed below.  
+
+```{r}
+case_ages <- linelist %>% 
+  select(case_id, infector, age_cat) %>% 
+  rename("case_age_cat" = "age_cat")
+```
+
+```{r message=FALSE, echo=F}
+# display the shapefile as a table
+DT::datatable(head(case_ages, 50), rownames = FALSE, options = list(pageLength = 5, scrollX=T) )
+```
+
+Next, we create a dataframe of the infectors - at the moment it consists of a single column. These are the infector IDs from the linelist. Not every case has a known infector, so we remove missing values. The first rows are displayed below.  
+
+
+```{r}
+infectors <- linelist %>% 
+  select(infector) %>% 
+  filter(!is.na(infector))
+```
+
+```{r message=FALSE, echo=F}
+# display the shapefile as a table
+DT::datatable(head(infectors, 50), rownames = FALSE, options = list(pageLength = 5, scrollX=T) )
+```
+
+Next, we use joins to procure the ages of the infectors. This is not simple, because in the `linelist`, infector's ages are not listed as such. We achieve this result by joining the case linelist to the infectors - joining such that the infector in the left-side "baseline" dataframe links to the `case_id` in the right-side linelist. Thus, the data from the infector's case record in the linelist (including age) is added to the infector row. The first rows are displayed below.  
+
+```{r}
+infector_ages <- infectors %>%             # begin with infectors
+  left_join(                               # add the linelist data to each infector  
+    linelist,
+    by = c("infector" = "case_id")) %>%    # match infector to their information as a case
+  select(infector, age_cat) %>%            # keep only columns of interest
+  rename("infector_age_cat" = "age_cat")   # rename for clarify
+```
+
+```{r message=FALSE, echo=F}
+# display the shapefile as a table
+DT::datatable(head(infector_ages, 50), rownames = FALSE, options = list(pageLength = 5, scrollX=T) )
+```
+
+Then, we combine the cases and their ages with the infectors and their ages. Each of these dataframe has the column `infector`, so it is used for the join. The first rows are displayed below:    
+
+```{r}
+ages_complete <- case_ages %>%  
+  left_join(
+    infector_ages,
+    by = "infector") %>%        # each has the column infector
+  drop_na()                     # drop rows with any missing data
+```
+
+
+```{r message=FALSE, echo=F}
+# display the shapefile as a table
+DT::datatable(head(ages_complete, 50), rownames = FALSE, options = list(pageLength = 5, scrollX=T) )
+```
+
+Below, a simple cross-tabulation of counts between the case and infector age groups. Labels added for clarity.  
+
+```{r}
+table(cases = ages_complete$case_age_cat,
+      infectors = ages_complete$infector_age_cat)
+```
+We can convert this table to a dataframe with `data.frame()` from **base** R, which also automatically converts it to "long" format, which is desired for the `ggplot()`. The first rows are shown below.  
+
+```{r}
+long_counts <- data.frame(table(
+    cases     = ages_complete$case_age_cat,
+    infectors = ages_complete$infector_age_cat))
+```
+
+```{r message=FALSE, echo=F}
+# display the shapefile as a table
+DT::datatable(head(long_counts, 50), rownames = FALSE, options = list(pageLength = 5, scrollX=T) )
+```
+
+
+The same but we apply `prop.table()` from **base** R to the table so instead of counts we get proportion of all values. The first rows are shown below.    
+
+```{r}
+long_prop <- data.frame(prop.table(table(
+    cases = ages_complete$case_age_cat,
+    infectors = ages_complete$infector_age_cat)))
+```
+
+```{r message=FALSE, echo=F}
+# display the shapefile as a table
+DT::datatable(head(long_prop, 50), rownames = FALSE, options = list(pageLength = 5, scrollX=T) )
+```
+
+Now finally we can create the heatmap with **ggplot2** package, using the `geom_tile()` function.  
+
+* In the aesthetics `aes()` of `geom_tile()` sex the x and y as the case age and infector age  
+* Also in `aes()` set the argument `fill = ` to the Freq column - this is the value that will be converted to a tile color  
+* Set a scale color with `scale_fill_gradient()` - you can specify the high/low colors  
+  * Note that `scale_color_gradient()` is different! In this case you want the fill  
+* Because the color is made via "fill", you can use the `fill = ` argument in `labs()` to change the legend title  
+
+```{r}
+ggplot(data = long_prop)+       # use long data, with proportions as Freq
+  geom_tile(                    # visualize it in tiles
+    aes(
+      x = cases,         # x-axis is case age
+      y = infectors,     # y-axis is infector age
+      fill = Freq))+            # color of the tile is the Freq column in the data
+  scale_fill_gradient(          # adjust the fill color of the tiles
+    low = "blue",
+    high = "orange")+
+  labs(                         # labels
+    x = "Case age",
+    y = "Infector age",
+    title = "Who infected whom",
+    subtitle = "Frequency matrix of transmission events",
+    fill = "Proportion of all\ntranmsission events"     # legend title
+  )
+  
+```
+
 
 
 <!-- ======================================================= -->
 ## Reporting metrics over time { }
 
-Often in public health, an objective is to assess trends over time for many entities (facilities, jurisdictions, etc.). One way to visualize trends over time from many entities is a heatmap where the x-axis is time and the y-axis are the many entities.  
+Often in public health, one objective is to assess trends over time for many entities (facilities, jurisdictions, etc.). One way to visualize such trends over time is a heatmap where the x-axis is time and the y-axis are the many entities.  
 
 
 
-### Preparation
+### Preparation {-}
 
-To demonstrate this, we import this dataset of daily malaria case reports from `r length(unique(facility_count_data$location_name))` facilities. 
-
-The preparation will involve:  
-
-* Importing and reviewing the data   
-* Aggregating the daily data into weekly, and summarizing weekly performance  
-
-#### Load and view
+We begin with a dataset of daily malaria reports from many facilities. The reports contain a date, province, district, and malaria counts
 
 Below are the first 30 rows of these data:  
 
+And we also load this separate dataset of daily malaria case counts by facility:  
+
 ```{r, echo=F}
-DT::datatable(head(facility_count_data,30), rownames = FALSE, filter="top", options = list(pageLength = 5, scrollX=T))
+facility_count_data <- rio::import(here::here("data", "facility_count_data.rds")) %>% 
+  select(location_name, data_date, District, malaria_tot)
 ```
 
-#### Packages  
-
-The packages we will use are:  
-
-```{r}
-pacman::p_load(tidyverse, # ggplot and data manipulation
-               rio,       # importing data
-               aweek)     # manage weeks
+```{r, eval=F}
+facility_count_data <- import("facility_count_data.rds")
 ```
 
-#### Aggregate and summarize
 
-The objective is to transform the daily reports (seen in previous tab) into weekly reports with a summary of performance - in this case *the proportion of days per week that the facility reported any data* for **Spring District** from April-May 2019.  
+```{r, echo=F}
+DT::datatable(head(facility_count_data,30), rownames = FALSE, options = list(pageLength = 5, scrollX=T))
+```
 
-To achieve this:  
+
+#### Aggregate and summarize {-}
+
+**The objective in this example** is to transform the daily facility total malaria case counts (seen in previous tab) into *weekly* summary statistics of facility reporting performance - in this case *the proportion of days per week that the facility reported any data*. For this example we will show data only for **Spring District** from April-May 2019.  
+
+To achieve this we will do the following data management steps:  
 
 1) Filter the data as appropriate (by place, date)  
-2) Create a week column using `date2week()` from package **aweek**  
-    + This function transforms dates to weeks, using a specified start date of each week (e.g. "Monday")  
-    + The `floor_day =` argument means that dates are rounded into the week only (day of the week is not shown)  
-    + The `factor = ` argument converts the new column to a factor - important because all possible weeks within the date range are designated as levels, even if there is no data for them currently.  
+2) Create a week column using `floor_date()` from package **lubridate**  
+    + This function returns the start-date of a given date's week, using a specified start date of each week (e.g. "Mondays")  
 3) The data are grouped by columns "location" and "week" to create analysis units of "facility-week"  
-4) The verb `summarize()` creates new columns to calculate reporting performance for each "facility-week":  
+4) The function `summarise()` creates new columns to reflecting summary statistics per facility-week group:  
     + Number of days per week (7 - a static value)  
     + Number of reports received from the facility-week (could be more than 7!)  
     + Sum of malaria cases reported by the facility-week (just for interest)  
@@ -19577,40 +20360,88 @@ To achieve this:
 5) The dataframe is joined (`right_join()`) to a comprehensive list of all possible facility-week combinations, to make the dataset complete. The matrix of all possible combinations is created by applying `expand()` to those two columns of the dataframe as it is at that moment in the pipe chain (represented by "."). Because a `right_join()` is used, all rows in the `expand()` dataframe are kept, and added to agg_weeks if necessary. These new rows appear with `NA` (missing) summarized values.  
 
 
+Below we demonstrate step-by-step:  
+
 ```{r, message=FALSE, warning=FALSE}
 # Create weekly summary dataset
 agg_weeks <- facility_count_data %>% 
   
   # filter the data as appropriate
-  filter(District == "Spring",
-         data_date < as.Date("2019-06-01")) %>% 
-  
-  # Create week column from data_date
-  mutate(week = aweek::date2week(data_date,
-                                 start_date = "Monday",
-                                 floor_day = TRUE,
-                                 factor = TRUE)) %>% 
-  # Group into facility-weeks
-  group_by(location_name, week, .drop = F) %>%
-  
-  # Create summary column on the grouped data
-  summarize(n_days          = 7,                                          # 7 days per week           
-            n_reports       = dplyr::n(),                                 # number of reports received per week (could be >7)
-            malaria_tot     = sum(malaria_tot, na.rm = T),                # total malaria cases reported
-            n_days_reported = length(unique(data_date)),                  # number of unique days reporting per week
-            p_days_reported = round(100*(n_days_reported / n_days))) %>%  # percent of days reporting
-  
-  # Ensure every possible facility-week combination appears in the data
-  right_join(tidyr::expand(., week, location_name))    # "." represents the dataset at that moment in the pipe chain
-  
+  filter(
+    District == "Spring",
+    data_date < as.Date("2019-06-01")) 
 ```
 
+Now the dataset has `r nrow(agg_weeks)` rows, when it previously had `r nrow(facility_count_data) `  
+
+Next we create a `week` column reflecting the start date of the week for each record. This is achieved with the **lubridate** package and the function `floor_date()`, which is set to "week" and for the weeks to begin on Mondays (day 1 of the week - Sundays would be 7). The top rows are shown below.  
+
+```{r}
+agg_weeks <- agg_weeks %>% 
+  # Create week column from data_date
+  mutate(
+    week = lubridate::floor_date(                     # create new column of weeks
+      data_date,                                      # date column
+      unit = "week",                                  # give start of the week
+      week_start = 1))                                # weeks to start on Mondays 
+```
+
+The new week column can be seen on the far right of the dataframe  
+
+```{r, echo=F}
+DT::datatable(head(agg_weeks,30), rownames = FALSE, options = list(pageLength = 5, scrollX=T))
+```
+
+Now we group the data into facility-weeks and summarise them to produce statistics per facility-week. See the page on [Grouping data] for tips. The grouping itself doesn't change the dataframe, but it impacts how the subsequent summary statistics are calculated.  
+
+The top rows are shown below. Note how the columns have completely changed to reflect the desired summary statistics. Each row reflects one facility-week. 
+
+```{r, warning=F, message=F}
+agg_weeks <- agg_weeks %>%   
+
+  # Group into facility-weeks
+  group_by(
+    location_name, week,
+    .drop = F) %>%
+  
+  # Create summary statistics columns on the grouped data
+  summarize(
+    n_days          = 7,                                          # 7 days per week           
+    n_reports       = dplyr::n(),                                 # number of reports received per week (could be >7)
+    malaria_tot     = sum(malaria_tot, na.rm = T),                # total malaria cases reported
+    n_days_reported = length(unique(data_date)),                  # number of unique days reporting per week
+    p_days_reported = round(100*(n_days_reported / n_days)))      # percent of days reporting
+```
+
+```{r, echo=F}
+DT::datatable(head(agg_weeks,30), rownames = FALSE, options = list(pageLength = 5, scrollX=T))
+```
+Finally, we run the command below to ensure that ALL possible facility-weeks are present in the data, even if they were missing before.  
+
+We are using a `right_join()` on itself (the dataset is represented by ".") but having been expanded to include all possible combinations of the columns `week` and `location_name`. See documentation on the `expand()` function in the page on [Pivoting]. Before running this code the dataset contains `r nrow(agg_weeks)` rows.   
+
+```{r, message=F, warning=F}
+# Create dataframe of every possible facility-week
+expanded_weeks <- agg_weeks %>% 
+  mutate(week = as.factor(week)) %>%         # convert date to a factor so expand() works correctly
+  tidyr::expand(., week, location_name) %>%  # expand dataframe to include all possible facility-week combinations
+                                             # note: "." represents the dataset at that moment in the pipe chain
+  mutate(week = as.Date(week))               # re-convert week to class Date so the subsequent right_join works
+                                             
+
+# Use right-join with the expanded facility-week list to fill-in the missing gaps in the data
+agg_weeks <- agg_weeks %>%      
+  right_join(expanded_weeks) %>%                            # Ensure every possible facility-week combination appears in the data
+  mutate(p_days_reported = replace_na(p_days_reported, 0))  # convert missing values to 0                           
+```
+
+Before running this code the dataset contains `r nrow(agg_weeks)` rows.   
 
 <!-- ======================================================= -->
-### Create heatmap { }
+### Create heatmap {-}
 
 
-The `ggplot()` is make using `geom_tile()`:  
+The `ggplot()` is made using `geom_tile()` from the **ggplot2** package:  
 
 * Weeks on the x-axis is transformed to dates, allowing use of `scale_x_date()`  
 * location_name on the y-axis will show all facility names  
@@ -19619,52 +20450,86 @@ The `ggplot()` is make using `geom_tile()`:
 * `scale_x_date()` is used on the x-axis specifying labels every 2 weeks and their format  
 * Aesthetic themes and labels can be adjusted as necessary
 
+
+
+
 <!-- ======================================================= -->
-#### Basic  
+#### Basic {-}  
+
+A basic heatmap is produced below,using the default colors, scales, etc. Within the `aes()` for `geom_tile()` you must provide an x-axis column, y-axis column, **and** a column for the the `fill = ` - these are the numeric values that are converted to tile color.  
+
+```{r}
+ggplot(data = agg_weeks)+
+  geom_tile(
+    aes(x = week,
+        y = location_name,
+        fill = p_days_reported))
+```
+
+#### Cleaned plot {-}
+
+We can make this plot look better by adding additional **ggplot2** functions, as shown below. See the page on [ggplot tips] for details.  
 
 ```{r, message=FALSE, warning=FALSE}
-ggplot(agg_weeks,
-       aes(x = aweek::week2date(week),            # transformed to date class
-           y = location_name,
-           fill = p_days_reported))+
-  # tiles
-  geom_tile(colour="white")+                      # white gridlines
+ggplot(data = agg_weeks)+ 
   
-  scale_fill_gradient(low = "orange", high = "darkgreen", na.value = "grey80")+
-  scale_x_date(expand = c(0,0),
-               date_breaks = "2 weeks",
-               date_labels = "%d\n%b")+
+  # show data as tiles
+  geom_tile(
+    aes(x = week,
+        y = location_name,
+        fill = p_days_reported),      
+    color = "white")+                 # white gridlines
+  
+  scale_fill_gradient(
+    low = "orange",
+    high = "darkgreen",
+    na.value = "grey80")+
+  
+  # date axis
+  scale_x_date(
+    expand = c(0,0),             # remove extra space on sides
+    date_breaks = "2 weeks",     # labels every 2 weeks
+    date_labels = "%d\n%b")+     # format is day over month (\n in newline)
   
   # aesthetic themes
   theme_minimal()+                                  # simplify background
+  
   theme(
     legend.title = element_text(size=12, face="bold"),
     legend.text  = element_text(size=10, face="bold"),
-    legend.key.height = grid::unit(1,"cm"),         # height of legend key
-    legend.key.width  = grid::unit(0.6,"cm"),       # width of legend key
+    legend.key.height = grid::unit(1,"cm"),           # height of legend key
+    legend.key.width  = grid::unit(0.6,"cm"),         # width of legend key
     
-    axis.text.x = element_text(size=12),
-    axis.text.y = element_text(vjust=0.2),
-    axis.ticks = element_line(size=0.4),
-    axis.title = element_text(size=12, face="bold"),
+    axis.text.x = element_text(size=12),              # axis text size
+    axis.text.y = element_text(vjust=0.2),            # axis text alignment
+    axis.ticks = element_line(size=0.4),               
+    axis.title = element_text(size=12, face="bold"),  # axis title size and bold
     
-    plot.title = element_text(hjust=0,size=14,face="bold"),
-    plot.caption = element_text(hjust = 0, face = "italic")
+    plot.title = element_text(hjust=0,size=14,face="bold"),  # title right-aligned, large, bold
+    plot.caption = element_text(hjust = 0, face = "italic")  # caption right-aligned and italic
     )+
   
   # plot labels
   labs(x = "Week",
        y = "Facility name",
-       fill = "Reporting\nperformance (%)", # legend title
+       fill = "Reporting\nperformance (%)",           # legend title, because legend shows fill
        title = "Percent of days per week that facility reported data",
        subtitle = "District health facilities, April-May 2019",
        caption = "7-day weeks beginning on Mondays.")
 ```
 
-<!-- ======================================================= -->
-#### Ordered y-axis  
 
-If you want to order the y-axis facilities by something, convert them to class Factor and provide the order. Below, the order is set based on the total number of reporting days filed by the facility across the whole timespan:  
+
+
+
+<!-- ======================================================= -->
+#### Ordered y-axis {-}  
+
+Currently, the facilities are ordered "alphabetically" from the bottom to the top. If you want to adjust the order the y-axis facilities, convert them to class factor and provide the order. See the page on [Factors] for tips.  
+
+Below, the column `location_name` is converted to a factor, and the order of its levels is set based on the total number of reporting days filed by the facility across the whole time-span.  
+
+To do this, we create a dataframe which represents the total number of reports per facility, arranged in ascending order. We can use this vector to order the factor levels in the plot.   
 
 ```{r}
 facility_order <- agg_weeks %>% 
@@ -19673,156 +20538,155 @@ facility_order <- agg_weeks %>%
   arrange(tot_reports) # ascending order
 ```
 
-```{r}
-as.tibble(facility_order)
+See the dataframe below:  
+
+```{r, echo=F}
+DT::datatable(facility_order, rownames = FALSE, options = list(pageLength = 5, scrollX=T))
 ```
 
-Now use the above vector (`facility_order$location_name`) to be the order of the factor levels of location_name in the dataset `agg_weeks`:  
 
-```{r}
+
+
+Now use the above vector (`facility_order$location_name`) to be the order of the factor levels of location_name in the dataframe `agg_weeks`:  
+
+```{r, warning=F, message=F}
+# load package 
+pacman::p_load(forcats)
+
+# create factor and define levels manually
 agg_weeks <- agg_weeks %>% 
-  mutate(location_name = factor(location_name, levels = facility_order$location_name))
+  mutate(location_name = as_factor(location_name),
+         location_name = fct_relevel(location_name, 
+                                     levels = facility_order$location_name))
 ```
 
 And now the data are re-plotted, with location_name being an ordered factor:  
 
 ```{r, message=FALSE, warning=FALSE}
-ggplot(agg_weeks,
-       aes(x = aweek::week2date(week),            # transformed to date class
-           y = location_name,
-           fill = p_days_reported))+
-  # tiles
-  geom_tile(colour="white")+                      # white gridlines
-
-  scale_fill_gradient(low = "orange", high = "darkgreen", na.value = "grey80")+
-  scale_x_date(expand = c(0,0),
-               date_breaks = "2 weeks",
-               date_labels = "%d\n%b")+
+ggplot(data = agg_weeks)+ 
+  
+  # show data as tiles
+  geom_tile(
+    aes(x = week,
+        y = location_name,
+        fill = p_days_reported),      
+    color = "white")+                 # white gridlines
+  
+  scale_fill_gradient(
+    low = "orange",
+    high = "darkgreen",
+    na.value = "grey80")+
+  
+  # date axis
+  scale_x_date(
+    expand = c(0,0),             # remove extra space on sides
+    date_breaks = "2 weeks",     # labels every 2 weeks
+    date_labels = "%d\n%b")+     # format is day over month (\n in newline)
   
   # aesthetic themes
   theme_minimal()+                                  # simplify background
+  
   theme(
     legend.title = element_text(size=12, face="bold"),
     legend.text  = element_text(size=10, face="bold"),
-    legend.key.height = grid::unit(1,"cm"),         # height of legend key
-    legend.key.width  = grid::unit(0.6,"cm"),       # width of legend key
+    legend.key.height = grid::unit(1,"cm"),           # height of legend key
+    legend.key.width  = grid::unit(0.6,"cm"),         # width of legend key
     
-    axis.text.x = element_text(size=12),
-    axis.text.y = element_text(vjust=0.2),
-    axis.ticks = element_line(size=0.4),
-    axis.title = element_text(size=12, face="bold"),
+    axis.text.x = element_text(size=12),              # axis text size
+    axis.text.y = element_text(vjust=0.2),            # axis text alignment
+    axis.ticks = element_line(size=0.4),               
+    axis.title = element_text(size=12, face="bold"),  # axis title size and bold
     
-    plot.title = element_text(hjust=0,size=14,face="bold"),
-    plot.caption = element_text(hjust = 0, face = "italic")
+    plot.title = element_text(hjust=0,size=14,face="bold"),  # title right-aligned, large, bold
+    plot.caption = element_text(hjust = 0, face = "italic")  # caption right-aligned and italic
     )+
   
   # plot labels
   labs(x = "Week",
        y = "Facility name",
-       fill = "Reporting\nperformance (%)", # legend title
+       fill = "Reporting\nperformance (%)",           # legend title, because legend shows fill
        title = "Percent of days per week that facility reported data",
        subtitle = "District health facilities, April-May 2019",
        caption = "7-day weeks beginning on Mondays.")
 ```
 
+
+
+
+
 <!-- ======================================================= -->
-#### Display values  
+#### Display values {-}  
 
 
 You can add a `geom_text()` layer on top of the tiles, to display the actual numbers of each tile. Be aware this may not look pretty if you have many small tiles!  
 
-* Note the fillowing code added `geom_text(aes(label=p_days_reported))+`. In the aesthetic `aes()` of the `geom_tile()` the argument `label` (what to show) is set to the same numeric column used to create the color gradient.  
+The following code has been added: `geom_text(aes(label = p_days_reported))`. This adds text onto every tile. The text displayed is the value assigned to the argument `label = `, which in this case has been set to the same numeric column `p_days_reported` that is used to create the color gradient.  
 
+
+
+  
 ```{r, message=FALSE, warning=FALSE}
-ggplot(agg_weeks,
-       aes(x = aweek::week2date(week),            # transformed to date class
-           y = location_name,
-           fill = p_days_reported))+
-  # tiles
-  geom_tile(colour="white")+                      # white gridlines
+ggplot(data = agg_weeks)+ 
   
-  geom_text(aes(label = p_days_reported))+          # add text on top of tile
+  # show data as tiles
+  geom_tile(
+    aes(x = week,
+        y = location_name,
+        fill = p_days_reported),      
+    color = "white")+                 # white gridlines
   
-  scale_fill_gradient(low = "orange", high = "darkgreen", na.value = "grey80")+
-  scale_x_date(expand = c(0,0),
-               date_breaks = "2 weeks",
-               date_labels = "%d\n%b")+
+  # text
+  geom_text(
+    aes(
+      x = week,
+      y = location_name,
+      label = p_days_reported))+          # add text on top of tile
+  
+  # fill scale
+  scale_fill_gradient(
+    low = "orange",
+    high = "darkgreen",
+    na.value = "grey80")+
+  
+  # date axis
+  scale_x_date(
+    expand = c(0,0),             # remove extra space on sides
+    date_breaks = "2 weeks",     # labels every 2 weeks
+    date_labels = "%d\n%b")+     # format is day over month (\n in newline)
   
   # aesthetic themes
   theme_minimal()+                                  # simplify background
+  
   theme(
     legend.title = element_text(size=12, face="bold"),
     legend.text  = element_text(size=10, face="bold"),
-    legend.key.height = grid::unit(1,"cm"),         # height of legend key
-    legend.key.width  = grid::unit(0.6,"cm"),       # width of legend key
+    legend.key.height = grid::unit(1,"cm"),           # height of legend key
+    legend.key.width  = grid::unit(0.6,"cm"),         # width of legend key
     
-    axis.text.x = element_text(size=12),
-    axis.text.y = element_text(vjust=0.2),
-    axis.ticks = element_line(size=0.4),
-    axis.title = element_text(size=12, face="bold"),
+    axis.text.x = element_text(size=12),              # axis text size
+    axis.text.y = element_text(vjust=0.2),            # axis text alignment
+    axis.ticks = element_line(size=0.4),               
+    axis.title = element_text(size=12, face="bold"),  # axis title size and bold
     
-    plot.title = element_text(hjust=0,size=14,face="bold"),
-    plot.caption = element_text(hjust = 0, face = "italic")
+    plot.title = element_text(hjust=0,size=14,face="bold"),  # title right-aligned, large, bold
+    plot.caption = element_text(hjust = 0, face = "italic")  # caption right-aligned and italic
     )+
   
   # plot labels
   labs(x = "Week",
        y = "Facility name",
-       fill = "Reporting\nperformance (%)", # legend title
+       fill = "Reporting\nperformance (%)",           # legend title, because legend shows fill
        title = "Percent of days per week that facility reported data",
        subtitle = "District health facilities, April-May 2019",
        caption = "7-day weeks beginning on Mondays.")
 ```
 
-<!-- ======================================================= -->
-## GIS heatmaps { }
 
-Contoured heatmap of cases over a basemap  
 
-1) Create basemap tile from OpenStreetMap  
-2) Plot the cases from `linelist` using the latitude and longitude  
-
-http://data-analytics.net/cep/Schedule_files/geospatial.html
-
-```{r, message=FALSE, warning=FALSE}
-pacman::p_load(OpenStreetMap)
-
-# Fit basemap by range of lat/long coordinates. Choose tile type
-map <- openmap(c(max(linelist$lat, na.rm=T), max(linelist$lon, na.rm=T)),  # limits of tile
-               c(min(linelist$lat, na.rm=T), min(linelist$lon, na.rm=T)),
-               zoom = NULL,
-               type = c("osm", "stamen-toner", "stamen-terrain","stamen-watercolor", "esri","esri-topo")[1],
-               mergeTiles = TRUE)
-
-# Projection WGS84
-map.latlon <- openproj(map, projection = "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs")
-
-# Plot map. Must be autoplotted to work with ggplot
-OpenStreetMap::autoplot.OpenStreetMap(map.latlon)+
-  # Density tiles  
-  ggplot2::stat_density_2d(aes(x = lon,
-        y = lat,
-        fill = ..level..,
-        alpha=..level..),
-    bins = 10,
-    geom = "polygon",
-    contour_var = "count",
-    data = linelist,
-    show.legend = F) +
-  scale_fill_gradient(low = "black", high = "red")+
-  labs(x = "Longitude",
-       y = "Latitude",
-       title = "Distribution of simulated cases")
-
-```
-
-https://www.rdocumentation.org/packages/OpenStreetMap/versions/0.3.4/topics/autoplot.OpenStreetMap
 
 <!-- ======================================================= -->
 ## Resources { }
 
-This tab should stay with the name "Resources".
-Links to other online tutorials or resources.
 
 
 
