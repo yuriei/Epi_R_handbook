@@ -48,7 +48,7 @@ It is usually expressed through the **_survival probability_** which is the prob
 
 ```{r eval=F, out.width = "80%", out.height="80%", fig.align = "center"}
  
-#Add a figure from the following chuncks for the last version of the page
+#Add a figure from the following chunks for the last version of the page
 #do not forget to save the output figure in "images"
 # knitr::include_graphics(here::here("images", "survanalysis.png"))
 
@@ -61,9 +61,7 @@ To run survival analyses in R, one the most widely used package is the **surviva
 
 ```{r, echo=F, message=FALSE, warning=FALSE}
 
-if(!require(remotes)) install.packages("remotes")
-#if(!require(survminer)) remotes::install_github("kassambara/survminer", build_vignettes = FALSE)
-
+if(!require(survminer)) install.packages("survminer")
 
 pacman::p_load(
   ggplot2,
