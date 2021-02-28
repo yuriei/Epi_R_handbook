@@ -44,7 +44,6 @@ It is usually expressed through the **_survival probability_** which is the prob
 
 **_Censoring_**: Censoring occurs when at the end of follow-up, some of the individuals have not had the event of interest, and thus their true time to event is unknown. We will mostly focus on right censoring here but for more details on censoring and survival analysis in general, you can see references. 
 
-* Small image showing outputs   
 
 ```{r eval=F, out.width = "80%", out.height="80%", fig.align = "center"}
  
@@ -425,9 +424,13 @@ ggforest(linelistsurv_cox, data = linelist_surv)
 ## Resources {.tabset .tabset-fade .tabset-pills}
 
 [Survival Analysis Part I: Basic concepts and first analyses](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2394262/)
+
 [Survival analysis in infectious disease research: Describing events in time](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2954271/)
-[Cahpter on advanced survival models Princeton](https://data.princeton.edu/wws509/notes/c7.pdf)
+
+[Chapter on advanced survival models Princeton](https://data.princeton.edu/wws509/notes/c7.pdf)
+
 [Survival analysis cheatsheet R](https://publicifsv.sund.ku.dk/~ts/survival/survival-cheat.pdf)
+
 [Survminer cheastsheet](https://paulvanderlaken.files.wordpress.com/2017/08/survminer_cheatsheet.pdf)
 
 
