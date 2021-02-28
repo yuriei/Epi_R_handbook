@@ -28,6 +28,10 @@ knit: (function(inputFile, encoding) {
 <!-- ======================================================= -->
 # ggplot tips {#ggplot_tips .tabset .tabset-fade}  
 
+<<<<<<< HEAD
+=======
+https://www.tidyverse.org/blog/2018/07/ggplot2-3-0-0/
+>>>>>>> master
 
 <!-- ======================================================= -->
 ## Overview {.tabset .tabset-fade .tabset-pills}
@@ -126,16 +130,20 @@ delay_plot <- ggplot(data = linelist_cleaned,
   geom_point(size = 1, alpha = 0.5) +
   # add a trend line
   # use a linear method
-  geom_smooth(method = "lm") +
-  # add nicer labels
-  labs(x = "age", y = "onset to hospitalsiation (days)",
-       title = "Onset to hospitalisation by age")
-
+  geom_smooth(method = "lm")
 delay_plot
 
 ```
 
-This looks ok, but we could make the theme a little nicer. `ggplot2` comes with some preset themes that can be used to change the theme of the plot. We can also edit themes of the plot with extreme detail with the `theme()` function. For example, we can update this plot like this:
+This looks ok, but we could make the theme a little nicer. `ggplot2` comes with some preset themes that can be used to change the theme of the plot. We can also edit themes of the plot with extreme detail with the `theme()` function. We can also add some nicer labels to the plot with the `labs()` function. There are 5 standard labeling locations:
+
+  1. `x` - the x-axis
+  2. `y` - the y-axis
+  3. `title` - the main plot title
+  4. `subtitle` - directly underneath the plot title in smaller text (by default)
+  5. `caption` - bottom of plot, on the right by default
+  
+For example, we can update this plot like this:
 
 ```{r, eval = TRUE}
 
@@ -143,7 +151,14 @@ delay_plot +
   # set the theme to classic
   theme_classic() +
   # further edit the theme to move the legend position
-  theme(legend.position = "bottom")
+  theme(legend.position = "bottom")  +
+  # add nicer labels
+  labs(x = "age", 
+       y = "onset to hospitalsiation (days)",
+       title = "Onset to hospitalisation by age",
+       subtitle = glue::glue("total patients {nrow(linelist_cleaned)}"),
+       caption = "produced by me!")
+
 
 ```
 
@@ -311,7 +326,29 @@ ggplot(linelist_cleaned,
 
 <!-- ======================================================= -->
 ## Smart Labeling {.tabset .tabset-fade .tabset-pills}
-ggrepel
+In `ggplot2`, it is also possible to add text to plots. However, this comes with the notable limitation where text labels often clash with data points in a plot, making them look messy or hard to read. There is no ideal way to deal with this in the base package, but there is a `ggplot2` addon, known as `ggrepel` that makes dealing with this very simple! 
+
+The `ggrepel` package provides two new functions, `geom_label_repel()` and `and geom_text_repel()`, which replace `geom_label()` and `geom_text()`. Simply use these functions instead of the base functions to produce neat labels. You can also use the `force` argument to change the degree of repulsion between labels and their respective points.
+
+For our example, we will make a scatterplot showing BMI against age. We're also going to label each point with a patient id when the patient is under 10 years of age. We'll use a trick with filter to only show these specific points!
+
+
+```{r, eval = F}
+
+ggplot(linelist_cleaned, 
+       aes(x = age_years,
+           y = bmi)) +
+  geom_point() + 
+  # pass the filtered version of the dataset as a new dataset
+  ggrepel::geom_text_repel(data = linelist_cleaned %>% filter(age_years <= 10),
+                           aes(label = case_id),
+                           force = 1) +
+  labs(y = "bmi", x = "age in years")
+
+
+
+```
+
 
 <!-- ======================================================= -->
 ## Time axes {.tabset .tabset-fade .tabset-pills}
