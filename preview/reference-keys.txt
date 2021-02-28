@@ -1,5 +1,0 @@
-pivoting
-wide-to-long
-long-to-wide
-fill
-resources
