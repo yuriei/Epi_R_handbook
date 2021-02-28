@@ -36,9 +36,53 @@ https://www.tidyverse.org/blog/2018/07/ggplot2-3-0-0/
 <!-- ======================================================= -->
 ## Overview {.tabset .tabset-fade .tabset-pills}
 
-Embed ggplot cheatsheet
-
 `ggplot2` is the most popular data visualisation package in R, and is generally used instead of base `R` for creating figures. `ggplot2` benefits from a wide variety of supplementary packages that further enhance its functionality. Despite this, ggplot syntax is significantly different from base `R` plotting, and has a learning curve associated with it. Using `ggplot2` generally requires the user to format their data in a way that is highly `tidyverse` compatible, which ultimately makes using these packages together very effective.
+
+
+<!-- ======================================================= -->
+## Preparation {.tabset .tabset-fade .tabset-pills}
+
+When preparing data to plot, it is best to make the data adhere to tidyverse standards as much as possible. This is expanded on much more in previous sections. 
+
+Some simple ways we can prepare our data to make it better for plotting can often include making the contents of the data better for display - this does not necessarily mean its better for data manipulation! For example, we can replace `NA` values in a character column with the string "Unknown", or clean some variables so that their "data friendly" with underscores etc are changed to normal text. Here are some examples of this in action:
+
+```{r, eval = FALSE}
+linelist_cleaned <- linelist_cleaned %>%
+  # make display version of columns with more friendly names
+  mutate(
+    # f to Male, f to Female, NA to Unknown
+    gender_disp = case_when(gender == "m" ~ "Male",
+                            gender == "f" ~ "Female",
+                            is.na(gender) ~ "Unknown"),
+    # replace NA with unknown for outcome
+    outcome_disp = replace_na(outcome, "Unknown")
+  )
+
+
+```
+
+
+
+As a matter of data structure, we often also want to pivot our data into *longer* formats, which will allow us to use a set of variables as a single variable. For example, if we wanted to show the number of cases with specific symptoms, we are limited by the fact that each symptom is a specific column. We can pivot this to a longer format like this:
+
+```{r, eval = F}
+
+linelist_sym <- linelist_cleaned %>%
+  pivot_longer(cols = c("fever", "chills", "cough", "aches", "vomit"),
+               names_to = "symptom_name",
+               values_to = "symptom_is_present") %>%
+  mutate(symptom_is_present = replace_na(symptom_is_present, "unknown"))
+
+```
+
+Note that this format is not very useful for other operations, and should just be used for the plot it was made for. However, users should endeavour to use these practices as much as possible for the base dataset, as they are more tidyverse compliant, and will make working with the data easier.
+
+
+
+
+
+<!-- ======================================================= -->
+### basics of ggplot {.tabset .tabset-fade .tabset-pills}
 
 Plotting with `ggplot2` is based on defining base attributes to a plot, and adding layers on top. In addition, the user can change various plot attributes like axis settings, colour schemes, and labels with additional objects that are "added" to the plot. While ggplot objects can be highly complex, the basic order of creating a ggplot looks something like this:
 
@@ -135,7 +179,11 @@ delay_plot
 
 ```
 
-This looks ok, but we could make the theme a little nicer. `ggplot2` comes with some preset themes that can be used to change the theme of the plot. We can also edit themes of the plot with extreme detail with the `theme()` function. We can also add some nicer labels to the plot with the `labs()` function. There are 5 standard labeling locations:
+
+<!-- ======================================================= -->
+### Themes and Labels {.tabset .tabset-fade .tabset-pills}
+
+One of hte most important aspects of data visualisation is presenting data in a clear way with nice aesthetics. The plot we made previously looks ok, but we could make the theme a little nicer. `ggplot2` comes with some preset themes that can be used to change the theme of the plot. We can also edit themes of the plot with extreme detail with the `theme()` function. We can also add some nicer labels to the plot with the `labs()` function. There are 5 standard labeling locations:
 
   1. `x` - the x-axis
   2. `y` - the y-axis
@@ -147,85 +195,43 @@ For example, we can update this plot like this:
 
 ```{r, eval = TRUE}
 
-delay_plot + 
+delay_plot <- delay_plot + 
   # set the theme to classic
   theme_classic() +
   # further edit the theme to move the legend position
-  theme(legend.position = "bottom")  +
   # add nicer labels
   labs(x = "age", 
        y = "onset to hospitalsiation (days)",
        title = "Onset to hospitalisation by age",
        subtitle = glue::glue("total patients {nrow(linelist_cleaned)}"),
        caption = "produced by me!")
+delay_plot
+
+```
+
+The `theme()` function can also be used to edit the defaults of these elements. This function can take an extremely large number of arguments, each of which can be used to edit very specific aspects of the plot. We won't go through all examples, look at how editing aspects of text elements is done. The basic way this is done is:
+
+  1. Calling the specific argument of `theme()` for the element we want to edit (e.g. `plot.title` for the plot title)
+  2. Supplying the `element_text()` function to the argument (there are other versions of this e.g. `element_rect()` for editing the plot background aesthetics)
+  3. Changing the arguments in `element_text()`
+  
+For example, we increase the size of the plot title with `size`, make the subtitle italicised with `face`, and right
+justify the caption with `hjust`. We'll also change the legend location for good measure!
+
+```{r,eval=T}
+delay_plot + 
+    theme(legend.position = "bottom",#
+          # size of title is 30
+          plot.title = element_text(size = 30),
+          # right justify caption
+          plot.caption = element_text(hjust = 0),
+          # subtitle is italicised
+          plot.subtitle = element_text(face = "italic"))
 
 
 ```
 
-<!-- ======================================================= -->
-## Preparation {.tabset .tabset-fade .tabset-pills}
-
-When preparing data to plot, it is best to make the data adhere to tidyverse standards as much as possible. This is expanded on much more in previous sections. 
-
-Some simple ways we can prepare our data to make it better for plotting can often include making the contents of the data better for display - this does not necessarily mean its better for data manipulation! For example, we can replace `NA` values in a character column with the string "Unknown", or clean some variables so that their "data friendly" with underscores etc are changed to normal text. Here are some examples of this in action:
-
-```{r, eval = FALSE}
-linelist_cleaned <- linelist_cleaned %>%
-  # make display version of columns with more friendly names
-  mutate(
-    # f to Male, f to Female, NA to Unknown
-    gender_disp = case_when(gender == "m" ~ "Male",
-                            gender == "f" ~ "Female",
-                            is.na(gender) ~ "Unknown"),
-    # replace NA with unknown for outcome
-    outcome_disp = replace_na(outcome, "Unknown")
-  )
-
-
-```
-
-
-
-As a matter of data structure, we often also want to pivot our data into *longer* formats, which will allow us to use a set of variables as a single variable. For example, if we wanted to show the number of cases with specific symptoms, we are limited by the fact that each symptom is a specific column. We can pivot this to a longer format like this:
-
-```{r, eval = F}
-
-linelist_sym <- linelist_cleaned %>%
-  pivot_longer(cols = c("fever", "chills", "cough", "aches", "vomit"),
-               names_to = "symptom_name",
-               values_to = "symptom_is_present") %>%
-  mutate(symptom_is_present = replace_na(symptom_is_present, "unknown"))
-
-```
-
-We could then use new dataframe in an upcoming plot:
-
-```{r, eval = T}
-
-symp_plot <- ggplot(symp_plot, aes(x = symptom_name, fill = symptom_is_present)) +
-  # show as a portion of all
-  geom_bar(stat = "fill")
-
-symp_plot
-```
-Note that this format is not very useful for other operations, and should just be used for the plot it was made for. However, users should endeavour to use these practices as much as possible for the base dataset, as they are more tidyverse compliant, and will make working with the data easier.
-
-
-
-
-
-<!-- ======================================================= -->
-### sub-tab 1 {.tabset .tabset-fade .tabset-pills}
-
-Can be used to separate major steps of data preparation. Re-name as needed
-
-
-<!-- ======================================================= -->
-### sub-tab 2 {.tabset .tabset-fade .tabset-pills}
-
-Can be used to separate major steps of data preparation. Re-name as needed.
-
-
+If you ever want to remove an element of a plot, you can also do it through `theme()`! Just pass `element_blank()` to an argument in theme to have it disappear completely!
 
 <!-- ======================================================= -->
 ## Colour schemes {.tabset .tabset-fade .tabset-pills}
@@ -236,8 +242,16 @@ One of the most useful tricks is using manual scaling functions to explicity def
 
 If you want predefined palettes, you can use the `scale_xxx_brewer` or `scale_xxx_viridis_y` functions. The brewer functions can draw from colorbrewer.org palettes, and the viridis functions can draw from viridis (colourblind friendly!) palettes. Remember to define if the palette is discrete, continuous, or binned by specifying this at the end of the function (e.g. discrete is `scale_xxx_viridis_d`)
 
-We can see this by using the symptom plot we made in the previous section:
+We can see this by using the symptom-specific dataframe we made in the previous section:
 ```{r,eval = TRUE} 
+
+
+
+symp_plot <- ggplot(linelist_sym, aes(x = symptom_name, fill = symptom_is_present)) +
+  # show as a portion of all
+  geom_bar(stat = "fill")
+
+symp_plot
 
 symp_plot +
   scale_fill_manual(
@@ -257,58 +271,11 @@ symp_plot +
 
 
 ```
-*work with the symptom example*
 
-unnamed variable - pass as a string in aes(), and define colour later
-
-
-
-*something about changing order of discrete variables*
-
-<!-- ======================================================= -->
-## Highlighting {.tabset .tabset-fade .tabset-pills}
-
-Highlighting specific elements in a chart is a useful way to draw attention to a specific instance of a variable while also providing information on the dispersion of the full dataset. While this is not easily done in base `ggplot2`, there is an external package that can help to do this known as `gghighlight`. This is easy to use within the ggplot syntax.
-
-The `gghighlight` package uses the `gghighlight()` function to achieve this effect. To use this function, supply a logical statement to the function - this can have quite flexible outcomes, but here we'll show an example of the age distribution of cases in our linelist, highlighting them by outcome.
-
-```{r, eval = T}
-# load gghighlight
-library(gghighlight)
-
-
-# replace NA values with unknown in the outcome variable
-linelist_cleaned <- linelist_cleaned %>%
-  mutate(outcome = replace_na(outcome, "Unknown"))
-
-# produce a histogram of all cases by age
-ggplot(linelist_cleaned, 
-       aes(x = age_years, fill = outcome)) +
-  geom_histogram() + 
-  # highlight instances where the patient has died.
-  gghighlight::gghighlight(outcome == "Death")
-
-
-```
-
-This also works well with faceting functions - it allows the user to produce facet plots with the background data highlighted that doesn't apply to the facet!
-
-```{r, eval = T}
-
-# produce a histogram of all cases by age
-ggplot(linelist_cleaned, 
-       aes(x = age_years, fill = outcome)) +
-  geom_histogram() + 
-  # highlight instances where the patient has died.
-  gghighlight::gghighlight() +
-  facet_wrap(~outcome)
-
-
-```
 
 
 <!-- ======================================================= -->
-## Changing the order of discrete variables
+## Changing the order of discrete variables {.tabset .tabset-fade .tabset-pills}
 Changing the order that discrete variables appear in is often difficult to understand for people who are new to `ggplot2` graphs. It's easy to understand how to do this however once you understand how `ggplot2` handles discrete variables under the hood. Generally speaking, if a discrete varaible is used, it is automatically converted to a `factor` type - which orders factors by alphabetical order by default. To handle this, you simply have to reorder the factor levels to reflect the order you would like them to appear in the chart. For more detailed information on how to reorder `factor` objects, see the factor section of the guide. 
 
 We can look at a common example using age groups - by default the 5-9 age group will be placed in the middle of the age groups (given alphabetical order), but we can move it behind the 0-4 age group of the chart by releveling the factors.
@@ -323,6 +290,29 @@ ggplot(linelist_cleaned,
 
 
 ```
+
+
+<!-- ======================================================= -->
+## Multiple plots {.tabset .tabset-fade .tabset-pills}
+
+Often its useful to show multiple graphs on one page, or one super-figure. There are a few ways to achieve this and a lot of packages that can help to facilitate it. However, while external packages are nice, it is often easier to use faceting as an alternative that is prebuilt into `ggplot2`. Faceting plots is extremely easy to do in terms of code, and produces plots with more predictable aesthetics - you wont have to wrangle legends and ensure that axes are aligned etc.
+
+Faceting is a very specific way to obtain multiple plots - by definition, to facet you have to show the same type of plot in each facet, where every plot is specific to a level of a variable. This is done with one of two functions:
+
+  1. `facet_wrap()` This is used when you want to show a different graph for each level of a *single* variable. One example of this could be showing a different epidemic curve for each hospital in a region. 
+  
+  2. `facet_grid()` This is used when you want to bring a second variable into the faceting arrangement. Here each element of a grid is shows the intersection between an x or y element of a grid. For example, this could involve showing a different epidemic curve for each hospital in a region, shown horizontally, for each age group, shown vertically.
+  
+This can quickly become an overwhelming amount of information - its good to ensure you dont have too many levels of each variable that you choose to facet by!
+
+*COMBINE WITH NEALES SECTION*?
+
+
+
+While faceting is a convenient approach to plotting, sometimes its not possible to get the results you want from its relatively restrictive approach. Here, you may choose to combine plots by sticking them together into a larger plot. There are three well known packages that are great for this - `cowplot`, `gridExtra`, and `patchwork`. However, these packages largely do the same things, so we'll focus on `cowplot` for this section. 
+
+The `cowplot` package has a fairly wide range of functions, but the easiest use of it can be achieved through the use of `plot_grid()`. This is effectively a way to arrange predefined plots in a grid formation.
+
 
 <!-- ======================================================= -->
 ## Smart Labeling {.tabset .tabset-fade .tabset-pills}
@@ -368,6 +358,49 @@ ggplot(linelist_cleaned, aes(x = date_onset)) +
     # labels should show month then date
     date_labels = "%b %d"
   )
+
+```
+
+
+
+<!-- ======================================================= -->
+## Highlighting {.tabset .tabset-fade .tabset-pills}
+
+Highlighting specific elements in a chart is a useful way to draw attention to a specific instance of a variable while also providing information on the dispersion of the full dataset. While this is not easily done in base `ggplot2`, there is an external package that can help to do this known as `gghighlight`. This is easy to use within the ggplot syntax.
+
+The `gghighlight` package uses the `gghighlight()` function to achieve this effect. To use this function, supply a logical statement to the function - this can have quite flexible outcomes, but here we'll show an example of the age distribution of cases in our linelist, highlighting them by outcome.
+
+```{r, eval = T}
+# load gghighlight
+library(gghighlight)
+
+
+# replace NA values with unknown in the outcome variable
+linelist_cleaned <- linelist_cleaned %>%
+  mutate(outcome = replace_na(outcome, "Unknown"))
+
+# produce a histogram of all cases by age
+ggplot(linelist_cleaned, 
+       aes(x = age_years, fill = outcome)) +
+  geom_histogram() + 
+  # highlight instances where the patient has died.
+  gghighlight::gghighlight(outcome == "Death")
+
+
+```
+
+This also works well with faceting functions - it allows the user to produce facet plots with the background data highlighted that doesn't apply to the facet!
+
+```{r, eval = T}
+
+# produce a histogram of all cases by age
+ggplot(linelist_cleaned, 
+       aes(x = age_years, fill = outcome)) +
+  geom_histogram() + 
+  # highlight instances where the patient has died.
+  gghighlight::gghighlight() +
+  facet_wrap(~outcome)
+
 
 ```
 
