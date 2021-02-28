@@ -48,7 +48,8 @@ It is usually expressed through the **_survival probability_** which is the prob
 
 ```{r eval=F, out.width = "80%", out.height="80%", fig.align = "center"}
  
-#save the pl,ot of the exercise in images and call it here
+#Add a figure from the following chuncks for the last version of the page
+#do not forget to save the output figure in "images"
 # knitr::include_graphics(here::here("images", "survanalysis.png"))
 
 ```  
