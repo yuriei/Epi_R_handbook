@@ -75,6 +75,26 @@ i Input `hospital` is `recode(...)`.
 `Error: Insufficient values in manual scale. 3 needed but only 2 provided.`
 ggplot() scale_fill_manual() values = c("orange", "purple") ... insufficient for number of factor levels ... consider whether NA is now a factor level...
 
+
+```
+Error: unexpected symbol in:
+"  geom_histogram(stat = "identity")+
+  tidyquant::geom_ma(n=7, size = 2, color = "red" lty"
+```
+If you see "unexpected symbol" check for missing commas  
+
+
+
+
+**Wrong slashes**
+If you see an error like this when you try to export or import:  
+```
+No such file or directory:
+```
+ Make sure you have used `/` within the filepath, not `\`.  
+ 
+
+
 <!-- ======================================================= -->
 ### sub-tab 2 {.tabset .tabset-fade .tabset-pills}
 

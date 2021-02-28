@@ -24,10 +24,9 @@ knit: (function(inputFile, encoding) {
 ```
 
 ```{r, echo=F}
-linelist <- linelist %>% 
-  mutate(age = as.numeric(age))
-
+#Just for demo purposes
 pacman::p_load(apyramid)
+linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 ```
 
 <!-- ======================================================= -->
@@ -38,19 +37,49 @@ pacman::p_load(apyramid)
 <!-- ======================================================= -->
 ## Overview
 
-This section is **not** meant as a comprehensive "how to learn R" tutorial. However, it does cover some of the fundamentals that can be good to reference or refresh. 
+**This section is not meant as a comprehensive "learn basic R" tutorial**. However, it does cover some of the fundamentals that can be useful for reference or for refreshing your memory. 
 
-More comprehensive tutorials are available online. See the tab on recommended training.  
+See the tab on recommended training for more comprehensive tutorials.  
 
 
 <!-- ======================================================= -->
 ## Why use R?
 <h2> Why use R? </h2>
 
-* Reproducibility  
-* Fewer errors  
-* Collaboration  
-* Free
+As stated on the [R project website](https://www.r-project.org/about.html), R is a programming language and environment for statistical computing and graphics. It is highly versatile, extensible, and community-driven.  
+
+**Cost**
+
+R is free to use! There is a strong ethic in the community of free and open-source material.  
+
+**Reproducibility**  
+
+Conducting your data management and analysis through a programming language (compared to Excel or other primarily manual tool) enhances **reproducibility**, makes **error-detection** easier, and eases your workload.  
+
+**Community**  
+
+The broad R community is enormous and collaborative. New packages and tools are developed daily, and vetted by the community. Perhaps the largest organization of R users is [R-Ladies](https://rladies.org/), which likely has a chapter near you.   
+
+
+
+
+<!-- ======================================================= -->
+## Packages
+<h2> Packages </h2>
+
+
+
+
+Below we load some of the packages used in this page:  
+
+```{r}
+pacman::p_load(
+  tidyverse,
+  rio,
+  here
+)
+```
+
 
 <!-- ======================================================= -->
 ## Installation {#install .tabset .tabset-fade }
@@ -119,7 +148,7 @@ For RStudio to function you must also have R installed on the computer (see [thi
 
 By default RStudio displays four rectangle panes. 
 
-```{r basics_RStudio, out.width = "100%", fig.align = "center", echo=F}
+```{r out.width = "100%", fig.align = "center", echo=F}
 knitr::include_graphics(here::here("images", "RStudio_overview.png"))
 ```
 
@@ -152,7 +181,11 @@ This pane contains the Stata equivalents of the Plots Manager and Project Manage
 
 ### RStudio settings  
 
-Change RStudio settings and appearance in the Tools drop-down menu, by selecting Global Options
+Change RStudio settings and appearance in the *Tools* drop-down menu, by selecting *Global Options*. There you can change the default settings, including appearance/background color.  
+
+```{r basics_RStudio, out.width = "100%", fig.align = "center", echo=F}
+knitr::include_graphics(here::here("images", "RStudio_tools_options.png"))
+```
 
 
 
@@ -226,6 +259,7 @@ To change the working directory for all code chunks in an R markdown, edit the s
 knitr::opts_knit$set(root.dir = 'desired/filepath/here')
 ```
 
+
 <!-- ======================================================= -->
 ### Set Manually
 
@@ -237,14 +271,14 @@ From RStudio click: Session / Set Working Directory / Choose Directory (you will
 <!-- ======================================================= -->
 ### In an R project
 
-How things change in an R project
+If you are working in an R project, your working directory will by default be the root folder. This is convenient to maximize with the **here** package (LINK).  
 
 
 
 
-<h2> Objects </h2>
 <!-- ======================================================= -->
 ## Objects {#objects .tabset .tabset-fade }
+<h2> Objects </h2>
 
 Everything in R is an object. These sections will explain:  
 
@@ -300,7 +334,7 @@ reporting_week                 # prints the current value of reporting_week in t
 In the code below, the object `linelist` is created and assigned the value of a CSV file imported with the **rio** package.  
 
 ```{r basics_objects_dataframes, eval=FALSE}
-# linelist_raw is created and assigned the value of the imported CSV file
+# linelist is created and assigned the value of the imported CSV file
 linelist <- rio::import("my_linelist.csv")
 ```
 
@@ -330,12 +364,13 @@ knitr::include_graphics(here::here("images", "R_data_structures.png"))
 In epidemiology (and particularly field epidemiology), you will *most commonly* encounter data frames and vectors:  
 
 
-Common structure | Explanation | Example from templates
+Common structure | Explanation | Example
 ------------------- | ------------------------------------ | ------------------------  
 Vectors | A container for a sequence of singular objects, all of the same class (e.g. numeric, character). | **"Variables" (columns) in data frames are vectors** (e.g. the variable `age_years`).  
-Data Frames | Vectors (e.g. columns) that are bound together that all have the same number of rows. | `linelist_raw` and `linelist_cleaned` are both data frames.  
+Data Frames | Vectors (e.g. columns) that are bound together that all have the same number of rows. | `linelist` is a data frame.  
 
 Note that to create a vector that "stands alone", or is not part of a data frame (such as a list of location names), the function `c()` is often used:  
+
 `list_of_names <- c("Ruhengeri", "Gisenyi", "Kigali", "Butare")`  
 
 
@@ -593,10 +628,10 @@ To read more about a function, you can try searching online for resources OR sea
 ## Piping (`%>%`) {#piping .tabset .tabset-fade}
 <h2> Piping (`%>%`) </h2> 
 
-**Two general approaches to R coding are:**  
+**Two general approaches to working with objects are:**  
 
-1) **Tidyverse** - *piping* an object from function to function  
-2) **Define intermediate objects** - an older method, yet still worth knowing  
+1) **Tidyverse/piping** - sends an object from function to function - emphasizes the *action*, not the object  
+2) **Define intermediate objects** - emphasis the object, as it is re-defined again and again  
 
 
 <!-- ======================================================= -->
@@ -606,13 +641,16 @@ To read more about a function, you can try searching online for resources OR sea
 **Simply explained, the pipe operator (`%>%`) passes an intermediate output from one function to the next.**  
 You can think of it as saying "then". Many functions can be linked together with `%>%`.  
 
-* Piping emphasizes a sequence of actions, not the object the actions are being performed on  
+* **Piping emphasizes a sequence of actions, not the object the actions are being performed on**  
 * Best when a sequence of actions must be performed on one object  
 
-* from **magrittr**. Included in **dplyr** and **tidyverse**
+* From **magrittr**. Included in **dplyr** and **tidyverse**
 * Makes code more clean and easier to read, intuitive
-* express a sequence of operations  
-* the object is altered and then passed on to the next function  
+* Express a sequence of operations  
+* The object is altered and then passed on to the next function  
+
+Read more on this approach in the tidyverse [style guide](https://style.tidyverse.org/pipes.html
+)  
 
 Example:
 
@@ -634,28 +672,31 @@ Piping is not a base function. To use piping, the **dplyr** package must be inst
 
 <span style="color: orange;">**_CAUTION:_** Remember that even when using piping to link functions, if the assignment operator (`<-`) is present, the object to the left will still be over-written (re-defined) by the right side.</span>
 
-TODO
-%<>% shortcut for re-defining the object and piping
+
+**`%<>%`**  
+This is an "assignment pipe" from the **magritter** package, which pipes an object forward and also re-defines the object. It must be the first pipe operator in the chain. It is shorthand, so `object %<>% function() %>% function()` is the same as `object <- object %>% function() %>% function()`.  
+
 
 <!-- ======================================================= -->
 ### Define intermediate objects
 <h3> Define intermediate objects </h3>  
 
-Better if:  
+This approach to changing objects/dataframes may be better if:  
 
 * You need to manipulate multiple objects  
 * There are intermediate steps that are meaningful and deserve separate object names
 
-as changes are made - 
-still handy to know
 
-Risks: creating new objects for each step - lots of objects. If you use the wrong one you might not know.
-naming can be confusing,
-errors not easily detectable
+**Risks:**  
 
-either name each intermediate object, or overwrite the original, or combine all the functions together. all come with risks
+* Creating new objects for each step means creating lots of objects. If you use the wrong one you might not realize it!  
+*Naming all the objects can be confusing  
+* Errors may not be easily detectable  
 
-https://style.tidyverse.org/pipes.html
+Either name each intermediate object, or overwrite the original, or combine all the functions together. All come with their own risks.  
+
+Below are some examples:  
+
 
 ```{r piping_example_redefine, eval=F}
 # a fake example of how to bake a cake using this method (defining intermediate objects)
@@ -670,7 +711,8 @@ cake <- bake(batter_4, degrees = 350, system = "fahrenheit", minutes = 35)
 cake <- let_cool(cake)
 ```
 
-Combine all functions together - also difficult to read
+Combine all functions together - also difficult to read  
+
 ```{r piping_example_wide, eval=F}
 # an example of combining/nesting mutliple functions together - difficult to read
 cake <- let_cool(bake(mix_together(batter_3, utensil = spoon, minutes = 2), degrees = 350, system = "fahrenheit", minutes = 35))
@@ -684,6 +726,7 @@ cake <- let_cool(bake(mix_together(batter_3, utensil = spoon, minutes = 2), degr
 
 This section details operators in R, such as:  
 
+* Definitional operators  
 * Relational operators (less than, equal too..)  
 * Logical operators (and, or...)  
 * Handling missing values  
@@ -691,6 +734,34 @@ This section details operators in R, such as:
 * The `%in%` operator  
 
 
+
+<!-- ======================================================= -->
+### Assignment operators  
+<h3> Assignment operators </h3>
+
+**`<-`**  
+
+The basic assignment operator in R is `<-`. Such that `object_name <- value` (see R Basics tab on "Defining an Object").  
+This assignment operator can also be written as `=`. We advise use of `<-` for general R use.  
+We also advise surrounding operators with spaces, for readability.  
+
+
+**`<<-`**  
+
+If writing functions (LINK TO PAGE), or using R in an interactive way with sourced scripts (LINK TO PAGE), then you may need to use this assignment operator `<<-` (**base** R). This operator is used to define an object in a higher 'parent' R `Environment` (LINK to tab on R environments). Also see this [online reference](https://stat.ethz.ch/R-manual/R-devel/library/base/html/assignOps.html).
+
+
+**`%<>%`**  
+
+This is an "assignment pipe" from the **magritter** package, which pipes an object forward and also re-defines the object. It must be the first pipe operator in the chain. It is shorthand, so `object %<>% function() %>% function()` is the same as `object <- object %>% function() %>% function()`.  
+
+
+**`%<+%`**
+
+Used to add data to phylogenetic trees with the **ggtree** package. See the (LINK TO PAGE) or this online [resource book](https://yulab-smu.top/treedata-book/).  
+
+
+ 
 
 <!-- ======================================================= -->
 ### Relational and logical operators  
@@ -745,7 +816,7 @@ If one of the above criteria are not met | "Suspected"
 ### Missing values
 <h3> Missing values </h3>
 
-**In R, missing values are represented by the special value `NA`** (capital letters N and A - not in quotation marks). If you import data that records missing data in another way (e.g. 99, "Missing", or .), you may want to re-code those values to `NA`.
+**In R, missing values are represented by the special value `NA` (a "reserved" value)** (capital letters N and A - not in quotation marks). If you import data that records missing data in another way (e.g. 99, "Missing", or .), you may want to re-code those values to `NA`.
   
 **To test whether a value is `NA`, use the special function `is.na()`**, which returns `TRUE` or `FALSE`.
 
@@ -754,9 +825,23 @@ rdt_result <- c("Positive", "Suspected", "Positive", NA)   # two positive cases,
 is.na(rdt_result)  # Tests whether the value of rdt_result is NA
 ```
 
-To DO:
-SECTION ON OTHER `NA` TYPES: `NA_character`, `NA_real` etc.
-SECTION ON `NULL`
+Here is the [R documentation on missing values](https://stat.ethz.ch/R-manual/R-devel/library/base/html/NA.html)  
+
+**Variations on `NA`**  
+
+`NA` is actually a logical value of length 1. You may also encounter `NA_character_`, `NA_real_`, `NA_complex_`, and `NA_integer_`, which correspond to specific classes.  
+
+The most prominent application of one of these variants in common epidemiology work is using `case_when()`. The Right-Hand Side (RHS) values must all be of the same class. Thus, if you have character outcomes on the RHS like "Confirmed", "Suspect", "Probable" and `NA` - you will get an error. Instead of `NA` you must have `NA_character_`. Likewise for integers, use `NA_integer_`.  
+
+
+**`NULL`**  
+
+`NULL` is the null object in R, often used to represent a list of 0 length. Use `is.null()` to evaluate this status.  
+
+More detail on the difference between `NA` and `NULL` is [here](https://www.r-bloggers.com/2010/04/r-na-vs-null/)  
+
+
+
 
 <!-- ======================================================= -->
 ### Mathematics and statistics  
@@ -784,7 +869,8 @@ order of operations| ( )
 
 Objective          |Function
 -------------------|-------------
-rounding           | round(x, digits = n)
+rounding           | round(x, digits = n)  
+rounding           | janitor::round_half_up(x, digits = n)
 ceiling (round up) | ceiling(x)
 floor (round down) | floor(x)
 absolute value     | abs(x)
@@ -792,6 +878,14 @@ square root        | sqrt(x)
 exponent           | exponent(x)
 natural logarithm  | log(x)
 
+<span style="color: red;">**_DANGER:_** `round()` uses "banker's rounding" which rounds up from a .5 only if the upper number is even. Use `round_half_up()` from **janitor** to consistently round halves up to the nearest whole number. See [this](https://cran.r-project.org/web/packages/janitor/vignettes/janitor.html#explore-records-with-duplicated-values-for-specific-combinations-of-variables-with-get_dupes) </span>  
+
+```{r}
+# use the appropriate rounding function for your work
+round(c(2.5, 3.5))
+
+janitor::round_half_up(c(2.5, 3.5))
+```
 
 
 #### Statistical functions:  
@@ -811,9 +905,17 @@ maximum value            | max(x, na.rm=T)
 range of numeric values  | range(x, na.rm=T)
 summmary**               | summary(x)
 
-*`quantile()`: x is the numeric vector to examine, and probs is a numeric vector with probabilities within 0 and 1.0, e.g `c(0.5, 0.8, 0.85)`
+<span style="color: red;">**_DANGER:_** If providing a vector of numbers to one of the above functions, be sure to wrap the numbers within `c()` .</span>
 
-**`summary()`: gives a summary on a numeric vector including mean, median, and common percentiles
+```{r}
+# If supplying raw numbers to a function, wrap them in c()
+mean(1, 6, 12, 10, 5, 0)    # !!! INCORRECT !!!  
+
+mean(c(1, 6, 12, 10, 5, 0)) # CORRECT
+```
+
+* `quantile()`: x is the numeric vector to examine, and probs is a numeric vector with probabilities within 0 and 1.0, e.g `c(0.5, 0.8, 0.85)`
+** `summary()`: gives a summary on a numeric vector including mean, median, and common percentiles
 
 
 
@@ -827,14 +929,17 @@ repeat x, n times           | rep(x, ntimes)     |`rep(1:3, 2)` or `rep(c("a", "
 subdivide a numeric vector  | cut(x, n)          |`cut(linelist$age, 5)`
 
 
+
+
 <!-- ======================================================= -->
 ### `%in%`  
 <h3> `%in%` </h3>
 
-A very helpful operator 
+A very useful operator for matching values, and quickly assessing if a value is within a vector or dataframe.   
 
 ```{r}
 my_vector <- c("a", "b", "c", "d")
+
 "a" %in% my_vector
 "h" %in% my_vector
 ```
@@ -854,11 +959,16 @@ linelist <- linelist %>%
   mutate(hospital = case_when(
     hospital %in% c("St. Fr.", "Saint Francis") ~ "St. Francis")) # convert to correct spelling
 ```
+
+
+
+
+
 <!-- ======================================================= -->
 <!-- ======================================================= -->
 <!-- ======================================================= -->
-<h2>Loading Packages </h2>
 ## Loading Packages {.tabset .tabset-fade }
+<h2>Loading Packages </h2>
 
 
 This section describes the several ways to install a package:  
@@ -888,6 +998,10 @@ Download a package under development from Github repository
 
 **remotes** package
 
+
+
+
+
 <!-- ======================================================= -->
 <!-- ======================================================= -->
 <!-- ======================================================= -->
@@ -904,9 +1018,12 @@ Common errors and warnings and their solutions can be found in X section (TODO).
 See the handbook page on common errors and warnings.  
 
 
+
+
+
 <!-- ======================================================= -->
-### Errors and Warnings  
-<h3> Errors and warnings </h3>
+### Error versus Warning  
+<h3> Error versus warning </h3>
 
 When a command is run, the R Console may show you warning or error messages in red text.  
 
@@ -944,6 +1061,9 @@ Any script (RMarkdown or otherwise) will give clues when you have made a mistake
 (/images/Warnings_and_Errors.png)
 
 
+
+
+
 <!-- ======================================================= -->
 <!-- ======================================================= -->
 <!-- ======================================================= -->
@@ -953,6 +1073,9 @@ Any script (RMarkdown or otherwise) will give clues when you have made a mistake
 <!-- ======================================================= -->
 ### Cheatsheets
 <h3> Cheatsheets </h3>
+
+This is an online R resource specifically for [Excel users](https://jules32.github.io/r-for-excel-users/vlookup.html)  
+
 
 <!-- ======================================================= -->
 ### Courses

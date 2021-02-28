@@ -41,7 +41,7 @@ knit: (function(inputFile, encoding) {
 
 This page demonstrates common steps necessary to clean a dataset. It uses a simulated Ebola case linelist, which is used throughout the handbook.  
 
-```{r, out.width = "100%", fig.align = "center", echo=F}
+```{r, out.width = "75%", fig.align = "center", echo=F}
 knitr::include_graphics(here::here("images", "cleaning_dataset_snip.png"))
 ```
 
@@ -164,7 +164,7 @@ linelist <- linelist_raw %>%
 names(linelist)
 ```
 
-<span style="color: black;">**_NOTE:_** The column name "...24" was changed to "x24".</span>
+<span style="color: black;">**_NOTE:_** The column name "...28" was changed to "x28".</span>
 
 
 ### Manual column name cleaning  
@@ -455,7 +455,7 @@ names(linelist_age)
 ### Add to the pipe chain  
 <h3> Add to the pipe chain </h3>
 
-In the linelist, there are a few columns we do not need: `row_num`, `merged_header`, and `x24`. Remove them by adding a `select()` command to the cleaning pipe chain:  
+In the linelist, there are a few columns we do not need: `row_num`, `merged_header`, and `x28`. Remove them by adding a `select()` command to the cleaning pipe chain:  
 
 ```{r}
 # CLEANING 'PIPE' CHAIN (starts with raw data and pipes it through cleaning steps)
@@ -475,7 +475,121 @@ linelist <- linelist_raw %>%
            date_outcome         = date_of_outcome) %>% 
     
     # remove column
-    select(-c(row_num, merged_header, x24))
+    select(-c(row_num, merged_header, x28))
+```
+
+
+
+
+
+
+<!-- ======================================================= -->
+<!-- ======================================================= -->
+<!-- ======================================================= -->
+## Modify class {.tabset .tabset-fade  #Classes}
+<h2> Modify class </h2>
+
+<span style="color: orange;">**_CAUTION:_** This tab may follow from previous tabs.</span>
+
+See section on [object classes](#objectclasses)   
+
+Often you will need to set the correct class for a column. The most common approach is to use `mutate()` to define the column as itself, but with a different class.  Generally, this looks like this:  
+
+```{r, eval=F}
+# Examples of modifying class
+linelist <- linelist %>% 
+  mutate(date_var      = as.Date(date_var, format = "MM/DD/YYYY"),  # format should be the format of the raw data
+         numeric_var   = as.numeric(numeric_var),
+         character_var = as.character(character_var),
+         factor_var    = factor(factor_var, levels = c(), labels = c())
+         )
+```
+
+### Pre-checks and errors  
+<h3> Pre-checks and errors </h3>
+
+First we run some checks on the classes of important columns.  
+
+The class of the "age" column is character. To perform analysis, we need those numbers to be recognized as numeric! 
+
+```{r}
+class(linelist$age)
+```
+
+The class of the "date_onset" column is also character! To perform analysis, these dates must be recognized as dates! 
+ 
+```{r}
+class(linelist$date_onset)
+```
+
+However, if we try to classify the `date_onset` column as date, we would get an error. Use `table()` or *sort* or another method to examine all the values and identify different one. For example in our dataset we see that we see that one `date_onset` value was entered in a different format (15th April 2014) than all the other values!    
+
+```{r, echo=F}
+head(table(linelist$date_onset))
+```
+
+Before we can classify "date_onset" as a date, this value must be fixed to be the same format as the others. You can fix the date in the source data, or, we can do in the cleaning pipeline via `mutate()` and `recode()`. This must be done *before* the commands to convert to class Date. (LINK TO DATE SECTION).  
+
+```{r, eval=F}
+# fix incorrect values                 # old value       # new value
+mutate(date_onset = recode(date_onset, "15th April 2014" = "2014-04-15"))
+```
+
+The `mutate()` line can be read as: "mutate date_onset to equal date_onset recoded so that OLD VALUE is changed to NEW VALUE". Note that this pattern (OLD = NEW) for `recode()` is the opposite of most R patterns (new = old). The R development community is working on revising this for recoding.
+
+Especially after converting to class date, check your data visually or with `table()` to confirm that they were converted correctly! For `as.Date()`, the `format = ` argument is often a source of errors. 
+
+
+### Modify multiple columns  
+<h3> Modify multiple columns </h3>  
+
+
+You can use The **dplyr** function `across()` with `mutate()` to convert several columns at once to a new class. `across()` allows you to specify which columns you want a function to apply to. Below, we want to mutate the columns where `is.POSIXct()` (a type of date/time class that shows unnecessary timestamps) is `TRUE`, and apply the function `is.Date()` to them, in order to convert them to class "date".   
+
+* Note that within `across()` we also use the function `where()`.  
+* Note that is.POSIXct is from the package **lubridate**. Other similar functions (`is.character()`, `is.numeric()`, and `is.logical()`) are from **base R**  
+* Note that the functions in `across()` are written *without* the empty parentheses ()  
+
+
+```{r, eval=F}
+linelist <- linelist %>% 
+  mutate(across(where(lubridate::is.POSIXct), as.Date))
+```
+
+
+**Below, the described cleaning steps are added to the pipe chain.**  
+
+```{r}
+# CLEANING 'PIPE' CHAIN (starts with raw data and pipes it through cleaning steps)
+##################################################################################
+
+# begin cleaning pipe chain
+###########################
+linelist <- linelist_raw %>%
+    
+    # standardize column name syntax
+    janitor::clean_names() %>% 
+    
+    # manually re-name columns
+           # NEW name             # OLD name
+    rename(date_infection       = infection_date,
+           date_hospitalisation = hosp_date,
+           date_outcome         = date_of_outcome) %>% 
+  
+    # remove column
+    select(-c(row_num, merged_header, x28)) %>% 
+
+  
+# ABOVE ARE UPSTREAM CLEANING STEPS ALREADY DISCUSSED
+  ###################################################
+
+    # fix incorrect values                 # old value       # new value
+    mutate(date_onset = recode(date_onset, "15th April 2014" = "2014-04-15")) %>% 
+  
+    # correct the class of the columns
+    mutate(across(contains("date"), as.Date), 
+           generation = as.numeric(generation),
+           age        = as.numeric(age)) 
 ```
 
 
@@ -515,7 +629,14 @@ See the tabs below to add columns and rows
 We advise creating new columns with **dplyr** functions as part of a chain of such verb functions (e.g. filter, mutate, etc.)  
 If in need of a stand-alone command, you can use `mutate()` or the **base** R style to create a new column (see below).  
 
-**The verb `mutate()` is used to add a new column, or to modify an existing one.** Below are some example of creating new columns with `mutate()`. The syntax is: **new_column_name = value or function**. It is best practice to separate each new column with a comma and new line.  
+**The verb `mutate()` is used to add a new column, or to modify an existing one.** Below is an example of creating a new columns with `mutate()`. The syntax is: **new_column_name = value or function**. 
+
+```{r}
+linelist <- linelist %>% 
+  mutate(days_onset_hosp = as.numeric(date_hospitalisation - date_onset))
+```
+
+It is best practice to separate each new column with a comma and new line. Below, some practice columns are created:  
 
 ```{r}
 linelist <- linelist %>%                       # creating new, or modifying old dataset
@@ -526,7 +647,7 @@ linelist <- linelist %>%                       # creating new, or modifying old 
          ) 
 ```
 
-***Scroll to the right to see the new columns:***  
+***Scroll to the right to see the new columns (first 50 rows):***  
 
 ```{r message=FALSE, echo=F}
 # display the linelist data as a table
@@ -605,90 +726,7 @@ The former normalises mass by the global average whereas the latter normalises b
 ```
 
 
-
-
-
-
-
-
-<!-- ======================================================= -->
-<!-- ======================================================= -->
-<!-- ======================================================= -->
-## Modify class {.tabset .tabset-fade  #Classes}
-<h2> Modify class </h2>
-
-<span style="color: orange;">**_CAUTION:_** This tab may follow from previous tabs.</span>
-
-See section on [object classes](#objectclasses)   
-
-Often you will need to set the correct class for a column. The most common approach is to use `mutate()` to define the column as itself, but with a different class.  Generally, this looks like this:  
-
-```{r, eval=F}
-# Examples of modifying class
-linelist <- linelist %>% 
-  mutate(date_var      = as.Date(date_var, format = "MM/DD/YYYY"),  # format should be the format of the raw data
-         numeric_var   = as.numeric(numeric_var),
-         character_var = as.character(character_var),
-         factor_var    = factor(factor_var, levels = c(), labels = c())
-         )
-```
-
-### Pre-checks and errors  
-<h3> Pre-checks and errors </h3>
-
-First we run some checks on the classes of important columns.  
-
-The class of the "age" column is character. To perform analysis, we need those numbers to be recognized as numeric! 
-
-```{r}
-class(linelist$age)
-```
-
-The class of the "date_onset" column is also character! To perform analysis, these dates must be recognized as dates! 
- 
-```{r}
-class(linelist$date_onset)
-```
-
-However, if we try to classify the `date_onset` column as date, we would get an error. Use `table()` or *sort* or another method to examine all the values and identify different one. For example in our dataset we see that we see that one `date_onset` value was entered in a different format (15th April 2014) than all the other values!    
-
-```{r, echo=F}
-head(table(linelist$date_onset))
-```
-
-Before we can classify "date_onset" as a date, this value must be fixed to be the same format as the others. You can fix the date in the source data, or, we can do in the cleaning pipeline via `mutate()` and `recode()`. This must be done *before* the commands to convert to class Date. (LINK TO DATE SECTION).  
-
-```{r, eval=F}
-# fix incorrect values                 # old value       # new value
-mutate(date_onset = recode(date_onset, "15th April 2014" = "2014-04-15"))
-```
-
-The `mutate()` line can be read as: "mutate date_onset to equal date_onset recoded so that OLD VALUE is changed to NEW VALUE". Note that this pattern (OLD = NEW) for `recode()` is the opposite of most R patterns (new = old). The R development community is working on revising this for recoding.
-
-Especially after converting to class date, check your data visually or with `table()` to confirm that they were converted correctly! For `as.Date()`, the `format = ` argument is often a source of errors. 
-
-
-### Modify multiple columns
-<h3> Modify multiple columns </h3>
-```{r}
-class(linelist$date_infection)
-head(linelist$date_infection)
-```
-
-You can use The **dplyr** function `across()` with `mutate()` to convert several columns at once to a new class. `across()` allows you to specify which columns you want a function to apply to. Below, we want to mutate the columns where `is.POSIXct()` (a type of date/time class that shows unnecessary timestamps) is `TRUE`, and apply the function `is.Date()` to them, in order to convert them to class "date".   
-
-* Note that within `across()` we also use the function `where()`.  
-* Note that is.POSIXct is from the package **lubridate**. Other similar functions (`is.character()`, `is.numeric()`, and `is.logical()`) are from **base R**  
-* Note that the functions in `across()` are written *without* the empty parentheses ()  
-
-
-```{r, eval=F}
-linelist <- linelist %>% 
-  mutate(across(where(lubridate::is.POSIXct), as.Date))
-```
-
-
-**Below, the described cleaning steps are added to the pipe chain.**  
+### Add to pipe chain  
 
 ```{r}
 # CLEANING 'PIPE' CHAIN (starts with raw data and pipes it through cleaning steps)
@@ -708,11 +746,7 @@ linelist <- linelist_raw %>%
            date_outcome         = date_of_outcome) %>% 
   
     # remove column
-    select(-c(row_num, merged_header, x24)) %>% 
-
-  
-# ABOVE ARE UPSTREAM CLEANING STEPS ALREADY DISCUSSED
-  ###################################################
+    select(-c(row_num, merged_header, x28)) %>% 
 
     # fix incorrect values                 # old value       # new value
     mutate(date_onset = recode(date_onset, "15th April 2014" = "2014-04-15")) %>% 
@@ -720,12 +754,14 @@ linelist <- linelist_raw %>%
     # correct the class of the columns
     mutate(across(contains("date"), as.Date), 
            generation = as.numeric(generation),
-           age        = as.numeric(age)) 
+           age        = as.numeric(age)) %>% 
+
+  # ABOVE ARE UPSTREAM CLEANING STEPS ALREADY DISCUSSED
+  ###################################################
+
+  # create column: delay to hospitalisation
+  mutate(days_onset_hosp = as.numeric(date_hospitalisation - date_onset))
 ```
-
-
-
-
 
 
 
@@ -753,8 +789,27 @@ table(linelist$hospital, useNA = "always")
 
 These tabs demonstrate re-coding values manually b providing specific spellings to be corrected:  
 
-* Using `recode()`  
+* Using `replace()` for specific rows  
+* Using `recode()` for entire columns  
 * Using **base** R  
+
+
+#### `replace()`  
+
+To manually change values for specific rows within a dataframe (from within a pipe chain), use `replace()` within `mutate()`.  
+Use a logic condition to specify rows, for example an ID value of one row. The general syntax is:  
+
+`mutate(col_to_change = replace(col_to_change, criteria for rows, new value))`.  
+
+In the first example below, the gender value, in the row where id is "2195", is changed to "Female".  
+
+```{r, eval=F}
+# Example: change gender of one specific observation to "Female" 
+mutate(gender = replace(gender, id == "2195", "Female")
+
+# Example: chance gender of one specific observation to NA 
+mutate(gender = replace(gender, id == "2195", NA)
+```
 
 
 #### `recode()`  
@@ -961,7 +1016,7 @@ linelist <- linelist_raw %>%
            date_outcome         = date_of_outcome) %>% 
   
     # remove column
-    select(-c(row_num, merged_header, x24)) %>% 
+    select(-c(row_num, merged_header, x28)) %>% 
 
     # fix incorrect values                 # old value       # new value
     mutate(date_onset = recode(date_onset, "15th April 2014" = "2014-04-15")) %>% 
@@ -970,6 +1025,9 @@ linelist <- linelist_raw %>%
     mutate(across(contains("date"), as.Date), 
            generation = as.numeric(generation),
            age        = as.numeric(age)) %>% 
+  
+    # create column: delay to hospitalisation
+  mutate(days_onset_hosp = as.numeric(date_hospitalisation - date_onset)) %>% 
 
 # ABOVE ARE UPSTREAM CLEANING STEPS ALREADY DISCUSSED
   ###################################################
@@ -1171,7 +1229,7 @@ linelist <- linelist_raw %>%
            date_outcome         = date_of_outcome) %>% 
   
     # remove column
-        select(-c(row_num, merged_header, x24)) %>% 
+        select(-c(row_num, merged_header, x28)) %>% 
 
     # fix incorrect values                 # old value       # new value
     mutate(date_onset = recode(date_onset, "15th April 2014" = "2014-04-15")) %>% 
@@ -1180,6 +1238,10 @@ linelist <- linelist_raw %>%
     mutate(across(contains("date"), as.Date), 
            generation = as.numeric(generation),
            age        = as.numeric(age)) %>% 
+  
+    
+    # create column: delay to hospitalisation
+    mutate(days_onset_hosp = as.numeric(date_hospitalisation - date_onset)) %>% 
     
     # clean values of hospital column
     mutate(hospital = recode(hospital,
@@ -1537,7 +1599,7 @@ linelist <- linelist_raw %>%
            date_outcome         = date_of_outcome) %>% 
   
     # remove column
-        select(-c(row_num, merged_header, x24)) %>% 
+        select(-c(row_num, merged_header, x28)) %>% 
 
     # fix incorrect values                 # old value       # new value
     mutate(date_onset = recode(date_onset, "15th April 2014" = "2014-04-15")) %>% 
@@ -1546,6 +1608,10 @@ linelist <- linelist_raw %>%
     mutate(across(contains("date"), as.Date), 
            generation = as.numeric(generation),
            age        = as.numeric(age)) %>% 
+  
+    
+    # create column: delay to hospitalisation
+    mutate(days_onset_hosp = as.numeric(date_hospitalisation - date_onset)) %>% 
     
     # clean values of hospital column
     mutate(hospital = recode(hospital,
@@ -1686,15 +1752,18 @@ linelist <- linelist_raw %>%
            date_outcome         = date_of_outcome) %>% 
   
     # remove column
-        select(-c(row_num, merged_header, x24)) %>% 
+        select(-c(row_num, merged_header, x28)) %>% 
 
     # fix incorrect values                 # old value       # new value
     mutate(date_onset = recode(date_onset, "15th April 2014" = "2014-04-15")) %>% 
-    
+  
     # correct the class of the columns
     mutate(across(contains("date"), as.Date), 
            generation = as.numeric(generation),
            age        = as.numeric(age)) %>% 
+    
+    # create column: delay to hospitalisation
+    mutate(days_onset_hosp = as.numeric(date_hospitalisation - date_onset)) %>% 
     
     # clean values of hospital column
     mutate(hospital = recode(hospital,

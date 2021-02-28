@@ -128,11 +128,11 @@ klippy::klippy(position = c('top', 'right'))
 ```
 
 
-```{r child = 'scatterplots.Rmd'}
+```{r child = 'plot_discrete.Rmd'}
 ```
 
 
-```{r child = 'boxplots.Rmd'}
+```{r child = 'plot_continuous.Rmd'}
 ```
 
 
@@ -153,6 +153,10 @@ klippy::klippy(position = c('top', 'right'))
 
 
 ```{r child = 'survey_analysis.Rmd'}
+```
+
+
+```{r child = 'survival_analysis.Rmd'}
 ```
 
 
@@ -220,6 +224,10 @@ klippy::klippy(position = c('top', 'right'))
 ```
 
 
+```{r child = 'interactive_plots.Rmd'}
+```
+
+
 ```{r child = 'writing_functions.Rmd'}
 ```
 
@@ -240,11 +248,11 @@ klippy::klippy(position = c('top', 'right'))
 ```
 
 
-```{r child = 'plotly.Rmd'}
+```{r child = 'directories.Rmd'}
 ```
 
 
-```{r child = 'directories.Rmd'}
+```{r child = 'collaboration.Rmd'}
 ```
 
 
