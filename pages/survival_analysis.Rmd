@@ -83,7 +83,7 @@ This page explores survival analyses using the linelist used in most of the prev
 
 We start by loading the linelist as you have done previously using the `rio::import()` function.
 
-* Loading dataset  
+### Loading dataset  
 
 ```{r import_dataset}
 
@@ -93,7 +93,8 @@ linelist_case_data <- rio::import(here::here("data", "linelist_cleaned.rds"))
 
 ```
 
-* Adding or changing variables 
+
+### Data management and transformation
 
 In short survival data can be described as having the following three characteristics:
 
@@ -206,11 +207,12 @@ We then start our analysis using the `survfit()` function to produce a *survfit 
 <span style="color: black;">**_NOTE:_** The Kaplan-Meier estimate is a nonparametric maximum likelihood estimate (MLE) of the survival function. . (see resources for more information).</span>
 
 The summary of this *survfit object* will give what is called a *life table* that contains:
- * for each of the time of the follow-up (`time`) where an event happened and that are ascending ordered, 
- * the number of people who were at risk of developing the event (people who did not have the event yet nor were censored: `n.risk`),
- * those who did develop it  (`n.event`), 
- * and from this, the probability of not developing the event  (probability of not dying or of being alive at that specific time which is basically `1-(n.event/n.risk)` ).
- * Finally the standard error and the confidence interval for that probability are derived.
+
+* for each of the time of the follow-up (`time`) where an event happened and that are ascending ordered, 
+* the number of people who were at risk of developing the event (people who did not have the event yet nor were censored: `n.risk`),
+* those who did develop it  (`n.event`), 
+* and from this, the probability of not developing the event  (probability of not dying or of surviving past that specific time ).
+* Finally the standard error and the confidence interval for that probability are derived.
 
 We can also use the `print()` function. The `print.rmean=TRUE` argument is used to obtain the mean and its standard error (se).
 
@@ -252,7 +254,9 @@ print(
 
 Once the KM estimates are fitted, we can visualize that probability of being alive through the time using the basic `plot()` function that draws the so-known "Kaplan-Meier curve". In other words the curve below is a conventional illustration of the survival experience in the whole patient group.
 
-We can easily verify the follow-up time min and max on the curve. An easy way to interpret it is to say that the proportion of participants surviving past 60 days of f-u is around 40%.
+We can easily verify the follow-up time min and max on the curve. 
+
+An easy way to interpret it is to say that at time zero, all the participants are still alive: survival probability is then 100%. Then it decreases over time as patients die. The proportion of participants surviving past 60 days of f-u is around 40%.
 
 ```{r kmcurve}
 
@@ -415,6 +419,7 @@ The function `cox.zph()` from **survival** package may be used to test the propo
 
 
 <span style="color: black;">**_NOTE:_** A probability must lie in the range 0 to 1. However, the hazard represents the expected number of events per one unit of time. 
+
 * If the hazard ratio for a predictor is close to 1 then that predictor does not affect survival,
 * if the HR is less than 1, then the predictor is protective (i.e., associated with improved survival),
 * and if the HR is greater than 1, then the predictor is associated with increased risk (or decreased survival).</span> 
@@ -470,7 +475,7 @@ In another model we add more risk factors such as the source of infection and th
 
 In this model, we have included a continuous predictor (`days_onset_hosp`). In this case we interpret the parameter estimates as the increase in the expected log of the relative hazard for each one unit increase in the predictor, holding other predictors constant. 
 
-Which means the expected hazard is 0.9 times higher in a person who who is one day later admitted than another, holding gender constant. Or taking the inverse of the HR (`exp(-coef)` or `1/exp(coef)`), the expected hazard is 1.11 lower in a person who is admitted a day sooner.
+Which means the expected hazard is 0.9 times higher in a person who who is one day later admitted than another, holding gender constant. Or in a more straightforward explanation, a one unit increase in the duration of onset to admission is associated with a 10.7% (`coef *100`) decrease in the expected hazard.
 
 
 The graphical verification of this assumption may be performed with the function `ggcoxzph()` from the *survminer* package. 
