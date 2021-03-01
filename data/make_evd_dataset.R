@@ -213,7 +213,7 @@ table(is.na(evd$age), is.na(evd$gender))
 # ONSET MISSING
 ###############
 # random indices to convert to missing:
-to_NA_onset <- round(rnorm(n=round(nrow(evd)*.05),  # 5% of entries
+to_NA_onset <- round(rnorm(n=round(nrow(evd)*.08),  # 10% of entries
                          mean=nrow(evd)*.4,    # mean **earlier** in the outbreak 
                          sd=1000))
 to_NA_onset <- to_NA_sym[to_NA_onset < nrow(evd) & to_NA_onset > 0] # ensure indices are in appropriate range
@@ -296,7 +296,7 @@ evd[nrow(evd)+1,] <- NA
 
 ### ADD ROWS TO BE FILTERED OUT (from another outbreak years before)
 ###############################
-outbreak2_rownums <- round(rnorm(n=round(nrow(evd)*.10),  # 5% of entries
+outbreak2_rownums <- round(rnorm(n=round(nrow(evd)*.10)+1,  # 5% of entries
                                  mean=nrow(evd)*.5,    # mean middle of the outbreak 
                                  sd=1000))
 
@@ -426,7 +426,11 @@ duplicate_rownums <- round(rnorm(n=round(nrow(evd)*.02),  # 2% of entries
                                  mean=nrow(evd)*.5,    # mean middle of the outbreak 
                                  sd=1000))
 hist(duplicate_rownums)
-evd <- rbind(evd, evd[duplicate_rownums, ]) #rbind the same rows
+dups <- evd[duplicate_rownums, ] %>% 
+        mutate(case_id = " ")
+        
+        
+evd <- rbind(evd, dups) #rbind the same rows
 
 ### Add merged column header cells !!!
 # DO THIS IN EXCEL AFTER EXPORTING. Add two extra columns and merge the column names. They will be removed in the cleaning page. 
@@ -444,6 +448,7 @@ evd <- evd %>%
 # remove other columns
 evd <- select(evd, case_id:age, age_unit, everything()) %>% 
         select(-onset_to_hosp_days, -delay_short_long)
+head(evd, 10)
 
 # export
 rio::export(evd, here::here("data", "linelist_raw.xlsx"))

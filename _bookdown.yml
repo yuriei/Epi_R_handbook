@@ -4,6 +4,7 @@ language:
   ui:
     chapter_name: ""
 #new_session: yes   # does not work with rmd_files option
+download: [["index.html", "Offline HTML version"]]  
 after_chapter_script: "common.R"
 delete_merged_file: FALSE         
 rmd_files: [
@@ -26,11 +27,13 @@ rmd_files: [
   "new_pages/cat_data_management.Rmd",      # start of new section
   "new_pages/cleaning.Rmd",
   "new_pages/dates.Rmd",
-  "new_pages/missing_data.Rmd",
+  "new_pages/factors.Rmd",
+  "new_pages/pivoting.Rmd",
   "new_pages/grouping.Rmd",
   "new_pages/matching_joining.Rmd",
   "new_pages/character_regex.Rmd",
   "new_pages/deduplication.Rmd",
+  "new_pages/missing_data.Rmd",
   "new_pages/iteration.Rmd",
 
 
@@ -40,10 +43,10 @@ rmd_files: [
   "new_pages/stat_tests.Rmd",
   "new_pages/standardization.Rmd",              # need dsr resolution
   "new_pages/moving_average.Rmd",
-  "new_pages/endemic_corridor.Rmd",
+  #"new_pages/endemic_corridor.Rmd",
   "new_pages/time_series.Rmd",
   "new_pages/epidemic_models.Rmd",
-  "new_pages/modeling.Rmd",
+  #"new_pages/modeling.Rmd",
   "new_pages/survey_analysis.Rmd",
   "new_pages/survival_analysis.Rmd",
   "new_pages/gis.Rmd",
