@@ -241,7 +241,9 @@ Besides the `summary()` function, we can also use the `str()` function that give
 
 ```{r fit_struct}
 
-print(str(linelistsurv_fit))
+print(
+  str(linelistsurv_fit)
+      )
 
 ```
 
@@ -314,11 +316,13 @@ The log rank test is a popular test that compares the entire survival experience
 
 #create the new survfit object based on gender
 linelistsurv_fit_sex <-  survfit(
-              Surv(futime, event) ~ gender, #formula to create the survival curve: surv object 
-              data = linelist_surv)
+  
+              Surv(futime, event) ~ gender, #formula to create the survival curve: ~ gender indicates we no longer plot the overall survival but based on gender
+              data = linelist_surv #data to use 
+              )
 
 
-#plot the survival curves by gender
+#plot the survival curves by gender: have a look at the order of the strata level in the gender var before defining your colors
 col_sex <- c("lightgreen", "darkgreen")
 
 plot(linelistsurv_fit_sex,
@@ -334,7 +338,7 @@ legend("topright",
        )
 
 #compute the test of the difference between the survival curves
-survdiff(
+survival::survdiff(
           Surv(futime, event) ~ gender, 
           data = linelist_surv
          )
@@ -433,7 +437,7 @@ The same lack f evidence is noted regarding age-group.
 
 ```{r coxmodel_agesex}
 
-#fitting the model
+#fitting the cox model
 linelistsurv_cox_sexage <-  survival::coxph(
               Surv(futime, event) ~ gender + age_cat_small, 
               data = linelist_surv
@@ -473,14 +477,19 @@ The graphical verification of this assumption may be performed with the function
 
 ```{r coxmodel,  message=FALSE}
 
-linelistsurv_cox <-  coxph(Surv(futime, event) ~ gender + source + days_onset_hosp, data = linelist_surv)
+#fit the model
+linelistsurv_cox <-  coxph(
+                        Surv(futime, event) ~ gender + source + days_onset_hosp,
+                        data = linelist_surv)
 
+
+#test the proportional hazard model
 linelistsurv_ph_test <- cox.zph(linelistsurv_cox)
 linelistsurv_ph_test
 survminer::ggcoxzph(linelistsurv_ph_test)
 
 
-
+#print the summary of the model
 summary(linelistsurv_cox)
 
 ```
