@@ -81,9 +81,10 @@ pacman::p_load(
 
 This page explores survival analyses using the linelist used in most of the previous pages and on which we apply some changes to have a proper survival data.
 
-We start by loading the linelist as you have done previously using the `rio::import()` function.
 
 ### Loading dataset  
+
+We start by loading the linelist as you have done previously using the `rio::import()` function.
 
 ```{r import_dataset}
 
@@ -338,7 +339,7 @@ plot(linelistsurv_fit_sex,
 legend("topright", 
        legend=c("Female","Male"), 
        col =col_sex,
-       lty = 1, cex=.7, bty = "n" 
+       lty = 1, cex=.9, bty = "n" 
        )
 
 #compute the test of the difference between the survival curves
@@ -348,6 +349,7 @@ survival::survdiff(
          )
 
 ```
+
 
 Some packages allow illustrating survival curves for different groups and testing the difference at once. Using the `ggsurvplot()` function from the *survminer* package, we can add in our curve the print of the risk tables for each group as well the p-value from the log-rank test. 
 
@@ -417,13 +419,13 @@ The function `cox.zph()` from **survival** package may be used to test the propo
 
 
 
-
 <span style="color: black;">**_NOTE:_** A probability must lie in the range 0 to 1. However, the hazard represents the expected number of events per one unit of time. 
 
 * If the hazard ratio for a predictor is close to 1 then that predictor does not affect survival,
 * if the HR is less than 1, then the predictor is protective (i.e., associated with improved survival),
 * and if the HR is greater than 1, then the predictor is associated with increased risk (or decreased survival).</span> 
 
+### Fitting a Cox model
 
 We can first fit a model to assess the effect of age and gender on the survival. By just printing the model, we have the information on:
 
@@ -438,7 +440,6 @@ We can first fit a model to assess the effect of age and gender on the survival.
 The effect of the first covariate `gender`  is presented in the first row. `genderm` is printed stating that the first strata level ("f") i.e the female group is the reference group for the gender. Thus the interpretation of the test parameter is that of men compared to women. The p-value  indicates there was no enough evidence of an effect of the gender on the time to death.
 
 The same lack f evidence is noted regarding age-group.
-
 
 ```{r coxmodel_agesex}
 
