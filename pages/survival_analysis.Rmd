@@ -215,8 +215,6 @@ The summary of this *survfit object* will give what is called a *life table* tha
 * and from this, the probability of not developing the event  (probability of not dying or of surviving past that specific time ).
 * Finally the standard error and the confidence interval for that probability are derived.
 
-We can also use the `print()` function. The `print.rmean=TRUE` argument is used to obtain the mean and its standard error (se).
-
 
 ```{r fit}
 
@@ -229,14 +227,35 @@ linelistsurv_fit <-  survival::survfit(
 #print its summary for more details
 summary(linelistsurv_fit)
 
+```
 
-#print the linelistsurv_fit object and ask for information on the mean follow-up time and its se. 
-print(linelistsurv_fit, 
+
+While using `summary()` we can add the option `times` and  precise the specific times at which we want to see the survival information 
+
+```{r print_spec_times}
+
+#print its summary at specific times
+summary(
+  linelistsurv_fit,
+        times=c(5,10,20,30,60)
+        )
+
+```
+
+
+We can also use the `print()` function. The `print.rmean=TRUE` argument is used to obtain the mean survival time  which is often defined as the area under the survival curve and its standard error (se).
+
+
+```{r, mean_survtime}
+
+#print the linelistsurv_fit object and ask for information on the mean survival time and its se. 
+print(
+  linelistsurv_fit, 
       print.rmean = TRUE
       )
 
-
 ```
+
 
 <span style="color: darkgreen;">**_TIP:_** We can create the *surv object* directly in the `survfit()` function and save a line of code. This will then give `linelistsurv_quick <-  survfit(Surv(futime, event) ~ 1, data=linelist_surv)`. But as you have seen, in such case we have to precise the data where the variables time and event are taken from.</span>
 
