@@ -70,6 +70,7 @@ pacman::p_load(
   rio,        # importing data  
   here,       # relative file pathways  
   tidyverse,   # data manipulation and visualization
+  Epi,         #stat analyses in Epi
   survival,    #survival analysis
   survminer,   #survival analysis: advance KM curves...
   
@@ -175,7 +176,28 @@ head(linelist_surv[,c("case_id", "age_cat_small", "date_onset","date_outcome","o
 
 ```
 
+We can also cross-tabule the variable `age_cat_small` and `gender` to have more details on the distribution of this new variable among the gender groups. For this we use the `stat.table()` function of the **Epi** package.
 
+```{r}
+
+Epi::stat.table( 
+  #give variables for the cross tabulation
+  list(
+    gender, 
+    age_cat_small
+    ),
+  #precise the function you want to call (mean,count..)
+  list( 
+    count(),
+    percent(age_cat_small)
+    ), 
+  #add margins
+  margins=T, 
+  #data used
+  data = linelist_surv 
+  )
+
+```
 
 
 <!-- ======================================================= -->
@@ -243,7 +265,9 @@ summary(
 ```
 
 
-We can also use the `print()` function. The `print.rmean=TRUE` argument is used to obtain the mean survival time  which is often defined as the area under the survival curve and its standard error (se).
+We can also use the `print()` function. The `print.rmean=TRUE` argument is used to obtain the mean survival time and its standard error (se).
+
+<span style="color: black;">**_NOTE:_** The restricted mean survival time (RMST) is a specific survival measure more and more used in cancer survival analysis and which is often defined as the area under the survival curve given we observe patients up to restricted time T: more details in resources</span>
 
 
 ```{r, mean_survtime}
@@ -332,7 +356,7 @@ To compare the survival within different groups of our observed participants or 
 
 ### Log rank test {#logrank .tabset .tabset-fade .tabset-pills}
 
-The log rank test is a popular test that compares the entire survival experience between two or more *independent* groups and can be thought of as a test of whether the survival curves are identical (overlapping) or not (null hypothesis of no difference in survival between the groups). The `survdiff()` function of the **survival package** allows running the log-rank test when we specify `rho=0` which is the default. The test results gives a chi-square statistic along with a p-value since the log rank statistic is approximately distributed as a chi-square test statistic.
+The log rank test is a popular test that compares the entire survival experience between two or more *independent* groups and can be thought of as a test of whether the survival curves are identical (overlapping) or not (null hypothesis of no difference in survival between the groups). The `survdiff()` function of the **survival package** allows running the log-rank test when we specify `rho=0` (which is the default). The test results gives a chi-square statistic along with a p-value since the log rank statistic is approximately distributed as a chi-square test statistic.
 
  We first try to compare the survival curves by gender group. For this, we first try to visualize it (check whether the two survival curves are overlapping). A new *survfit object*  will be created with a slightly different formula. Then the *survdiff object* will be created.
 
@@ -369,6 +393,8 @@ survival::survdiff(
 
 ```
 
+We see that the survival curve for women and the one for men overlap up to 15 days of follow-up and then women seem to have a slightly better survival. Yet the log-rank test does not gives enough evidence of a statistical difference between the survival for women and the survival for Men at `\alpha= 0.05`.
+
 
 Some packages allow illustrating survival curves for different groups and testing the difference at once. Using the `ggsurvplot()` function from the *survminer* package, we can add in our curve the print of the risk tables for each group as well the p-value from the log-rank test. 
 
@@ -397,9 +423,8 @@ survminer::ggsurvplot(
 
 ```
 
-The log-rank test does not gives enough evidence of a statistically difference between the survival among Women and the survival among Men.
 
-We can then look for a difference in the source of the contamination. In this case, the Log rank test gives enough evidence of a difference in the survival probabilities at `alpha= 0.005`.
+We can then look for a difference in the source of the contamination. In this case, the Log rank test gives enough evidence of a difference in the survival probabilities at `\alpha= 0.005`.
 The survival probabilities for patients that got infected in funerals are higher than the survival probabilities for patients that got infected in other places, suggesting a survival benefit.
 
 ```{r comp_surv_source}
@@ -427,13 +452,12 @@ ggsurvplot(
 
 ```
 
-
 <!-- ======================================================= -->
 ## Cox regression analysis {#coxmodel .tabset .tabset-fade .tabset-pills}
 
-Cox proportional hazards regression is one of the most popular regression techniques for survival analysis. It is used to assess the effect of several risk factors or exposures simultaneously on the survival time. Other models  can also be used since the Cox model requires *important assumptions* that need to be verified for an appropriate use such as the proportional hazards assumption: see references. 
+Cox proportional hazards regression is one of the most popular regression techniques for survival analysis. Other models  can also be used since the Cox model requires *important assumptions* that need to be verified for an appropriate use such as the proportional hazards assumption: see references. 
 
-In a Cox proportional hazards regression model, the measure of effect is the **_hazard rate_** (HR), which is the risk of failure or the risk of death in our example, given that the participant has survived up to a specific time.  Usually, we are interested in comparing groups with respect to their hazards, and we use a hazard ratio, which is analogous to an odds ratio in the setting of multiple logistic regression analysis. The `cox.ph()` from the **survival** package is used to fit the model.
+In a Cox proportional hazards regression model, the measure of effect is the **_hazard rate_** (HR), which is the risk of failure (or the risk of death in our example), given that the participant has survived up to a specific time.  Usually, we are interested in comparing *independent* groups with respect to their hazards, and we use a hazard ratio, which is analogous to an odds ratio in the setting of multiple logistic regression analysis. The `cox.ph()` from the **survival** package is used to fit the model.
 The function `cox.zph()` from **survival** package may be used to test the proportional hazards assumption for a Cox regression model fit. 
 
 
@@ -456,9 +480,9 @@ We can first fit a model to assess the effect of age and gender on the survival.
   
   The `summary()` function applied to the cox model object gives more info such as the confidence interval of the estimated HR and the different test scores.
 
-The effect of the first covariate `gender`  is presented in the first row. `genderm` is printed stating that the first strata level ("f") i.e the female group is the reference group for the gender. Thus the interpretation of the test parameter is that of men compared to women. The p-value  indicates there was no enough evidence of an effect of the gender on the time to death.
+The effect of the first covariate `gender`  is presented in the first row. `genderm` is printed stating that the first strata level ("f") i.e the female group is the reference group for the gender. Thus the interpretation of the test parameter is that of men compared to women. The p-value  indicates there was no enough evidence of an effect of the gender on the expected hazard or of an association between gender and all-cause mortality.
 
-The same lack f evidence is noted regarding age-group.
+The same lack of evidence is noted regarding age-group.
 
 ```{r coxmodel_agesex}
 
@@ -481,7 +505,7 @@ summary(linelistsurv_cox_sexage)
 
 It was interesting to run the model and look at the results but a first look to verify whether the proportional hazards assumptions is respected could help saving time.
 
-```{r, test_assumption}
+```{r test_assumption}
 
 test_ph_sexage <- survival::cox.zph(linelistsurv_cox_sexage)
 test_ph_sexage
@@ -493,19 +517,15 @@ test_ph_sexage
 
 In another model we add more risk factors such as the source of infection and the number of days between date of onset and admission. This time, we first  verify the proportional hazards assumption before going forward.
 
-In this model, we have included a continuous predictor (`days_onset_hosp`). In this case we interpret the parameter estimates as the increase in the expected log of the relative hazard for each one unit increase in the predictor, holding other predictors constant. 
+In this model, we have included a continuous predictor (`days_onset_hosp`). In this case we interpret the parameter estimates as the increase in the expected log of the relative hazard for each one unit increase in the predictor, holding other predictors constant. We first verify the proportional hazards assumption.  The graphical verification of this assumption may be performed with the function `ggcoxzph()` from the *survminer* package. 
 
-Which means the expected hazard is 0.9 times higher in a person who who is one day later admitted than another, holding gender constant. Or in a more straightforward explanation, a one unit increase in the duration of onset to admission is associated with a 10.7% (`coef *100`) decrease in the expected hazard.
-
-
-The graphical verification of this assumption may be performed with the function `ggcoxzph()` from the *survminer* package. 
-
-```{r coxmodel,  message=FALSE}
+```{r coxmodel_fit_ph,  message=FALSE}
 
 #fit the model
 linelistsurv_cox <-  coxph(
-                        Surv(futime, event) ~ gender + source + days_onset_hosp,
-                        data = linelist_surv)
+                        Surv(futime, event) ~ gender + age_years+ source + days_onset_hosp,
+                        data = linelist_surv
+                        )
 
 
 #test the proportional hazard model
@@ -513,11 +533,21 @@ linelistsurv_ph_test <- cox.zph(linelistsurv_cox)
 linelistsurv_ph_test
 survminer::ggcoxzph(linelistsurv_ph_test)
 
+```
+
+
+The model results indicates there is a negative association between onset to admission duration and all-cause mortality. The expected hazard is 0.9 times lower in a person who who is one day later admitted than another, holding gender constant. Or in a more straightforward explanation, a one unit increase in the duration of onset to admission is associated with a 10.7% (`coef *100`) decrease in the risk of death.
+
+Results show also a positive association between the source of infection and the all-cause mortality. Which is to say there is an increased risk of death (1.21x) for patients that got a source of infection other than funerals.
+
+
+```{r coxmodel_summary,  message=FALSE}
 
 #print the summary of the model
 summary(linelistsurv_cox)
 
 ```
+
 
 <!-- ======================================================= -->
 
@@ -545,6 +575,7 @@ ggforest(linelistsurv_cox, data = linelist_surv)
 
 [Survminer cheastsheet](https://paulvanderlaken.files.wordpress.com/2017/08/survminer_cheatsheet.pdf)
 
+[Paper on different survival measures for cancer registry data with Rcode provided as supplementary materials](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6322561/)
 
 ```{r, child= '_page_closeout.Rmd', eval = params$run_page_ind==F, include = F}
 ```
