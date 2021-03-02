@@ -118,7 +118,7 @@
 <div id="package-and-function-names" class="section level3 unnumbered">
 <h3>Package and function names<a class="anchor" aria-label="anchor" href="#package-and-function-names"><i class="fas fa-link"></i></a>
 </h3>
-<p>Package names are written in bold (e.g. <strong>dplyr</strong>) and functions are written like this: <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code>. Packages referenced either in text or within code like this: <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">dplyr::mutate()</a></code></p>
+<p>Package names are written in bold (e.g. <strong>dplyr</strong>) and functions are written like this: <code>mutate()</code>. Packages referenced either in text or within code like this: <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">dplyr::mutate()</a></code></p>
 </div>
 <div id="types-of-notes" class="section level3 unnumbered">
 <h3>Types of notes<a class="anchor" aria-label="anchor" href="#types-of-notes"><i class="fas fa-link"></i></a>
@@ -137,13 +137,13 @@
 <p>As a result, code that <em>could</em> be written like this:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">obs</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">name</span><span class="op">)</span> <span class="op">%&gt;%</span>                    <span class="co"># group the rows by 'name'</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_max</a></span><span class="op">(</span><span class="va">date</span>, n <span class="op">=</span> <span class="fl">1</span>, with_ties <span class="op">=</span> <span class="cn">F</span><span class="op">)</span> <span class="co"># if there's a tie (of date), take the first row</span></code></pre></div>
+  <span class="fu">group_by</span><span class="op">(</span><span class="va">name</span><span class="op">)</span> <span class="op">%&gt;%</span>                    <span class="co"># group the rows by 'name'</span>
+  <span class="fu">slice_max</span><span class="op">(</span><span class="va">date</span>, n <span class="op">=</span> <span class="fl">1</span>, with_ties <span class="op">=</span> <span class="cn">F</span><span class="op">)</span> <span class="co"># if there's a tie (of date), take the first row</span></code></pre></div>
 <p>…is written like this:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">obs</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">name</span><span class="op">)</span> <span class="op">%&gt;%</span>   <span class="co"># group the rows by 'name'</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice_max</a></span><span class="op">(</span>
+  <span class="fu">group_by</span><span class="op">(</span><span class="va">name</span><span class="op">)</span> <span class="op">%&gt;%</span>   <span class="co"># group the rows by 'name'</span>
+  <span class="fu">slice_max</span><span class="op">(</span>
     <span class="va">date</span>,              <span class="co"># keep row per group with maximum date value </span>
     n <span class="op">=</span> <span class="fl">1</span>,             <span class="co"># keep only the single highest row </span>
     with_ties <span class="op">=</span> <span class="cn">F</span><span class="op">)</span>     <span class="co"># if there's a tie (of date), take the first row</span></code></pre></div>
@@ -216,7 +216,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>R Handbook for Epidemiologists</strong>" was written by the handbook team. It was last built on 2021-02-27.</p>
+    <p>"<strong>R Handbook for Epidemiologists</strong>" was written by the handbook team. It was last built on 2021-03-02.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

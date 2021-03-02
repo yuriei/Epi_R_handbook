@@ -137,7 +137,7 @@
 <li>The <strong>rio</strong> for importing/exporting
 <ul>
 <li>
-<code>import()</code> and <code><a href="https://docs.ropensci.org/plotly/reference/export.html">export()</a></code> handle almost any kind of file by reading the existing or desired file extension (e.g. .csv, .xlsx, .png)<br>
+<code>import()</code> and <code>export()</code> handle almost any kind of file by reading the existing or desired file extension (e.g. .csv, .xlsx, .png)<br>
 </li>
 <li>See the page on <a href="import-and-export.html#import-and-export">Import and export</a> of data for more informaton</li>
 </ul>
@@ -198,7 +198,7 @@
 </li>
 <li>All export/import commands can now use <code>here()</code> to create the filepath<br>
 </li>
-<li>Remember to load <strong>here</strong> with <code><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load()</a></code> or <code><a href="https://rdrr.io/r/base/library.html">library()</a></code>
+<li>Remember to load <strong>here</strong> with <code>p_load()</code> or <code><a href="https://rdrr.io/r/base/library.html">library()</a></code>
 </li>
 </ol>
 <p>Here are some examples of import/export/saving using <code>here()</code>:</p>
@@ -209,7 +209,7 @@
 <div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb120-1"><a href="r-projects.html#cb120-1" aria-hidden="true" tabindex="-1"></a><span class="fu">export</span>(linelist, <span class="fu">here</span>(<span class="st">"data"</span>,<span class="st">"clean"</span>, <span class="st">"my_linelist.rds"</span>)</span></code></pre></div>
 <p>And for saving the most recently printed plot as “epicurve_2021-02-15.png” within the “epicurves” folder in “outputs” folder in the R project.</p>
 <div class="sourceCode" id="cb121"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsave.html">ggsave</a></span><span class="op">(</span><span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"outputs"</span>, <span class="st">"epicurves"</span>, <span class="st">"epicurve_2021-02-15.png"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu">ggsave</span><span class="op">(</span><span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"outputs"</span>, <span class="st">"epicurves"</span>, <span class="st">"epicurve_2021-02-15.png"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <!-- ======================================================= -->
 </div>
 <div id="resources" class="section level2" number="5.4">
@@ -253,7 +253,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>R Handbook for Epidemiologists</strong>" was written by the handbook team. It was last built on 2021-02-27.</p>
+    <p>"<strong>R Handbook for Epidemiologists</strong>" was written by the handbook team. It was last built on 2021-03-02.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
