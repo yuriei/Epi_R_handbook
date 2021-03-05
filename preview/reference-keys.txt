@@ -1,7 +1,3 @@
-survival-analysis
-overview
-preparation
-basics-of-survival-analysis
-comparison-of-survival-curves
-cox-regression-analysis
-resources
+transition-to-r
+from-stata
+from-sas
