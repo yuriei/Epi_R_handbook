@@ -2,7 +2,7 @@
 knit: "bookdown::render_book"
 title: "The Epidemiologist R Handbook"
 author: "the handbook team"
-description: "This is a R reference manual for applied epidemiologists and public health practitioners. It includes topics such as R basics, data cleaning, epidemic curves and projections, transmission chains, statistical modeling, routine reports with R markdown, and GIS,"  
+description: "This is a R reference manual for applied epidemiologists and public health practitioners."  
 date: "`r Sys.Date()`"
 #url: 'https://github.com/nsbatra/Epi_R_handbook'
 github-repo: nsbatra/Epi_R_handbook
@@ -13,7 +13,6 @@ output: bookdown::gitbook
 documentclass: book
 ---
 
-<meta name="description" content="This is a free open-access R reference manual for applied epidemiologists and public health practitioners." />
 
 # The Epidemiologist R Handbook {-}
 
@@ -198,97 +197,760 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 
 <!--chapter:end:new_pages/cat_preview.Rmd-->
 
+# Descriptive analysis { }
 
 <!-- ======================================================= -->
-<!-- ======================================================= -->
-<!-- ======================================================= -->
-# Transition to R { }  
 
-Below, we provide some advice and resources if you are transitioning to R from another statistical language.
+## Overview {  }
 
-## From Stata  
-<!-- ======================================================= -->
+This tab demonstrates the use of **base** R, **dplyr**, and **gtsummary** to produce descriptive statistics and tabulations. Consider these factors when choosing an approach:  
 
-**Coming to R from Stata**  
-
-Many epidemiologists are first taught how to use Stata, and it can seem daunting to move into R. However, if you are a comfortable Stata user then the jump into R is certainly more manageable than you might think. While there are some key differences between Stata and R in how data can be created and modified, as well as how analysis functions are implemented – after learning these key differences you will be able to translate your skills.
-
-Below are some key translations between Stata and R, which may be handy as your review this guide.
-
-
-**General notes**
-
-**STATA**                    | **R**  
----------------------------- | ---------------------------------------------    
-You can only view and manipulate one dataset at a time | You can view and manipulate multiple datasets at the same time, therefore you will frequently have to specify your dataset within the code
-Online community available through [https://www.statalist.org/](https://www.statalist.org/) | Online community available through [RStudio](https://community.rstudio.com/), [StackOverFlow](https://stackoverflow.com/questions/tagged/r), and [R-bloggers](https://www.r-bloggers.com/)
-Point and click functionality as an option | Minimal point and click functionality
-Help for commands available by `help [command]` | Help available by `[function]?` or search in the Help pane
-Comment code using * or /// or  /* TEXT */ | Comment code using #
-Almost all commands are built-in to Stata. New/user-written functions can be installed as **ado** files using **ssc install** [package] | R installs with **base** functions, but typical use involves installing other packages from CRAN (see page on [R basics])
-Analysis is usually written in a **do** file | Analysis written in an R script in the RStudio source pane. R markdown scripts are an alternative.
-
-
-**Working directory**  
-
-**STATA**                        | **R**  
--------------------------------- | ---------------------------------------------
-Working directories involve absolute filepaths (e.g. "C:/usename/documents/projects/data/")| Working directories can be either absolute, or relative to a project root folder by using the **here** package (see [Import and export]) 
-See current working directory with **pwd** | Use `getwd()` or `here()` (if using the **here** package), with empty parentheses 
-Set working directory with **cd** “folder location” | Use `setwd(“folder location”)`, or `set_here("folder location)` (if using **here** package)
-
-**Importing and viewing data**  
-
-**STATA**                    | **R**  
--------------------------------- | ---------------------------------------------
-Specific commands per file type | Use `import()` from **rio** package for almost all filetypes. Specific functions exist as alternatives (see [Import and export])
-Reading in csv files is done by **import delimited** “filename.csv” | Use `import("filename.csv")`
-Reading in xslx files is done by **import excel** “filename.xlsx” | Use `import("filename.xlsx")`
-Browse your data in a new window using the command **browse** | View a dataset in the RStudio source pane using `View(dataset)`. *You need to specify your dataset name to the function in R because multiple datasets can be held at the same time. Note capital "V" in this function*
-Get a high-level overview of your dataset using **summarize**, which provides the variable names and basic information | Get a high-level overview of your dataset using `summary(dataset)`
-
-**Basic data manipulation**  
-
-**STATA**                    | **R**  
--------------------------------- | ---------------------------------------------
-Dataset columns are often referred to as "variables" | More often referred to as "columns" or sometimes as "vectors" or "variables"
-No need to specify the dataset | In each of the below commands, you need to specify the dataset - see the page on [Cleaning data] for examples
-New variables are created using the command **generate** *varname* =  | Generate new variables using the function `mutate(varname = )`. See page on [Cleaning data] for details on all the below **dplyr** functions.
-Variables are renamed using **rename** *old_name new_name* | Columns can be renamed using the function `rename(new_name = old_name)`
-Variables are dropped using **drop** *varname* | Columns can be removed using the function `select()` with the column name in the parentheses following a minus sign
-Factor variables can be labeled using a series of commands such as **label define** | Labeling values can done by converting the column to Factor class and specifying levels. See page on [Factors]. Column names are not typically labeled as they are in Stata.
-
-**Descriptive analysis**  
-
-**STATA**                    | **R**  
--------------------------------- | ---------------------------------------------
-Tabulate counts of a variable using **tab** *varname* | Provide the dataset and column name to `table()` such as `table(dataset$colname)`. Alternatively, use `count(varname)` from the **dplyr** package, as explained in [Grouping data]
-Cross-tabulaton of two variables in a 2x2 table is done with **tab** *varname1 varname2* | Use `table(dataset$varname1, dataset$varname2` or `count(varname1, varname2)`
-
-
-While this list gives an overview of the basics in translating Stata commands into R, it is not exhaustive. There are many other great resources for Stata users transitioning to R that could be of interest:  
-
-* https://dss.princeton.edu/training/RStata.pdf  
-* https://clanfear.github.io/Stata_R_Equivalency/docs/r_stata_commands.html  
-* http://r4stats.com/books/r4stata/  
+* Code simplicity  
+* Accessibility of outputs  
+* Presentation-quality printed outputs  
 
 
 
+1.  Browse data: get a quick overview of your dataset using `summary()` or the **skimr** package
 
-## From SAS  
+2.  Summary statistics: mean, median, range, standard deviations, percentiles
+
+3.  Frequency / cross-tabs: counts and proportions
+
+4.  Statistical tests: t-tests, wilcoxon rank sum, kruskal-wallis and chi-squares
+
+5.  Correlations
+
 <!-- ======================================================= -->
 
-Under construction  
+## Preparation {  }
+
+
+### Packages
+
+This code chunk shows the loading of packages required for the analyses.
+
+```{r}
+pacman::p_load(
+  rio,          # File import
+  here,         # File locator
+  skimr,        # get overview of data
+  tidyverse,    # data management + ggplot2 graphics, 
+  gtsummary,    # summary statistics and tests
+  janitor,      # adding totals and percents to tables
+  flextable,    # converting tables to HTML
+  corrr         # correlation analayis for numeric variables
+  )
+```
+
+### Load data {-}
+
+The example dataset used in this section is a linelist of individual cases from a simulated epidemic.  
+
+The dataset is imported using the `import()` function from the *rio* package. See the page on [Import and export] for various ways to import data.
+
+```{r, echo=F}
+# import the linelist into R
+linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
+```
+
+```{r, eval=F}
+# import the linelist
+linelist <- rio::import("linelist_cleaned.xlsx")
+```
+
+The first 50 rows of the linelist are displayed below.
+
+```{r, message=FALSE, echo=F}
+# display the linelist data as a table
+DT::datatable(head(linelist, 50), rownames = FALSE, filter="top", options = list(pageLength = 5, scrollX=T) )
+```
+
+
+### Clean data {-}
+
+See the page on [Cleaning data] for full explanation of cleaning data and use of **dyplr** functions such as `mutate()`, `filter()`, `select()`, etc.  
+
+The purposes of this page, we just ensure that the class of column `age` is numeric.  
+
+```{r}
+## make sure that age variable is numeric 
+linelist <- linelist %>% 
+  mutate(age = as.numeric(age))
+```
 
 
 
-## Data interoperability  
+
+<!-- ======================================================= -->
+## Browse data {  }
+
+### `skimr` package {-}
+
+Using the **skimr** package you can get a detailed and aesthetically pleasing overview of each of the variables in your dataset. Read more about **skimr** at the [github page](https://github.com/ropensci/skimr).  
+
+Below the function `skim()` is applied to the entire `linelist` data frame. A summary of every column is produced.    
+
+```{r eval=F}
+## get information about each variable in a dataset 
+skim(linelist)
+```
+
+```{r eval=T, echo=F}
+# sparkline histograms not showing correctly, so avoiding them.
+skim_without_charts(linelist)
+```
+
+### Base R {-}
+
+You can also use the `summary()` function, from **base** R, to get information about an entire data sets. Provide the name of the dataset to `summary()` and it will return an overview of each column in a whole dataset. The values returned will depend on the class of each column. However, this output can be more difficult to read than using **skimr**.  
+
+```{r, eval=F}
+## get information about each variable in a dataset 
+summary(linelist)
+```
+
+
+
+
+<!-- ======================================================= -->
+## Descriptive tables {}
+
+You have several choices when producing tabulations, cross-tabulations, and statistical summaries. Some of the factors to consider include code simplicity and ease, where the output appears (R console, or Viewer pane), and what you can do with the data afterward. All of the options below have strengths and can create simple or complex tables. Nevertheless, below is one way to approach your decision on what to use.  
+
+* Use `table()` and `summary()` from **base** R to view quick tables  
+* Use `count()` and `summarise()` from **dplyr** within the context of a pipe chain or if preparing data for `ggplot()`  
+* Use `tbl_summary()` from **gtsummary** to produce elaborate publication-ready tables  
+
+
+### **base** R {-}  
+
+#### Statistical functions 
+
+To print summary statistics on a numeric column to the console, **base** R functions can be the easiest and fastest to use. These functions are also often used within more complex code operations, for example if grouping and summarising columns, or referencing max()` to calibrate plot height.  
+
+See the [R Basics] page for a complete list of mathematical operators such as `max()`, `min()`, `median()`, `mean()`, `quantile()`, `sd()`, and `range()`.
+
+<span style="color: orange;">**_CAUTION:_** If your data contain missing values, R wants you to know this and so will return `NA` unless you specify to the above mathematical functions that you want R to ignore missing values, via the argument `na.rm = TRUE`.</span>
+
+
+You can return most of the important summary statistics for a numeric column using `summary()`, as below. Note that the dataframe must also be specified.  
+
+```{r}
+summary(linelist$age)
+```
+
+
+#### Tables  
+
+Use the function `table()` to print counts of unique values to the R console. You must specify the dataframe and the column, as shown below. <span style="color: orange;">**_CAUTION:_** `NA` (missing) values will **not** be tabulated unless you include the argument `useNA = "always"` (could also be set to "no" or "ifany").</span>
+
+```{r}
+table(linelist$outcome, useNA = "always")
+```
+
+Two columns (or even three!) can be cross-tabulated by listing them after each other, separated by commas. Optionally, you can assign each column a "name" like `Outcome = linelist$outcome` to help distinguishing them in the printed table. This is how you can create a classic epidemiological 2x2 table.  
+
+```{r}
+age_by_outcome <- table(linelist$age_cat, linelist$outcome, useNA = "always")
+age_by_outcome   # print table
+```
+You can return proportions by passing the table to the function `prop.table()` as below. Use the `margins = ` argument to specify whether you want the proportions to be of rows (1), of columns (3), or of the whole table (3). For clarity, we pipe the table to the `round()` function from **base** R, specifying 2 digits.   
+
+```{r}
+# get proportions of table defined above, by rows, rounded
+prop.table(age_by_outcome, 1) %>% round(2)
+```
+
+To add row and column totals, pass the table to `addmargins()`. This works for both counts and proportions.  
+
+```{r}
+addmargins(age_by_outcome)
+```
+
+Converting a `table()` object like the one above directly to a data frame is surprisingly not straight-forward. One option is demonstrated below:  
+
+1) Create the table, *without using* `useNA = "always"`, instead convert the `NA` values to "(Missing)" with `fct_explicit_na()` from the **forcats** package  
+2) Add totals if desired (optional) by piping to `addmargin()`  
+3) Pipe to the **base** R function `as.data.frame.matrix()`  
+4) Pipe the table to the **dplyr** function `add_rownames()`, specifying the first column  
+5) Print. In this example we use `flextable()` from package **flextable** as described in the [Tables] page. This will print to the RStudio viewer pane as HTML.  
+
+```{r, warning=F, message=F}
+table(fct_explicit_na(linelist$age_cat), fct_explicit_na(linelist$outcome)) %>% 
+  addmargins() %>% 
+  as.data.frame.matrix() %>% 
+  add_rownames(var = "Age Category") %>% 
+  flextable()
+```
+Below is an alternative method for adding totals and percents. The totals and formatting of counts and percents is added *after* conversion to class Data Frame. The `adorn_xxx()` functions from **janitor** only work on a data frame.  
+
+```{r, warning=F, message=F}
+table(fct_explicit_na(linelist$age_cat), fct_explicit_na(linelist$outcome)) %>% 
+  as.data.frame.matrix() %>% 
+  add_rownames(var = "Age Category") %>% 
+  adorn_totals() %>%
+  adorn_percentages(denominator = "row") %>% 
+  adorn_pct_formatting() %>%
+  adorn_ns(position = "front") %>% 
+  flextable()
+```
+
+
+### **gtsummary** package {-}  
+
+If you want to print your summary statistics in a pretty, publication-ready graphic, you can use the **gtsummary** package and its function `tbl_summary()`. The code can seem complex at first, but the outputs look very nice and print to your RStudio Viewer panel as HTML. Read a [vignette here](http://www.danieldsjoberg.com/gtsummary/articles/tbl_summary.html).    
+
+To introduce `tbl_summary()` we will show the most basic behavior first, which actually produces a large and beautiful table. Then, we will examine in detail how to make adjustments and more tailored tables. 
+
+
+
+#### Summary table {-}
+
+The default behavior of `tbl_summary()` is quite incredible - it takes the columns you provide and creates a summary table. The functions prints statistics appropriate to the column class: median and inter-quartile range (IQR) for numeric columns, and counts (%) for categorical or binary columns. Missing values are converted to "Unknown". Footnotes are added to the bottom to explain the statistics, while the total N is shown at the top.  
+
+```{r}
+linelist %>% 
+  select(age_years, gender, outcome, fever, temp, hospital) %>%  # keep columns of interest
+  tbl_summary()                                                  # pipe to tbl_summary()
+```
+
+
+Now we will explain how the function works and how to make adjustments. The key arguments are detailed below: 
+
+**`by = `**  
+You can stratify your table by a column (e.g. by `outcome`), creating a 2-way table.  
+
+**`statistic = `**  
+Indicate which statistics to show and how to display them with an equation. There are two sides to the equation, separated by a tilde `~`. On the right in quotes is the statistical display desired, and on the left are the columns to which that display will apply.  
+
+* The right side uses the syntax of `str_glue()` from **stringr** (see [Characters and Strings]), with the desired display string in quotes and the statistics themselves within curly brackets. You can include statistics like "n" (for counts), "N" (for denominator), "mean", "median", "sd", "max", "min", percentiles as "p##" like "p25", or percent of total as "p". See `?tbl_summary` for details.  
+* For the left side of the equation, you can specify columns by name (e.g. `age` or `c(age, gender)`) or using helpers such as `all_continuous()`, `all_categorical()`, `contains()`, `starts_with()`, etc.  
+
+A simple example of a `statistic = ` equation might look like this - only printing the mean of column `age`:  
+
+```{r}
+linelist %>% 
+  select(age_years) %>%         # keep only columns of interest 
+  tbl_summary(                  # create summary table
+    statistic = age_years ~ "{mean}") # print mean of age
+```
+
+A slightly more complex equation might look like this, incorporating the max and min values within parentheses and separated by a comma:  
+
+```{r, eval=F}
+statistic = age_years ~ "({min}, {max})"
+```
+
+You can also differentiate syntax for separate columns or types of columns. In the more complex example below, the value provided to `statistc = ` is a **list** indicating that for all continuous columns the table should print mean with standard deviation in parentheses, while for all categorical columns it should print the n, denominator, and percent.  
+
+**`digits = `**  
+Adjust the digits and rounding. Optionally, this can be specified to be for continuous columns only (as below).  
+
+**`label = `**  
+Adjust how the column name should be displayed. Provide the column name and its desired label separated by a tilde. The default is the column name.  
+
+**`missing_text = `**  
+Adjust how missing values are displayed. The default is "Unknown".  
+
+**`type = `**  
+This is used to adjust how many levels of the statistics are shown. The syntax is similar to `statistic = ` in that you provide an equation with columns on the left and a value on the right. Two common scenarios include:  
+
+* `type = all_categorical() ~ "categorical"` Forces dichotomous columns (e.g. fever) to show all levels instead of only the “yes” row  
+* `type = all_continuous() ~ "continuous2"` Allows multi-line statistics per variable, as shown in section below  
+
+In the example below, each of these arguments is used to modify the original summary table:  
+
+```{r}
+linelist %>% 
+  select(age_years, gender, outcome, fever, temp, hospital) %>% # keep only columns of interest
+  tbl_summary(     
+    by = outcome,                                               # stratify entire table by outcome
+    statistic = list(all_continuous() ~ "{mean} ({sd})",        # stats and format for continuous columns
+                     all_categorical() ~ "{n} / {N} ({p}%)"),   # stats and format for categorical columns
+    digits = all_continuous() ~ 1,                              # rounding for continuous columns
+    type   = all_categorical() ~ "categorical",                 # force all categorical levels to display
+    label  = list(                                              # display labels for column names
+      outcome   ~ "Outcome",                           
+      age_years ~ "Age (years)",
+      gender    ~ "Gender",
+      temp      ~ "Temperature",
+      hospital  ~ "Hospital"),
+    missing_text = "Missing"                                    # how missing values should display
+  )
+```
+
+
+
+#### Multi-line stats for continuous variables {-}  
+
+If you want to print multiple lines of statistics for continuous variables, you can indicate this by setting the `type = ` to "continuous2".  You can combine all of the previously shown elements in one table by choosing which statistics you want to show. To do this you need to tell the function that you want to get a table back by entering the type as “continuous2”.
+
+Note that this automatically excludes all missing values. If missing values are not excluded, the returned value will be NA (missing). The number of missing values is seen in the Unknown column).
+
+```{r}
+linelist %>% 
+  select(age_years, temp) %>%                      # keep only columns of interest
+  tbl_summary(                                     # create summary table
+    type = all_continuous() ~ "continuous2",       # indicate that you want to print multiple statistics 
+    statistic = all_continuous() ~ c(
+      "{mean} ({sd})",                             # line 1: mean and SD
+      "{median} ({p25}, {p75})",                   # line 2: median and IQR
+      "{min}, {max}")                              # line 3: min and max
+    )
+```
+There are many other ways to modify these tables, including adding p-values, adjusting color and headings, etc. Many of these are described in the documentation (enter `?tbl_summary` in Console), and some are given in examples below.  
+
+
+
+
+### **dplyr** package {-}  
+
+Creating cross-tabulations with **dplyr** is less straightforward, as such outputs do not fit within the **tidyverse** dataset structure. However, this approach to tabulation is useful if you are working within a longer pipe chain, and if you want to pass the results to `ggplot()` (which expects "long" data). See the [Cleaning data] page for an example of a pipe chain.  
+
+Use the **dplyr** function `count()` to return tabulated counts. This function as applied to group data is described in depth in the [Grouping data] page. The output returned is in a "long" format and a column `n` has been created to hold the counts.  
+
+```{r}
+linelist %>% 
+  count(age_cat)
+```
+
+You can cross-tabulate two or more columns by adding them within the `count()` function. Note the format is different than for `table()` - it is "long" in that each unique combination of the two columns is listed, with the counts in the `n` column. Also note that missing values are considered.  
+
+```{r}
+linelist %>% 
+  count(age_cat, gender)
+```
+
+To pipe this output to `ggplot()` is relatively straight-forward. See further examples in the pages [Plotting categorical data] and [ggplot tips].  
+
+```{r, warning=F, message=F}
+linelist %>% 
+  count(outcome, age_cat) %>% 
+  ggplot()+
+    geom_bar(aes(x = outcome, fill = age_cat, y = n), stat = "identity")
+```
+
+#### Add proportions {-}  
+
+To add proportions or percents in a new column, use `mutate()` on the counted data frame as below. Note that the data remain in "long" format (not like `table()` above). 
+```{r}
+linelist %>% 
+  count(outcome) %>%                     # counts by outcome 
+  mutate(percentage = n / sum(n) * 100)  # calculate proportion
+```
+You can calculate proportions *within groups* by having two levels of aggregation prior to using `mutate()`. The below table first groups the data frame by `outcome` and then groups/counts by `age_cat`, achieving the breakdown of age *by outcome*. Note that you can add more stratifications by adding columns to the `group_by()` command.  
+
+```{r}
+linelist %>% 
+  group_by(outcome) %>%                  # group first by outcome 
+  count(age_cat) %>%                     # group again and count by gender (produces n column)
+  mutate(percentage = n / sum(n) * 100)  # calculate proportion - note the denominator is by outcome group
+```
+
+Note that it is possible to change the below table to wide format, making it more like a two-by-two (cross tabulation), using the **tidyr** `pivot_wider()` function. This would be done by adding this to the end of the code: `pivot_wider(names_from = age_cat, values_from = c(n, percentage))` For more information see the page on [Pivoting data].  
+
+If you want to display a table produced using `count()`, you can add totals, percents, and proportions using the package **janitor**. See a detailed example in the [Grouping data] page, and a brief example below:  
+
+```{r}
+pacman::p_load(janitor)
+
+linelist %>% 
+  count(outcome) %>%              # produce the counts by unique outcome
+  adorn_totals(where = "row") %>% # add total row
+  adorn_percentages("col") %>%    # add proportion by column
+  adorn_pct_formatting() %>%      # proportion converted to percent
+  adorn_ns(position = "front")    # Add the underlying N, in front of the percentage
+```
+
+#### `summarise()` {-}  
+
+You can also use **dplyr** to create a table with different summary statistics, for example mean, median, range, standard deviation and percentiles. You can also show these all in one table. This is discussed in detail in the page on [Grouping data].  
+
+Note the argument `na.rm = TRUE`, which removes missing values from the calculation. If missing values are not excluded, the returned value will be NA (missing).
+
+```{r}
+linelist %>% 
+  summarise(mean = mean(age_years, na.rm = TRUE)) # get the mean value of age while excluding missings
+```
+
+To return percentiles you can type in one value that you would like, or you can type in multiple (e.g. to return the interquartile range).
+
+```{r descriptive_dplyr_percentile}
+# get default percentile values of age (0%, 25%, 50%, 75%, 100%)
+linelist %>% 
+  summarise(percentiles = quantile(age_years, na.rm = TRUE))
+
+# get specified percentile values of age (5%, 50%, 75%, 98%)
+linelist %>% 
+  summarise(percentiles = quantile(age_years,
+                                   probs = c(.05, 0.5, 0.75, 0.98), 
+                                   na.rm=TRUE))
+```
+
+You can combine all of the previously shown elements in one table by choosing which statistics you want to show. In dplyr you will need to use the `str_c` 
+function from **stringr** to combine outputs for the IQR and the range in to one 
+cell, separated by a comma. 
+
+Note that this automatically excludes all missing values. If missing values are not excluded, the returned value will be NA (missing). The number of missing values is seen in the Unknown column).
+
+```{r}
+
+linelist %>% 
+  summarise(
+    mean   = mean(age_years, na.rm = TRUE),   # mean
+    SD     = sd(age_years, na.rm = TRUE),     # standard deviation
+    median = median(age_years, na.rm = TRUE), # median 
+    IQR = str_c(                        # collapse the IQR, separated by a comma
+      quantile(age_years, probs = c(0.25, 0.75), na.rm = TRUE), 
+      collapse = ", "
+      ), 
+    range = str_c(                      # collapse range, separated by a comma
+      range(age_years, na.rm = TRUE), 
+      collapse = ", "
+    )
+  )
+
+```
+
+Lastly, another option is to use the **janitor** package [`tabyl` function](http://sfirke.github.io/janitor/reference/tabyl.html). 
+
+
+
+
+
+
+
+
+
 <!-- ======================================================= -->
 
-See the [Import and export] page for details on how the R package **rio** can import and export files such as STATA .dta files, SAS .xpt and.sas7bdat files, SPSS .por and.sav files, and many others.  
+## Statistical tests {  }
+
+
+### **base** R {-}
+
+You can use **base** R functions to produce the results of statistical tests. The commands are relatively simple and results will print to the R Console for simple viewing. However, the outputs are usually lists and so are harder to manipulate if you want to use the results in subsequent code operations. 
+
+#### T-tests {-} 
+
+Provide the numeric column on the left side of the equation and the categorical column on the right side. Specify the dataset to `data = `. Optionally, set `paired = `, and `conf.level = ` and `alternative = ` (either "two.sided", "less", or "greater"). Enter `?t.test` for more details.  
+
+```{r}
+## compare mean age by outcome group with a t-test
+t.test(age_years ~ outcome, data = linelist)
+```
+
+You can compare two numeric vectors using this alternative syntax. For example, if the two columns are in different data sets.  
+
+```{r, eval=F}
+t.test(df1$age_years, df2$age_years)
+```
+
+Conduct a one-sample t-test with the known/hypothesized populaton mean on the right side of the equation:  
+
+```{r, eval=F}
+t.test(linelist$age_years, mu = 45)
+```
+
+#### Shapiro-Wilk's test {-}  
+
+```{r, eval=F}
+shapiro.test(linelist$age_years)
+```
+
+#### Wilcoxon rank sum test {-}
+
+```{r wilcox_base}
+
+## compare age distribution by outcome group with a wilcox test
+wilcox.test(age_years ~ outcome, data = linelist)
+
+```
+
+#### Kruskal-wallis test {-}
+
+
+```{r }
+
+## compare age distribution by outcome group with a kruskal-wallis test
+kruskal.test(age_years ~ outcome, linelist)
+
+```
+
+#### Chi-squared test {-} 
+
+```{r}
+
+## compare the proportions in each group with a chi-squared test
+chisq.test(linelist$gender, linelist$outcome)
+
+```
 
 
 
+
+
+### `gtsummary` package {-}
+
+Performing statistical tests of comparison with `tbl_summary` is done by adding the 
+`add_p` function to a table and specifying which test to use. See the detailed description 
+above of how to produce these tables. It is possible to get p-values corrected for multiple testing by using the
+`add_q` function. 
+
+#### Chi-squared test 
+
+Compare the proportions of a categorical variable in two groups. The default statistical test for 
+`add_p()` is to perform a chi-squared test of independence with continuity correction, but if 
+any expected call count is below 5 then a Fisher's exact test is used. 
+
+```{r chi_gt}
+linelist %>% 
+  select(gender, outcome) %>%    # keep variables of interest
+  tbl_summary(by = outcome) %>%  # produce summary table and specify grouping variable
+  add_p()                        # specify what test to perform
+```
+
+
+#### T-tests {-} 
+
+Compare the difference in means for a continuous variable in two groups. 
+For example compare the mean age by patient outcome. 
+
+```{r ttest_gt}
+
+linelist %>% 
+  select(age_years, outcome) %>%             # keep variables of interest
+  tbl_summary(                               # produce summary table
+    statistic = age_years ~ "{mean} ({sd})", # specify what statistics to show
+    by = outcome) %>%                        # specify the grouping variable
+  add_p(age_years ~ "t.test")                # specify what tests to perform
+
+
+```
+
+#### Wilcoxon rank sum test
+
+Compare the distribution of a continuous variable in two groups. The default 
+is to use the Wilcoxon rank sum test and the median (IQR) when comparing two 
+groups. However for non-normally distributed data or comparing multiple groups, 
+the Kruskal-wallis test is more appropriate. 
+
+```{r wilcox_gt}
+
+linelist %>% 
+  select(age_years, outcome) %>%                       # keep variables of interest
+  tbl_summary(                                         # produce summary table
+    statistic = age_years ~ "{median} ({p25}, {p75})", # specify what statistic to show (this is default so could remove)
+    by = outcome) %>%                                  # specify the grouping variable
+  add_p(age_years ~ "wilcox.test")                     # specify what test to perform (default so could leave brackets empty)
+
+
+```
+
+#### Kruskal-wallis test
+
+Compare the distribution of a continuous variable in two or more groups, 
+regardless of whether the data is normally distributed. 
+
+```{r kruskal_gt}
+
+linelist %>% 
+  select(age_years, outcome) %>%                       # keep variables of interest
+  tbl_summary(                                         # produce summary table
+    statistic = age_years ~ "{median} ({p25}, {p75})", # specify what statistic to show (default, so could remove)
+    by = outcome) %>%                                  # specify the grouping variable
+  add_p(age_years ~ "kruskal.test")                    # specify what test to perform
+
+
+```
+
+
+
+
+### `dplyr` package
+
+Performing statistical tests in `dplyr` alone is very dense, again because it 
+does not fit within the tidy-data framework. It requires using `purrr` to create
+a list of dataframes for each of the subgroups you want to compare. See the page on [Iteration and loops] to learn about **purrr**.  
+An easier alternative may be the `rstatix` package. 
+
+#### T-tests 
+
+```{r ttest_dplyr}
+
+linelist %>% 
+  ## only keep variables of interest
+  select(age, outcome) %>% 
+  ## drop those missing outcome 
+  filter(!is.na(outcome)) %>% 
+  ## specify the grouping variable
+  group_by(outcome) %>% 
+  ## create a subset of data for each group (as a list)
+  nest() %>% 
+  ## spread in to wide format
+  pivot_wider(names_from = outcome, values_from = data) %>% 
+  mutate(
+    ## calculate the mean age for the death group
+    Death_mean = map(Death, ~mean(.x$age, na.rm = TRUE)),
+    ## calculate the sd among dead 
+    Death_sd = map(Death, ~sd(.x$age, na.rm = TRUE)),
+    ## calculate the mean age for the recover group
+    Recover_mean = map(Recover, ~mean(.x$age, na.rm = TRUE)), 
+    ## calculate the sd among recovered 
+    Recover_sd = map(Recover, ~sd(.x$age, na.rm = TRUE)),
+    ## using both grouped data sets compare mean age with a t-test
+    ## keep only the p.value
+    t_test = map2(Death, Recover, ~t.test(.x$age, .y$age)$p.value)
+  ) %>% 
+  ## drop datasets 
+  select(-Death, -Recover) %>% 
+  ## return a dataset with the medians and p.value (drop missing)
+  unnest(cols = everything())
+
+```
+
+
+#### Wilcoxon rank sum test
+
+```{r wilcox_dplyr}
+
+linelist %>% 
+  ## only keep variables of interest
+  select(age, outcome) %>% 
+  ## drop those missing outcome 
+  filter(!is.na(outcome)) %>% 
+  ## specify the grouping variable
+  group_by(outcome) %>% 
+  ## create a subset of data for each group (as a list)
+  nest() %>% 
+  ## spread in to wide format
+  pivot_wider(names_from = outcome, values_from = data) %>% 
+  mutate(
+    ## calculate the median age for the death group
+    Death_median = map(Death, ~median(.x$age, na.rm = TRUE)),
+    ## calculate the sd among dead 
+    Death_iqr = map(Death, ~str_c(
+      quantile(.x$age, probs = c(0.25, 0.75), na.rm = TRUE), 
+      collapse = ", "
+      )),
+    ## calculate the median age for the recover group
+    Recover_median = map(Recover, ~median(.x$age, na.rm = TRUE)), 
+    ## calculate the sd among recovered 
+    Recover_iqr = map(Recover, ~str_c(
+      quantile(.x$age, probs = c(0.25, 0.75), na.rm = TRUE), 
+      collapse = ", "
+      )),
+    ## using both grouped data sets compare age distribution with a wilcox test
+    ## keep only the p.value
+    wilcox = map2(Death, Recover, ~wilcox.test(.x$age, .y$age)$p.value)
+  ) %>% 
+  ## drop datasets 
+  select(-Death, -Recover) %>% 
+  ## return a dataset with the medians and p.value (drop missing)
+  unnest(cols = everything())
+
+```
+
+#### Kruskal-wallis test
+
+
+```{r kruskal_dplyr}
+
+linelist %>% 
+  ## only keep variables of interest
+  select(age, outcome) %>% 
+  ## drop those missing outcome 
+  filter(!is.na(outcome)) %>% 
+  ## specify the grouping variable
+  group_by(outcome) %>% 
+  ## create a subset of data for each group (as a list)
+  nest() %>% 
+  ## spread in to wide format
+  pivot_wider(names_from = outcome, values_from = data) %>% 
+  mutate(
+    ## calculate the median age for the death group
+    Death_median = map(Death, ~median(.x$age, na.rm = TRUE)),
+    ## calculate the sd among dead 
+    Death_iqr = map(Death, ~str_c(
+      quantile(.x$age, probs = c(0.25, 0.75), na.rm = TRUE), 
+      collapse = ", "
+      )),
+    ## calculate the median age for the recover group
+    Recover_median = map(Recover, ~median(.x$age, na.rm = TRUE)), 
+    ## calculate the sd among recovered 
+    Recover_iqr = map(Recover, ~str_c(
+      quantile(.x$age, probs = c(0.25, 0.75), na.rm = TRUE), 
+      collapse = ", "
+      )),
+    ## using the original data set compare age distribution with a kruskal test
+    ## keep only the p.value
+    kruskal = kruskal.test(linelist$age, linelist$outcome)$p.value
+  ) %>% 
+  ## drop datasets 
+  select(-Death, -Recover) %>% 
+  ## return a dataset with the medians and p.value (drop missing)
+  unnest(cols = everything())
+
+```
+
+#### Chi-squared test 
+
+
+```{r}
+linelist %>% 
+  ## do everything by gender 
+  group_by(outcome) %>% 
+  ## count the variable of interest
+  count(gender) %>% 
+  ## calculate proportion 
+  ## note that the denominator here is the sum of each gender
+  mutate(percentage = n / sum(n) * 100) %>% 
+  pivot_wider(names_from = outcome, values_from = c(n, percentage)) %>% 
+  filter(!is.na(gender)) %>% 
+  mutate(pval = chisq.test(linelist$gender, linelist$outcome)$p.value)
+```
+
+
+<!-- ======================================================= -->
+
+## Correlations {  }
+
+Correlation between numeric variables can be investigated using the tidyverse  
+`corrr` package. It allows you to compute correlations using Pearson, Kendall
+tau or Spearman rho. The package creates a table and also has a function to 
+automatically plot the values. 
+
+```{r, warning=F, message=F}
+
+correlation_tab <- linelist %>% 
+  select(generation, age, ct_blood, days_onset_hosp, wt_kg, ht_cm) %>%   # keep numeric variables of interest
+  correlate()      # create correlation table (using default pearson)
+
+correlation_tab    # print
+
+## remove duplicate entries (the table above is mirrored) 
+correlation_tab <- correlation_tab %>% 
+  shave()
+
+## view correlation table 
+correlation_tab
+
+## plot correlations 
+rplot(correlation_tab)
+```
+
+
+<!-- ======================================================= -->
+
+## Resources {  }
+
+Much of the information in this page is adapted from these resources and vignettes online:  
+
+[gtsummary](http://www.danieldsjoberg.com/gtsummary/articles/tbl_summary.html)
+[dplyr](https://dplyr.tidyverse.org/articles/grouping.html)
+[corrr](https://corrr.tidymodels.org/articles/using-corrr.html)
+[sthda correlation](http://www.sthda.com/english/wiki/correlation-test-between-two-variables-in-r)
 ```{r include=FALSE, cache=FALSE}
 
 # clear workspace
@@ -321,5 +983,5 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 #count_data <- rio::import(here::here("data", "facility_count_data.rds"))
 ```
 
-<!--chapter:end:new_pages/switch_to_R.Rmd-->
+<!--chapter:end:new_pages/descriptive_statistics.Rmd-->
 
