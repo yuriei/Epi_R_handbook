@@ -214,11 +214,11 @@ If applied to a vector, it will remove <code>NA</code> values from the vector it
 <p>The <code>gg_miss_var()</code> function will show you the number of missing values in each column. You can add a bare column name to the argument <code>facet =</code> if desired to see the plot by groups. By default, counts are shown instead of percents (<code>show_pct = FALSE</code>). You can also add labs as a normal ggplot with <code>+labs()</code>.</p>
 <div class="sourceCode" id="cb676"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">gg_miss_var</span><span class="op">(</span><span class="va">linelist</span>, show_pct <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-485-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-479-1.png" width="672"></div>
 <p>You can use <code>vis_miss()</code> to visualize the dataframe as a heatmap, showing whether each value is missing or not. As usual, you can also <code><a href="https://dplyr.tidyverse.org/reference/select.html">select()</a></code> certain columns from the dataframe and the provide that to the function.</p>
 <div class="sourceCode" id="cb677"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">vis_miss</span><span class="op">(</span><span class="va">linelist</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-486-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-480-1.png" width="672"></div>
 </div>
 <div id="explore-and-visualize-missingness-relationships" class="section level3 unnumbered">
 <h3>Explore and visualize missingness relationships<a class="anchor" aria-label="anchor" href="#explore-and-visualize-missingness-relationships"><i class="fas fa-link"></i></a>
@@ -229,18 +229,18 @@ If applied to a vector, it will remove <code>NA</code> values from the vector it
 <div class="sourceCode" id="cb678"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span>
   <span class="va">linelist</span>, 
-  <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">age_years</span>,             
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">age_years</span>,             
       y <span class="op">=</span> <span class="va">temp</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>     <span class="co"># column to show missingness</span>
   <span class="fu">geom_miss_point</span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-487-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-481-1.png" width="672"></div>
 <p>To assess missingness in the dataframe <em>stratified by another column</em>, consider <code>gg_miss_fct()</code>, which returns a heatmap of percent missingness in the dataframe by a factor/categorical (or date) column:</p>
 <div class="sourceCode" id="cb679"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">gg_miss_fct</span><span class="op">(</span><span class="va">linelist</span>, <span class="va">age_cat5</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-488-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-482-1.png" width="672"></div>
 <p>This function can also be used with a date column to see missingness over time:</p>
 <div class="sourceCode" id="cb680"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">gg_miss_fct</span><span class="op">(</span><span class="va">linelist</span>, <span class="va">date_onset</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-489-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-483-1.png" width="672"></div>
 </div>
 <div id="shadow-columns" class="section level3 unnumbered">
 <h3>“Shadow” columns<a class="anchor" aria-label="anchor" href="#shadow-columns"><i class="fas fa-link"></i></a>
@@ -251,24 +251,29 @@ If applied to a vector, it will remove <code>NA</code> values from the vector it
   <span class="fu">bind_shadow</span><span class="op">(</span><span class="op">)</span>
 
 <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">shadowed_linelist</span><span class="op">)</span></code></pre></div>
-<pre><code>##  [1] "case_id"                 "generation"              "date_infection"          "date_onset"              "date_hospitalisation"    "date_outcome"           
-##  [7] "outcome"                 "gender"                  "age"                     "age_unit"                "age_years"               "age_cat"                
-## [13] "age_cat5"                "hospital"                "lon"                     "lat"                     "infector"                "source"                 
-## [19] "wt_kg"                   "ht_cm"                   "ct_blood"                "fever"                   "chills"                  "cough"                  
-## [25] "aches"                   "vomit"                   "temp"                    "time_admission"          "bmi"                     "days_onset_hosp"        
-## [31] "case_id_NA"              "generation_NA"           "date_infection_NA"       "date_onset_NA"           "date_hospitalisation_NA" "date_outcome_NA"        
-## [37] "outcome_NA"              "gender_NA"               "age_NA"                  "age_unit_NA"             "age_years_NA"            "age_cat_NA"             
-## [43] "age_cat5_NA"             "hospital_NA"             "lon_NA"                  "lat_NA"                  "infector_NA"             "source_NA"              
-## [49] "wt_kg_NA"                "ht_cm_NA"                "ct_blood_NA"             "fever_NA"                "chills_NA"               "cough_NA"               
-## [55] "aches_NA"                "vomit_NA"                "temp_NA"                 "time_admission_NA"       "bmi_NA"                  "days_onset_hosp_NA"</code></pre>
+<pre><code>##  [1] "case_id"                 "generation"              "date_infection"          "date_onset"             
+##  [5] "date_hospitalisation"    "date_outcome"            "outcome"                 "gender"                 
+##  [9] "age"                     "age_unit"                "age_years"               "age_cat"                
+## [13] "age_cat5"                "hospital"                "lon"                     "lat"                    
+## [17] "infector"                "source"                  "wt_kg"                   "ht_cm"                  
+## [21] "ct_blood"                "fever"                   "chills"                  "cough"                  
+## [25] "aches"                   "vomit"                   "temp"                    "time_admission"         
+## [29] "bmi"                     "days_onset_hosp"         "case_id_NA"              "generation_NA"          
+## [33] "date_infection_NA"       "date_onset_NA"           "date_hospitalisation_NA" "date_outcome_NA"        
+## [37] "outcome_NA"              "gender_NA"               "age_NA"                  "age_unit_NA"            
+## [41] "age_years_NA"            "age_cat_NA"              "age_cat5_NA"             "hospital_NA"            
+## [45] "lon_NA"                  "lat_NA"                  "infector_NA"             "source_NA"              
+## [49] "wt_kg_NA"                "ht_cm_NA"                "ct_blood_NA"             "fever_NA"               
+## [53] "chills_NA"               "cough_NA"                "aches_NA"                "vomit_NA"               
+## [57] "temp_NA"                 "time_admission_NA"       "bmi_NA"                  "days_onset_hosp_NA"</code></pre>
 <p>These “shadow” columns can be used to plot the density of proportion of values that are missing, by any another column X. For example, the plot below shows the proportion of records missing <code>days_onset_hosp</code> (number of days from symptom onset to hospitalisation), by that record’s value in <code>date_hospitalisation</code>. Essentially, you are plotting the density of the x-axis column, but stratifying the results (<code>color =</code>) by a shadow column of interest. This analysis works best if the x-axis is a numeric or date column.</p>
 <div class="sourceCode" id="cb683"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span>
   <span class="va">shadowed_linelist</span>,                   <span class="co"># dataframe with shadow columns</span>
-  <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">date_hospitalisation</span>,        <span class="co"># numeric or date column</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">date_hospitalisation</span>,        <span class="co"># numeric or date column</span>
       colour <span class="op">=</span> <span class="va">age_years_NA</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>        <span class="co"># shadow column of interest</span>
   <span class="fu">geom_density</span><span class="op">(</span><span class="op">)</span>                       <span class="co"># plots the density curves</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-491-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-485-1.png" width="672"></div>
 <p>You can also use these “shadow” columns to stratify a statistical summary, as shown below:</p>
 <div class="sourceCode" id="cb684"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">linelist</span> <span class="op">%&gt;%</span>
@@ -309,7 +314,7 @@ If applied to a vector, it will remove <code>NA</code> values from the vector it
 <div class="sourceCode" id="cb687"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">outcome_missing</span><span class="op">)</span><span class="op">+</span>
     <span class="fu">geom_line</span><span class="op">(</span>
-      <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">week</span>, y <span class="op">=</span> <span class="va">value</span>, group <span class="op">=</span> <span class="va">statistic</span>, color <span class="op">=</span> <span class="va">statistic</span><span class="op">)</span>,
+      <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">week</span>, y <span class="op">=</span> <span class="va">value</span>, group <span class="op">=</span> <span class="va">statistic</span>, color <span class="op">=</span> <span class="va">statistic</span><span class="op">)</span>,
       size <span class="op">=</span> <span class="fl">2</span>,
       stat <span class="op">=</span> <span class="st">"identity"</span><span class="op">)</span><span class="op">+</span>
     <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Weekly outcomes"</span>,
@@ -323,7 +328,7 @@ If applied to a vector, it will remove <code>NA</code> values from the vector it
   <span class="fu">theme</span><span class="op">(</span>
     legend.position <span class="op">=</span> <span class="st">"bottom"</span>
   <span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-494-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-488-1.png" width="672"></div>
 <!-- ======================================================= -->
 </div>
 </div>

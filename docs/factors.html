@@ -174,10 +174,10 @@
 <p>Likewise, if we make a bar plot the values also appear in this order from the bottom:<br>
 This probably does not make sense to show.</p>
 <div class="sourceCode" id="cb334"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">linelist</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">delay</span><span class="op">)</span><span class="op">)</span><span class="op">+</span>
+<code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">linelist</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">delay</span><span class="op">)</span><span class="op">)</span><span class="op">+</span>
   <span class="fu">geom_bar</span><span class="op">(</span><span class="op">)</span><span class="op">+</span>
   <span class="fu">theme_classic</span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-237-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-231-1.png" width="672"></div>
 </div>
 <div id="convert-to-factor" class="section level2" number="10.4">
 <h2>
@@ -227,24 +227,24 @@ This probably does not make sense to show.</p>
 <span class="va">linelist</span><span class="op">$</span><span class="va">delay</span> <span class="op">&lt;-</span> <span class="fu">fct_relevel</span><span class="op">(</span><span class="va">linelist</span><span class="op">$</span><span class="va">delay</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"&lt;2 days"</span>, <span class="st">"2-5 days"</span>, <span class="st">"&gt;5 days"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>Alternatively, you can adjust the levels of a factor from <em>within</em> a plot, and the re-ordering of the levels will only apply within the plot. Below, you can see how the specified order begins from the bottom to the top. The missing value <code>NA</code> are at the end.</p>
 <div class="sourceCode" id="cb339"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">linelist</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="fu">fct_relevel</span><span class="op">(</span><span class="va">delay</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"&lt;2 days"</span>, <span class="st">"2-5 days"</span>, <span class="st">"&gt;5 days"</span>, <span class="st">"Missing"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">+</span>
+<code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">linelist</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu">fct_relevel</span><span class="op">(</span><span class="va">delay</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"&lt;2 days"</span>, <span class="st">"2-5 days"</span>, <span class="st">"&gt;5 days"</span>, <span class="st">"Missing"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">+</span>
   <span class="fu">geom_bar</span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-241-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-235-1.png" width="672"></div>
 <p>Note how the default x-axis label is now quite complicated - you can overwrite this with the <code>labs()</code> in ggplot.</p>
 <p><strong><code>fct_infreq()</code></strong></p>
 <p>To order by frequency that the value appears in the data, use <code>fct_infreq()</code>. Any missing values (<code>NA</code>) will automatically be included at the end.</p>
 <p>You can reverse the order by wrapping with <code>fct_rev()</code>, like this: <code>fct_rev(fct_infreq(time_period))</code>.</p>
 <div class="sourceCode" id="cb340"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># ordered by frequency</span>
-<span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">linelist</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="fu">fct_infreq</span><span class="op">(</span><span class="va">delay</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">+</span>
+<span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">linelist</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu">fct_infreq</span><span class="op">(</span><span class="va">delay</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">+</span>
   <span class="fu">geom_bar</span><span class="op">(</span><span class="op">)</span><span class="op">+</span>
   <span class="fu">labs</span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Delay onset to admission (days)"</span><span class="op">)</span>
 
 <span class="co"># reversed frequency</span>
-<span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">linelist</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="fu">fct_rev</span><span class="op">(</span><span class="fu">fct_infreq</span><span class="op">(</span><span class="va">delay</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">+</span>
+<span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">linelist</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu">fct_rev</span><span class="op">(</span><span class="fu">fct_infreq</span><span class="op">(</span><span class="va">delay</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">+</span>
   <span class="fu">geom_bar</span><span class="op">(</span><span class="op">)</span><span class="op">+</span>
   <span class="fu">labs</span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Delay onset to admission (days)"</span><span class="op">)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-242-1.png" width="50%"><img src="_main_files/figure-html/unnamed-chunk-242-2.png" width="50%"></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-236-1.png" width="50%"><img src="_main_files/figure-html/unnamed-chunk-236-2.png" width="50%"></p>
 <p><strong><code>fct_reorder()</code></strong></p>
 <p>Use this function to order the levels by another column. For example, to order boxplots showing delay <em>by the median CT value of each delay group</em>.</p>
 <p>In the examples below, the x-axis if delay group, and the y = axis is CT value. The boxplots are also colored by delay group.</p>
@@ -255,28 +255,28 @@ In the second example, the x-axis column has been wrapped in <code>fct_reorder()
 <code class="sourceCode R"><span class="co"># boxplots ordered by original factor levels</span>
 <span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">linelist</span><span class="op">)</span><span class="op">+</span>
   <span class="fu">geom_boxplot</span><span class="op">(</span>
-    <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">delay</span>,
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">delay</span>,
         y <span class="op">=</span> <span class="va">ct_blood</span>, 
         fill <span class="op">=</span> <span class="va">delay</span><span class="op">)</span><span class="op">)</span><span class="op">+</span>
   <span class="fu">labs</span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Delay onset to admission (days)"</span>,
        title <span class="op">=</span> <span class="st">"Ordered by increasing delay (original factor levels)"</span><span class="op">)</span><span class="op">+</span>
   <span class="fu">theme_classic</span><span class="op">(</span><span class="op">)</span><span class="op">+</span>
   <span class="fu">theme</span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-243-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-237-1.png" width="672"></div>
 <div class="sourceCode" id="cb342"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># boxplots ordered by median CT value</span>
 <span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">linelist</span><span class="op">)</span><span class="op">+</span>
   <span class="fu">geom_boxplot</span><span class="op">(</span>
-    <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="fu">fct_reorder</span><span class="op">(</span><span class="va">delay</span>, <span class="va">ct_blood</span>, <span class="st">"median"</span><span class="op">)</span>,
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu">fct_reorder</span><span class="op">(</span><span class="va">delay</span>, <span class="va">ct_blood</span>, <span class="st">"median"</span><span class="op">)</span>,
         y <span class="op">=</span> <span class="va">ct_blood</span>,
         fill <span class="op">=</span> <span class="va">delay</span><span class="op">)</span><span class="op">)</span><span class="op">+</span>
   <span class="fu">labs</span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Delay onset to admission (days)"</span>,
        title <span class="op">=</span> <span class="st">"Ordered by median CT value in group"</span><span class="op">)</span><span class="op">+</span>
   <span class="fu">theme_classic</span><span class="op">(</span><span class="op">)</span><span class="op">+</span>
   <span class="fu">theme</span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-243-2.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-237-2.png" width="672"></div>
 <p><strong><code>fct_reorder2()</code></strong></p>
-<p>Use this function to order the <em>legend colors</em> by the vertical order of groups at the “end” of the plot. For example, if you have lines showing case counts by hospital over time, you can apply <code>fct_reorder2()</code> to the <code>color =</code> argument within <code>aes()</code>, such that the vertical order of hospitals appearing in the legend aligns with the order of lines at the terminal end of the plot. Read more in the <a href="https://forcats.tidyverse.org/reference/fct_reorder.html">function documentation</a>.</p>
+<p>Use this function to order the <em>legend colors</em> by the vertical order of groups at the “end” of the plot. For example, if you have lines showing case counts by hospital over time, you can apply <code>fct_reorder2()</code> to the <code>color =</code> argument within <code><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes()</a></code>, such that the vertical order of hospitals appearing in the legend aligns with the order of lines at the terminal end of the plot. Read more in the <a href="https://forcats.tidyverse.org/reference/fct_reorder.html">function documentation</a>.</p>
 <div class="sourceCode" id="cb343"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">linelist</span> <span class="op">%&gt;%</span>         <span class="co"># begin with the linelist            </span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span>             <span class="co"># summarise so n = counts of rows by epiweek and by hospital</span>
@@ -286,11 +286,11 @@ In the second example, the x-axis column has been wrapped in <code>fct_reorder()
   
   <span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span><span class="op">+</span>           <span class="co"># start plot</span>
   <span class="fu">geom_line</span><span class="op">(</span>          <span class="co"># make lines</span>
-    <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">epiweek</span>,  <span class="co"># x-axis epiweek</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">epiweek</span>,  <span class="co"># x-axis epiweek</span>
         y <span class="op">=</span> <span class="va">n</span>,        <span class="co"># height in number of rows</span>
         color <span class="op">=</span> <span class="fu">fct_reorder2</span><span class="op">(</span><span class="va">hospital</span>, <span class="va">epiweek</span>, <span class="va">n</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">+</span> <span class="co"># grouped by hospital and colors ordered by n value at end of plot</span>
   <span class="fu">labs</span><span class="op">(</span>color <span class="op">=</span> <span class="st">"Hospital"</span><span class="op">)</span>  <span class="co"># change legend title</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-244-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-238-1.png" width="672"></div>
 <p><strong><code>fct_lump()</code></strong></p>
 <p>To “lump” together many low-frequency levels into an “Other” group, you can use this function. Do one of the following:</p>
 <ul>
@@ -301,10 +301,10 @@ In the second example, the x-axis column has been wrapped in <code>fct_reorder()
 <p>You can also change the label for “Other” by using <code>other_level =</code>. Below, all but the two most-frequent hospitals are combined into “Other hospitals”.</p>
 <div class="sourceCode" id="cb344"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">linelist</span><span class="op">)</span><span class="op">+</span>
-  <span class="fu">geom_bar</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="fu">fct_lump</span><span class="op">(</span><span class="va">hospital</span>,    <span class="co"># column for x-axis</span>
+  <span class="fu">geom_bar</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu">fct_lump</span><span class="op">(</span><span class="va">hospital</span>,    <span class="co"># column for x-axis</span>
                             n <span class="op">=</span> <span class="fl">2</span>,       <span class="co"># keep two most-frequent levels</span>
                             other_level <span class="op">=</span> <span class="st">"Other hospitals"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="co"># label for "Other" group</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-245-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-239-1.png" width="672"></div>
 <p>You can also use <code>fct_other()</code> to manually assign factor levels to an “Other” group. Below, all <code>hospital</code> values aside from “Port Hospital” and “Central Hospital” are combined into “Other”.</p>
 <p>You can use the arguments <code>keep =</code>, or <code>drop =</code>, and can change the label of “Other” with <code>other_label =</code>.</p>
 <div class="sourceCode" id="cb345"><pre class="downlit sourceCode r">
@@ -367,16 +367,17 @@ Below, the labels of the factor column <code>delay</code> (grouped days from ons
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>hospital <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">hospital</span><span class="op">)</span><span class="op">)</span>
 
 <span class="fu"><a href="https://rdrr.io/r/base/levels.html">levels</a></span><span class="op">(</span><span class="va">linelist</span><span class="op">$</span><span class="va">hospital</span><span class="op">)</span></code></pre></div>
-<pre><code>## [1] "Central Hospital"                     "Military Hospital"                    "Missing"                              "Other"                               
-## [5] "Port Hospital"                        "St. Mark's Maternity Hospital (SMMH)"</code></pre>
+<pre><code>## [1] "Central Hospital"                     "Military Hospital"                    "Missing"                             
+## [4] "Other"                                "Port Hospital"                        "St. Mark's Maternity Hospital (SMMH)"</code></pre>
 <p>Now we can add the level “University Hospital”:</p>
 <div class="sourceCode" id="cb355"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">linelist</span> <span class="op">&lt;-</span> <span class="va">linelist</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>hospital <span class="op">=</span> <span class="fu">fct_expand</span><span class="op">(</span><span class="va">hospital</span>, <span class="st">"University Hospital"</span><span class="op">)</span><span class="op">)</span>
 
 <span class="fu"><a href="https://rdrr.io/r/base/levels.html">levels</a></span><span class="op">(</span><span class="va">linelist</span><span class="op">$</span><span class="va">hospital</span><span class="op">)</span></code></pre></div>
-<pre><code>## [1] "Central Hospital"                     "Military Hospital"                    "Missing"                              "Other"                               
-## [5] "Port Hospital"                        "St. Mark's Maternity Hospital (SMMH)" "University Hospital"</code></pre>
+<pre><code>## [1] "Central Hospital"                     "Military Hospital"                    "Missing"                             
+## [4] "Other"                                "Port Hospital"                        "St. Mark's Maternity Hospital (SMMH)"
+## [7] "University Hospital"</code></pre>
 <div id="epiweeks" class="section level3 unnumbered">
 <h3>Epiweeks<a class="anchor" aria-label="anchor" href="#epiweeks"><i class="fas fa-link"></i></a>
 </h3>

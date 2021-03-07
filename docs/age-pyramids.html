@@ -118,7 +118,7 @@ These tabs demonstrate how to produce age pyramids using:</p>
 <ul>
 <li>Fast &amp; easy: Using the <strong>apyramid</strong> package<br>
 </li>
-<li>More flexible: Using <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code><br>
+<li>More flexible: Using <code>ggplot()</code><br>
 </li>
 <li>Having baseline demographics displayed in the background of the pyramid<br>
 </li>
@@ -129,10 +129,10 @@ These tabs demonstrate how to produce age pyramids using:</p>
 <span class="header-section-number">32.1</span> Overview<a class="anchor" aria-label="anchor" href="#overview-20"><i class="fas fa-link"></i></a>
 </h2>
 <p><img src="images/pop_pyramid_baseline.png" width="50%"><img src="images/likert.png" width="50%"></p>
-<p>Age/gender demographic pyramids in R are generally made with <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code> by creating two barplots (one for each gender), converting one’s values to negative values, and flipping the x and y axes to display the barplots vertically.</p>
+<p>Age/gender demographic pyramids in R are generally made with <code>ggplot()</code> by creating two barplots (one for each gender), converting one’s values to negative values, and flipping the x and y axes to display the barplots vertically.</p>
 <p>Here we offer a quick approach through the <strong>apyramid</strong> package:</p>
 <ul>
-<li>More customizable code using the raw <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code> commands<br>
+<li>More customizable code using the raw <code>ggplot()</code> commands<br>
 </li>
 <li>How to combine case demographic data and compare with that of a baseline population (as shown above)<br>
 </li>
@@ -153,32 +153,32 @@ These tabs demonstrate how to produce age pyramids using:</p>
 </ul>
 <p><strong>Load packages</strong></p>
 <p>First, load the packages required for this analysis:</p>
-<div class="sourceCode" id="cb1139"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1188"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span><span class="va">rio</span>,       <span class="co"># to import data</span>
                <span class="va">here</span>,      <span class="co"># to locate files</span>
                <span class="va">tidyverse</span>, <span class="co"># to clean, handle, and plot the data (includes ggplot2 package)</span>
                <span class="va">apyramid</span>,  <span class="co"># a package dedicated to creating age pyramids</span>
                <span class="va">stringr</span><span class="op">)</span>   <span class="co"># working with strings for titles, captions, etc.</span></code></pre></div>
 <p>Load the data</p>
-<div class="sourceCode" id="cb1140"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1189"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">linelist</span> <span class="op">&lt;-</span> <span class="fu">rio</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/rio/man/import.html">import</a></span><span class="op">(</span><span class="st">"linelist_cleaned.csv"</span><span class="op">)</span></code></pre></div>
 <p><strong>Check class of variables</strong></p>
 <p>Ensure that the age variable is class Numeric, and check the class and order of levels of <code>age_cat</code> and <code>age_cat5</code></p>
-<div class="sourceCode" id="cb1141"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1190"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">linelist</span><span class="op">$</span><span class="va">age_years</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] "numeric"</code></pre>
-<div class="sourceCode" id="cb1143"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1192"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">linelist</span><span class="op">$</span><span class="va">age_cat</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] "factor"</code></pre>
-<div class="sourceCode" id="cb1145"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1194"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">linelist</span><span class="op">$</span><span class="va">age_cat5</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] "factor"</code></pre>
-<div class="sourceCode" id="cb1147"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1196"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">linelist</span><span class="op">$</span><span class="va">age_cat</span>, useNA <span class="op">=</span> <span class="st">"always"</span><span class="op">)</span></code></pre></div>
 <pre><code>## 
 ##   0-4   5-9 10-14 15-19 20-29 30-49 50-69   70+  &lt;NA&gt; 
 ##  1066  1103   918   773  1102   724   102    13    87</code></pre>
-<div class="sourceCode" id="cb1149"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1198"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">linelist</span><span class="op">$</span><span class="va">age_cat5</span>, useNA <span class="op">=</span> <span class="st">"always"</span><span class="op">)</span></code></pre></div>
 <pre><code>## 
 ##   0-4   5-9 10-14 15-19 20-24 25-29 30-34 35-39 40-44 45-49 50-54 55-59 60-64 65-69 70-74 75-79 80-84   85+  &lt;NA&gt; 
@@ -189,7 +189,7 @@ These tabs demonstrate how to produce age pyramids using:</p>
 <h2>
 <span class="header-section-number">32.3</span> <strong>apyramid</strong> package<a class="anchor" aria-label="anchor" href="#apyramid-package"><i class="fas fa-link"></i></a>
 </h2>
-<p>The package <strong>apyramid</strong> allows you to quickly make an age pyramid. For more nuanced situations, see the tab on using <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code> to make age pyramids. You can read more about the <strong>apyramid</strong> package in its Help page by entering <code>?age_pyramid</code> in your R console.</p>
+<p>The package <strong>apyramid</strong> allows you to quickly make an age pyramid. For more nuanced situations, see the tab on using <code>ggplot()</code> to make age pyramids. You can read more about the <strong>apyramid</strong> package in its Help page by entering <code>?age_pyramid</code> in your R console.</p>
 <div id="linelist-data" class="section level3" number="32.3.1">
 <h3>
 <span class="header-section-number">32.3.1</span> Linelist data<a class="anchor" aria-label="anchor" href="#linelist-data"><i class="fas fa-link"></i></a>
@@ -202,31 +202,31 @@ These tabs demonstrate how to produce age pyramids using:</p>
 </li>
 <li>The <em>split_by</em> argument (bar colors) should be a binary column (in this case “gender”)</li>
 </ul>
-<div class="sourceCode" id="cb1151"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1200"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">apyramid</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/apyramid/man/age_pyramid.html">age_pyramid</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">linelist</span>,
                       age_group <span class="op">=</span> <span class="st">"age_cat5"</span>,
                       split_by <span class="op">=</span> <span class="st">"gender"</span><span class="op">)</span></code></pre></div>
 <pre><code>## Warning: 284 missing rows were removed (87 values from `age_cat5` and 284 values from `gender`).</code></pre>
-<p><img src="_main_files/figure-html/unnamed-chunk-766-1.png" width="672">
+<p><img src="_main_files/figure-html/unnamed-chunk-792-1.png" width="672">
 When using <strong>agepyramid</strong> package, if the <code>split_by</code> column is binary (e.g. male/female, or yes/no), then the result will appear as a pyramid. However if there are more than two values in the <code>split_by</code> column (not including <code>NA</code>), the pyramid will appears as a faceted barplot with empty bars in the background indicating the range of the un-faceted data set for the age group. Values of split_by will appear as labels at top of each facet. For example below if the <code>split_by</code> variable is “hospital”.</p>
-<div class="sourceCode" id="cb1153"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1202"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">apyramid</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/apyramid/man/age_pyramid.html">age_pyramid</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">linelist</span>,
                       age_group <span class="op">=</span> <span class="st">"age_cat5"</span>,
                       split_by <span class="op">=</span> <span class="st">"hospital"</span>,
                       na.rm <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>        <span class="co"># show a bar for patients missing age, (note: this changes the pyramid into a faceted barplot)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-767-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-793-1.png" width="672"></div>
 <p><strong>Missing values</strong><br>
 Rows missing values for the <code>split_by</code> or <code>age_group</code> columns, if coded as <code>NA</code>, will not trigger the faceting shown above. By default these rows will not be shown. However you can specify that they appear, in an adjacent barplot and as a separate age group at the top, by specifying <code>na.rm = FALSE</code>.</p>
-<div class="sourceCode" id="cb1154"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1203"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">apyramid</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/apyramid/man/age_pyramid.html">age_pyramid</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">linelist</span>,
                       age_group <span class="op">=</span> <span class="st">"age_cat5"</span>,
                       split_by <span class="op">=</span> <span class="st">"gender"</span>,
                       na.rm <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>         <span class="co"># show patients missing age or gender</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-768-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-794-1.png" width="672"></div>
 <p><strong>Proportions, colors, &amp; aesthetics</strong></p>
 <p>By default, the bars display counts (not %), a dashed mid-line for each group is shown, and the colors are green/purple. Each of these parameters can all be adjusted, as shown below:</p>
-<p>You can also add additional <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code> commands to the plot using the standard <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code> “+” syntax, such as aesthetic themes and label adjustments:</p>
-<div class="sourceCode" id="cb1155"><pre class="downlit sourceCode r">
+<p>You can also add additional <code>ggplot()</code> commands to the plot using the standard <code>ggplot()</code> “+” syntax, such as aesthetic themes and label adjustments:</p>
+<div class="sourceCode" id="cb1204"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">apyramid</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/apyramid/man/age_pyramid.html">age_pyramid</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">linelist</span>,
                       age_group <span class="op">=</span> <span class="st">"age_cat5"</span>,
                       split_by <span class="op">=</span> <span class="st">"gender"</span>,
@@ -236,22 +236,22 @@ Rows missing values for the <code>split_by</code> or <code>age_group</code> colu
                       <span class="op">)</span><span class="op">+</span>                 
   
   <span class="co"># additional ggplot commands</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span><span class="op">+</span>                                          <span class="co"># simplify the background</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html">scale_fill_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"orange"</span>, <span class="st">"purple"</span><span class="op">)</span>,         <span class="co"># to specify colors AND labels</span>
+  <span class="fu">theme_minimal</span><span class="op">(</span><span class="op">)</span><span class="op">+</span>                                          <span class="co"># simplify the background</span>
+  <span class="fu">scale_fill_manual</span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"orange"</span>, <span class="st">"purple"</span><span class="op">)</span>,         <span class="co"># to specify colors AND labels</span>
                      labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Male"</span>, <span class="st">"Female"</span><span class="op">)</span><span class="op">)</span><span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>y <span class="op">=</span> <span class="st">"Percent of all cases"</span>,                          <span class="co"># note that x and y labels are switched (see ggplot tab)</span>
+  <span class="fu">labs</span><span class="op">(</span>y <span class="op">=</span> <span class="st">"Percent of all cases"</span>,                          <span class="co"># note that x and y labels are switched (see ggplot tab)</span>
        x <span class="op">=</span> <span class="st">"Age categories"</span>,                          
        fill <span class="op">=</span> <span class="st">"Gender"</span>, 
        caption <span class="op">=</span> <span class="st">"My data source and caption here"</span>,
        title <span class="op">=</span> <span class="st">"Title of my plot"</span>,
        subtitle <span class="op">=</span> <span class="st">"Subtitle with \n a second line..."</span><span class="op">)</span><span class="op">+</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>
+  <span class="fu">theme</span><span class="op">(</span>
     legend.position <span class="op">=</span> <span class="st">"bottom"</span>,                             <span class="co"># move legend to bottom</span>
-    axis.text <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">10</span>, face <span class="op">=</span> <span class="st">"bold"</span><span class="op">)</span>,     <span class="co"># fonts/sizes, see ggplot tips page</span>
-    axis.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">12</span>, face <span class="op">=</span> <span class="st">"bold"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+    axis.text <span class="op">=</span> <span class="fu">element_text</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">10</span>, face <span class="op">=</span> <span class="st">"bold"</span><span class="op">)</span>,     <span class="co"># fonts/sizes, see ggplot tips page</span>
+    axis.title <span class="op">=</span> <span class="fu">element_text</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">12</span>, face <span class="op">=</span> <span class="st">"bold"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>## Warning: 284 missing rows were removed (87 values from `age_cat5` and 284 values from `gender`).</code></pre>
 <pre><code>## Scale for 'fill' is already present. Adding another scale for 'fill', which will replace the existing scale.</code></pre>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-769-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-795-1.png" width="672"></div>
 </div>
 <div id="aggregated-data-1" class="section level3" number="32.3.2">
 <h3>
@@ -261,29 +261,29 @@ Rows missing values for the <code>split_by</code> or <code>age_group</code> colu
 <p>Let’s say that your dataset looks like this, with columns for age category, and male counts, female counts, and missing counts.<br>
 (see the handbook page on Transforming data for tips)</p>
 <pre><code>## `summarise()` has grouped output by 'age_cat5'. You can override using the `.groups` argument.</code></pre>
-<div class="sourceCode" id="cb1159"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1208"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># View the aggregated data</span>
 <span class="fu">DT</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/DT/man/datatable.html">datatable</a></span><span class="op">(</span><span class="va">demo_agg</span>, rownames <span class="op">=</span> <span class="cn">FALSE</span>, filter<span class="op">=</span><span class="st">"top"</span>, options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>pageLength <span class="op">=</span> <span class="fl">5</span>, scrollX<span class="op">=</span><span class="cn">T</span><span class="op">)</span> <span class="op">)</span></code></pre></div>
-<p><code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code> perfers data in “long” format, so first pivot the data to be “long” with the <code>pivot_longer()</code> function from <strong>dplyr</strong>.</p>
-<div class="sourceCode" id="cb1160"><pre class="downlit sourceCode r">
+<p><code>ggplot()</code> perfers data in “long” format, so first pivot the data to be “long” with the <code>pivot_longer()</code> function from <strong>dplyr</strong>.</p>
+<div class="sourceCode" id="cb1209"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># pivot the aggregated data into long format</span>
 <span class="va">demo_agg_long</span> <span class="op">&lt;-</span> <span class="va">demo_agg</span> <span class="op">%&gt;%</span> 
   <span class="fu">pivot_longer</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">f</span>, <span class="va">m</span>, <span class="va">missing_gender</span><span class="op">)</span>,            <span class="co"># cols to elongate</span>
                names_to <span class="op">=</span> <span class="st">"gender"</span>,                <span class="co"># name for new col of categories</span>
                values_to <span class="op">=</span> <span class="st">"counts"</span><span class="op">)</span> <span class="op">%&gt;%</span>           <span class="co"># name for new col of counts</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>gender <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/na_if.html">na_if</a></span><span class="op">(</span><span class="va">gender</span>, <span class="st">"missing_gender"</span><span class="op">)</span><span class="op">)</span> <span class="co"># convert "missing_gender" to NA</span></code></pre></div>
-<div class="sourceCode" id="cb1161"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1210"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># View the aggregated data</span>
 <span class="fu">DT</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/DT/man/datatable.html">datatable</a></span><span class="op">(</span><span class="va">demo_agg_long</span>, rownames <span class="op">=</span> <span class="cn">FALSE</span>, filter<span class="op">=</span><span class="st">"top"</span>, options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>pageLength <span class="op">=</span> <span class="fl">5</span>, scrollX<span class="op">=</span><span class="cn">T</span><span class="op">)</span> <span class="op">)</span></code></pre></div>
 <p>Then use the <code>split_by</code> and <code>count</code> arguments of <code>age_pyramid()</code> to specify the respective columns:</p>
-<div class="sourceCode" id="cb1162"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1211"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">apyramid</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/apyramid/man/age_pyramid.html">age_pyramid</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">demo_agg_long</span>,
                       age_group <span class="op">=</span> <span class="st">"age_cat5"</span>,
                       split_by <span class="op">=</span> <span class="st">"gender"</span>,
                       count <span class="op">=</span> <span class="st">"counts"</span><span class="op">)</span>      <span class="co"># give the column name for the aggregated counts</span></code></pre></div>
 <pre><code>## Warning: Removed 27 rows containing missing values (position_stack).</code></pre>
 <pre><code>## Warning: Removed 19 rows containing missing values.</code></pre>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-774-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-800-1.png" width="672"></div>
 <p>Note in the above, that the factor order of “m” and “f” is different (pyramid reversed). To adjust the order you must re-define gender in the aggredated data as a Factor and order the levels as desired.</p>
 <!-- ======================================================= -->
 </div>
@@ -292,45 +292,45 @@ Rows missing values for the <code>split_by</code> or <code>age_group</code> colu
 <h2>
 <span class="header-section-number">32.4</span> <code>ggplot()</code><a class="anchor" aria-label="anchor" href="#ggplot"><i class="fas fa-link"></i></a>
 </h2>
-<p>Using <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code> to build your age pyramid allows for more flexibility, but requires more effort and understanding of how <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code> works. It is also easier to accidentally make mistakes.</p>
-<p><strong>apyramid</strong> uses <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code> in the background (and accepts <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code> commands added), but this page shows how to adjust or recreate a pyramid only using <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code>, if you wish.</p>
+<p>Using <code>ggplot()</code> to build your age pyramid allows for more flexibility, but requires more effort and understanding of how <code>ggplot()</code> works. It is also easier to accidentally make mistakes.</p>
+<p><strong>apyramid</strong> uses <code>ggplot()</code> in the background (and accepts <code>ggplot()</code> commands added), but this page shows how to adjust or recreate a pyramid only using <code>ggplot()</code>, if you wish.</p>
 <!-- ======================================================= -->
 <div id="constructing-the-plot" class="section level3" number="32.4.1">
 <h3>
 <span class="header-section-number">32.4.1</span> Constructing the plot<a class="anchor" aria-label="anchor" href="#constructing-the-plot"><i class="fas fa-link"></i></a>
 </h3>
-<p>First, understand that to make such a pyramid using <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code> the approach is to:</p>
+<p>First, understand that to make such a pyramid using <code>ggplot()</code> the approach is to:</p>
 <ul>
-<li><p>Within the <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code>, create <strong>two</strong> graphs by age category. Create one for each of the two grouping values (in this case gender). See filters applied to the <code>data</code> arguments in each <code><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram()</a></code> commands below.</p></li>
-<li><p>If using <code><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram()</a></code>, the graphs operate off the numeric column (e.g. <code>age_years</code>), whereas if using <code>geom_barplot()</code> the graphs operate from an ordered Factor (e.g. <code>age_cat5</code>).</p></li>
+<li><p>Within the <code>ggplot()</code>, create <strong>two</strong> graphs by age category. Create one for each of the two grouping values (in this case gender). See filters applied to the <code>data</code> arguments in each <code>geom_histogram()</code> commands below.</p></li>
+<li><p>If using <code>geom_histogram()</code>, the graphs operate off the numeric column (e.g. <code>age_years</code>), whereas if using <code>geom_barplot()</code> the graphs operate from an ordered Factor (e.g. <code>age_cat5</code>).</p></li>
 <li><p>One graph will have positive count values, while the other will have its counts converted to negative values - this allows both graphs to be seen and compared against each other in the same plot.</p></li>
-<li><p>The command <code><a href="https://ggplot2.tidyverse.org/reference/coord_flip.html">coord_flip()</a></code> switches the X and Y axes, resulting in the graphs turning vertical and creating the pyramid.</p></li>
+<li><p>The command <code>coord_flip()</code> switches the X and Y axes, resulting in the graphs turning vertical and creating the pyramid.</p></li>
 <li><p>Lastly, the counts-axis labels must be specified so they appear as “positive” counts on both sides of the pyramid (despite the underlying values on one side being negative).</p></li>
 </ul>
-<p>A <strong>simple</strong> version of this, using <code><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram()</a></code>, is below:</p>
-<div class="sourceCode" id="cb1165"><pre class="downlit sourceCode r">
+<p>A <strong>simple</strong> version of this, using <code>geom_histogram()</code>, is below:</p>
+<div class="sourceCode" id="cb1214"><pre class="downlit sourceCode r">
 <code class="sourceCode R">  <span class="co"># begin ggplot</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">linelist</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">age</span>, fill <span class="op">=</span> <span class="va">gender</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">linelist</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">age</span>, fill <span class="op">=</span> <span class="va">gender</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   
   <span class="co"># female histogram</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">linelist</span>, <span class="va">gender</span> <span class="op">==</span> <span class="st">"f"</span><span class="op">)</span>,
+  <span class="fu">geom_histogram</span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">linelist</span>, <span class="va">gender</span> <span class="op">==</span> <span class="st">"f"</span><span class="op">)</span>,
                  breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">85</span>,<span class="fl">5</span><span class="op">)</span>,
                  colour <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span> <span class="op">+</span>
   
   <span class="co"># male histogram (values converted to negative)</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">linelist</span>, <span class="va">gender</span> <span class="op">==</span> <span class="st">"m"</span><span class="op">)</span>,
+  <span class="fu">geom_histogram</span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">linelist</span>, <span class="va">gender</span> <span class="op">==</span> <span class="st">"m"</span><span class="op">)</span>,
                  breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">85</span>,<span class="fl">5</span><span class="op">)</span>,
                  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y<span class="op">=</span><span class="va">..count..</span><span class="op">*</span><span class="op">(</span><span class="op">-</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span>,
                  colour <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span> <span class="op">+</span>
   
   <span class="co"># flip the X and Y axes</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_flip.html">coord_flip</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">coord_flip</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   
   <span class="co"># adjust counts-axis scale</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span><span class="op">(</span>limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">600</span>, <span class="fl">900</span><span class="op">)</span>,
+  <span class="fu">scale_y_continuous</span><span class="op">(</span>limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">600</span>, <span class="fl">900</span><span class="op">)</span>,
                      breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="op">-</span><span class="fl">600</span>,<span class="fl">900</span>,<span class="fl">100</span><span class="op">)</span>,
                      labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="op">-</span><span class="fl">600</span>, <span class="fl">900</span>, <span class="fl">100</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-775-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-801-1.png" width="672"></div>
 <p><span style="color: red;"><strong><em>DANGER:</em></strong> If the <strong>limits</strong> of your counts axis are set too low, and a counts bar exceeds them, the bar will disappear entirely or be artificially shortened! Watch for this if analyzing data which is routinely updated. Prevent it by having your count-axis limits auto-adjust to your data, as below.</span></p>
 <p>There are many things you can change/add to this simple version, including:</p>
 <ul>
@@ -338,7 +338,7 @@ Rows missing values for the <code>split_by</code> or <code>age_group</code> colu
 </li>
 <li>Manually specify colors and legend labels</li>
 </ul>
-<div class="sourceCode" id="cb1166"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1215"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># create dataset with proportion of total</span>
 <span class="va">pyramid_data</span> <span class="op">&lt;-</span> <span class="va">linelist</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">age_cat5</span>, <span class="va">gender</span><span class="op">)</span> <span class="op">%&gt;%</span> 
@@ -350,16 +350,16 @@ Rows missing values for the <code>split_by</code> or <code>age_group</code> colu
             <span class="va">gender</span> <span class="op">==</span> <span class="st">"m"</span> <span class="op">~</span> <span class="op">-</span><span class="va">percent</span>,
             <span class="cn">TRUE</span>          <span class="op">~</span> <span class="cn">NA_real_</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>## `summarise()` has grouped output by 'age_cat5'. You can override using the `.groups` argument.</code></pre>
-<div class="sourceCode" id="cb1168"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1217"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">max_per</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">pyramid_data</span><span class="op">$</span><span class="va">percent</span>, na.rm<span class="op">=</span><span class="cn">T</span><span class="op">)</span>
 <span class="va">min_per</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span><span class="op">(</span><span class="va">pyramid_data</span><span class="op">$</span><span class="va">percent</span>, na.rm<span class="op">=</span><span class="cn">T</span><span class="op">)</span>
 
 
 <span class="co"># begin ggplot</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span><span class="op">+</span>  <span class="co"># default x-axis is age in years;</span>
+  <span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span><span class="op">+</span>  <span class="co"># default x-axis is age in years;</span>
 
   <span class="co"># case data graph</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">pyramid_data</span>,
+  <span class="fu">geom_bar</span><span class="op">(</span>data <span class="op">=</span> <span class="va">pyramid_data</span>,
            stat <span class="op">=</span> <span class="st">"identity"</span>,
            <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">age_cat5</span>,
                y <span class="op">=</span> <span class="va">percent</span>,
@@ -367,59 +367,59 @@ Rows missing values for the <code>split_by</code> or <code>age_group</code> colu
            colour <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span><span class="op">+</span>         <span class="co"># white around each bar</span>
   
   <span class="co"># flip the X and Y axes to make pyramid vertical</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_flip.html">coord_flip</a></span><span class="op">(</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu">coord_flip</span><span class="op">(</span><span class="op">)</span><span class="op">+</span>
   
 
   <span class="co"># adjust the axes scales (remember they are flipped now!)</span>
   <span class="co">#scale_x_continuous(breaks = seq(0,100,5), labels = seq(0,100,5)) +</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span><span class="op">(</span>limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">min_per</span>, <span class="va">max_per</span><span class="op">)</span>,
+  <span class="fu">scale_y_continuous</span><span class="op">(</span>limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">min_per</span>, <span class="va">max_per</span><span class="op">)</span>,
                      breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Round.html">floor</a></span><span class="op">(</span><span class="va">min_per</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/Round.html">ceiling</a></span><span class="op">(</span><span class="va">max_per</span><span class="op">)</span>, <span class="fl">2</span><span class="op">)</span>,
                      labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Round.html">floor</a></span><span class="op">(</span><span class="va">min_per</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/Round.html">ceiling</a></span><span class="op">(</span><span class="va">max_per</span><span class="op">)</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span>, <span class="st">"%"</span><span class="op">)</span><span class="op">)</span><span class="op">+</span>
 
   <span class="co"># designate colors and legend labels manually</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html">scale_fill_manual</a></span><span class="op">(</span>
+  <span class="fu">scale_fill_manual</span><span class="op">(</span>
     values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"f"</span> <span class="op">=</span> <span class="st">"orange"</span>,
                <span class="st">"m"</span> <span class="op">=</span> <span class="st">"darkgreen"</span><span class="op">)</span>,
     labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Female"</span>, <span class="st">"Male"</span><span class="op">)</span>,
   <span class="op">)</span> <span class="op">+</span>
   
   <span class="co"># label values (remember X and Y flipped now)</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>
+  <span class="fu">labs</span><span class="op">(</span>
     x <span class="op">=</span> <span class="st">"Age group"</span>,
     y <span class="op">=</span> <span class="st">"Percent of total"</span>,
     fill <span class="op">=</span> <span class="cn">NULL</span>,
     caption <span class="op">=</span> <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_glue.html">str_glue</a></span><span class="op">(</span><span class="st">"Data are from linelist \nn = {nrow(linelist)} (age or sex missing for {sum(is.na(linelist$gender) | is.na(linelist$age_years))} cases) \nData as of: {format(Sys.Date(), '%d %b %Y')}"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   
   <span class="co"># optional aesthetic themes</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>
-    panel.grid.major <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,
-    panel.grid.minor <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,
-    panel.background <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,
-    axis.line <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_line</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span>,
-    plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>hjust <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>, 
-    plot.caption <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>hjust<span class="op">=</span><span class="fl">0</span>, size<span class="op">=</span><span class="fl">11</span>, face <span class="op">=</span> <span class="st">"italic"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu">theme</span><span class="op">(</span>
+    panel.grid.major <span class="op">=</span> <span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span>,
+    panel.grid.minor <span class="op">=</span> <span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span>,
+    panel.background <span class="op">=</span> <span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span>,
+    axis.line <span class="op">=</span> <span class="fu">element_line</span><span class="op">(</span>colour <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span>,
+    plot.title <span class="op">=</span> <span class="fu">element_text</span><span class="op">(</span>hjust <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>, 
+    plot.caption <span class="op">=</span> <span class="fu">element_text</span><span class="op">(</span>hjust<span class="op">=</span><span class="fl">0</span>, size<span class="op">=</span><span class="fl">11</span>, face <span class="op">=</span> <span class="st">"italic"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
   
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"Age and gender of cases"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+  <span class="fu">ggtitle</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"Age and gender of cases"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>## Warning: Removed 15 rows containing missing values (position_stack).</code></pre>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-776-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-802-1.png" width="672"></div>
 <!-- ======================================================= -->
 </div>
 <div id="compare-to-baseline" class="section level3" number="32.4.2">
 <h3>
 <span class="header-section-number">32.4.2</span> Compare to baseline<a class="anchor" aria-label="anchor" href="#compare-to-baseline"><i class="fas fa-link"></i></a>
 </h3>
-<p>With the flexibility of <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code>, you can have a second layer of bars in the background that represent the true population pyramid. This can provide a nice visualization to compare the observed counts with the baseline.</p>
+<p>With the flexibility of <code>ggplot()</code>, you can have a second layer of bars in the background that represent the true population pyramid. This can provide a nice visualization to compare the observed counts with the baseline.</p>
 <p>Import and view the population data</p>
-<div class="sourceCode" id="cb1170"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1219"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># import the population demographics data</span>
 <span class="va">pop</span> <span class="op">&lt;-</span> <span class="fu">rio</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/rio/man/import.html">import</a></span><span class="op">(</span><span class="st">"country_demographics.csv"</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb1171"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1220"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># display the linelist data as a table</span>
 <span class="fu">DT</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/DT/man/datatable.html">datatable</a></span><span class="op">(</span><span class="va">pop</span>, rownames <span class="op">=</span> <span class="cn">FALSE</span>, filter<span class="op">=</span><span class="st">"top"</span>, options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>pageLength <span class="op">=</span> <span class="fl">10</span>, scrollX<span class="op">=</span><span class="cn">T</span><span class="op">)</span> <span class="op">)</span></code></pre></div>
-<div id="htmlwidget-93cc4886461b2e073044" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-93cc4886461b2e073044">{"x":{"filter":"top","filterHTML":"<tr>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"integer\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"40402\" data-max=\"7828087\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"integer\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"64656\" data-max=\"7674675\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","data":[["0-4","5-9","10-14","15-19","20-24","25-29","30-34","35-39","40-44","45-49","50-54","55-59","60-64","65-69","70-74","75-79","80-84","85+"],[7828087,6705882,5601230,4576430,3734111,3111651,2571215,2121247,1735468,1418749,1145345,900239,685141,500248,347093,202240,94325,40402],[7674675,6592449,5522555,4533885,3726537,3118040,2592416,2150490,1771213,1459439,1193903,956070,745682,563894,416543,258538,130479,64656]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>age_cat5<\/th>\n      <th>m<\/th>\n      <th>f<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":10,"scrollX":true,"columnDefs":[{"className":"dt-right","targets":[1,2]}],"order":[],"autoWidth":false,"orderClasses":false,"orderCellsTop":true}},"evals":[],"jsHooks":[]}</script><p>First some data management steps:</p>
-<p>Here we record the order of age categories that we want to appear. Due to some quirks the way the <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code> is implemented, it is easiest to store these as a character vector and use them later in the plotting function.</p>
-<div class="sourceCode" id="cb1172"><pre class="downlit sourceCode r">
+<div id="htmlwidget-a7af884ca1ef2505ad18" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-a7af884ca1ef2505ad18">{"x":{"filter":"top","filterHTML":"<tr>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"integer\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"40402\" data-max=\"7828087\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"integer\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"64656\" data-max=\"7674675\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","data":[["0-4","5-9","10-14","15-19","20-24","25-29","30-34","35-39","40-44","45-49","50-54","55-59","60-64","65-69","70-74","75-79","80-84","85+"],[7828087,6705882,5601230,4576430,3734111,3111651,2571215,2121247,1735468,1418749,1145345,900239,685141,500248,347093,202240,94325,40402],[7674675,6592449,5522555,4533885,3726537,3118040,2592416,2150490,1771213,1459439,1193903,956070,745682,563894,416543,258538,130479,64656]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>age_cat5<\/th>\n      <th>m<\/th>\n      <th>f<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":10,"scrollX":true,"columnDefs":[{"className":"dt-right","targets":[1,2]}],"order":[],"autoWidth":false,"orderClasses":false,"orderCellsTop":true}},"evals":[],"jsHooks":[]}</script><p>First some data management steps:</p>
+<p>Here we record the order of age categories that we want to appear. Due to some quirks the way the <code>ggplot()</code> is implemented, it is easiest to store these as a character vector and use them later in the plotting function.</p>
+<div class="sourceCode" id="cb1221"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># record correct age cat levels</span>
 <span class="va">age_levels</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"0-4"</span>,<span class="st">"5-9"</span>, <span class="st">"10-14"</span>, <span class="st">"15-19"</span>, <span class="st">"20-24"</span>,
                 <span class="st">"25-29"</span>,<span class="st">"30-34"</span>, <span class="st">"35-39"</span>, <span class="st">"40-44"</span>, <span class="st">"45-49"</span>,
@@ -433,7 +433,7 @@ Rows missing values for the <code>split_by</code> or <code>age_group</code> colu
 </li>
 <li>Bind them together, one on-top of the other (<code><a href="https://dplyr.tidyverse.org/reference/bind.html">bind_rows()</a></code>)</li>
 </ul>
-<div class="sourceCode" id="cb1173"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1222"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># create/transform populaton data, with percent of total</span>
 <span class="co">########################################################</span>
 <span class="va">pop_data</span> <span class="op">&lt;-</span> <span class="fu">pivot_longer</span><span class="op">(</span><span class="va">pop</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">m</span>, <span class="va">f</span><span class="op">)</span>, names_to <span class="op">=</span> <span class="st">"gender"</span>, values_to <span class="op">=</span> <span class="st">"counts"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="co"># pivot gender columns longer</span>
@@ -444,11 +444,11 @@ Rows missing values for the <code>split_by</code> or <code>age_group</code> colu
                             <span class="va">gender</span> <span class="op">==</span> <span class="st">"m"</span> <span class="op">~</span> <span class="op">-</span><span class="va">percent</span>,
                             <span class="cn">TRUE</span>          <span class="op">~</span> <span class="cn">NA_real_</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>Review the changed population dataset</p>
-<div class="sourceCode" id="cb1174"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1223"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># display the linelist data as a table</span>
 <span class="fu">DT</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/DT/man/datatable.html">datatable</a></span><span class="op">(</span><span class="va">pop_data</span>, rownames <span class="op">=</span> <span class="cn">FALSE</span>, filter<span class="op">=</span><span class="st">"top"</span>, options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>pageLength <span class="op">=</span> <span class="fl">5</span>, scrollX<span class="op">=</span><span class="cn">T</span><span class="op">)</span> <span class="op">)</span></code></pre></div>
 <p>Now implement the same for the case linelist. Slightly different because it begins with case-rows, not counts.</p>
-<div class="sourceCode" id="cb1175"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1224"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># create case data by age/gender, with percent of total</span>
 <span class="co">#######################################################</span>
 <span class="va">case_data</span> <span class="op">&lt;-</span> <span class="va">linelist</span> <span class="op">%&gt;%</span>
@@ -463,30 +463,30 @@ Rows missing values for the <code>split_by</code> or <code>age_group</code> colu
             <span class="cn">TRUE</span>          <span class="op">~</span> <span class="cn">NA_real_</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>## `summarise()` has grouped output by 'age_cat5'. You can override using the `.groups` argument.</code></pre>
 <p>Review the changed case dataset</p>
-<div class="sourceCode" id="cb1177"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1226"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># display the linelist data as a table</span>
 <span class="fu">DT</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/DT/man/datatable.html">datatable</a></span><span class="op">(</span><span class="va">case_data</span>, rownames <span class="op">=</span> <span class="cn">FALSE</span>, filter<span class="op">=</span><span class="st">"top"</span>, options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>pageLength <span class="op">=</span> <span class="fl">5</span>, scrollX<span class="op">=</span><span class="cn">T</span><span class="op">)</span> <span class="op">)</span></code></pre></div>
 <p>Now the two datasets are combined, one on top of the other (same column names)</p>
-<div class="sourceCode" id="cb1178"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1227"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># combine case and population data (same column names, age_cat values, and gender values)</span>
 <span class="va">pyramid_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind.html">bind_rows</a></span><span class="op">(</span><span class="va">case_data</span>, <span class="va">pop_data</span><span class="op">)</span></code></pre></div>
 <p>Store the maximum and minimum percent values, used in the plotting funtion to define the extent of the plot (and not cut off any bars!)</p>
-<div class="sourceCode" id="cb1179"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1228"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Define extent of percent axis, used for plot limits</span>
 <span class="va">max_per</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">pyramid_data</span><span class="op">$</span><span class="va">percent</span>, na.rm<span class="op">=</span><span class="cn">T</span><span class="op">)</span>
 <span class="va">min_per</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span><span class="op">(</span><span class="va">pyramid_data</span><span class="op">$</span><span class="va">percent</span>, na.rm<span class="op">=</span><span class="cn">T</span><span class="op">)</span></code></pre></div>
-<p>Now the plot is made with <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code>:</p>
+<p>Now the plot is made with <code>ggplot()</code>:</p>
 <ul>
 <li>One bar graph of population data (wider, more transparent bars)</li>
 <li>One bar graph of case data (small, more solid bars)</li>
 </ul>
-<div class="sourceCode" id="cb1180"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1229"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># begin ggplot</span>
 <span class="co">##############</span>
-<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span><span class="op">+</span>  <span class="co"># default x-axis is age in years;</span>
+<span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span><span class="op">+</span>  <span class="co"># default x-axis is age in years;</span>
 
   <span class="co"># population data graph</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">pyramid_data</span>, <span class="va">data</span> <span class="op">==</span> <span class="st">"population"</span><span class="op">)</span>,
+  <span class="fu">geom_bar</span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">pyramid_data</span>, <span class="va">data</span> <span class="op">==</span> <span class="st">"population"</span><span class="op">)</span>,
            stat <span class="op">=</span> <span class="st">"identity"</span>,
            <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">age_cat5</span>,
                y <span class="op">=</span> <span class="va">percent</span>,
@@ -496,7 +496,7 @@ Rows missing values for the <code>split_by</code> or <code>age_group</code> colu
            width <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">+</span>                                     <span class="co"># full width</span>
   
   <span class="co"># case data graph</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">pyramid_data</span>, <span class="va">data</span> <span class="op">==</span> <span class="st">"cases"</span><span class="op">)</span>, 
+  <span class="fu">geom_bar</span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">pyramid_data</span>, <span class="va">data</span> <span class="op">==</span> <span class="st">"cases"</span><span class="op">)</span>, 
            stat <span class="op">=</span> <span class="st">"identity"</span>,                              <span class="co"># use % as given in data, not counting rows</span>
            <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">age_cat5</span>,                               <span class="co"># age categories as original X axis</span>
                y <span class="op">=</span> <span class="va">percent</span>,                                <span class="co"># % as original Y-axis</span>
@@ -506,14 +506,14 @@ Rows missing values for the <code>split_by</code> or <code>age_group</code> colu
            width <span class="op">=</span> <span class="fl">0.3</span><span class="op">)</span><span class="op">+</span>                                   <span class="co"># half width</span>
   
   <span class="co"># flip the X and Y axes to make pyramid vertical</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_flip.html">coord_flip</a></span><span class="op">(</span><span class="op">)</span><span class="op">+</span>
+  <span class="fu">coord_flip</span><span class="op">(</span><span class="op">)</span><span class="op">+</span>
   
   <span class="co"># adjust axes order, scale, and labels (remember X and Y axes are flipped now)</span>
   <span class="co"># manually ensure that age-axis is ordered correctly</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_discrete.html">scale_x_discrete</a></span><span class="op">(</span>limits <span class="op">=</span> <span class="va">age_levels</span><span class="op">)</span><span class="op">+</span> 
+  <span class="fu">scale_x_discrete</span><span class="op">(</span>limits <span class="op">=</span> <span class="va">age_levels</span><span class="op">)</span><span class="op">+</span> 
   
   <span class="co"># set percent-axis </span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span><span class="op">(</span>limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">min_per</span>, <span class="va">max_per</span><span class="op">)</span>,                                          <span class="co"># min and max defined above</span>
+  <span class="fu">scale_y_continuous</span><span class="op">(</span>limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">min_per</span>, <span class="va">max_per</span><span class="op">)</span>,                                          <span class="co"># min and max defined above</span>
                      breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Round.html">floor</a></span><span class="op">(</span><span class="va">min_per</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/Round.html">ceiling</a></span><span class="op">(</span><span class="va">max_per</span><span class="op">)</span>, by <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>,                <span class="co"># from min% to max% by 2 </span>
                      labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span>                                                       <span class="co"># for the labels, paste together... </span>
                        <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Round.html">floor</a></span><span class="op">(</span><span class="va">min_per</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/Round.html">ceiling</a></span><span class="op">(</span><span class="va">max_per</span><span class="op">)</span>, by <span class="op">=</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span>,                  <span class="co"># ...rounded absolute values of breaks... </span>
@@ -521,7 +521,7 @@ Rows missing values for the <code>split_by</code> or <code>age_group</code> colu
                                                                                             <span class="co"># floor(), ceiling() round down and up </span>
 
   <span class="co"># designate colors and legend labels manually</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html">scale_fill_manual</a></span><span class="op">(</span>
+  <span class="fu">scale_fill_manual</span><span class="op">(</span>
     values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"f"</span> <span class="op">=</span> <span class="st">"orange"</span>,         <span class="co"># assign colors to values in the data</span>
                <span class="st">"m"</span> <span class="op">=</span> <span class="st">"darkgreen"</span><span class="op">)</span>,
     labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"f"</span> <span class="op">=</span> <span class="st">"Female"</span>,
@@ -529,7 +529,7 @@ Rows missing values for the <code>split_by</code> or <code>age_group</code> colu
   <span class="op">)</span> <span class="op">+</span>
 
   <span class="co"># plot labels, titles, caption    </span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>
+  <span class="fu">labs</span><span class="op">(</span>
     title <span class="op">=</span> <span class="st">"Case age and gender distribution,\nas compared to baseline population"</span>,
     subtitle <span class="op">=</span> <span class="st">""</span>,
     x <span class="op">=</span> <span class="st">"Age category"</span>,
@@ -538,16 +538,16 @@ Rows missing values for the <code>split_by</code> or <code>age_group</code> colu
     caption <span class="op">=</span> <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_glue.html">str_glue</a></span><span class="op">(</span><span class="st">"Cases shown on top of country demographic baseline\nCase data are from linelist, n = {nrow(linelist)}\nAge or gender missing for {sum(is.na(linelist$gender) | is.na(linelist$age_years))} cases\nCase data as of: {format(max(linelist$date_onset, na.rm=T), '%d %b %Y')}"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   
   <span class="co"># optional aesthetic themes</span>
-  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>
+  <span class="fu">theme</span><span class="op">(</span>
     legend.position <span class="op">=</span> <span class="st">"bottom"</span>,                             <span class="co"># move legend to bottom</span>
-    panel.grid.major <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,
-    panel.grid.minor <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,
-    panel.background <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_blank</a></span><span class="op">(</span><span class="op">)</span>,
-    axis.line <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_line</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span>,
-    plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>hjust <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>, 
-    plot.caption <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>hjust<span class="op">=</span><span class="fl">0</span>, size<span class="op">=</span><span class="fl">11</span>, face <span class="op">=</span> <span class="st">"italic"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+    panel.grid.major <span class="op">=</span> <span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span>,
+    panel.grid.minor <span class="op">=</span> <span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span>,
+    panel.background <span class="op">=</span> <span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span>,
+    axis.line <span class="op">=</span> <span class="fu">element_line</span><span class="op">(</span>colour <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span>,
+    plot.title <span class="op">=</span> <span class="fu">element_text</span><span class="op">(</span>hjust <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>, 
+    plot.caption <span class="op">=</span> <span class="fu">element_text</span><span class="op">(</span>hjust<span class="op">=</span><span class="fl">0</span>, size<span class="op">=</span><span class="fl">11</span>, face <span class="op">=</span> <span class="st">"italic"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>## Warning: Removed 15 rows containing missing values (position_stack).</code></pre>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-787-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-813-1.png" width="672"></div>
 <!-- ======================================================= -->
 </div>
 </div>
@@ -555,13 +555,13 @@ Rows missing values for the <code>split_by</code> or <code>age_group</code> colu
 <h2>
 <span class="header-section-number">32.5</span> Likert scale<a class="anchor" aria-label="anchor" href="#likert-scale"><i class="fas fa-link"></i></a>
 </h2>
-<p>The techniques used to make a population pyramid with <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code> can also be used to make plots of Likert-scale survey data.</p>
+<p>The techniques used to make a population pyramid with <code>ggplot()</code> can also be used to make plots of Likert-scale survey data.</p>
 <p>Import the data</p>
-<div class="sourceCode" id="cb1182"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1231"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># import the likert survey response data</span>
 <span class="va">likert_data</span> <span class="op">&lt;-</span> <span class="fu">rio</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/rio/man/import.html">import</a></span><span class="op">(</span><span class="st">"likert_data.csv"</span><span class="op">)</span></code></pre></div>
 <p>Start with data that looks like this, with a categorical classification of each respondent (<code>status</code>) and their answers to 8 questions on a 4-point Likert-type scale (“Very poor”, “Poor”, “Good”, “Very good”).</p>
-<div class="sourceCode" id="cb1183"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1232"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># display the linelist data as a table</span>
 <span class="fu">DT</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/DT/man/datatable.html">datatable</a></span><span class="op">(</span><span class="va">likert_data</span>, rownames <span class="op">=</span> <span class="cn">FALSE</span>, filter<span class="op">=</span><span class="st">"top"</span>, options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>pageLength <span class="op">=</span> <span class="fl">10</span>, scrollX<span class="op">=</span><span class="cn">T</span><span class="op">)</span> <span class="op">)</span></code></pre></div>
 <p>First, some data management steps:</p>
@@ -574,7 +574,7 @@ Rows missing values for the <code>split_by</code> or <code>age_group</code> colu
 </li>
 <li>Store the max count value so limits of plot are appropriate</li>
 </ul>
-<div class="sourceCode" id="cb1184"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1233"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">melted</span> <span class="op">&lt;-</span> <span class="fu">pivot_longer</span><span class="op">(</span><span class="va">likert_data</span>, <span class="va">Q1</span><span class="op">:</span><span class="va">Q8</span>, names_to <span class="op">=</span> <span class="st">"Question"</span>, values_to <span class="op">=</span> <span class="st">"Response"</span><span class="op">)</span> <span class="op">%&gt;%</span> 
      <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>direction <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when</a></span><span class="op">(</span>
                <span class="va">Response</span> <span class="op">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Poor"</span>,<span class="st">"Very Poor"</span><span class="op">)</span> <span class="op">~</span> <span class="st">"Negative"</span>,
@@ -589,14 +589,14 @@ Rows missing values for the <code>split_by</code> or <code>age_group</code> colu
    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">status</span>, <span class="va">Question</span><span class="op">)</span> <span class="op">%&gt;%</span> 
    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html">n</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>## `summarise()` has grouped output by 'status'. You can override using the `.groups` argument.</code></pre>
-<div class="sourceCode" id="cb1186"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1235"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">melted_max</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">melted_max</span><span class="op">$</span><span class="va">n</span>, na.rm<span class="op">=</span><span class="cn">T</span><span class="op">)</span></code></pre></div>
 <p>Now make the plot:</p>
-<div class="sourceCode" id="cb1187"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1236"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># make plot</span>
-<span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span><span class="op">+</span>
+<span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span><span class="op">+</span>
      <span class="co"># bar graph of the "negative" responses </span>
-     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">melted</span>,
+     <span class="fu">geom_bar</span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">melted</span>,
                             <span class="va">direction</span> <span class="op">==</span> <span class="st">"Negative"</span><span class="op">)</span>, 
               <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">status</span>,
                         y<span class="op">=</span><span class="va">..count..</span><span class="op">*</span><span class="op">(</span><span class="op">-</span><span class="fl">1</span><span class="op">)</span>,    <span class="co"># counts inverted to negative</span>
@@ -606,26 +606,26 @@ Rows missing values for the <code>split_by</code> or <code>age_group</code> colu
                     position <span class="op">=</span> <span class="st">"stack"</span><span class="op">)</span><span class="op">+</span>
      
      <span class="co"># bar graph of the "positive responses</span>
-     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">melted</span>, <span class="va">direction</span> <span class="op">==</span> <span class="st">"Positive"</span><span class="op">)</span>,
+     <span class="fu">geom_bar</span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">melted</span>, <span class="va">direction</span> <span class="op">==</span> <span class="st">"Positive"</span><span class="op">)</span>,
               <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">status</span>, fill <span class="op">=</span> <span class="va">Response</span><span class="op">)</span>,
               colour <span class="op">=</span> <span class="st">"black"</span>,
               closed <span class="op">=</span> <span class="st">"left"</span>,
               position <span class="op">=</span> <span class="st">"stack"</span><span class="op">)</span><span class="op">+</span>
      
      <span class="co"># flip the X and Y axes</span>
-     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_flip.html">coord_flip</a></span><span class="op">(</span><span class="op">)</span><span class="op">+</span>
+     <span class="fu">coord_flip</span><span class="op">(</span><span class="op">)</span><span class="op">+</span>
   
      <span class="co"># Black vertical line at 0</span>
-     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_hline</a></span><span class="op">(</span>yintercept <span class="op">=</span> <span class="fl">0</span>, color <span class="op">=</span> <span class="st">"black"</span>, size<span class="op">=</span><span class="fl">1</span><span class="op">)</span><span class="op">+</span>
+     <span class="fu">geom_hline</span><span class="op">(</span>yintercept <span class="op">=</span> <span class="fl">0</span>, color <span class="op">=</span> <span class="st">"black"</span>, size<span class="op">=</span><span class="fl">1</span><span class="op">)</span><span class="op">+</span>
      
     <span class="co"># convert labels to all positive numbers</span>
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span><span class="op">(</span>limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/Round.html">ceiling</a></span><span class="op">(</span><span class="va">melted_max</span><span class="op">/</span><span class="fl">10</span><span class="op">)</span><span class="op">*</span><span class="fl">11</span>, <span class="fu"><a href="https://rdrr.io/r/base/Round.html">ceiling</a></span><span class="op">(</span><span class="va">melted_max</span><span class="op">/</span><span class="fl">10</span><span class="op">)</span><span class="op">*</span><span class="fl">10</span><span class="op">)</span>,   <span class="co"># seq from neg to pos by 10, edges rounded outward to nearest 5</span>
+    <span class="fu">scale_y_continuous</span><span class="op">(</span>limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/Round.html">ceiling</a></span><span class="op">(</span><span class="va">melted_max</span><span class="op">/</span><span class="fl">10</span><span class="op">)</span><span class="op">*</span><span class="fl">11</span>, <span class="fu"><a href="https://rdrr.io/r/base/Round.html">ceiling</a></span><span class="op">(</span><span class="va">melted_max</span><span class="op">/</span><span class="fl">10</span><span class="op">)</span><span class="op">*</span><span class="fl">10</span><span class="op">)</span>,   <span class="co"># seq from neg to pos by 10, edges rounded outward to nearest 5</span>
                        breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/Round.html">ceiling</a></span><span class="op">(</span><span class="va">melted_max</span><span class="op">/</span><span class="fl">10</span><span class="op">)</span><span class="op">*</span><span class="fl">10</span>, <span class="fu"><a href="https://rdrr.io/r/base/Round.html">ceiling</a></span><span class="op">(</span><span class="va">melted_max</span><span class="op">/</span><span class="fl">10</span><span class="op">)</span><span class="op">*</span><span class="fl">10</span>, <span class="fl">10</span><span class="op">)</span>,
                        labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/Round.html">ceiling</a></span><span class="op">(</span><span class="va">melted_max</span><span class="op">/</span><span class="fl">10</span><span class="op">)</span><span class="op">*</span><span class="fl">10</span>, <span class="fl">0</span>, <span class="fl">10</span><span class="op">)</span>,
                                             <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fu"><a href="https://rdrr.io/r/base/Round.html">ceiling</a></span><span class="op">(</span><span class="va">melted_max</span><span class="op">/</span><span class="fl">10</span><span class="op">)</span><span class="op">*</span><span class="fl">10</span>, <span class="fl">10</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
      
     <span class="co"># color scales manually assigned </span>
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html">scale_fill_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Very Good"</span>  <span class="op">=</span> <span class="st">"green4"</span>, <span class="co"># assigns colors</span>
+    <span class="fu">scale_fill_manual</span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Very Good"</span>  <span class="op">=</span> <span class="st">"green4"</span>, <span class="co"># assigns colors</span>
                                   <span class="st">"Good"</span>      <span class="op">=</span> <span class="st">"green3"</span>,
                                   <span class="st">"Poor"</span>      <span class="op">=</span> <span class="st">"yellow"</span>,
                                   <span class="st">"Very Poor"</span> <span class="op">=</span> <span class="st">"red3"</span><span class="op">)</span>,
@@ -634,25 +634,25 @@ Rows missing values for the <code>split_by</code> or <code>age_group</code> colu
     
      
     <span class="co"># facet the entire plot so each question is a sub-plot</span>
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">Question</span>, ncol <span class="op">=</span> <span class="fl">3</span><span class="op">)</span><span class="op">+</span>
+    <span class="fu">facet_wrap</span><span class="op">(</span><span class="op">~</span><span class="va">Question</span>, ncol <span class="op">=</span> <span class="fl">3</span><span class="op">)</span><span class="op">+</span>
      
     <span class="co"># labels, titles, caption</span>
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Respondent status"</span>,
+    <span class="fu">labs</span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Respondent status"</span>,
           y <span class="op">=</span> <span class="st">"Number of responses"</span>,
           fill <span class="op">=</span> <span class="st">""</span><span class="op">)</span><span class="op">+</span>
-     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span><span class="op">(</span><span class="fu">str_glue</span><span class="op">(</span><span class="st">"Likert-style responses\nn = {nrow(likert_data)}"</span><span class="op">)</span><span class="op">)</span><span class="op">+</span>
+     <span class="fu">ggtitle</span><span class="op">(</span><span class="fu">str_glue</span><span class="op">(</span><span class="st">"Likert-style responses\nn = {nrow(likert_data)}"</span><span class="op">)</span><span class="op">)</span><span class="op">+</span>
 
      <span class="co"># aesthetic settings</span>
-     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span><span class="op">+</span>
-     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>axis.text <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">12</span><span class="op">)</span>,
-           axis.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">14</span>, face <span class="op">=</span> <span class="st">"bold"</span><span class="op">)</span>,
-           strip.text <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">14</span>, face <span class="op">=</span> <span class="st">"bold"</span><span class="op">)</span>,  <span class="co"># facet sub-titles</span>
-           plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">20</span>, face <span class="op">=</span> <span class="st">"bold"</span><span class="op">)</span>,
-           panel.background <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_rect</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="cn">NA</span>, color <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span><span class="op">)</span> <span class="co"># black box around each facet</span></code></pre></div>
+     <span class="fu">theme_minimal</span><span class="op">(</span><span class="op">)</span><span class="op">+</span>
+     <span class="fu">theme</span><span class="op">(</span>axis.text <span class="op">=</span> <span class="fu">element_text</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">12</span><span class="op">)</span>,
+           axis.title <span class="op">=</span> <span class="fu">element_text</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">14</span>, face <span class="op">=</span> <span class="st">"bold"</span><span class="op">)</span>,
+           strip.text <span class="op">=</span> <span class="fu">element_text</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">14</span>, face <span class="op">=</span> <span class="st">"bold"</span><span class="op">)</span>,  <span class="co"># facet sub-titles</span>
+           plot.title <span class="op">=</span> <span class="fu">element_text</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">20</span>, face <span class="op">=</span> <span class="st">"bold"</span><span class="op">)</span>,
+           panel.background <span class="op">=</span> <span class="fu">element_rect</span><span class="op">(</span>fill <span class="op">=</span> <span class="cn">NA</span>, color <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span><span class="op">)</span> <span class="co"># black box around each facet</span></code></pre></div>
 <pre><code>## Warning: Ignoring unknown parameters: closed
 
 ## Warning: Ignoring unknown parameters: closed</code></pre>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-793-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-819-1.png" width="672"></div>
 <!-- ======================================================= -->
 </div>
 <div id="resources-25" class="section level2" number="32.6">

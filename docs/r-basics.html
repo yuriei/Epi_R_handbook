@@ -616,8 +616,8 @@ The object <code>current_week</code> will then appear in the RStudio Environment
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># All of the summary</span>
 <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">linelist</span><span class="op">$</span><span class="va">age</span><span class="op">)</span></code></pre></div>
-<pre><code>##           Min.        1st Qu.         Median           Mean        3rd Qu.           Max.           NA's 
-##  0.00000000000  6.00000000000 13.00000000000 16.20082744354 23.00000000000 90.00000000000             87</code></pre>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+##     0.0     6.0    13.0    16.2    23.0    90.0      87</code></pre>
 <div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Just one part of the summary</span>
 <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">linelist</span><span class="op">$</span><span class="va">age</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>  </code></pre></div>
@@ -722,8 +722,8 @@ Brackets can also be written after one another, as demonstrated below.</p>
 <p>The object provided to a function also can be a column in a dataset. For example, when the function <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> is applied to the numeric column <code>age</code> in the dataset <code>linelist</code>, the output is a summary of the columns’s numeric and missing values.</p>
 <div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">linelist</span><span class="op">$</span><span class="va">age</span><span class="op">)</span></code></pre></div>
-<pre><code>##           Min.        1st Qu.         Median           Mean        3rd Qu.           Max.           NA's 
-##  0.00000000000  6.00000000000 13.00000000000 16.20082744354 23.00000000000 90.00000000000             87</code></pre>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+##     0.0     6.0    13.0    16.2    23.0    90.0      87</code></pre>
 <p><span style="color: black;"><strong><em>NOTE:</em></strong> Behind the scenes, a function represents complex additional code that has been wrapped up for the user into one easy command.</span></p>
 <!-- ======================================================= -->
 </div>
@@ -744,7 +744,7 @@ Brackets can also be written after one another, as demonstrated below.</p>
 <div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Create an age pyramid</span>
 <span class="fu">apyramid</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/apyramid/man/age_pyramid.html">age_pyramid</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">linelist</span>, age_group <span class="op">=</span> <span class="st">"age_cat5"</span>, split_by <span class="op">=</span> <span class="st">"gender"</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-28-1.png" width="75%" height="75%"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-22-1.png" width="75%" height="75%"></div>
 <p>The above command can be equivalently written as below, with newlines. This can be easier to read and to write <code># comments</code>. To run this command you can highlight the entire command, or just place your cursor in the first line and then press Ctrl and Enter keys simultaneously.</p>
 <div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Create an age pyramid</span>
@@ -753,7 +753,7 @@ Brackets can also be written after one another, as demonstrated below.</p>
   age_group <span class="op">=</span> <span class="st">"age_cat5"</span>, <span class="co"># age group column</span>
   split_by <span class="op">=</span> <span class="st">"gender"</span>     <span class="co"># two sides to pyramid</span>
   <span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-29-1.png" width="75%" height="75%"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-23-1.png" width="75%" height="75%"></div>
 <p>The first half of an argument assignment (e.g. <code>data =</code>) does not need to be specified if the arguments are written in a specific order (specified in the function’s documentation). The below code produces the exact same pyramid as above, because the function expects the argument order: data frame, <code>age_group</code> variable, <code>split_by</code> variable.</p>
 <div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># This command will produce the exact same graphic as above</span>
@@ -773,7 +773,7 @@ Brackets can also be written after one another, as demonstrated below.</p>
   proportional <span class="op">=</span> <span class="cn">TRUE</span>,         <span class="co"># percents instead of counts</span>
   pal <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"orange"</span>, <span class="st">"purple"</span><span class="op">)</span>  <span class="co"># colors</span>
   <span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-30-1.png" width="75%" height="75%"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-24-1.png" width="75%" height="75%"></div>
 <!-- ======================================================= -->
 <!-- ======================================================= -->
 <!-- ======================================================= -->
@@ -1363,7 +1363,7 @@ We also advise surrounding such operators with spaces, for readability.</p>
 <pre><code>## [1] 1</code></pre>
 <div class="sourceCode" id="cb76"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">6</span>, <span class="fl">12</span>, <span class="fl">10</span>, <span class="fl">5</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span> <span class="co"># CORRECT</span></code></pre></div>
-<pre><code>## [1] 5.666666666666667</code></pre>
+<pre><code>## [1] 5.666667</code></pre>
 </div>
 <div id="other-useful-functions" class="section level4" number="3.12.0.2">
 <h4>
