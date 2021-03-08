@@ -66,9 +66,9 @@
 <li><a class="" href="joining-data.html"><span class="header-section-number">13</span> Joining data</a></li>
 <li><a class="" href="characters-and-strings.html"><span class="header-section-number">14</span> Characters and strings</a></li>
 <li><a class="" href="de-duplication.html"><span class="header-section-number">15</span> De-duplication</a></li>
-<li><a class="" href="missing-data.html"><span class="header-section-number">16</span> Missing data</a></li>
-<li><a class="" href="iteration-and-loops.html"><span class="header-section-number">17</span> Iteration and loops</a></li>
+<li><a class="" href="iteration-and-loops.html"><span class="header-section-number">16</span> Iteration and loops</a></li>
 <li class="book-part">Analysis</li>
+<li><a class="" href="missing-data.html"><span class="header-section-number">17</span> Missing data</a></li>
 <li><a class="" href="descriptive-analysis.html"><span class="header-section-number">18</span> Descriptive analysis</a></li>
 <li><a class="" href="univariate-and-multivariate-regression.html"><span class="header-section-number">19</span> Univariate and multivariate regression</a></li>
 <li><a class="" href="standardization.html"><span class="header-section-number">20</span> Standardization</a></li>
@@ -135,7 +135,7 @@ In current medical research, it is widely used in clinical studies to assess the
 <h3>Loading dataset<a class="anchor" aria-label="anchor" href="#loading-dataset"><i class="fas fa-link"></i></a>
 </h3>
 <p>We start by loading the linelist as you have done previously using the <code><a href="https://rdrr.io/pkg/rio/man/import.html">rio::import()</a></code> function.</p>
-<div class="sourceCode" id="cb940"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb974"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># import linelist</span>
 <span class="va">linelist_case_data</span> <span class="op">&lt;-</span> <span class="fu">rio</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/rio/man/import.html">import</a></span><span class="op">(</span><span class="st">"linelist_cleaned.xlsx"</span><span class="op">)</span></code></pre></div>
 </div>
@@ -158,7 +158,7 @@ In current medical research, it is widely used in clinical studies to assess the
 <p><span style="color: orange;"><strong><em>CAUTION:</em></strong> Since in a real cohort study, the information on the time of origin and the end of the follow-up is known given individuals are observed, we will remove observations where the date of onset or the date of outcome is unknown. Also the cases where the date of onset is later than the date of outcome will be removed since they are considered as wrong.</span></p>
 <p><span style="color: darkgreen;"><strong><em>TIP:</em></strong> Given that filtering to greater than (&gt;) or less than (&lt;) a date can remove rows with missing values, applying the filter on the wrong dates will also remove the rows with missing dates.</span></p>
 <p>We then create from the var <code>age_cat</code> another variable <code>age_cat_small</code> that indicates reduces the categories of the age groups to 3.</p>
-<div class="sourceCode" id="cb941"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb975"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#create a new data called linelist_surv from the linelist_case_data</span>
 
 <span class="va">linelist_surv</span> <span class="op">&lt;-</span>  <span class="va">linelist_case_data</span> <span class="op">%&gt;%</span> 
@@ -187,11 +187,11 @@ In current medical research, it is widely used in clinical studies to assess the
        age_cat_small <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">age_cat_small</span>,
                               levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"0-4"</span>, <span class="st">"5-19"</span>, <span class="st">"20+"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p><span style="color: darkgreen;"><strong><em>TIP:</em></strong> We can verify the new variables we have created by doing a summary on the <code>futime</code> and a cross-tabulation between <code>event</code> and <code>outcome</code> from which it was created. Besides this verification it is a good habit communicating on the median follow-up time when interpreting survival analysis results.</span></p>
-<div class="sourceCode" id="cb942"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb976"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">linelist_surv</span><span class="op">$</span><span class="va">futime</span><span class="op">)</span></code></pre></div>
 <pre><code>##          Min.       1st Qu.        Median          Mean       3rd Qu.          Max. 
 ##  1.0000000000  6.0000000000 10.0000000000 11.9234006734 16.0000000000 64.0000000000</code></pre>
-<div class="sourceCode" id="cb944"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb978"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># cross tabulate the new event var and the outcome var from which it was created</span>
 <span class="co"># to make sure the code did what it was intended to</span>
 <span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">linelist_surv</span>, 
@@ -202,7 +202,7 @@ In current medical research, it is widely used in clinical studies to assess the
 ##   Death      0 2060
 ##   Recover 1617    0
 ##   &lt;NA&gt;    1075    0</code></pre>
-<div class="sourceCode" id="cb946"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb980"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># cross tabulate the new age_cat_small var and the age_cat var from which it was created,</span>
 <span class="co"># to make sure the code did what it was intended to</span>
 
@@ -215,7 +215,7 @@ In current medical research, it is widely used in clinical studies to assess the
 ##          5-19   0 899   733   619     0     0     0   0    0
 ##          20+    0   0     0     0   904   583    85  10    0
 ##          &lt;NA&gt;   0   0     0     0     0     0     0   0   68</code></pre>
-<div class="sourceCode" id="cb948"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb982"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># print the 10 first observations of the linelist_surv data looking at specific variables (including those newly created)</span>
 
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">linelist_surv</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"case_id"</span>, <span class="st">"age_cat_small"</span>, <span class="st">"date_onset"</span>,<span class="st">"date_outcome"</span>,<span class="st">"outcome"</span>,<span class="st">"event"</span>,<span class="st">"futime"</span><span class="op">)</span><span class="op">]</span>, <span class="fl">10</span><span class="op">)</span></code></pre></div>
@@ -231,7 +231,7 @@ In current medical research, it is widely used in clinical studies to assess the
 ## 9   07e3e8           20+ 2014-05-27   2014-06-01 Recover     0      5
 ## 10  2b8773          5-19 2014-06-06   2014-06-16    &lt;NA&gt;     0     10</code></pre>
 <p>We can also cross-tabule the variable <code>age_cat_small</code> and <code>gender</code> to have more details on the distribution of this new variable among the gender groups. For this we use the <code>stat.table()</code> function of the <strong>Epi</strong> package.</p>
-<div class="sourceCode" id="cb950"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb984"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">Epi</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/Epi/man/stattable.html">stat.table</a></span><span class="op">(</span> 
   <span class="co">#give variables for the cross tabulation</span>
   <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
@@ -276,7 +276,7 @@ In current medical research, it is widely used in clinical studies to assess the
 <h3>Building a surv-type object<a class="anchor" aria-label="anchor" href="#building-a-surv-type-object"><i class="fas fa-link"></i></a>
 </h3>
 <p>We will first use <code>Surv()</code> to build a standard survival object form the follow-up time and the event variables.The result of such a step is to produce an object of type <em>survival</em> that focuses on the time information by precising whether or not the event of interest (death) was observed. This is done using a “+” after the time in the print out of <em>survobj</em> that indicates right-censoring.</p>
-<div class="sourceCode" id="cb952"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb986"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">survobj</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/with.html">with</a></span><span class="op">(</span><span class="va">linelist_surv</span>, 
                 
                 <span class="fu">survival</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/survival/man/Surv.html">Surv</a></span><span class="op">(</span><span class="va">futime</span>, <span class="va">event</span><span class="op">)</span>
@@ -285,8 +285,8 @@ In current medical research, it is widely used in clinical studies to assess the
 
 <span class="co">#print the 50 first elements of the vector to see how it presents</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">survobj</span>,<span class="fl">50</span><span class="op">)</span></code></pre></div>
-<pre><code>##  [1]  6+  5+ 14+  8+  2+ 12+ 21  11   5+ 10+  4  10+  3  10+ 11+  4   4  11  23+  4   9+ 14+  5+  9+  5  31+  8  11+ 13+  4  26+
-## [32]  7   6  14+  4  15  17+  8+ 18  12  14  12+  7   6+ 11  20+  2  22+  5   6+</code></pre>
+<pre><code>##  [1]  6+  5+ 14+  8+  2+ 12+ 21  11   5+ 10+  4  10+  3  10+ 11+  4   4  11  23+  4   9+ 14+  5+  9+  5  31+  8  11+ 13+  4  26+  7   6  14+  4  15  17+  8+ 18  12  14  12+  7 
+## [44]  6+ 11  20+  2  22+  5   6+</code></pre>
 </div>
 <div id="running-initial-analyses" class="section level3 unnumbered">
 <h3>Running initial analyses<a class="anchor" aria-label="anchor" href="#running-initial-analyses"><i class="fas fa-link"></i></a>
@@ -301,7 +301,7 @@ In current medical research, it is widely used in clinical studies to assess the
 <li>and from this, the probability of not developing the event (probability of not dying or of surviving past that specific time ).</li>
 <li>Finally the standard error and the confidence interval for that probability are derived.</li>
 </ul>
-<div class="sourceCode" id="cb954"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb988"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#fit the KM estimates using the formula where the previously Surv object "survobj" is the response variable. "~ 1" precises we run the model for the overall survival.</span>
 
 <span class="va">linelistsurv_fit</span> <span class="op">&lt;-</span>  <span class="fu">survival</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/survival/man/survfit.html">survfit</a></span><span class="op">(</span>
@@ -343,7 +343,7 @@ In current medical research, it is widely used in clinical studies to assess the
 ##    29    244       1 0.430644591232 0.01001013004335 0.411465303272 0.450717867297
 ##    38     75       1 0.424902663349 0.01140519989053 0.403126712063 0.447854900007</code></pre>
 <p>While using <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> we can add the option <code>times</code> and precise the specific times at which we want to see the survival information</p>
-<div class="sourceCode" id="cb956"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb990"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#print its summary at specific times</span>
 <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span>
   <span class="va">linelistsurv_fit</span>,
@@ -359,7 +359,7 @@ In current medical research, it is widely used in clinical studies to assess the
 ##    60      2       1 0.424902663349 0.01140519989053 0.403126712063 0.447854900007</code></pre>
 <p>We can also use the <code><a href="https://rdrr.io/r/base/print.html">print()</a></code> function. The <code>print.rmean=TRUE</code> argument is used to obtain the mean survival time and its standard error (se).</p>
 <p><span style="color: black;"><strong><em>NOTE:</em></strong> The restricted mean survival time (RMST) is a specific survival measure more and more used in cancer survival analysis and which is often defined as the area under the survival curve given we observe patients up to restricted time T: more details in resources</span></p>
-<div class="sourceCode" id="cb958"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb992"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#print the linelistsurv_fit object and ask for information on the mean survival time and its se. </span>
 <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span>
   <span class="va">linelistsurv_fit</span>, 
@@ -372,7 +372,7 @@ In current medical research, it is widely used in clinical studies to assess the
 ##     * restricted mean with upper limit =  64</code></pre>
 <p><span style="color: darkgreen;"><strong><em>TIP:</em></strong> We can create the <em>surv object</em> directly in the <code>survfit()</code> function and save a line of code. This will then give <code>linelistsurv_quick &lt;-  survfit(Surv(futime, event) ~ 1, data=linelist_surv)</code>. But as you have seen, in such case we have to precise the data where the variables time and event are taken from.</span></p>
 <p>Besides the <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> function, we can also use the <code><a href="https://rdrr.io/r/utils/str.html">str()</a></code> function that gives more details on the structure of the <code>survfit()</code> object. Among those details is an important one: <em>cumhaz</em> which allows for instance to plot the <strong><em>cumulative hazard</em></strong>, with the <strong><em>hazard</em></strong> being the <strong><em>instantaneous rate of event occurrence</em></strong> (see references).</p>
-<div class="sourceCode" id="cb960"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb994"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span>
   <span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">linelistsurv_fit</span><span class="op">)</span>
       <span class="op">)</span></code></pre></div>
@@ -403,16 +403,16 @@ In current medical research, it is widely used in clinical studies to assess the
 <p>Once the KM estimates are fitted, we can visualize that probability of being alive through the time using the basic <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> function that draws the so-known “Kaplan-Meier curve”. In other words the curve below is a conventional illustration of the survival experience in the whole patient group.</p>
 <p>We can easily verify the follow-up time min and max on the curve.</p>
 <p>An easy way to interpret it is to say that at time zero, all the participants are still alive: survival probability is then 100%. Then it decreases over time as patients die. The proportion of participants surviving past 60 days of f-u is around 40%.</p>
-<div class="sourceCode" id="cb962"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb996"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">linelistsurv_fit</span>, 
      xlab <span class="op">=</span> <span class="st">"Days of follow-up"</span>,    <span class="co">#xaxis label</span>
      ylab<span class="op">=</span><span class="st">"Survival Probability"</span>,   <span class="co">#yaxis label</span>
      main<span class="op">=</span> <span class="st">"Overall survival curve"</span> <span class="co">#figure title</span>
      <span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-598-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-627-1.png" width="672"></div>
 <p>The confidence interval of the KM estimates of the survival are also plotted by default and can be dismissed by adding the option <code>conf.int=FALSE</code> to the <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> command.</p>
 <p>Since the event of interest is “death”, drawing a curve describing the complements of the survival proportions will lead to drawing the cumulative mortality proportions.</p>
-<div class="sourceCode" id="cb963"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb997"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span>
      <span class="va">linelistsurv_fit</span>,
      xlab <span class="op">=</span> <span class="st">"Days of follow-up"</span>,       
@@ -440,7 +440,7 @@ In current medical research, it is widely used in clinical studies to assess the
        cex<span class="op">=</span><span class="fl">.85</span>, <span class="co">#factor that defines size of the legend text</span>
        bty <span class="op">=</span> <span class="st">"n"</span> <span class="co">#no box type to be drawn for the legend</span>
        <span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-599-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-628-1.png" width="672"></div>
 <!-- ======================================================= -->
 </div>
 </div>
@@ -454,7 +454,7 @@ In current medical research, it is widely used in clinical studies to assess the
 </h3>
 <p>The log rank test is a popular test that compares the entire survival experience between two or more <em>independent</em> groups and can be thought of as a test of whether the survival curves are identical (overlapping) or not (null hypothesis of no difference in survival between the groups). The <code>survdiff()</code> function of the <strong>survival package</strong> allows running the log-rank test when we specify <code>rho=0</code> (which is the default). The test results gives a chi-square statistic along with a p-value since the log rank statistic is approximately distributed as a chi-square test statistic.</p>
 <p>We first try to compare the survival curves by gender group. For this, we first try to visualize it (check whether the two survival curves are overlapping). A new <em>survfit object</em> will be created with a slightly different formula. Then the <em>survdiff object</em> will be created.</p>
-<div class="sourceCode" id="cb964"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb998"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#create the new survfit object based on gender</span>
 <span class="va">linelistsurv_fit_sex</span> <span class="op">&lt;-</span>  <span class="fu">survfit</span><span class="op">(</span>
   
@@ -478,7 +478,7 @@ In current medical research, it is widely used in clinical studies to assess the
        lty <span class="op">=</span> <span class="fl">1</span>, cex<span class="op">=</span><span class="fl">.9</span>, bty <span class="op">=</span> <span class="st">"n"</span> 
        <span class="op">)</span></code></pre></div>
 <div class="inline-figure"><img src="_main_files/figure-html/comp_surv-1.png" width="672"></div>
-<div class="sourceCode" id="cb965"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb999"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#compute the test of the difference between the survival curves</span>
 <span class="fu">survival</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/survival/man/survdiff.html">survdiff</a></span><span class="op">(</span>
           <span class="fu">Surv</span><span class="op">(</span><span class="va">futime</span>, <span class="va">event</span><span class="op">)</span> <span class="op">~</span> <span class="va">gender</span>, 
@@ -498,7 +498,7 @@ In current medical research, it is widely used in clinical studies to assess the
 <p>Some packages allow illustrating survival curves for different groups and testing the difference at once. Using the <code>ggsurvplot()</code> function from the <em>survminer</em> package, we can add in our curve the print of the risk tables for each group as well the p-value from the log-rank test.</p>
 <p>We find back the p-value that was found in the previous step.</p>
 <p><span style="color: orange;"><strong><em>CAUTION:</em></strong> <strong>survminer</strong> functions require since the latest versions, specifying again the data used to fit the survival object. Remember doing this to avoid non-specific error messages. </span></p>
-<div class="sourceCode" id="cb967"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1001"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">survminer</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/survminer/man/ggsurvplot.html">ggsurvplot</a></span><span class="op">(</span>
   
     <span class="va">linelistsurv_fit_sex</span>, 
@@ -515,10 +515,10 @@ In current medical research, it is widely used in clinical studies to assess the
     surv.median.line <span class="op">=</span> <span class="st">"hv"</span>, <span class="co">#draw a line to the median survival</span>
     ggtheme <span class="op">=</span> <span class="fu">theme_light</span><span class="op">(</span><span class="op">)</span>
 <span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-600-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-629-1.png" width="672"></div>
 <p>We can then look for a difference in the source of the contamination. In this case, the Log rank test gives enough evidence of a difference in the survival probabilities at <code>\alpha= 0.005</code>.
 The survival probabilities for patients that got infected in funerals are higher than the survival probabilities for patients that got infected in other places, suggesting a survival benefit.</p>
-<div class="sourceCode" id="cb968"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1002"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">linelistsurv_fit_source</span> <span class="op">&lt;-</span>  <span class="fu">survfit</span><span class="op">(</span>
               <span class="fu">Surv</span><span class="op">(</span><span class="va">futime</span>, <span class="va">event</span><span class="op">)</span> <span class="op">~</span> <span class="va">source</span>,
               data <span class="op">=</span> <span class="va">linelist_surv</span>
@@ -541,7 +541,7 @@ The survival probabilities for patients that got infected in funerals are higher
 <span class="op">)</span></code></pre></div>
 <pre><code>## Warning: Vectorized input to `element_text()` is not officially supported.
 ## Results may be unexpected or may change in future versions of ggplot2.</code></pre>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-601-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-630-1.png" width="672"></div>
 <!-- ======================================================= -->
 </div>
 </div>
@@ -572,7 +572,7 @@ The function <code>cox.zph()</code> from <strong>survival</strong> package may b
 <p>The <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> function applied to the cox model object gives more info such as the confidence interval of the estimated HR and the different test scores.</p>
 <p>The effect of the first covariate <code>gender</code> is presented in the first row. <code>genderm</code> is printed stating that the first strata level (“f”) i.e the female group is the reference group for the gender. Thus the interpretation of the test parameter is that of men compared to women. The p-value indicates there was no enough evidence of an effect of the gender on the expected hazard or of an association between gender and all-cause mortality.</p>
 <p>The same lack of evidence is noted regarding age-group.</p>
-<div class="sourceCode" id="cb970"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1004"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#fitting the cox model</span>
 <span class="va">linelistsurv_cox_sexage</span> <span class="op">&lt;-</span>  <span class="fu">survival</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/survival/man/coxph.html">coxph</a></span><span class="op">(</span>
               <span class="fu">Surv</span><span class="op">(</span><span class="va">futime</span>, <span class="va">event</span><span class="op">)</span> <span class="op">~</span> <span class="va">gender</span> <span class="op">+</span> <span class="va">age_cat_small</span>, 
@@ -594,7 +594,7 @@ The function <code>cox.zph()</code> from <strong>survival</strong> package may b
 ## Likelihood ratio test=3.26  on 3 df, p=0.353582261511
 ## n= 4525, number of events= 1977 
 ##    (227 observations deleted due to missingness)</code></pre>
-<div class="sourceCode" id="cb972"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1006"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#summary of the model</span>
 <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">linelistsurv_cox_sexage</span><span class="op">)</span></code></pre></div>
 <pre><code>## Call:
@@ -619,7 +619,7 @@ The function <code>cox.zph()</code> from <strong>survival</strong> package may b
 ## Wald test            = 3.3  on 3 df,   p=0.347276801
 ## Score (logrank) test = 3.3  on 3 df,   p=0.346971184</code></pre>
 <p>It was interesting to run the model and look at the results but a first look to verify whether the proportional hazards assumptions is respected could help saving time.</p>
-<div class="sourceCode" id="cb974"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1008"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">test_ph_sexage</span> <span class="op">&lt;-</span> <span class="fu">survival</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/survival/man/cox.zph.html">cox.zph</a></span><span class="op">(</span><span class="va">linelistsurv_cox_sexage</span><span class="op">)</span>
 <span class="va">test_ph_sexage</span></code></pre></div>
 <pre><code>##                        chisq df       p
@@ -629,7 +629,7 @@ The function <code>cox.zph()</code> from <strong>survival</strong> package may b
 <p><span style="color: black;"><strong><em>NOTE:</em></strong> A second argument called <em>method</em> can be specified when computing the cox model. It is the determines how ties are handled. The <em>default</em> is “efron”, and the other options are “breslow” and “exact”.</span></p>
 <p>In another model we add more risk factors such as the source of infection and the number of days between date of onset and admission. This time, we first verify the proportional hazards assumption before going forward.</p>
 <p>In this model, we have included a continuous predictor (<code>days_onset_hosp</code>). In this case we interpret the parameter estimates as the increase in the expected log of the relative hazard for each one unit increase in the predictor, holding other predictors constant. We first verify the proportional hazards assumption. The graphical verification of this assumption may be performed with the function <code>ggcoxzph()</code> from the <em>survminer</em> package.</p>
-<div class="sourceCode" id="cb976"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1010"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#fit the model</span>
 <span class="va">linelistsurv_cox</span> <span class="op">&lt;-</span>  <span class="fu">coxph</span><span class="op">(</span>
                         <span class="fu">Surv</span><span class="op">(</span><span class="va">futime</span>, <span class="va">event</span><span class="op">)</span> <span class="op">~</span> <span class="va">gender</span> <span class="op">+</span> <span class="va">age_years</span><span class="op">+</span> <span class="va">source</span> <span class="op">+</span> <span class="va">days_onset_hosp</span>,
@@ -646,12 +646,12 @@ The function <code>cox.zph()</code> from <strong>survival</strong> package may b
 ## source           2.816651205641  1   0.093291
 ## days_onset_hosp 34.394956562443  1 4.4989e-09
 ## GLOBAL          37.989980649635  4 1.1259e-07</code></pre>
-<div class="sourceCode" id="cb978"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1012"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">survminer</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/survminer/man/ggcoxzph.html">ggcoxzph</a></span><span class="op">(</span><span class="va">linelistsurv_ph_test</span><span class="op">)</span></code></pre></div>
 <div class="inline-figure"><img src="_main_files/figure-html/coxmodel_fit_ph-1.png" width="672"></div>
 <p>The model results indicates there is a negative association between onset to admission duration and all-cause mortality. The expected hazard is 0.9 times lower in a person who who is one day later admitted than another, holding gender constant. Or in a more straightforward explanation, a one unit increase in the duration of onset to admission is associated with a 10.7% (<code>coef *100</code>) decrease in the risk of death.</p>
 <p>Results show also a positive association between the source of infection and the all-cause mortality. Which is to say there is an increased risk of death (1.21x) for patients that got a source of infection other than funerals.</p>
-<div class="sourceCode" id="cb979"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1013"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#print the summary of the model</span>
 <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">linelistsurv_cox</span><span class="op">)</span></code></pre></div>
 <pre><code>## Call:
@@ -685,7 +685,7 @@ The function <code>cox.zph()</code> from <strong>survival</strong> package may b
 <h3>Forest plots<a class="anchor" aria-label="anchor" href="#forest-plots"><i class="fas fa-link"></i></a>
 </h3>
 <p>We can then visualize the results of the cox model using the practical forest plots with the <code>ggforest()</code> function of the <strong>survminer package</strong>.</p>
-<div class="sourceCode" id="cb981"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1015"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">ggforest</span><span class="op">(</span><span class="va">linelistsurv_cox</span>, data <span class="op">=</span> <span class="va">linelist_surv</span><span class="op">)</span></code></pre></div>
 <div class="inline-figure"><img src="_main_files/figure-html/forestp-1.png" width="672"></div>
 <!-- ======================================================= -->
@@ -751,7 +751,7 @@ The function <code>cox.zph()</code> from <strong>survival</strong> package may b
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>The Epidemiologist R Handbook</strong>" was written by the handbook team. It was last built on 2021-03-06.</p>
+    <p>"<strong>The Epidemiologist R Handbook</strong>" was written by the handbook team. It was last built on 2021-03-07.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
