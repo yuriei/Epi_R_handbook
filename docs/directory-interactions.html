@@ -66,9 +66,9 @@
 <li><a class="" href="joining-data.html"><span class="header-section-number">13</span> Joining data</a></li>
 <li><a class="" href="characters-and-strings.html"><span class="header-section-number">14</span> Characters and strings</a></li>
 <li><a class="" href="de-duplication.html"><span class="header-section-number">15</span> De-duplication</a></li>
-<li><a class="" href="missing-data.html"><span class="header-section-number">16</span> Missing data</a></li>
-<li><a class="" href="iteration-and-loops.html"><span class="header-section-number">17</span> Iteration and loops</a></li>
+<li><a class="" href="iteration-and-loops.html"><span class="header-section-number">16</span> Iteration and loops</a></li>
 <li class="book-part">Analysis</li>
+<li><a class="" href="missing-data.html"><span class="header-section-number">17</span> Missing data</a></li>
 <li><a class="" href="descriptive-analysis.html"><span class="header-section-number">18</span> Descriptive analysis</a></li>
 <li><a class="" href="univariate-and-multivariate-regression.html"><span class="header-section-number">19</span> Univariate and multivariate regression</a></li>
 <li><a class="" href="standardization.html"><span class="header-section-number">20</span> Standardization</a></li>
@@ -113,79 +113,184 @@
 <h1>
 <span class="header-section-number">48</span> Directory interactions<a class="anchor" aria-label="anchor" href="#directory-interactions"><i class="fas fa-link"></i></a>
 </h1>
-<!-- ======================================================= -->
-<div id="overview-35" class="section level2" number="48.1">
+<p>In this page we cover common scenarios where you interact with, save, and import with directories (folders).</p>
+<div id="preparation-38" class="section level2" number="48.1">
 <h2>
-<span class="header-section-number">48.1</span> Overview<a class="anchor" aria-label="anchor" href="#overview-35"><i class="fas fa-link"></i></a>
+<span class="header-section-number">48.1</span> Preparation<a class="anchor" aria-label="anchor" href="#preparation-38"><i class="fas fa-link"></i></a>
 </h2>
-<p>Saving files, deleting files, creating folders, interacting with files in a folder, etc
-Overwriting files in Excel</p>
-<!-- ======================================================= -->
+<div id="fs-package" class="section level3 unnumbered">
+<h3>
+<strong>fs</strong> package<a class="anchor" aria-label="anchor" href="#fs-package"><i class="fas fa-link"></i></a>
+</h3>
+<p>The <strong>fs</strong> package is a <strong>tidyverse</strong> package that facilitate directory interactions, improving on some of the <strong>base</strong> R functions. In the sections below we will often use functions from <strong>fs</strong>.</p>
+<div class="sourceCode" id="cb1451"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span><span class="va">fs</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="preparation-38" class="section level2" number="48.2">
+<div id="print-directory-as-a-dendrogram-tree" class="section level3" number="48.1.1">
+<h3>
+<span class="header-section-number">48.1.1</span> Print directory as a dendrogram tree<a class="anchor" aria-label="anchor" href="#print-directory-as-a-dendrogram-tree"><i class="fas fa-link"></i></a>
+</h3>
+<p>Use the function <code>dir_tree()</code> from <strong>fs</strong>.</p>
+<p>Provide the folder filepath to <code>path =</code> and decide whether you want to show only one level (<code>recurse = FALSE</code>) or all files in all sub-levels (<code>recurse = TRUE</code>). Below we use <code>here("data)</code> as shorthand for the R project and it’s sub-folder “data”, which contains all the data used for this R handbook. We use set it to display all files within “data” and its sub-folders (e.g. “cache”, “epidemic models”, “population”, “shp”, and “weather”).</p>
+<div class="sourceCode" id="cb1452"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="http://fs.r-lib.org/reference/dir_tree.html">dir_tree</a></span><span class="op">(</span>path <span class="op">=</span> <span class="fu">here</span><span class="op">(</span><span class="st">"data"</span><span class="op">)</span>, recurse <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<pre><code>## C:/Users/Neale/OneDrive - Neale Batra/Documents/Analytic Software/R/Projects/R handbook/Epi_R_handbook/data
+## +-- africa_countries.geo.json
+## +-- cache
+## |   \-- epidemic_models
+## |       +-- 2015-04-30
+## |       |   +-- estimated_reported_cases_samples.rds
+## |       |   +-- estimate_samples.rds
+## |       |   +-- latest_date.rds
+## |       |   +-- reported_cases.rds
+## |       |   +-- summarised_estimated_reported_cases.rds
+## |       |   +-- summarised_estimates.rds
+## |       |   \-- summary.rds
+## |       +-- epinow_res.rds
+## |       +-- epinow_res_small.rds
+## |       +-- generation_time.rds
+## |       \-- incubation_period.rds
+## +-- campylobacter_germany.xlsx
+## +-- Central Hospital.csv
+## +-- cleaning_dict.csv
+## +-- country_demographics.csv
+## +-- country_demographics_2.csv
+## +-- covid_incidence.csv
+## +-- covid_incidence_map.R
+## +-- district_count_data.xlsx
+## +-- facility_count_data.rds
+## +-- fluH7N9_China_2013.csv
+## +-- hospital_linelists.xlsx
+## +-- likert_data.csv
+## +-- linelist_cleaned.rds
+## +-- linelist_cleaned.xlsx
+## +-- linelist_raw.xlsx
+## +-- make_evd_dataset.R
+## +-- Military Hospital.csv
+## +-- Missing.csv
+## +-- Other.csv
+## +-- population
+## |   +-- sle_admpop_adm3_2020.csv
+## |   \-- sle_population_statistics_sierraleone_2020.xlsx
+## +-- Port Hospital.csv
+## +-- sample_data_Shigella_tree.csv
+## +-- Shigella_subtree_2.nwk
+## +-- Shigella_tree.nwk
+## +-- shp
+## |   +-- README.txt
+## |   +-- sle_adm3.CPG
+## |   +-- sle_adm3.dbf
+## |   +-- sle_adm3.prj
+## |   +-- sle_adm3.sbn
+## |   +-- sle_adm3.sbx
+## |   +-- sle_adm3.shp
+## |   +-- sle_adm3.shp.xml
+## |   +-- sle_adm3.shx
+## |   +-- sle_hf.CPG
+## |   +-- sle_hf.dbf
+## |   +-- sle_hf.prj
+## |   +-- sle_hf.sbn
+## |   +-- sle_hf.sbx
+## |   +-- sle_hf.shp
+## |   \-- sle_hf.shx
+## +-- St. Mark's Maternity Hospital (SMMH).csv
+## +-- weather
+## |   +-- germany_weather2002.nc
+## |   +-- germany_weather2003.nc
+## |   +-- germany_weather2004.nc
+## |   +-- germany_weather2005.nc
+## |   +-- germany_weather2006.nc
+## |   +-- germany_weather2007.nc
+## |   +-- germany_weather2008.nc
+## |   +-- germany_weather2009.nc
+## |   +-- germany_weather2010.nc
+## |   \-- germany_weather2011.nc
+## \-- world_standard_population_by_sex.csv</code></pre>
+</div>
+</div>
+<div id="accessing-files-in-the-directory" class="section level2" number="48.2">
 <h2>
-<span class="header-section-number">48.2</span> Preparation<a class="anchor" aria-label="anchor" href="#preparation-38"><i class="fas fa-link"></i></a>
+<span class="header-section-number">48.2</span> Accessing files in the directory<a class="anchor" aria-label="anchor" href="#accessing-files-in-the-directory"><i class="fas fa-link"></i></a>
 </h2>
-<p>Keep the title of this section as “Preparation”.<br>
-Data preparation steps such as:</p>
+</div>
+<div id="running-other-files" class="section level2" number="48.3">
+<h2>
+<span class="header-section-number">48.3</span> Running other files<a class="anchor" aria-label="anchor" href="#running-other-files"><i class="fas fa-link"></i></a>
+</h2>
+<div id="source" class="section level3 unnumbered">
+<h3>
+<code>source()</code><a class="anchor" aria-label="anchor" href="#source"><i class="fas fa-link"></i></a>
+</h3>
+<p>To run one R script from another R script, you can use the <code><a href="https://rdrr.io/r/base/source.html">source()</a></code> command (from <strong>base</strong> R).</p>
+<div class="sourceCode" id="cb1454"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/source.html">source</a></span><span class="op">(</span><span class="fu">here</span><span class="op">(</span><span class="st">"scripts"</span>, <span class="st">"cleaning_scripts"</span>, <span class="st">"clean_testing_data.R"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<p>This is equivalent to viewing the above R script and clicking the “Source” button in the upper-right of the script. This will execute the script but will do it silently (no output to the R console) unless specifically intended. See the page on [Interactive console] for examples of using <code><a href="https://rdrr.io/r/base/source.html">source()</a></code> to interact with a user via the R console in question-and-answer mode.</p>
+<div class="inline-figure"><img src="images/source_button.png" width="82" style="display: block; margin: auto;"></div>
+</div>
+<div id="render" class="section level3 unnumbered">
+<h3>
+<code>render()</code><a class="anchor" aria-label="anchor" href="#render"><i class="fas fa-link"></i></a>
+</h3>
+<p><code>render()</code> is a variation on <code><a href="https://rdrr.io/r/base/source.html">source()</a></code> most often used for R markdown scripts. You provide the <code>input =</code> which is the R markdown file, and also the <code>output_format =</code> (typically either “html_document”, “pdf_document”, “word_document”, "")</p>
+<p>See the page on <a href="r-markdown-1.html#r-markdown-1">R markdown</a> for more details. Also see the documentation for <code>render()</code> <a href="https://rmarkdown.rstudio.com/docs/reference/render.html">here</a> or by entering <code>?render</code>.</p>
+</div>
+<div id="run-files-in-a-directory" class="section level3 unnumbered">
+<h3>Run files in a directory<a class="anchor" aria-label="anchor" href="#run-files-in-a-directory"><i class="fas fa-link"></i></a>
+</h3>
+<p>You can create a <em>for loop</em> and use it to <code><a href="https://rdrr.io/r/base/source.html">source()</a></code> every file in a directory, as identified with <code><a href="https://rdrr.io/r/base/list.files.html">dir()</a></code>.</p>
+<div class="sourceCode" id="cb1455"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw">for</span><span class="op">(</span><span class="va">script</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/list.files.html">dir</a></span><span class="op">(</span><span class="fu">here</span><span class="op">(</span><span class="st">"scripts"</span><span class="op">)</span>, pattern <span class="op">=</span> <span class="st">".R$"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>   <span class="co"># for each script name in the R Project's "scripts" folder (with .R extension)</span>
+  <span class="kw"><a href="https://rdrr.io/r/base/source.html">source</a></span><span class="op">(</span><span class="fu">here</span><span class="op">(</span><span class="st">"scripts"</span>, <span class="va">script</span><span class="op">)</span><span class="op">)</span>                        <span class="co"># source the file with the matching name that exists in the scripts folder</span>
+<span class="op">}</span></code></pre></div>
+<p>If you only want to run certain scripts, you can identify them by name like this:</p>
+<div class="sourceCode" id="cb1456"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">scripts_to_run</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>
+     <span class="st">"epicurves.R"</span>,
+     <span class="st">"demographic_tables.R"</span>,
+     <span class="st">"survival_curves.R"</span>
+<span class="op">)</span>
+
+<span class="kw">for</span><span class="op">(</span><span class="va">script</span> <span class="kw">in</span> <span class="va">scripts_to_run</span><span class="op">)</span> <span class="op">{</span>
+  <span class="kw"><a href="https://rdrr.io/r/base/source.html">source</a></span><span class="op">(</span><span class="fu">here</span><span class="op">(</span><span class="st">"scripts"</span>, <span class="va">script</span><span class="op">)</span><span class="op">)</span>
+<span class="op">}</span></code></pre></div>
+<p>Here is a <a href="https://cran.r-project.org/web/packages/fs/vignettes/function-comparisons.html">comparison</a> of the <strong>fs</strong> and <strong>base</strong> R functions.</p>
+</div>
+<div id="import-files-in-a-directory" class="section level3 unnumbered">
+<h3>Import files in a directory<a class="anchor" aria-label="anchor" href="#import-files-in-a-directory"><i class="fas fa-link"></i></a>
+</h3>
+<p>See the page on <a href="import-and-export.html#import-and-export">Import and export</a> for importing and exporting individual files.<br>
+See the page on <a href="iteration-and-loops.html#iteration-and-loops">Iteration and loops</a> for an example with the package <strong>purrr</strong> demonstrating:</p>
 <ul>
-<li>Loading dataset<br>
+<li>Splitting a dataframe and saving it as multiple CSV files<br>
 </li>
-<li>Adding or changing variables<br>
+<li>Splitting a dataframe and saving each part as a separate sheet within one Excel workbook<br>
 </li>
-<li>melting, pivoting, grouping, etc.</li>
+<li>Importing multiple CSV files and combining them into one dataframe<br>
+</li>
+<li>Importing an Excel workbook with multiple sheets and combining them into one dataframe</li>
 </ul>
-<!-- ======================================================= --><div id="sub-tab-1-5" class="section level3" number="48.2.1">
-<h3>
-<span class="header-section-number">48.2.1</span> sub-tab 1<a class="anchor" aria-label="anchor" href="#sub-tab-1-5"><i class="fas fa-link"></i></a>
-</h3>
-<p>Can be used to separate major steps of data preparation. Re-name as needed</p>
-<!-- ======================================================= -->
-</div>
-<div id="sub-tab-2-5" class="section level3" number="48.2.2">
-<h3>
-<span class="header-section-number">48.2.2</span> sub-tab 2<a class="anchor" aria-label="anchor" href="#sub-tab-2-5"><i class="fas fa-link"></i></a>
-</h3>
-<p>Can be used to separate major steps of data preparation. Re-name as needed.</p>
-<!-- ======================================================= -->
 </div>
 </div>
-<div id="option-1-4" class="section level2" number="48.3">
+<div id="base-r-5" class="section level2" number="48.4">
 <h2>
-<span class="header-section-number">48.3</span> Option 1<a class="anchor" aria-label="anchor" href="#option-1-4"><i class="fas fa-link"></i></a>
+<span class="header-section-number">48.4</span> <strong>base</strong> R<a class="anchor" aria-label="anchor" href="#base-r-5"><i class="fas fa-link"></i></a>
 </h2>
-<p>This tab can be renamed.
-This tab should demonstrate execution of the task using recommended package/approach. For example, using a package customized for this task where the execution is simple and fast but perhaps less customizable. For example using <em>incidence</em> package to create an epicurve.</p>
+<p>See below the functions <code><a href="https://rdrr.io/r/base/list.files.html">list.files()</a></code> and <code><a href="https://rdrr.io/r/base/list.files.html">dir()</a></code>, which perform the same operation of listing files within a specified directory. You can specify <code>ignore.case =</code> or a specific patter to look for.</p>
+<div class="sourceCode" id="cb1457"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/list.files.html">list.files</a></span><span class="op">(</span>path <span class="op">=</span> <span class="fu">here</span><span class="op">(</span><span class="st">"data"</span><span class="op">)</span><span class="op">)</span>
+
+<span class="fu"><a href="https://rdrr.io/r/base/list.files.html">list.files</a></span><span class="op">(</span>path <span class="op">=</span> <span class="fu">here</span><span class="op">(</span><span class="st">"data"</span><span class="op">)</span>, pattern <span class="op">=</span> <span class="st">".csv"</span><span class="op">)</span>
+<span class="co"># dir(path = here("data"), pattern = ".csv")</span>
+
+<span class="fu"><a href="https://rdrr.io/r/base/list.files.html">list.files</a></span><span class="op">(</span>path <span class="op">=</span> <span class="fu">here</span><span class="op">(</span><span class="st">"data"</span><span class="op">)</span>, pattern <span class="op">=</span> <span class="st">"evd"</span>, ignore.case <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<p>If a file is currently “open”, it will display with a tilde in front, like “~$hospital_linelists.xlsx”.</p>
 <!-- ======================================================= -->
-<div id="option-1-sub-tab-5" class="section level3" number="48.3.1">
-<h3>
-<span class="header-section-number">48.3.1</span> Option 1 sub-tab<a class="anchor" aria-label="anchor" href="#option-1-sub-tab-5"><i class="fas fa-link"></i></a>
-</h3>
-<p>Sub-tabs if necessary. Re-name as needed.</p>
-<!-- ======================================================= -->
-</div>
-</div>
-<div id="option-2-5" class="section level2" number="48.4">
-<h2>
-<span class="header-section-number">48.4</span> Option 2<a class="anchor" aria-label="anchor" href="#option-2-5"><i class="fas fa-link"></i></a>
-</h2>
-<p>This tab can be re-named.
-This tab should demonstrate execution of the task a more standard/core package (e.g. ggplot2, or base R) that allows for more flexibility in the output or more package stability. For example, showing how to create an epicurve using <em>ggplot2</em>.</p>
-<!-- ======================================================= -->
-<div id="option-2-sub-tab-5" class="section level3" number="48.4.1">
-<h3>
-<span class="header-section-number">48.4.1</span> Option 2 sub-tab<a class="anchor" aria-label="anchor" href="#option-2-sub-tab-5"><i class="fas fa-link"></i></a>
-</h3>
-<p>Sub-tabs if necessary. Re-name as needed.</p>
-<!-- ======================================================= -->
-</div>
 </div>
 <div id="resources-41" class="section level2" number="48.5">
 <h2>
 <span class="header-section-number">48.5</span> Resources<a class="anchor" aria-label="anchor" href="#resources-41"><i class="fas fa-link"></i></a>
 </h2>
-<p>This tab should stay with the name “Resources”.
-Links to other online tutorials or resources.</p>
+<p><a href="https://cran.r-project.org/web/packages/fs/vignettes/function-comparisons.html" class="uri">https://cran.r-project.org/web/packages/fs/vignettes/function-comparisons.html</a></p>
 
 </div>
 </div>
@@ -196,19 +301,22 @@ Links to other online tutorials or resources.</p>
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
 <li><a class="nav-link" href="#directory-interactions"><span class="header-section-number">48</span> Directory interactions</a></li>
-<li><a class="nav-link" href="#overview-35"><span class="header-section-number">48.1</span> Overview</a></li>
 <li>
-<a class="nav-link" href="#preparation-38"><span class="header-section-number">48.2</span> Preparation</a><ul class="nav navbar-nav">
-<li><a class="nav-link" href="#sub-tab-1-5"><span class="header-section-number">48.2.1</span> sub-tab 1</a></li>
-<li><a class="nav-link" href="#sub-tab-2-5"><span class="header-section-number">48.2.2</span> sub-tab 2</a></li>
+<a class="nav-link" href="#preparation-38"><span class="header-section-number">48.1</span> Preparation</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#fs-package">fs package</a></li>
+<li><a class="nav-link" href="#print-directory-as-a-dendrogram-tree"><span class="header-section-number">48.1.1</span> Print directory as a dendrogram tree</a></li>
 </ul>
 </li>
+<li><a class="nav-link" href="#accessing-files-in-the-directory"><span class="header-section-number">48.2</span> Accessing files in the directory</a></li>
 <li>
-<a class="nav-link" href="#option-1-4"><span class="header-section-number">48.3</span> Option 1</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#option-1-sub-tab-5"><span class="header-section-number">48.3.1</span> Option 1 sub-tab</a></li></ul>
+<a class="nav-link" href="#running-other-files"><span class="header-section-number">48.3</span> Running other files</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#source">source()</a></li>
+<li><a class="nav-link" href="#render">render()</a></li>
+<li><a class="nav-link" href="#run-files-in-a-directory">Run files in a directory</a></li>
+<li><a class="nav-link" href="#import-files-in-a-directory">Import files in a directory</a></li>
+</ul>
 </li>
-<li>
-<a class="nav-link" href="#option-2-5"><span class="header-section-number">48.4</span> Option 2</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#option-2-sub-tab-5"><span class="header-section-number">48.4.1</span> Option 2 sub-tab</a></li></ul>
-</li>
+<li><a class="nav-link" href="#base-r-5"><span class="header-section-number">48.4</span> base R</a></li>
 <li><a class="nav-link" href="#resources-41"><span class="header-section-number">48.5</span> Resources</a></li>
 </ul>
 
@@ -226,7 +334,7 @@ Links to other online tutorials or resources.</p>
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>The Epidemiologist R Handbook</strong>" was written by the handbook team. It was last built on 2021-03-06.</p>
+    <p>"<strong>The Epidemiologist R Handbook</strong>" was written by the handbook team. It was last built on 2021-03-07.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
