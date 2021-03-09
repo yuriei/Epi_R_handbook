@@ -84,7 +84,7 @@
 <li><a class="" href="plot-continuous-data.html"><span class="header-section-number">29</span> Plot continuous data</a></li>
 <li><a class="" href="plot-categorical-data.html"><span class="header-section-number">30</span> Plot categorical data</a></li>
 <li><a class="" href="tables-1.html"><span class="header-section-number">31</span> Tables</a></li>
-<li><a class="" href="age-pyramids.html"><span class="header-section-number">32</span> Age pyramids</a></li>
+<li><a class="" href="age-pyramids-and-likert-scales.html"><span class="header-section-number">32</span> Age pyramids and Likert-scales</a></li>
 <li><a class="" href="diagrams.html"><span class="header-section-number">33</span> Diagrams</a></li>
 <li><a class="" href="combination-analysis.html"><span class="header-section-number">34</span> Combination analysis</a></li>
 <li><a class="" href="heatmaps.html"><span class="header-section-number">35</span> Heatmaps</a></li>
@@ -92,16 +92,16 @@
 <li><a class="" href="phylogenetic-trees.html"><span class="header-section-number">37</span> Phylogenetic trees</a></li>
 <li><a class="" href="interactive-plots.html"><span class="header-section-number">38</span> Interactive plots</a></li>
 <li class="book-part">Advanced</li>
-<li><a class="" href="errors-warnings-1.html"><span class="header-section-number">39</span> Errors &amp; warnings</a></li>
-<li><a class="" href="advanced-rstudio.html"><span class="header-section-number">40</span> Advanced RStudio</a></li>
-<li><a class="" href="relational-databases.html"><span class="header-section-number">41</span> Relational databases</a></li>
-<li><a class="" href="routine-reports.html"><span class="header-section-number">42</span> Routine reports</a></li>
-<li><a class="" href="r-markdown-1.html"><span class="header-section-number">43</span> R Markdown</a></li>
-<li><a class="" href="shiny-and-dashboards.html"><span class="header-section-number">44</span> Shiny and dashboards</a></li>
-<li><a class="" href="collaboration.html"><span class="header-section-number">45</span> Collaboration</a></li>
-<li><a class="" href="writing-functions.html"><span class="header-section-number">46</span> Writing functions</a></li>
-<li><a class="" href="r-on-network-drives.html"><span class="header-section-number">47</span> R on network drives</a></li>
-<li><a class="" href="directory-interactions.html"><span class="header-section-number">48</span> Directory interactions</a></li>
+<li><a class="" href="directory-interactions.html"><span class="header-section-number">39</span> Directory interactions</a></li>
+<li><a class="" href="r-markdown-1.html"><span class="header-section-number">40</span> R Markdown</a></li>
+<li><a class="" href="routine-reports.html"><span class="header-section-number">41</span> Routine reports</a></li>
+<li><a class="" href="errors-warnings-1.html"><span class="header-section-number">42</span> Errors &amp; warnings</a></li>
+<li><a class="" href="advanced-rstudio.html"><span class="header-section-number">43</span> Advanced RStudio</a></li>
+<li><a class="" href="relational-databases.html"><span class="header-section-number">44</span> Relational databases</a></li>
+<li><a class="" href="shiny-and-dashboards.html"><span class="header-section-number">45</span> Shiny and dashboards</a></li>
+<li><a class="" href="collaboration.html"><span class="header-section-number">46</span> Collaboration</a></li>
+<li><a class="" href="writing-functions.html"><span class="header-section-number">47</span> Writing functions</a></li>
+<li><a class="" href="r-on-network-drives.html"><span class="header-section-number">48</span> R on network drives</a></li>
 </ul>
 
         <div class="book-extra">
@@ -113,12 +113,6 @@
 <h1>
 <span class="header-section-number">10</span> Factors<a class="anchor" aria-label="anchor" href="#factors"><i class="fas fa-link"></i></a>
 </h1>
-<!-- ======================================================= -->
-<div id="overview-4" class="section level2" number="10.1">
-<h2>
-<span class="header-section-number">10.1</span> Overview<a class="anchor" aria-label="anchor" href="#overview-4"><i class="fas fa-link"></i></a>
-</h2>
-<p>Under construction - TBD</p>
 <p>In R, <em>factors</em> allow for ordered categorical data. A column can be converted from class numeric, categorical, or even logical to class <em>factor</em>. In this case, the values are stored as <em>ordered integer <strong>levels</strong></em>, and can display with assigned <em>labels</em>.</p>
 <p>In a column of class <em>factor</em>:</p>
 <ul>
@@ -129,10 +123,9 @@
 <p>Most of this page will use functions from the package <strong>forcats</strong> (a short name for “For categorical variables”).</p>
 <p><em>Factors are useful in statistical modeling, which allows integer values such as 1/0 to be evaluated categorically and not continuously.</em></p>
 <!-- ======================================================= -->
-</div>
-<div id="preparation" class="section level2" number="10.2">
+<div id="preparation" class="section level2" number="10.1">
 <h2>
-<span class="header-section-number">10.2</span> Preparation<a class="anchor" aria-label="anchor" href="#preparation"><i class="fas fa-link"></i></a>
+<span class="header-section-number">10.1</span> Preparation<a class="anchor" aria-label="anchor" href="#preparation"><i class="fas fa-link"></i></a>
 </h2>
 <p><strong>Load packages</strong></p>
 <p>Below are the packages used in this page</p>
@@ -151,9 +144,9 @@
 <span class="va">linelist</span> <span class="op">&lt;-</span> <span class="fu">rio</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/rio/man/import.html">import</a></span><span class="op">(</span><span class="st">"linelist_cleaned.xlsx"</span><span class="op">)</span></code></pre></div>
 <!-- ======================================================= -->
 </div>
-<div id="preparation-1" class="section level2" number="10.3">
+<div id="create-new-column" class="section level2" number="10.2">
 <h2>
-<span class="header-section-number">10.3</span> Preparation<a class="anchor" aria-label="anchor" href="#preparation-1"><i class="fas fa-link"></i></a>
+<span class="header-section-number">10.2</span> Create new column<a class="anchor" aria-label="anchor" href="#create-new-column"><i class="fas fa-link"></i></a>
 </h2>
 <p>We begin in a common epidemiological scenario - the creation of a categorical column. In this case, we use the existing column <code>days_onset_hosp</code> (days from symptom onset to hospital admission) to classify rows into categorical groups.</p>
 <p>The <strong>dplyr</strong> function <code><a href="https://dplyr.tidyverse.org/reference/case_when.html">case_when()</a></code> is used to apply logical criteria on each row, resulting in values for the new column <code>delay</code></p>
@@ -179,9 +172,9 @@ This probably does not make sense to show.</p>
   <span class="fu">theme_classic</span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-231-1.png" width="672"></div>
 </div>
-<div id="convert-to-factor" class="section level2" number="10.4">
+<div id="convert-to-factor" class="section level2" number="10.3">
 <h2>
-<span class="header-section-number">10.4</span> Convert to factor<a class="anchor" aria-label="anchor" href="#convert-to-factor"><i class="fas fa-link"></i></a>
+<span class="header-section-number">10.3</span> Convert to factor<a class="anchor" aria-label="anchor" href="#convert-to-factor"><i class="fas fa-link"></i></a>
 </h2>
 <p>To initially convert a column to class <em>factor</em>, use the <strong>base</strong> R function <code><a href="https://rdrr.io/r/base/factor.html">factor()</a></code>. Below the dataframe <code>linelist</code> is modified such that the column <code>time_period</code> is converted to a factor.</p>
 <div class="sourceCode" id="cb335"><pre class="downlit sourceCode r">
@@ -192,9 +185,9 @@ This probably does not make sense to show.</p>
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/levels.html">levels</a></span><span class="op">(</span><span class="va">linelist</span><span class="op">$</span><span class="va">delay</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] "&lt;2 days"  "&gt;5 days"  "2-5 days"</code></pre>
 </div>
-<div id="adjust-level-order" class="section level2" number="10.5">
+<div id="adjust-level-order" class="section level2" number="10.4">
 <h2>
-<span class="header-section-number">10.5</span> Adjust level order<a class="anchor" aria-label="anchor" href="#adjust-level-order"><i class="fas fa-link"></i></a>
+<span class="header-section-number">10.4</span> Adjust level order<a class="anchor" aria-label="anchor" href="#adjust-level-order"><i class="fas fa-link"></i></a>
 </h2>
 <p>Using the package <strong>forcats</strong>, there are several functions to adjust the order of a factor’s levels:</p>
 <ul>
@@ -317,9 +310,9 @@ In the second example, the x-axis column has been wrapped in <code>fct_reorder()
 ##              454             1762             3672</code></pre>
 </div>
 </div>
-<div id="missing-values-3" class="section level2" number="10.6">
+<div id="missing-values-3" class="section level2" number="10.5">
 <h2>
-<span class="header-section-number">10.6</span> Missing values<a class="anchor" aria-label="anchor" href="#missing-values-3"><i class="fas fa-link"></i></a>
+<span class="header-section-number">10.5</span> Missing values<a class="anchor" aria-label="anchor" href="#missing-values-3"><i class="fas fa-link"></i></a>
 </h2>
 <p>If you have <code>NA</code> values in your column, you can easily convert them to a named value such as “Missing” with <code>fct_explicit_na()</code>, as performed below temporarily on the column <code>delay</code>:</p>
 <div class="sourceCode" id="cb347"><pre class="downlit sourceCode r">
@@ -331,9 +324,9 @@ In the second example, the x-axis column has been wrapped in <code>fct_reorder()
 ##  &lt;2 days 2-5 days  &gt;5 days     &lt;NA&gt; 
 ##     3183     2103      602        0</code></pre>
 </div>
-<div id="edit-labels" class="section level2" number="10.7">
+<div id="edit-labels" class="section level2" number="10.6">
 <h2>
-<span class="header-section-number">10.7</span> Edit labels<a class="anchor" aria-label="anchor" href="#edit-labels"><i class="fas fa-link"></i></a>
+<span class="header-section-number">10.6</span> Edit labels<a class="anchor" aria-label="anchor" href="#edit-labels"><i class="fas fa-link"></i></a>
 </h2>
 <p>Adjust the factor labels with <code>fct_recode()</code>. remember that these do not change the underlying values, only their labels.<br>
 Below, the labels of the factor column <code>delay</code> (grouped days from onset to admission) are edited:</p>
@@ -356,9 +349,9 @@ Below, the labels of the factor column <code>delay</code> (grouped days from ons
 ## Less than 2 days      2 to 5 days More than 5 days 
 ##             3183             2103              602</code></pre>
 </div>
-<div id="adddrop-levels" class="section level2" number="10.8">
+<div id="adddrop-levels" class="section level2" number="10.7">
 <h2>
-<span class="header-section-number">10.8</span> Add/drop levels<a class="anchor" aria-label="anchor" href="#adddrop-levels"><i class="fas fa-link"></i></a>
+<span class="header-section-number">10.7</span> Add/drop levels<a class="anchor" aria-label="anchor" href="#adddrop-levels"><i class="fas fa-link"></i></a>
 </h2>
 <p>If you have a factor and want to add levels (regardless of whether there are any rows with those values), use <code>fct_expand()</code>.</p>
 <p>See how if we classify “hospital” as a factor, and then try to change the values, an error is returned:</p>
@@ -367,16 +360,17 @@ Below, the labels of the factor column <code>delay</code> (grouped days from ons
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>hospital <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">hospital</span><span class="op">)</span><span class="op">)</span>
 
 <span class="fu"><a href="https://rdrr.io/r/base/levels.html">levels</a></span><span class="op">(</span><span class="va">linelist</span><span class="op">$</span><span class="va">hospital</span><span class="op">)</span></code></pre></div>
-<pre><code>## [1] "Central Hospital"                     "Military Hospital"                    "Missing"                              "Other"                               
-## [5] "Port Hospital"                        "St. Mark's Maternity Hospital (SMMH)"</code></pre>
+<pre><code>## [1] "Central Hospital"                     "Military Hospital"                    "Missing"                             
+## [4] "Other"                                "Port Hospital"                        "St. Mark's Maternity Hospital (SMMH)"</code></pre>
 <p>Now we can add the level “University Hospital”:</p>
 <div class="sourceCode" id="cb355"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">linelist</span> <span class="op">&lt;-</span> <span class="va">linelist</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>hospital <span class="op">=</span> <span class="fu">fct_expand</span><span class="op">(</span><span class="va">hospital</span>, <span class="st">"University Hospital"</span><span class="op">)</span><span class="op">)</span>
 
 <span class="fu"><a href="https://rdrr.io/r/base/levels.html">levels</a></span><span class="op">(</span><span class="va">linelist</span><span class="op">$</span><span class="va">hospital</span><span class="op">)</span></code></pre></div>
-<pre><code>## [1] "Central Hospital"                     "Military Hospital"                    "Missing"                              "Other"                               
-## [5] "Port Hospital"                        "St. Mark's Maternity Hospital (SMMH)" "University Hospital"</code></pre>
+<pre><code>## [1] "Central Hospital"                     "Military Hospital"                    "Missing"                             
+## [4] "Other"                                "Port Hospital"                        "St. Mark's Maternity Hospital (SMMH)"
+## [7] "University Hospital"</code></pre>
 <div id="epiweeks" class="section level3 unnumbered">
 <h3>Epiweeks<a class="anchor" aria-label="anchor" href="#epiweeks"><i class="fas fa-link"></i></a>
 </h3>
@@ -394,9 +388,9 @@ Below, the labels of the factor column <code>delay</code> (grouped days from ons
 <!-- ======================================================= -->
 </div>
 </div>
-<div id="resources-3" class="section level2" number="10.9">
+<div id="resources-3" class="section level2" number="10.8">
 <h2>
-<span class="header-section-number">10.9</span> Resources<a class="anchor" aria-label="anchor" href="#resources-3"><i class="fas fa-link"></i></a>
+<span class="header-section-number">10.8</span> Resources<a class="anchor" aria-label="anchor" href="#resources-3"><i class="fas fa-link"></i></a>
 </h2>
 <p>R for Data Science page on <a href="https://r4ds.had.co.nz/factors.html">factors</a>.</p>
 
@@ -412,19 +406,18 @@ Below, the labels of the factor column <code>delay</code> (grouped days from ons
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
 <li><a class="nav-link" href="#factors"><span class="header-section-number">10</span> Factors</a></li>
-<li><a class="nav-link" href="#overview-4"><span class="header-section-number">10.1</span> Overview</a></li>
-<li><a class="nav-link" href="#preparation"><span class="header-section-number">10.2</span> Preparation</a></li>
-<li><a class="nav-link" href="#preparation-1"><span class="header-section-number">10.3</span> Preparation</a></li>
-<li><a class="nav-link" href="#convert-to-factor"><span class="header-section-number">10.4</span> Convert to factor</a></li>
+<li><a class="nav-link" href="#preparation"><span class="header-section-number">10.1</span> Preparation</a></li>
+<li><a class="nav-link" href="#create-new-column"><span class="header-section-number">10.2</span> Create new column</a></li>
+<li><a class="nav-link" href="#convert-to-factor"><span class="header-section-number">10.3</span> Convert to factor</a></li>
 <li>
-<a class="nav-link" href="#adjust-level-order"><span class="header-section-number">10.5</span> Adjust level order</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#examples-1">Examples</a></li></ul>
+<a class="nav-link" href="#adjust-level-order"><span class="header-section-number">10.4</span> Adjust level order</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#examples-1">Examples</a></li></ul>
 </li>
-<li><a class="nav-link" href="#missing-values-3"><span class="header-section-number">10.6</span> Missing values</a></li>
-<li><a class="nav-link" href="#edit-labels"><span class="header-section-number">10.7</span> Edit labels</a></li>
+<li><a class="nav-link" href="#missing-values-3"><span class="header-section-number">10.5</span> Missing values</a></li>
+<li><a class="nav-link" href="#edit-labels"><span class="header-section-number">10.6</span> Edit labels</a></li>
 <li>
-<a class="nav-link" href="#adddrop-levels"><span class="header-section-number">10.8</span> Add/drop levels</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#epiweeks">Epiweeks</a></li></ul>
+<a class="nav-link" href="#adddrop-levels"><span class="header-section-number">10.7</span> Add/drop levels</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#epiweeks">Epiweeks</a></li></ul>
 </li>
-<li><a class="nav-link" href="#resources-3"><span class="header-section-number">10.9</span> Resources</a></li>
+<li><a class="nav-link" href="#resources-3"><span class="header-section-number">10.8</span> Resources</a></li>
 </ul>
 
       <div class="book-extra">
@@ -441,7 +434,7 @@ Below, the labels of the factor column <code>delay</code> (grouped days from ons
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>The Epidemiologist R Handbook</strong>" was written by the handbook team. It was last built on 2021-03-07.</p>
+    <p>"<strong>The Epidemiologist R Handbook</strong>" was written by the handbook team. It was last built on 2021-03-09.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

@@ -84,7 +84,7 @@
 <li><a class="" href="plot-continuous-data.html"><span class="header-section-number">29</span> Plot continuous data</a></li>
 <li><a class="" href="plot-categorical-data.html"><span class="header-section-number">30</span> Plot categorical data</a></li>
 <li><a class="" href="tables-1.html"><span class="header-section-number">31</span> Tables</a></li>
-<li><a class="" href="age-pyramids.html"><span class="header-section-number">32</span> Age pyramids</a></li>
+<li><a class="" href="age-pyramids-and-likert-scales.html"><span class="header-section-number">32</span> Age pyramids and Likert-scales</a></li>
 <li><a class="" href="diagrams.html"><span class="header-section-number">33</span> Diagrams</a></li>
 <li><a class="" href="combination-analysis.html"><span class="header-section-number">34</span> Combination analysis</a></li>
 <li><a class="" href="heatmaps.html"><span class="header-section-number">35</span> Heatmaps</a></li>
@@ -92,16 +92,16 @@
 <li><a class="" href="phylogenetic-trees.html"><span class="header-section-number">37</span> Phylogenetic trees</a></li>
 <li><a class="" href="interactive-plots.html"><span class="header-section-number">38</span> Interactive plots</a></li>
 <li class="book-part">Advanced</li>
-<li><a class="" href="errors-warnings-1.html"><span class="header-section-number">39</span> Errors &amp; warnings</a></li>
-<li><a class="" href="advanced-rstudio.html"><span class="header-section-number">40</span> Advanced RStudio</a></li>
-<li><a class="" href="relational-databases.html"><span class="header-section-number">41</span> Relational databases</a></li>
-<li><a class="" href="routine-reports.html"><span class="header-section-number">42</span> Routine reports</a></li>
-<li><a class="" href="r-markdown-1.html"><span class="header-section-number">43</span> R Markdown</a></li>
-<li><a class="" href="shiny-and-dashboards.html"><span class="header-section-number">44</span> Shiny and dashboards</a></li>
-<li><a class="" href="collaboration.html"><span class="header-section-number">45</span> Collaboration</a></li>
-<li><a class="" href="writing-functions.html"><span class="header-section-number">46</span> Writing functions</a></li>
-<li><a class="" href="r-on-network-drives.html"><span class="header-section-number">47</span> R on network drives</a></li>
-<li><a class="" href="directory-interactions.html"><span class="header-section-number">48</span> Directory interactions</a></li>
+<li><a class="" href="directory-interactions.html"><span class="header-section-number">39</span> Directory interactions</a></li>
+<li><a class="" href="r-markdown-1.html"><span class="header-section-number">40</span> R Markdown</a></li>
+<li><a class="" href="routine-reports.html"><span class="header-section-number">41</span> Routine reports</a></li>
+<li><a class="" href="errors-warnings-1.html"><span class="header-section-number">42</span> Errors &amp; warnings</a></li>
+<li><a class="" href="advanced-rstudio.html"><span class="header-section-number">43</span> Advanced RStudio</a></li>
+<li><a class="" href="relational-databases.html"><span class="header-section-number">44</span> Relational databases</a></li>
+<li><a class="" href="shiny-and-dashboards.html"><span class="header-section-number">45</span> Shiny and dashboards</a></li>
+<li><a class="" href="collaboration.html"><span class="header-section-number">46</span> Collaboration</a></li>
+<li><a class="" href="writing-functions.html"><span class="header-section-number">47</span> Writing functions</a></li>
+<li><a class="" href="r-on-network-drives.html"><span class="header-section-number">48</span> R on network drives</a></li>
 </ul>
 
         <div class="book-extra">
@@ -113,7 +113,7 @@
 <h1>
 <span class="header-section-number">28</span> Epidemic curves<a class="anchor" aria-label="anchor" href="#epidemic-curves"><i class="fas fa-link"></i></a>
 </h1>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-703-1.png" width="75%"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-724-1.png" width="75%"></div>
 <p>An epidemic curve (also known as an “epi curve”) is a core epidemiological chart typically used to visualize the temporal pattern of illness onset among a cluster or epidemic of cases.</p>
 <p>Analysis of the epicurve can reveal temporal trends, outliers, the magnitude of the outbreak, the most likely time period of exposure, time intervals between case generations, and can even help identify the mode of transmission of an unidentified disease (e.g. point source, continuous common source, person-to-person propogation). One online lesson on interpretation of epi curves can be found at the website of the <a href="https://www.cdc.gov/training/quicklearns/epimode/index.html">US CDC</a>.</p>
 <p>In this page we demonstrate two approaches to producing epicurves in R:</p>
@@ -134,15 +134,15 @@
 </li>
 <li>Overlaying cumulative case incidence using a second axis</li>
 </ul>
-<!-- ======================================================= --><div id="preparation-18" class="section level2" number="28.1">
+<!-- ======================================================= --><div id="preparation-17" class="section level2" number="28.1">
 <h2>
-<span class="header-section-number">28.1</span> Preparation<a class="anchor" aria-label="anchor" href="#preparation-18"><i class="fas fa-link"></i></a>
+<span class="header-section-number">28.1</span> Preparation<a class="anchor" aria-label="anchor" href="#preparation-17"><i class="fas fa-link"></i></a>
 </h2>
 <div id="packages-5" class="section level3 unnumbered">
 <h3>Packages<a class="anchor" aria-label="anchor" href="#packages-5"><i class="fas fa-link"></i></a>
 </h3>
 <p>This code chunk shows the loading of packages required for the analyses.</p>
-<div class="sourceCode" id="cb1110"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1107"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span>
   <span class="va">rio</span>,          <span class="co"># file import/export</span>
   <span class="va">here</span>,         <span class="co"># relative filepaths </span>
@@ -165,22 +165,22 @@
 <li>Aggregated counts by hospital from the same simulated epidemic</li>
 </ul>
 <p>The datasets are imported using the <code>import()</code> function from the <strong>rio</strong> package. See the page on <a href="import-and-export.html#import-and-export">Import and export</a> for various ways to import data. The linelist and aggregated counts are displayed below.</p>
-<div class="sourceCode" id="cb1111"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1108"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">linelist</span> <span class="op">&lt;-</span> <span class="fu">rio</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/rio/man/import.html">import</a></span><span class="op">(</span><span class="st">"linelist_cleaned.xlsx"</span><span class="op">)</span></code></pre></div>
 <p><strong>Case linelist</strong></p>
 <p>The first 50 rows are displayed</p>
-<div id="htmlwidget-1a8d243b2609f37ae6f2" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-1a8d243b2609f37ae6f2">{"x":{"filter":"none","data":[["a3c8b8","d8a13d","5fe599","8689b7","11f8ea","893f25","be99c8","d0523a","ce9c02","275cc7","07e3e8","8a4580","2b8773","057e7a","be502d","4cff96","bab455","a6c614","c15f36","2eaa9a","2ebf95","c36eb4","02d8fd","af9f9a","88eff2","f50e8a","bc648d","567136","b799eb","67184b","170473","42e1a9","64c8ef","8ebf6e","e56412","0b46a0","188619","62a2ef","da8ecb","148f18","a9feb3","92ab68","58b968","f81362","6670a5","92ddf7","386dfb","3ad520","ae50c8","2ed605"],[4,4,4,4,2,3,3,7,5,5,4,4,5,7,5,6,5,5,5,5,6,8,9,6,5,10,9,6,5,6,7,12,6,7,9,9,7,9,5,6,6,8,10,8,9,9,9,7,9,9],["2014-05-07","2014-05-06","2014-05-08",null,null,"2014-05-18","2014-05-03","2014-05-20","2014-05-27","2014-05-24","2014-05-22",null,"2014-05-31","2014-06-04","2014-06-09","2014-06-05",null,"2014-06-05",null,"2014-06-07",null,"2014-06-15","2014-06-14",null,null,null,null,null,"2014-06-27",null,"2014-07-05",null,null,"2014-07-02","2014-07-12","2014-07-12","2014-07-05","2014-07-02","2014-06-20",null,"2014-06-29",null,"2014-07-18",null,"2014-07-18","2014-07-19","2014-07-19","2014-07-12","2014-07-20","2014-07-27"],["2014-05-08","2014-05-08","2014-05-13","2014-05-13","2014-05-16","2014-05-21","2014-05-22","2014-05-24","2014-05-27","2014-05-27","2014-05-27","2014-06-02","2014-06-06","2014-06-14","2014-06-15","2014-06-15","2014-06-15","2014-06-16","2014-06-17","2014-06-17","2014-06-19","2014-06-20","2014-06-20","2014-06-20","2014-06-20","2014-06-22","2014-06-30","2014-07-02","2014-07-03","2014-07-04","2014-07-09","2014-07-12","2014-07-14","2014-07-14","2014-07-15","2014-07-16","2014-07-17","2014-07-17","2014-07-18","2014-07-19","2014-07-19","2014-07-19","2014-07-20","2014-07-20","2014-07-20","2014-07-23","2014-07-23","2014-07-24","2014-07-25","2014-07-28"],["2014-05-10","2014-05-10","2014-05-15","2014-05-14","2014-05-18","2014-05-22","2014-05-23","2014-05-26","2014-05-29","2014-05-28","2014-05-29","2014-06-02","2014-06-07","2014-06-15","2014-06-16","2014-06-16","2014-06-16","2014-06-18","2014-06-19","2014-06-17","2014-06-21","2014-06-21","2014-06-20","2014-06-20","2014-06-21","2014-06-23","2014-07-02","2014-07-03","2014-07-05","2014-07-06","2014-07-10","2014-07-14","2014-07-15","2014-07-14","2014-07-17","2014-07-16","2014-07-19","2014-07-19","2014-07-20","2014-07-20","2014-07-21","2014-07-20","2014-07-21","2014-07-21","2014-07-22","2014-07-25","2014-07-23","2014-07-24","2014-07-27","2014-07-30"],["2014-05-14",null,null,"2014-05-18","2014-05-30","2014-05-29","2014-05-24","2014-06-05","2014-06-17","2014-06-07","2014-06-01",null,"2014-06-16",null,"2014-06-19","2014-06-25","2014-06-18","2014-06-26","2014-06-28",null,"2014-06-23","2014-06-24","2014-07-01","2014-07-13","2014-06-24","2014-07-01","2014-07-14","2014-07-07","2014-07-12","2014-07-09","2014-08-09","2014-07-20","2014-07-25","2014-07-27","2014-07-19","2014-08-11","2014-07-24","2014-07-23","2014-08-01","2014-07-23","2014-08-03","2014-08-05","2014-07-28","2014-08-07","2014-08-01",null,null,null,"2014-08-08","2014-08-09"],["Recover",null,null,"Recover","Recover","Recover","Recover",null,"Death","Death","Recover","Death",null,"Recover","Death",null,"Death","Recover","Recover","Recover","Death","Death","Death",null,"Death",null,"Recover",null,"Recover","Death","Recover","Death","Recover","Recover","Death","Recover","Death","Death",null,"Death","Death",null,null,"Death","Death","Recover","Recover",null,"Death",null],["m","f","m","f","m","m","f","f","m","f","f","m","f","f","m","m","f","f","f","f","m","m","m","f","f","f","m","m","m","m","f","f","m","f","f","f","m","f","m","f","f","f","m","m","f","m","f","f","f","f"],[1,4,21,2,27,25,18,2,20,4,22,7,7,18,33,34,12,31,0,3,3,51,51,9,15,8,35,37,34,15,35,9,30,9,23,13,25,14,39,1,14,12,14,28,13,6,42,10,6,10],["years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years"],[1,4,21,2,27,25,18,2,20,4,22,7,7,18,33,34,12,31,0,3,3,51,51,9,15,8,35,37,34,15,35,9,30,9,23,13,25,14,39,1,14,12,14,28,13,6,42,10,6,10],["0-4","0-4","20-29","0-4","20-29","20-29","15-19","0-4","20-29","0-4","20-29","5-9","5-9","15-19","30-49","30-49","10-14","30-49","0-4","0-4","0-4","50-69","50-69","5-9","15-19","5-9","30-49","30-49","30-49","15-19","30-49","5-9","30-49","5-9","20-29","10-14","20-29","10-14","30-49","0-4","10-14","10-14","10-14","20-29","10-14","5-9","30-49","10-14","5-9","10-14"],["0-4","0-4","20-24","0-4","25-29","25-29","15-19","0-4","20-24","0-4","20-24","5-9","5-9","15-19","30-34","30-34","10-14","30-34","0-4","0-4","0-4","50-54","50-54","5-9","15-19","5-9","35-39","35-39","30-34","15-19","35-39","5-9","30-34","5-9","20-24","10-14","25-29","10-14","35-39","0-4","10-14","10-14","10-14","25-29","10-14","5-9","40-44","10-14","5-9","10-14"],["Port Hospital","St. Mark's Maternity Hospital (SMMH)","Other","Missing","St. Mark's Maternity Hospital (SMMH)","Military Hospital","Port Hospital","Missing","Port Hospital","Central Hospital","Missing","Military Hospital","Missing","Missing","Military Hospital","Port Hospital","Port Hospital","Other","Missing","Missing","Port Hospital","Port Hospital","Port Hospital","Missing","St. Mark's Maternity Hospital (SMMH)","Port Hospital","Port Hospital","Port Hospital","Missing","Other","Military Hospital","Military Hospital","Central Hospital","Military Hospital","Central Hospital","Missing","Military Hospital","Central Hospital","Missing","Missing","St. Mark's Maternity Hospital (SMMH)","Military Hospital","Port Hospital","Other","Military Hospital","Missing","Military Hospital","Missing","Port Hospital","Military Hospital"],[-13.2231931914572,-13.2354719577436,-13.2157351064963,-13.2152339775486,-13.212910703914,-13.2228638912441,-13.222625321098,-13.2565628977111,-13.2243703238737,-13.2369393782451,-13.2331547837254,-13.2222002700958,-13.2149474159902,-13.2180326141688,-13.2535215623253,-13.217651519706,-13.2372027220014,-13.2190654487695,-13.2189533374241,-13.209391925612,-13.2265780018024,-13.2619688324425,-13.2124311244169,-13.2371313571269,-13.2195578885261,-13.2336087079551,-13.2130045468176,-13.2160657166043,-13.2162953240809,-13.2355883289789,-13.247814368147,-13.2142410663192,-13.2614705796373,-13.2630592726116,-13.2343341712241,-13.2087039682346,-13.2581175859281,-13.2379376608352,-13.218781651651,-13.2483677722899,-13.2155668757305,-13.2333516655879,-13.238964614443,-13.2163318124535,-13.2217866965605,-13.2221173306518,-13.2510797882678,-13.262635786914,-13.2472895700622,-13.2597714344876],[8.47325128269697,8.4627682729487,8.46897295100924,8.45171855856465,8.46481700596819,8.46082377490923,8.46183062600728,8.48379248016347,8.47024789713924,8.46916113869591,8.46272931462646,8.46388925014565,8.45192988292173,8.47155535608018,8.45884880725177,8.46236804334872,8.46956119136946,8.47737640975659,8.45136291368722,8.47570184950483,8.48676680560442,8.48475855218221,8.45344099552146,8.48777544809491,8.46210832824745,8.47804840685363,8.47135450705077,8.48802917129884,8.46395131808455,8.4728562695215,8.47038713612408,8.4641347894342,8.45750552360835,8.47493999153642,8.47832062438022,8.4763997148275,8.45535258467199,8.4697737543226,8.48438437371817,8.48466158574339,8.4627846208641,8.46517148129756,8.48776686246878,8.4630635336683,8.4623972994508,8.46420961833913,8.47178418137766,8.4632880274758,8.48450777619227,8.45925216791802],["2ae019","20b688","f547d6",null,null,"11f8ea","aec8ec","4b38b7","53da57","e02f66","893f25",null,"5387a2","cbbe78","a2086d","ba7326",null,"3ff1bc",null,"9f6884",null,"057e7a","e61cb9",null,null,null,null,null,"ea3740",null,"71577a",null,null,"567136","894024","894024","71577a","b0c500","eb2277",null,"af1c1f",null,"62a2ef",null,"67be4e","d15be5","f36522","312ecf","26c588","e26da6"],["other","other","other",null,null,"other","other","other","other","other","other",null,"other","funeral","other","other",null,"funeral",null,"other",null,"other","other",null,null,null,null,null,"other",null,"other",null,null,"other","funeral","funeral","other","other","funeral",null,"other",null,"other",null,"other","other","other","other","other","other"],[18,35,78,18,68,66,57,25,64,41,72,45,29,53,71,77,52,71,0,35,45,82,92,34,40,42,67,75,66,52,84,39,66,52,55,60,67,59,75,28,61,55,77,68,51,44,88,46,33,53],[50,74,148,61,198,161,116,48,156,75,144,109,99,140,157,146,118,162,22,62,58,195,257,114,144,96,206,172,176,125,229,88,177,88,150,151,169,136,186,24,124,147,163,167,152,89,188,112,72,139],[22,21,22,23,21,21,22,20,22,23,22,20,22,22,21,22,22,23,23,21,23,20,22,22,22,22,22,22,22,22,23,23,23,22,23,23,20,22,21,22,23,23,23,20,21,21,22,21,22,23],[null,"no","no",null,null,"no",null,"no","no","no","no","no","no","no",null,null,null,"no","no",null,"no","no","no","no","no",null,"no",null,null,"no",null,null,"no",null,"no","no","no","no","no","no","no","no","no","no","no","no",null,"no","no","no"],[null,"no","yes",null,null,"no",null,"yes","no","no","no","no","yes","yes",null,null,null,"no","no",null,"no","no","no","no","no",null,"no",null,null,"no",null,null,"yes",null,"no","no","no","yes","no","no","no","yes","yes","yes","no","no",null,"no","no","yes"],[null,"yes","yes",null,null,"yes",null,"no","yes","yes","yes","no","yes","yes",null,null,null,"yes","yes",null,"yes","no","yes","yes","yes",null,"yes",null,null,"yes",null,null,"yes",null,"no","yes","yes","yes","yes","no","yes","yes","no","yes","yes","yes",null,"yes","yes","yes"],[null,"no","yes",null,null,"no",null,"no","no","no","no","no","no","no",null,null,null,"no","no",null,"no","no","no","no","no",null,"no",null,null,"no",null,null,"no",null,"no","no","no","no","no","no","no","no","yes","no","no","yes",null,"no","no","no"],[null,"yes","yes",null,null,"yes",null,"yes","yes","no","yes","no","yes","yes",null,null,null,"no","yes",null,"no","yes","yes","no","yes",null,"yes",null,null,"yes",null,null,"no",null,"yes","yes","no","no","no","no","yes","yes","no","yes","no","no",null,"no","yes","no"],[37.3,37.4,37,36,36.7,37.3,36.8,37,36.4,37.2,37.3,36.9,37,36.9,37.3,37.1,36.7,36.6,37.7,37.6,36.8,36.9,36.6,37.7,37,36.4,36.4,37.4,36.3,37,37.5,37.8,36.8,37.5,37.4,36.5,37.2,36.6,37.3,36.3,37.2,36.9,36.4,36.4,36.2,37,37.2,37.3,36.4,37.5],["20:35","14:16","09:17","11:32","18:52","16:51",null,"14:29","11:57","09:21","13:08","23:20","17:29",null,"18:39",null,"14:16",null,"08:00","11:43","11:10","15:10","11:53","19:11",null,"14:26","04:17","17:32",null,null,"12:28",null,"10:12","10:39","16:46","19:50","16:06","13:52","11:28","07:40","12:60","15:24","06:27","06:17","09:36","14:01","17:06","12:57","13:07",null],[72,63.9152666179693,35.6099342585829,48.3740929857565,17.3451688603204,25.4619806334632,42.3602853745541,108.506944444444,26.2984878369494,72.8888888888889,34.7222222222222,37.8755996969952,29.5888174676053,27.0408163265306,28.8044139721693,36.1231000187652,37.3455903476013,27.0538027739674,0,91.05098855359,133.769322235434,21.5647600262985,13.9290526730155,26.1618959679902,19.2901234567901,45.5729166666667,15.7884814779904,25.3515413737155,21.3068181818182,33.28,16.018001182281,50.3615702479339,21.0667432730058,67.1487603305785,24.4444444444444,26.3146353230121,23.458562375267,31.8987889273356,21.6788067984738,486.111111111111,39.6722164412071,25.4523578138738,28.9811434378411,24.3823729785937,22.0740997229917,55.5485418507764,24.8981439565414,36.6709183673469,63.6574074074074,27.431292376171],[2,2,2,1,2,1,1,2,2,1,2,0,1,1,1,1,1,2,2,0,2,1,0,0,1,1,2,1,2,2,1,2,1,0,2,0,2,2,2,1,2,1,1,1,2,2,0,0,2,2]],"container":"<table class=\"white-space: nowrap\">\n  <thead>\n    <tr>\n      <th>case_id<\/th>\n      <th>generation<\/th>\n      <th>date_infection<\/th>\n      <th>date_onset<\/th>\n      <th>date_hospitalisation<\/th>\n      <th>date_outcome<\/th>\n      <th>outcome<\/th>\n      <th>gender<\/th>\n      <th>age<\/th>\n      <th>age_unit<\/th>\n      <th>age_years<\/th>\n      <th>age_cat<\/th>\n      <th>age_cat5<\/th>\n      <th>hospital<\/th>\n      <th>lon<\/th>\n      <th>lat<\/th>\n      <th>infector<\/th>\n      <th>source<\/th>\n      <th>wt_kg<\/th>\n      <th>ht_cm<\/th>\n      <th>ct_blood<\/th>\n      <th>fever<\/th>\n      <th>chills<\/th>\n      <th>cough<\/th>\n      <th>aches<\/th>\n      <th>vomit<\/th>\n      <th>temp<\/th>\n      <th>time_admission<\/th>\n      <th>bmi<\/th>\n      <th>days_onset_hosp<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"scrollX":true,"columnDefs":[{"className":"dt-right","targets":[1,8,10,14,15,18,19,20,26,28,29]}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script><p><strong>Case counts aggregated by hospital</strong></p>
+<div id="htmlwidget-ab0f86a06db503d5d072" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-ab0f86a06db503d5d072">{"x":{"filter":"none","data":[["a3c8b8","d8a13d","5fe599","8689b7","11f8ea","893f25","be99c8","d0523a","ce9c02","275cc7","07e3e8","8a4580","2b8773","057e7a","be502d","4cff96","bab455","a6c614","c15f36","2eaa9a","2ebf95","c36eb4","02d8fd","af9f9a","88eff2","f50e8a","bc648d","567136","b799eb","67184b","170473","42e1a9","64c8ef","8ebf6e","e56412","0b46a0","188619","62a2ef","da8ecb","148f18","a9feb3","92ab68","58b968","f81362","6670a5","92ddf7","386dfb","3ad520","ae50c8","2ed605"],[4,4,4,4,2,3,3,7,5,5,4,4,5,7,5,6,5,5,5,5,6,8,9,6,5,10,9,6,5,6,7,12,6,7,9,9,7,9,5,6,6,8,10,8,9,9,9,7,9,9],["2014-05-07","2014-05-06","2014-05-08",null,null,"2014-05-18","2014-05-03","2014-05-20","2014-05-27","2014-05-24","2014-05-22",null,"2014-05-31","2014-06-04","2014-06-09","2014-06-05",null,"2014-06-05",null,"2014-06-07",null,"2014-06-15","2014-06-14",null,null,null,null,null,"2014-06-27",null,"2014-07-05",null,null,"2014-07-02","2014-07-12","2014-07-12","2014-07-05","2014-07-02","2014-06-20",null,"2014-06-29",null,"2014-07-18",null,"2014-07-18","2014-07-19","2014-07-19","2014-07-12","2014-07-20","2014-07-27"],["2014-05-08","2014-05-08","2014-05-13","2014-05-13","2014-05-16","2014-05-21","2014-05-22","2014-05-24","2014-05-27","2014-05-27","2014-05-27","2014-06-02","2014-06-06","2014-06-14","2014-06-15","2014-06-15","2014-06-15","2014-06-16","2014-06-17","2014-06-17","2014-06-19","2014-06-20","2014-06-20","2014-06-20","2014-06-20","2014-06-22","2014-06-30","2014-07-02","2014-07-03","2014-07-04","2014-07-09","2014-07-12","2014-07-14","2014-07-14","2014-07-15","2014-07-16","2014-07-17","2014-07-17","2014-07-18","2014-07-19","2014-07-19","2014-07-19","2014-07-20","2014-07-20","2014-07-20","2014-07-23","2014-07-23","2014-07-24","2014-07-25","2014-07-28"],["2014-05-10","2014-05-10","2014-05-15","2014-05-14","2014-05-18","2014-05-22","2014-05-23","2014-05-26","2014-05-29","2014-05-28","2014-05-29","2014-06-02","2014-06-07","2014-06-15","2014-06-16","2014-06-16","2014-06-16","2014-06-18","2014-06-19","2014-06-17","2014-06-21","2014-06-21","2014-06-20","2014-06-20","2014-06-21","2014-06-23","2014-07-02","2014-07-03","2014-07-05","2014-07-06","2014-07-10","2014-07-14","2014-07-15","2014-07-14","2014-07-17","2014-07-16","2014-07-19","2014-07-19","2014-07-20","2014-07-20","2014-07-21","2014-07-20","2014-07-21","2014-07-21","2014-07-22","2014-07-25","2014-07-23","2014-07-24","2014-07-27","2014-07-30"],["2014-05-14",null,null,"2014-05-18","2014-05-30","2014-05-29","2014-05-24","2014-06-05","2014-06-17","2014-06-07","2014-06-01",null,"2014-06-16",null,"2014-06-19","2014-06-25","2014-06-18","2014-06-26","2014-06-28",null,"2014-06-23","2014-06-24","2014-07-01","2014-07-13","2014-06-24","2014-07-01","2014-07-14","2014-07-07","2014-07-12","2014-07-09","2014-08-09","2014-07-20","2014-07-25","2014-07-27","2014-07-19","2014-08-11","2014-07-24","2014-07-23","2014-08-01","2014-07-23","2014-08-03","2014-08-05","2014-07-28","2014-08-07","2014-08-01",null,null,null,"2014-08-08","2014-08-09"],["Recover",null,null,"Recover","Recover","Recover","Recover",null,"Death","Death","Recover","Death",null,"Recover","Death",null,"Death","Recover","Recover","Recover","Death","Death","Death",null,"Death",null,"Recover",null,"Recover","Death","Recover","Death","Recover","Recover","Death","Recover","Death","Death",null,"Death","Death",null,null,"Death","Death","Recover","Recover",null,"Death",null],["m","f","m","f","m","m","f","f","m","f","f","m","f","f","m","m","f","f","f","f","m","m","m","f","f","f","m","m","m","m","f","f","m","f","f","f","m","f","m","f","f","f","m","m","f","m","f","f","f","f"],[1,4,21,2,27,25,18,2,20,4,22,7,7,18,33,34,12,31,0,3,3,51,51,9,15,8,35,37,34,15,35,9,30,9,23,13,25,14,39,1,14,12,14,28,13,6,42,10,6,10],["years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years"],[1,4,21,2,27,25,18,2,20,4,22,7,7,18,33,34,12,31,0,3,3,51,51,9,15,8,35,37,34,15,35,9,30,9,23,13,25,14,39,1,14,12,14,28,13,6,42,10,6,10],["0-4","0-4","20-29","0-4","20-29","20-29","15-19","0-4","20-29","0-4","20-29","5-9","5-9","15-19","30-49","30-49","10-14","30-49","0-4","0-4","0-4","50-69","50-69","5-9","15-19","5-9","30-49","30-49","30-49","15-19","30-49","5-9","30-49","5-9","20-29","10-14","20-29","10-14","30-49","0-4","10-14","10-14","10-14","20-29","10-14","5-9","30-49","10-14","5-9","10-14"],["0-4","0-4","20-24","0-4","25-29","25-29","15-19","0-4","20-24","0-4","20-24","5-9","5-9","15-19","30-34","30-34","10-14","30-34","0-4","0-4","0-4","50-54","50-54","5-9","15-19","5-9","35-39","35-39","30-34","15-19","35-39","5-9","30-34","5-9","20-24","10-14","25-29","10-14","35-39","0-4","10-14","10-14","10-14","25-29","10-14","5-9","40-44","10-14","5-9","10-14"],["Port Hospital","St. Mark's Maternity Hospital (SMMH)","Other","Missing","St. Mark's Maternity Hospital (SMMH)","Military Hospital","Port Hospital","Missing","Port Hospital","Central Hospital","Missing","Military Hospital","Missing","Missing","Military Hospital","Port Hospital","Port Hospital","Other","Missing","Missing","Port Hospital","Port Hospital","Port Hospital","Missing","St. Mark's Maternity Hospital (SMMH)","Port Hospital","Port Hospital","Port Hospital","Missing","Other","Military Hospital","Military Hospital","Central Hospital","Military Hospital","Central Hospital","Missing","Military Hospital","Central Hospital","Missing","Missing","St. Mark's Maternity Hospital (SMMH)","Military Hospital","Port Hospital","Other","Military Hospital","Missing","Military Hospital","Missing","Port Hospital","Military Hospital"],[-13.2231931914572,-13.2354719577436,-13.2157351064963,-13.2152339775486,-13.212910703914,-13.2228638912441,-13.222625321098,-13.2565628977111,-13.2243703238737,-13.2369393782451,-13.2331547837254,-13.2222002700958,-13.2149474159902,-13.2180326141688,-13.2535215623253,-13.217651519706,-13.2372027220014,-13.2190654487695,-13.2189533374241,-13.209391925612,-13.2265780018024,-13.2619688324425,-13.2124311244169,-13.2371313571269,-13.2195578885261,-13.2336087079551,-13.2130045468176,-13.2160657166043,-13.2162953240809,-13.2355883289789,-13.247814368147,-13.2142410663192,-13.2614705796373,-13.2630592726116,-13.2343341712241,-13.2087039682346,-13.2581175859281,-13.2379376608352,-13.218781651651,-13.2483677722899,-13.2155668757305,-13.2333516655879,-13.238964614443,-13.2163318124535,-13.2217866965605,-13.2221173306518,-13.2510797882678,-13.262635786914,-13.2472895700622,-13.2597714344876],[8.47325128269697,8.4627682729487,8.46897295100924,8.45171855856465,8.46481700596819,8.46082377490923,8.46183062600728,8.48379248016347,8.47024789713924,8.46916113869591,8.46272931462646,8.46388925014565,8.45192988292173,8.47155535608018,8.45884880725177,8.46236804334872,8.46956119136946,8.47737640975659,8.45136291368722,8.47570184950483,8.48676680560442,8.48475855218221,8.45344099552146,8.48777544809491,8.46210832824745,8.47804840685363,8.47135450705077,8.48802917129884,8.46395131808455,8.4728562695215,8.47038713612408,8.4641347894342,8.45750552360835,8.47493999153642,8.47832062438022,8.4763997148275,8.45535258467199,8.4697737543226,8.48438437371817,8.48466158574339,8.4627846208641,8.46517148129756,8.48776686246878,8.4630635336683,8.4623972994508,8.46420961833913,8.47178418137766,8.4632880274758,8.48450777619227,8.45925216791802],["2ae019","20b688","f547d6",null,null,"11f8ea","aec8ec","4b38b7","53da57","e02f66","893f25",null,"5387a2","cbbe78","a2086d","ba7326",null,"3ff1bc",null,"9f6884",null,"057e7a","e61cb9",null,null,null,null,null,"ea3740",null,"71577a",null,null,"567136","894024","894024","71577a","b0c500","eb2277",null,"af1c1f",null,"62a2ef",null,"67be4e","d15be5","f36522","312ecf","26c588","e26da6"],["other","other","other",null,null,"other","other","other","other","other","other",null,"other","funeral","other","other",null,"funeral",null,"other",null,"other","other",null,null,null,null,null,"other",null,"other",null,null,"other","funeral","funeral","other","other","funeral",null,"other",null,"other",null,"other","other","other","other","other","other"],[18,35,78,18,68,66,57,25,64,41,72,45,29,53,71,77,52,71,0,35,45,82,92,34,40,42,67,75,66,52,84,39,66,52,55,60,67,59,75,28,61,55,77,68,51,44,88,46,33,53],[50,74,148,61,198,161,116,48,156,75,144,109,99,140,157,146,118,162,22,62,58,195,257,114,144,96,206,172,176,125,229,88,177,88,150,151,169,136,186,24,124,147,163,167,152,89,188,112,72,139],[22,21,22,23,21,21,22,20,22,23,22,20,22,22,21,22,22,23,23,21,23,20,22,22,22,22,22,22,22,22,23,23,23,22,23,23,20,22,21,22,23,23,23,20,21,21,22,21,22,23],[null,"no","no",null,null,"no",null,"no","no","no","no","no","no","no",null,null,null,"no","no",null,"no","no","no","no","no",null,"no",null,null,"no",null,null,"no",null,"no","no","no","no","no","no","no","no","no","no","no","no",null,"no","no","no"],[null,"no","yes",null,null,"no",null,"yes","no","no","no","no","yes","yes",null,null,null,"no","no",null,"no","no","no","no","no",null,"no",null,null,"no",null,null,"yes",null,"no","no","no","yes","no","no","no","yes","yes","yes","no","no",null,"no","no","yes"],[null,"yes","yes",null,null,"yes",null,"no","yes","yes","yes","no","yes","yes",null,null,null,"yes","yes",null,"yes","no","yes","yes","yes",null,"yes",null,null,"yes",null,null,"yes",null,"no","yes","yes","yes","yes","no","yes","yes","no","yes","yes","yes",null,"yes","yes","yes"],[null,"no","yes",null,null,"no",null,"no","no","no","no","no","no","no",null,null,null,"no","no",null,"no","no","no","no","no",null,"no",null,null,"no",null,null,"no",null,"no","no","no","no","no","no","no","no","yes","no","no","yes",null,"no","no","no"],[null,"yes","yes",null,null,"yes",null,"yes","yes","no","yes","no","yes","yes",null,null,null,"no","yes",null,"no","yes","yes","no","yes",null,"yes",null,null,"yes",null,null,"no",null,"yes","yes","no","no","no","no","yes","yes","no","yes","no","no",null,"no","yes","no"],[37.3,37.4,37,36,36.7,37.3,36.8,37,36.4,37.2,37.3,36.9,37,36.9,37.3,37.1,36.7,36.6,37.7,37.6,36.8,36.9,36.6,37.7,37,36.4,36.4,37.4,36.3,37,37.5,37.8,36.8,37.5,37.4,36.5,37.2,36.6,37.3,36.3,37.2,36.9,36.4,36.4,36.2,37,37.2,37.3,36.4,37.5],["20:35","14:16","09:17","11:32","18:52","16:51",null,"14:29","11:57","09:21","13:08","23:20","17:29",null,"18:39",null,"14:16",null,"08:00","11:43","11:10","15:10","11:53","19:11",null,"14:26","04:17","17:32",null,null,"12:28",null,"10:12","10:39","16:46","19:50","16:06","13:52","11:28","07:40","12:60","15:24","06:27","06:17","09:36","14:01","17:06","12:57","13:07",null],[72,63.9152666179693,35.6099342585829,48.3740929857565,17.3451688603204,25.4619806334632,42.3602853745541,108.506944444444,26.2984878369494,72.8888888888889,34.7222222222222,37.8755996969952,29.5888174676053,27.0408163265306,28.8044139721693,36.1231000187652,37.3455903476013,27.0538027739674,0,91.05098855359,133.769322235434,21.5647600262985,13.9290526730155,26.1618959679902,19.2901234567901,45.5729166666667,15.7884814779904,25.3515413737155,21.3068181818182,33.28,16.018001182281,50.3615702479339,21.0667432730058,67.1487603305785,24.4444444444444,26.3146353230121,23.458562375267,31.8987889273356,21.6788067984738,486.111111111111,39.6722164412071,25.4523578138738,28.9811434378411,24.3823729785937,22.0740997229917,55.5485418507764,24.8981439565414,36.6709183673469,63.6574074074074,27.431292376171],[2,2,2,1,2,1,1,2,2,1,2,0,1,1,1,1,1,2,2,0,2,1,0,0,1,1,2,1,2,2,1,2,1,0,2,0,2,2,2,1,2,1,1,1,2,2,0,0,2,2]],"container":"<table class=\"white-space: nowrap\">\n  <thead>\n    <tr>\n      <th>case_id<\/th>\n      <th>generation<\/th>\n      <th>date_infection<\/th>\n      <th>date_onset<\/th>\n      <th>date_hospitalisation<\/th>\n      <th>date_outcome<\/th>\n      <th>outcome<\/th>\n      <th>gender<\/th>\n      <th>age<\/th>\n      <th>age_unit<\/th>\n      <th>age_years<\/th>\n      <th>age_cat<\/th>\n      <th>age_cat5<\/th>\n      <th>hospital<\/th>\n      <th>lon<\/th>\n      <th>lat<\/th>\n      <th>infector<\/th>\n      <th>source<\/th>\n      <th>wt_kg<\/th>\n      <th>ht_cm<\/th>\n      <th>ct_blood<\/th>\n      <th>fever<\/th>\n      <th>chills<\/th>\n      <th>cough<\/th>\n      <th>aches<\/th>\n      <th>vomit<\/th>\n      <th>temp<\/th>\n      <th>time_admission<\/th>\n      <th>bmi<\/th>\n      <th>days_onset_hosp<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"scrollX":true,"columnDefs":[{"className":"dt-right","targets":[1,8,10,14,15,18,19,20,26,28,29]}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script><p><strong>Case counts aggregated by hospital</strong></p>
 <p>The first 50 rows are displayed</p>
-<div id="htmlwidget-601676b788506f067476" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-601676b788506f067476">{"x":{"filter":"none","data":[["Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital"],["2014-05-06","2014-05-10","2014-05-13","2014-05-28","2014-06-06","2014-06-09","2014-06-14","2014-06-19","2014-07-09","2014-07-10","2014-07-11","2014-07-13","2014-07-14","2014-07-15","2014-07-17","2014-07-19","2014-07-27","2014-07-30","2014-08-01","2014-08-02","2014-08-04","2014-08-05","2014-08-07","2014-08-09","2014-08-12","2014-08-14","2014-08-15","2014-08-16","2014-08-17","2014-08-18","2014-08-19","2014-08-20","2014-08-21","2014-08-22","2014-08-23","2014-08-24","2014-08-26","2014-08-28","2014-08-29","2014-08-30","2014-08-31","2014-09-01","2014-09-02","2014-09-03","2014-09-04","2014-09-05","2014-09-06","2014-09-07","2014-09-09","2014-09-10"],[1,1,1,2,1,1,1,1,1,1,1,1,2,1,1,2,1,1,2,1,2,1,1,2,1,3,1,1,1,2,3,2,2,2,1,2,2,2,1,2,3,3,2,1,1,2,3,2,2,1]],"container":"<table class=\"white-space: nowrap\">\n  <thead>\n    <tr>\n      <th>hospital<\/th>\n      <th>date_hospitalisation<\/th>\n      <th>n_cases<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"scrollX":true,"columnDefs":[{"className":"dt-right","targets":2}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-a6b7e6b0a7ff37589550" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-a6b7e6b0a7ff37589550">{"x":{"filter":"none","data":[["Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital"],["2014-05-06","2014-05-10","2014-05-13","2014-05-28","2014-06-06","2014-06-09","2014-06-14","2014-06-19","2014-07-09","2014-07-10","2014-07-11","2014-07-13","2014-07-14","2014-07-15","2014-07-17","2014-07-19","2014-07-27","2014-07-30","2014-08-01","2014-08-02","2014-08-04","2014-08-05","2014-08-07","2014-08-09","2014-08-12","2014-08-14","2014-08-15","2014-08-16","2014-08-17","2014-08-18","2014-08-19","2014-08-20","2014-08-21","2014-08-22","2014-08-23","2014-08-24","2014-08-26","2014-08-28","2014-08-29","2014-08-30","2014-08-31","2014-09-01","2014-09-02","2014-09-03","2014-09-04","2014-09-05","2014-09-06","2014-09-07","2014-09-09","2014-09-10"],[1,1,1,2,1,1,1,1,1,1,1,1,2,1,1,2,1,1,2,1,2,1,1,2,1,3,1,1,1,2,3,2,2,2,1,2,2,2,1,2,3,3,2,1,1,2,3,2,2,1]],"container":"<table class=\"white-space: nowrap\">\n  <thead>\n    <tr>\n      <th>hospital<\/th>\n      <th>date_hospitalisation<\/th>\n      <th>n_cases<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"scrollX":true,"columnDefs":[{"className":"dt-right","targets":2}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
 </div>
 <div id="set-parameters" class="section level3 unnumbered">
 <h3>Set parameters<a class="anchor" aria-label="anchor" href="#set-parameters"><i class="fas fa-link"></i></a>
 </h3>
 <p>You may want to set editable parameters for production of a report, such as the date for which the data is current (the “data date”).
 You can then reference <code>data_date</code> in the code when applying filters or in captions that auto-update.</p>
-<div class="sourceCode" id="cb1112"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1109"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## set the report date for the report</span>
 <span class="co">## note: can be set to Sys.Date() for the current date</span>
 <span class="va">data_date</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span><span class="op">(</span><span class="st">"2015-05-15"</span><span class="op">)</span></code></pre></div>
@@ -191,7 +191,7 @@ You can then reference <code>data_date</code> in the code when applying filters 
 <p>Verify that each relevant date column is class Date and has an appropriate range of values.</p>
 <p>You can do this one-by-one using <code><a href="https://rdrr.io/r/graphics/hist.html">hist()</a></code> for histograms, or <code><a href="https://rdrr.io/r/base/range.html">range()</a></code> with <code>na.rm=TRUE</code>.</p>
 <p>An alternative is to use a <em>for loop</em> to print a histogram for each pre-defined date column.</p>
-<div class="sourceCode" id="cb1113"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1110"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># create character vector of column names </span>
 <span class="va">DateCols</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span><span class="op">(</span><span class="fu">tidyselect</span><span class="fu">::</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/vars_select.html">vars_select</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">linelist</span><span class="op">)</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">matches</a></span><span class="op">(</span><span class="st">"date|Date|dt"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 
@@ -201,7 +201,7 @@ You can then reference <code>data_date</code> in the code when applying filters 
        breaks <span class="op">=</span> <span class="fl">50</span>,         <span class="co"># number of breaks for the histogram</span>
        xlab <span class="op">=</span> <span class="va">Col</span><span class="op">)</span>          <span class="co"># x-axis label is the name of the column</span>
   <span class="op">}</span>                         <span class="co"># close the loop</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-709-1.png" width="50%"><img src="_main_files/figure-html/unnamed-chunk-709-2.png" width="50%"><img src="_main_files/figure-html/unnamed-chunk-709-3.png" width="50%"><img src="_main_files/figure-html/unnamed-chunk-709-4.png" width="50%"></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-730-1.png" width="50%"><img src="_main_files/figure-html/unnamed-chunk-730-2.png" width="50%"><img src="_main_files/figure-html/unnamed-chunk-730-3.png" width="50%"><img src="_main_files/figure-html/unnamed-chunk-730-4.png" width="50%"></p>
 <!-- ======================================================= -->
 </div>
 </div>
@@ -237,7 +237,7 @@ You can then reference <code>data_date</code> in the code when applying filters 
 </li>
 </ol>
 <p><strong>A simple example</strong> - an epicurve of daily cases:</p>
-<div class="sourceCode" id="cb1114"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1111"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># load incidence package</span>
 <span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span><span class="va">incidence</span><span class="op">)</span>
 
@@ -247,7 +247,7 @@ You can then reference <code>data_date</code> in the code when applying filters 
 
 <span class="co"># plot the incidence object</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">epi_day</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-710-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-731-1.png" width="672"></div>
 </div>
 <div id="change-time-interval-of-case-aggregation" class="section level3 unnumbered">
 <h3>Change time interval of case aggregation<a class="anchor" aria-label="anchor" href="#change-time-interval-of-case-aggregation"><i class="fas fa-link"></i></a>
@@ -298,7 +298,7 @@ You can then reference <code>data_date</code> in the code when applying filters 
 </tbody>
 </table></div>
 <p>Below are examples of how different intervals look when applied to the linelist. The format and frequency of the date <em>labels</em> on the x-axis are the defaults for the specified interval.</p>
-<div class="sourceCode" id="cb1115"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1112"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Create the incidence objects (with different intervals)</span>
 <span class="co">##############################</span>
 <span class="co"># Weekly (Monday week by default)</span>
@@ -334,7 +334,7 @@ You can then reference <code>data_date</code> in the code when applying filters 
 <li>Plot the incidence object</li>
 </ol>
 <p>The example below uses data filtered to show only cases at Central Hospital.</p>
-<div class="sourceCode" id="cb1116"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1113"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># filter the linelist</span>
 <span class="va">central_data</span> <span class="op">&lt;-</span> <span class="va">linelist</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">hospital</span> <span class="op">==</span> <span class="st">"Central Hospital"</span><span class="op">)</span>
@@ -344,7 +344,7 @@ You can then reference <code>data_date</code> in the code when applying filters 
 
 <span class="co"># plot the incidence object</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">central_outbreak</span><span class="op">)</span> <span class="op">+</span> <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Weekly case incidence at Central Hospital"</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-711-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-732-1.png" width="672"></div>
 </div>
 <div id="modifications-with-plot" class="section level3 unnumbered">
 <h3>Modifications with <code>plot()</code><a class="anchor" aria-label="anchor" href="#modifications-with-plot"><i class="fas fa-link"></i></a>
@@ -379,7 +379,7 @@ You can then reference <code>data_date</code> in the code when applying filters 
 </ul>
 <p>Type <code>?plot.incidence</code> in the R console for more details on each. Below is an example using some of the above arguments.</p>
 <p>To further adjust plot appearance, see the section on using <code>ggplot()</code> to apply <code>theme()</code> arguments to the <strong>incidence</strong> plot.</p>
-<div class="sourceCode" id="cb1117"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1114"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># filter the linelist</span>
 <span class="va">central_data</span> <span class="op">&lt;-</span> <span class="va">linelist</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">hospital</span> <span class="op">==</span> <span class="st">"Central Hospital"</span><span class="op">)</span>
@@ -395,13 +395,13 @@ You can then reference <code>data_date</code> in the code when applying filters 
      alpha <span class="op">=</span> <span class="fl">0.5</span>,
      color <span class="op">=</span> <span class="st">"darkblue"</span>,
      border <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-712-1.png" width="50%"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-733-1.png" width="50%"></div>
 </div>
 <div id="modifications-with-ggplot2" class="section level3 unnumbered">
 <h3>Modifications with ggplot2<a class="anchor" aria-label="anchor" href="#modifications-with-ggplot2"><i class="fas fa-link"></i></a>
 </h3>
 <p>You can add <strong>ggplot2</strong> modifications to the incidence plot by adding a <code><a href="https://rdrr.io/r/base/Arithmetic.html">+</a></code> after the close of the incidence <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> function, as demonstrated below. See the <strong>ggplot2</strong> section and page on <a href="ggplot-tips.html#ggplot-tips">ggplot tips</a> for more options.</p>
-<div class="sourceCode" id="cb1118"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1115"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># filter the linelist</span>
 <span class="va">central_data</span> <span class="op">&lt;-</span> <span class="va">linelist</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">hospital</span> <span class="op">==</span> <span class="st">"Central Hospital"</span><span class="op">)</span>
@@ -443,14 +443,14 @@ You can then reference <code>data_date</code> in the code when applying filters 
     axis.text <span class="op">=</span> <span class="fu">element_text</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">10</span>, face <span class="op">=</span> <span class="st">"bold"</span><span class="op">)</span>,  <span class="co"># axis text size and bold</span>
     plot.caption <span class="op">=</span> <span class="fu">element_text</span><span class="op">(</span>hjust <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>               <span class="co"># move caption to left</span>
   <span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-713-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-734-1.png" width="672"></div>
 </div>
 <div id="group-and-color-by-values" class="section level3 unnumbered">
 <h3>Group and color by values<a class="anchor" aria-label="anchor" href="#group-and-color-by-values"><i class="fas fa-link"></i></a>
 </h3>
 <p>To color cases by a value, provide the column to the <code>groups =</code> argument in the <code>incidence()</code> command.</p>
 <p>In the example below the cases in the whole outbreak are colored by their age category. Note the use of <code>incidence()</code> argument <code>na_as_group =</code>. If <code>TRUE</code> (by default), missing values (<code>NA</code>) will form their own group. To adjust the legend title, add the <strong>ggplot2</strong> function <code>labs()</code> as shown in the second plot, specifying a label for <code>fill =</code>.</p>
-<div class="sourceCode" id="cb1119"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1116"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Create incidence object, with data grouped by age category</span>
 <span class="va">age_outbreak</span> <span class="op">&lt;-</span> <span class="fu">incidence</span><span class="op">(</span><span class="va">linelist</span><span class="op">$</span><span class="va">date_onset</span>,            <span class="co"># date of onset for x-axis</span>
                                interval <span class="op">=</span> <span class="st">"week"</span>,         <span class="co"># Monday weekly aggregation of cases</span>
@@ -464,13 +464,13 @@ You can then reference <code>data_date</code> in the code when applying filters 
 <span class="co"># plot the grouped incidence object, specifying legend title</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">age_outbreak</span><span class="op">)</span><span class="op">+</span>
   <span class="fu">labs</span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"Age category"</span><span class="op">)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-714-1.png" width="50%"><img src="_main_files/figure-html/unnamed-chunk-714-2.png" width="50%"></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-735-1.png" width="50%"><img src="_main_files/figure-html/unnamed-chunk-735-2.png" width="50%"></p>
 </div>
 <div id="change-colors" class="section level3 unnumbered">
 <h3>Change colors<a class="anchor" aria-label="anchor" href="#change-colors"><i class="fas fa-link"></i></a>
 </h3>
 <p>To specify colors manually, provide the name of the color or a character vector of colors to the argument <code>color =</code>. The number of colors listed must equal the number of groups (be aware of missing values as a group)</p>
-<div class="sourceCode" id="cb1120"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1117"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># weekly outbreak by hospital</span>
 <span class="va">hosp_outbreak</span> <span class="op">&lt;-</span> <span class="fu">incidence</span><span class="op">(</span><span class="va">linelist</span><span class="op">$</span><span class="va">date_onset</span>, 
                                interval <span class="op">=</span> <span class="st">"week"</span>, 
@@ -481,13 +481,13 @@ You can then reference <code>data_date</code> in the code when applying filters 
 
 <span class="co"># manual colors</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">hosp_outbreak</span>, color <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"darkgreen"</span>, <span class="st">"darkblue"</span>, <span class="st">"purple"</span>, <span class="st">"grey"</span>, <span class="st">"yellow"</span>, <span class="st">"orange"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-715-1.png" width="50%"><img src="_main_files/figure-html/unnamed-chunk-715-2.png" width="50%"></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-736-1.png" width="50%"><img src="_main_files/figure-html/unnamed-chunk-736-2.png" width="50%"></p>
 <div id="change-color-palette" class="section level4 unnumbered">
 <h4>Change color palette<a class="anchor" aria-label="anchor" href="#change-color-palette"><i class="fas fa-link"></i></a>
 </h4>
 <p>Use the argument <code>col_pal</code> in <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> to change the color palette to one of the default <strong>base</strong> R palettes (do <em>not</em> put the name of the palette in quotes).</p>
 <p>Alternatively, adjust the palette with <strong>ggplot2</strong> “fill” scales - see the <a href="ggplot-tips.html#ggplot-tips">ggplot tips</a> page for details.</p>
-<div class="sourceCode" id="cb1121"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1118"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Create incidence object, with data grouped by age category</span>
 <span class="va">age_outbreak</span> <span class="op">&lt;-</span> <span class="fu">incidence</span><span class="op">(</span><span class="va">linelist</span><span class="op">$</span><span class="va">date_onset</span>,            <span class="co"># date of onset for x-axis</span>
                                interval <span class="op">=</span> <span class="st">"week"</span>,         <span class="co"># weekly aggregation of cases</span>
@@ -499,7 +499,7 @@ You can then reference <code>data_date</code> in the code when applying filters 
 
 <span class="co"># plot with different color palette</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">age_outbreak</span>, col_pal <span class="op">=</span> <span class="va">rainbow</span><span class="op">)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-716-1.png" width="50%"><img src="_main_files/figure-html/unnamed-chunk-716-2.png" width="50%"></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-737-1.png" width="50%"><img src="_main_files/figure-html/unnamed-chunk-737-2.png" width="50%"></p>
 </div>
 </div>
 <div id="adjust-level-order-1" class="section level3 unnumbered">
@@ -508,7 +508,7 @@ You can then reference <code>data_date</code> in the code when applying filters 
 <p>To adjust the order of group appearance (on plot and in legend), the grouping column must be class Factor. See the page on <a href="factors.html#factors">Factors</a> for more information.</p>
 <p>Below is an epicurve by gender, and the objective is to show “Missing” on the top of the epicurve, “Male” in the middle, and “Female” on the bottom - but to have the Legend in the reverse order so that Missing is on the bottom of the legend.</p>
 <p>First, let’s see the plot with the default ordering:</p>
-<div class="sourceCode" id="cb1122"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1119"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># ORIGINAL - hospital NOT as factor</span>
 <span class="co">###################################</span>
 
@@ -522,7 +522,7 @@ You can then reference <code>data_date</code> in the code when applying filters 
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">hospital_outbreak</span>,
      show_cases <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">+</span>
   <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"ORIGINAL - hospital not a factor"</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-717-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-738-1.png" width="672"></div>
 <p>Now, to make some changes to the levels we can do the following:</p>
 <ul>
 <li>The package <strong>forcats</strong> is loaded, to work with factors<br>
@@ -548,7 +548,7 @@ You can then reference <code>data_date</code> in the code when applying filters 
 </ul>
 </li>
 </ul>
-<div class="sourceCode" id="cb1123"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1120"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># MODIFIED - hospital as factor</span>
 <span class="co">###############################</span>
 
@@ -586,7 +586,7 @@ You can then reference <code>data_date</code> in the code when applying filters 
       y <span class="op">=</span> <span class="st">"Weekly case incidence"</span>,               <span class="co"># y axis title  </span>
       x <span class="op">=</span> <span class="st">"Week of symptom onset"</span>,               <span class="co"># x axis title</span>
       fill <span class="op">=</span> <span class="st">"Hospital"</span><span class="op">)</span>                         <span class="co"># title of legend     </span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-718-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-739-1.png" width="672"></div>
 </div>
 <div id="change-legend" class="section level3 unnumbered">
 <h3>Change legend<a class="anchor" aria-label="anchor" href="#change-legend"><i class="fas fa-link"></i></a>
@@ -667,7 +667,7 @@ You can then reference <code>data_date</code> in the code when applying filters 
 <li>Type <code>?scale_x_incidence</code> into the R console to see more information</li>
 </ul>
 <p>See how in the plot below (with Sunday week interval), the first date label is 27 April 2014, which is the Sunday before the first case on May 1</p>
-<div class="sourceCode" id="cb1124"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1121"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># create weekly incidence object (Sunday weeks)</span>
 <span class="va">outbreak</span> <span class="op">&lt;-</span> <span class="fu">incidence</span><span class="op">(</span><span class="va">central_data</span><span class="op">$</span><span class="va">date_onset</span>, interval <span class="op">=</span> <span class="st">"Sunday week"</span><span class="op">)</span>
 
@@ -676,7 +676,7 @@ You can then reference <code>data_date</code> in the code when applying filters 
   <span class="fu">scale_x_incidence</span><span class="op">(</span><span class="va">outbreak</span>,             <span class="co"># name of incidence object</span>
                     labels_week <span class="op">=</span> <span class="cn">FALSE</span>,  <span class="co"># show dates instead of weeks</span>
                     n_breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">outbreak</span><span class="op">)</span><span class="op">/</span><span class="fl">8</span><span class="op">)</span> <span class="co"># breaks every 8 weeks from Sunday before first case</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-719-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-740-1.png" width="672"></div>
 </div>
 <div id="option-2-scale_x_date-and-make_breaks" class="section level4 unnumbered">
 <h4>Option 2: <code>scale_x_date()</code> and <code>make_breaks()</code><a class="anchor" aria-label="anchor" href="#option-2-scale_x_date-and-make_breaks"><i class="fas fa-link"></i></a>
@@ -709,7 +709,7 @@ You can then reference <code>data_date</code> in the code when applying filters 
 <code>date_minor_breaks =</code> Sets frequency of minor gridlines, e.g. “weeks”. If using Sunday weeks and you want minor gridlines see Option 3.</li>
 </ul>
 <p>Note how in the example below, the incidence object interval is Monday weeks, and the first date label is 28 April, the Monday before the first case reported 1 May.</p>
-<div class="sourceCode" id="cb1125"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1122"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Break modification using scale_x_date() and make_breaks()</span>
 <span class="co">###########################################################</span>
 <span class="co"># make incidence object</span>
@@ -724,7 +724,7 @@ You can then reference <code>data_date</code> in the code when applying filters 
     breaks            <span class="op">=</span> <span class="va">my_labels</span><span class="op">$</span><span class="va">breaks</span>, <span class="co"># use $breaks on the make_breaks() output</span>
     date_labels       <span class="op">=</span> <span class="st">"%d %b\n%Y"</span>,      <span class="co"># detailed adjustment to date label format</span>
     date_minor_breaks <span class="op">=</span> <span class="st">"weeks"</span><span class="op">)</span>          <span class="co"># vertical lines each week (only works for Monday week incidence objects)  </span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-720-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-741-1.png" width="672"></div>
 </div>
 <div id="option-3-use-scale_x_date-only" class="section level4 unnumbered">
 <h4>Option 3: Use <code>scale_x_date()</code> only<a class="anchor" aria-label="anchor" href="#option-3-use-scale_x_date-only"><i class="fas fa-link"></i></a>
@@ -744,7 +744,7 @@ You can then reference <code>data_date</code> in the code when applying filters 
 <li>Provide an interval for minor vertical grid lines interval to <code>date_minor_breaks =</code>
 </li>
 </ul>
-<div class="sourceCode" id="cb1126"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1123"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Date break modification using scale_x_date() only</span>
 <span class="co">###################################################</span>
 
@@ -757,7 +757,7 @@ You can then reference <code>data_date</code> in the code when applying filters 
                date_breaks       <span class="op">=</span> <span class="st">"3 weeks"</span>,      <span class="co"># date labels appear every 3 Monday weeks</span>
                date_minor_breaks <span class="op">=</span> <span class="st">"week"</span>,         <span class="co"># minor vertical lines appear every Monday week</span>
                date_labels       <span class="op">=</span> <span class="st">"%d\n%b\n'%y"</span><span class="op">)</span>  <span class="co"># date labels format </span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-721-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-742-1.png" width="672"></div>
 <p>If your incidence intervals are <strong>Sunday weeks</strong>, the code required is more complex - see below for a Sunday week example</p>
 <ul>
 <li>Provide a sequence of Sunday dates to <code>breaks =</code> and to <code>minor_breaks =</code><br>
@@ -772,7 +772,7 @@ You can then reference <code>data_date</code> in the code when applying filters 
 </h4>
 <p>If you want a plot of Sunday weeks and also finely-adjusted label formats, you might find this code example helpful.<br>
 Here is an example of producing a weekly epicurve using <strong>incidence</strong> for Sunday weeks, with finely-adjusted date labels through <strong>ggplot2</strong>’s <code>scale_x_date()</code>:</p>
-<div class="sourceCode" id="cb1127"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1124"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># load packages</span>
 <span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span><span class="va">tidyverse</span>,  <span class="co"># for ggplot</span>
                <span class="va">incidence</span>,  <span class="co"># for epicurve</span>
@@ -822,7 +822,7 @@ Here is an example of producing a weekly epicurve using <strong>incidence</stron
        title <span class="op">=</span> <span class="st">"Weekly case incidence at Central Hospital (Sunday weeks)"</span>,
        <span class="co">#subtitle = "",</span>
        caption  <span class="op">=</span> <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_glue.html">str_glue</a></span><span class="op">(</span><span class="st">"n = {nrow(central_data)} from Central Hospital; Case onsets range from {format(min(central_data$date_onset, na.rm=T), format = '%a %d %b %Y')} to {format(max(central_data$date_onset, na.rm=T), format = '%a %d %b %Y')}\n{nrow(central_data %&gt;% filter(is.na(date_onset)))} cases missing date of onset and not shown"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-722-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-743-1.png" width="672"></div>
 </div>
 </div>
 <div id="facetssmall-multiples" class="section level3 unnumbered">
@@ -830,9 +830,8 @@ Here is an example of producing a weekly epicurve using <strong>incidence</stron
 </h3>
 <p>To facet the plot by a variable (make “small multiples”), you must do this via <strong>ggplot2</strong>. See the section on facets.</p>
 </div>
-<div id="other-tips" class="section level3" number="28.2.1">
-<h3>
-<span class="header-section-number">28.2.1</span> Other tips<a class="anchor" aria-label="anchor" href="#other-tips"><i class="fas fa-link"></i></a>
+<div id="other-tips" class="section level3 unnumbered">
+<h3>Other tips<a class="anchor" aria-label="anchor" href="#other-tips"><i class="fas fa-link"></i></a>
 </h3>
 <p><span style="color: red;"><strong><em>DANGER:</em></strong> Be cautious if a static y-axis scale (e.g. 0 to 30 by 5: <code><a href="https://rdrr.io/r/base/seq.html">seq(0, 30, 5)</a></code>). Static numbers can cut-off your data if the data changes!.</span></p>
 <p>Note: if using aggregated counts (for example an epiweek x-axis) your x-axis may not be Date class and may require use <code>scale_x_discrete()</code> instead of <code>scale_x_date()</code> - see section on aggregated data epicurves for more details.</p>
@@ -846,7 +845,7 @@ Here is an example of producing a weekly epicurve using <strong>incidence</stron
 <p>Using the <strong>ggplot2</strong> package alone to create an epicurve can offer more customizable plots, but also involves more code and potential for error:</p>
 <p>Unlike using <strong>incidence</strong> package, you must manually control the aggregation of the data (into weeks, months, etc) <em>and</em> the labels on the date axis. If not carefully managed, this can lead to headaches.</p>
 <p>These examples use a subset of the <code>linelist</code> dataset - only the cases from Central Hospital.</p>
-<div class="sourceCode" id="cb1128"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1125"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">central_data</span> <span class="op">&lt;-</span> <span class="va">linelist</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">hospital</span> <span class="op">==</span> <span class="st">"Central Hospital"</span><span class="op">)</span></code></pre></div>
 <!-- ======================================================= -->
@@ -865,7 +864,7 @@ Here is an example of producing a weekly epicurve using <strong>incidence</stron
 <h4>Simplest examples<a class="anchor" aria-label="anchor" href="#simplest-examples"><i class="fas fa-link"></i></a>
 </h4>
 <p>Below is perhaps the most simple code to produce daily and weekly epicurves.</p>
-<div class="sourceCode" id="cb1129"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1126"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># daily </span>
 <span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">central_data</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">date_onset</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>  <span class="co"># x column must be class Date</span>
   <span class="fu">geom_histogram</span><span class="op">(</span>binwidth <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">+</span>                     <span class="co"># cases binned by 1 day </span>
@@ -883,23 +882,25 @@ Here is an example of producing a weekly epicurve using <strong>incidence</stron
 </h4>
 <p>To create weekly epicurves where the bins begin on a specific day of the week (e.g. Monday or Sunday), specify the histogram bin <code>breaks =</code> manually (not with <code>binwidth</code>). This can be done by creating a <strong>sequence of dates using the <code><a href="https://rdrr.io/r/base/seq.Date.html">seq.Date()</a></code> function</strong> (<strong>base</strong> R):</p>
 <p>This function expects <code>to =</code>, <code>from =</code>, and <code>by =</code> arguments as shown below.</p>
-<div class="sourceCode" id="cb1130"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1127"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/seq.Date.html">seq.Date</a></span><span class="op">(</span>
   from <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span><span class="op">(</span><span class="st">"2015-01-01"</span><span class="op">)</span>,
   to <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span><span class="op">(</span><span class="st">"2016-01-01"</span><span class="op">)</span>,
   by <span class="op">=</span> <span class="st">"months"</span><span class="op">)</span></code></pre></div>
-<pre><code>##  [1] "2015-01-01" "2015-02-01" "2015-03-01" "2015-04-01" "2015-05-01" "2015-06-01" "2015-07-01" "2015-08-01" "2015-09-01" "2015-10-01" "2015-11-01" "2015-12-01" "2016-01-01"</code></pre>
+<pre><code>##  [1] "2015-01-01" "2015-02-01" "2015-03-01" "2015-04-01" "2015-05-01" "2015-06-01" "2015-07-01" "2015-08-01" "2015-09-01" "2015-10-01"
+## [11] "2015-11-01" "2015-12-01" "2016-01-01"</code></pre>
 <p>You can start/end the sequence at a specific date, as shown above, or you can write flexible code to begin the sequence at a specific day of the week <em>before the first case</em>. An example of creating such dynamic weekly breaks is below:</p>
-<div class="sourceCode" id="cb1132"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1129"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Sequence of dates from the Monday before the first case to the Monday after the last case, by week</span>
 <span class="fu"><a href="https://rdrr.io/r/base/seq.Date.html">seq.Date</a></span><span class="op">(</span>from <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span><span class="op">(</span><span class="fu"><a href="http://lubridate.tidyverse.org/reference/round_date.html">floor_date</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span><span class="op">(</span><span class="va">central_data</span><span class="op">$</span><span class="va">date_onset</span>, na.rm<span class="op">=</span><span class="cn">T</span><span class="op">)</span>,   <span class="st">"week"</span>, week_start <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span>,
          to   <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span><span class="op">(</span><span class="fu"><a href="http://lubridate.tidyverse.org/reference/round_date.html">ceiling_date</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">central_data</span><span class="op">$</span><span class="va">date_onset</span>, na.rm<span class="op">=</span><span class="cn">T</span><span class="op">)</span>, <span class="st">"week"</span>, week_start <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span>,
          by   <span class="op">=</span> <span class="st">"7 days"</span><span class="op">)</span></code></pre></div>
-<pre><code>##  [1] "2014-04-28" "2014-05-05" "2014-05-12" "2014-05-19" "2014-05-26" "2014-06-02" "2014-06-09" "2014-06-16" "2014-06-23" "2014-06-30" "2014-07-07" "2014-07-14" "2014-07-21"
-## [14] "2014-07-28" "2014-08-04" "2014-08-11" "2014-08-18" "2014-08-25" "2014-09-01" "2014-09-08" "2014-09-15" "2014-09-22" "2014-09-29" "2014-10-06" "2014-10-13" "2014-10-20"
-## [27] "2014-10-27" "2014-11-03" "2014-11-10" "2014-11-17" "2014-11-24" "2014-12-01" "2014-12-08" "2014-12-15" "2014-12-22" "2014-12-29" "2015-01-05" "2015-01-12" "2015-01-19"
-## [40] "2015-01-26" "2015-02-02" "2015-02-09" "2015-02-16" "2015-02-23" "2015-03-02" "2015-03-09" "2015-03-16" "2015-03-23" "2015-03-30" "2015-04-06" "2015-04-13" "2015-04-20"
-## [53] "2015-04-27" "2015-05-04"</code></pre>
+<pre><code>##  [1] "2014-04-28" "2014-05-05" "2014-05-12" "2014-05-19" "2014-05-26" "2014-06-02" "2014-06-09" "2014-06-16" "2014-06-23" "2014-06-30"
+## [11] "2014-07-07" "2014-07-14" "2014-07-21" "2014-07-28" "2014-08-04" "2014-08-11" "2014-08-18" "2014-08-25" "2014-09-01" "2014-09-08"
+## [21] "2014-09-15" "2014-09-22" "2014-09-29" "2014-10-06" "2014-10-13" "2014-10-20" "2014-10-27" "2014-11-03" "2014-11-10" "2014-11-17"
+## [31] "2014-11-24" "2014-12-01" "2014-12-08" "2014-12-15" "2014-12-22" "2014-12-29" "2015-01-05" "2015-01-12" "2015-01-19" "2015-01-26"
+## [41] "2015-02-02" "2015-02-09" "2015-02-16" "2015-02-23" "2015-03-02" "2015-03-09" "2015-03-16" "2015-03-23" "2015-03-30" "2015-04-06"
+## [51] "2015-04-13" "2015-04-20" "2015-04-27" "2015-05-04"</code></pre>
 <p>Let’s unpack the rather daunting code above:</p>
 <ul>
 <li>The “from” value (earliest date of the sequence) is created as follows: the minimum date value (<code><a href="https://rdrr.io/r/base/Extremes.html">min()</a></code> with <code>na.rm=TRUE</code>) in the column <code>date_onset</code> is fed to <code><a href="http://lubridate.tidyverse.org/reference/round_date.html">floor_date()</a></code> from the <strong>lubridate</strong> package. <code><a href="http://lubridate.tidyverse.org/reference/round_date.html">floor_date()</a></code> uses the specified arguments to return the start date of that “week”, given that the start of each week is a Monday (<code>week_start = 1</code>).<br>
@@ -927,7 +928,7 @@ Here is an example of producing a weekly epicurve using <strong>incidence</stron
 <li>Color and fill of the bars are defined in <code>geom_histogram()</code>
 </li>
 </ul>
-<div class="sourceCode" id="cb1134"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1131"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># TOTAL MONDAY WEEK ALIGNMENT</span>
 <span class="co">#############################</span>
 <span class="fu">ggplot</span><span class="op">(</span><span class="va">central_data</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">date_onset</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
@@ -972,7 +973,7 @@ Here is an example of producing a weekly epicurve using <strong>incidence</stron
     x        <span class="op">=</span> <span class="st">"Week of symptom onset"</span>,
     y        <span class="op">=</span> <span class="st">"Weekly incident cases reported"</span>,
     caption  <span class="op">=</span> <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_glue.html">str_glue</a></span><span class="op">(</span><span class="st">"n = {nrow(central_data)} from Central Hospital; Case onsets range from {format(min(central_data$date_onset, na.rm=T), format = '%a %d %b %Y')} to {format(max(central_data$date_onset, na.rm=T), format = '%a %d %b %Y')}\n{nrow(central_data %&gt;% filter(is.na(date_onset)))} cases missing date of onset and not shown"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-728-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-749-1.png" width="672"></div>
 </div>
 <div id="sunday-weeks-example" class="section level4 unnumbered">
 <h4>Sunday weeks example<a class="anchor" aria-label="anchor" href="#sunday-weeks-example"><i class="fas fa-link"></i></a>
@@ -987,7 +988,7 @@ Here is an example of producing a weekly epicurve using <strong>incidence</stron
 <li>Color and fill are defined in <code>geom_histogram()</code>
 </li>
 </ul>
-<div class="sourceCode" id="cb1135"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1132"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># TOTAL SUNDAY WEEK ALIGNMENT</span>
 <span class="co">#############################</span>
 <span class="fu">ggplot</span><span class="op">(</span><span class="va">central_data</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">date_onset</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
@@ -1045,7 +1046,7 @@ Here is an example of producing a weekly epicurve using <strong>incidence</stron
     x        <span class="op">=</span> <span class="st">"Week of symptom onset"</span>,
     y        <span class="op">=</span> <span class="st">"Weekly incident cases reported"</span>,
     caption  <span class="op">=</span> <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_glue.html">str_glue</a></span><span class="op">(</span><span class="st">"n = {nrow(central_data)} from Central Hospital; Case onsets range from {format(min(central_data$date_onset, na.rm=T), format = '%a %d %b %Y')} to {format(max(central_data$date_onset, na.rm=T), format = '%a %d %b %Y')}\n{nrow(central_data %&gt;% filter(is.na(date_onset)))} cases missing date of onset and not shown"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-729-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-750-1.png" width="672"></div>
 </div>
 </div>
 <div id="groupcolor-by-value" class="section level3 unnumbered">
@@ -1062,10 +1063,10 @@ Here is an example of producing a weekly epicurve using <strong>incidence</stron
 </li>
 <li>Arguments <em>inside</em> <code><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes()</a></code> will apply <em>by group</em>, whereas any <em>outside</em> will apply to all bars (e.g. you may want <code>color =</code> outside, so each bar has the same color border)</li>
 </ul>
-<div class="sourceCode" id="cb1136"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1133"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">geom_histogram</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>group <span class="op">=</span> <span class="va">gender</span>, fill <span class="op">=</span> <span class="va">gender</span><span class="op">)</span>, color <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span></code></pre></div>
 <p>Here it is applied in practice:</p>
-<div class="sourceCode" id="cb1137"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1134"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">plot_data</span><span class="op">)</span> <span class="op">+</span> 
   
   <span class="co"># make histogram: specify bin break points: starts the Monday before first case, end Monday after last case</span>
@@ -1082,7 +1083,7 @@ Here is an example of producing a weekly epicurve using <strong>incidence</stron
     
     <span class="co"># Color around bars</span>
     color <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-731-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-752-1.png" width="672"></div>
 </div>
 <div id="adjust-colors" class="section level3 unnumbered">
 <h3>Adjust colors<a class="anchor" aria-label="anchor" href="#adjust-colors"><i class="fas fa-link"></i></a>
@@ -1100,7 +1101,7 @@ Here is an example of producing a weekly epicurve using <strong>incidence</stron
 </li>
 <li>To adjust the colors via a pre-defined color scale, see the page on <a href="ggplot-tips.html#ggplot-tips">ggplot tips</a>.</li>
 </ul>
-<div class="sourceCode" id="cb1138"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1135"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">plot_data</span><span class="op">)</span><span class="op">+</span> 
   
   <span class="co"># make histogram: specify bin break points: starts the Monday before first case, end Monday after last case</span>
@@ -1121,14 +1122,14 @@ Here is an example of producing a weekly epicurve using <strong>incidence</stron
   <span class="co"># manual specification of colors</span>
   <span class="fu">scale_fill_manual</span><span class="op">(</span>
     values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"grey"</span>, <span class="st">"black"</span>, <span class="st">"orange"</span>, <span class="st">"purple"</span><span class="op">)</span><span class="op">)</span> <span class="co"># specify fill colors ("values") - attention to order!</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-732-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-753-1.png" width="672"></div>
 </div>
 <div id="adjust-level-order-2" class="section level3 unnumbered">
 <h3>Adjust level order<a class="anchor" aria-label="anchor" href="#adjust-level-order-2"><i class="fas fa-link"></i></a>
 </h3>
 <p>Stacking order, and the labels for each group in the legend, is best adjusted by classifying the group column as class Factor. You can then designate the levels and their labels, and the order (which is reflected in stack order). See the page on <a href="factors.html#factors">Factors</a> or <a href="ggplot-tips.html#ggplot-tips">ggplot tips</a> for details.</p>
 <p>Before making the plot, convert the grouping column to class Factor using <code>as_factor()</code> from the <strong>forcats</strong> package. Then you can make other adjustments to the levels, as detailed in the page on <a href="factors.html#factors">Factors</a>.</p>
-<div class="sourceCode" id="cb1139"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1136"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># load forcats package for working with factors</span>
 <span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span><span class="va">forcats</span><span class="op">)</span>
 
@@ -1142,7 +1143,7 @@ Here is an example of producing a weekly epicurve using <strong>incidence</stron
 <span class="fu"><a href="https://rdrr.io/r/base/levels.html">levels</a></span><span class="op">(</span><span class="va">plot_data</span><span class="op">$</span><span class="va">hospital</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] "Missing"           "Other"             "Port Hospital"     "Military Hospital"</code></pre>
 <p>In the below plot, the only differences from previous is that column <code>hospital</code> has been consolidated as above, and we use <code>guides()</code> to reverse the legend order, so that “Missing” is on the bottom of the legend.</p>
-<div class="sourceCode" id="cb1141"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1138"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span><span class="va">plot_data</span><span class="op">)</span> <span class="op">+</span> 
   
   <span class="co"># make histogram: specify bin break points: starts the Monday before first case, end Monday after last case</span>
@@ -1190,7 +1191,7 @@ Here is an example of producing a weekly epicurve using <strong>incidence</stron
     x        <span class="op">=</span> <span class="st">"Week of symptom onset"</span>,
     y        <span class="op">=</span> <span class="st">"Weekly incident cases reported"</span>,
     fill     <span class="op">=</span> <span class="st">"Hospital"</span><span class="op">)</span>   <span class="co"># title of legend</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-734-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-755-1.png" width="672"></div>
 </div>
 <div id="adjust-legend" class="section level3 unnumbered">
 <h3>Adjust legend<a class="anchor" aria-label="anchor" href="#adjust-legend"><i class="fas fa-link"></i></a>
@@ -1217,7 +1218,7 @@ Here is an example of producing a weekly epicurve using <strong>incidence</stron
 </h3>
 <p>Side-by-side display of group bars (as opposed to stacked) is specified within <code>geom_histogram()</code> with <code>position = "dodge"</code> (place this outside of <code><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes()</a></code>).</p>
 <p>If there are more than two value groups, these can become difficult to read. Consider instead using a faceted plot (small multiples). To improve readability in this example, missing gender values could be removed.</p>
-<div class="sourceCode" id="cb1142"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1139"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span><span class="va">central_data</span><span class="op">)</span><span class="op">+</span> 
     <span class="fu">geom_histogram</span><span class="op">(</span>
         <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>
@@ -1259,16 +1260,16 @@ Here is an example of producing a weekly epicurve using <strong>incidence</stron
        fill     <span class="op">=</span> <span class="st">"Gender"</span>,                                      <span class="co"># provide new title for legend</span>
        x        <span class="op">=</span> <span class="st">"Week of symptom onset"</span>,
        y        <span class="op">=</span> <span class="st">"Weekly incident cases reported"</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-735-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-756-1.png" width="672"></div>
 </div>
 <div id="axis-limits" class="section level3 unnumbered">
 <h3>Axis limits<a class="anchor" aria-label="anchor" href="#axis-limits"><i class="fas fa-link"></i></a>
 </h3>
 <p>You can set maximum and minimum date values using <code>limits = c()</code> within <code>scale_x_date()</code>. For example:</p>
-<div class="sourceCode" id="cb1143"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1140"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">scale_x_date</span><span class="op">(</span>limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span><span class="op">(</span><span class="st">"2014-04-01"</span><span class="op">)</span>, <span class="cn">NA</span><span class="op">)</span><span class="op">)</span> <span class="co"># sets a minimum date but leaves the maximum open.  </span></code></pre></div>
 <p>Likewise, if you want to the x-axis to extend to a specific date (e.g. current date), even if no new cases have been reported, you can use:</p>
-<div class="sourceCode" id="cb1144"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1144-1"><a href="epidemic-curves.html#cb1144-1" aria-hidden="true" tabindex="-1"></a><span class="fu">scale_x_date</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="cn">NA</span>, <span class="fu">Sys.Date</span>()) <span class="co"># ensures date axis will extend until current date  </span></span></code></pre></div>
+<div class="sourceCode" id="cb1141"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1141-1"><a href="epidemic-curves.html#cb1141-1" aria-hidden="true" tabindex="-1"></a><span class="fu">scale_x_date</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="cn">NA</span>, <span class="fu">Sys.Date</span>()) <span class="co"># ensures date axis will extend until current date  </span></span></code></pre></div>
 <p><span style="color: orange;"><strong><em>CAUTION:</em></strong> Caution using limits! They remove all data outside the limits, which can impact y-axis max/min, modeling, and other statistics. Strongly consider instead using limits by adding <code>coord_cartesian( xlim= c(), ylim=c() )</code> to your plot, which acts as a “zoom” without removing data. </span></p>
 <p><span style="color: red;"><strong><em>DANGER:</em></strong> Be cautious setting the y-axis scale breaks or limits (e.g. 0 to 30 by 5: <code><a href="https://rdrr.io/r/base/seq.html">seq(0, 30, 5)</a></code>). Such static numbers can cut-off your plot too short if the data changes to exceed the limit!.</span></p>
 </div>
@@ -1310,7 +1311,7 @@ Here is an example of producing a weekly epicurve using <strong>incidence</stron
 <h4>Demonstrations<a class="anchor" aria-label="anchor" href="#demonstrations"><i class="fas fa-link"></i></a>
 </h4>
 <p>Below is a demonstration of plots where the bins and the plot labels/grid lines are aligned and not aligned:</p>
-<div class="sourceCode" id="cb1145"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1142"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># 7-day binwidth defaults</span>
 <span class="co">#################</span>
 <span class="fu">ggplot</span><span class="op">(</span><span class="va">central_data</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">date_onset</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="co"># x column must be class Date</span>
@@ -1417,7 +1418,7 @@ Here is an example of producing a weekly epicurve using <strong>incidence</stron
   
   <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"ALIGNED Sundays"</span>,
        subtitle <span class="op">=</span> <span class="st">"7-day bins manually set to begin Sunday before first case (27 Apr)\nDate labels and gridlines manually set to Sundays as well"</span><span class="op">)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-738-1.png" width="672"><img src="_main_files/figure-html/unnamed-chunk-738-2.png" width="672"><img src="_main_files/figure-html/unnamed-chunk-738-3.png" width="672"><img src="_main_files/figure-html/unnamed-chunk-738-4.png" width="672"><img src="_main_files/figure-html/unnamed-chunk-738-5.png" width="672"></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-759-1.png" width="672"><img src="_main_files/figure-html/unnamed-chunk-759-2.png" width="672"><img src="_main_files/figure-html/unnamed-chunk-759-3.png" width="672"><img src="_main_files/figure-html/unnamed-chunk-759-4.png" width="672"><img src="_main_files/figure-html/unnamed-chunk-759-5.png" width="672"></p>
 </div>
 </div>
 </div>
@@ -1456,7 +1457,7 @@ Font size and face, strip color, etc. can be modified through <code>theme()</cod
 <p><strong>Strip labels</strong><br>
 Labels of the facet plots can be modified through the “labels” of the column as a factor, or by the use of a “labeller”.</p>
 <p>Make a labeller like this, using the function <code>as_labeller()</code> from <strong>ggplot2</strong>. Then provide the labeller to the <code>labeller =</code> argument of <code>facet_wrap()</code> as shown below.</p>
-<div class="sourceCode" id="cb1146"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1143"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">my_labels</span> <span class="op">&lt;-</span> <span class="fu">as_labeller</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>
      <span class="st">"0-4"</span>   <span class="op">=</span> <span class="st">"Ages 0-4"</span>,
      <span class="st">"5-9"</span>   <span class="op">=</span> <span class="st">"Ages 5-9"</span>,
@@ -1467,7 +1468,7 @@ Labels of the facet plots can be modified through the “labels” of the column
      <span class="st">"50-69"</span> <span class="op">=</span> <span class="st">"Ages 50-69"</span>,
      <span class="st">"70+"</span>   <span class="op">=</span> <span class="st">"Over age 70"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p><strong>An example facetted plot</strong> - facetted by column <code>age_cat</code>.</p>
-<div class="sourceCode" id="cb1147"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1144"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># make plot</span>
 <span class="co">###########</span>
 <span class="fu">ggplot</span><span class="op">(</span><span class="va">central_data</span><span class="op">)</span> <span class="op">+</span> 
@@ -1517,16 +1518,16 @@ Labels of the facet plots can be modified through the “labels” of the column
        x        <span class="op">=</span> <span class="st">"Week of symptom onset"</span>,
        y        <span class="op">=</span> <span class="st">"Weekly incident cases reported"</span>,
        caption  <span class="op">=</span> <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_glue.html">str_glue</a></span><span class="op">(</span><span class="st">"n = {nrow(central_data)} from Central Hospital; Case onsets range from {format(min(central_data$date_onset, na.rm=T), format = '%a %d %b %Y')} to {format(max(central_data$date_onset, na.rm=T), format = '%a %d %b %Y')}\n{nrow(central_data %&gt;% filter(is.na(date_onset)))} cases missing date of onset and not shown"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-740-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-761-1.png" width="672"></div>
 <p>See this <a href="https://ggplot2.tidyverse.org/reference/labellers.html">link</a> for more information on labellers.</p>
 </div>
 <div id="total-epidemic-in-facet-background" class="section level3 unnumbered">
 <h3>Total epidemic in facet background<a class="anchor" aria-label="anchor" href="#total-epidemic-in-facet-background"><i class="fas fa-link"></i></a>
 </h3>
 <p>To show the total epidemic in the background of each facet, add a separate <code>geom_histogram()</code> command <em>before</em> the current one. Specify that the data used in this histogram is your data <em>without</em> the column used for faceting (use <code><a href="https://dplyr.tidyverse.org/reference/select.html">select()</a></code>). Then, specify a color like “grey” and a degree of transparency to make it appear in the background.</p>
-<div class="sourceCode" id="cb1148"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1148-1"><a href="epidemic-curves.html#cb1148-1" aria-hidden="true" tabindex="-1"></a><span class="fu">geom_histogram</span>(<span class="at">data =</span> <span class="fu">select</span>(central_data, <span class="sc">-</span>age_cat), <span class="at">color =</span> <span class="st">"grey"</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>)<span class="sc">+</span></span></code></pre></div>
+<div class="sourceCode" id="cb1145"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1145-1"><a href="epidemic-curves.html#cb1145-1" aria-hidden="true" tabindex="-1"></a><span class="fu">geom_histogram</span>(<span class="at">data =</span> <span class="fu">select</span>(central_data, <span class="sc">-</span>age_cat), <span class="at">color =</span> <span class="st">"grey"</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>)<span class="sc">+</span></span></code></pre></div>
 <p>Note that the y-axis maximum is now based on the height of the entire epidemic.</p>
-<div class="sourceCode" id="cb1149"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1146"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span><span class="va">central_data</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">date_onset</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
   
   <span class="co"># for background shadow of whole outbreak</span>
@@ -1580,13 +1581,13 @@ Labels of the facet plots can be modified through the “labels” of the column
     x        <span class="op">=</span> <span class="st">"Week of symptom onset"</span>,
     y        <span class="op">=</span> <span class="st">"Weekly incident cases reported"</span>,
     caption  <span class="op">=</span> <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_glue.html">str_glue</a></span><span class="op">(</span><span class="st">"n = {nrow(central_data)} from Central Hospital; Case onsets range from {format(min(central_data$date_onset, na.rm=T), format = '%a %d %b %Y')} to {format(max(central_data$date_onset, na.rm=T), format = '%a %d %b %Y')}\n{nrow(central_data %&gt;% filter(is.na(date_onset)))} cases missing date of onset and not shown"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-742-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-763-1.png" width="672"></div>
 </div>
 <div id="one-facet-with-all-data" class="section level3 unnumbered">
 <h3>One facet with ALL data<a class="anchor" aria-label="anchor" href="#one-facet-with-all-data"><i class="fas fa-link"></i></a>
 </h3>
 <p>If you want to have one facet box that contains all the data, complete the following steps. To do this, duplicate the entire dataset so that the number of rows doubles. There will also be a new column, in this case called <code>facet</code>. In this column, the duplicated rows will have the value “all”, and in the original rows will be the value of the faceting column - thus you have created a new column to facet on in which one of the unique values contains all the data from the original dataset. A “helper” function <code>CreateAllFacet()</code> below assist with this:</p>
-<div class="sourceCode" id="cb1150"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1147"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Define helper function</span>
 <span class="va">CreateAllFacet</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">df</span>, <span class="va">col</span><span class="op">)</span><span class="op">{</span>
      <span class="va">df</span><span class="op">$</span><span class="va">facet</span> <span class="op">&lt;-</span> <span class="va">df</span><span class="op">[[</span><span class="va">col</span><span class="op">]</span><span class="op">]</span>
@@ -1600,7 +1601,7 @@ Labels of the facet plots can be modified through the “labels” of the column
      <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="va">merged</span><span class="op">)</span>
 <span class="op">}</span></code></pre></div>
 <p>Now apply the helper function to the dataset, on column <code>age_cat</code>:</p>
-<div class="sourceCode" id="cb1151"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1148"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Create dataset that is duplicated and with new column "facet" to show "all" age categories as another facet level</span>
 <span class="va">central_data2</span> <span class="op">&lt;-</span> <span class="fu">CreateAllFacet</span><span class="op">(</span><span class="va">central_data</span>, col <span class="op">=</span> <span class="st">"age_cat"</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>
@@ -1621,7 +1622,7 @@ Labels of the facet plots can be modified through the “labels” of the column
 </li>
 <li>Optional: to achieve vertically stacked facets: the facet column is moved to rows side of equation and on right is replaced by “.” (<code>facet_wrap(facet~.)</code>), and <code>ncol = 1</code>. You may also need to adjust the width and height of the saved png plot image (see <code>ggsave()</code> in <a href="ggplot-tips.html#ggplot-tips">ggplot tips</a>).</li>
 </ul>
-<div class="sourceCode" id="cb1153"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1150"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span><span class="va">central_data2</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">date_onset</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
   
   <span class="co"># actual epicurves by group</span>
@@ -1661,7 +1662,7 @@ Labels of the facet plots can be modified through the “labels” of the column
        x        <span class="op">=</span> <span class="st">"Week of symptom onset"</span>,
        y        <span class="op">=</span> <span class="st">"Weekly incident cases reported"</span>,
        caption  <span class="op">=</span> <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_glue.html">str_glue</a></span><span class="op">(</span><span class="st">"n = {nrow(central_data)} from Central Hospital; Case onsets range from {format(min(central_data$date_onset, na.rm=T), format = '%a %d %b %Y')} to {format(max(central_data$date_onset, na.rm=T), format = '%a %d %b %Y')}\n{nrow(central_data %&gt;% filter(is.na(date_onset)))} cases missing date of onset and not shown"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-745-1.png" width="480"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-766-1.png" width="480"></div>
 </div>
 </div>
 <div id="moving-averages-2" class="section level2" number="28.5">
@@ -1684,7 +1685,7 @@ Labels of the facet plots can be modified through the “labels” of the column
 <li>In the <code>ggplot()</code>, a <code>geom_line()</code> is added after the histogram, reflecting the moving average.</li>
 </ul>
 <p>See the helpful online <a href="https://cran.r-project.org/web/packages/slider/vignettes/slider.html">vignette for the <strong>slider</strong> package</a></p>
-<div class="sourceCode" id="cb1154"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1151"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># load package</span>
 <span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span><span class="va">slider</span><span class="op">)</span>  <span class="co"># slider used to calculate rolling averages</span>
 
@@ -1728,7 +1729,7 @@ Labels of the facet plots can be modified through the “labels” of the column
          fill <span class="op">=</span> <span class="st">"Legend"</span><span class="op">)</span><span class="op">+</span> 
     <span class="fu">theme_minimal</span><span class="op">(</span><span class="op">)</span><span class="op">+</span>
     <span class="fu">theme</span><span class="op">(</span>legend.title <span class="op">=</span> <span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span><span class="op">)</span>  <span class="co"># removes title of legend</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-746-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-767-1.png" width="672"></div>
 </div>
 </div>
 <div id="tentative-data" class="section level2" number="28.6">
@@ -1770,7 +1771,7 @@ Labels of the facet plots can be modified through the “labels” of the column
 <li>Here is an <code>annotate()</code> <a href="https://ggplot2.tidyverse.org/reference/annotate.html">online example</a>
 </li>
 </ul>
-<div class="sourceCode" id="cb1155"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1152"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span><span class="va">central_data</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">date_onset</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
   
   <span class="co"># histogram</span>
@@ -1821,9 +1822,9 @@ Labels of the facet plots can be modified through the “labels” of the column
            y <span class="op">=</span> <span class="fl">15</span>,
            label <span class="op">=</span> <span class="st">"Subject to reporting delays"</span>,
            angle <span class="op">=</span> <span class="fl">90</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-747-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-768-1.png" width="672"></div>
 <p>The same black vertical line can be achieved with the code below, but using <code>geom_vline()</code> you lose the ability to control the height:</p>
-<div class="sourceCode" id="cb1156"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1153"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">geom_vline</span><span class="op">(</span>xintercept <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">central_data</span><span class="op">$</span><span class="va">date_onset</span>, na.rm <span class="op">=</span> <span class="cn">T</span><span class="op">)</span> <span class="op">-</span> <span class="fl">21</span>,
            size <span class="op">=</span> <span class="fl">2</span>,
            color <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span></code></pre></div>
@@ -1832,7 +1833,7 @@ Labels of the facet plots can be modified through the “labels” of the column
 <h3>Using <code>geom_segment()</code> and <code>geom_rect()</code><a class="anchor" aria-label="anchor" href="#using-geom_segment-and-geom_rect"><i class="fas fa-link"></i></a>
 </h3>
 <p>In this alternative method, the red color is explained in the legend.</p>
-<div class="sourceCode" id="cb1157"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1154"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span><span class="va">central_data</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">date_onset</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
   
   <span class="co"># histogram</span>
@@ -1876,7 +1877,7 @@ Labels of the facet plots can be modified through the “labels” of the column
                lty <span class="op">=</span> <span class="st">"solid"</span>,
                size <span class="op">=</span> <span class="fl">2</span><span class="op">)</span><span class="op">+</span>
   <span class="fu">theme</span><span class="op">(</span>legend.title <span class="op">=</span> <span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span><span class="op">)</span>                 <span class="co"># remove title of legend</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-749-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-770-1.png" width="672"></div>
 </div>
 </div>
 <div id="multi-level-date-labels" class="section level2" number="28.7">
@@ -1892,7 +1893,7 @@ Labels of the facet plots can be modified through the “labels” of the column
 <li>A line is used instead of a histogram, as the faceting approach below does not work well with histograms.</li>
 </ul>
 <p><strong>Aggregate to weekly counts</strong></p>
-<div class="sourceCode" id="cb1158"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1155"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Create dataset of case counts by week</span>
 <span class="co">#######################################</span>
 <span class="va">central_weekly</span> <span class="op">&lt;-</span> <span class="va">linelist</span> <span class="op">%&gt;%</span>
@@ -1904,7 +1905,7 @@ Labels of the facet plots can be modified through the “labels” of the column
                            to   <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">week</span><span class="op">)</span>,
                            by   <span class="op">=</span> <span class="st">"week"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p><strong>Make plots</strong></p>
-<div class="sourceCode" id="cb1159"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1156"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># plot with box border on year</span>
 <span class="co">##############################</span>
 <span class="fu">ggplot</span><span class="op">(</span><span class="va">central_weekly</span><span class="op">)</span> <span class="op">+</span>
@@ -1923,8 +1924,8 @@ Labels of the facet plots can be modified through the “labels” of the column
                                         colour <span class="op">=</span> <span class="st">"grey50"</span><span class="op">)</span>,
         panel.spacing <span class="op">=</span> <span class="fu">unit</span><span class="op">(</span><span class="fl">0</span>, <span class="st">"cm"</span><span class="op">)</span><span class="op">)</span><span class="op">+</span>      <span class="co"># no space between facet panels</span>
   <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Nested year labels, grey label border"</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-751-1.png" width="672"></div>
-<div class="sourceCode" id="cb1160"><pre class="downlit sourceCode r">
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-772-1.png" width="672"></div>
+<div class="sourceCode" id="cb1157"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># plot with no box border on year</span>
 <span class="co">#################################</span>
 <span class="fu">ggplot</span><span class="op">(</span><span class="va">central_weekly</span>,
@@ -1948,7 +1949,7 @@ Labels of the facet plots can be modified through the “labels” of the column
           panel.border <span class="op">=</span> <span class="fu">element_rect</span><span class="op">(</span>colour<span class="op">=</span><span class="st">"grey40"</span><span class="op">)</span>,  <span class="co"># grey border to facet PANEL</span>
           panel.spacing<span class="op">=</span><span class="fu">unit</span><span class="op">(</span><span class="fl">0</span>,<span class="st">"cm"</span><span class="op">)</span><span class="op">)</span><span class="op">+</span>                   <span class="co"># No space between facet panels</span>
   <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Nested year labels - points, shaded, no label border"</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-751-2.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-772-2.png" width="672"></div>
 <p>The above techniques were adapted from <a href="https://stackoverflow.com/questions/44616530/axis-labels-on-two-lines-with-nested-x-variables-year-below-months">this</a> and <a href="https://stackoverflow.com/questions/20571306/multi-row-x-axis-labels-in-ggplot-line-chart">this</a> post on stackoverflow.com.</p>
 </div>
 <div id="aggregated-data" class="section level2" number="28.8">
@@ -1965,7 +1966,7 @@ Labels of the facet plots can be modified through the “labels” of the column
 </h4>
 <p>To aggregate a linelist into days, use the same approach but there is no need to create a new column. Use <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> on the date column (e.g. <code>date_onset</code>).</p>
 <p>If plotting a histogram, missing days in the data are not a problem as long as the column is class Date. However, it may be important for other types of plots or tables to have all possible days apear in the data. This is done with: <code><a href="https://tidyr.tidyverse.org/reference/complete.html">tidyr::complete()</a></code></p>
-<div class="sourceCode" id="cb1161"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1158"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Make dataset of weekly case counts</span>
 <span class="va">daily_counts</span> <span class="op">&lt;-</span> <span class="va">linelist</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">date_onset</span><span class="op">)</span> <span class="op">%&gt;%</span>                           <span class="co"># count number of rows per unique date</span>
@@ -1990,7 +1991,7 @@ Labels of the facet plots can be modified through the “labels” of the column
 <li>Follow with <code>complete()</code> to ensure that all weeks appear - even those with no cases.</li>
 </ol>
 <p>For example:</p>
-<div class="sourceCode" id="cb1162"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1159"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Make dataset of weekly case counts</span>
 <span class="va">weekly_counts</span> <span class="op">&lt;-</span> <span class="va">linelist</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>
@@ -2003,9 +2004,9 @@ Labels of the facet plots can be modified through the “labels” of the column
                            by<span class="op">=</span><span class="st">"week"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup</a></span><span class="op">(</span><span class="op">)</span>                                           <span class="co"># deactivate grouping</span></code></pre></div>
 <p>Here are the first 50 rows of the resulting dataframe:</p>
-<div id="htmlwidget-f8b41f563622d4ca5e67" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-f8b41f563622d4ca5e67">{"x":{"filter":"top","filterHTML":"<tr>\n  <td data-type=\"date\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"1396742400000\" data-max=\"1426377600000\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"integer\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"1\" data-max=\"322\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","data":[["2014-04-06","2014-04-13","2014-04-20","2014-04-27","2014-05-04","2014-05-11","2014-05-18","2014-05-25","2014-06-01","2014-06-08","2014-06-15","2014-06-22","2014-06-29","2014-07-06","2014-07-13","2014-07-20","2014-07-27","2014-08-03","2014-08-10","2014-08-17","2014-08-24","2014-08-31","2014-09-07","2014-09-14","2014-09-21","2014-09-28","2014-10-05","2014-10-12","2014-10-19","2014-10-26","2014-11-02","2014-11-09","2014-11-16","2014-11-23","2014-11-30","2014-12-07","2014-12-14","2014-12-21","2014-12-28","2015-01-04","2015-01-11","2015-01-18","2015-01-25","2015-02-01","2015-02-08","2015-02-15","2015-02-22","2015-03-01","2015-03-08","2015-03-15"],[1,1,4,4,12,15,16,23,22,18,30,25,33,36,56,59,81,86,118,130,168,201,224,322,301,300,293,268,259,255,231,182,142,176,156,130,125,124,94,101,107,101,87,81,67,80,80,76,68,61]],"container":"<table class=\"white-space: nowrap\">\n  <thead>\n    <tr>\n      <th>week<\/th>\n      <th>n<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"scrollX":true,"columnDefs":[{"className":"dt-right","targets":1}],"order":[],"autoWidth":false,"orderClasses":false,"orderCellsTop":true,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script><p><strong>Alternatively, you can use the <a href="https://cran.r-project.org/web/packages/aweek/vignettes/introduction.html"><strong>aweek</strong></a> package’s <code>date2week()</code> function</strong>. As shown below, set <code>week_start =</code> to “Sunday”, or “Monday”, etc. Set <code>floor_date = TRUE</code> so the output is YYYY-Www. Set <code>factor = TRUE</code> so that all possible weeks are included, even if there are no cases (this replaces the <code>complete()</code> step in the <strong>lubridate</strong> approach above). You can also use <code>numeric = TRUE</code> if you want only the week number (note this will not distinguish between years).</p>
-<div class="sourceCode" id="cb1163"><pre class="downlit sourceCode r">
+<div id="htmlwidget-b406f349a18207f5072e" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-b406f349a18207f5072e">{"x":{"filter":"top","filterHTML":"<tr>\n  <td data-type=\"date\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"1396742400000\" data-max=\"1426377600000\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"integer\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"1\" data-max=\"322\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","data":[["2014-04-06","2014-04-13","2014-04-20","2014-04-27","2014-05-04","2014-05-11","2014-05-18","2014-05-25","2014-06-01","2014-06-08","2014-06-15","2014-06-22","2014-06-29","2014-07-06","2014-07-13","2014-07-20","2014-07-27","2014-08-03","2014-08-10","2014-08-17","2014-08-24","2014-08-31","2014-09-07","2014-09-14","2014-09-21","2014-09-28","2014-10-05","2014-10-12","2014-10-19","2014-10-26","2014-11-02","2014-11-09","2014-11-16","2014-11-23","2014-11-30","2014-12-07","2014-12-14","2014-12-21","2014-12-28","2015-01-04","2015-01-11","2015-01-18","2015-01-25","2015-02-01","2015-02-08","2015-02-15","2015-02-22","2015-03-01","2015-03-08","2015-03-15"],[1,1,4,4,12,15,16,23,22,18,30,25,33,36,56,59,81,86,118,130,168,201,224,322,301,300,293,268,259,255,231,182,142,176,156,130,125,124,94,101,107,101,87,81,67,80,80,76,68,61]],"container":"<table class=\"white-space: nowrap\">\n  <thead>\n    <tr>\n      <th>week<\/th>\n      <th>n<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"scrollX":true,"columnDefs":[{"className":"dt-right","targets":1}],"order":[],"autoWidth":false,"orderClasses":false,"orderCellsTop":true,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script><p><strong>Alternatively, you can use the <a href="https://cran.r-project.org/web/packages/aweek/vignettes/introduction.html"><strong>aweek</strong></a> package’s <code>date2week()</code> function</strong>. As shown below, set <code>week_start =</code> to “Sunday”, or “Monday”, etc. Set <code>floor_date = TRUE</code> so the output is YYYY-Www. Set <code>factor = TRUE</code> so that all possible weeks are included, even if there are no cases (this replaces the <code>complete()</code> step in the <strong>lubridate</strong> approach above). You can also use <code>numeric = TRUE</code> if you want only the week number (note this will not distinguish between years).</p>
+<div class="sourceCode" id="cb1160"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Make dataset of weekly case counts</span>
 <span class="va">weekly_counts</span> <span class="op">&lt;-</span> <span class="va">linelist</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>week <span class="op">=</span> <span class="fu">aweek</span><span class="fu">::</span><span class="fu"><a href="https://www.repidemicsconsortium.org/aweek/reference/date2week.html">date2week</a></span><span class="op">(</span><span class="va">date_onset</span>,          <span class="co"># new column of week of onset</span>
@@ -2024,7 +2025,7 @@ Labels of the facet plots can be modified through the “labels” of the column
 </h4>
 <p>To aggregate cases into months, again use <code><a href="http://lubridate.tidyverse.org/reference/round_date.html">floor_date()</a></code> from the <strong>lubridate</strong> package, but with the argument <code>unit = "months"</code>. This rounds each date down to the 1st of its month. The output will be class Date.</p>
 <p>Note that in the <code>complete()</code> step we also use “months”</p>
-<div class="sourceCode" id="cb1164"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1161"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Make dataset of weekly case counts</span>
 <span class="va">monthly_counts</span> <span class="op">&lt;-</span> <span class="va">linelist</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>month <span class="op">=</span> <span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="http://lubridate.tidyverse.org/reference/round_date.html">floor_date</a></span><span class="op">(</span><span class="va">date_onset</span>, unit <span class="op">=</span> <span class="st">"months"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>   <span class="co"># new column, 1st of month of onset</span>
@@ -2033,8 +2034,8 @@ Labels of the facet plots can be modified through the “labels” of the column
   <span class="fu">complete</span><span class="op">(</span>month <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.Date.html">seq.Date</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span><span class="op">(</span><span class="va">month</span><span class="op">)</span>,     <span class="co"># fill-in all months with no cases reported</span>
                             <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">month</span><span class="op">)</span>,
                             by<span class="op">=</span><span class="st">"month"</span><span class="op">)</span><span class="op">)</span>    </code></pre></div>
-<div id="htmlwidget-842b44b4049edfe4a94f" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-842b44b4049edfe4a94f">{"x":{"filter":"top","filterHTML":"<tr>\n  <td data-type=\"date\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"1396310400000\" data-max=\"1427846400000\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"integer\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"7\" data-max=\"1205\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","data":[["2014-04-01","2014-05-01","2014-06-01","2014-07-01","2014-08-01","2014-09-01","2014-10-01","2014-11-01","2014-12-01","2015-01-01","2015-02-01","2015-03-01","2015-04-01"],[7,69,103,231,550,1159,1205,789,570,434,308,277,186]],"container":"<table class=\"white-space: nowrap\">\n  <thead>\n    <tr>\n      <th>month<\/th>\n      <th>n<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"scrollX":true,"columnDefs":[{"className":"dt-right","targets":1}],"order":[],"autoWidth":false,"orderClasses":false,"orderCellsTop":true,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-9e062686ad58d0129a89" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-9e062686ad58d0129a89">{"x":{"filter":"top","filterHTML":"<tr>\n  <td data-type=\"date\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"1396310400000\" data-max=\"1427846400000\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"integer\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"7\" data-max=\"1205\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","data":[["2014-04-01","2014-05-01","2014-06-01","2014-07-01","2014-08-01","2014-09-01","2014-10-01","2014-11-01","2014-12-01","2015-01-01","2015-02-01","2015-03-01","2015-04-01"],[7,69,103,231,550,1159,1205,789,570,434,308,277,186]],"container":"<table class=\"white-space: nowrap\">\n  <thead>\n    <tr>\n      <th>month<\/th>\n      <th>n<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"scrollX":true,"columnDefs":[{"className":"dt-right","targets":1}],"order":[],"autoWidth":false,"orderClasses":false,"orderCellsTop":true,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <div id="plotting-aggregated-count-data" class="section level3 unnumbered">
@@ -2042,9 +2043,9 @@ Labels of the facet plots can be modified through the “labels” of the column
 </h3>
 <p>Often instead of a linelist, you begin with aggregated counts from facilities, districts, etc. You can make an epicurve from <code>ggplot()</code> but the code will be slightly different. The <strong>incidence</strong> package does not currently support plotting of aggregated count data.</p>
 <p>This section will utilize the <code>count_data</code> dataset that was imported earlier, in the data preparation section. It is the <code>linelist</code> aggregated to day-hospital counts. The first 50 rows are displayed below.</p>
-<div id="htmlwidget-df23fae43c63e801511a" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-df23fae43c63e801511a">{"x":{"filter":"top","filterHTML":"<tr>\n  <td data-type=\"disabled\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"date\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"1399334400000\" data-max=\"1410307200000\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"integer\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"1\" data-max=\"3\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","data":[["Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital"],["2014-05-06","2014-05-10","2014-05-13","2014-05-28","2014-06-06","2014-06-09","2014-06-14","2014-06-19","2014-07-09","2014-07-10","2014-07-11","2014-07-13","2014-07-14","2014-07-15","2014-07-17","2014-07-19","2014-07-27","2014-07-30","2014-08-01","2014-08-02","2014-08-04","2014-08-05","2014-08-07","2014-08-09","2014-08-12","2014-08-14","2014-08-15","2014-08-16","2014-08-17","2014-08-18","2014-08-19","2014-08-20","2014-08-21","2014-08-22","2014-08-23","2014-08-24","2014-08-26","2014-08-28","2014-08-29","2014-08-30","2014-08-31","2014-09-01","2014-09-02","2014-09-03","2014-09-04","2014-09-05","2014-09-06","2014-09-07","2014-09-09","2014-09-10"],[1,1,1,2,1,1,1,1,1,1,1,1,2,1,1,2,1,1,2,1,2,1,1,2,1,3,1,1,1,2,3,2,2,2,1,2,2,2,1,2,3,3,2,1,1,2,3,2,2,1]],"container":"<table class=\"white-space: nowrap\">\n  <thead>\n    <tr>\n      <th>hospital<\/th>\n      <th>date_hospitalisation<\/th>\n      <th>n_cases<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"scrollX":true,"columnDefs":[{"className":"dt-right","targets":2}],"order":[],"autoWidth":false,"orderClasses":false,"orderCellsTop":true,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script><p>As before, we must ensure date variables are correctly classified.</p>
-<div class="sourceCode" id="cb1165"><pre class="downlit sourceCode r">
+<div id="htmlwidget-6c0715827cc5676298ba" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-6c0715827cc5676298ba">{"x":{"filter":"top","filterHTML":"<tr>\n  <td data-type=\"disabled\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"date\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"1399334400000\" data-max=\"1410307200000\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"integer\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"1\" data-max=\"3\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","data":[["Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital"],["2014-05-06","2014-05-10","2014-05-13","2014-05-28","2014-06-06","2014-06-09","2014-06-14","2014-06-19","2014-07-09","2014-07-10","2014-07-11","2014-07-13","2014-07-14","2014-07-15","2014-07-17","2014-07-19","2014-07-27","2014-07-30","2014-08-01","2014-08-02","2014-08-04","2014-08-05","2014-08-07","2014-08-09","2014-08-12","2014-08-14","2014-08-15","2014-08-16","2014-08-17","2014-08-18","2014-08-19","2014-08-20","2014-08-21","2014-08-22","2014-08-23","2014-08-24","2014-08-26","2014-08-28","2014-08-29","2014-08-30","2014-08-31","2014-09-01","2014-09-02","2014-09-03","2014-09-04","2014-09-05","2014-09-06","2014-09-07","2014-09-09","2014-09-10"],[1,1,1,2,1,1,1,1,1,1,1,1,2,1,1,2,1,1,2,1,2,1,1,2,1,3,1,1,1,2,3,2,2,2,1,2,2,2,1,2,3,3,2,1,1,2,3,2,2,1]],"container":"<table class=\"white-space: nowrap\">\n  <thead>\n    <tr>\n      <th>hospital<\/th>\n      <th>date_hospitalisation<\/th>\n      <th>n_cases<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"scrollX":true,"columnDefs":[{"className":"dt-right","targets":2}],"order":[],"autoWidth":false,"orderClasses":false,"orderCellsTop":true,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script><p>As before, we must ensure date variables are correctly classified.</p>
+<div class="sourceCode" id="cb1162"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Convert Date variable to Date class</span>
 <span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">count_data</span><span class="op">$</span><span class="va">date_hospitalisation</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] "Date"</code></pre>
@@ -2058,29 +2059,29 @@ Labels of the facet plots can be modified through the “labels” of the column
 <li>Use of <code>stat = "identity"</code> within <code>geom_histogram()</code> indicates that the y-values could be counts from the <code>y =</code> column in <code><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes()</a></code>
 </li>
 </ul>
-<div class="sourceCode" id="cb1167"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1164"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">count_data</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span><span class="op">(</span><span class="va">date_hospitalisation</span><span class="op">)</span>, y <span class="op">=</span> <span class="va">n_cases</span><span class="op">)</span><span class="op">)</span><span class="op">+</span>
      <span class="fu">geom_histogram</span><span class="op">(</span>stat <span class="op">=</span> <span class="st">"identity"</span><span class="op">)</span><span class="op">+</span>
      <span class="fu">labs</span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Date of report"</span>, 
           y <span class="op">=</span> <span class="st">"Number of cases"</span>,
           Title <span class="op">=</span> <span class="st">"Daily case incidence, from daily count data"</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-760-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-781-1.png" width="672"></div>
 </div>
 <div id="plotting-weekly-counts" class="section level4 unnumbered">
 <h4>Plotting weekly counts<a class="anchor" aria-label="anchor" href="#plotting-weekly-counts"><i class="fas fa-link"></i></a>
 </h4>
 <p>To aggregated the daily counts into weekly counts, we use the package <strong>lubridate</strong> and function <code><a href="http://lubridate.tidyverse.org/reference/round_date.html">floor_date()</a></code>, as described above.</p>
 <p>Note that we use <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> and <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize()</a></code> in place of <code><a href="https://dplyr.tidyverse.org/reference/count.html">count()</a></code> because we need to <code><a href="https://rdrr.io/r/base/sum.html">sum()</a></code> case counts instead of just counting the number of rows per group.</p>
-<div class="sourceCode" id="cb1168"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1165"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Create weekly dataset with epiweek column</span>
 <span class="va">count_data_weekly</span> <span class="op">&lt;-</span> <span class="va">count_data</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>epiweek <span class="op">=</span> <span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="http://lubridate.tidyverse.org/reference/round_date.html">floor_date</a></span><span class="op">(</span><span class="va">date_hospitalisation</span>, <span class="st">"week"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">hospital</span>, <span class="va">epiweek</span>, .drop<span class="op">=</span><span class="cn">F</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize</a></span><span class="op">(</span>n_cases_weekly <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">n_cases</span>, na.rm<span class="op">=</span><span class="cn">T</span><span class="op">)</span><span class="op">)</span>   </code></pre></div>
 <p>The first 50 rows of <code>count_data_weekly</code> are displayed below. You can see that the counts have been aggregated into weeks. Each week is displayed by the first day of the week (Monday by default).</p>
-<div id="htmlwidget-719910be8e486b4e3948" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-719910be8e486b4e3948">{"x":{"filter":"none","data":[["Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Military Hospital","Military Hospital"],["2014-05-04","2014-05-11","2014-05-25","2014-06-01","2014-06-08","2014-06-15","2014-07-06","2014-07-13","2014-07-27","2014-08-03","2014-08-10","2014-08-17","2014-08-24","2014-08-31","2014-09-07","2014-09-14","2014-09-21","2014-09-28","2014-10-05","2014-10-12","2014-10-19","2014-10-26","2014-11-02","2014-11-09","2014-11-16","2014-11-23","2014-11-30","2014-12-07","2014-12-14","2014-12-21","2014-12-28","2015-01-04","2015-01-11","2015-01-18","2015-01-25","2015-02-01","2015-02-08","2015-02-15","2015-02-22","2015-03-01","2015-03-08","2015-03-15","2015-03-22","2015-03-29","2015-04-05","2015-04-12","2015-04-19","2015-04-26","2014-04-13","2014-05-11"],[2,1,2,1,2,1,3,7,5,6,6,13,9,15,12,23,24,23,25,26,23,19,25,19,14,9,10,9,8,12,5,10,5,6,6,4,8,9,8,2,5,3,4,5,6,3,6,5,1,6]],"container":"<table class=\"white-space: nowrap\">\n  <thead>\n    <tr>\n      <th>hospital<\/th>\n      <th>epiweek<\/th>\n      <th>n_cases_weekly<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"scrollX":true,"columnDefs":[{"className":"dt-right","targets":2}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script><p>YOu can also specify the factor level order of <code>hospital</code> (optional)</p>
-<div class="sourceCode" id="cb1169"><pre class="downlit sourceCode r">
+<div id="htmlwidget-51c8de7a8078418389c7" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-51c8de7a8078418389c7">{"x":{"filter":"none","data":[["Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Central Hospital","Military Hospital","Military Hospital"],["2014-05-04","2014-05-11","2014-05-25","2014-06-01","2014-06-08","2014-06-15","2014-07-06","2014-07-13","2014-07-27","2014-08-03","2014-08-10","2014-08-17","2014-08-24","2014-08-31","2014-09-07","2014-09-14","2014-09-21","2014-09-28","2014-10-05","2014-10-12","2014-10-19","2014-10-26","2014-11-02","2014-11-09","2014-11-16","2014-11-23","2014-11-30","2014-12-07","2014-12-14","2014-12-21","2014-12-28","2015-01-04","2015-01-11","2015-01-18","2015-01-25","2015-02-01","2015-02-08","2015-02-15","2015-02-22","2015-03-01","2015-03-08","2015-03-15","2015-03-22","2015-03-29","2015-04-05","2015-04-12","2015-04-19","2015-04-26","2014-04-13","2014-05-11"],[2,1,2,1,2,1,3,7,5,6,6,13,9,15,12,23,24,23,25,26,23,19,25,19,14,9,10,9,8,12,5,10,5,6,6,4,8,9,8,2,5,3,4,5,6,3,6,5,1,6]],"container":"<table class=\"white-space: nowrap\">\n  <thead>\n    <tr>\n      <th>hospital<\/th>\n      <th>epiweek<\/th>\n      <th>n_cases_weekly<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"scrollX":true,"columnDefs":[{"className":"dt-right","targets":2}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script><p>YOu can also specify the factor level order of <code>hospital</code> (optional)</p>
+<div class="sourceCode" id="cb1166"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">count_data_weekly</span> <span class="op">&lt;-</span> <span class="va">count_data_weekly</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>hospital <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">hospital</span><span class="op">)</span>,
          hospital <span class="op">=</span> <span class="fu">fct_relevel</span><span class="op">(</span><span class="va">hospital</span>,
@@ -2089,7 +2090,7 @@ Labels of the facet plots can be modified through the “labels” of the column
                                   <span class="st">"St. Mark's Maternity Hospital (SMMH)"</span>,
                                   <span class="st">"Other"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>Now plot by epiweek. Remember <code>stat = "identity"</code> when making the histogram.</p>
-<div class="sourceCode" id="cb1170"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1167"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">count_data_weekly</span>,
        <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">epiweek</span>,
            y <span class="op">=</span> <span class="va">n_cases_weekly</span>,
@@ -2112,7 +2113,7 @@ Labels of the facet plots can be modified through the “labels” of the column
        y <span class="op">=</span> <span class="st">"Weekly case incidence"</span>,
        fill <span class="op">=</span> <span class="st">"Hospital"</span>,
        title <span class="op">=</span> <span class="st">"Weekly case incidence, from aggregated count data by hospital"</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-764-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-785-1.png" width="672"></div>
 <!-- ======================================================= -->
 </div>
 </div>
@@ -2129,16 +2130,16 @@ Labels of the facet plots can be modified through the “labels” of the column
 <span class="header-section-number">28.10</span> Cumulative Incidence<a class="anchor" aria-label="anchor" href="#cumulative-incidence"><i class="fas fa-link"></i></a>
 </h2>
 <p>If beginning with a case linelist, create a new column containing the cumulative number of cases per day in an outbreak using <code><a href="https://rdrr.io/r/base/cumsum.html">cumsum()</a></code> from <strong>base</strong> R:</p>
-<div class="sourceCode" id="cb1171"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1168"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">cumulative_case_counts</span> <span class="op">&lt;-</span> <span class="va">linelist</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">date_onset</span><span class="op">)</span> <span class="op">%&gt;%</span>                <span class="co"># count of rows per day (returned in column "n")   </span>
   <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>                         
     cumulative_cases <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cumsum.html">cumsum</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span>       <span class="co"># new column of the cumulative number of rows at each date</span>
     <span class="op">)</span></code></pre></div>
 <p>The first 10 rows are shown below:</p>
-<div id="htmlwidget-7cb7d738df42e9294804" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-7cb7d738df42e9294804">{"x":{"filter":"none","data":[["2014-04-07","2014-04-15","2014-04-21","2014-04-25","2014-04-26","2014-04-27","2014-05-01","2014-05-03","2014-05-04","2014-05-05"],[1,1,2,1,1,1,2,1,1,1],[1,2,4,5,6,7,9,10,11,12]],"container":"<table class=\"white-space: nowrap\">\n  <thead>\n    <tr>\n      <th>date_onset<\/th>\n      <th>n<\/th>\n      <th>cumulative_cases<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":10,"scrollX":true,"columnDefs":[{"className":"dt-right","targets":[1,2]}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script><p>This cumulative column can then be plotted against <code>date_onset</code>, using <code>geom_line()</code>:</p>
-<div class="sourceCode" id="cb1172"><pre class="downlit sourceCode r">
+<div id="htmlwidget-bb7760942f5114131042" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-bb7760942f5114131042">{"x":{"filter":"none","data":[["2014-04-07","2014-04-15","2014-04-21","2014-04-25","2014-04-26","2014-04-27","2014-05-01","2014-05-03","2014-05-04","2014-05-05"],[1,1,2,1,1,1,2,1,1,1],[1,2,4,5,6,7,9,10,11,12]],"container":"<table class=\"white-space: nowrap\">\n  <thead>\n    <tr>\n      <th>date_onset<\/th>\n      <th>n<\/th>\n      <th>cumulative_cases<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":10,"scrollX":true,"columnDefs":[{"className":"dt-right","targets":[1,2]}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script><p>This cumulative column can then be plotted against <code>date_onset</code>, using <code>geom_line()</code>:</p>
+<div class="sourceCode" id="cb1169"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">plot_cumulative</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span><span class="op">+</span>
   <span class="fu">geom_line</span><span class="op">(</span>
     data <span class="op">=</span> <span class="va">cumulative_case_counts</span>,
@@ -2147,9 +2148,9 @@ Labels of the facet plots can be modified through the “labels” of the column
     color <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span>
 
 <span class="va">plot_cumulative</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-767-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-788-1.png" width="672"></div>
 <p>It can also be overlaid onto the epicurve, with dual-axis using the <strong>cowplot</strong> method described in the <a href="ggplot-tips.html#ggplot-tips">ggplot tips</a> page:</p>
-<div class="sourceCode" id="cb1173"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1170"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#load package</span>
 <span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span><span class="va">cowplot</span><span class="op">)</span>
 
@@ -2183,10 +2184,10 @@ Labels of the facet plots can be modified through the “labels” of the column
     axis.title.x <span class="op">=</span> <span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span>,
     axis.ticks <span class="op">=</span> <span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>Now use <strong>cowplot</strong> to overlay the two plots. Attention has been paid to the x-axis alignment, side of the y-axis, and use of <code>theme_cowplot()</code>.</p>
-<div class="sourceCode" id="cb1174"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1171"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">aligned_plots</span> <span class="op">&lt;-</span> <span class="fu">align_plots</span><span class="op">(</span><span class="va">plot_cases</span>, <span class="va">plot_cumulative</span>, align<span class="op">=</span><span class="st">"hv"</span>, axis<span class="op">=</span><span class="st">"tblr"</span><span class="op">)</span>
 <span class="fu">ggdraw</span><span class="op">(</span><span class="va">aligned_plots</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span> <span class="op">+</span> <span class="fu">draw_plot</span><span class="op">(</span><span class="va">aligned_plots</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-769-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-790-1.png" width="672"></div>
 <!-- ======================================================= -->
 </div>
 <div id="resources-21" class="section level2" number="28.11">
@@ -2205,7 +2206,7 @@ Labels of the facet plots can be modified through the “labels” of the column
       <ul class="nav navbar-nav">
 <li><a class="nav-link" href="#epidemic-curves"><span class="header-section-number">28</span> Epidemic curves</a></li>
 <li>
-<a class="nav-link" href="#preparation-18"><span class="header-section-number">28.1</span> Preparation</a><ul class="nav navbar-nav">
+<a class="nav-link" href="#preparation-17"><span class="header-section-number">28.1</span> Preparation</a><ul class="nav navbar-nav">
 <li><a class="nav-link" href="#packages-5">Packages</a></li>
 <li><a class="nav-link" href="#load-data-7">Load data</a></li>
 <li><a class="nav-link" href="#set-parameters">Set parameters</a></li>
@@ -2225,7 +2226,7 @@ Labels of the facet plots can be modified through the “labels” of the column
 <li><a class="nav-link" href="#change-legend">Change legend</a></li>
 <li><a class="nav-link" href="#date-axis-labelsgridlines">Date-axis labels/gridlines</a></li>
 <li><a class="nav-link" href="#facetssmall-multiples">Facets/small multiples</a></li>
-<li><a class="nav-link" href="#other-tips"><span class="header-section-number">28.2.1</span> Other tips</a></li>
+<li><a class="nav-link" href="#other-tips">Other tips</a></li>
 </ul>
 </li>
 <li>
@@ -2282,7 +2283,7 @@ Labels of the facet plots can be modified through the “labels” of the column
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>The Epidemiologist R Handbook</strong>" was written by the handbook team. It was last built on 2021-03-07.</p>
+    <p>"<strong>The Epidemiologist R Handbook</strong>" was written by the handbook team. It was last built on 2021-03-09.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

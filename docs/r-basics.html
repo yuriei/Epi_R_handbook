@@ -84,7 +84,7 @@
 <li><a class="" href="plot-continuous-data.html"><span class="header-section-number">29</span> Plot continuous data</a></li>
 <li><a class="" href="plot-categorical-data.html"><span class="header-section-number">30</span> Plot categorical data</a></li>
 <li><a class="" href="tables-1.html"><span class="header-section-number">31</span> Tables</a></li>
-<li><a class="" href="age-pyramids.html"><span class="header-section-number">32</span> Age pyramids</a></li>
+<li><a class="" href="age-pyramids-and-likert-scales.html"><span class="header-section-number">32</span> Age pyramids and Likert-scales</a></li>
 <li><a class="" href="diagrams.html"><span class="header-section-number">33</span> Diagrams</a></li>
 <li><a class="" href="combination-analysis.html"><span class="header-section-number">34</span> Combination analysis</a></li>
 <li><a class="" href="heatmaps.html"><span class="header-section-number">35</span> Heatmaps</a></li>
@@ -92,16 +92,16 @@
 <li><a class="" href="phylogenetic-trees.html"><span class="header-section-number">37</span> Phylogenetic trees</a></li>
 <li><a class="" href="interactive-plots.html"><span class="header-section-number">38</span> Interactive plots</a></li>
 <li class="book-part">Advanced</li>
-<li><a class="" href="errors-warnings-1.html"><span class="header-section-number">39</span> Errors &amp; warnings</a></li>
-<li><a class="" href="advanced-rstudio.html"><span class="header-section-number">40</span> Advanced RStudio</a></li>
-<li><a class="" href="relational-databases.html"><span class="header-section-number">41</span> Relational databases</a></li>
-<li><a class="" href="routine-reports.html"><span class="header-section-number">42</span> Routine reports</a></li>
-<li><a class="" href="r-markdown-1.html"><span class="header-section-number">43</span> R Markdown</a></li>
-<li><a class="" href="shiny-and-dashboards.html"><span class="header-section-number">44</span> Shiny and dashboards</a></li>
-<li><a class="" href="collaboration.html"><span class="header-section-number">45</span> Collaboration</a></li>
-<li><a class="" href="writing-functions.html"><span class="header-section-number">46</span> Writing functions</a></li>
-<li><a class="" href="r-on-network-drives.html"><span class="header-section-number">47</span> R on network drives</a></li>
-<li><a class="" href="directory-interactions.html"><span class="header-section-number">48</span> Directory interactions</a></li>
+<li><a class="" href="directory-interactions.html"><span class="header-section-number">39</span> Directory interactions</a></li>
+<li><a class="" href="r-markdown-1.html"><span class="header-section-number">40</span> R Markdown</a></li>
+<li><a class="" href="routine-reports.html"><span class="header-section-number">41</span> Routine reports</a></li>
+<li><a class="" href="errors-warnings-1.html"><span class="header-section-number">42</span> Errors &amp; warnings</a></li>
+<li><a class="" href="advanced-rstudio.html"><span class="header-section-number">43</span> Advanced RStudio</a></li>
+<li><a class="" href="relational-databases.html"><span class="header-section-number">44</span> Relational databases</a></li>
+<li><a class="" href="shiny-and-dashboards.html"><span class="header-section-number">45</span> Shiny and dashboards</a></li>
+<li><a class="" href="collaboration.html"><span class="header-section-number">46</span> Collaboration</a></li>
+<li><a class="" href="writing-functions.html"><span class="header-section-number">47</span> Writing functions</a></li>
+<li><a class="" href="r-on-network-drives.html"><span class="header-section-number">48</span> R on network drives</a></li>
 </ul>
 
         <div class="book-extra">
@@ -616,8 +616,8 @@ The object <code>current_week</code> will then appear in the RStudio Environment
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># All of the summary</span>
 <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">linelist</span><span class="op">$</span><span class="va">age</span><span class="op">)</span></code></pre></div>
-<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
-##     0.0     6.0    13.0    16.2    23.0    90.0      87</code></pre>
+<pre><code>##           Min.        1st Qu.         Median           Mean        3rd Qu.           Max.           NA's 
+##  0.00000000000  6.00000000000 13.00000000000 16.20082744354 23.00000000000 90.00000000000             87</code></pre>
 <div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Just one part of the summary</span>
 <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">linelist</span><span class="op">$</span><span class="va">age</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>  </code></pre></div>
@@ -722,8 +722,8 @@ Brackets can also be written after one another, as demonstrated below.</p>
 <p>The object provided to a function also can be a column in a dataset. For example, when the function <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> is applied to the numeric column <code>age</code> in the dataset <code>linelist</code>, the output is a summary of the columns’s numeric and missing values.</p>
 <div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">linelist</span><span class="op">$</span><span class="va">age</span><span class="op">)</span></code></pre></div>
-<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
-##     0.0     6.0    13.0    16.2    23.0    90.0      87</code></pre>
+<pre><code>##           Min.        1st Qu.         Median           Mean        3rd Qu.           Max.           NA's 
+##  0.00000000000  6.00000000000 13.00000000000 16.20082744354 23.00000000000 90.00000000000             87</code></pre>
 <p><span style="color: black;"><strong><em>NOTE:</em></strong> Behind the scenes, a function represents complex additional code that has been wrapped up for the user into one easy command.</span></p>
 <!-- ======================================================= -->
 </div>
@@ -1172,19 +1172,13 @@ We also advise surrounding such operators with spaces, for readability.</p>
 <div id="missing-values" class="section level3 unnumbered">
 <h3>Missing values<a class="anchor" aria-label="anchor" href="#missing-values"><i class="fas fa-link"></i></a>
 </h3>
-<p><strong>In R, missing values are represented by the special value <code>NA</code> (a “reserved” value)</strong> (capital letters N and A - not in quotation marks). If you import data that records missing data in another way (e.g. 99, “Missing”, or .), you may want to re-code those values to <code>NA</code>.</p>
+<p><strong>In R, missing values are represented by the special value <code>NA</code> (a “reserved” value)</strong> (capital letters N and A - not in quotation marks). If you import data that records missing data in another way (e.g. 99, “Missing”, or .), you may want to re-code those values to <code>NA</code>. How to do this is addressed in the <a href="import-and-export.html#import-and-export">Import and export</a> page.</p>
 <p><strong>To test whether a value is <code>NA</code>, use the special function <code><a href="https://rdrr.io/r/base/NA.html">is.na()</a></code></strong>, which returns <code>TRUE</code> or <code>FALSE</code>.</p>
 <div class="sourceCode" id="cb67"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">rdt_result</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Positive"</span>, <span class="st">"Suspected"</span>, <span class="st">"Positive"</span>, <span class="cn">NA</span><span class="op">)</span>   <span class="co"># two positive cases, one suspected, and one unknown</span>
 <span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">rdt_result</span><span class="op">)</span>  <span class="co"># Tests whether the value of rdt_result is NA</span></code></pre></div>
 <pre><code>## [1] FALSE FALSE FALSE  TRUE</code></pre>
-<p>Here is the <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/NA.html">R documentation on missing values</a></p>
-<p><strong>Variations on <code>NA</code></strong></p>
-<p><code>NA</code> is actually a logical value of length 1. You may also encounter <code>NA_character_</code>, <code>NA_real_</code>, <code>NA_complex_</code>, and <code>NA_integer_</code>, which correspond to specific classes.</p>
-<p>The most prominent application of one of these variants in common epidemiology work is using <code>case_when()</code>. The Right-Hand Side (RHS) values must all be of the same class. Thus, if you have character outcomes on the RHS like “Confirmed”, “Suspect”, “Probable” and <code>NA</code> - you will get an error. Instead of <code>NA</code> you must have <code>NA_character_</code>. Likewise for integers, use <code>NA_integer_</code>.</p>
-<p><strong><code>NULL</code></strong></p>
-<p><code>NULL</code> is the null object in R, often used to represent a list of 0 length. Use <code><a href="https://rdrr.io/r/base/NULL.html">is.null()</a></code> to evaluate this status.</p>
-<p>More detail on the difference between <code>NA</code> and <code>NULL</code> is <a href="https://www.r-bloggers.com/2010/04/r-na-vs-null/">here</a></p>
+<p>Read more about missing, infinite, <code>NULL</code>, and impossible values in the page on <a href="missing-data.html#missing-data">Missing data</a>. Learn how to convert missing values when importing data in the page on <a href="import-and-export.html#import-and-export">Import and export</a>.</p>
 <!-- ======================================================= -->
 </div>
 <div id="mathematics-and-statistics" class="section level3 unnumbered">
@@ -1363,7 +1357,7 @@ We also advise surrounding such operators with spaces, for readability.</p>
 <pre><code>## [1] 1</code></pre>
 <div class="sourceCode" id="cb76"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">6</span>, <span class="fl">12</span>, <span class="fl">10</span>, <span class="fl">5</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span> <span class="co"># CORRECT</span></code></pre></div>
-<pre><code>## [1] 5.666667</code></pre>
+<pre><code>## [1] 5.666666666666667</code></pre>
 </div>
 <div id="other-useful-functions" class="section level4" number="3.12.0.2">
 <h4>
@@ -1619,7 +1613,7 @@ We also advise surrounding such operators with spaces, for readability.</p>
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>The Epidemiologist R Handbook</strong>" was written by the handbook team. It was last built on 2021-03-07.</p>
+    <p>"<strong>The Epidemiologist R Handbook</strong>" was written by the handbook team. It was last built on 2021-03-09.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
