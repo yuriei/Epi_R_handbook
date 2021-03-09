@@ -1,0 +1,13 @@
+iteration-and-loops
+preparation
+for-loops
+purrr
+mapping-a-function-across-columns
+resources
+directory-interactions
+preparation-1
+print-directory-as-a-dendrogram-tree
+accessing-files-in-the-directory
+running-other-files
+base-r
+resources-1

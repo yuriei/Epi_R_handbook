@@ -1,0 +1,1815 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>31 Tables | The Epidemiologist R Handbook</title>
+<meta name="author" content="the handbook team">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.2"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.6/header-attrs.js"></script><script src="libs/jquery-3.5.1/jquery-3.5.1.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.5.3/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.5.3/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.2.3.9000/tabs.js"></script><script src="libs/bs3compat-0.2.3.9000/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script><link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet">
+<script src="libs/datatables-binding-0.15/datatables.js"></script><link href="libs/dt-core-1.10.20/css/jquery.dataTables.min.css" rel="stylesheet">
+<link href="libs/dt-core-1.10.20/css/jquery.dataTables.extra.css" rel="stylesheet">
+<script src="libs/dt-core-1.10.20/js/jquery.dataTables.min.js"></script><link href="libs/nouislider-7.0.10/jquery.nouislider.min.css" rel="stylesheet">
+<script src="libs/nouislider-7.0.10/jquery.nouislider.min.js"></script><link href="libs/selectize-0.12.0/selectize.bootstrap3.css" rel="stylesheet">
+<script src="libs/selectize-0.12.0/selectize.min.js"></script><link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet">
+<script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+<link href="libs/bsTable-3.3.7/bootstrapTable.min.css" rel="stylesheet">
+<script src="libs/bsTable-3.3.7/bootstrapTable.js"></script><link href="libs/tabwid-1.0.0/tabwid.css" rel="stylesheet">
+<link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet">
+<script src="libs/leaflet-1.3.1/leaflet.js"></script><link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet">
+<script src="libs/proj4-2.6.2/proj4.min.js"></script><script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script><link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet">
+<script src="libs/leaflet-binding-2.0.4.1/leaflet.js"></script><script src="libs/leaflet-providers-1.9.0/leaflet-providers_1.9.0.js"></script><script src="libs/leaflet-providers-plugin-2.0.4.1/leaflet-providers-plugin.js"></script><script src="libs/viz-1.8.2/viz.js"></script><link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet">
+<script src="libs/grViz-binding-1.0.6.1/grViz.js"></script><script src="libs/d3-4.5.0/d3.min.js"></script><script src="libs/sankey-1/sankey.js"></script><script src="libs/sankeyNetwork-binding-0.4/sankeyNetwork.js"></script><script src="libs/plotly-binding-4.9.3/plotly.js"></script><script src="libs/typedarray-0.1/typedarray.min.js"></script><link href="libs/plotly-htmlwidgets-css-1.57.1/plotly-htmlwidgets.css" rel="stylesheet">
+<script src="libs/plotly-main-1.57.1/plotly-latest.min.js"></script><link href="libs/vis-4.20.1/vis.css" rel="stylesheet">
+<script src="libs/vis-4.20.1/vis.min.js"></script><script src="libs/visNetwork-binding-2.0.9/visNetwork.js"></script><link href="libs/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<script src="libs/plotly-basic-1.57.1/plotly-basic-1.57.1.min.js"></script><script src="libs/plotly-cartesian-1.57.1/plotly-cartesian-1.57.1.min.js"></script><script src="https://cdn.jsdelivr.net/autocomplete.js/0/autocomplete.jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/mark.js@8.11.1/dist/mark.min.js"></script><!-- CSS --><link rel="stylesheet" href="style_bs4.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">The Epidemiologist R Handbook</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">The Epidemiologist R Handbook</a></li>
+<li class="book-part">About this book</li>
+<li><a class="" href="style-and-editorial-notes.html"><span class="header-section-number">1</span> Style and editorial notes</a></li>
+<li><a class="" href="datasets-used.html"><span class="header-section-number">2</span> Datasets used</a></li>
+<li class="book-part">Basics</li>
+<li><a class="" href="r-basics.html"><span class="header-section-number">3</span> R Basics</a></li>
+<li><a class="" href="transition-to-r.html"><span class="header-section-number">4</span> Transition to R</a></li>
+<li><a class="" href="import-and-export.html"><span class="header-section-number">5</span> Import and export</a></li>
+<li><a class="" href="r-projects.html"><span class="header-section-number">6</span> R projects</a></li>
+<li><a class="" href="suggested-packages.html"><span class="header-section-number">7</span> Suggested packages</a></li>
+<li class="book-part">Data Management</li>
+<li><a class="" href="cleaning-data.html"><span class="header-section-number">8</span> Cleaning data</a></li>
+<li><a class="" href="working-with-dates.html"><span class="header-section-number">9</span> Working with dates</a></li>
+<li><a class="" href="factors.html"><span class="header-section-number">10</span> Factors</a></li>
+<li><a class="" href="pivoting-data.html"><span class="header-section-number">11</span> Pivoting data</a></li>
+<li><a class="" href="grouping-data.html"><span class="header-section-number">12</span> Grouping data</a></li>
+<li><a class="" href="joining-data.html"><span class="header-section-number">13</span> Joining data</a></li>
+<li><a class="" href="characters-and-strings.html"><span class="header-section-number">14</span> Characters and strings</a></li>
+<li><a class="" href="de-duplication.html"><span class="header-section-number">15</span> De-duplication</a></li>
+<li><a class="" href="iteration-and-loops.html"><span class="header-section-number">16</span> Iteration and loops</a></li>
+<li class="book-part">Analysis</li>
+<li><a class="" href="missing-data.html"><span class="header-section-number">17</span> Missing data</a></li>
+<li><a class="" href="descriptive-analysis.html"><span class="header-section-number">18</span> Descriptive analysis</a></li>
+<li><a class="" href="univariate-and-multivariate-regression.html"><span class="header-section-number">19</span> Univariate and multivariate regression</a></li>
+<li><a class="" href="standardization.html"><span class="header-section-number">20</span> Standardization</a></li>
+<li><a class="" href="moving-averages.html"><span class="header-section-number">21</span> Moving averages</a></li>
+<li><a class="" href="time-series-and-outbreak-detection.html"><span class="header-section-number">22</span> Time series and outbreak detection</a></li>
+<li><a class="" href="epidemic-modeling.html"><span class="header-section-number">23</span> Epidemic modeling</a></li>
+<li><a class="" href="survey-analysis.html"><span class="header-section-number">24</span> Survey analysis</a></li>
+<li><a class="" href="survival-analysis.html"><span class="header-section-number">25</span> Survival analysis</a></li>
+<li><a class="" href="gis-basics.html"><span class="header-section-number">26</span> GIS basics</a></li>
+<li class="book-part">Data Vizualization</li>
+<li><a class="" href="ggplot-tips.html"><span class="header-section-number">27</span> ggplot tips</a></li>
+<li><a class="" href="epidemic-curves.html"><span class="header-section-number">28</span> Epidemic curves</a></li>
+<li><a class="" href="plot-continuous-data.html"><span class="header-section-number">29</span> Plot continuous data</a></li>
+<li><a class="" href="plot-categorical-data.html"><span class="header-section-number">30</span> Plot categorical data</a></li>
+<li><a class="active" href="tables-1.html"><span class="header-section-number">31</span> Tables</a></li>
+<li><a class="" href="age-pyramids.html"><span class="header-section-number">32</span> Age pyramids</a></li>
+<li><a class="" href="diagrams.html"><span class="header-section-number">33</span> Diagrams</a></li>
+<li><a class="" href="combination-analysis.html"><span class="header-section-number">34</span> Combination analysis</a></li>
+<li><a class="" href="heatmaps.html"><span class="header-section-number">35</span> Heatmaps</a></li>
+<li><a class="" href="transmission-chains.html"><span class="header-section-number">36</span> Transmission chains</a></li>
+<li><a class="" href="phylogenetic-trees.html"><span class="header-section-number">37</span> Phylogenetic trees</a></li>
+<li><a class="" href="interactive-plots.html"><span class="header-section-number">38</span> Interactive plots</a></li>
+<li class="book-part">Advanced</li>
+<li><a class="" href="errors-warnings-1.html"><span class="header-section-number">39</span> Errors &amp; warnings</a></li>
+<li><a class="" href="advanced-rstudio.html"><span class="header-section-number">40</span> Advanced RStudio</a></li>
+<li><a class="" href="relational-databases.html"><span class="header-section-number">41</span> Relational databases</a></li>
+<li><a class="" href="routine-reports.html"><span class="header-section-number">42</span> Routine reports</a></li>
+<li><a class="" href="r-markdown-1.html"><span class="header-section-number">43</span> R Markdown</a></li>
+<li><a class="" href="shiny-and-dashboards.html"><span class="header-section-number">44</span> Shiny and dashboards</a></li>
+<li><a class="" href="collaboration.html"><span class="header-section-number">45</span> Collaboration</a></li>
+<li><a class="" href="writing-functions.html"><span class="header-section-number">46</span> Writing functions</a></li>
+<li><a class="" href="r-on-network-drives.html"><span class="header-section-number">47</span> R on network drives</a></li>
+<li><a class="" href="directory-interactions.html"><span class="header-section-number">48</span> Directory interactions</a></li>
+</ul>
+
+        <div class="book-extra">
+          
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="tables-1" class="section level1" number="31">
+<h1>
+<span class="header-section-number">31</span> Tables<a class="anchor" aria-label="anchor" href="#tables-1"><i class="fas fa-link"></i></a>
+</h1>
+<p>This section demonstrates how to create publication-ready tables, which can be inserted directly into shareable documents, including R Markdown outputs.</p>
+<!-- ======================================================= -->
+<div id="overview-19" class="section level2" number="31.1">
+<h2>
+<span class="header-section-number">31.1</span> Overview<a class="anchor" aria-label="anchor" href="#overview-19"><i class="fas fa-link"></i></a>
+</h2>
+<p>We build on previous sections on basic statistics and creating summary tables (e.g. using <code>dplyr</code> and <code>gtsummary</code> and show how to create publication-read tables. The primary package we use is flextable, which is compatible with multiple R Markdown formats, including html and word documents.</p>
+<p>Example:</p>
+<p><strong>Table of Ebola patients with outcome information: Number, proportion, and CT values of cases who recovered and died</strong></p>
+<template id="da8b7b12-e870-49e6-b28c-739252a9227d"><style>
+.tabwid table{
+  border-collapse:collapse;
+  line-height:1;
+  margin-left:auto;
+  margin-right:auto;
+  border-width: 0;
+  display: table;
+  margin-top: 1.275em;
+  margin-bottom: 1.275em;
+  border-spacing: 0;
+  border-color: transparent;
+}
+.tabwid_left table{
+  margin-left:0;
+}
+.tabwid_right table{
+  margin-right:0;
+}
+.tabwid td {
+    padding: 0;
+}
+.tabwid a {
+  text-decoration: none;
+}
+.tabwid thead {
+    background-color: transparent;
+}
+.tabwid tfoot {
+    background-color: transparent;
+}
+.tabwid table tr {
+background-color: transparent;
+}
+</style>
+<div class="tabwid">
+<style>.cl-bfc82d8c{border-collapse:collapse;}.cl-bfbb3758{font-family:'Arial';font-size:11pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-bfbb3759{font-family:'Arial';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-bfbb5e40{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-bfbb5e41{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-bfbbac56{width:54pt;background-clip: padding-box;background-color:rgba(242, 242, 242, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-bfbbac57{width:108pt;background-clip: padding-box;background-color:rgba(242, 242, 242, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-bfbbac58{width:216pt;background-clip: padding-box;background-color:rgba(242, 242, 242, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-bfbbac59{width:54pt;background-clip: padding-box;background-color:rgba(145, 194, 147, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-bfbbac5a{width:108pt;background-clip: padding-box;background-color:rgba(145, 194, 147, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-bfbbac5b{width:216pt;background-clip: padding-box;background-color:rgba(145, 194, 147, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-bfbbac5c{width:54pt;background-clip: padding-box;background-color:rgba(242, 242, 242, 1.00);vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-bfbbac5d{width:216pt;background-clip: padding-box;background-color:rgba(242, 242, 242, 1.00);vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-bfbbac5e{width:108pt;background-clip: padding-box;background-color:rgba(242, 242, 242, 1.00);vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-bfbbac5f{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(255, 255, 255, 1.00);border-top: 2pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-bfbbac60{width:216pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(255, 255, 255, 1.00);border-top: 2pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-bfbbd352{width:108pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(255, 255, 255, 1.00);border-top: 2pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-bfbbd353{width:216pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(0, 0, 0, 1.00);border-top: 2pt solid rgba(255, 255, 255, 1.00);border-left: 0 solid rgba(255, 255, 255, 0.00);border-right: 0 solid rgba(255, 255, 255, 0.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-bfbbd354{width:108pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(0, 0, 0, 1.00);border-top: 2pt solid rgba(255, 255, 255, 1.00);border-left: 0 solid rgba(255, 255, 255, 0.00);border-right: 0 solid rgba(255, 255, 255, 0.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-bfbbd355{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(0, 0, 0, 1.00);border-top: 2pt solid rgba(255, 255, 255, 1.00);border-left: 0 solid rgba(255, 255, 255, 0.00);border-right: 0 solid rgba(255, 255, 255, 0.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}caption {color: #777;margin-top: 10px;margin-bottom: 10px;text-align: center;}</style>
+<div class="inline-table"><table class="cl-bfc82d8c">
+<thead>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-bfbbac60"><p class="cl-bfbb5e40"><span class="cl-bfbb3758">Hospital</span></p></td>
+<td class="cl-bfbbd352"><p class="cl-bfbb5e41"><span class="cl-bfbb3758">Total cases with known outcome</span></p></td>
+<td colspan="3" class="cl-bfbbac5f"><p class="cl-bfbb5e41"><span class="cl-bfbb3758">Recovered</span></p></td>
+<td colspan="3" class="cl-bfbbac5f"><p class="cl-bfbb5e41"><span class="cl-bfbb3758">Died</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-bfbbd353"><p class="cl-bfbb5e40"><span class="cl-bfbb3759"></span></p></td>
+<td class="cl-bfbbd354"><p class="cl-bfbb5e41"><span class="cl-bfbb3759"></span></p></td>
+<td class="cl-bfbbd355"><p class="cl-bfbb5e41"><span class="cl-bfbb3759">Number</span></p></td>
+<td class="cl-bfbbd354"><p class="cl-bfbb5e41"><span class="cl-bfbb3759">Proportion of cases with outcomes</span></p></td>
+<td class="cl-bfbbd355"><p class="cl-bfbb5e41"><span class="cl-bfbb3759">CT value</span></p></td>
+<td class="cl-bfbbd355"><p class="cl-bfbb5e41"><span class="cl-bfbb3759">Number</span></p></td>
+<td class="cl-bfbbd354"><p class="cl-bfbb5e41"><span class="cl-bfbb3759">Proportion of cases with outcomes</span></p></td>
+<td class="cl-bfbbd355"><p class="cl-bfbb5e41"><span class="cl-bfbb3759">CT value</span></p></td>
+</tr>
+</thead>
+<tbody>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-bfbbac58"><p class="cl-bfbb5e40"><span class="cl-bfbb3759">Port Hospital</span></p></td>
+<td class="cl-bfbbac57"><p class="cl-bfbb5e41"><span class="cl-bfbb3759">1,364</span></p></td>
+<td class="cl-bfbbac56"><p class="cl-bfbb5e41"><span class="cl-bfbb3759">579</span></p></td>
+<td class="cl-bfbbac57"><p class="cl-bfbb5e41"><span class="cl-bfbb3759">42.45</span></p></td>
+<td class="cl-bfbbac56"><p class="cl-bfbb5e41"><span class="cl-bfbb3759">22.0</span></p></td>
+<td class="cl-bfbbac56"><p class="cl-bfbb5e41"><span class="cl-bfbb3759">785</span></p></td>
+<td class="cl-bfbbac57"><p class="cl-bfbb5e41"><span class="cl-bfbb3759">57.55</span></p></td>
+<td class="cl-bfbbac56"><p class="cl-bfbb5e41"><span class="cl-bfbb3759">22.0</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-bfbbac5b"><p class="cl-bfbb5e40"><span class="cl-bfbb3759">Military Hospital</span></p></td>
+<td class="cl-bfbbac5a"><p class="cl-bfbb5e41"><span class="cl-bfbb3759">708</span></p></td>
+<td class="cl-bfbbac59"><p class="cl-bfbb5e41"><span class="cl-bfbb3759">309</span></p></td>
+<td class="cl-bfbbac5a"><p class="cl-bfbb5e41"><span class="cl-bfbb3759">43.64</span></p></td>
+<td class="cl-bfbbac59"><p class="cl-bfbb5e41"><span class="cl-bfbb3759">21.0</span></p></td>
+<td class="cl-bfbbac59"><p class="cl-bfbb5e41"><span class="cl-bfbb3759">399</span></p></td>
+<td class="cl-bfbbac5a"><p class="cl-bfbb5e41"><span class="cl-bfbb3759">56.36</span></p></td>
+<td class="cl-bfbbac59"><p class="cl-bfbb5e41"><span class="cl-bfbb3759">22.0</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-bfbbac58"><p class="cl-bfbb5e40"><span class="cl-bfbb3759">Other</span></p></td>
+<td class="cl-bfbbac57"><p class="cl-bfbb5e41"><span class="cl-bfbb3759">685</span></p></td>
+<td class="cl-bfbbac56"><p class="cl-bfbb5e41"><span class="cl-bfbb3759">290</span></p></td>
+<td class="cl-bfbbac57"><p class="cl-bfbb5e41"><span class="cl-bfbb3759">42.34</span></p></td>
+<td class="cl-bfbbac56"><p class="cl-bfbb5e41"><span class="cl-bfbb3759">21.0</span></p></td>
+<td class="cl-bfbbac56"><p class="cl-bfbb5e41"><span class="cl-bfbb3759">395</span></p></td>
+<td class="cl-bfbbac57"><p class="cl-bfbb5e41"><span class="cl-bfbb3759">57.66</span></p></td>
+<td class="cl-bfbbac56"><p class="cl-bfbb5e41"><span class="cl-bfbb3759">22.0</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-bfbbac58"><p class="cl-bfbb5e40"><span class="cl-bfbb3759">Central Hospital</span></p></td>
+<td class="cl-bfbbac57"><p class="cl-bfbb5e41"><span class="cl-bfbb3759">358</span></p></td>
+<td class="cl-bfbbac56"><p class="cl-bfbb5e41"><span class="cl-bfbb3759">165</span></p></td>
+<td class="cl-bfbbac57"><p class="cl-bfbb5e41"><span class="cl-bfbb3759">46.09</span></p></td>
+<td class="cl-bfbbac56"><p class="cl-bfbb5e41"><span class="cl-bfbb3759">22.0</span></p></td>
+<td class="cl-bfbbac56"><p class="cl-bfbb5e41"><span class="cl-bfbb3759">193</span></p></td>
+<td class="cl-bfbbac57"><p class="cl-bfbb5e41"><span class="cl-bfbb3759">53.91</span></p></td>
+<td class="cl-bfbbac56"><p class="cl-bfbb5e41"><span class="cl-bfbb3759">22.0</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-bfbbac5d"><p class="cl-bfbb5e40"><span class="cl-bfbb3759">St. Mark's Maternity Hospital (SMMH)</span></p></td>
+<td class="cl-bfbbac5e"><p class="cl-bfbb5e41"><span class="cl-bfbb3759">325</span></p></td>
+<td class="cl-bfbbac5c"><p class="cl-bfbb5e41"><span class="cl-bfbb3759">126</span></p></td>
+<td class="cl-bfbbac5e"><p class="cl-bfbb5e41"><span class="cl-bfbb3759">38.77</span></p></td>
+<td class="cl-bfbbac5c"><p class="cl-bfbb5e41"><span class="cl-bfbb3759">21.0</span></p></td>
+<td class="cl-bfbbac5c"><p class="cl-bfbb5e41"><span class="cl-bfbb3759">199</span></p></td>
+<td class="cl-bfbbac5e"><p class="cl-bfbb5e41"><span class="cl-bfbb3759">61.23</span></p></td>
+<td class="cl-bfbbac5c"><p class="cl-bfbb5e41"><span class="cl-bfbb3759">22.0</span></p></td>
+</tr>
+</tbody>
+</table></div>
+</div></template><div id="b1b78849-68c5-4933-b554-250f4b951e2d"></div>
+<script>
+var dest = document.getElementById("b1b78849-68c5-4933-b554-250f4b951e2d");
+var template = document.getElementById("da8b7b12-e870-49e6-b28c-739252a9227d");
+var caption = template.content.querySelector("caption");
+if(caption) {
+  caption.style.cssText = "display:block;text-align:center;";
+  var newcapt = document.createElement("p");
+  newcapt.appendChild(caption)
+  dest.parentNode.insertBefore(newcapt, dest.previousSibling);
+}
+var fantome = dest.attachShadow({mode: 'open'});
+var templateContent = template.content;
+fantome.appendChild(templateContent);
+</script><!-- ======================================================= -->
+</div>
+<div id="preparation-21" class="section level2" number="31.2">
+<h2>
+<span class="header-section-number">31.2</span> Preparation<a class="anchor" aria-label="anchor" href="#preparation-21"><i class="fas fa-link"></i></a>
+</h2>
+<p>Using packages discussed in other sections such as <code>gtsummary</code> and <code>dplyr</code>, create a table with the content of interest, with the correct columns and rows.</p>
+<p>Here we create a simple summary table of patient outcomes using the Ebola linelist. We are interested in knowing the number and proportion of patients that recover or died, as well as their median CT values, by hospital of admission.</p>
+<div class="sourceCode" id="cb1209"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">table</span> <span class="op">&lt;-</span> <span class="va">linelist</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">hospital</span>, <span class="va">outcome</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">outcome</span><span class="op">)</span> <span class="op">&amp;</span> <span class="va">hospital</span><span class="op">!=</span><span class="st">"Missing"</span><span class="op">)</span> <span class="op">%&gt;%</span>  <span class="co"># Remove cases with missing outcome/hospital</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>ct_value <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/median.html">median</a></span><span class="op">(</span><span class="va">ct_blood</span><span class="op">)</span>, N <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html">n</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>  <span class="co"># Calculate indicators of interest </span>
+  <span class="fu">pivot_wider</span><span class="op">(</span>values_from<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">ct_value</span>, <span class="va">N</span><span class="op">)</span>, names_from <span class="op">=</span> <span class="va">outcome</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="co">#Pivot from long to wide</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>`N known` <span class="op">=</span> <span class="va">`N_Death`</span> <span class="op">+</span> <span class="va">N_Recover</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="co"># Calculate total number</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="op">-</span><span class="va">`N known`</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="co"># Arrange rows from highest to lowest total</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>`Prop_Death` <span class="op">=</span> <span class="va">`N_Death`</span><span class="op">/</span><span class="va">`N known`</span><span class="op">*</span><span class="fl">100</span>,  <span class="co"># Calculate proportions</span>
+         `Prop_Recover` <span class="op">=</span> <span class="va">`N_Recover`</span><span class="op">/</span><span class="va">`N known`</span><span class="op">*</span><span class="fl">100</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">hospital</span>, <span class="va">`N known`</span>, <span class="va">`N_Recover`</span>, <span class="va">`Prop_Recover`</span>, <span class="va">ct_value_Recover</span>,
+         <span class="va">`N_Death`</span>, <span class="va">`Prop_Death`</span>, <span class="va">ct_value_Death</span><span class="op">)</span> <span class="co"># Re-order columns </span>
+
+
+<span class="va">table</span></code></pre></div>
+<pre><code>## # A tibble: 5 x 8
+## # Groups:   hospital [5]
+##   hospital                             `N known` N_Recover Prop_Recover ct_value_Recover N_Death Prop_Death ct_value_Death
+##   &lt;chr&gt;                                    &lt;int&gt;     &lt;int&gt;        &lt;dbl&gt;            &lt;dbl&gt;   &lt;int&gt;      &lt;dbl&gt;          &lt;dbl&gt;
+## 1 Port Hospital                             1364       579         42.4               22     785       57.6             22
+## 2 Military Hospital                          708       309         43.6               21     399       56.4             22
+## 3 Other                                      685       290         42.3               21     395       57.7             22
+## 4 Central Hospital                           358       165         46.1               22     193       53.9             22
+## 5 St. Mark's Maternity Hospital (SMMH)       325       126         38.8               21     199       61.2             22</code></pre>
+<p>Load, and install if necessary, <code>flextable</code>, which we will use to convert the above table into a fully formatted and presentable table.</p>
+<div class="sourceCode" id="cb1211"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span><span class="va">flextable</span><span class="op">)</span></code></pre></div>
+<!-- ======================================================= -->
+</div>
+<div id="basic-flextable" class="section level2" number="31.3">
+<h2>
+<span class="header-section-number">31.3</span> Basic flextable<a class="anchor" aria-label="anchor" href="#basic-flextable"><i class="fas fa-link"></i></a>
+</h2>
+<p><strong>Creating a flextable</strong></p>
+<p>To create and manage flextable objects, we pass the table object through the flextable function and progressively add more formatting and features using the dplyr syntax.</p>
+<p>The syntax of each line of flextable code is as follows:</p>
+<ul>
+<li>
+<code>function(table, i = X, j = X, part = "X")</code>, where:
+<ul>
+<li>
+<code>table</code> is the name of the table object, although does not need to be stated if using the dplyr syntax and the table name has already been specified (see examples).</li>
+<li>The ‘function’ can be one of many different functions, such as <code>width</code> to determine column widths, <code>bg</code> to set background colours, <code>align</code> to set whether text is centre/right/left aligned, and so on.</li>
+<li>
+<code>part</code> refers to which part of the table the function is being applied to. E.g. “header”, “body” or “all”.</li>
+<li>
+<code>i</code> specifies the row to apply the function to, where ‘X’ is the row number. If multiple rows, e.g. the first to third rows, one can specify: <code>i = c(1:3)</code>. Note if ‘body’ is selected, the first row starts from underneath the header section.</li>
+<li>
+<code>j</code> specifies the column to apply the function to, where ‘x’ is the column number or name. If multiple rows, e.g. the fifth and sixth, one can specify: <code>j = c(5,6)</code>.</li>
+</ul>
+</li>
+</ul>
+<div class="sourceCode" id="cb1212"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">ftable</span> <span class="op">&lt;-</span> <span class="fu">flextable</span><span class="op">(</span><span class="va">table</span><span class="op">)</span> 
+<span class="va">ftable</span></code></pre></div>
+<template id="62b91cf2-6aa8-44fa-bcc7-bb7ea035fc2a"><style>
+.tabwid table{
+  border-collapse:collapse;
+  line-height:1;
+  margin-left:auto;
+  margin-right:auto;
+  border-width: 0;
+  display: table;
+  margin-top: 1.275em;
+  margin-bottom: 1.275em;
+  border-spacing: 0;
+  border-color: transparent;
+}
+.tabwid_left table{
+  margin-left:0;
+}
+.tabwid_right table{
+  margin-right:0;
+}
+.tabwid td {
+    padding: 0;
+}
+.tabwid a {
+  text-decoration: none;
+}
+.tabwid thead {
+    background-color: transparent;
+}
+.tabwid tfoot {
+    background-color: transparent;
+}
+.tabwid table tr {
+background-color: transparent;
+}
+</style>
+<div class="tabwid">
+<style>.cl-c10832dc{border-collapse:collapse;}.cl-c0fb15b6{font-family:'Arial';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-c0fb6476{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-c0fb6477{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-c0fbd94c{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c0fbd94d{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c0fbd94e{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c0fbd94f{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c0fbd950{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 2pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c0fbd951{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 2pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}caption {color: #777;margin-top: 10px;margin-bottom: 10px;text-align: center;}</style>
+<div class="inline-table"><table class="cl-c10832dc">
+<thead><tr style="overflow-wrap:break-word;">
+<td class="cl-c0fbd951"><p class="cl-c0fb6476"><span class="cl-c0fb15b6">hospital</span></p></td>
+<td class="cl-c0fbd950"><p class="cl-c0fb6477"><span class="cl-c0fb15b6">N known</span></p></td>
+<td class="cl-c0fbd950"><p class="cl-c0fb6477"><span class="cl-c0fb15b6">N_Recover</span></p></td>
+<td class="cl-c0fbd950"><p class="cl-c0fb6477"><span class="cl-c0fb15b6">Prop_Recover</span></p></td>
+<td class="cl-c0fbd950"><p class="cl-c0fb6477"><span class="cl-c0fb15b6">ct_value_Recover</span></p></td>
+<td class="cl-c0fbd950"><p class="cl-c0fb6477"><span class="cl-c0fb15b6">N_Death</span></p></td>
+<td class="cl-c0fbd950"><p class="cl-c0fb6477"><span class="cl-c0fb15b6">Prop_Death</span></p></td>
+<td class="cl-c0fbd950"><p class="cl-c0fb6477"><span class="cl-c0fb15b6">ct_value_Death</span></p></td>
+</tr></thead>
+<tbody>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-c0fbd94d"><p class="cl-c0fb6476"><span class="cl-c0fb15b6">Port Hospital</span></p></td>
+<td class="cl-c0fbd94c"><p class="cl-c0fb6477"><span class="cl-c0fb15b6">1,364</span></p></td>
+<td class="cl-c0fbd94c"><p class="cl-c0fb6477"><span class="cl-c0fb15b6">579</span></p></td>
+<td class="cl-c0fbd94c"><p class="cl-c0fb6477"><span class="cl-c0fb15b6">42.4</span></p></td>
+<td class="cl-c0fbd94c"><p class="cl-c0fb6477"><span class="cl-c0fb15b6">22.0</span></p></td>
+<td class="cl-c0fbd94c"><p class="cl-c0fb6477"><span class="cl-c0fb15b6">785</span></p></td>
+<td class="cl-c0fbd94c"><p class="cl-c0fb6477"><span class="cl-c0fb15b6">57.6</span></p></td>
+<td class="cl-c0fbd94c"><p class="cl-c0fb6477"><span class="cl-c0fb15b6">22.0</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-c0fbd94d"><p class="cl-c0fb6476"><span class="cl-c0fb15b6">Military Hospital</span></p></td>
+<td class="cl-c0fbd94c"><p class="cl-c0fb6477"><span class="cl-c0fb15b6">708</span></p></td>
+<td class="cl-c0fbd94c"><p class="cl-c0fb6477"><span class="cl-c0fb15b6">309</span></p></td>
+<td class="cl-c0fbd94c"><p class="cl-c0fb6477"><span class="cl-c0fb15b6">43.6</span></p></td>
+<td class="cl-c0fbd94c"><p class="cl-c0fb6477"><span class="cl-c0fb15b6">21.0</span></p></td>
+<td class="cl-c0fbd94c"><p class="cl-c0fb6477"><span class="cl-c0fb15b6">399</span></p></td>
+<td class="cl-c0fbd94c"><p class="cl-c0fb6477"><span class="cl-c0fb15b6">56.4</span></p></td>
+<td class="cl-c0fbd94c"><p class="cl-c0fb6477"><span class="cl-c0fb15b6">22.0</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-c0fbd94d"><p class="cl-c0fb6476"><span class="cl-c0fb15b6">Other</span></p></td>
+<td class="cl-c0fbd94c"><p class="cl-c0fb6477"><span class="cl-c0fb15b6">685</span></p></td>
+<td class="cl-c0fbd94c"><p class="cl-c0fb6477"><span class="cl-c0fb15b6">290</span></p></td>
+<td class="cl-c0fbd94c"><p class="cl-c0fb6477"><span class="cl-c0fb15b6">42.3</span></p></td>
+<td class="cl-c0fbd94c"><p class="cl-c0fb6477"><span class="cl-c0fb15b6">21.0</span></p></td>
+<td class="cl-c0fbd94c"><p class="cl-c0fb6477"><span class="cl-c0fb15b6">395</span></p></td>
+<td class="cl-c0fbd94c"><p class="cl-c0fb6477"><span class="cl-c0fb15b6">57.7</span></p></td>
+<td class="cl-c0fbd94c"><p class="cl-c0fb6477"><span class="cl-c0fb15b6">22.0</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-c0fbd94d"><p class="cl-c0fb6476"><span class="cl-c0fb15b6">Central Hospital</span></p></td>
+<td class="cl-c0fbd94c"><p class="cl-c0fb6477"><span class="cl-c0fb15b6">358</span></p></td>
+<td class="cl-c0fbd94c"><p class="cl-c0fb6477"><span class="cl-c0fb15b6">165</span></p></td>
+<td class="cl-c0fbd94c"><p class="cl-c0fb6477"><span class="cl-c0fb15b6">46.1</span></p></td>
+<td class="cl-c0fbd94c"><p class="cl-c0fb6477"><span class="cl-c0fb15b6">22.0</span></p></td>
+<td class="cl-c0fbd94c"><p class="cl-c0fb6477"><span class="cl-c0fb15b6">193</span></p></td>
+<td class="cl-c0fbd94c"><p class="cl-c0fb6477"><span class="cl-c0fb15b6">53.9</span></p></td>
+<td class="cl-c0fbd94c"><p class="cl-c0fb6477"><span class="cl-c0fb15b6">22.0</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-c0fbd94f"><p class="cl-c0fb6476"><span class="cl-c0fb15b6">St. Mark's Maternity Hospital (SMMH)</span></p></td>
+<td class="cl-c0fbd94e"><p class="cl-c0fb6477"><span class="cl-c0fb15b6">325</span></p></td>
+<td class="cl-c0fbd94e"><p class="cl-c0fb6477"><span class="cl-c0fb15b6">126</span></p></td>
+<td class="cl-c0fbd94e"><p class="cl-c0fb6477"><span class="cl-c0fb15b6">38.8</span></p></td>
+<td class="cl-c0fbd94e"><p class="cl-c0fb6477"><span class="cl-c0fb15b6">21.0</span></p></td>
+<td class="cl-c0fbd94e"><p class="cl-c0fb6477"><span class="cl-c0fb15b6">199</span></p></td>
+<td class="cl-c0fbd94e"><p class="cl-c0fb6477"><span class="cl-c0fb15b6">61.2</span></p></td>
+<td class="cl-c0fbd94e"><p class="cl-c0fb6477"><span class="cl-c0fb15b6">22.0</span></p></td>
+</tr>
+</tbody>
+</table></div>
+</div></template><div id="db3c9cb8-916d-48eb-94ba-95cd85346bc1"></div>
+<script>
+var dest = document.getElementById("db3c9cb8-916d-48eb-94ba-95cd85346bc1");
+var template = document.getElementById("62b91cf2-6aa8-44fa-bcc7-bb7ea035fc2a");
+var caption = template.content.querySelector("caption");
+if(caption) {
+  caption.style.cssText = "display:block;text-align:center;";
+  var newcapt = document.createElement("p");
+  newcapt.appendChild(caption)
+  dest.parentNode.insertBefore(newcapt, dest.previousSibling);
+}
+var fantome = dest.attachShadow({mode: 'open'});
+var templateContent = template.content;
+fantome.appendChild(templateContent);
+</script><p>We see immediately that it has suboptimal spacing, and the proportions have too many decimal places.</p>
+<p><strong>Formatting cell content</strong></p>
+<p>We edit the proportion colums to one decimal place using flextable code. Note this could also have been done at data management stage with the <code><a href="https://rdrr.io/r/base/Round.html">round()</a></code> function.</p>
+<div class="sourceCode" id="cb1213"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">ftable</span> <span class="op">&lt;-</span> <span class="fu">colformat_num</span><span class="op">(</span><span class="va">ftable</span>, j <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">4</span>,<span class="fl">7</span><span class="op">)</span>, digits <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
+<span class="va">ftable</span></code></pre></div>
+<template id="ebb44722-a86c-4794-a520-f38e1fa4c005"><style>
+.tabwid table{
+  border-collapse:collapse;
+  line-height:1;
+  margin-left:auto;
+  margin-right:auto;
+  border-width: 0;
+  display: table;
+  margin-top: 1.275em;
+  margin-bottom: 1.275em;
+  border-spacing: 0;
+  border-color: transparent;
+}
+.tabwid_left table{
+  margin-left:0;
+}
+.tabwid_right table{
+  margin-right:0;
+}
+.tabwid td {
+    padding: 0;
+}
+.tabwid a {
+  text-decoration: none;
+}
+.tabwid thead {
+    background-color: transparent;
+}
+.tabwid tfoot {
+    background-color: transparent;
+}
+.tabwid table tr {
+background-color: transparent;
+}
+</style>
+<div class="tabwid">
+<style>.cl-c1250628{border-collapse:collapse;}.cl-c118d2ea{font-family:'Arial';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-c118f9fa{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-c118f9fb{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-c1199630{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1199631{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1199632{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1199633{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1199634{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 2pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1199635{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 2pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}caption {color: #777;margin-top: 10px;margin-bottom: 10px;text-align: center;}</style>
+<div class="inline-table"><table class="cl-c1250628">
+<thead><tr style="overflow-wrap:break-word;">
+<td class="cl-c1199635"><p class="cl-c118f9fa"><span class="cl-c118d2ea">hospital</span></p></td>
+<td class="cl-c1199634"><p class="cl-c118f9fb"><span class="cl-c118d2ea">N known</span></p></td>
+<td class="cl-c1199634"><p class="cl-c118f9fb"><span class="cl-c118d2ea">N_Recover</span></p></td>
+<td class="cl-c1199634"><p class="cl-c118f9fb"><span class="cl-c118d2ea">Prop_Recover</span></p></td>
+<td class="cl-c1199634"><p class="cl-c118f9fb"><span class="cl-c118d2ea">ct_value_Recover</span></p></td>
+<td class="cl-c1199634"><p class="cl-c118f9fb"><span class="cl-c118d2ea">N_Death</span></p></td>
+<td class="cl-c1199634"><p class="cl-c118f9fb"><span class="cl-c118d2ea">Prop_Death</span></p></td>
+<td class="cl-c1199634"><p class="cl-c118f9fb"><span class="cl-c118d2ea">ct_value_Death</span></p></td>
+</tr></thead>
+<tbody>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-c1199631"><p class="cl-c118f9fa"><span class="cl-c118d2ea">Port Hospital</span></p></td>
+<td class="cl-c1199630"><p class="cl-c118f9fb"><span class="cl-c118d2ea">1,364</span></p></td>
+<td class="cl-c1199630"><p class="cl-c118f9fb"><span class="cl-c118d2ea">579</span></p></td>
+<td class="cl-c1199630"><p class="cl-c118f9fb"><span class="cl-c118d2ea">42.4</span></p></td>
+<td class="cl-c1199630"><p class="cl-c118f9fb"><span class="cl-c118d2ea">22.0</span></p></td>
+<td class="cl-c1199630"><p class="cl-c118f9fb"><span class="cl-c118d2ea">785</span></p></td>
+<td class="cl-c1199630"><p class="cl-c118f9fb"><span class="cl-c118d2ea">57.6</span></p></td>
+<td class="cl-c1199630"><p class="cl-c118f9fb"><span class="cl-c118d2ea">22.0</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-c1199631"><p class="cl-c118f9fa"><span class="cl-c118d2ea">Military Hospital</span></p></td>
+<td class="cl-c1199630"><p class="cl-c118f9fb"><span class="cl-c118d2ea">708</span></p></td>
+<td class="cl-c1199630"><p class="cl-c118f9fb"><span class="cl-c118d2ea">309</span></p></td>
+<td class="cl-c1199630"><p class="cl-c118f9fb"><span class="cl-c118d2ea">43.6</span></p></td>
+<td class="cl-c1199630"><p class="cl-c118f9fb"><span class="cl-c118d2ea">21.0</span></p></td>
+<td class="cl-c1199630"><p class="cl-c118f9fb"><span class="cl-c118d2ea">399</span></p></td>
+<td class="cl-c1199630"><p class="cl-c118f9fb"><span class="cl-c118d2ea">56.4</span></p></td>
+<td class="cl-c1199630"><p class="cl-c118f9fb"><span class="cl-c118d2ea">22.0</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-c1199631"><p class="cl-c118f9fa"><span class="cl-c118d2ea">Other</span></p></td>
+<td class="cl-c1199630"><p class="cl-c118f9fb"><span class="cl-c118d2ea">685</span></p></td>
+<td class="cl-c1199630"><p class="cl-c118f9fb"><span class="cl-c118d2ea">290</span></p></td>
+<td class="cl-c1199630"><p class="cl-c118f9fb"><span class="cl-c118d2ea">42.3</span></p></td>
+<td class="cl-c1199630"><p class="cl-c118f9fb"><span class="cl-c118d2ea">21.0</span></p></td>
+<td class="cl-c1199630"><p class="cl-c118f9fb"><span class="cl-c118d2ea">395</span></p></td>
+<td class="cl-c1199630"><p class="cl-c118f9fb"><span class="cl-c118d2ea">57.7</span></p></td>
+<td class="cl-c1199630"><p class="cl-c118f9fb"><span class="cl-c118d2ea">22.0</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-c1199631"><p class="cl-c118f9fa"><span class="cl-c118d2ea">Central Hospital</span></p></td>
+<td class="cl-c1199630"><p class="cl-c118f9fb"><span class="cl-c118d2ea">358</span></p></td>
+<td class="cl-c1199630"><p class="cl-c118f9fb"><span class="cl-c118d2ea">165</span></p></td>
+<td class="cl-c1199630"><p class="cl-c118f9fb"><span class="cl-c118d2ea">46.1</span></p></td>
+<td class="cl-c1199630"><p class="cl-c118f9fb"><span class="cl-c118d2ea">22.0</span></p></td>
+<td class="cl-c1199630"><p class="cl-c118f9fb"><span class="cl-c118d2ea">193</span></p></td>
+<td class="cl-c1199630"><p class="cl-c118f9fb"><span class="cl-c118d2ea">53.9</span></p></td>
+<td class="cl-c1199630"><p class="cl-c118f9fb"><span class="cl-c118d2ea">22.0</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-c1199633"><p class="cl-c118f9fa"><span class="cl-c118d2ea">St. Mark's Maternity Hospital (SMMH)</span></p></td>
+<td class="cl-c1199632"><p class="cl-c118f9fb"><span class="cl-c118d2ea">325</span></p></td>
+<td class="cl-c1199632"><p class="cl-c118f9fb"><span class="cl-c118d2ea">126</span></p></td>
+<td class="cl-c1199632"><p class="cl-c118f9fb"><span class="cl-c118d2ea">38.8</span></p></td>
+<td class="cl-c1199632"><p class="cl-c118f9fb"><span class="cl-c118d2ea">21.0</span></p></td>
+<td class="cl-c1199632"><p class="cl-c118f9fb"><span class="cl-c118d2ea">199</span></p></td>
+<td class="cl-c1199632"><p class="cl-c118f9fb"><span class="cl-c118d2ea">61.2</span></p></td>
+<td class="cl-c1199632"><p class="cl-c118f9fb"><span class="cl-c118d2ea">22.0</span></p></td>
+</tr>
+</tbody>
+</table></div>
+</div></template><div id="bd84fed9-4d3b-46d8-972c-955f4def23db"></div>
+<script>
+var dest = document.getElementById("bd84fed9-4d3b-46d8-972c-955f4def23db");
+var template = document.getElementById("ebb44722-a86c-4794-a520-f38e1fa4c005");
+var caption = template.content.querySelector("caption");
+if(caption) {
+  caption.style.cssText = "display:block;text-align:center;";
+  var newcapt = document.createElement("p");
+  newcapt.appendChild(caption)
+  dest.parentNode.insertBefore(newcapt, dest.previousSibling);
+}
+var fantome = dest.attachShadow({mode: 'open'});
+var templateContent = template.content;
+fantome.appendChild(templateContent);
+</script><p><strong>Formatting column width</strong></p>
+<p>We can use the autofit() function, which nicely stretches out the table so that each cell only has one row of text.</p>
+<div class="sourceCode" id="cb1214"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">ftable</span> <span class="op">%&gt;%</span> <span class="fu">autofit</span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<template id="6312ce34-df11-47f3-a0e4-6f41879b1230"><style>
+.tabwid table{
+  border-collapse:collapse;
+  line-height:1;
+  margin-left:auto;
+  margin-right:auto;
+  border-width: 0;
+  display: table;
+  margin-top: 1.275em;
+  margin-bottom: 1.275em;
+  border-spacing: 0;
+  border-color: transparent;
+}
+.tabwid_left table{
+  margin-left:0;
+}
+.tabwid_right table{
+  margin-right:0;
+}
+.tabwid td {
+    padding: 0;
+}
+.tabwid a {
+  text-decoration: none;
+}
+.tabwid thead {
+    background-color: transparent;
+}
+.tabwid tfoot {
+    background-color: transparent;
+}
+.tabwid table tr {
+background-color: transparent;
+}
+</style>
+<div class="tabwid">
+<style>.cl-c150f0f8{border-collapse:collapse;}.cl-c141ffc6{font-family:'Arial';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-c14226d6{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-c14226d7{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-c142c2f8{width:75.6pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c142c2f9{width:63.9pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c142c2fa{width:63.3pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c142c2fb{width:108.6pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c142c2fc{width:97pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c142c2fd{width:204.2pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c142c2fe{width:90.8pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c142c2ff{width:79.2pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c142c300{width:97pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c142c301{width:90.8pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c142c302{width:204.2pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c142ea08{width:108.6pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c142ea09{width:75.6pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c142ea0a{width:79.2pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c142ea0b{width:63.9pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c142ea0c{width:63.3pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c142ea0d{width:75.6pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c142ea0e{width:63.9pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c142ea0f{width:79.2pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c142ea10{width:204.2pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c142ea11{width:63.3pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c142ea12{width:90.8pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c143105a{width:108.6pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c143105b{width:97pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c143105c{width:97pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c143105d{width:108.6pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c143105e{width:204.2pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c143105f{width:90.8pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1431060{width:79.2pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1431061{width:63.3pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1431062{width:63.9pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1431063{width:75.6pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1431064{width:108.6pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1433760{width:63.3pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1433761{width:204.2pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1433762{width:63.9pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1433763{width:97pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1433764{width:90.8pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1433765{width:79.2pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1433766{width:75.6pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1433767{width:108.6pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 2pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1433768{width:204.2pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 2pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1433769{width:90.8pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 2pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c143376a{width:97pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 2pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1435e52{width:79.2pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 2pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1435e53{width:63.3pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 2pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1435e54{width:75.6pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 2pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1435e55{width:63.9pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 2pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}caption {color: #777;margin-top: 10px;margin-bottom: 10px;text-align: center;}</style>
+<div class="inline-table"><table class="cl-c150f0f8">
+<thead><tr style="overflow-wrap:break-word;">
+<td class="cl-c1433768"><p class="cl-c14226d6"><span class="cl-c141ffc6">hospital</span></p></td>
+<td class="cl-c1435e53"><p class="cl-c14226d7"><span class="cl-c141ffc6">N known</span></p></td>
+<td class="cl-c1435e54"><p class="cl-c14226d7"><span class="cl-c141ffc6">N_Recover</span></p></td>
+<td class="cl-c1433769"><p class="cl-c14226d7"><span class="cl-c141ffc6">Prop_Recover</span></p></td>
+<td class="cl-c1433767"><p class="cl-c14226d7"><span class="cl-c141ffc6">ct_value_Recover</span></p></td>
+<td class="cl-c1435e55"><p class="cl-c14226d7"><span class="cl-c141ffc6">N_Death</span></p></td>
+<td class="cl-c1435e52"><p class="cl-c14226d7"><span class="cl-c141ffc6">Prop_Death</span></p></td>
+<td class="cl-c143376a"><p class="cl-c14226d7"><span class="cl-c141ffc6">ct_value_Death</span></p></td>
+</tr></thead>
+<tbody>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-c142c2fd"><p class="cl-c14226d6"><span class="cl-c141ffc6">Port Hospital</span></p></td>
+<td class="cl-c142c2fa"><p class="cl-c14226d7"><span class="cl-c141ffc6">1,364</span></p></td>
+<td class="cl-c142c2f8"><p class="cl-c14226d7"><span class="cl-c141ffc6">579</span></p></td>
+<td class="cl-c142c2fe"><p class="cl-c14226d7"><span class="cl-c141ffc6">42.4</span></p></td>
+<td class="cl-c142c2fb"><p class="cl-c14226d7"><span class="cl-c141ffc6">22.0</span></p></td>
+<td class="cl-c142c2f9"><p class="cl-c14226d7"><span class="cl-c141ffc6">785</span></p></td>
+<td class="cl-c142c2ff"><p class="cl-c14226d7"><span class="cl-c141ffc6">57.6</span></p></td>
+<td class="cl-c142c2fc"><p class="cl-c14226d7"><span class="cl-c141ffc6">22.0</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-c142c302"><p class="cl-c14226d6"><span class="cl-c141ffc6">Military Hospital</span></p></td>
+<td class="cl-c142ea0c"><p class="cl-c14226d7"><span class="cl-c141ffc6">708</span></p></td>
+<td class="cl-c142ea09"><p class="cl-c14226d7"><span class="cl-c141ffc6">309</span></p></td>
+<td class="cl-c142c301"><p class="cl-c14226d7"><span class="cl-c141ffc6">43.6</span></p></td>
+<td class="cl-c142ea08"><p class="cl-c14226d7"><span class="cl-c141ffc6">21.0</span></p></td>
+<td class="cl-c142ea0b"><p class="cl-c14226d7"><span class="cl-c141ffc6">399</span></p></td>
+<td class="cl-c142ea0a"><p class="cl-c14226d7"><span class="cl-c141ffc6">56.4</span></p></td>
+<td class="cl-c142c300"><p class="cl-c14226d7"><span class="cl-c141ffc6">22.0</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-c142ea10"><p class="cl-c14226d6"><span class="cl-c141ffc6">Other</span></p></td>
+<td class="cl-c142ea11"><p class="cl-c14226d7"><span class="cl-c141ffc6">685</span></p></td>
+<td class="cl-c142ea0d"><p class="cl-c14226d7"><span class="cl-c141ffc6">290</span></p></td>
+<td class="cl-c142ea12"><p class="cl-c14226d7"><span class="cl-c141ffc6">42.3</span></p></td>
+<td class="cl-c143105a"><p class="cl-c14226d7"><span class="cl-c141ffc6">21.0</span></p></td>
+<td class="cl-c142ea0e"><p class="cl-c14226d7"><span class="cl-c141ffc6">395</span></p></td>
+<td class="cl-c142ea0f"><p class="cl-c14226d7"><span class="cl-c141ffc6">57.7</span></p></td>
+<td class="cl-c143105b"><p class="cl-c14226d7"><span class="cl-c141ffc6">22.0</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-c143105e"><p class="cl-c14226d6"><span class="cl-c141ffc6">Central Hospital</span></p></td>
+<td class="cl-c1431061"><p class="cl-c14226d7"><span class="cl-c141ffc6">358</span></p></td>
+<td class="cl-c1431063"><p class="cl-c14226d7"><span class="cl-c141ffc6">165</span></p></td>
+<td class="cl-c143105f"><p class="cl-c14226d7"><span class="cl-c141ffc6">46.1</span></p></td>
+<td class="cl-c143105d"><p class="cl-c14226d7"><span class="cl-c141ffc6">22.0</span></p></td>
+<td class="cl-c1431062"><p class="cl-c14226d7"><span class="cl-c141ffc6">193</span></p></td>
+<td class="cl-c1431060"><p class="cl-c14226d7"><span class="cl-c141ffc6">53.9</span></p></td>
+<td class="cl-c143105c"><p class="cl-c14226d7"><span class="cl-c141ffc6">22.0</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-c1433761"><p class="cl-c14226d6"><span class="cl-c141ffc6">St. Mark's Maternity Hospital (SMMH)</span></p></td>
+<td class="cl-c1433760"><p class="cl-c14226d7"><span class="cl-c141ffc6">325</span></p></td>
+<td class="cl-c1433766"><p class="cl-c14226d7"><span class="cl-c141ffc6">126</span></p></td>
+<td class="cl-c1433764"><p class="cl-c14226d7"><span class="cl-c141ffc6">38.8</span></p></td>
+<td class="cl-c1431064"><p class="cl-c14226d7"><span class="cl-c141ffc6">21.0</span></p></td>
+<td class="cl-c1433762"><p class="cl-c14226d7"><span class="cl-c141ffc6">199</span></p></td>
+<td class="cl-c1433765"><p class="cl-c14226d7"><span class="cl-c141ffc6">61.2</span></p></td>
+<td class="cl-c1433763"><p class="cl-c14226d7"><span class="cl-c141ffc6">22.0</span></p></td>
+</tr>
+</tbody>
+</table></div>
+</div></template><div id="09efe144-7035-4d36-be90-db093f0f574e"></div>
+<script>
+var dest = document.getElementById("09efe144-7035-4d36-be90-db093f0f574e");
+var template = document.getElementById("6312ce34-df11-47f3-a0e4-6f41879b1230");
+var caption = template.content.querySelector("caption");
+if(caption) {
+  caption.style.cssText = "display:block;text-align:center;";
+  var newcapt = document.createElement("p");
+  newcapt.appendChild(caption)
+  dest.parentNode.insertBefore(newcapt, dest.previousSibling);
+}
+var fantome = dest.attachShadow({mode: 'open'});
+var templateContent = template.content;
+fantome.appendChild(templateContent);
+</script><p>However, this might not always be appropriate, especially if there are very long values within cells, meaning the table might not fit on the page.</p>
+<p>Instead, we can specify widths. It can take some playing around to know what width value to put. In the example below, we specify different widths for column 1, column 2, and columns 4 to 8.</p>
+<div class="sourceCode" id="cb1215"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">ftable</span> <span class="op">&lt;-</span> <span class="va">ftable</span> <span class="op">%&gt;%</span> 
+  <span class="fu">width</span><span class="op">(</span>j<span class="op">=</span><span class="fl">1</span>, width <span class="op">=</span> <span class="fl">2.7</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">width</span><span class="op">(</span>j<span class="op">=</span><span class="fl">2</span>, width <span class="op">=</span> <span class="fl">1.5</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">width</span><span class="op">(</span>j<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">4</span>,<span class="fl">5</span>,<span class="fl">7</span>,<span class="fl">8</span><span class="op">)</span>, width <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
+
+<span class="va">ftable</span></code></pre></div>
+<template id="6c8b41f5-6f0e-45d2-8144-5e54f869ff7f"><style>
+.tabwid table{
+  border-collapse:collapse;
+  line-height:1;
+  margin-left:auto;
+  margin-right:auto;
+  border-width: 0;
+  display: table;
+  margin-top: 1.275em;
+  margin-bottom: 1.275em;
+  border-spacing: 0;
+  border-color: transparent;
+}
+.tabwid_left table{
+  margin-left:0;
+}
+.tabwid_right table{
+  margin-right:0;
+}
+.tabwid td {
+    padding: 0;
+}
+.tabwid a {
+  text-decoration: none;
+}
+.tabwid thead {
+    background-color: transparent;
+}
+.tabwid tfoot {
+    background-color: transparent;
+}
+.tabwid table tr {
+background-color: transparent;
+}
+</style>
+<div class="tabwid">
+<style>.cl-c16fe6a2{border-collapse:collapse;}.cl-c162efba{font-family:'Arial';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-c162efbb{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-c162efbc{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-c1633de4{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1633de5{width:108pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1633de6{width:72pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1633de7{width:194.4pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1633de8{width:72pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1633de9{width:108pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1633dea{width:194.4pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1633deb{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1633dec{width:72pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 2pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1633ded{width:194.4pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 2pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1633dee{width:108pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 2pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c16364cc{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 2pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}caption {color: #777;margin-top: 10px;margin-bottom: 10px;text-align: center;}</style>
+<div class="inline-table"><table class="cl-c16fe6a2">
+<thead><tr style="overflow-wrap:break-word;">
+<td class="cl-c1633ded"><p class="cl-c162efbb"><span class="cl-c162efba">hospital</span></p></td>
+<td class="cl-c1633dee"><p class="cl-c162efbc"><span class="cl-c162efba">N known</span></p></td>
+<td class="cl-c16364cc"><p class="cl-c162efbc"><span class="cl-c162efba">N_Recover</span></p></td>
+<td class="cl-c1633dec"><p class="cl-c162efbc"><span class="cl-c162efba">Prop_Recover</span></p></td>
+<td class="cl-c1633dec"><p class="cl-c162efbc"><span class="cl-c162efba">ct_value_Recover</span></p></td>
+<td class="cl-c16364cc"><p class="cl-c162efbc"><span class="cl-c162efba">N_Death</span></p></td>
+<td class="cl-c1633dec"><p class="cl-c162efbc"><span class="cl-c162efba">Prop_Death</span></p></td>
+<td class="cl-c1633dec"><p class="cl-c162efbc"><span class="cl-c162efba">ct_value_Death</span></p></td>
+</tr></thead>
+<tbody>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-c1633de7"><p class="cl-c162efbb"><span class="cl-c162efba">Port Hospital</span></p></td>
+<td class="cl-c1633de5"><p class="cl-c162efbc"><span class="cl-c162efba">1,364</span></p></td>
+<td class="cl-c1633de4"><p class="cl-c162efbc"><span class="cl-c162efba">579</span></p></td>
+<td class="cl-c1633de6"><p class="cl-c162efbc"><span class="cl-c162efba">42.4</span></p></td>
+<td class="cl-c1633de6"><p class="cl-c162efbc"><span class="cl-c162efba">22.0</span></p></td>
+<td class="cl-c1633de4"><p class="cl-c162efbc"><span class="cl-c162efba">785</span></p></td>
+<td class="cl-c1633de6"><p class="cl-c162efbc"><span class="cl-c162efba">57.6</span></p></td>
+<td class="cl-c1633de6"><p class="cl-c162efbc"><span class="cl-c162efba">22.0</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-c1633de7"><p class="cl-c162efbb"><span class="cl-c162efba">Military Hospital</span></p></td>
+<td class="cl-c1633de5"><p class="cl-c162efbc"><span class="cl-c162efba">708</span></p></td>
+<td class="cl-c1633de4"><p class="cl-c162efbc"><span class="cl-c162efba">309</span></p></td>
+<td class="cl-c1633de6"><p class="cl-c162efbc"><span class="cl-c162efba">43.6</span></p></td>
+<td class="cl-c1633de6"><p class="cl-c162efbc"><span class="cl-c162efba">21.0</span></p></td>
+<td class="cl-c1633de4"><p class="cl-c162efbc"><span class="cl-c162efba">399</span></p></td>
+<td class="cl-c1633de6"><p class="cl-c162efbc"><span class="cl-c162efba">56.4</span></p></td>
+<td class="cl-c1633de6"><p class="cl-c162efbc"><span class="cl-c162efba">22.0</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-c1633de7"><p class="cl-c162efbb"><span class="cl-c162efba">Other</span></p></td>
+<td class="cl-c1633de5"><p class="cl-c162efbc"><span class="cl-c162efba">685</span></p></td>
+<td class="cl-c1633de4"><p class="cl-c162efbc"><span class="cl-c162efba">290</span></p></td>
+<td class="cl-c1633de6"><p class="cl-c162efbc"><span class="cl-c162efba">42.3</span></p></td>
+<td class="cl-c1633de6"><p class="cl-c162efbc"><span class="cl-c162efba">21.0</span></p></td>
+<td class="cl-c1633de4"><p class="cl-c162efbc"><span class="cl-c162efba">395</span></p></td>
+<td class="cl-c1633de6"><p class="cl-c162efbc"><span class="cl-c162efba">57.7</span></p></td>
+<td class="cl-c1633de6"><p class="cl-c162efbc"><span class="cl-c162efba">22.0</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-c1633de7"><p class="cl-c162efbb"><span class="cl-c162efba">Central Hospital</span></p></td>
+<td class="cl-c1633de5"><p class="cl-c162efbc"><span class="cl-c162efba">358</span></p></td>
+<td class="cl-c1633de4"><p class="cl-c162efbc"><span class="cl-c162efba">165</span></p></td>
+<td class="cl-c1633de6"><p class="cl-c162efbc"><span class="cl-c162efba">46.1</span></p></td>
+<td class="cl-c1633de6"><p class="cl-c162efbc"><span class="cl-c162efba">22.0</span></p></td>
+<td class="cl-c1633de4"><p class="cl-c162efbc"><span class="cl-c162efba">193</span></p></td>
+<td class="cl-c1633de6"><p class="cl-c162efbc"><span class="cl-c162efba">53.9</span></p></td>
+<td class="cl-c1633de6"><p class="cl-c162efbc"><span class="cl-c162efba">22.0</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-c1633dea"><p class="cl-c162efbb"><span class="cl-c162efba">St. Mark's Maternity Hospital (SMMH)</span></p></td>
+<td class="cl-c1633de9"><p class="cl-c162efbc"><span class="cl-c162efba">325</span></p></td>
+<td class="cl-c1633deb"><p class="cl-c162efbc"><span class="cl-c162efba">126</span></p></td>
+<td class="cl-c1633de8"><p class="cl-c162efbc"><span class="cl-c162efba">38.8</span></p></td>
+<td class="cl-c1633de8"><p class="cl-c162efbc"><span class="cl-c162efba">21.0</span></p></td>
+<td class="cl-c1633deb"><p class="cl-c162efbc"><span class="cl-c162efba">199</span></p></td>
+<td class="cl-c1633de8"><p class="cl-c162efbc"><span class="cl-c162efba">61.2</span></p></td>
+<td class="cl-c1633de8"><p class="cl-c162efbc"><span class="cl-c162efba">22.0</span></p></td>
+</tr>
+</tbody>
+</table></div>
+</div></template><div id="237cb205-8616-4b6c-8105-250da1852ab3"></div>
+<script>
+var dest = document.getElementById("237cb205-8616-4b6c-8105-250da1852ab3");
+var template = document.getElementById("6c8b41f5-6f0e-45d2-8144-5e54f869ff7f");
+var caption = template.content.querySelector("caption");
+if(caption) {
+  caption.style.cssText = "display:block;text-align:center;";
+  var newcapt = document.createElement("p");
+  newcapt.appendChild(caption)
+  dest.parentNode.insertBefore(newcapt, dest.previousSibling);
+}
+var fantome = dest.attachShadow({mode: 'open'});
+var templateContent = template.content;
+fantome.appendChild(templateContent);
+</script><p><strong>Column headers</strong></p>
+<p>We want to clearer headers for easier interpretation of table contents.</p>
+<p>First we can add an extra header layer for clarity. We do this with the <code>add_header_row</code> with ‘top’ set to true, so that columns about the same subgroups can be grouped together. We also rename the now-second header layer. Finally we merge the columns in the top header row.</p>
+<div class="sourceCode" id="cb1216"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">ftable</span> <span class="op">&lt;-</span> <span class="va">ftable</span> <span class="op">%&gt;%</span> 
+  <span class="fu">add_header_row</span><span class="op">(</span> values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Hospital"</span>, 
+                             <span class="st">"Total cases with known outcome"</span>, 
+                             <span class="st">"Recovered"</span>, 
+                             <span class="st">""</span>,
+                             <span class="st">""</span>,
+                             <span class="st">"Died"</span>, <span class="co"># This and the next two columns will be one value ' died</span>
+                             <span class="st">""</span>,     <span class="co"># As merging will keep the first column, next two are blank</span>
+                             <span class="st">""</span><span class="op">)</span>, 
+                  top <span class="op">=</span> <span class="cn">T</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="co"># New header goes on top of existing header row</span>
+    <span class="fu">set_header_labels</span><span class="op">(</span>hospital <span class="op">=</span> <span class="st">""</span>, <span class="co"># Rename the columns in original header row</span>
+                    `N known` <span class="op">=</span> <span class="st">""</span>,                  
+                    N_Recover <span class="op">=</span> <span class="st">"Total"</span>,
+                    Prop_Recover <span class="op">=</span> <span class="st">"% of cases"</span>,
+                    ct_value_Recover <span class="op">=</span> <span class="st">"Median CT values"</span>,
+                    N_Death <span class="op">=</span> <span class="st">"Total"</span>,
+                    Prop_Death <span class="op">=</span> <span class="st">"% of cases"</span>,
+                     ct_value_Death <span class="op">=</span> <span class="st">"Median CT values"</span><span class="op">)</span>  <span class="op">%&gt;%</span> 
+  <span class="fu">merge_at</span><span class="op">(</span>i <span class="op">=</span> <span class="fl">1</span>, j <span class="op">=</span> <span class="fl">3</span><span class="op">:</span><span class="fl">5</span>, part <span class="op">=</span> <span class="st">"header"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="co"># Horizontally merge columns in new header row</span>
+  <span class="fu">merge_at</span><span class="op">(</span>i <span class="op">=</span> <span class="fl">1</span>, j <span class="op">=</span> <span class="fl">6</span><span class="op">:</span><span class="fl">8</span>, part <span class="op">=</span> <span class="st">"header"</span><span class="op">)</span>  
+
+<span class="va">ftable</span></code></pre></div>
+<template id="7c2a3de2-f397-4485-a2a2-afad0f0ec403"><style>
+.tabwid table{
+  border-collapse:collapse;
+  line-height:1;
+  margin-left:auto;
+  margin-right:auto;
+  border-width: 0;
+  display: table;
+  margin-top: 1.275em;
+  margin-bottom: 1.275em;
+  border-spacing: 0;
+  border-color: transparent;
+}
+.tabwid_left table{
+  margin-left:0;
+}
+.tabwid_right table{
+  margin-right:0;
+}
+.tabwid td {
+    padding: 0;
+}
+.tabwid a {
+  text-decoration: none;
+}
+.tabwid thead {
+    background-color: transparent;
+}
+.tabwid tfoot {
+    background-color: transparent;
+}
+.tabwid table tr {
+background-color: transparent;
+}
+</style>
+<div class="tabwid">
+<style>.cl-c19284fa{border-collapse:collapse;}.cl-c1860310{font-family:'Arial';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-c1860311{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-c1860312{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-c1867840{width:72pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1867841{width:108pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1867842{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1867843{width:194.4pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1867844{width:72pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1867845{width:194.4pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1867846{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1867847{width:108pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1867848{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(255, 255, 255, 0.00);border-top: 0 solid rgba(255, 255, 255, 0.00);border-left: 0 solid rgba(255, 255, 255, 0.00);border-right: 0 solid rgba(255, 255, 255, 0.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1867849{width:72pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(255, 255, 255, 0.00);border-top: 0 solid rgba(255, 255, 255, 0.00);border-left: 0 solid rgba(255, 255, 255, 0.00);border-right: 0 solid rgba(255, 255, 255, 0.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c186784a{width:194.4pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(255, 255, 255, 0.00);border-top: 0 solid rgba(255, 255, 255, 0.00);border-left: 0 solid rgba(255, 255, 255, 0.00);border-right: 0 solid rgba(255, 255, 255, 0.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1869f1e{width:108pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(255, 255, 255, 0.00);border-top: 0 solid rgba(255, 255, 255, 0.00);border-left: 0 solid rgba(255, 255, 255, 0.00);border-right: 0 solid rgba(255, 255, 255, 0.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1869f1f{width:194.4pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 2pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1869f20{width:108pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 2pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1869f21{width:72pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 2pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1869f22{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 2pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}caption {color: #777;margin-top: 10px;margin-bottom: 10px;text-align: center;}</style>
+<div class="inline-table"><table class="cl-c19284fa">
+<thead>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-c186784a"><p class="cl-c1860311"><span class="cl-c1860310">Hospital</span></p></td>
+<td class="cl-c1869f1e"><p class="cl-c1860311"><span class="cl-c1860310">Total cases with known outcome</span></p></td>
+<td colspan="3" class="cl-c1867848"><p class="cl-c1860311"><span class="cl-c1860310">Recovered</span></p></td>
+<td colspan="3" class="cl-c1867848"><p class="cl-c1860311"><span class="cl-c1860310">Died</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-c1869f1f"><p class="cl-c1860311"><span class="cl-c1860310"></span></p></td>
+<td class="cl-c1869f20"><p class="cl-c1860312"><span class="cl-c1860310"></span></p></td>
+<td class="cl-c1869f22"><p class="cl-c1860312"><span class="cl-c1860310">Total</span></p></td>
+<td class="cl-c1869f21"><p class="cl-c1860312"><span class="cl-c1860310">% of cases</span></p></td>
+<td class="cl-c1869f21"><p class="cl-c1860312"><span class="cl-c1860310">Median CT values</span></p></td>
+<td class="cl-c1869f22"><p class="cl-c1860312"><span class="cl-c1860310">Total</span></p></td>
+<td class="cl-c1869f21"><p class="cl-c1860312"><span class="cl-c1860310">% of cases</span></p></td>
+<td class="cl-c1869f21"><p class="cl-c1860312"><span class="cl-c1860310">Median CT values</span></p></td>
+</tr>
+</thead>
+<tbody>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-c1867843"><p class="cl-c1860311"><span class="cl-c1860310">Port Hospital</span></p></td>
+<td class="cl-c1867841"><p class="cl-c1860312"><span class="cl-c1860310">1,364</span></p></td>
+<td class="cl-c1867842"><p class="cl-c1860312"><span class="cl-c1860310">579</span></p></td>
+<td class="cl-c1867840"><p class="cl-c1860312"><span class="cl-c1860310">42.4</span></p></td>
+<td class="cl-c1867840"><p class="cl-c1860312"><span class="cl-c1860310">22.0</span></p></td>
+<td class="cl-c1867842"><p class="cl-c1860312"><span class="cl-c1860310">785</span></p></td>
+<td class="cl-c1867840"><p class="cl-c1860312"><span class="cl-c1860310">57.6</span></p></td>
+<td class="cl-c1867840"><p class="cl-c1860312"><span class="cl-c1860310">22.0</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-c1867843"><p class="cl-c1860311"><span class="cl-c1860310">Military Hospital</span></p></td>
+<td class="cl-c1867841"><p class="cl-c1860312"><span class="cl-c1860310">708</span></p></td>
+<td class="cl-c1867842"><p class="cl-c1860312"><span class="cl-c1860310">309</span></p></td>
+<td class="cl-c1867840"><p class="cl-c1860312"><span class="cl-c1860310">43.6</span></p></td>
+<td class="cl-c1867840"><p class="cl-c1860312"><span class="cl-c1860310">21.0</span></p></td>
+<td class="cl-c1867842"><p class="cl-c1860312"><span class="cl-c1860310">399</span></p></td>
+<td class="cl-c1867840"><p class="cl-c1860312"><span class="cl-c1860310">56.4</span></p></td>
+<td class="cl-c1867840"><p class="cl-c1860312"><span class="cl-c1860310">22.0</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-c1867843"><p class="cl-c1860311"><span class="cl-c1860310">Other</span></p></td>
+<td class="cl-c1867841"><p class="cl-c1860312"><span class="cl-c1860310">685</span></p></td>
+<td class="cl-c1867842"><p class="cl-c1860312"><span class="cl-c1860310">290</span></p></td>
+<td class="cl-c1867840"><p class="cl-c1860312"><span class="cl-c1860310">42.3</span></p></td>
+<td class="cl-c1867840"><p class="cl-c1860312"><span class="cl-c1860310">21.0</span></p></td>
+<td class="cl-c1867842"><p class="cl-c1860312"><span class="cl-c1860310">395</span></p></td>
+<td class="cl-c1867840"><p class="cl-c1860312"><span class="cl-c1860310">57.7</span></p></td>
+<td class="cl-c1867840"><p class="cl-c1860312"><span class="cl-c1860310">22.0</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-c1867843"><p class="cl-c1860311"><span class="cl-c1860310">Central Hospital</span></p></td>
+<td class="cl-c1867841"><p class="cl-c1860312"><span class="cl-c1860310">358</span></p></td>
+<td class="cl-c1867842"><p class="cl-c1860312"><span class="cl-c1860310">165</span></p></td>
+<td class="cl-c1867840"><p class="cl-c1860312"><span class="cl-c1860310">46.1</span></p></td>
+<td class="cl-c1867840"><p class="cl-c1860312"><span class="cl-c1860310">22.0</span></p></td>
+<td class="cl-c1867842"><p class="cl-c1860312"><span class="cl-c1860310">193</span></p></td>
+<td class="cl-c1867840"><p class="cl-c1860312"><span class="cl-c1860310">53.9</span></p></td>
+<td class="cl-c1867840"><p class="cl-c1860312"><span class="cl-c1860310">22.0</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-c1867845"><p class="cl-c1860311"><span class="cl-c1860310">St. Mark's Maternity Hospital (SMMH)</span></p></td>
+<td class="cl-c1867847"><p class="cl-c1860312"><span class="cl-c1860310">325</span></p></td>
+<td class="cl-c1867846"><p class="cl-c1860312"><span class="cl-c1860310">126</span></p></td>
+<td class="cl-c1867844"><p class="cl-c1860312"><span class="cl-c1860310">38.8</span></p></td>
+<td class="cl-c1867844"><p class="cl-c1860312"><span class="cl-c1860310">21.0</span></p></td>
+<td class="cl-c1867846"><p class="cl-c1860312"><span class="cl-c1860310">199</span></p></td>
+<td class="cl-c1867844"><p class="cl-c1860312"><span class="cl-c1860310">61.2</span></p></td>
+<td class="cl-c1867844"><p class="cl-c1860312"><span class="cl-c1860310">22.0</span></p></td>
+</tr>
+</tbody>
+</table></div>
+</div></template><div id="669881c5-e72f-4676-aee7-2b36349c96f3"></div>
+<script>
+var dest = document.getElementById("669881c5-e72f-4676-aee7-2b36349c96f3");
+var template = document.getElementById("7c2a3de2-f397-4485-a2a2-afad0f0ec403");
+var caption = template.content.querySelector("caption");
+if(caption) {
+  caption.style.cssText = "display:block;text-align:center;";
+  var newcapt = document.createElement("p");
+  newcapt.appendChild(caption)
+  dest.parentNode.insertBefore(newcapt, dest.previousSibling);
+}
+var fantome = dest.attachShadow({mode: 'open'});
+var templateContent = template.content;
+fantome.appendChild(templateContent);
+</script><p><strong>Formatting borders and background </strong></p>
+<p>Flextable has default borders that do not respond well to additional header levels. We start from scratch by removing the existing borders with <code>border_remove</code>. Then we add a black line to the bottom of the table using <code>hlinw</code>, by specifying the 5th row of the table body. Flextable will default add a line to the bottom of the row. In order to add black lines to the <em>top</em> of sections, we need to use <code>hline_top</code>.</p>
+<p>We also use <code>fp_border</code> here, which actually applied the border. This is a function from the <code>officer</code> package.</p>
+<div class="sourceCode" id="cb1217"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ardata-fr.github.io/officeverse/">officer</a></span><span class="op">)</span>
+
+<span class="va">ftable</span> <span class="op">&lt;-</span> <span class="va">ftable</span> <span class="op">%&gt;%</span> 
+  <span class="fu">border_remove</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="co"># Remove existing borders </span>
+  <span class="fu">hline</span><span class="op">(</span>part <span class="op">=</span> <span class="st">"body"</span>, i<span class="op">=</span><span class="fl">5</span>, border <span class="op">=</span> <span class="fu"><a href="https://davidgohel.github.io/officer/reference/fp_border.html">fp_border</a></span><span class="op">(</span>color<span class="op">=</span><span class="st">"black"</span>, width<span class="op">=</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">hline_top</span><span class="op">(</span>part <span class="op">=</span> <span class="st">"header"</span>, border <span class="op">=</span> <span class="fu"><a href="https://davidgohel.github.io/officer/reference/fp_border.html">fp_border</a></span><span class="op">(</span>color<span class="op">=</span><span class="st">"black"</span>, width<span class="op">=</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">hline_top</span><span class="op">(</span>part <span class="op">=</span> <span class="st">"body"</span>, border <span class="op">=</span> <span class="fu"><a href="https://davidgohel.github.io/officer/reference/fp_border.html">fp_border</a></span><span class="op">(</span>color<span class="op">=</span><span class="st">"black"</span>, width<span class="op">=</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span> 
+
+
+<span class="va">ftable</span></code></pre></div>
+<template id="f53a70f7-199f-451f-9701-684c985d957d"><style>
+.tabwid table{
+  border-collapse:collapse;
+  line-height:1;
+  margin-left:auto;
+  margin-right:auto;
+  border-width: 0;
+  display: table;
+  margin-top: 1.275em;
+  margin-bottom: 1.275em;
+  border-spacing: 0;
+  border-color: transparent;
+}
+.tabwid_left table{
+  margin-left:0;
+}
+.tabwid_right table{
+  margin-right:0;
+}
+.tabwid td {
+    padding: 0;
+}
+.tabwid a {
+  text-decoration: none;
+}
+.tabwid thead {
+    background-color: transparent;
+}
+.tabwid tfoot {
+    background-color: transparent;
+}
+.tabwid table tr {
+background-color: transparent;
+}
+</style>
+<div class="tabwid">
+<style>.cl-c1ad9844{border-collapse:collapse;}.cl-c1a1b27c{font-family:'Arial';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-c1a1b27d{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-c1a1b27e{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-c1a22784{width:72pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1a22785{width:108pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1a22786{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1a22787{width:194.4pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1a22788{width:72pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1a22789{width:194.4pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1a2278a{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1a2278b{width:108pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1a2278c{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 2pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1a2278d{width:72pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 2pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1a2278e{width:194.4pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 2pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1a24e8a{width:108pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 2pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}caption {color: #777;margin-top: 10px;margin-bottom: 10px;text-align: center;}</style>
+<div class="inline-table"><table class="cl-c1ad9844">
+<thead>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-c1a2278e"><p class="cl-c1a1b27d"><span class="cl-c1a1b27c">Hospital</span></p></td>
+<td class="cl-c1a24e8a"><p class="cl-c1a1b27d"><span class="cl-c1a1b27c">Total cases with known outcome</span></p></td>
+<td colspan="3" class="cl-c1a2278c"><p class="cl-c1a1b27d"><span class="cl-c1a1b27c">Recovered</span></p></td>
+<td colspan="3" class="cl-c1a2278c"><p class="cl-c1a1b27d"><span class="cl-c1a1b27c">Died</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-c1a22789"><p class="cl-c1a1b27d"><span class="cl-c1a1b27c"></span></p></td>
+<td class="cl-c1a2278b"><p class="cl-c1a1b27e"><span class="cl-c1a1b27c"></span></p></td>
+<td class="cl-c1a2278a"><p class="cl-c1a1b27e"><span class="cl-c1a1b27c">Total</span></p></td>
+<td class="cl-c1a22788"><p class="cl-c1a1b27e"><span class="cl-c1a1b27c">% of cases</span></p></td>
+<td class="cl-c1a22788"><p class="cl-c1a1b27e"><span class="cl-c1a1b27c">Median CT values</span></p></td>
+<td class="cl-c1a2278a"><p class="cl-c1a1b27e"><span class="cl-c1a1b27c">Total</span></p></td>
+<td class="cl-c1a22788"><p class="cl-c1a1b27e"><span class="cl-c1a1b27c">% of cases</span></p></td>
+<td class="cl-c1a22788"><p class="cl-c1a1b27e"><span class="cl-c1a1b27c">Median CT values</span></p></td>
+</tr>
+</thead>
+<tbody>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-c1a22787"><p class="cl-c1a1b27d"><span class="cl-c1a1b27c">Port Hospital</span></p></td>
+<td class="cl-c1a22785"><p class="cl-c1a1b27e"><span class="cl-c1a1b27c">1,364</span></p></td>
+<td class="cl-c1a22786"><p class="cl-c1a1b27e"><span class="cl-c1a1b27c">579</span></p></td>
+<td class="cl-c1a22784"><p class="cl-c1a1b27e"><span class="cl-c1a1b27c">42.4</span></p></td>
+<td class="cl-c1a22784"><p class="cl-c1a1b27e"><span class="cl-c1a1b27c">22.0</span></p></td>
+<td class="cl-c1a22786"><p class="cl-c1a1b27e"><span class="cl-c1a1b27c">785</span></p></td>
+<td class="cl-c1a22784"><p class="cl-c1a1b27e"><span class="cl-c1a1b27c">57.6</span></p></td>
+<td class="cl-c1a22784"><p class="cl-c1a1b27e"><span class="cl-c1a1b27c">22.0</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-c1a22787"><p class="cl-c1a1b27d"><span class="cl-c1a1b27c">Military Hospital</span></p></td>
+<td class="cl-c1a22785"><p class="cl-c1a1b27e"><span class="cl-c1a1b27c">708</span></p></td>
+<td class="cl-c1a22786"><p class="cl-c1a1b27e"><span class="cl-c1a1b27c">309</span></p></td>
+<td class="cl-c1a22784"><p class="cl-c1a1b27e"><span class="cl-c1a1b27c">43.6</span></p></td>
+<td class="cl-c1a22784"><p class="cl-c1a1b27e"><span class="cl-c1a1b27c">21.0</span></p></td>
+<td class="cl-c1a22786"><p class="cl-c1a1b27e"><span class="cl-c1a1b27c">399</span></p></td>
+<td class="cl-c1a22784"><p class="cl-c1a1b27e"><span class="cl-c1a1b27c">56.4</span></p></td>
+<td class="cl-c1a22784"><p class="cl-c1a1b27e"><span class="cl-c1a1b27c">22.0</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-c1a22787"><p class="cl-c1a1b27d"><span class="cl-c1a1b27c">Other</span></p></td>
+<td class="cl-c1a22785"><p class="cl-c1a1b27e"><span class="cl-c1a1b27c">685</span></p></td>
+<td class="cl-c1a22786"><p class="cl-c1a1b27e"><span class="cl-c1a1b27c">290</span></p></td>
+<td class="cl-c1a22784"><p class="cl-c1a1b27e"><span class="cl-c1a1b27c">42.3</span></p></td>
+<td class="cl-c1a22784"><p class="cl-c1a1b27e"><span class="cl-c1a1b27c">21.0</span></p></td>
+<td class="cl-c1a22786"><p class="cl-c1a1b27e"><span class="cl-c1a1b27c">395</span></p></td>
+<td class="cl-c1a22784"><p class="cl-c1a1b27e"><span class="cl-c1a1b27c">57.7</span></p></td>
+<td class="cl-c1a22784"><p class="cl-c1a1b27e"><span class="cl-c1a1b27c">22.0</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-c1a22787"><p class="cl-c1a1b27d"><span class="cl-c1a1b27c">Central Hospital</span></p></td>
+<td class="cl-c1a22785"><p class="cl-c1a1b27e"><span class="cl-c1a1b27c">358</span></p></td>
+<td class="cl-c1a22786"><p class="cl-c1a1b27e"><span class="cl-c1a1b27c">165</span></p></td>
+<td class="cl-c1a22784"><p class="cl-c1a1b27e"><span class="cl-c1a1b27c">46.1</span></p></td>
+<td class="cl-c1a22784"><p class="cl-c1a1b27e"><span class="cl-c1a1b27c">22.0</span></p></td>
+<td class="cl-c1a22786"><p class="cl-c1a1b27e"><span class="cl-c1a1b27c">193</span></p></td>
+<td class="cl-c1a22784"><p class="cl-c1a1b27e"><span class="cl-c1a1b27c">53.9</span></p></td>
+<td class="cl-c1a22784"><p class="cl-c1a1b27e"><span class="cl-c1a1b27c">22.0</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-c1a22789"><p class="cl-c1a1b27d"><span class="cl-c1a1b27c">St. Mark's Maternity Hospital (SMMH)</span></p></td>
+<td class="cl-c1a2278b"><p class="cl-c1a1b27e"><span class="cl-c1a1b27c">325</span></p></td>
+<td class="cl-c1a2278a"><p class="cl-c1a1b27e"><span class="cl-c1a1b27c">126</span></p></td>
+<td class="cl-c1a22788"><p class="cl-c1a1b27e"><span class="cl-c1a1b27c">38.8</span></p></td>
+<td class="cl-c1a22788"><p class="cl-c1a1b27e"><span class="cl-c1a1b27c">21.0</span></p></td>
+<td class="cl-c1a2278a"><p class="cl-c1a1b27e"><span class="cl-c1a1b27c">199</span></p></td>
+<td class="cl-c1a22788"><p class="cl-c1a1b27e"><span class="cl-c1a1b27c">61.2</span></p></td>
+<td class="cl-c1a22788"><p class="cl-c1a1b27e"><span class="cl-c1a1b27c">22.0</span></p></td>
+</tr>
+</tbody>
+</table></div>
+</div></template><div id="784491ac-f5cf-4c55-bae4-6ac90014ee10"></div>
+<script>
+var dest = document.getElementById("784491ac-f5cf-4c55-bae4-6ac90014ee10");
+var template = document.getElementById("f53a70f7-199f-451f-9701-684c985d957d");
+var caption = template.content.querySelector("caption");
+if(caption) {
+  caption.style.cssText = "display:block;text-align:center;";
+  var newcapt = document.createElement("p");
+  newcapt.appendChild(caption)
+  dest.parentNode.insertBefore(newcapt, dest.previousSibling);
+}
+var fantome = dest.attachShadow({mode: 'open'});
+var templateContent = template.content;
+fantome.appendChild(templateContent);
+</script><p><strong>Font and alignment</strong></p>
+<p>We centre-align all columns aside from the left-most column with the hospital names, using the <code>align</code> function.</p>
+<div class="sourceCode" id="cb1218"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">ftable</span> <span class="op">&lt;-</span> <span class="va">ftable</span> <span class="op">%&gt;%</span> 
+   <span class="fu">flextable</span><span class="fu">::</span><span class="fu"><a href="https://davidgohel.github.io/flextable/reference/align.html">align</a></span><span class="op">(</span>align <span class="op">=</span> <span class="st">"center"</span>, j <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span><span class="op">:</span><span class="fl">8</span><span class="op">)</span>, part <span class="op">=</span> <span class="st">"all"</span><span class="op">)</span> 
+<span class="va">ftable</span></code></pre></div>
+<template id="2023f457-1194-4de3-acfa-269830503012"><style>
+.tabwid table{
+  border-collapse:collapse;
+  line-height:1;
+  margin-left:auto;
+  margin-right:auto;
+  border-width: 0;
+  display: table;
+  margin-top: 1.275em;
+  margin-bottom: 1.275em;
+  border-spacing: 0;
+  border-color: transparent;
+}
+.tabwid_left table{
+  margin-left:0;
+}
+.tabwid_right table{
+  margin-right:0;
+}
+.tabwid td {
+    padding: 0;
+}
+.tabwid a {
+  text-decoration: none;
+}
+.tabwid thead {
+    background-color: transparent;
+}
+.tabwid tfoot {
+    background-color: transparent;
+}
+.tabwid table tr {
+background-color: transparent;
+}
+</style>
+<div class="tabwid">
+<style>.cl-c1cf996c{border-collapse:collapse;}.cl-c1c3b44e{font-family:'Arial';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-c1c3db54{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-c1c3db55{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-c1c45070{width:72pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1c45071{width:108pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1c45072{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1c45073{width:194.4pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1c45074{width:72pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1c45075{width:194.4pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1c45076{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1c45077{width:108pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1c45078{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 2pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1c45079{width:72pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 2pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1c4507a{width:194.4pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 2pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1c47776{width:108pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 2pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}caption {color: #777;margin-top: 10px;margin-bottom: 10px;text-align: center;}</style>
+<div class="inline-table"><table class="cl-c1cf996c">
+<thead>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-c1c4507a"><p class="cl-c1c3db54"><span class="cl-c1c3b44e">Hospital</span></p></td>
+<td class="cl-c1c47776"><p class="cl-c1c3db55"><span class="cl-c1c3b44e">Total cases with known outcome</span></p></td>
+<td colspan="3" class="cl-c1c45078"><p class="cl-c1c3db55"><span class="cl-c1c3b44e">Recovered</span></p></td>
+<td colspan="3" class="cl-c1c45078"><p class="cl-c1c3db55"><span class="cl-c1c3b44e">Died</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-c1c45075"><p class="cl-c1c3db54"><span class="cl-c1c3b44e"></span></p></td>
+<td class="cl-c1c45077"><p class="cl-c1c3db55"><span class="cl-c1c3b44e"></span></p></td>
+<td class="cl-c1c45076"><p class="cl-c1c3db55"><span class="cl-c1c3b44e">Total</span></p></td>
+<td class="cl-c1c45074"><p class="cl-c1c3db55"><span class="cl-c1c3b44e">% of cases</span></p></td>
+<td class="cl-c1c45074"><p class="cl-c1c3db55"><span class="cl-c1c3b44e">Median CT values</span></p></td>
+<td class="cl-c1c45076"><p class="cl-c1c3db55"><span class="cl-c1c3b44e">Total</span></p></td>
+<td class="cl-c1c45074"><p class="cl-c1c3db55"><span class="cl-c1c3b44e">% of cases</span></p></td>
+<td class="cl-c1c45074"><p class="cl-c1c3db55"><span class="cl-c1c3b44e">Median CT values</span></p></td>
+</tr>
+</thead>
+<tbody>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-c1c45073"><p class="cl-c1c3db54"><span class="cl-c1c3b44e">Port Hospital</span></p></td>
+<td class="cl-c1c45071"><p class="cl-c1c3db55"><span class="cl-c1c3b44e">1,364</span></p></td>
+<td class="cl-c1c45072"><p class="cl-c1c3db55"><span class="cl-c1c3b44e">579</span></p></td>
+<td class="cl-c1c45070"><p class="cl-c1c3db55"><span class="cl-c1c3b44e">42.4</span></p></td>
+<td class="cl-c1c45070"><p class="cl-c1c3db55"><span class="cl-c1c3b44e">22.0</span></p></td>
+<td class="cl-c1c45072"><p class="cl-c1c3db55"><span class="cl-c1c3b44e">785</span></p></td>
+<td class="cl-c1c45070"><p class="cl-c1c3db55"><span class="cl-c1c3b44e">57.6</span></p></td>
+<td class="cl-c1c45070"><p class="cl-c1c3db55"><span class="cl-c1c3b44e">22.0</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-c1c45073"><p class="cl-c1c3db54"><span class="cl-c1c3b44e">Military Hospital</span></p></td>
+<td class="cl-c1c45071"><p class="cl-c1c3db55"><span class="cl-c1c3b44e">708</span></p></td>
+<td class="cl-c1c45072"><p class="cl-c1c3db55"><span class="cl-c1c3b44e">309</span></p></td>
+<td class="cl-c1c45070"><p class="cl-c1c3db55"><span class="cl-c1c3b44e">43.6</span></p></td>
+<td class="cl-c1c45070"><p class="cl-c1c3db55"><span class="cl-c1c3b44e">21.0</span></p></td>
+<td class="cl-c1c45072"><p class="cl-c1c3db55"><span class="cl-c1c3b44e">399</span></p></td>
+<td class="cl-c1c45070"><p class="cl-c1c3db55"><span class="cl-c1c3b44e">56.4</span></p></td>
+<td class="cl-c1c45070"><p class="cl-c1c3db55"><span class="cl-c1c3b44e">22.0</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-c1c45073"><p class="cl-c1c3db54"><span class="cl-c1c3b44e">Other</span></p></td>
+<td class="cl-c1c45071"><p class="cl-c1c3db55"><span class="cl-c1c3b44e">685</span></p></td>
+<td class="cl-c1c45072"><p class="cl-c1c3db55"><span class="cl-c1c3b44e">290</span></p></td>
+<td class="cl-c1c45070"><p class="cl-c1c3db55"><span class="cl-c1c3b44e">42.3</span></p></td>
+<td class="cl-c1c45070"><p class="cl-c1c3db55"><span class="cl-c1c3b44e">21.0</span></p></td>
+<td class="cl-c1c45072"><p class="cl-c1c3db55"><span class="cl-c1c3b44e">395</span></p></td>
+<td class="cl-c1c45070"><p class="cl-c1c3db55"><span class="cl-c1c3b44e">57.7</span></p></td>
+<td class="cl-c1c45070"><p class="cl-c1c3db55"><span class="cl-c1c3b44e">22.0</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-c1c45073"><p class="cl-c1c3db54"><span class="cl-c1c3b44e">Central Hospital</span></p></td>
+<td class="cl-c1c45071"><p class="cl-c1c3db55"><span class="cl-c1c3b44e">358</span></p></td>
+<td class="cl-c1c45072"><p class="cl-c1c3db55"><span class="cl-c1c3b44e">165</span></p></td>
+<td class="cl-c1c45070"><p class="cl-c1c3db55"><span class="cl-c1c3b44e">46.1</span></p></td>
+<td class="cl-c1c45070"><p class="cl-c1c3db55"><span class="cl-c1c3b44e">22.0</span></p></td>
+<td class="cl-c1c45072"><p class="cl-c1c3db55"><span class="cl-c1c3b44e">193</span></p></td>
+<td class="cl-c1c45070"><p class="cl-c1c3db55"><span class="cl-c1c3b44e">53.9</span></p></td>
+<td class="cl-c1c45070"><p class="cl-c1c3db55"><span class="cl-c1c3b44e">22.0</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-c1c45075"><p class="cl-c1c3db54"><span class="cl-c1c3b44e">St. Mark's Maternity Hospital (SMMH)</span></p></td>
+<td class="cl-c1c45077"><p class="cl-c1c3db55"><span class="cl-c1c3b44e">325</span></p></td>
+<td class="cl-c1c45076"><p class="cl-c1c3db55"><span class="cl-c1c3b44e">126</span></p></td>
+<td class="cl-c1c45074"><p class="cl-c1c3db55"><span class="cl-c1c3b44e">38.8</span></p></td>
+<td class="cl-c1c45074"><p class="cl-c1c3db55"><span class="cl-c1c3b44e">21.0</span></p></td>
+<td class="cl-c1c45076"><p class="cl-c1c3db55"><span class="cl-c1c3b44e">199</span></p></td>
+<td class="cl-c1c45074"><p class="cl-c1c3db55"><span class="cl-c1c3b44e">61.2</span></p></td>
+<td class="cl-c1c45074"><p class="cl-c1c3db55"><span class="cl-c1c3b44e">22.0</span></p></td>
+</tr>
+</tbody>
+</table></div>
+</div></template><div id="beed5e44-4011-4431-9b06-c3acfdfa9038"></div>
+<script>
+var dest = document.getElementById("beed5e44-4011-4431-9b06-c3acfdfa9038");
+var template = document.getElementById("2023f457-1194-4de3-acfa-269830503012");
+var caption = template.content.querySelector("caption");
+if(caption) {
+  caption.style.cssText = "display:block;text-align:center;";
+  var newcapt = document.createElement("p");
+  newcapt.appendChild(caption)
+  dest.parentNode.insertBefore(newcapt, dest.previousSibling);
+}
+var fantome = dest.attachShadow({mode: 'open'});
+var templateContent = template.content;
+fantome.appendChild(templateContent);
+</script><p>Additionally, we can increase the header font size and change then to bold.</p>
+<div class="sourceCode" id="cb1219"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">ftable</span> <span class="op">&lt;-</span>  <span class="va">ftable</span> <span class="op">%&gt;%</span>  
+  <span class="fu">fontsize</span><span class="op">(</span>i <span class="op">=</span> <span class="fl">1</span>, size <span class="op">=</span> <span class="fl">12</span>, part <span class="op">=</span> <span class="st">"header"</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+    <span class="fu"><a href="https://rdrr.io/r/grDevices/plotmath.html">bold</a></span><span class="op">(</span>i <span class="op">=</span> <span class="fl">1</span>, bold <span class="op">=</span> <span class="cn">TRUE</span>, part <span class="op">=</span> <span class="st">"header"</span><span class="op">)</span>
+
+<span class="va">ftable</span></code></pre></div>
+<template id="4b5adc81-7b5f-438c-a860-a941848baf5f"><style>
+.tabwid table{
+  border-collapse:collapse;
+  line-height:1;
+  margin-left:auto;
+  margin-right:auto;
+  border-width: 0;
+  display: table;
+  margin-top: 1.275em;
+  margin-bottom: 1.275em;
+  border-spacing: 0;
+  border-color: transparent;
+}
+.tabwid_left table{
+  margin-left:0;
+}
+.tabwid_right table{
+  margin-right:0;
+}
+.tabwid td {
+    padding: 0;
+}
+.tabwid a {
+  text-decoration: none;
+}
+.tabwid thead {
+    background-color: transparent;
+}
+.tabwid tfoot {
+    background-color: transparent;
+}
+.tabwid table tr {
+background-color: transparent;
+}
+</style>
+<div class="tabwid">
+<style>.cl-c1e89c0a{border-collapse:collapse;}.cl-c1dda138{font-family:'Arial';font-size:12pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-c1dda139{font-family:'Arial';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-c1ddc82a{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-c1ddc82b{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-c1de3d78{width:72pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1de3d79{width:108pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1de3d7a{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1de3d7b{width:194.4pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1de3d7c{width:72pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1de3d7d{width:194.4pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1de3d7e{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1de3d7f{width:108pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1de3d80{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 2pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1de3d81{width:72pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 2pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1de3d82{width:194.4pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 2pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1de644c{width:108pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 2pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}caption {color: #777;margin-top: 10px;margin-bottom: 10px;text-align: center;}</style>
+<div class="inline-table"><table class="cl-c1e89c0a">
+<thead>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-c1de3d82"><p class="cl-c1ddc82a"><span class="cl-c1dda138">Hospital</span></p></td>
+<td class="cl-c1de644c"><p class="cl-c1ddc82b"><span class="cl-c1dda138">Total cases with known outcome</span></p></td>
+<td colspan="3" class="cl-c1de3d80"><p class="cl-c1ddc82b"><span class="cl-c1dda138">Recovered</span></p></td>
+<td colspan="3" class="cl-c1de3d80"><p class="cl-c1ddc82b"><span class="cl-c1dda138">Died</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-c1de3d7d"><p class="cl-c1ddc82a"><span class="cl-c1dda139"></span></p></td>
+<td class="cl-c1de3d7f"><p class="cl-c1ddc82b"><span class="cl-c1dda139"></span></p></td>
+<td class="cl-c1de3d7e"><p class="cl-c1ddc82b"><span class="cl-c1dda139">Total</span></p></td>
+<td class="cl-c1de3d7c"><p class="cl-c1ddc82b"><span class="cl-c1dda139">% of cases</span></p></td>
+<td class="cl-c1de3d7c"><p class="cl-c1ddc82b"><span class="cl-c1dda139">Median CT values</span></p></td>
+<td class="cl-c1de3d7e"><p class="cl-c1ddc82b"><span class="cl-c1dda139">Total</span></p></td>
+<td class="cl-c1de3d7c"><p class="cl-c1ddc82b"><span class="cl-c1dda139">% of cases</span></p></td>
+<td class="cl-c1de3d7c"><p class="cl-c1ddc82b"><span class="cl-c1dda139">Median CT values</span></p></td>
+</tr>
+</thead>
+<tbody>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-c1de3d7b"><p class="cl-c1ddc82a"><span class="cl-c1dda139">Port Hospital</span></p></td>
+<td class="cl-c1de3d79"><p class="cl-c1ddc82b"><span class="cl-c1dda139">1,364</span></p></td>
+<td class="cl-c1de3d7a"><p class="cl-c1ddc82b"><span class="cl-c1dda139">579</span></p></td>
+<td class="cl-c1de3d78"><p class="cl-c1ddc82b"><span class="cl-c1dda139">42.4</span></p></td>
+<td class="cl-c1de3d78"><p class="cl-c1ddc82b"><span class="cl-c1dda139">22.0</span></p></td>
+<td class="cl-c1de3d7a"><p class="cl-c1ddc82b"><span class="cl-c1dda139">785</span></p></td>
+<td class="cl-c1de3d78"><p class="cl-c1ddc82b"><span class="cl-c1dda139">57.6</span></p></td>
+<td class="cl-c1de3d78"><p class="cl-c1ddc82b"><span class="cl-c1dda139">22.0</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-c1de3d7b"><p class="cl-c1ddc82a"><span class="cl-c1dda139">Military Hospital</span></p></td>
+<td class="cl-c1de3d79"><p class="cl-c1ddc82b"><span class="cl-c1dda139">708</span></p></td>
+<td class="cl-c1de3d7a"><p class="cl-c1ddc82b"><span class="cl-c1dda139">309</span></p></td>
+<td class="cl-c1de3d78"><p class="cl-c1ddc82b"><span class="cl-c1dda139">43.6</span></p></td>
+<td class="cl-c1de3d78"><p class="cl-c1ddc82b"><span class="cl-c1dda139">21.0</span></p></td>
+<td class="cl-c1de3d7a"><p class="cl-c1ddc82b"><span class="cl-c1dda139">399</span></p></td>
+<td class="cl-c1de3d78"><p class="cl-c1ddc82b"><span class="cl-c1dda139">56.4</span></p></td>
+<td class="cl-c1de3d78"><p class="cl-c1ddc82b"><span class="cl-c1dda139">22.0</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-c1de3d7b"><p class="cl-c1ddc82a"><span class="cl-c1dda139">Other</span></p></td>
+<td class="cl-c1de3d79"><p class="cl-c1ddc82b"><span class="cl-c1dda139">685</span></p></td>
+<td class="cl-c1de3d7a"><p class="cl-c1ddc82b"><span class="cl-c1dda139">290</span></p></td>
+<td class="cl-c1de3d78"><p class="cl-c1ddc82b"><span class="cl-c1dda139">42.3</span></p></td>
+<td class="cl-c1de3d78"><p class="cl-c1ddc82b"><span class="cl-c1dda139">21.0</span></p></td>
+<td class="cl-c1de3d7a"><p class="cl-c1ddc82b"><span class="cl-c1dda139">395</span></p></td>
+<td class="cl-c1de3d78"><p class="cl-c1ddc82b"><span class="cl-c1dda139">57.7</span></p></td>
+<td class="cl-c1de3d78"><p class="cl-c1ddc82b"><span class="cl-c1dda139">22.0</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-c1de3d7b"><p class="cl-c1ddc82a"><span class="cl-c1dda139">Central Hospital</span></p></td>
+<td class="cl-c1de3d79"><p class="cl-c1ddc82b"><span class="cl-c1dda139">358</span></p></td>
+<td class="cl-c1de3d7a"><p class="cl-c1ddc82b"><span class="cl-c1dda139">165</span></p></td>
+<td class="cl-c1de3d78"><p class="cl-c1ddc82b"><span class="cl-c1dda139">46.1</span></p></td>
+<td class="cl-c1de3d78"><p class="cl-c1ddc82b"><span class="cl-c1dda139">22.0</span></p></td>
+<td class="cl-c1de3d7a"><p class="cl-c1ddc82b"><span class="cl-c1dda139">193</span></p></td>
+<td class="cl-c1de3d78"><p class="cl-c1ddc82b"><span class="cl-c1dda139">53.9</span></p></td>
+<td class="cl-c1de3d78"><p class="cl-c1ddc82b"><span class="cl-c1dda139">22.0</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-c1de3d7d"><p class="cl-c1ddc82a"><span class="cl-c1dda139">St. Mark's Maternity Hospital (SMMH)</span></p></td>
+<td class="cl-c1de3d7f"><p class="cl-c1ddc82b"><span class="cl-c1dda139">325</span></p></td>
+<td class="cl-c1de3d7e"><p class="cl-c1ddc82b"><span class="cl-c1dda139">126</span></p></td>
+<td class="cl-c1de3d7c"><p class="cl-c1ddc82b"><span class="cl-c1dda139">38.8</span></p></td>
+<td class="cl-c1de3d7c"><p class="cl-c1ddc82b"><span class="cl-c1dda139">21.0</span></p></td>
+<td class="cl-c1de3d7e"><p class="cl-c1ddc82b"><span class="cl-c1dda139">199</span></p></td>
+<td class="cl-c1de3d7c"><p class="cl-c1ddc82b"><span class="cl-c1dda139">61.2</span></p></td>
+<td class="cl-c1de3d7c"><p class="cl-c1ddc82b"><span class="cl-c1dda139">22.0</span></p></td>
+</tr>
+</tbody>
+</table></div>
+</div></template><div id="10e24b56-5b52-443b-ac90-2c01cf1317bc"></div>
+<script>
+var dest = document.getElementById("10e24b56-5b52-443b-ac90-2c01cf1317bc");
+var template = document.getElementById("4b5adc81-7b5f-438c-a860-a941848baf5f");
+var caption = template.content.querySelector("caption");
+if(caption) {
+  caption.style.cssText = "display:block;text-align:center;";
+  var newcapt = document.createElement("p");
+  newcapt.appendChild(caption)
+  dest.parentNode.insertBefore(newcapt, dest.previousSibling);
+}
+var fantome = dest.attachShadow({mode: 'open'});
+var templateContent = template.content;
+fantome.appendChild(templateContent);
+</script><p><strong>Background</strong></p>
+<p>To distinguish the content of the table from the headers, we may want to add additional formatting. e.g. changing the background colour. In this example we change the table body to gray.</p>
+<div class="sourceCode" id="cb1220"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">ftable</span> <span class="op">&lt;-</span> <span class="va">ftable</span> <span class="op">%&gt;%</span> 
+    <span class="fu">bg</span><span class="op">(</span>part <span class="op">=</span> <span class="st">"body"</span>, bg <span class="op">=</span> <span class="st">"gray95"</span><span class="op">)</span>  
+
+<span class="va">ftable</span> </code></pre></div>
+<template id="eafde973-da8f-4ac0-93d5-240e031b424b"><style>
+.tabwid table{
+  border-collapse:collapse;
+  line-height:1;
+  margin-left:auto;
+  margin-right:auto;
+  border-width: 0;
+  display: table;
+  margin-top: 1.275em;
+  margin-bottom: 1.275em;
+  border-spacing: 0;
+  border-color: transparent;
+}
+.tabwid_left table{
+  margin-left:0;
+}
+.tabwid_right table{
+  margin-right:0;
+}
+.tabwid td {
+    padding: 0;
+}
+.tabwid a {
+  text-decoration: none;
+}
+.tabwid thead {
+    background-color: transparent;
+}
+.tabwid tfoot {
+    background-color: transparent;
+}
+.tabwid table tr {
+background-color: transparent;
+}
+</style>
+<div class="tabwid">
+<style>.cl-c2045d5a{border-collapse:collapse;}.cl-c1f78e68{font-family:'Arial';font-size:12pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-c1f78e69{font-family:'Arial';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-c1f7b51e{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-c1f7b51f{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-c1f80348{width:72pt;background-clip: padding-box;background-color:rgba(242, 242, 242, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1f80349{width:108pt;background-clip: padding-box;background-color:rgba(242, 242, 242, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1f8034a{width:54pt;background-clip: padding-box;background-color:rgba(242, 242, 242, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1f8034b{width:194.4pt;background-clip: padding-box;background-color:rgba(242, 242, 242, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1f8034c{width:72pt;background-clip: padding-box;background-color:rgba(242, 242, 242, 1.00);vertical-align: middle;border-bottom: 2pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1f8034d{width:194.4pt;background-clip: padding-box;background-color:rgba(242, 242, 242, 1.00);vertical-align: middle;border-bottom: 2pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1f8034e{width:54pt;background-clip: padding-box;background-color:rgba(242, 242, 242, 1.00);vertical-align: middle;border-bottom: 2pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1f8034f{width:108pt;background-clip: padding-box;background-color:rgba(242, 242, 242, 1.00);vertical-align: middle;border-bottom: 2pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1f80350{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 2pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1f80351{width:72pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 2pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1f80352{width:194.4pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 2pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1f82a44{width:108pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 2pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1f82a45{width:194.4pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1f82a46{width:108pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1f82a47{width:72pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1f82a48{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}caption {color: #777;margin-top: 10px;margin-bottom: 10px;text-align: center;}</style>
+<div class="inline-table"><table class="cl-c2045d5a">
+<thead>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-c1f80352"><p class="cl-c1f7b51e"><span class="cl-c1f78e68">Hospital</span></p></td>
+<td class="cl-c1f82a44"><p class="cl-c1f7b51f"><span class="cl-c1f78e68">Total cases with known outcome</span></p></td>
+<td colspan="3" class="cl-c1f80350"><p class="cl-c1f7b51f"><span class="cl-c1f78e68">Recovered</span></p></td>
+<td colspan="3" class="cl-c1f80350"><p class="cl-c1f7b51f"><span class="cl-c1f78e68">Died</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-c1f82a45"><p class="cl-c1f7b51e"><span class="cl-c1f78e69"></span></p></td>
+<td class="cl-c1f82a46"><p class="cl-c1f7b51f"><span class="cl-c1f78e69"></span></p></td>
+<td class="cl-c1f82a48"><p class="cl-c1f7b51f"><span class="cl-c1f78e69">Total</span></p></td>
+<td class="cl-c1f82a47"><p class="cl-c1f7b51f"><span class="cl-c1f78e69">% of cases</span></p></td>
+<td class="cl-c1f82a47"><p class="cl-c1f7b51f"><span class="cl-c1f78e69">Median CT values</span></p></td>
+<td class="cl-c1f82a48"><p class="cl-c1f7b51f"><span class="cl-c1f78e69">Total</span></p></td>
+<td class="cl-c1f82a47"><p class="cl-c1f7b51f"><span class="cl-c1f78e69">% of cases</span></p></td>
+<td class="cl-c1f82a47"><p class="cl-c1f7b51f"><span class="cl-c1f78e69">Median CT values</span></p></td>
+</tr>
+</thead>
+<tbody>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-c1f8034b"><p class="cl-c1f7b51e"><span class="cl-c1f78e69">Port Hospital</span></p></td>
+<td class="cl-c1f80349"><p class="cl-c1f7b51f"><span class="cl-c1f78e69">1,364</span></p></td>
+<td class="cl-c1f8034a"><p class="cl-c1f7b51f"><span class="cl-c1f78e69">579</span></p></td>
+<td class="cl-c1f80348"><p class="cl-c1f7b51f"><span class="cl-c1f78e69">42.4</span></p></td>
+<td class="cl-c1f80348"><p class="cl-c1f7b51f"><span class="cl-c1f78e69">22.0</span></p></td>
+<td class="cl-c1f8034a"><p class="cl-c1f7b51f"><span class="cl-c1f78e69">785</span></p></td>
+<td class="cl-c1f80348"><p class="cl-c1f7b51f"><span class="cl-c1f78e69">57.6</span></p></td>
+<td class="cl-c1f80348"><p class="cl-c1f7b51f"><span class="cl-c1f78e69">22.0</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-c1f8034b"><p class="cl-c1f7b51e"><span class="cl-c1f78e69">Military Hospital</span></p></td>
+<td class="cl-c1f80349"><p class="cl-c1f7b51f"><span class="cl-c1f78e69">708</span></p></td>
+<td class="cl-c1f8034a"><p class="cl-c1f7b51f"><span class="cl-c1f78e69">309</span></p></td>
+<td class="cl-c1f80348"><p class="cl-c1f7b51f"><span class="cl-c1f78e69">43.6</span></p></td>
+<td class="cl-c1f80348"><p class="cl-c1f7b51f"><span class="cl-c1f78e69">21.0</span></p></td>
+<td class="cl-c1f8034a"><p class="cl-c1f7b51f"><span class="cl-c1f78e69">399</span></p></td>
+<td class="cl-c1f80348"><p class="cl-c1f7b51f"><span class="cl-c1f78e69">56.4</span></p></td>
+<td class="cl-c1f80348"><p class="cl-c1f7b51f"><span class="cl-c1f78e69">22.0</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-c1f8034b"><p class="cl-c1f7b51e"><span class="cl-c1f78e69">Other</span></p></td>
+<td class="cl-c1f80349"><p class="cl-c1f7b51f"><span class="cl-c1f78e69">685</span></p></td>
+<td class="cl-c1f8034a"><p class="cl-c1f7b51f"><span class="cl-c1f78e69">290</span></p></td>
+<td class="cl-c1f80348"><p class="cl-c1f7b51f"><span class="cl-c1f78e69">42.3</span></p></td>
+<td class="cl-c1f80348"><p class="cl-c1f7b51f"><span class="cl-c1f78e69">21.0</span></p></td>
+<td class="cl-c1f8034a"><p class="cl-c1f7b51f"><span class="cl-c1f78e69">395</span></p></td>
+<td class="cl-c1f80348"><p class="cl-c1f7b51f"><span class="cl-c1f78e69">57.7</span></p></td>
+<td class="cl-c1f80348"><p class="cl-c1f7b51f"><span class="cl-c1f78e69">22.0</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-c1f8034b"><p class="cl-c1f7b51e"><span class="cl-c1f78e69">Central Hospital</span></p></td>
+<td class="cl-c1f80349"><p class="cl-c1f7b51f"><span class="cl-c1f78e69">358</span></p></td>
+<td class="cl-c1f8034a"><p class="cl-c1f7b51f"><span class="cl-c1f78e69">165</span></p></td>
+<td class="cl-c1f80348"><p class="cl-c1f7b51f"><span class="cl-c1f78e69">46.1</span></p></td>
+<td class="cl-c1f80348"><p class="cl-c1f7b51f"><span class="cl-c1f78e69">22.0</span></p></td>
+<td class="cl-c1f8034a"><p class="cl-c1f7b51f"><span class="cl-c1f78e69">193</span></p></td>
+<td class="cl-c1f80348"><p class="cl-c1f7b51f"><span class="cl-c1f78e69">53.9</span></p></td>
+<td class="cl-c1f80348"><p class="cl-c1f7b51f"><span class="cl-c1f78e69">22.0</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-c1f8034d"><p class="cl-c1f7b51e"><span class="cl-c1f78e69">St. Mark's Maternity Hospital (SMMH)</span></p></td>
+<td class="cl-c1f8034f"><p class="cl-c1f7b51f"><span class="cl-c1f78e69">325</span></p></td>
+<td class="cl-c1f8034e"><p class="cl-c1f7b51f"><span class="cl-c1f78e69">126</span></p></td>
+<td class="cl-c1f8034c"><p class="cl-c1f7b51f"><span class="cl-c1f78e69">38.8</span></p></td>
+<td class="cl-c1f8034c"><p class="cl-c1f7b51f"><span class="cl-c1f78e69">21.0</span></p></td>
+<td class="cl-c1f8034e"><p class="cl-c1f7b51f"><span class="cl-c1f78e69">199</span></p></td>
+<td class="cl-c1f8034c"><p class="cl-c1f7b51f"><span class="cl-c1f78e69">61.2</span></p></td>
+<td class="cl-c1f8034c"><p class="cl-c1f7b51f"><span class="cl-c1f78e69">22.0</span></p></td>
+</tr>
+</tbody>
+</table></div>
+</div></template><div id="1464dca1-9c76-4dfc-bcde-06e624069318"></div>
+<script>
+var dest = document.getElementById("1464dca1-9c76-4dfc-bcde-06e624069318");
+var template = document.getElementById("eafde973-da8f-4ac0-93d5-240e031b424b");
+var caption = template.content.querySelector("caption");
+if(caption) {
+  caption.style.cssText = "display:block;text-align:center;";
+  var newcapt = document.createElement("p");
+  newcapt.appendChild(caption)
+  dest.parentNode.insertBefore(newcapt, dest.previousSibling);
+}
+var fantome = dest.attachShadow({mode: 'open'});
+var templateContent = template.content;
+fantome.appendChild(templateContent);
+</script><!-- ======================================================= -->
+</div>
+<div id="conditional-flextable-formatting" class="section level2" number="31.4">
+<h2>
+<span class="header-section-number">31.4</span> Conditional flextable formatting<a class="anchor" aria-label="anchor" href="#conditional-flextable-formatting"><i class="fas fa-link"></i></a>
+</h2>
+<p>We can highlight all values in a column that meet a certain rule, e.g. where more than 55% of cases died.</p>
+<div class="sourceCode" id="cb1221"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">ftable</span> <span class="op">%&gt;%</span> 
+  <span class="fu">bg</span><span class="op">(</span>j<span class="op">=</span><span class="fl">7</span>, i<span class="op">=</span> <span class="op">~</span> <span class="va">Prop_Death</span> <span class="op">&gt;=</span><span class="fl">55</span>, part <span class="op">=</span> <span class="st">"body"</span>, bg <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span> </code></pre></div>
+<template id="2292d073-0b0b-4397-a3eb-1301052b5538"><style>
+.tabwid table{
+  border-collapse:collapse;
+  line-height:1;
+  margin-left:auto;
+  margin-right:auto;
+  border-width: 0;
+  display: table;
+  margin-top: 1.275em;
+  margin-bottom: 1.275em;
+  border-spacing: 0;
+  border-color: transparent;
+}
+.tabwid_left table{
+  margin-left:0;
+}
+.tabwid_right table{
+  margin-right:0;
+}
+.tabwid td {
+    padding: 0;
+}
+.tabwid a {
+  text-decoration: none;
+}
+.tabwid thead {
+    background-color: transparent;
+}
+.tabwid tfoot {
+    background-color: transparent;
+}
+.tabwid table tr {
+background-color: transparent;
+}
+</style>
+<div class="tabwid">
+<style>.cl-c21e7014{border-collapse:collapse;}.cl-c2117990{font-family:'Arial';font-size:12pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-c2117991{font-family:'Arial';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-c211a0aa{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-c211a0ab{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-c211eeb6{width:72pt;background-clip: padding-box;background-color:rgba(242, 242, 242, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c211eeb7{width:72pt;background-clip: padding-box;background-color:rgba(255, 0, 0, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c211eeb8{width:108pt;background-clip: padding-box;background-color:rgba(242, 242, 242, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c211eeb9{width:54pt;background-clip: padding-box;background-color:rgba(242, 242, 242, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c211eeba{width:194.4pt;background-clip: padding-box;background-color:rgba(242, 242, 242, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c211eebb{width:72pt;background-clip: padding-box;background-color:rgba(242, 242, 242, 1.00);vertical-align: middle;border-bottom: 2pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c211eebc{width:194.4pt;background-clip: padding-box;background-color:rgba(242, 242, 242, 1.00);vertical-align: middle;border-bottom: 2pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c211eebd{width:54pt;background-clip: padding-box;background-color:rgba(242, 242, 242, 1.00);vertical-align: middle;border-bottom: 2pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c211eebe{width:72pt;background-clip: padding-box;background-color:rgba(255, 0, 0, 1.00);vertical-align: middle;border-bottom: 2pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c211eebf{width:108pt;background-clip: padding-box;background-color:rgba(242, 242, 242, 1.00);vertical-align: middle;border-bottom: 2pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c211eec0{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 2pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c21215da{width:72pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 2pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c21215db{width:194.4pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 2pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c21215dc{width:108pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 2pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c21215dd{width:194.4pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c21215de{width:108pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c21215df{width:72pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c21215e0{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}caption {color: #777;margin-top: 10px;margin-bottom: 10px;text-align: center;}</style>
+<div class="inline-table"><table class="cl-c21e7014">
+<thead>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-c21215db"><p class="cl-c211a0aa"><span class="cl-c2117990">Hospital</span></p></td>
+<td class="cl-c21215dc"><p class="cl-c211a0ab"><span class="cl-c2117990">Total cases with known outcome</span></p></td>
+<td colspan="3" class="cl-c211eec0"><p class="cl-c211a0ab"><span class="cl-c2117990">Recovered</span></p></td>
+<td colspan="3" class="cl-c211eec0"><p class="cl-c211a0ab"><span class="cl-c2117990">Died</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-c21215dd"><p class="cl-c211a0aa"><span class="cl-c2117991"></span></p></td>
+<td class="cl-c21215de"><p class="cl-c211a0ab"><span class="cl-c2117991"></span></p></td>
+<td class="cl-c21215e0"><p class="cl-c211a0ab"><span class="cl-c2117991">Total</span></p></td>
+<td class="cl-c21215df"><p class="cl-c211a0ab"><span class="cl-c2117991">% of cases</span></p></td>
+<td class="cl-c21215df"><p class="cl-c211a0ab"><span class="cl-c2117991">Median CT values</span></p></td>
+<td class="cl-c21215e0"><p class="cl-c211a0ab"><span class="cl-c2117991">Total</span></p></td>
+<td class="cl-c21215df"><p class="cl-c211a0ab"><span class="cl-c2117991">% of cases</span></p></td>
+<td class="cl-c21215df"><p class="cl-c211a0ab"><span class="cl-c2117991">Median CT values</span></p></td>
+</tr>
+</thead>
+<tbody>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-c211eeba"><p class="cl-c211a0aa"><span class="cl-c2117991">Port Hospital</span></p></td>
+<td class="cl-c211eeb8"><p class="cl-c211a0ab"><span class="cl-c2117991">1,364</span></p></td>
+<td class="cl-c211eeb9"><p class="cl-c211a0ab"><span class="cl-c2117991">579</span></p></td>
+<td class="cl-c211eeb6"><p class="cl-c211a0ab"><span class="cl-c2117991">42.4</span></p></td>
+<td class="cl-c211eeb6"><p class="cl-c211a0ab"><span class="cl-c2117991">22.0</span></p></td>
+<td class="cl-c211eeb9"><p class="cl-c211a0ab"><span class="cl-c2117991">785</span></p></td>
+<td class="cl-c211eeb7"><p class="cl-c211a0ab"><span class="cl-c2117991">57.6</span></p></td>
+<td class="cl-c211eeb6"><p class="cl-c211a0ab"><span class="cl-c2117991">22.0</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-c211eeba"><p class="cl-c211a0aa"><span class="cl-c2117991">Military Hospital</span></p></td>
+<td class="cl-c211eeb8"><p class="cl-c211a0ab"><span class="cl-c2117991">708</span></p></td>
+<td class="cl-c211eeb9"><p class="cl-c211a0ab"><span class="cl-c2117991">309</span></p></td>
+<td class="cl-c211eeb6"><p class="cl-c211a0ab"><span class="cl-c2117991">43.6</span></p></td>
+<td class="cl-c211eeb6"><p class="cl-c211a0ab"><span class="cl-c2117991">21.0</span></p></td>
+<td class="cl-c211eeb9"><p class="cl-c211a0ab"><span class="cl-c2117991">399</span></p></td>
+<td class="cl-c211eeb7"><p class="cl-c211a0ab"><span class="cl-c2117991">56.4</span></p></td>
+<td class="cl-c211eeb6"><p class="cl-c211a0ab"><span class="cl-c2117991">22.0</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-c211eeba"><p class="cl-c211a0aa"><span class="cl-c2117991">Other</span></p></td>
+<td class="cl-c211eeb8"><p class="cl-c211a0ab"><span class="cl-c2117991">685</span></p></td>
+<td class="cl-c211eeb9"><p class="cl-c211a0ab"><span class="cl-c2117991">290</span></p></td>
+<td class="cl-c211eeb6"><p class="cl-c211a0ab"><span class="cl-c2117991">42.3</span></p></td>
+<td class="cl-c211eeb6"><p class="cl-c211a0ab"><span class="cl-c2117991">21.0</span></p></td>
+<td class="cl-c211eeb9"><p class="cl-c211a0ab"><span class="cl-c2117991">395</span></p></td>
+<td class="cl-c211eeb7"><p class="cl-c211a0ab"><span class="cl-c2117991">57.7</span></p></td>
+<td class="cl-c211eeb6"><p class="cl-c211a0ab"><span class="cl-c2117991">22.0</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-c211eeba"><p class="cl-c211a0aa"><span class="cl-c2117991">Central Hospital</span></p></td>
+<td class="cl-c211eeb8"><p class="cl-c211a0ab"><span class="cl-c2117991">358</span></p></td>
+<td class="cl-c211eeb9"><p class="cl-c211a0ab"><span class="cl-c2117991">165</span></p></td>
+<td class="cl-c211eeb6"><p class="cl-c211a0ab"><span class="cl-c2117991">46.1</span></p></td>
+<td class="cl-c211eeb6"><p class="cl-c211a0ab"><span class="cl-c2117991">22.0</span></p></td>
+<td class="cl-c211eeb9"><p class="cl-c211a0ab"><span class="cl-c2117991">193</span></p></td>
+<td class="cl-c211eeb6"><p class="cl-c211a0ab"><span class="cl-c2117991">53.9</span></p></td>
+<td class="cl-c211eeb6"><p class="cl-c211a0ab"><span class="cl-c2117991">22.0</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-c211eebc"><p class="cl-c211a0aa"><span class="cl-c2117991">St. Mark's Maternity Hospital (SMMH)</span></p></td>
+<td class="cl-c211eebf"><p class="cl-c211a0ab"><span class="cl-c2117991">325</span></p></td>
+<td class="cl-c211eebd"><p class="cl-c211a0ab"><span class="cl-c2117991">126</span></p></td>
+<td class="cl-c211eebb"><p class="cl-c211a0ab"><span class="cl-c2117991">38.8</span></p></td>
+<td class="cl-c211eebb"><p class="cl-c211a0ab"><span class="cl-c2117991">21.0</span></p></td>
+<td class="cl-c211eebd"><p class="cl-c211a0ab"><span class="cl-c2117991">199</span></p></td>
+<td class="cl-c211eebe"><p class="cl-c211a0ab"><span class="cl-c2117991">61.2</span></p></td>
+<td class="cl-c211eebb"><p class="cl-c211a0ab"><span class="cl-c2117991">22.0</span></p></td>
+</tr>
+</tbody>
+</table></div>
+</div></template><div id="87defde6-98ad-4242-af91-86d182424d2b"></div>
+<script>
+var dest = document.getElementById("87defde6-98ad-4242-af91-86d182424d2b");
+var template = document.getElementById("2292d073-0b0b-4397-a3eb-1301052b5538");
+var caption = template.content.querySelector("caption");
+if(caption) {
+  caption.style.cssText = "display:block;text-align:center;";
+  var newcapt = document.createElement("p");
+  newcapt.appendChild(caption)
+  dest.parentNode.insertBefore(newcapt, dest.previousSibling);
+}
+var fantome = dest.attachShadow({mode: 'open'});
+var templateContent = template.content;
+fantome.appendChild(templateContent);
+</script><p>Or, we can higlight the entire row meeting a certain criterion, such as a hospital of interest. This is particularly helpful when looping through e.g. reports per geographical area, to highlight in tables where the current iteration compares to the other geographies. To do this we just remove the column (<code>j</code>) specification.</p>
+<div class="sourceCode" id="cb1222"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">ftable</span> <span class="op">%&gt;%</span> 
+  <span class="fu">bg</span><span class="op">(</span><span class="va">.</span>, j<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">8</span><span class="op">)</span>, i<span class="op">=</span> <span class="op">~</span> <span class="va">hospital</span> <span class="op">==</span> <span class="st">"Military Hospital"</span>, part <span class="op">=</span> <span class="st">"body"</span>, bg <span class="op">=</span> <span class="st">"#91c293"</span><span class="op">)</span> </code></pre></div>
+<template id="6a28ea9c-fdbb-42e3-8911-62edc5a1e0c9"><style>
+.tabwid table{
+  border-collapse:collapse;
+  line-height:1;
+  margin-left:auto;
+  margin-right:auto;
+  border-width: 0;
+  display: table;
+  margin-top: 1.275em;
+  margin-bottom: 1.275em;
+  border-spacing: 0;
+  border-color: transparent;
+}
+.tabwid_left table{
+  margin-left:0;
+}
+.tabwid_right table{
+  margin-right:0;
+}
+.tabwid td {
+    padding: 0;
+}
+.tabwid a {
+  text-decoration: none;
+}
+.tabwid thead {
+    background-color: transparent;
+}
+.tabwid tfoot {
+    background-color: transparent;
+}
+.tabwid table tr {
+background-color: transparent;
+}
+</style>
+<div class="tabwid">
+<style>.cl-c24a3550{border-collapse:collapse;}.cl-c238f916{font-family:'Arial';font-size:12pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-c238f917{font-family:'Arial';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-c239201c{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-c239201d{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-c239bc3e{width:72pt;background-clip: padding-box;background-color:rgba(242, 242, 242, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c239bc3f{width:108pt;background-clip: padding-box;background-color:rgba(242, 242, 242, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c239bc40{width:54pt;background-clip: padding-box;background-color:rgba(242, 242, 242, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c239bc41{width:194.4pt;background-clip: padding-box;background-color:rgba(242, 242, 242, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c239bc42{width:72pt;background-clip: padding-box;background-color:rgba(145, 194, 147, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c239bc43{width:194.4pt;background-clip: padding-box;background-color:rgba(145, 194, 147, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c239bc44{width:108pt;background-clip: padding-box;background-color:rgba(145, 194, 147, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c239bc45{width:54pt;background-clip: padding-box;background-color:rgba(145, 194, 147, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c239bc46{width:72pt;background-clip: padding-box;background-color:rgba(242, 242, 242, 1.00);vertical-align: middle;border-bottom: 2pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c239bc47{width:194.4pt;background-clip: padding-box;background-color:rgba(242, 242, 242, 1.00);vertical-align: middle;border-bottom: 2pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c239bc48{width:54pt;background-clip: padding-box;background-color:rgba(242, 242, 242, 1.00);vertical-align: middle;border-bottom: 2pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c239e344{width:108pt;background-clip: padding-box;background-color:rgba(242, 242, 242, 1.00);vertical-align: middle;border-bottom: 2pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c239e345{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 2pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c239e346{width:72pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 2pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c239e347{width:194.4pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 2pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c239e348{width:108pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 2pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c239e349{width:194.4pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c239e34a{width:108pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c239e34b{width:72pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c239e34c{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}caption {color: #777;margin-top: 10px;margin-bottom: 10px;text-align: center;}</style>
+<div class="inline-table"><table class="cl-c24a3550">
+<thead>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-c239e347"><p class="cl-c239201c"><span class="cl-c238f916">Hospital</span></p></td>
+<td class="cl-c239e348"><p class="cl-c239201d"><span class="cl-c238f916">Total cases with known outcome</span></p></td>
+<td colspan="3" class="cl-c239e345"><p class="cl-c239201d"><span class="cl-c238f916">Recovered</span></p></td>
+<td colspan="3" class="cl-c239e345"><p class="cl-c239201d"><span class="cl-c238f916">Died</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-c239e349"><p class="cl-c239201c"><span class="cl-c238f917"></span></p></td>
+<td class="cl-c239e34a"><p class="cl-c239201d"><span class="cl-c238f917"></span></p></td>
+<td class="cl-c239e34c"><p class="cl-c239201d"><span class="cl-c238f917">Total</span></p></td>
+<td class="cl-c239e34b"><p class="cl-c239201d"><span class="cl-c238f917">% of cases</span></p></td>
+<td class="cl-c239e34b"><p class="cl-c239201d"><span class="cl-c238f917">Median CT values</span></p></td>
+<td class="cl-c239e34c"><p class="cl-c239201d"><span class="cl-c238f917">Total</span></p></td>
+<td class="cl-c239e34b"><p class="cl-c239201d"><span class="cl-c238f917">% of cases</span></p></td>
+<td class="cl-c239e34b"><p class="cl-c239201d"><span class="cl-c238f917">Median CT values</span></p></td>
+</tr>
+</thead>
+<tbody>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-c239bc41"><p class="cl-c239201c"><span class="cl-c238f917">Port Hospital</span></p></td>
+<td class="cl-c239bc3f"><p class="cl-c239201d"><span class="cl-c238f917">1,364</span></p></td>
+<td class="cl-c239bc40"><p class="cl-c239201d"><span class="cl-c238f917">579</span></p></td>
+<td class="cl-c239bc3e"><p class="cl-c239201d"><span class="cl-c238f917">42.4</span></p></td>
+<td class="cl-c239bc3e"><p class="cl-c239201d"><span class="cl-c238f917">22.0</span></p></td>
+<td class="cl-c239bc40"><p class="cl-c239201d"><span class="cl-c238f917">785</span></p></td>
+<td class="cl-c239bc3e"><p class="cl-c239201d"><span class="cl-c238f917">57.6</span></p></td>
+<td class="cl-c239bc3e"><p class="cl-c239201d"><span class="cl-c238f917">22.0</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-c239bc43"><p class="cl-c239201c"><span class="cl-c238f917">Military Hospital</span></p></td>
+<td class="cl-c239bc44"><p class="cl-c239201d"><span class="cl-c238f917">708</span></p></td>
+<td class="cl-c239bc45"><p class="cl-c239201d"><span class="cl-c238f917">309</span></p></td>
+<td class="cl-c239bc42"><p class="cl-c239201d"><span class="cl-c238f917">43.6</span></p></td>
+<td class="cl-c239bc42"><p class="cl-c239201d"><span class="cl-c238f917">21.0</span></p></td>
+<td class="cl-c239bc45"><p class="cl-c239201d"><span class="cl-c238f917">399</span></p></td>
+<td class="cl-c239bc42"><p class="cl-c239201d"><span class="cl-c238f917">56.4</span></p></td>
+<td class="cl-c239bc42"><p class="cl-c239201d"><span class="cl-c238f917">22.0</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-c239bc41"><p class="cl-c239201c"><span class="cl-c238f917">Other</span></p></td>
+<td class="cl-c239bc3f"><p class="cl-c239201d"><span class="cl-c238f917">685</span></p></td>
+<td class="cl-c239bc40"><p class="cl-c239201d"><span class="cl-c238f917">290</span></p></td>
+<td class="cl-c239bc3e"><p class="cl-c239201d"><span class="cl-c238f917">42.3</span></p></td>
+<td class="cl-c239bc3e"><p class="cl-c239201d"><span class="cl-c238f917">21.0</span></p></td>
+<td class="cl-c239bc40"><p class="cl-c239201d"><span class="cl-c238f917">395</span></p></td>
+<td class="cl-c239bc3e"><p class="cl-c239201d"><span class="cl-c238f917">57.7</span></p></td>
+<td class="cl-c239bc3e"><p class="cl-c239201d"><span class="cl-c238f917">22.0</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-c239bc41"><p class="cl-c239201c"><span class="cl-c238f917">Central Hospital</span></p></td>
+<td class="cl-c239bc3f"><p class="cl-c239201d"><span class="cl-c238f917">358</span></p></td>
+<td class="cl-c239bc40"><p class="cl-c239201d"><span class="cl-c238f917">165</span></p></td>
+<td class="cl-c239bc3e"><p class="cl-c239201d"><span class="cl-c238f917">46.1</span></p></td>
+<td class="cl-c239bc3e"><p class="cl-c239201d"><span class="cl-c238f917">22.0</span></p></td>
+<td class="cl-c239bc40"><p class="cl-c239201d"><span class="cl-c238f917">193</span></p></td>
+<td class="cl-c239bc3e"><p class="cl-c239201d"><span class="cl-c238f917">53.9</span></p></td>
+<td class="cl-c239bc3e"><p class="cl-c239201d"><span class="cl-c238f917">22.0</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-c239bc47"><p class="cl-c239201c"><span class="cl-c238f917">St. Mark's Maternity Hospital (SMMH)</span></p></td>
+<td class="cl-c239e344"><p class="cl-c239201d"><span class="cl-c238f917">325</span></p></td>
+<td class="cl-c239bc48"><p class="cl-c239201d"><span class="cl-c238f917">126</span></p></td>
+<td class="cl-c239bc46"><p class="cl-c239201d"><span class="cl-c238f917">38.8</span></p></td>
+<td class="cl-c239bc46"><p class="cl-c239201d"><span class="cl-c238f917">21.0</span></p></td>
+<td class="cl-c239bc48"><p class="cl-c239201d"><span class="cl-c238f917">199</span></p></td>
+<td class="cl-c239bc46"><p class="cl-c239201d"><span class="cl-c238f917">61.2</span></p></td>
+<td class="cl-c239bc46"><p class="cl-c239201d"><span class="cl-c238f917">22.0</span></p></td>
+</tr>
+</tbody>
+</table></div>
+</div></template><div id="c2f45177-1389-4d6e-a8b6-8a674b574561"></div>
+<script>
+var dest = document.getElementById("c2f45177-1389-4d6e-a8b6-8a674b574561");
+var template = document.getElementById("6a28ea9c-fdbb-42e3-8911-62edc5a1e0c9");
+var caption = template.content.querySelector("caption");
+if(caption) {
+  caption.style.cssText = "display:block;text-align:center;";
+  var newcapt = document.createElement("p");
+  newcapt.appendChild(caption)
+  dest.parentNode.insertBefore(newcapt, dest.previousSibling);
+}
+var fantome = dest.attachShadow({mode: 'open'});
+var templateContent = template.content;
+fantome.appendChild(templateContent);
+</script><!-- ======================================================= -->
+</div>
+<div id="saving-your-table" class="section level2" number="31.5">
+<h2>
+<span class="header-section-number">31.5</span> Saving your table<a class="anchor" aria-label="anchor" href="#saving-your-table"><i class="fas fa-link"></i></a>
+</h2>
+<p>There are different ways the table can be integrated into your output.</p>
+<p><strong>Save single table</strong></p>
+<p>You can export the tables to Word, PowerPoint or HTML or as an image (PNG) files. To do this, one of the following functions is used:</p>
+<ul>
+<li>save_as_docx</li>
+<li>save_as_pptx</li>
+<li>save_as_image</li>
+<li>save_as_html</li>
+</ul>
+<p>For instance:</p>
+<div class="sourceCode" id="cb1223"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">save_as_docx</span><span class="op">(</span><span class="st">"my table"</span> <span class="op">=</span> <span class="va">ftable</span>, path <span class="op">=</span> <span class="st">"file.docx"</span><span class="op">)</span>
+<span class="co"># Edit the 'my table' as needed for the title of table. If not specified the whole file will be blank. </span>
+
+<span class="fu">save_as_image</span><span class="op">(</span><span class="va">ftable</span>, path <span class="op">=</span> <span class="st">"file.png"</span><span class="op">)</span></code></pre></div>
+<pre><code>## [1] "C:/Users/Neale/OneDrive - Neale Batra/Documents/Analytic Software/R/Projects/R handbook/Epi_R_handbook/file.png"</code></pre>
+<p>Note the packages <code>webshot</code> or <code>webshot2</code> are required to save a flextable as an image.Images may come out with transparent backgrounds.</p>
+<p>If you want to view a ‘live’ versions of the flextable output in the intended document format, for instance so you can see if it fits in the page or so you can copy it into another document, you can use the print method with the argument preview set to “pptx” or “docx”. The document will pop up.</p>
+<pre><code><a href="https://rdrr.io/r/base/print.html">print(ftable, preview = "docx") # Word document example
+print(ftable, preview = "pptx") # Powerpoint example</a></code></pre>
+<p><strong>Save table to R markdown document</strong></p>
+<p>This table can be integrated into your an automated document, an R markdown output, if the table object is called within the R markdown chunk. This means the table can be updated as part of a report where the data might change, so the numbers can be refreshed.</p>
+<p>See detail in the R markdown section of this handbook.</p>
+<!-- ======================================================= -->
+</div>
+<div id="resources-24" class="section level2" number="31.6">
+<h2>
+<span class="header-section-number">31.6</span> Resources<a class="anchor" aria-label="anchor" href="#resources-24"><i class="fas fa-link"></i></a>
+</h2>
+<p>The full flextable explanation is here: <a href="https://ardata-fr.github.io/flextable-book/" class="uri">https://ardata-fr.github.io/flextable-book/</a></p>
+
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="plot-categorical-data.html"><span class="header-section-number">30</span> Plot categorical data</a></div>
+<div class="next"><a href="age-pyramids.html"><span class="header-section-number">32</span> Age pyramids</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#tables-1"><span class="header-section-number">31</span> Tables</a></li>
+<li><a class="nav-link" href="#overview-19"><span class="header-section-number">31.1</span> Overview</a></li>
+<li><a class="nav-link" href="#preparation-21"><span class="header-section-number">31.2</span> Preparation</a></li>
+<li><a class="nav-link" href="#basic-flextable"><span class="header-section-number">31.3</span> Basic flextable</a></li>
+<li><a class="nav-link" href="#conditional-flextable-formatting"><span class="header-section-number">31.4</span> Conditional flextable formatting</a></li>
+<li><a class="nav-link" href="#saving-your-table"><span class="header-section-number">31.5</span> Saving your table</a></li>
+<li><a class="nav-link" href="#resources-24"><span class="header-section-number">31.6</span> Resources</a></li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+          
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>The Epidemiologist R Handbook</strong>" was written by the handbook team. It was last built on 2021-03-07.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+</html>
