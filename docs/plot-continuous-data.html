@@ -16,7 +16,8 @@
 <script src="libs/nouislider-7.0.10/jquery.nouislider.min.js"></script><link href="libs/selectize-0.12.0/selectize.bootstrap3.css" rel="stylesheet">
 <script src="libs/selectize-0.12.0/selectize.min.js"></script><link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet">
 <script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
-<link href="libs/tabwid-1.0.0/tabwid.css" rel="stylesheet">
+<link href="libs/bsTable-3.3.7/bootstrapTable.min.css" rel="stylesheet">
+<script src="libs/bsTable-3.3.7/bootstrapTable.js"></script><link href="libs/tabwid-1.0.0/tabwid.css" rel="stylesheet">
 <link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet">
 <script src="libs/leaflet-1.3.1/leaflet.js"></script><link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet">
 <script src="libs/proj4-2.6.2/proj4.min.js"></script><script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script><link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet">
@@ -46,7 +47,7 @@
 
       <nav aria-label="Table of contents"><h2>Table of contents</h2>
         <ul class="book-toc list-unstyled">
-<li><a class="" href="index.html">The Epidemiologist R Handbook</a></li>
+<li><a class="" href="index.html"></a></li>
 <li class="book-part">About this book</li>
 <li><a class="" href="style-and-editorial-notes.html"><span class="header-section-number">1</span> Style and editorial notes</a></li>
 <li><a class="" href="datasets-used.html"><span class="header-section-number">2</span> Datasets used</a></li>
@@ -142,7 +143,7 @@ Overview
 <li>
 <strong>Scatter plots</strong> for two continuous variables.</li>
 </ul>
-<p><img src="_main_files/figure-html/unnamed-chunk-818-1.png" width="50%"><img src="_main_files/figure-html/unnamed-chunk-818-2.png" width="50%"><img src="_main_files/figure-html/unnamed-chunk-818-3.png" width="50%"><img src="_main_files/figure-html/unnamed-chunk-818-4.png" width="50%"></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-817-1.png" width="50%"><img src="_main_files/figure-html/unnamed-chunk-817-2.png" width="50%"><img src="_main_files/figure-html/unnamed-chunk-817-3.png" width="50%"><img src="_main_files/figure-html/unnamed-chunk-817-4.png" width="50%"></p>
 <!-- ======================================================= -->
 </div>
 <div id="preparation-18" class="section level2" number="29.2">
@@ -230,7 +231,7 @@ Plotting with ggplot2
            x <span class="op">=</span> <span class="va">outcome</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>                          <span class="co"># Grouping variable</span>
   <span class="fu">geom_boxplot</span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"gold"</span><span class="op">)</span><span class="op">+</span>                      <span class="co"># Create the boxplot and specify colour</span>
   <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"B) ggplot2 boxplot by gender"</span><span class="op">)</span>      </code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-820-1.png" width="50%"><img src="_main_files/figure-html/unnamed-chunk-820-2.png" width="50%"></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-819-1.png" width="50%"><img src="_main_files/figure-html/unnamed-chunk-819-2.png" width="50%"></p>
 <p><strong>Histograms</strong></p>
 <p>Below is code for generating <strong>histograms</strong>, to show the distribution of CT values of Ebola patients. Within the <code><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes()</a></code> bracket, you specify which variable you want to see the distribution of. You can supply either the x or the y, which will change the direction of the plot. The y or the x respectively will then show the count, represented by columns referred to as ‘bins’.</p>
 <div class="sourceCode" id="cb1178"><pre class="downlit sourceCode r">
@@ -243,7 +244,7 @@ Plotting with ggplot2
 <span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">linelist</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">ct_blood</span><span class="op">)</span><span class="op">)</span><span class="op">+</span>  <span class="co"># provide y variable </span>
   <span class="fu">geom_histogram</span><span class="op">(</span><span class="op">)</span><span class="op">+</span>
   <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"B) Simple ggplot2 histogram with axes swapped"</span><span class="op">)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-821-1.png" width="50%"><img src="_main_files/figure-html/unnamed-chunk-821-2.png" width="50%"></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-820-1.png" width="50%"><img src="_main_files/figure-html/unnamed-chunk-820-2.png" width="50%"></p>
 <p>In the examples above, R has guessed the most appropriate way to present the data, and issues a message to tell you how many bins (columns) it went with, and to prompt you to customise it yourself:</p>
 <pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
 <p>It used 30 bins, and they look spaced out because some of them have 0 values. This relates to the way the values have been rounded.</p>
@@ -260,7 +261,7 @@ Plotting with ggplot2
   <span class="fu">geom_histogram</span><span class="op">(</span>binwidth <span class="op">=</span> <span class="fl">1</span>,                <span class="co"># Each bar includes a CT value range of 1</span>
                  color <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span><span class="op">+</span>            <span class="co"># Add white outline so bars can easily be distinguished</span>
   <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"B) Ggplot histogram with bindwidth of 1"</span><span class="op">)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-822-1.png" width="50%"><img src="_main_files/figure-html/unnamed-chunk-822-2.png" width="50%"></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-821-1.png" width="50%"><img src="_main_files/figure-html/unnamed-chunk-821-2.png" width="50%"></p>
 <p>Rather than counts, you can change the stats within the <code><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes()</a></code> bracket to specify proportions - see (plot A) below. You can also layer different histograms with different settings (plot B).</p>
 <div class="sourceCode" id="cb1181"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># A) Histogram with proportion</span>
@@ -277,7 +278,7 @@ Plotting with ggplot2
                  alpha <span class="op">=</span> <span class="fl">0.4</span>,                       <span class="co"># Set top layer to be slightly see through</span>
                  fill <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span><span class="op">+</span> 
   <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"B) Layered ggplot histograms"</span><span class="op">)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-823-1.png" width="50%"><img src="_main_files/figure-html/unnamed-chunk-823-2.png" width="50%"></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-822-1.png" width="50%"><img src="_main_files/figure-html/unnamed-chunk-822-2.png" width="50%"></p>
 <p><strong>Violin, jitter, and sina plots</strong></p>
 <p>Below is code for creating <strong>violin plots</strong> (<code>geom_violin</code>) and <strong>jitter plots</strong> (<code>geom_jitter</code>) to show age distributions. One can specify that the ‘fill’ or ’color’is also determined by the data, thereby inserting these options within the <code>aes</code> bracket.</p>
 <div class="sourceCode" id="cb1182"><pre class="downlit sourceCode r">
@@ -297,7 +298,7 @@ Plotting with ggplot2
            color <span class="op">=</span> <span class="va">outcome</span><span class="op">)</span><span class="op">)</span><span class="op">+</span> <span class="co"># Color variable</span>
   <span class="fu">geom_jitter</span><span class="op">(</span><span class="op">)</span><span class="op">+</span>                                  <span class="co"># Create the violin plot</span>
   <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"B) ggplot2 jitter plot by gender"</span><span class="op">)</span>     </code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-824-1.png" width="50%"><img src="_main_files/figure-html/unnamed-chunk-824-2.png" width="50%"></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-823-1.png" width="50%"><img src="_main_files/figure-html/unnamed-chunk-823-2.png" width="50%"></p>
 <p>One can combine the two using the <code>geom_sina</code> option, which is actually part of the <code>ggforce</code> package. This can be easier to visually interpret. A) on the left shows basic layering of both a <code>geom_violin</code> and <code>geom_sina</code>. B) shows slightly more effort put into the appearance of the ggplot (see in-line comments).</p>
 <div class="sourceCode" id="cb1183"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span><span class="va">ggforce</span><span class="op">)</span>
@@ -328,7 +329,7 @@ Plotting with ggplot2
   <span class="fu">theme_minimal</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>                                <span class="co"># Remove the gray background</span>
   <span class="fu">theme</span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span> <span class="op">+</span>                <span class="co"># Remove unnecessary legend</span>
   <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"B) ggplot() violin and sina plot by gender with formatting"</span><span class="op">)</span>      </code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-825-1.png" width="50%"><img src="_main_files/figure-html/unnamed-chunk-825-2.png" width="50%"></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-824-1.png" width="50%"><img src="_main_files/figure-html/unnamed-chunk-824-2.png" width="50%"></p>
 </div>
 <div id="plotting-one-continuous-variable-within-facets" class="section level3" number="29.3.3">
 <h3>
@@ -360,7 +361,7 @@ Plotting with ggplot2
   <span class="fu">geom_boxplot</span><span class="op">(</span><span class="op">)</span><span class="op">+</span>
   <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"A) A Ggplot2 boxplot by gender and outcome"</span><span class="op">)</span><span class="op">+</span>
   <span class="fu">facet_grid</span><span class="op">(</span><span class="va">outcome</span><span class="op">~</span><span class="va">gender</span><span class="op">)</span>                          <span class="co"># Outcome is the row, gender is the column</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-826-1.png" width="50%"><img src="_main_files/figure-html/unnamed-chunk-826-2.png" width="50%"></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-825-1.png" width="50%"><img src="_main_files/figure-html/unnamed-chunk-825-2.png" width="50%"></p>
 <p><strong>Further faceting options</strong></p>
 <p>The scales used when facetting are consistent across subgroups, which is helpful for comparisons, but not always appropriate or optimal.</p>
 <p>When using <code>facet_wrap</code> or <code>facet_grid</code>, we can add <code>scales = "free_y"</code> (plot A) so that the heights of the faceted histograms are standardised and the shapes are easier to compare. This is particularly useful if the actual counts are small for one of the subcategories and trends are otherwise hard to see. Instead of <code>free_y</code> we can also write <code>free_x</code> to do the same for the x axis or <code>free</code> for both axes. Note that in <code>facet_grid</code>, the y scales will be the same for facets in the same row, and the x scales will be the same for facets in the same column.</p>
@@ -382,7 +383,7 @@ Plotting with ggplot2
   <span class="fu">facet_grid</span><span class="op">(</span><span class="va">hospital</span><span class="op">~</span><span class="va">.</span>, <span class="co"># Facet with hospital as the row </span>
              scales <span class="op">=</span> <span class="st">"free_y"</span>, <span class="co"># Free the y scale of each facet</span>
              space <span class="op">=</span> <span class="st">"free_y"</span><span class="op">)</span> <span class="co"># Free the vertical spacing of each facet to optimise space</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-827-1.png" width="50%"><img src="_main_files/figure-html/unnamed-chunk-827-2.png" width="50%"></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-826-1.png" width="50%"><img src="_main_files/figure-html/unnamed-chunk-826-2.png" width="50%"></p>
 </div>
 <div id="plotting-two-continuous-variables" class="section level3" number="29.3.4">
 <h3>
@@ -403,7 +404,7 @@ Plotting with ggplot2
   <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"B) Scatter plot of weight and age faceted by gender and outcome"</span><span class="op">)</span><span class="op">+</span>
   <span class="fu">facet_grid</span><span class="op">(</span><span class="va">gender</span><span class="op">~</span><span class="va">outcome</span><span class="op">)</span> </code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-828-1.png" width="50%"><img src="_main_files/figure-html/unnamed-chunk-828-2.png" width="50%"></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-827-1.png" width="50%"><img src="_main_files/figure-html/unnamed-chunk-827-2.png" width="50%"></p>
 <!-- ======================================================= -->
 </div>
 </div>
@@ -431,7 +432,7 @@ In-built graphics package
 <span class="co"># Histogram</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/hist.html">hist</a></span><span class="op">(</span><span class="va">linelist</span><span class="op">$</span><span class="va">wt_kg</span>,
                   main <span class="op">=</span> <span class="st">"B) Base histogram"</span><span class="op">)</span> </code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-829-1.png" width="50%"><img src="_main_files/figure-html/unnamed-chunk-829-2.png" width="50%"></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-828-1.png" width="50%"><img src="_main_files/figure-html/unnamed-chunk-828-2.png" width="50%"></p>
 <p><strong>Further customisation</strong></p>
 <p>Subgroups can also be shown, by subgroup or crossed groups. Note how with plot B below, <code>outcome</code> and <code>gender</code> are written as <code>outcome*gender</code> such that the boxplots are for the four combinations of the two columns. They do not get facetted across different rows and columns like in ggplot2.</p>
 <p>We specify <code>linelist</code> as the dataset so we do not need to write <code>age</code> as <code>linelist$age</code></p>
@@ -445,7 +446,7 @@ In-built graphics package
 <span class="fu"><a href="https://rdrr.io/r/graphics/boxplot.html">boxplot</a></span><span class="op">(</span><span class="va">age</span> <span class="op">~</span> <span class="va">outcome</span><span class="op">*</span><span class="va">gender</span>,
                   data <span class="op">=</span> <span class="va">linelist</span>, 
                   main <span class="op">=</span> <span class="st">"B) Base boxplot) by crossed groups"</span><span class="op">)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-830-1.png" width="50%"><img src="_main_files/figure-html/unnamed-chunk-830-2.png" width="50%"></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-829-1.png" width="50%"><img src="_main_files/figure-html/unnamed-chunk-829-2.png" width="50%"></p>
 <p>Some further options with <code><a href="https://rdrr.io/r/graphics/boxplot.html">boxplot()</a></code> shown below are:</p>
 <ul>
 <li>Boxplot width proportional to sample size (A)</li>
@@ -474,7 +475,7 @@ In-built graphics package
         col<span class="op">=</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"gold"</span>,<span class="st">"darkgreen"</span><span class="op">)</span><span class="op">)</span>,
         main<span class="op">=</span><span class="st">"C) Horizontal boxplot()"</span>,
         xlab<span class="op">=</span><span class="st">"Suppliment and Dose"</span><span class="op">)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-831-1.png" width="33%"><img src="_main_files/figure-html/unnamed-chunk-831-2.png" width="33%"><img src="_main_files/figure-html/unnamed-chunk-831-3.png" width="33%"></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-830-1.png" width="33%"><img src="_main_files/figure-html/unnamed-chunk-830-2.png" width="33%"><img src="_main_files/figure-html/unnamed-chunk-830-3.png" width="33%"></p>
 </div>
 <div id="plotting-two-continuous-variables-1" class="section level3" number="29.4.2">
 <h3>
@@ -483,7 +484,7 @@ In-built graphics package
 <p>Using base R, we can quickly visualise the relationship between two continuous variables with the <code>plot</code> function.</p>
 <div class="sourceCode" id="cb1190"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">linelist</span><span class="op">$</span><span class="va">age</span>, <span class="va">linelist</span><span class="op">$</span><span class="va">wt_kg</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-832-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-831-1.png" width="672"></div>
 <!-- ======================================================= -->
 </div>
 </div>

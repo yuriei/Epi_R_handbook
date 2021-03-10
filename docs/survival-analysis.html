@@ -16,7 +16,8 @@
 <script src="libs/nouislider-7.0.10/jquery.nouislider.min.js"></script><link href="libs/selectize-0.12.0/selectize.bootstrap3.css" rel="stylesheet">
 <script src="libs/selectize-0.12.0/selectize.min.js"></script><link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet">
 <script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
-<link href="libs/tabwid-1.0.0/tabwid.css" rel="stylesheet">
+<link href="libs/bsTable-3.3.7/bootstrapTable.min.css" rel="stylesheet">
+<script src="libs/bsTable-3.3.7/bootstrapTable.js"></script><link href="libs/tabwid-1.0.0/tabwid.css" rel="stylesheet">
 <link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet">
 <script src="libs/leaflet-1.3.1/leaflet.js"></script><link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet">
 <script src="libs/proj4-2.6.2/proj4.min.js"></script><script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script><link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet">
@@ -46,7 +47,7 @@
 
       <nav aria-label="Table of contents"><h2>Table of contents</h2>
         <ul class="book-toc list-unstyled">
-<li><a class="" href="index.html">The Epidemiologist R Handbook</a></li>
+<li><a class="" href="index.html"></a></li>
 <li class="book-part">About this book</li>
 <li><a class="" href="style-and-editorial-notes.html"><span class="header-section-number">1</span> Style and editorial notes</a></li>
 <li><a class="" href="datasets-used.html"><span class="header-section-number">2</span> Datasets used</a></li>
@@ -284,8 +285,8 @@ In current medical research, it is widely used in clinical studies to assess the
 
 <span class="co">#print the 50 first elements of the vector to see how it presents</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">survobj</span>,<span class="fl">50</span><span class="op">)</span></code></pre></div>
-<pre><code>##  [1]  6+  5+ 14+  8+  2+ 12+ 21  11   5+ 10+  4  10+  3  10+ 11+  4   4  11  23+  4   9+ 14+  5+  9+  5  31+  8  11+ 13+  4  26+  7   6  14+
-## [35]  4  15  17+  8+ 18  12  14  12+  7   6+ 11  20+  2  22+  5   6+</code></pre>
+<pre><code>##  [1]  6+  5+ 14+  8+  2+ 12+ 21  11   5+ 10+  4  10+  3  10+ 11+  4   4  11  23+  4   9+ 14+  5+  9+  5  31+  8  11+ 13+  4  26+  7 
+## [33]  6  14+  4  15  17+  8+ 18  12  14  12+  7   6+ 11  20+  2  22+  5   6+</code></pre>
 </div>
 <div id="running-initial-analyses" class="section level3 unnumbered">
 <h3>Running initial analyses<a class="anchor" aria-label="anchor" href="#running-initial-analyses"><i class="fas fa-link"></i></a>
@@ -408,7 +409,7 @@ In current medical research, it is widely used in clinical studies to assess the
      ylab<span class="op">=</span><span class="st">"Survival Probability"</span>,   <span class="co">#yaxis label</span>
      main<span class="op">=</span> <span class="st">"Overall survival curve"</span> <span class="co">#figure title</span>
      <span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-674-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-673-1.png" width="672"></div>
 <p>The confidence interval of the KM estimates of the survival are also plotted by default and can be dismissed by adding the option <code>conf.int=FALSE</code> to the <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> command.</p>
 <p>Since the event of interest is “death”, drawing a curve describing the complements of the survival proportions will lead to drawing the cumulative mortality proportions.</p>
 <div class="sourceCode" id="cb1018"><pre class="downlit sourceCode r">
@@ -439,7 +440,7 @@ In current medical research, it is widely used in clinical studies to assess the
        cex<span class="op">=</span><span class="fl">.85</span>, <span class="co">#factor that defines size of the legend text</span>
        bty <span class="op">=</span> <span class="st">"n"</span> <span class="co">#no box type to be drawn for the legend</span>
        <span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-675-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-674-1.png" width="672"></div>
 <!-- ======================================================= -->
 </div>
 </div>
@@ -514,7 +515,7 @@ In current medical research, it is widely used in clinical studies to assess the
     surv.median.line <span class="op">=</span> <span class="st">"hv"</span>, <span class="co">#draw a line to the median survival</span>
     ggtheme <span class="op">=</span> <span class="fu">theme_light</span><span class="op">(</span><span class="op">)</span>
 <span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-676-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-675-1.png" width="672"></div>
 <p>We can then look for a difference in the source of the contamination. In this case, the Log rank test gives enough evidence of a difference in the survival probabilities at <code>\alpha= 0.005</code>.
 The survival probabilities for patients that got infected in funerals are higher than the survival probabilities for patients that got infected in other places, suggesting a survival benefit.</p>
 <div class="sourceCode" id="cb1023"><pre class="downlit sourceCode r">
@@ -540,7 +541,7 @@ The survival probabilities for patients that got infected in funerals are higher
 <span class="op">)</span></code></pre></div>
 <pre><code>## Warning: Vectorized input to `element_text()` is not officially supported.
 ## Results may be unexpected or may change in future versions of ggplot2.</code></pre>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-677-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-676-1.png" width="672"></div>
 <!-- ======================================================= -->
 </div>
 </div>

@@ -16,7 +16,8 @@
 <script src="libs/nouislider-7.0.10/jquery.nouislider.min.js"></script><link href="libs/selectize-0.12.0/selectize.bootstrap3.css" rel="stylesheet">
 <script src="libs/selectize-0.12.0/selectize.min.js"></script><link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet">
 <script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
-<link href="libs/tabwid-1.0.0/tabwid.css" rel="stylesheet">
+<link href="libs/bsTable-3.3.7/bootstrapTable.min.css" rel="stylesheet">
+<script src="libs/bsTable-3.3.7/bootstrapTable.js"></script><link href="libs/tabwid-1.0.0/tabwid.css" rel="stylesheet">
 <link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet">
 <script src="libs/leaflet-1.3.1/leaflet.js"></script><link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet">
 <script src="libs/proj4-2.6.2/proj4.min.js"></script><script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script><link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet">
@@ -46,7 +47,7 @@
 
       <nav aria-label="Table of contents"><h2>Table of contents</h2>
         <ul class="book-toc list-unstyled">
-<li><a class="" href="index.html">The Epidemiologist R Handbook</a></li>
+<li><a class="" href="index.html"></a></li>
 <li class="book-part">About this book</li>
 <li><a class="" href="style-and-editorial-notes.html"><span class="header-section-number">1</span> Style and editorial notes</a></li>
 <li><a class="" href="datasets-used.html"><span class="header-section-number">2</span> Datasets used</a></li>
@@ -188,7 +189,7 @@
   <span class="co"># add labels to the axes</span>
   <span class="fu">labs</span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Age in years"</span>, y <span class="op">=</span> <span class="st">"Number of cases"</span><span class="op">)</span></code></pre></div>
 <pre><code>## Warning: Removed 87 rows containing non-finite values (stat_bin).</code></pre>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-730-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-729-1.png" width="672"></div>
 <p>With this code, the most important things to note are:</p>
 <ol style="list-style-type: decimal">
 <li>When making a ggplot, all objects are combined with a <code><a href="https://rdrr.io/r/base/Arithmetic.html">+</a></code> sign.</li>
@@ -222,7 +223,7 @@ d. size of an object (`size = `)</code></pre>
   <span class="co"># add labels to the axes</span>
   <span class="fu">labs</span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Age in years"</span>, y <span class="op">=</span> <span class="st">"Number of cases"</span><span class="op">)</span></code></pre></div>
 <pre><code>## Warning: Removed 87 rows containing non-finite values (stat_bin).</code></pre>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-732-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-731-1.png" width="672"></div>
 <p>There are a huge number of different geoms that can be used, and they are all used with similar attribute names. While not exhaustive, some of the shapes that can be used are:</p>
 <ol style="list-style-type: decimal">
 <li>Histograms - <code>geom_histogram()</code>
@@ -253,7 +254,7 @@ d. size of an object (`size = `)</code></pre>
   <span class="fu">geom_smooth</span><span class="op">(</span>method <span class="op">=</span> <span class="st">"lm"</span><span class="op">)</span>
 <span class="va">wt_ht_plot</span></code></pre></div>
 <pre><code>## `geom_smooth()` using formula 'y ~ x'</code></pre>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-733-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-732-1.png" width="672"></div>
 <!-- ======================================================= -->
 </div>
 <div id="themes-and-labels" class="section level2" number="27.4">
@@ -287,7 +288,7 @@ d. size of an object (`size = `)</code></pre>
        caption <span class="op">=</span> <span class="st">"produced by me!"</span><span class="op">)</span>
 <span class="va">wt_ht_plot</span></code></pre></div>
 <pre><code>## `geom_smooth()` using formula 'y ~ x'</code></pre>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-734-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-733-1.png" width="672"></div>
 <p>The <code>theme()</code> function can also be used to edit the defaults of these elements. This function can take an extremely large number of arguments, each of which can be used to edit very specific aspects of the plot. We won’t go through all examples, look at how editing aspects of text elements is done. The basic way this is done is:</p>
 <ol style="list-style-type: decimal">
 <li>Calling the specific argument of <code>theme()</code> for the element we want to edit (e.g. <code>plot.title</code> for the plot title)</li>
@@ -307,7 +308,7 @@ justify the caption with <code>hjust</code>. We’ll also change the legend loca
           <span class="co"># subtitle is italicised</span>
           plot.subtitle <span class="op">=</span> <span class="fu">element_text</span><span class="op">(</span>face <span class="op">=</span> <span class="st">"italic"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>## `geom_smooth()` using formula 'y ~ x'</code></pre>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-735-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-734-1.png" width="672"></div>
 <p>If you ever want to remove an element of a plot, you can also do it through <code>theme()</code>! Just pass <code>element_blank()</code> to an argument in theme to have it disappear completely!</p>
 <!-- ======================================================= -->
 </div>
@@ -330,7 +331,7 @@ justify the caption with <code>hjust</code>. We’ll also change the legend loca
   <span class="op">)</span>
 
 <span class="va">symp_plot</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-736-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-735-1.png" width="672"></div>
 <div class="sourceCode" id="cb1096"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">symp_plot</span> <span class="op">+</span>
   <span class="fu">scale_fill_manual</span><span class="op">(</span>
@@ -343,14 +344,14 @@ justify the caption with <code>hjust</code>. We’ll also change the legend loca
     <span class="co"># legend has no title</span>
     name <span class="op">=</span> <span class="st">""</span>
   <span class="op">)</span> </code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-736-2.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-735-2.png" width="672"></div>
 <div class="sourceCode" id="cb1097"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">symp_plot</span> <span class="op">+</span>
   <span class="fu">scale_fill_viridis_d</span><span class="op">(</span>
     breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"yes"</span>, <span class="st">"no"</span>, <span class="st">"unknown"</span><span class="op">)</span>,
     name <span class="op">=</span> <span class="st">""</span>
   <span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-736-3.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-735-3.png" width="672"></div>
 <!-- ======================================================= -->
 </div>
 <div id="change-order-of-discrete-variables" class="section level2" number="27.6">
@@ -369,7 +370,7 @@ justify the caption with <code>hjust</code>. We’ll also change the legend loca
   <span class="fu">labs</span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Age group"</span>, y <span class="op">=</span> <span class="st">"Number of hospitalisations"</span>,
        title <span class="op">=</span> <span class="st">"Total hospitalisations by age group"</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">theme_minimal</span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-737-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-736-1.png" width="672"></div>
 <!-- ======================================================= -->
 </div>
 <div id="multiple-plots" class="section level2" number="27.7">
@@ -397,7 +398,7 @@ justify the caption with <code>hjust</code>. We’ll also change the legend loca
   <span class="op">)</span> <span class="op">+</span>
   <span class="fu">facet_wrap</span><span class="op">(</span><span class="op">~</span><span class="va">District</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">theme_minimal</span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-738-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-737-1.png" width="672"></div>
 <p>We can also use a <code>facet_grid()</code> approach with the different age groups - we need to do some data transformations first however, as the age groups all are in their own columns - we want them in a single column. When you pass the two variables to <code>facet_grid()</code>, you can use formula notation (e.g. <code>x ~ y</code>) or wrap the variables in <code><a href="https://dplyr.tidyverse.org/reference/vars.html">vars()</a></code>. For reference, this: <code>facet_grid(x ~ y)</code> is equivalent to <code>facet_grid(rows = vars(x), cols = vars(y))</code> Here’s how we can do this:</p>
 <div class="sourceCode" id="cb1100"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">malaria_age</span> <span class="op">&lt;-</span> <span class="va">malaria_data</span> <span class="op">%&gt;%</span>
@@ -427,7 +428,7 @@ justify the caption with <code>hjust</code>. We’ll also change the legend loca
   <span class="op">)</span> <span class="op">+</span>
   <span class="fu">facet_grid</span><span class="op">(</span>rows <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span><span class="op">(</span><span class="va">District</span><span class="op">)</span>, cols <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/vars.html">vars</a></span><span class="op">(</span><span class="va">age_group</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">theme_minimal</span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-739-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-738-1.png" width="672"></div>
 <p>While faceting is a convenient approach to plotting, sometimes its not possible to get the results you want from its relatively restrictive approach. Here, you may choose to combine plots by sticking them together into a larger plot. There are three well known packages that are great for this - <code>cowplot</code>, <code>gridExtra</code>, and <code>patchwork</code>. However, these packages largely do the same things, so we’ll focus on <code>cowplot</code> for this section.</p>
 <p>The <code>cowplot</code> package has a fairly wide range of functions, but the easiest use of it can be achieved through the use of <code>plot_grid()</code>. This is effectively a way to arrange predefined plots in a grid formation. We can work through another example with the malaria dataset - here we can plot the total cases by district, and also show the epidemic curve over time.</p>
 <div class="sourceCode" id="cb1101"><pre class="downlit sourceCode r">
@@ -456,7 +457,7 @@ justify the caption with <code>hjust</code>. We’ll also change the legend loca
                    nrow <span class="op">=</span> <span class="fl">2</span>,
                    <span class="co"># top plot is 2/3 as tall as second</span>
                    rel_heights <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-740-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-739-1.png" width="672"></div>
 <!-- ======================================================= -->
 </div>
 <div id="smart-labeling" class="section level2" number="27.8">
@@ -478,7 +479,7 @@ justify the caption with <code>hjust</code>. We’ll also change the legend loca
                            <span class="fu">aes</span><span class="op">(</span>label <span class="op">=</span> <span class="va">case_id</span><span class="op">)</span>,
                            force <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">labs</span><span class="op">(</span>y <span class="op">=</span> <span class="st">"weight (kg)"</span>, x <span class="op">=</span> <span class="st">"height(cm)"</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-741-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-740-1.png" width="672"></div>
 <!-- ======================================================= -->
 </div>
 <div id="time-axes" class="section level2" number="27.9">
@@ -502,7 +503,7 @@ justify the caption with <code>hjust</code>. We’ll also change the legend loca
     date_labels <span class="op">=</span> <span class="st">"%b %d"</span>
   <span class="op">)</span> <span class="op">+</span>
   <span class="fu">theme_classic</span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-742-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-741-1.png" width="672"></div>
 <!-- ======================================================= -->
 </div>
 <div id="highlighting" class="section level2" number="27.10">
@@ -526,7 +527,7 @@ justify the caption with <code>hjust</code>. We’ll also change the legend loca
   <span class="fu">geom_histogram</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> 
   <span class="co"># highlight instances where the patient has died.</span>
   <span class="fu">gghighlight</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/gghighlight/man/gghighlight.html">gghighlight</a></span><span class="op">(</span><span class="va">outcome</span> <span class="op">==</span> <span class="st">"Death"</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-743-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-742-1.png" width="672"></div>
 <p>This also works well with faceting functions - it allows the user to produce facet plots with the background data highlighted that doesn’t apply to the facet!</p>
 <div class="sourceCode" id="cb1105"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># produce a histogram of all cases by age</span>
@@ -536,7 +537,7 @@ justify the caption with <code>hjust</code>. We’ll also change the legend loca
   <span class="co"># highlight instances where the patient has died.</span>
   <span class="fu">gghighlight</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/gghighlight/man/gghighlight.html">gghighlight</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">facet_wrap</span><span class="op">(</span><span class="op">~</span><span class="va">outcome</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-744-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-743-1.png" width="672"></div>
 <!-- ======================================================= -->
 </div>
 <div id="dual-axes" class="section level2" number="27.11">
@@ -582,7 +583,7 @@ This is essentially the epicurve. We use <code>geom_area()</code> just to demons
      <span class="op">)</span>
 
 <span class="va">p1</span>                                      <span class="co"># view plot </span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-745-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-744-1.png" width="672"></div>
 <p><strong>Make plot 2</strong><br>
 Create the second plot showing a line of the weekly percent of cases who died.</p>
 <div class="sourceCode" id="cb1107"><pre class="downlit sourceCode r">
@@ -607,14 +608,14 @@ Create the second plot showing a line of the weekly percent of cases who died.</
           <span class="op">)</span>
 
 <span class="va">p2</span>     <span class="co"># view plot</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-746-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-745-1.png" width="672"></div>
 <p>Now we align the plot using the function <code>align_plots()</code>, specifying horizontal and vertical alignment (“hv”, could also be “h”, “v”, “none”). We specify alignment of all axes as well (top, bottom, left, and right) with “tblr”. The output is of class list (2 elements).</p>
 <p>Then we draw the two plots together using <code>ggdraw()</code> (from <strong>cowplot</strong>) and referencing the two parts of the <code>aligned_plots</code> object.</p>
 <div class="sourceCode" id="cb1108"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">aligned_plots</span> <span class="op">&lt;-</span> <span class="fu">align_plots</span><span class="op">(</span><span class="va">p1</span>, <span class="va">p2</span>, align<span class="op">=</span><span class="st">"hv"</span>, axis<span class="op">=</span><span class="st">"tblr"</span><span class="op">)</span>                  <span class="co"># align the two plots and save them as list</span>
 <span class="va">aligned_plotted</span> <span class="op">&lt;-</span> <span class="fu">ggdraw</span><span class="op">(</span><span class="va">aligned_plots</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span> <span class="op">+</span> <span class="fu">draw_plot</span><span class="op">(</span><span class="va">aligned_plots</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>  <span class="co"># overlay them and save the visual plot</span>
 <span class="va">aligned_plotted</span>                                                                <span class="co"># print the overlayed plots</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-747-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-746-1.png" width="672"></div>
 </div>
 <div id="statistical-transformation" class="section level3 unnumbered">
 <h3>Statistical transformation<a class="anchor" aria-label="anchor" href="#statistical-transformation"><i class="fas fa-link"></i></a>
@@ -650,7 +651,7 @@ Create the second plot showing a line of the weekly percent of cases who died.</
   <span class="fu">labs</span><span class="op">(</span>x <span class="op">=</span> <span class="st">"date of data collection"</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">theme_minimal</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">theme</span><span class="op">(</span>legend.title <span class="op">=</span> <span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-748-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-747-1.png" width="672"></div>
 </div>
 </div>
 <div id="resources-20" class="section level2" number="27.12">

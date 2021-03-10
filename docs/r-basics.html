@@ -16,7 +16,8 @@
 <script src="libs/nouislider-7.0.10/jquery.nouislider.min.js"></script><link href="libs/selectize-0.12.0/selectize.bootstrap3.css" rel="stylesheet">
 <script src="libs/selectize-0.12.0/selectize.min.js"></script><link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet">
 <script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
-<link href="libs/tabwid-1.0.0/tabwid.css" rel="stylesheet">
+<link href="libs/bsTable-3.3.7/bootstrapTable.min.css" rel="stylesheet">
+<script src="libs/bsTable-3.3.7/bootstrapTable.js"></script><link href="libs/tabwid-1.0.0/tabwid.css" rel="stylesheet">
 <link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet">
 <script src="libs/leaflet-1.3.1/leaflet.js"></script><link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet">
 <script src="libs/proj4-2.6.2/proj4.min.js"></script><script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script><link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet">
@@ -46,7 +47,7 @@
 
       <nav aria-label="Table of contents"><h2>Table of contents</h2>
         <ul class="book-toc list-unstyled">
-<li><a class="" href="index.html">The Epidemiologist R Handbook</a></li>
+<li><a class="" href="index.html"></a></li>
 <li class="book-part">About this book</li>
 <li><a class="" href="style-and-editorial-notes.html"><span class="header-section-number">1</span> Style and editorial notes</a></li>
 <li><a class="" href="datasets-used.html"><span class="header-section-number">2</span> Datasets used</a></li>
@@ -776,7 +777,7 @@ Brackets can also be written after one another, as demonstrated below.</p>
 <div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Create an age pyramid</span>
 <span class="fu">apyramid</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/apyramid/man/age_pyramid.html">age_pyramid</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">linelist</span>, age_group <span class="op">=</span> <span class="st">"age_cat5"</span>, split_by <span class="op">=</span> <span class="st">"gender"</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-27-1.png" width="75%" height="75%"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-26-1.png" width="75%" height="75%"></div>
 <p>The above command can be equivalently written as below, with newlines. This can be easier to read and to write <code># comments</code>. To run this command you can highlight the entire command, or just place your cursor in the first line and then press Ctrl and Enter keys simultaneously.</p>
 <div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Create an age pyramid</span>
@@ -785,7 +786,7 @@ Brackets can also be written after one another, as demonstrated below.</p>
   age_group <span class="op">=</span> <span class="st">"age_cat5"</span>, <span class="co"># age group column</span>
   split_by <span class="op">=</span> <span class="st">"gender"</span>     <span class="co"># two sides to pyramid</span>
   <span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-28-1.png" width="75%" height="75%"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-27-1.png" width="75%" height="75%"></div>
 <p>The first half of an argument assignment (e.g. <code>data =</code>) does not need to be specified if the arguments are written in a specific order (specified in the function’s documentation). The below code produces the exact same pyramid as above, because the function expects the argument order: data frame, <code>age_group</code> variable, <code>split_by</code> variable.</p>
 <div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># This command will produce the exact same graphic as above</span>
@@ -805,7 +806,7 @@ Brackets can also be written after one another, as demonstrated below.</p>
   proportional <span class="op">=</span> <span class="cn">TRUE</span>,         <span class="co"># percents instead of counts</span>
   pal <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"orange"</span>, <span class="st">"purple"</span><span class="op">)</span>  <span class="co"># colors</span>
   <span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-29-1.png" width="75%" height="75%"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-28-1.png" width="75%" height="75%"></div>
 <!-- ======================================================= -->
 <!-- ======================================================= -->
 <!-- ======================================================= -->
@@ -847,7 +848,7 @@ Brackets can also be written after one another, as demonstrated below.</p>
 <div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span><span class="va">tidyverse</span>, <span class="va">rio</span>, <span class="va">here</span><span class="op">)</span></code></pre></div>
 <p><strong>Install from github</strong></p>
-<p>Sometimes, you need to install the <em>development version</em> of a package, from a Github repository. You can use <code>p_load_gh()</code> from <strong>pacman</strong> (this function is a “wrapper” around <code><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github()</a></code> from <strong>devtools</strong> package).</p>
+<p>Sometimes, you need to install the <em>development version</em> of a package, from a Github repository. You can use <code>p_load_gh()</code> from <strong>pacman</strong> (this function is a “wrapper” around <code>install_github()</code> from <strong>devtools</strong> package).</p>
 <p>In the examples below, the first name listed in the quotation marks is the Github ID of the repository owner, and after the slash is the name of the repository. If you want to install from a branch other than the main/master branch, add it after an “@”.</p>
 <p>Of course, you have to load <strong>pacman</strong> before running any of its functions, or just specify the package name with two colons <code>pacman::</code> - this loads the package in order to execute that function.</p>
 <div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
@@ -866,7 +867,7 @@ Brackets can also be written after one another, as demonstrated below.</p>
 <code class="sourceCode R"><span class="va">packageurl</span> <span class="op">&lt;-</span> <span class="st">"https://cran.r-project.org/src/contrib/Archive/dsr/dsr_0.2.2.tar.gz"</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="va">packageurl</span>, repos<span class="op">=</span><span class="cn">NULL</span>, type<span class="op">=</span><span class="st">"source"</span><span class="op">)</span></code></pre></div>
 <p>Or, download it to your computer in a zipped file:</p>
-<p>Option 1: using <code><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_local()</a></code> from the <strong>remotes</strong> package</p>
+<p>Option 1: using <code>install_local()</code> from the <strong>remotes</strong> package</p>
 <div class="sourceCode" id="cb62"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_local.html">install_local</a></span><span class="op">(</span><span class="st">"~/Downloads/dplyr-master.zip"</span><span class="op">)</span></code></pre></div>
 <p>Option 2: using <code><a href="https://rdrr.io/r/utils/install.packages.html">install.packages()</a></code> from <strong>base</strong> R, providing the file path to the ZIP file and setting <code>type = "source</code> and <code>repos = NULL</code>.</p>
