@@ -1,11 +1,1 @@
-phylogenetic-trees
-overview
-preparation
-simple-tree-visualization
-manipulation-of-phylogenetic-trees
-zooming-in-on-one-part-of-the-tree
-collapsing-one-part-of-the-tree
-rotating-nodes-in-a-tree
-example-subtree-with-sample-data-annotation
-more-complex-trees-adding-heatmaps-of-sample-data
-resources
+part-preview-pages
