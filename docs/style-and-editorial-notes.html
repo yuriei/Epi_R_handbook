@@ -16,8 +16,7 @@
 <script src="libs/nouislider-7.0.10/jquery.nouislider.min.js"></script><link href="libs/selectize-0.12.0/selectize.bootstrap3.css" rel="stylesheet">
 <script src="libs/selectize-0.12.0/selectize.min.js"></script><link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet">
 <script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
-<link href="libs/bsTable-3.3.7/bootstrapTable.min.css" rel="stylesheet">
-<script src="libs/bsTable-3.3.7/bootstrapTable.js"></script><link href="libs/tabwid-1.0.0/tabwid.css" rel="stylesheet">
+<link href="libs/tabwid-1.0.0/tabwid.css" rel="stylesheet">
 <link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet">
 <script src="libs/leaflet-1.3.1/leaflet.js"></script><link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet">
 <script src="libs/proj4-2.6.2/proj4.min.js"></script><script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script><link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet">
@@ -56,9 +55,9 @@
 <li><a class="" href="transition-to-r.html"><span class="header-section-number">4</span> Transition to R</a></li>
 <li><a class="" href="import-and-export.html"><span class="header-section-number">5</span> Import and export</a></li>
 <li><a class="" href="r-projects.html"><span class="header-section-number">6</span> R projects</a></li>
-<li><a class="" href="suggested-packages.html"><span class="header-section-number">7</span> Suggested packages</a></li>
+<li><a class="" href="suggested-packages-1.html"><span class="header-section-number">7</span> Suggested packages</a></li>
 <li class="book-part">Data Management</li>
-<li><a class="" href="cleaning-data.html"><span class="header-section-number">8</span> Cleaning data</a></li>
+<li><a class="" href="cleaning-data-and-core-functions.html"><span class="header-section-number">8</span> Cleaning data and core functions</a></li>
 <li><a class="" href="working-with-dates.html"><span class="header-section-number">9</span> Working with dates</a></li>
 <li><a class="" href="factors.html"><span class="header-section-number">10</span> Factors</a></li>
 <li><a class="" href="pivoting-data.html"><span class="header-section-number">11</span> Pivoting data</a></li>
@@ -86,7 +85,7 @@
 <li><a class="" href="tables-1.html"><span class="header-section-number">31</span> Tables</a></li>
 <li><a class="" href="age-pyramids-and-likert-scales.html"><span class="header-section-number">32</span> Age pyramids and Likert-scales</a></li>
 <li><a class="" href="diagrams.html"><span class="header-section-number">33</span> Diagrams</a></li>
-<li><a class="" href="combination-analysis.html"><span class="header-section-number">34</span> Combination analysis</a></li>
+<li><a class="" href="combinations-analysis.html"><span class="header-section-number">34</span> Combinations analysis</a></li>
 <li><a class="" href="heatmaps.html"><span class="header-section-number">35</span> Heatmaps</a></li>
 <li><a class="" href="transmission-chains.html"><span class="header-section-number">36</span> Transmission chains</a></li>
 <li><a class="" href="phylogenetic-trees.html"><span class="header-section-number">37</span> Phylogenetic trees</a></li>
@@ -113,50 +112,76 @@
 <h1>
 <span class="header-section-number">1</span> Style and editorial notes<a class="anchor" aria-label="anchor" href="#style-and-editorial-notes"><i class="fas fa-link"></i></a>
 </h1>
-<div id="style" class="section level2" number="1.1">
+<p>In this page we describe the philosophical approach, style, and specific editorial decisions made during the creation of this handbook.</p>
+<div id="approach-and-style" class="section level2" number="1.1">
 <h2>
-<span class="header-section-number">1.1</span> Style<a class="anchor" aria-label="anchor" href="#style"><i class="fas fa-link"></i></a>
+<span class="header-section-number">1.1</span> Approach and style<a class="anchor" aria-label="anchor" href="#approach-and-style"><i class="fas fa-link"></i></a>
 </h2>
-<div id="notes" class="section level3 unnumbered">
-<h3>Notes<a class="anchor" aria-label="anchor" href="#notes"><i class="fas fa-link"></i></a>
+<p>The potential audience for this book is large. It will surely be used by people very new to R, and also by experienced R users looking for best practices and tips. So it must be both accessible and succinct. Therefore, our approach was to provide <em>just enough</em> text explanation that someone very new to R can apply the code and follow what is the code is doing.</p>
+<p>A few other points:</p>
+<ul>
+<li>This is a code reference book accompanied by relatively brief examples - <em>not</em> a thorough textbook on R or data science<br>
+</li>
+<li>This is a <em>R handbook</em> for use within applied epidemiology - not a manual on the methods or science of applied epidemiology</li>
+</ul>
+<div id="packages" class="section level3 unnumbered">
+<h3>Packages<a class="anchor" aria-label="anchor" href="#packages"><i class="fas fa-link"></i></a>
 </h3>
-<p>Here are the types of notes you may encounter in the handbook:</p>
-<p><span style="color: black;"><strong><em>NOTE:</em></strong> This is a note</span></p>
-<p><span style="color: darkgreen;"><strong><em>TIP:</em></strong> This is a tip.</span></p>
-<p><span style="color: orange;"><strong><em>CAUTION:</em></strong> This is a cautionary note.</span></p>
-<p><span style="color: red;"><strong><em>DANGER:</em></strong> This is a warning.</span></p>
-</div>
-<div id="package-choice" class="section level3 unnumbered">
-<h3>Package choice<a class="anchor" aria-label="anchor" href="#package-choice"><i class="fas fa-link"></i></a>
-</h3>
+<p><strong>So many choices</strong></p>
+<p>One of the most challenging aspects of learning R is knowing which R package to use for a given task. It is a common occurrence to struggle through a tasks only later to realize - hey, there’s an R package that does all that in one command line!</p>
+<p>In this handbook, we try to offer you at least two ways to complete each task: one tried-and-true method (probably in <strong>base</strong> R or <strong>tidyverse</strong>) and one special R package that is custom-built for that purpose. We want you to have a couple options in case you can’t download a given package or it otherwise does not work for you.</p>
+<p>In choosing which packages to use, we prioritized R packages and approaches that have been tested and vetted by the community, would be friendly to beginners, that are stable (not changing very often), and that accomplish the task with minimal adaptation.</p>
 <p>This handbook generally prioritizes R packages and functions from the <strong>tidyverse</strong>. Tidyverse is a collection of R packages designed for data science that share underlying grammar and data structures. All tidyverse packages can be installed or loaded via the <strong>tidyverse</strong> package. Read more at the <a href="https://www.tidyverse.org/">tidyverse website</a>.</p>
-<p>When applicable, we also offer code options using <strong>base</strong> R - the packages and functions that come with R at installation. This is because we recognize that some in this book’s audience may not have reliable internet to download many packages.</p>
+<p>When applicable, we also offer code options using <strong>base</strong> R - the packages and functions that come with R at installation. This is because we recognize that some in this book’s audience may not have reliable internet to download extra packages.</p>
+<p>*<strong>Linking functions to packages explicitly</strong></p>
+<p>It is often frustrating in R tutorials when a function is show in code, but you don’t know which package it is from! We try to avoid this situation.</p>
+<p>In the narrative text, package names are written in bold (e.g. <strong>dplyr</strong>) and functions are written like this: <code>mutate()</code>. We strive to be explicit about which package a function comes from, either by referencing the package in nearby text or by specifying the package explicitly in the code like this: <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">dplyr::mutate()</a></code>. It may look redundant, but we are doing it on purpose.</p>
+<p>See the page on <a href="r-basics.html#r-basics">R basics</a> to learn more about packages and functions.</p>
 </div>
-<div id="coding-style" class="section level3 unnumbered">
-<h3>Coding style<a class="anchor" aria-label="anchor" href="#coding-style"><i class="fas fa-link"></i></a>
+<div id="code-style" class="section level3 unnumbered">
+<h3>Code style<a class="anchor" aria-label="anchor" href="#code-style"><i class="fas fa-link"></i></a>
 </h3>
-<p>In the handbook, we frequently utilize new lines in our code, making it appear “long”. We do this to offer more comments, make it easier to read on a narrow screen (no sideways scrolling needed), and to be clear which arguments belong to which function. Generally, R is not affected by such new lines.</p>
+<p>In the handbook, we frequently utilize “new lines”, making our code appear “long”. We do this for a few reasons:</p>
+<ul>
+<li>We can write explanatory comments with <code>#</code> that are adjacent to each little part of the code<br>
+</li>
+<li>Generally speaking, longer (vertical) code is easier to read<br>
+</li>
+<li>This way is easier to read on a narrow screen (no sideways scrolling needed)<br>
+</li>
+<li>From the indentation, it should be easier to tell which arguments belong to which function</li>
+</ul>
 <p>As a result, code that <em>could</em> be written like this:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">obs</span> <span class="op">%&gt;%</span> 
+<code class="sourceCode R"><span class="va">linelist</span> <span class="op">%&gt;%</span> 
   <span class="fu">group_by</span><span class="op">(</span><span class="va">name</span><span class="op">)</span> <span class="op">%&gt;%</span>                    <span class="co"># group the rows by 'name'</span>
   <span class="fu">slice_max</span><span class="op">(</span><span class="va">date</span>, n <span class="op">=</span> <span class="fl">1</span>, with_ties <span class="op">=</span> <span class="cn">F</span><span class="op">)</span> <span class="co"># if there's a tie (of date), take the first row</span></code></pre></div>
 <p>…is written like this:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">obs</span> <span class="op">%&gt;%</span> 
+<code class="sourceCode R"><span class="va">linelist</span> <span class="op">%&gt;%</span> 
   <span class="fu">group_by</span><span class="op">(</span><span class="va">name</span><span class="op">)</span> <span class="op">%&gt;%</span>   <span class="co"># group the rows by 'name'</span>
   <span class="fu">slice_max</span><span class="op">(</span>
     <span class="va">date</span>,              <span class="co"># keep row per group with maximum date value </span>
     n <span class="op">=</span> <span class="fl">1</span>,             <span class="co"># keep only the single highest row </span>
     with_ties <span class="op">=</span> <span class="cn">F</span><span class="op">)</span>     <span class="co"># if there's a tie (of date), take the first row</span></code></pre></div>
-<p>In the narrative text, package names are written in bold (e.g. <strong>dplyr</strong>) and functions are written like this: <code>mutate()</code>. We strive to be explicit about which package a function comes from, either by referencing this in nearby text or specifying the package explicitly in the code like this: <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">dplyr::mutate()</a></code>. See the page on <a href="r-basics.html#r-basics">R basics</a> to learn more about packages and functions.</p>
+<p>R code is generally not affected by new lines or indentations. In fact, when writing code, if you initiate a new line after a comma it will apply automatic indentation patterns.</p>
+<p>We also use lots of spaces (e.g. <code>n = 1</code> instead of <code>n=1</code>) because it is easier to read. Be nice to the people reading your code!</p>
+</div>
+<div id="notes" class="section level3 unnumbered">
+<h3>Notes<a class="anchor" aria-label="anchor" href="#notes"><i class="fas fa-link"></i></a>
+</h3>
+<p>Here are the types of notes you may encounter in the handbook:</p>
+<p><span style="color: black;"><strong><em>NOTE:</em></strong> This is a note</span>
+<span style="color: darkgreen;"><strong><em>TIP:</em></strong> This is a tip.</span>
+<span style="color: orange;"><strong><em>CAUTION:</em></strong> This is a cautionary note.</span>
+<span style="color: red;"><strong><em>DANGER:</em></strong> This is a warning.</span></p>
 </div>
 </div>
 <div id="editorial-decisions" class="section level2" number="1.2">
 <h2>
 <span class="header-section-number">1.2</span> Editorial decisions<a class="anchor" aria-label="anchor" href="#editorial-decisions"><i class="fas fa-link"></i></a>
 </h2>
-<p>Below, we track significant editorial decisions around package and function choice. If you disagree or want to offer a new tool, please join/start a conversation on our Github page.</p>
+<p>Below, we track significant editorial decisions around package and function choice. If you disagree or want to offer a new tool for consideration, please join/start a conversation on our Github page.</p>
 <p><strong>Table of package, function, and other editorial decisions</strong></p>
 <div class="inline-table"><table class="table table-sm">
 <colgroup>
@@ -196,10 +221,10 @@
       <ul class="nav navbar-nav">
 <li><a class="nav-link" href="#style-and-editorial-notes"><span class="header-section-number">1</span> Style and editorial notes</a></li>
 <li>
-<a class="nav-link" href="#style"><span class="header-section-number">1.1</span> Style</a><ul class="nav navbar-nav">
+<a class="nav-link" href="#approach-and-style"><span class="header-section-number">1.1</span> Approach and style</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#packages">Packages</a></li>
+<li><a class="nav-link" href="#code-style">Code style</a></li>
 <li><a class="nav-link" href="#notes">Notes</a></li>
-<li><a class="nav-link" href="#package-choice">Package choice</a></li>
-<li><a class="nav-link" href="#coding-style">Coding style</a></li>
 </ul>
 </li>
 <li><a class="nav-link" href="#editorial-decisions"><span class="header-section-number">1.2</span> Editorial decisions</a></li>
@@ -219,7 +244,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>The Epidemiologist R Handbook</strong>" was written by the handbook team. It was last built on 2021-03-09.</p>
+    <p>"<strong>The Epidemiologist R Handbook</strong>" was written by the handbook team. It was last built on 2021-03-10.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
