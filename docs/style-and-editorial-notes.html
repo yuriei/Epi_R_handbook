@@ -68,9 +68,9 @@
 <li><a class="" href="de-duplication.html"><span class="header-section-number">15</span> De-duplication</a></li>
 <li><a class="" href="iteration-and-loops.html"><span class="header-section-number">16</span> Iteration and loops</a></li>
 <li class="book-part">Analysis</li>
-<li><a class="" href="missing-data.html"><span class="header-section-number">17</span> Missing data</a></li>
-<li><a class="" href="descriptive-analysis.html"><span class="header-section-number">18</span> Descriptive analysis</a></li>
-<li><a class="" href="univariate-and-multivariate-regression.html"><span class="header-section-number">19</span> Univariate and multivariate regression</a></li>
+<li><a class="" href="descriptive-analysis.html"><span class="header-section-number">17</span> Descriptive analysis</a></li>
+<li><a class="" href="univariate-and-multivariate-regression.html"><span class="header-section-number">18</span> Univariate and multivariate regression</a></li>
+<li><a class="" href="missing-data.html"><span class="header-section-number">19</span> Missing data</a></li>
 <li><a class="" href="standardization.html"><span class="header-section-number">20</span> Standardization</a></li>
 <li><a class="" href="moving-averages.html"><span class="header-section-number">21</span> Moving averages</a></li>
 <li><a class="" href="time-series-and-outbreak-detection.html"><span class="header-section-number">22</span> Time series and outbreak detection</a></li>
@@ -78,7 +78,7 @@
 <li><a class="" href="survey-analysis.html"><span class="header-section-number">24</span> Survey analysis</a></li>
 <li><a class="" href="survival-analysis.html"><span class="header-section-number">25</span> Survival analysis</a></li>
 <li><a class="" href="gis-basics.html"><span class="header-section-number">26</span> GIS basics</a></li>
-<li class="book-part">Data Vizualization</li>
+<li class="book-part">Data Visualization</li>
 <li><a class="" href="ggplot-tips.html"><span class="header-section-number">27</span> ggplot tips</a></li>
 <li><a class="" href="epidemic-curves.html"><span class="header-section-number">28</span> Epidemic curves</a></li>
 <li><a class="" href="plot-continuous-data.html"><span class="header-section-number">29</span> Plot continuous data</a></li>
@@ -129,13 +129,13 @@
 <h3>Packages<a class="anchor" aria-label="anchor" href="#packages"><i class="fas fa-link"></i></a>
 </h3>
 <p><strong>So many choices</strong></p>
-<p>One of the most challenging aspects of learning R is knowing which R package to use for a given task. It is a common occurrence to struggle through a tasks only later to realize - hey, there’s an R package that does all that in one command line!</p>
+<p>One of the most challenging aspects of learning R is knowing which R package to use for a given task. It is a common occurrence to struggle through a task only later to realize - hey, there’s an R package that does all that in one command line!</p>
 <p>In this handbook, we try to offer you at least two ways to complete each task: one tried-and-true method (probably in <strong>base</strong> R or <strong>tidyverse</strong>) and one special R package that is custom-built for that purpose. We want you to have a couple options in case you can’t download a given package or it otherwise does not work for you.</p>
-<p>In choosing which packages to use, we prioritized R packages and approaches that have been tested and vetted by the community, would be friendly to beginners, that are stable (not changing very often), and that accomplish the task with minimal adaptation.</p>
+<p>In choosing which packages to use, we prioritized R packages and approaches that have been tested and vetted by the community, minimize the number of packages used in a typical work session, that are stable (not changing very often), and that accomplish the task simply and cleanly</p>
 <p>This handbook generally prioritizes R packages and functions from the <strong>tidyverse</strong>. Tidyverse is a collection of R packages designed for data science that share underlying grammar and data structures. All tidyverse packages can be installed or loaded via the <strong>tidyverse</strong> package. Read more at the <a href="https://www.tidyverse.org/">tidyverse website</a>.</p>
-<p>When applicable, we also offer code options using <strong>base</strong> R - the packages and functions that come with R at installation. This is because we recognize that some in this book’s audience may not have reliable internet to download extra packages.</p>
-<p>*<strong>Linking functions to packages explicitly</strong></p>
-<p>It is often frustrating in R tutorials when a function is show in code, but you don’t know which package it is from! We try to avoid this situation.</p>
+<p>When applicable, we also offer code options using <strong>base</strong> R - the packages and functions that come with R at installation. This is because we recognize that some of this book’s audience may not have reliable internet to download extra packages.</p>
+<p><strong>Linking functions to packages explicitly</strong></p>
+<p>It is often frustrating in R tutorials when a function is shown in code, but you don’t know which package it is from! We try to avoid this situation.</p>
 <p>In the narrative text, package names are written in bold (e.g. <strong>dplyr</strong>) and functions are written like this: <code>mutate()</code>. We strive to be explicit about which package a function comes from, either by referencing the package in nearby text or by specifying the package explicitly in the code like this: <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">dplyr::mutate()</a></code>. It may look redundant, but we are doing it on purpose.</p>
 <p>See the page on <a href="r-basics.html#r-basics">R basics</a> to learn more about packages and functions.</p>
 </div>
@@ -146,36 +146,33 @@
 <ul>
 <li>We can write explanatory comments with <code>#</code> that are adjacent to each little part of the code<br>
 </li>
-<li>Generally speaking, longer (vertical) code is easier to read<br>
+<li>Generally, longer (vertical) code is easier to read<br>
 </li>
-<li>This way is easier to read on a narrow screen (no sideways scrolling needed)<br>
+<li>It is easier to read on a narrow screen (no sideways scrolling needed)<br>
 </li>
-<li>From the indentation, it should be easier to tell which arguments belong to which function</li>
+<li>From the indentations, it can be easier to know which arguments belong to which function</li>
 </ul>
 <p>As a result, code that <em>could</em> be written like this:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">linelist</span> <span class="op">%&gt;%</span> 
-  <span class="fu">group_by</span><span class="op">(</span><span class="va">name</span><span class="op">)</span> <span class="op">%&gt;%</span>                    <span class="co"># group the rows by 'name'</span>
+  <span class="fu">group_by</span><span class="op">(</span><span class="va">hospital</span><span class="op">)</span> <span class="op">%&gt;%</span>  <span class="co"># group rows by hospital</span>
   <span class="fu">slice_max</span><span class="op">(</span><span class="va">date</span>, n <span class="op">=</span> <span class="fl">1</span>, with_ties <span class="op">=</span> <span class="cn">F</span><span class="op">)</span> <span class="co"># if there's a tie (of date), take the first row</span></code></pre></div>
 <p>…is written like this:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">linelist</span> <span class="op">%&gt;%</span> 
-  <span class="fu">group_by</span><span class="op">(</span><span class="va">name</span><span class="op">)</span> <span class="op">%&gt;%</span>   <span class="co"># group the rows by 'name'</span>
+  <span class="fu">group_by</span><span class="op">(</span><span class="va">hospital</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="co"># group rows by hospital</span>
   <span class="fu">slice_max</span><span class="op">(</span>
-    <span class="va">date</span>,              <span class="co"># keep row per group with maximum date value </span>
-    n <span class="op">=</span> <span class="fl">1</span>,             <span class="co"># keep only the single highest row </span>
-    with_ties <span class="op">=</span> <span class="cn">F</span><span class="op">)</span>     <span class="co"># if there's a tie (of date), take the first row</span></code></pre></div>
-<p>R code is generally not affected by new lines or indentations. In fact, when writing code, if you initiate a new line after a comma it will apply automatic indentation patterns.</p>
-<p>We also use lots of spaces (e.g. <code>n = 1</code> instead of <code>n=1</code>) because it is easier to read. Be nice to the people reading your code!</p>
+    <span class="va">date</span>,                <span class="co"># keep row per group with maximum date value </span>
+    n <span class="op">=</span> <span class="fl">1</span>,               <span class="co"># keep only the single highest row </span>
+    with_ties <span class="op">=</span> <span class="cn">F</span><span class="op">)</span>       <span class="co"># if there's a tie (of date), take the first row</span></code></pre></div>
+<p>R code is generally not affected by new lines or indentations. When writing code, if you initiate a new line after a comma it will apply automatic indentation patterns.</p>
+<p>We also use lots of spaces (e.g. <code>n = 1</code> instead of <code>n=1</code>) because it is easier to read. Be kind to the people reading your code!</p>
 </div>
 <div id="notes" class="section level3 unnumbered">
 <h3>Notes<a class="anchor" aria-label="anchor" href="#notes"><i class="fas fa-link"></i></a>
 </h3>
 <p>Here are the types of notes you may encounter in the handbook:</p>
-<p><span style="color: black;"><strong><em>NOTE:</em></strong> This is a note</span>
-<span style="color: darkgreen;"><strong><em>TIP:</em></strong> This is a tip.</span>
-<span style="color: orange;"><strong><em>CAUTION:</em></strong> This is a cautionary note.</span>
-<span style="color: red;"><strong><em>DANGER:</em></strong> This is a warning.</span></p>
+<p><span style="color: black;"><strong><em>NOTE:</em></strong> This is a note</span><br><span style="color: darkgreen;"><strong><em>TIP:</em></strong> This is a tip.</span><br><span style="color: orange;"><strong><em>CAUTION:</em></strong> This is a cautionary note.</span><br><span style="color: red;"><strong><em>DANGER:</em></strong> This is a warning.</span></p>
 </div>
 </div>
 <div id="editorial-decisions" class="section level2" number="1.2">
@@ -194,21 +191,27 @@
 <thead><tr class="header">
 <th>Subject</th>
 <th>Considered</th>
-<th>Outcome &amp; date</th>
+<th>Outcome</th>
 <th>Brief rationale</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
 <td>Epiweeks</td>
 <td>aweek, lubridate</td>
-<td>lubridate, Dec 2020</td>
+<td>lubridate</td>
 <td>consistency, package maintenance prospects</td>
 </tr>
 <tr class="even">
 <td>ggplot labels</td>
 <td>labs(), ggtitle(), ylab(), xlab()</td>
-<td>labs(), Feb 2021</td>
-<td>All labels in one function/one place</td>
+<td>labs()</td>
+<td>all labels in one place, simplicity</td>
+</tr>
+<tr class="odd">
+<td>factors</td>
+<td>factor() (base), as_factor() (forcats)</td>
+<td>as_factor()</td>
+<td>all factor functions in one package</td>
 </tr>
 </tbody>
 </table></div>
