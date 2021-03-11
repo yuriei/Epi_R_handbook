@@ -67,23 +67,32 @@
 </ul>
 <!-- ======================================================= -->
 </div>
-<div id="packages-and-data" class="section level2" number="1.2">
+<div id="preparation" class="section level2" number="1.2">
 <h2>
-<span class="header-section-number">1.2</span> Packages and data<a class="anchor" aria-label="anchor" href="#packages-and-data"><i class="fas fa-link"></i></a>
+<span class="header-section-number">1.2</span> Preparation<a class="anchor" aria-label="anchor" href="#preparation"><i class="fas fa-link"></i></a>
 </h2>
-<p>The following packages are recommended for working with dates:</p>
+<div id="load-packages" class="section level3 unnumbered">
+<h3>Load packages<a class="anchor" aria-label="anchor" href="#load-packages"><i class="fas fa-link"></i></a>
+</h3>
+<p>This code chunk shows the loading of packages required for this page. In this handbook we emphasize <code>p_load()</code> from <strong>pacman</strong>, which installs the package if necessary and loads it for use. You can also load packages with <code><a href="https://rdrr.io/r/base/library.html">library()</a></code> from <strong>base</strong> R. See the page on [R basics] for more information on R packages.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Checks if package is installed, installs if necessary, and loads package for current session</span>
 
-<span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span><span class="va">aweek</span>,      <span class="co"># flexibly converts dates to weeks, and vis-versa</span>
-               <span class="va">lubridate</span>,  <span class="co"># for conversions to months, years, etc.</span>
-               <span class="va">linelist</span>,   <span class="co"># function to guess messy dates</span>
-               <span class="va">ISOweek</span>,    <span class="co"># another option for creating weeks</span>
-               <span class="va">tidyverse</span><span class="op">)</span>  <span class="co"># data management and visualization  </span></code></pre></div>
-<p>In this page we will occasionally use the case linelist for demonstration.</p>
+<span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span>
+  <span class="va">aweek</span>,      <span class="co"># flexibly converts dates to weeks, and vis-versa</span>
+  <span class="va">lubridate</span>,  <span class="co"># for conversions to months, years, etc.</span>
+  <span class="va">linelist</span>,   <span class="co"># function to guess messy dates</span>
+  <span class="va">ISOweek</span>,    <span class="co"># another option for creating weeks</span>
+  <span class="va">tidyverse</span><span class="op">)</span>  <span class="co"># data management and visualization  </span></code></pre></div>
+</div>
+<div id="import-data" class="section level3 unnumbered">
+<h3>Import data<a class="anchor" aria-label="anchor" href="#import-data"><i class="fas fa-link"></i></a>
+</h3>
+<p>We import the dataset of cases from a simulated Ebola epidemic. If you want to download the data to follow along step-by-step, see instruction in the [Datasets used] page.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">linelist</span> <span class="op">&lt;-</span> <span class="fu">rio</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/rio/man/import.html">import</a></span><span class="op">(</span><span class="st">"linelist_cleaned.xlsx"</span><span class="op">)</span></code></pre></div>
 <!-- ======================================================= -->
+</div>
 </div>
 <div id="current-date-and-time" class="section level2" number="1.3">
 <h2>
@@ -93,11 +102,11 @@
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># get the system date - this is a DATE class</span>
 <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.Date</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<pre><code>## [1] "2021-03-10"</code></pre>
+<pre><code>## [1] "2021-03-11"</code></pre>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># get the system time - this is a DATETIME class</span>
 <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.time</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<pre><code>## [1] "2021-03-10 19:58:51 EST"</code></pre>
+<pre><code>## [1] "2021-03-11 18:03:41 EST"</code></pre>
 <p>With the <strong>lubridate</strong> package these can also be returned with <code>today()</code> and <code>now()</code>, respectively. <code><a href="https://rdrr.io/r/base/date.html">date()</a></code> returns the current date and time with weekday and month names.</p>
 <!-- ======================================================= -->
 </div>
@@ -361,6 +370,7 @@ In this example, the <code>linelist</code> data frame has a column in format “
 <div id="date-math" class="section level3 unnumbered">
 <h3>Date math<a class="anchor" aria-label="anchor" href="#date-math"><i class="fas fa-link"></i></a>
 </h3>
+<p>You can add certain numbers of days or weeks using their respective function from <strong>lubridate</strong>.</p>
 <div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># add 3 days to this date</span>
 <span class="va">example_date</span> <span class="op">+</span> <span class="fu">days</span><span class="op">(</span><span class="fl">3</span><span class="op">)</span></code></pre></div>
@@ -373,12 +383,26 @@ In this example, the <code>linelist</code> data frame has a column in format “
 <div id="date-intervals" class="section level3 unnumbered">
 <h3>Date intervals<a class="anchor" aria-label="anchor" href="#date-intervals"><i class="fas fa-link"></i></a>
 </h3>
+<p>The difference between dates can be calculated by:</p>
+<ol style="list-style-type: decimal">
+<li>Ensure both dates are of class date<br>
+</li>
+<li>Use subtraction to return the “difftime” difference between the two dates<br>
+</li>
+<li>If necessary, convert the result to numeric class to perform subsequent mathematical calculations</li>
+</ol>
+<p>Below the interval between two dates is calculated and displayedYou can find intervals by using the subtraction “minus” symbol on values that are class Date. Note, however that the class of the returned value is “difftime” as displayed below, not numeric.</p>
 <div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># find the interval between this date and Feb 20 2020 </span>
-<span class="va">example_date</span> <span class="op">-</span> <span class="fu">ymd</span><span class="op">(</span><span class="st">"2020-02-20"</span><span class="op">)</span></code></pre></div>
+<span class="va">output</span> <span class="op">&lt;-</span> <span class="va">example_date</span> <span class="op">-</span> <span class="fu">ymd</span><span class="op">(</span><span class="st">"2020-02-20"</span><span class="op">)</span>
+<span class="va">output</span>    <span class="co"># print</span></code></pre></div>
 <pre><code>## Time difference of 10 days</code></pre>
-<p>This can all be brought together to work with data - for example:</p>
 <div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">output</span><span class="op">)</span></code></pre></div>
+<pre><code>## [1] "difftime"</code></pre>
+<p>To do subsequent operations on a “difftime”, convert it to numeric with <code><a href="https://rdrr.io/r/base/numeric.html">as.numeric()</a></code>.</p>
+<p>This can all be brought together to work with data - for example:</p>
+<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span><span class="va">lubridate</span>, <span class="va">tidyverse</span><span class="op">)</span>   <span class="co"># load packages</span>
 
 <span class="va">linelist</span> <span class="op">&lt;-</span> <span class="va">linelist</span> <span class="op">%&gt;%</span>
@@ -392,29 +416,6 @@ In this example, the <code>linelist</code> data frame has a column in format “
     
   <span class="co"># find the difference in days between onset and hospitalisation</span>
   <span class="fu">mutate</span><span class="op">(</span>onset_to_hosp_days <span class="op">=</span> <span class="va">date_hospitalisation</span> <span class="op">-</span> <span class="va">date_of_onset</span><span class="op">)</span></code></pre></div>
-<!-- ======================================================= -->
-</div>
-</div>
-<div id="calculate-distance-between-dates" class="section level2" number="1.9">
-<h2>
-<span class="header-section-number">1.9</span> Calculate distance between dates<a class="anchor" aria-label="anchor" href="#calculate-distance-between-dates"><i class="fas fa-link"></i></a>
-</h2>
-<p>The difference between dates can be calculated by:</p>
-<ol style="list-style-type: decimal">
-<li>Correctly formating <em>both</em> date column as class date (see instructions above)<br>
-</li>
-<li>Creating a new column that is defined as one date column subtracted from the other</li>
-<li>Converting the result to numeric class (default is class “datediff”). This ensures that subsequent mathematical calculations can be performed.</li>
-</ol>
-<div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># define columns as date classes</span>
-<span class="va">date_of_onset</span> <span class="op">&lt;-</span> <span class="fu">ymd</span><span class="op">(</span><span class="st">"2020-03-16"</span><span class="op">)</span>
-<span class="va">date_lab_confirmation</span> <span class="op">&lt;-</span> <span class="fu">ymd</span><span class="op">(</span><span class="st">"2020-03-20"</span><span class="op">)</span>
-
-<span class="co"># find the delay between onset and lab confirmation</span>
-<span class="va">days_to_lab_conf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/double.html">as.double</a></span><span class="op">(</span><span class="va">date_lab_confirmation</span> <span class="op">-</span> <span class="va">date_of_onset</span><span class="op">)</span>
-<span class="va">days_to_lab_conf</span></code></pre></div>
-<pre><code>## [1] 4</code></pre>
 <p>In a dataframe format (i.e. when working with a linelist), if either of the above dates is missing, the operation will fail for that row. This will result in an <code>NA</code> instead of a numeric value. When using this column for calculations, be sure to set the <code>na.rm</code> option to <code>TRUE</code>. For example:</p>
 <div class="sourceCode" id="cb62"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># add a new column</span>
@@ -431,9 +432,10 @@ In this example, the <code>linelist</code> data frame has a column in format “
 <span class="co"># this is easy to look at and will be explained later in the handbook</span></code></pre></div>
 <!-- ======================================================= -->
 </div>
-<div id="date-display" class="section level2" number="1.10">
+</div>
+<div id="date-display" class="section level2" number="1.9">
 <h2>
-<span class="header-section-number">1.10</span> Date display<a class="anchor" aria-label="anchor" href="#date-display"><i class="fas fa-link"></i></a>
+<span class="header-section-number">1.9</span> Date display<a class="anchor" aria-label="anchor" href="#date-display"><i class="fas fa-link"></i></a>
 </h2>
 <p>Once dates are the correct class, you often want them to display differently (e.g. in a plot, graph, or table). For example, to display as “Monday 05 Jan” instead of “2018-01-05”. You can do this with the <strong>base</strong> R function <code><a href="https://rdrr.io/r/base/format.html">format()</a></code>, which accepts the date and then a character string (in quotes) specifying the desired output (same as the <code>format =</code> argument in <code><a href="https://rdrr.io/r/base/as.Date.html">as.Date()</a></code>). Read more <a href="https://www.statmethods.net/input/dates.html">in this online tutorial</a>. Below are most of the common placeholders for the string.</p>
 <p>Using <code><a href="https://rdrr.io/r/base/format.html">format()</a></code> will convert the values to class Character, so this is generally used towards the end of an analysis or for display purposes only!</p>
@@ -459,23 +461,23 @@ In this example, the <code>linelist</code> data frame has a column in format “
 <div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># today's date, with formatting</span>
 <span class="fu"><a href="https://rdrr.io/r/base/format.html">format</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.Date</a></span><span class="op">(</span><span class="op">)</span>, format <span class="op">=</span> <span class="st">"%d %B %Y"</span><span class="op">)</span></code></pre></div>
-<pre><code>## [1] "10 March 2021"</code></pre>
+<pre><code>## [1] "11 March 2021"</code></pre>
 <div class="sourceCode" id="cb65"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># easy way to get full date and time (no formatting)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/date.html">date</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<pre><code>## [1] "Wed Mar 10 19:58:53 2021"</code></pre>
+<pre><code>## [1] "Thu Mar 11 18:03:45 2021"</code></pre>
 <div class="sourceCode" id="cb67"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># formatted date, time, and time zone (using paste0() function)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span>
   <span class="fu"><a href="https://rdrr.io/r/base/format.html">format</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.Date</a></span><span class="op">(</span><span class="op">)</span>, format <span class="op">=</span> <span class="st">"%A, %b %d '%y, %z  %Z, "</span><span class="op">)</span>, 
   <span class="fu"><a href="https://rdrr.io/r/base/format.html">format</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.time</a></span><span class="op">(</span><span class="op">)</span>, format <span class="op">=</span> <span class="st">"%H:%M:%S"</span><span class="op">)</span>
 <span class="op">)</span></code></pre></div>
-<pre><code>## [1] "Wednesday, Mar 10 '21, +0000  UTC, 19:58:53"</code></pre>
+<pre><code>## [1] "Thursday, Mar 11 '21, +0000  UTC, 18:03:45"</code></pre>
 <!-- ======================================================= -->
 </div>
-<div id="converting-datestime-zones" class="section level2" number="1.11">
+<div id="converting-datestime-zones" class="section level2" number="1.10">
 <h2>
-<span class="header-section-number">1.11</span> Converting dates/time zones<a class="anchor" aria-label="anchor" href="#converting-datestime-zones"><i class="fas fa-link"></i></a>
+<span class="header-section-number">1.10</span> Converting dates/time zones<a class="anchor" aria-label="anchor" href="#converting-datestime-zones"><i class="fas fa-link"></i></a>
 </h2>
 <p>When data is present in different time time zones, it can often be important to standardise this data in a unified time zone. This can present a further challenge, as the time zone component of data must be coded manually in most cases.</p>
 <p>In R, each <em>datetime</em> object has a timezone component. By default, all datetime objects will carry the local time zone for the computer being used - this is generally specific to a <em>location</em> rather than a named timezone, as time zones will often change in locations due to daylight savings time. It is not possible to accurately compensate for time zones without a time component of a date, as the event a date column represents cannot be attributed to a specific time, and therefore time shifts measured in hours cannot be reasonably accounted for.</p>
@@ -485,7 +487,7 @@ In this example, the <code>linelist</code> data frame has a column in format “
 <code class="sourceCode R"><span class="co"># assign the current time to a column</span>
 <span class="va">time_now</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.time</a></span><span class="op">(</span><span class="op">)</span>
 <span class="va">time_now</span></code></pre></div>
-<pre><code>## [1] "2021-03-10 19:58:53 EST"</code></pre>
+<pre><code>## [1] "2021-03-11 18:03:45 EST"</code></pre>
 <div class="sourceCode" id="cb71"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># use with_tz() to assign a new timezone to the column, while CHANGING the clock time</span>
 <span class="va">time_london_real</span> <span class="op">&lt;-</span> <span class="fu">with_tz</span><span class="op">(</span><span class="va">time_now</span>, <span class="st">"Europe/London"</span><span class="op">)</span>
@@ -506,9 +508,9 @@ In this example, the <code>linelist</code> data frame has a column in format “
 <span class="co"># "Africa/Lubumbashi" is the time zone for eastern DRC/Kivu Nord</span></code></pre></div>
 <!-- ======================================================= -->
 </div>
-<div id="epidemiological-weeks" class="section level2" number="1.12">
+<div id="epidemiological-weeks" class="section level2" number="1.11">
 <h2>
-<span class="header-section-number">1.12</span> Epidemiological weeks<a class="anchor" aria-label="anchor" href="#epidemiological-weeks"><i class="fas fa-link"></i></a>
+<span class="header-section-number">1.11</span> Epidemiological weeks<a class="anchor" aria-label="anchor" href="#epidemiological-weeks"><i class="fas fa-link"></i></a>
 </h2>
 <div id="lubridate-1" class="section level3 unnumbered">
 <h3>
@@ -542,8 +544,8 @@ The returned value is the start date of the week, in Date class. This is useful 
     to <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">week</span><span class="op">)</span>,
     by <span class="op">=</span> <span class="st">"week"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>Here are the first rows of the resulting data frame:</p>
-<div id="htmlwidget-b90c392b4afb30213ab0" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-b90c392b4afb30213ab0">{"x":{"filter":"top","filterHTML":"<tr>\n  <td data-type=\"date\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"1396742400000\" data-max=\"1408233600000\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"integer\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"1\" data-max=\"130\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","data":[["2014-04-06","2014-04-13","2014-04-20","2014-04-27","2014-05-04","2014-05-11","2014-05-18","2014-05-25","2014-06-01","2014-06-08","2014-06-15","2014-06-22","2014-06-29","2014-07-06","2014-07-13","2014-07-20","2014-07-27","2014-08-03","2014-08-10","2014-08-17"],[1,1,4,4,12,15,16,23,22,18,30,25,33,36,56,59,81,86,118,130]],"container":"<table class=\"white-space: nowrap\">\n  <thead>\n    <tr>\n      <th>week<\/th>\n      <th>n<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"scrollX":true,"columnDefs":[{"className":"dt-right","targets":1}],"order":[],"autoWidth":false,"orderClasses":false,"orderCellsTop":true,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-4965c1ca9d2c484b1965" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-4965c1ca9d2c484b1965">{"x":{"filter":"top","filterHTML":"<tr>\n  <td data-type=\"date\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"1396742400000\" data-max=\"1408233600000\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"integer\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"1\" data-max=\"130\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","data":[["2014-04-06","2014-04-13","2014-04-20","2014-04-27","2014-05-04","2014-05-11","2014-05-18","2014-05-25","2014-06-01","2014-06-08","2014-06-15","2014-06-22","2014-06-29","2014-07-06","2014-07-13","2014-07-20","2014-07-27","2014-08-03","2014-08-10","2014-08-17"],[1,1,4,4,12,15,16,23,22,18,30,25,33,36,56,59,81,86,118,130]],"container":"<table class=\"white-space: nowrap\">\n  <thead>\n    <tr>\n      <th>week<\/th>\n      <th>n<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"scrollX":true,"columnDefs":[{"className":"dt-right","targets":1}],"order":[],"autoWidth":false,"orderClasses":false,"orderCellsTop":true,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <div id="alternatives" class="section level3 unnumbered">
@@ -555,14 +557,14 @@ Another alternative for time series which also works well to show a a “week”
 <!-- ======================================================= -->
 </div>
 </div>
-<div id="lagging-and-leading-calculations" class="section level2" number="1.13">
+<div id="lagging-and-leading-calculations" class="section level2" number="1.12">
 <h2>
-<span class="header-section-number">1.13</span> Lagging and leading calculations<a class="anchor" aria-label="anchor" href="#lagging-and-leading-calculations"><i class="fas fa-link"></i></a>
+<span class="header-section-number">1.12</span> Lagging and leading calculations<a class="anchor" aria-label="anchor" href="#lagging-and-leading-calculations"><i class="fas fa-link"></i></a>
 </h2>
 <p><code>lead()</code> and <code><a href="https://rdrr.io/r/stats/lag.html">lag()</a></code> are functions from the <strong>dplyr</strong> package which help find previous (lagged) or subsequent (leading) values in a vector - typically a numeric or date vector. This is useful when doing calculations of change/difference between time units.</p>
 <p>Let’s say you want to calculate the difference in cases between a current week and the previous one. The data are initially provided in weekly counts as shown below. To learn how to aggregate counts from daily to weekly see the page on aggregating (LINK).</p>
-<div id="htmlwidget-c1a7216ad2b50c384894" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-c1a7216ad2b50c384894">{"x":{"filter":"none","data":[["2019-06-23","2019-06-30","2019-07-07","2019-07-14","2019-07-21","2019-07-28","2019-08-04","2019-08-11","2019-08-18","2019-08-25","2019-09-01","2019-09-08","2019-09-15","2019-09-22","2019-09-29","2019-10-06","2019-10-13","2019-10-20","2019-10-27","2019-11-03","2019-11-10","2019-11-17","2019-11-24","2019-12-01","2019-12-08","2019-12-15","2019-12-22","2019-12-29"],[0,25,59,90,65,79,41,47,31,32,28,28,76,41,70,90,124,278,371,329,177,69,77,97,100,39,19,0]],"container":"<table class=\"white-space: nowrap\">\n  <thead>\n    <tr>\n      <th>week_start<\/th>\n      <th>cases_wk<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"scrollX":true,"columnDefs":[{"className":"dt-right","targets":1}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script><p><strong>When using <code><a href="https://rdrr.io/r/stats/lag.html">lag()</a></code> or <code>lead()</code> the order of rows in the dataframe is very important! - pay attention to whether your dates/numbers are ascending or descending</strong></p>
+<div id="htmlwidget-75bbb74f2a272b7575e1" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-75bbb74f2a272b7575e1">{"x":{"filter":"none","data":[["2019-06-23","2019-06-30","2019-07-07","2019-07-14","2019-07-21","2019-07-28","2019-08-04","2019-08-11","2019-08-18","2019-08-25","2019-09-01","2019-09-08","2019-09-15","2019-09-22","2019-09-29","2019-10-06","2019-10-13","2019-10-20","2019-10-27","2019-11-03","2019-11-10","2019-11-17","2019-11-24","2019-12-01","2019-12-08","2019-12-15","2019-12-22","2019-12-29"],[0,25,59,90,65,79,41,47,31,32,28,28,76,41,70,90,124,278,371,329,177,69,77,97,100,39,19,0]],"container":"<table class=\"white-space: nowrap\">\n  <thead>\n    <tr>\n      <th>week_start<\/th>\n      <th>cases_wk<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"scrollX":true,"columnDefs":[{"className":"dt-right","targets":1}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script><p><strong>When using <code><a href="https://rdrr.io/r/stats/lag.html">lag()</a></code> or <code>lead()</code> the order of rows in the dataframe is very important! - pay attention to whether your dates/numbers are ascending or descending</strong></p>
 <p>First, create a new column containing the value of the previous (lagged) week.</p>
 <ul>
 <li>Control the number of units back/forward with <code>n =</code> (must be a non-negative integer)<br>
@@ -574,19 +576,19 @@ Another alternative for time series which also works well to show a a “week”
 <div class="sourceCode" id="cb75"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">counts</span> <span class="op">&lt;-</span> <span class="va">counts</span> <span class="op">%&gt;%</span> 
   <span class="fu">mutate</span><span class="op">(</span>cases_prev_wk <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/lag.html">lag</a></span><span class="op">(</span><span class="va">cases_wk</span>, n <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<div id="htmlwidget-c13606f60e39ccee273c" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-c13606f60e39ccee273c">{"x":{"filter":"none","data":[["2019-06-23","2019-06-30","2019-07-07","2019-07-14","2019-07-21","2019-07-28","2019-08-04","2019-08-11","2019-08-18","2019-08-25","2019-09-01","2019-09-08","2019-09-15","2019-09-22","2019-09-29","2019-10-06","2019-10-13","2019-10-20","2019-10-27","2019-11-03","2019-11-10","2019-11-17","2019-11-24","2019-12-01","2019-12-08","2019-12-15","2019-12-22","2019-12-29"],[0,25,59,90,65,79,41,47,31,32,28,28,76,41,70,90,124,278,371,329,177,69,77,97,100,39,19,0],[null,0,25,59,90,65,79,41,47,31,32,28,28,76,41,70,90,124,278,371,329,177,69,77,97,100,39,19]],"container":"<table class=\"white-space: nowrap\">\n  <thead>\n    <tr>\n      <th>week_start<\/th>\n      <th>cases_wk<\/th>\n      <th>cases_prev_wk<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"scrollX":true,"columnDefs":[{"className":"dt-right","targets":[1,2]}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script><p>Next, create a new column which is the difference between the two cases columns:</p>
+<div id="htmlwidget-8f4b9efa8016e101985e" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-8f4b9efa8016e101985e">{"x":{"filter":"none","data":[["2019-06-23","2019-06-30","2019-07-07","2019-07-14","2019-07-21","2019-07-28","2019-08-04","2019-08-11","2019-08-18","2019-08-25","2019-09-01","2019-09-08","2019-09-15","2019-09-22","2019-09-29","2019-10-06","2019-10-13","2019-10-20","2019-10-27","2019-11-03","2019-11-10","2019-11-17","2019-11-24","2019-12-01","2019-12-08","2019-12-15","2019-12-22","2019-12-29"],[0,25,59,90,65,79,41,47,31,32,28,28,76,41,70,90,124,278,371,329,177,69,77,97,100,39,19,0],[null,0,25,59,90,65,79,41,47,31,32,28,28,76,41,70,90,124,278,371,329,177,69,77,97,100,39,19]],"container":"<table class=\"white-space: nowrap\">\n  <thead>\n    <tr>\n      <th>week_start<\/th>\n      <th>cases_wk<\/th>\n      <th>cases_prev_wk<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"scrollX":true,"columnDefs":[{"className":"dt-right","targets":[1,2]}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script><p>Next, create a new column which is the difference between the two cases columns:</p>
 <div class="sourceCode" id="cb76"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">counts</span> <span class="op">&lt;-</span> <span class="va">counts</span> <span class="op">%&gt;%</span> 
   <span class="fu">mutate</span><span class="op">(</span>cases_prev_wk <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/lag.html">lag</a></span><span class="op">(</span><span class="va">cases_wk</span>, n <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>,
          case_diff <span class="op">=</span> <span class="va">cases_wk</span> <span class="op">-</span> <span class="va">cases_prev_wk</span><span class="op">)</span></code></pre></div>
-<div id="htmlwidget-6797f0a85305742cf4ee" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-6797f0a85305742cf4ee">{"x":{"filter":"none","data":[["2019-06-23","2019-06-30","2019-07-07","2019-07-14","2019-07-21","2019-07-28","2019-08-04","2019-08-11","2019-08-18","2019-08-25","2019-09-01","2019-09-08","2019-09-15","2019-09-22","2019-09-29","2019-10-06","2019-10-13","2019-10-20","2019-10-27","2019-11-03","2019-11-10","2019-11-17","2019-11-24","2019-12-01","2019-12-08","2019-12-15","2019-12-22","2019-12-29"],[0,25,59,90,65,79,41,47,31,32,28,28,76,41,70,90,124,278,371,329,177,69,77,97,100,39,19,0],[null,0,25,59,90,65,79,41,47,31,32,28,28,76,41,70,90,124,278,371,329,177,69,77,97,100,39,19],[null,25,34,31,-25,14,-38,6,-16,1,-4,0,48,-35,29,20,34,154,93,-42,-152,-108,8,20,3,-61,-20,-19]],"container":"<table class=\"white-space: nowrap\">\n  <thead>\n    <tr>\n      <th>week_start<\/th>\n      <th>cases_wk<\/th>\n      <th>cases_prev_wk<\/th>\n      <th>case_diff<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"scrollX":true,"columnDefs":[{"className":"dt-right","targets":[1,2,3]}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script><p>You can read more about <code>lead()</code> and <code><a href="https://rdrr.io/r/stats/lag.html">lag()</a></code> in the documentation <a href="https://dplyr.tidyverse.org/reference/lead-lag.html">here</a> or by entering <code><a href="https://rdrr.io/r/stats/lag.html">?lag</a></code> in your console.</p>
+<div id="htmlwidget-0e0401ebaee3861f05b8" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-0e0401ebaee3861f05b8">{"x":{"filter":"none","data":[["2019-06-23","2019-06-30","2019-07-07","2019-07-14","2019-07-21","2019-07-28","2019-08-04","2019-08-11","2019-08-18","2019-08-25","2019-09-01","2019-09-08","2019-09-15","2019-09-22","2019-09-29","2019-10-06","2019-10-13","2019-10-20","2019-10-27","2019-11-03","2019-11-10","2019-11-17","2019-11-24","2019-12-01","2019-12-08","2019-12-15","2019-12-22","2019-12-29"],[0,25,59,90,65,79,41,47,31,32,28,28,76,41,70,90,124,278,371,329,177,69,77,97,100,39,19,0],[null,0,25,59,90,65,79,41,47,31,32,28,28,76,41,70,90,124,278,371,329,177,69,77,97,100,39,19],[null,25,34,31,-25,14,-38,6,-16,1,-4,0,48,-35,29,20,34,154,93,-42,-152,-108,8,20,3,-61,-20,-19]],"container":"<table class=\"white-space: nowrap\">\n  <thead>\n    <tr>\n      <th>week_start<\/th>\n      <th>cases_wk<\/th>\n      <th>cases_prev_wk<\/th>\n      <th>case_diff<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"scrollX":true,"columnDefs":[{"className":"dt-right","targets":[1,2,3]}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script><p>You can read more about <code>lead()</code> and <code><a href="https://rdrr.io/r/stats/lag.html">lag()</a></code> in the documentation <a href="https://dplyr.tidyverse.org/reference/lead-lag.html">here</a> or by entering <code><a href="https://rdrr.io/r/stats/lag.html">?lag</a></code> in your console.</p>
 <!-- ======================================================= -->
 </div>
-<div id="dates-miscellaneous" class="section level2" number="1.14">
+<div id="dates-miscellaneous" class="section level2" number="1.13">
 <h2>
-<span class="header-section-number">1.14</span> Dates miscellaneous<a class="anchor" aria-label="anchor" href="#dates-miscellaneous"><i class="fas fa-link"></i></a>
+<span class="header-section-number">1.13</span> Dates miscellaneous<a class="anchor" aria-label="anchor" href="#dates-miscellaneous"><i class="fas fa-link"></i></a>
 </h2>
 <ul>
 <li>
@@ -599,9 +601,9 @@ Another alternative for time series which also works well to show a a “week”
 </ul>
 <!-- ======================================================= -->
 </div>
-<div id="resources" class="section level2" number="1.15">
+<div id="resources" class="section level2" number="1.14">
 <h2>
-<span class="header-section-number">1.15</span> Resources<a class="anchor" aria-label="anchor" href="#resources"><i class="fas fa-link"></i></a>
+<span class="header-section-number">1.14</span> Resources<a class="anchor" aria-label="anchor" href="#resources"><i class="fas fa-link"></i></a>
 </h2>
 <p><strong>lubridate</strong> <a href="https://lubridate.tidyverse.org/">tidyverse page</a><br><strong>lubridate</strong> RStudio <a href="https://rawgit.com/rstudio/cheatsheets/master/lubridate.pdf">cheatsheet</a><br>
 R for Data Science page on <a href="https://r4ds.had.co.nz/dates-and-times.html">dates and times</a><br><a href="https://www.statmethods.net/input/dates.html">Online tutorial</a>
@@ -617,7 +619,12 @@ R for Data Science page on <a href="https://r4ds.had.co.nz/dates-and-times.html"
       <ul class="nav navbar-nav">
 <li><a class="nav-link" href="#working-with-dates"><span class="header-section-number">1</span> Working with dates</a></li>
 <li><a class="nav-link" href="#overview"><span class="header-section-number">1.1</span> Overview</a></li>
-<li><a class="nav-link" href="#packages-and-data"><span class="header-section-number">1.2</span> Packages and data</a></li>
+<li>
+<a class="nav-link" href="#preparation"><span class="header-section-number">1.2</span> Preparation</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#load-packages">Load packages</a></li>
+<li><a class="nav-link" href="#import-data">Import data</a></li>
+</ul>
+</li>
 <li><a class="nav-link" href="#current-date-and-time"><span class="header-section-number">1.3</span> Current date and time</a></li>
 <li>
 <a class="nav-link" href="#convert-to-date-class"><span class="header-section-number">1.4</span> Convert to Date class</a><ul class="nav navbar-nav">
@@ -640,18 +647,17 @@ R for Data Science page on <a href="https://r4ds.had.co.nz/dates-and-times.html"
 <li><a class="nav-link" href="#date-intervals">Date intervals</a></li>
 </ul>
 </li>
-<li><a class="nav-link" href="#calculate-distance-between-dates"><span class="header-section-number">1.9</span> Calculate distance between dates</a></li>
-<li><a class="nav-link" href="#date-display"><span class="header-section-number">1.10</span> Date display</a></li>
-<li><a class="nav-link" href="#converting-datestime-zones"><span class="header-section-number">1.11</span> Converting dates/time zones</a></li>
+<li><a class="nav-link" href="#date-display"><span class="header-section-number">1.9</span> Date display</a></li>
+<li><a class="nav-link" href="#converting-datestime-zones"><span class="header-section-number">1.10</span> Converting dates/time zones</a></li>
 <li>
-<a class="nav-link" href="#epidemiological-weeks"><span class="header-section-number">1.12</span> Epidemiological weeks</a><ul class="nav navbar-nav">
+<a class="nav-link" href="#epidemiological-weeks"><span class="header-section-number">1.11</span> Epidemiological weeks</a><ul class="nav navbar-nav">
 <li><a class="nav-link" href="#lubridate-1">lubridate</a></li>
 <li><a class="nav-link" href="#alternatives">Alternatives</a></li>
 </ul>
 </li>
-<li><a class="nav-link" href="#lagging-and-leading-calculations"><span class="header-section-number">1.13</span> Lagging and leading calculations</a></li>
-<li><a class="nav-link" href="#dates-miscellaneous"><span class="header-section-number">1.14</span> Dates miscellaneous</a></li>
-<li><a class="nav-link" href="#resources"><span class="header-section-number">1.15</span> Resources</a></li>
+<li><a class="nav-link" href="#lagging-and-leading-calculations"><span class="header-section-number">1.12</span> Lagging and leading calculations</a></li>
+<li><a class="nav-link" href="#dates-miscellaneous"><span class="header-section-number">1.13</span> Dates miscellaneous</a></li>
+<li><a class="nav-link" href="#resources"><span class="header-section-number">1.14</span> Resources</a></li>
 </ul>
 
       <div class="book-extra">
@@ -668,7 +674,7 @@ R for Data Science page on <a href="https://r4ds.had.co.nz/dates-and-times.html"
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>The Epidemiologist R Handbook</strong>" was written by the handbook team. It was last built on 2021-03-10.</p>
+    <p>"<strong>The Epidemiologist R Handbook</strong>" was written by the handbook team. It was last built on 2021-03-11.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
