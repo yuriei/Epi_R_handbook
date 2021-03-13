@@ -16,7 +16,8 @@
 <script src="libs/nouislider-7.0.10/jquery.nouislider.min.js"></script><link href="libs/selectize-0.12.0/selectize.bootstrap3.css" rel="stylesheet">
 <script src="libs/selectize-0.12.0/selectize.min.js"></script><link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet">
 <script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
-<link href="libs/tabwid-1.0.0/tabwid.css" rel="stylesheet">
+<link href="libs/bsTable-3.3.7/bootstrapTable.min.css" rel="stylesheet">
+<script src="libs/bsTable-3.3.7/bootstrapTable.js"></script><link href="libs/tabwid-1.0.0/tabwid.css" rel="stylesheet">
 <link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet">
 <script src="libs/leaflet-1.3.1/leaflet.js"></script><link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet">
 <script src="libs/proj4-2.6.2/proj4.min.js"></script><script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script><link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet">
@@ -66,7 +67,6 @@
 <li><a class="" href="characters-and-strings.html"><span class="header-section-number">14</span> Characters and strings</a></li>
 <li><a class="" href="de-duplication.html"><span class="header-section-number">15</span> De-duplication</a></li>
 <li><a class="" href="iteration-and-loops.html"><span class="header-section-number">16</span> Iteration and loops</a></li>
-<li><a class="" href="import-data-7.html">Import data</a></li>
 <li class="book-part">Analysis</li>
 <li><a class="" href="descriptive-analysis.html"><span class="header-section-number">17</span> Descriptive analysis</a></li>
 <li><a class="" href="univariate-and-multivariate-regression.html"><span class="header-section-number">18</span> Univariate and multivariate regression</a></li>
@@ -99,7 +99,7 @@
 <li><a class="" href="advanced-rstudio.html"><span class="header-section-number">43</span> Advanced RStudio</a></li>
 <li><a class="" href="relational-databases.html"><span class="header-section-number">44</span> Relational databases</a></li>
 <li><a class="" href="shiny-and-dashboards.html"><span class="header-section-number">45</span> Shiny and dashboards</a></li>
-<li><a class="" href="collaboration.html"><span class="header-section-number">46</span> Collaboration</a></li>
+<li><a class="" href="collaboration-with-github.html"><span class="header-section-number">46</span> Collaboration with Github</a></li>
 <li><a class="" href="writing-functions.html"><span class="header-section-number">47</span> Writing functions</a></li>
 <li><a class="" href="r-on-network-drives.html"><span class="header-section-number">48</span> R on network drives</a></li>
 </ul>
@@ -176,7 +176,7 @@ This probably does not make sense to show.</p>
 <code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">linelist</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">delay</span><span class="op">)</span><span class="op">)</span><span class="op">+</span>
   <span class="fu">geom_bar</span><span class="op">(</span><span class="op">)</span><span class="op">+</span>
   <span class="fu">theme_classic</span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-247-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-242-1.png" width="672"></div>
 </div>
 <div id="convert-to-factor" class="section level2" number="10.3">
 <h2>
@@ -228,7 +228,7 @@ This probably does not make sense to show.</p>
 <div class="sourceCode" id="cb348"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">linelist</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="fu">fct_relevel</span><span class="op">(</span><span class="va">delay</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"&lt;2 days"</span>, <span class="st">"2-5 days"</span>, <span class="st">"&gt;5 days"</span>, <span class="st">"Missing"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">+</span>
   <span class="fu">geom_bar</span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-251-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-246-1.png" width="672"></div>
 <p>Note how the default x-axis label is now quite complicated - you can overwrite this with the <code>labs()</code> in ggplot.</p>
 <p><strong><code>fct_infreq()</code></strong></p>
 <p>To order by frequency that the value appears in the data, use <code>fct_infreq()</code>. Any missing values (<code>NA</code>) will automatically be included at the end.</p>
@@ -243,7 +243,7 @@ This probably does not make sense to show.</p>
 <span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">linelist</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="fu">fct_rev</span><span class="op">(</span><span class="fu">fct_infreq</span><span class="op">(</span><span class="va">delay</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">+</span>
   <span class="fu">geom_bar</span><span class="op">(</span><span class="op">)</span><span class="op">+</span>
   <span class="fu">labs</span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Delay onset to admission (days)"</span><span class="op">)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-252-1.png" width="50%"><img src="_main_files/figure-html/unnamed-chunk-252-2.png" width="50%"></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-247-1.png" width="50%"><img src="_main_files/figure-html/unnamed-chunk-247-2.png" width="50%"></p>
 <p><strong><code>fct_reorder()</code></strong></p>
 <p>Use this function to order the levels by another column. For example, to order boxplots showing delay <em>by the median CT value of each delay group</em>.</p>
 <p>In the examples below, the x-axis if delay group, and the y = axis is CT value. The boxplots are also colored by delay group.</p>
@@ -261,7 +261,7 @@ In the second example, the x-axis column has been wrapped in <code>fct_reorder()
        title <span class="op">=</span> <span class="st">"Ordered by increasing delay (original factor levels)"</span><span class="op">)</span><span class="op">+</span>
   <span class="fu">theme_classic</span><span class="op">(</span><span class="op">)</span><span class="op">+</span>
   <span class="fu">theme</span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-253-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-248-1.png" width="672"></div>
 <div class="sourceCode" id="cb351"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># boxplots ordered by median CT value</span>
 <span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">linelist</span><span class="op">)</span><span class="op">+</span>
@@ -273,7 +273,7 @@ In the second example, the x-axis column has been wrapped in <code>fct_reorder()
        title <span class="op">=</span> <span class="st">"Ordered by median CT value in group"</span><span class="op">)</span><span class="op">+</span>
   <span class="fu">theme_classic</span><span class="op">(</span><span class="op">)</span><span class="op">+</span>
   <span class="fu">theme</span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-253-2.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-248-2.png" width="672"></div>
 <p><strong><code>fct_reorder2()</code></strong></p>
 <p>Use this function to order the <em>legend colors</em> by the vertical order of groups at the “end” of the plot. For example, if you have lines showing case counts by hospital over time, you can apply <code>fct_reorder2()</code> to the <code>color =</code> argument within <code>aes()</code>, such that the vertical order of hospitals appearing in the legend aligns with the order of lines at the terminal end of the plot. Read more in the <a href="https://forcats.tidyverse.org/reference/fct_reorder.html">function documentation</a>.</p>
 <div class="sourceCode" id="cb352"><pre class="downlit sourceCode r">
@@ -289,7 +289,7 @@ In the second example, the x-axis column has been wrapped in <code>fct_reorder()
         y <span class="op">=</span> <span class="va">n</span>,        <span class="co"># height in number of rows</span>
         color <span class="op">=</span> <span class="fu">fct_reorder2</span><span class="op">(</span><span class="va">hospital</span>, <span class="va">epiweek</span>, <span class="va">n</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">+</span> <span class="co"># grouped by hospital and colors ordered by n value at end of plot</span>
   <span class="fu">labs</span><span class="op">(</span>color <span class="op">=</span> <span class="st">"Hospital"</span><span class="op">)</span>  <span class="co"># change legend title</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-254-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-249-1.png" width="672"></div>
 <p><strong><code>fct_lump()</code></strong></p>
 <p>To “lump” together many low-frequency levels into an “Other” group, you can use this function. Do one of the following:</p>
 <ul>
@@ -303,7 +303,7 @@ In the second example, the x-axis column has been wrapped in <code>fct_reorder()
   <span class="fu">geom_bar</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="fu">fct_lump</span><span class="op">(</span><span class="va">hospital</span>,    <span class="co"># column for x-axis</span>
                             n <span class="op">=</span> <span class="fl">2</span>,       <span class="co"># keep two most-frequent levels</span>
                             other_level <span class="op">=</span> <span class="st">"Other hospitals"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="co"># label for "Other" group</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-255-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-250-1.png" width="672"></div>
 <p>You can also use <code>fct_other()</code> to manually assign factor levels to an “Other” group. Below, all <code>hospital</code> values aside from “Port Hospital” and “Central Hospital” are combined into “Other”.</p>
 <p>You can use the arguments <code>keep =</code>, or <code>drop =</code>, and can change the label of “Other” with <code>other_label =</code>.</p>
 <div class="sourceCode" id="cb354"><pre class="downlit sourceCode r">
@@ -445,7 +445,7 @@ Below, the labels of the factor column <code>delay</code> (grouped days from ons
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>The Epidemiologist R Handbook</strong>" was written by the handbook team. It was last built on 2021-03-11.</p>
+    <p>"<strong>The Epidemiologist R Handbook</strong>" was written by the handbook team. It was last built on 2021-03-12.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

@@ -1,9 +1,5 @@
-tab:unnamed-chunk-20
-descriptive-analysis
+iteration-and-loops
 preparation
-browse-data
-descriptive-tables
-statistical-tests
-chi-squared-test-1
-correlations
+purrr
+for-loops
 resources

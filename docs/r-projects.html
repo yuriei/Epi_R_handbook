@@ -16,7 +16,8 @@
 <script src="libs/nouislider-7.0.10/jquery.nouislider.min.js"></script><link href="libs/selectize-0.12.0/selectize.bootstrap3.css" rel="stylesheet">
 <script src="libs/selectize-0.12.0/selectize.min.js"></script><link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet">
 <script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
-<link href="libs/tabwid-1.0.0/tabwid.css" rel="stylesheet">
+<link href="libs/bsTable-3.3.7/bootstrapTable.min.css" rel="stylesheet">
+<script src="libs/bsTable-3.3.7/bootstrapTable.js"></script><link href="libs/tabwid-1.0.0/tabwid.css" rel="stylesheet">
 <link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet">
 <script src="libs/leaflet-1.3.1/leaflet.js"></script><link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet">
 <script src="libs/proj4-2.6.2/proj4.min.js"></script><script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script><link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet">
@@ -66,7 +67,6 @@
 <li><a class="" href="characters-and-strings.html"><span class="header-section-number">14</span> Characters and strings</a></li>
 <li><a class="" href="de-duplication.html"><span class="header-section-number">15</span> De-duplication</a></li>
 <li><a class="" href="iteration-and-loops.html"><span class="header-section-number">16</span> Iteration and loops</a></li>
-<li><a class="" href="import-data-7.html">Import data</a></li>
 <li class="book-part">Analysis</li>
 <li><a class="" href="descriptive-analysis.html"><span class="header-section-number">17</span> Descriptive analysis</a></li>
 <li><a class="" href="univariate-and-multivariate-regression.html"><span class="header-section-number">18</span> Univariate and multivariate regression</a></li>
@@ -99,7 +99,7 @@
 <li><a class="" href="advanced-rstudio.html"><span class="header-section-number">43</span> Advanced RStudio</a></li>
 <li><a class="" href="relational-databases.html"><span class="header-section-number">44</span> Relational databases</a></li>
 <li><a class="" href="shiny-and-dashboards.html"><span class="header-section-number">45</span> Shiny and dashboards</a></li>
-<li><a class="" href="collaboration.html"><span class="header-section-number">46</span> Collaboration</a></li>
+<li><a class="" href="collaboration-with-github.html"><span class="header-section-number">46</span> Collaboration with Github</a></li>
 <li><a class="" href="writing-functions.html"><span class="header-section-number">47</span> Writing functions</a></li>
 <li><a class="" href="r-on-network-drives.html"><span class="header-section-number">48</span> R on network drives</a></li>
 </ul>
@@ -114,9 +114,9 @@
 <span class="header-section-number">6</span> R projects<a class="anchor" aria-label="anchor" href="#r-projects"><i class="fas fa-link"></i></a>
 </h1>
 <p>An R project enables your work to be bundled in a self-contained folder. Within the project, all the relevant scripts, data files, figures/outputs, and history are be stored in sub-folders and importantly - the <em>working directory</em> is the project’s root folder.</p>
-<div id="optimal-use" class="section level2" number="6.1">
+<div id="suggested-use" class="section level2" number="6.1">
 <h2>
-<span class="header-section-number">6.1</span> Optimal use<a class="anchor" aria-label="anchor" href="#optimal-use"><i class="fas fa-link"></i></a>
+<span class="header-section-number">6.1</span> Suggested use<a class="anchor" aria-label="anchor" href="#suggested-use"><i class="fas fa-link"></i></a>
 </h2>
 <p>A common, efficient, and trouble-free way to use R is to combine these 3 elements. Each is described in the sections below.</p>
 <ol style="list-style-type: decimal">
@@ -132,7 +132,7 @@
 </li>
 </ul>
 </li>
-<li>The <strong>rio</strong> for importing/exporting
+<li>The <strong>rio</strong> package for importing/exporting
 <ul>
 <li>
 <code>import()</code> and <code>export()</code> handle any file type by by its extension (e.g. .csv, .xlsx, .png)</li>
@@ -151,7 +151,7 @@
 </li>
 <li>If you want to create the project within an existing folder, click “Existing directory” and indicate the folder.<br>
 </li>
-<li>If you want to clone a Github repository, select the third option “Version Control” and then “Git”. See the page on [Collaboration with Github] for further details.</li>
+<li>If you want to clone a Github repository, select the third option “Version Control” and then “Git”. See the page on <a href="collaboration-with-github.html#collaboration-with-github">Collaboration with Github</a> for further details.</li>
 </ul>
 <div class="inline-figure"><img src="images/create_project.png" width="75%" style="display: block; margin: auto;"></div>
 <p>The R project you create will come in the form of a folder containing a <em>.Rproj</em> file. This file is a shortcut and likely the primary way you will open your project. You can also open a project by selecting “Open Project” from the File menu. Alternatively on the far upper right side of RStudio you will see an R project icon and a drop-down menu of available R projects.</p>
@@ -182,7 +182,7 @@
 <h3>Version control<a class="anchor" aria-label="anchor" href="#version-control"><i class="fas fa-link"></i></a>
 </h3>
 <p>Consider a version control system. It could be something as simple as having dates on the names of scripts (e.g. “transmission_analysis_2020-10-03.R”) and an “archive” folder. Consider also having commented header text at the top of each script with a description, tags, authors, and change log.</p>
-<p>A more complicated method would involve using Github or a similar platform for version control. See the page on [Collaboration with Github].</p>
+<p>A more complicated method would involve using Github or a similar platform for version control. See the page on <a href="collaboration-with-github.html#collaboration-with-github">Collaboration with Github</a>.</p>
 <p>One tip is that you can search across an entire project or folder using the “Find in Files” tool (Edit menu). It can search and even replace strings across multiple files.</p>
 </div>
 </div>
@@ -190,7 +190,7 @@
 <h2>
 <span class="header-section-number">6.3</span> Examples<a class="anchor" aria-label="anchor" href="#examples"><i class="fas fa-link"></i></a>
 </h2>
-<p>Below are some examples of import/export/saving using <code>here()</code>:</p>
+<p>Below are some examples of import/export/saving using <code>here()</code> from within an R projct. Read more about using the <strong>here</strong> package in the <a href="import-and-export.html#import-and-export">Import and export</a> page.</p>
 <p><em>Importing <code>linelist.xlsx</code> from the “data” folder in your R project</em></p>
 <div class="sourceCode" id="cb128"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">linelist</span> <span class="op">&lt;-</span> <span class="fu">import</span><span class="op">(</span><span class="fu">here</span><span class="op">(</span><span class="st">"data"</span>, <span class="st">"linelist.xlsx"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
@@ -216,7 +216,7 @@
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
 <li><a class="nav-link" href="#r-projects"><span class="header-section-number">6</span> R projects</a></li>
-<li><a class="nav-link" href="#optimal-use"><span class="header-section-number">6.1</span> Optimal use</a></li>
+<li><a class="nav-link" href="#suggested-use"><span class="header-section-number">6.1</span> Suggested use</a></li>
 <li>
 <a class="nav-link" href="#creating-an-r-project"><span class="header-section-number">6.2</span> Creating an R project</a><ul class="nav navbar-nav">
 <li><a class="nav-link" href="#switch-projects">Switch projects</a></li>
@@ -243,7 +243,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>The Epidemiologist R Handbook</strong>" was written by the handbook team. It was last built on 2021-03-11.</p>
+    <p>"<strong>The Epidemiologist R Handbook</strong>" was written by the handbook team. It was last built on 2021-03-12.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

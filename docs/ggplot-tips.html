@@ -16,7 +16,8 @@
 <script src="libs/nouislider-7.0.10/jquery.nouislider.min.js"></script><link href="libs/selectize-0.12.0/selectize.bootstrap3.css" rel="stylesheet">
 <script src="libs/selectize-0.12.0/selectize.min.js"></script><link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet">
 <script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
-<link href="libs/tabwid-1.0.0/tabwid.css" rel="stylesheet">
+<link href="libs/bsTable-3.3.7/bootstrapTable.min.css" rel="stylesheet">
+<script src="libs/bsTable-3.3.7/bootstrapTable.js"></script><link href="libs/tabwid-1.0.0/tabwid.css" rel="stylesheet">
 <link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet">
 <script src="libs/leaflet-1.3.1/leaflet.js"></script><link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet">
 <script src="libs/proj4-2.6.2/proj4.min.js"></script><script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script><link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet">
@@ -66,7 +67,6 @@
 <li><a class="" href="characters-and-strings.html"><span class="header-section-number">14</span> Characters and strings</a></li>
 <li><a class="" href="de-duplication.html"><span class="header-section-number">15</span> De-duplication</a></li>
 <li><a class="" href="iteration-and-loops.html"><span class="header-section-number">16</span> Iteration and loops</a></li>
-<li><a class="" href="import-data-7.html">Import data</a></li>
 <li class="book-part">Analysis</li>
 <li><a class="" href="descriptive-analysis.html"><span class="header-section-number">17</span> Descriptive analysis</a></li>
 <li><a class="" href="univariate-and-multivariate-regression.html"><span class="header-section-number">18</span> Univariate and multivariate regression</a></li>
@@ -99,7 +99,7 @@
 <li><a class="" href="advanced-rstudio.html"><span class="header-section-number">43</span> Advanced RStudio</a></li>
 <li><a class="" href="relational-databases.html"><span class="header-section-number">44</span> Relational databases</a></li>
 <li><a class="" href="shiny-and-dashboards.html"><span class="header-section-number">45</span> Shiny and dashboards</a></li>
-<li><a class="" href="collaboration.html"><span class="header-section-number">46</span> Collaboration</a></li>
+<li><a class="" href="collaboration-with-github.html"><span class="header-section-number">46</span> Collaboration with Github</a></li>
 <li><a class="" href="writing-functions.html"><span class="header-section-number">47</span> Writing functions</a></li>
 <li><a class="" href="r-on-network-drives.html"><span class="header-section-number">48</span> R on network drives</a></li>
 </ul>
@@ -136,7 +136,7 @@
 <h3>Load packages<a class="anchor" aria-label="anchor" href="#load-packages-16"><i class="fas fa-link"></i></a>
 </h3>
 <p>This code chunk shows the loading of packages required for the analyses. In this handbook we emphasize <code>p_load()</code> from <strong>pacman</strong>, which installs the package if necessary and loads it for use. You can also load packages with <code><a href="https://rdrr.io/r/base/library.html">library()</a></code> from <strong>base</strong> R. See the page on <a href="r-basics.html#r-basics">R basics</a> for more information on R packages.</p>
-<div class="sourceCode" id="cb1099"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1098"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span>
   <span class="va">tidyverse</span>,      <span class="co"># includes ggplot2 and other</span>
   <span class="va">rio</span>,            <span class="co"># import/export</span>
@@ -152,7 +152,7 @@
 <h3>IMport data<a class="anchor" aria-label="anchor" href="#import-data-12"><i class="fas fa-link"></i></a>
 </h3>
 <p>We import the dataset of cases from a simulated Ebola epidemic. If you want to download the data to follow step-by-step, see instructions in the <a href="datasets-used.html#datasets-used">Datasets used</a> page. The dataset is imported using the <code>import()</code> function from the <strong>rio</strong> package. See the page on <a href="import-and-export.html#import-and-export">Import and export</a> for various ways to import data.</p>
-<div class="sourceCode" id="cb1100"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1099"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">linelist_cleaned</span> <span class="op">&lt;-</span> <span class="fu">rio</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/rio/man/import.html">import</a></span><span class="op">(</span><span class="st">"linelist_cleaned.xlsx"</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="general-cleaning" class="section level3 unnumbered">
@@ -160,7 +160,7 @@
 </h3>
 <p>When preparing data to plot, it is best to make the data adhere to <a href="https://r4ds.had.co.nz/tidy-data.html">“tidy” data standards</a> as much as possible. How to achieve this is expanded on in the data management pages of this handbook, such as <a href="cleaning-data-and-core-functions.html#cleaning-data-and-core-functions">Cleaning data and core functions</a>.</p>
 <p>Some simple ways we can prepare our data to make it better for plotting can often include making the contents of the data better for display - this does not necessarily mean its better for data manipulation! For example, we can replace <code>NA</code> values in a character column with the string “Unknown”, or clean some variables so that their “data friendly” with underscores etc are changed to normal text. Here are some examples of this in action:</p>
-<div class="sourceCode" id="cb1101"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1100"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">linelist_cleaned</span> <span class="op">&lt;-</span> <span class="va">linelist_cleaned</span> <span class="op">%&gt;%</span>
   <span class="co"># make display version of columns with more friendly names</span>
   <span class="fu">mutate</span><span class="op">(</span>
@@ -177,7 +177,7 @@
 </h3>
 <p>As a matter of data structure, we often also want to pivot our data into <em>longer</em> formats, which will allow us to use a set of variables as a single variable. Read more about this is the page on <a href="pivoting-data.html#pivoting-data">Pivoting data</a>.</p>
 <p>For example, if we wanted to show the number of cases with specific symptoms, we are limited by the fact that each symptom is a specific column. We can pivot this to a longer format like this:</p>
-<div class="sourceCode" id="cb1102"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1101"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">linelist_sym</span> <span class="op">&lt;-</span> <span class="va">linelist_cleaned</span> <span class="op">%&gt;%</span>
   <span class="fu">pivot_longer</span><span class="op">(</span>cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"fever"</span>, <span class="st">"chills"</span>, <span class="st">"cough"</span>, <span class="st">"aches"</span>, <span class="st">"vomit"</span><span class="op">)</span>,
                names_to <span class="op">=</span> <span class="st">"symptom_name"</span>,
@@ -199,7 +199,7 @@
 <li>Change plot aesthetics e.g. changing the axes, labels, colour scheme, background etc.</li>
 </ol>
 <p>In code, this might look like this:</p>
-<div class="sourceCode" id="cb1103"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1102"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># define base plot attributes and dataset</span>
 <span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">linelist_cleaned</span>, mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">age</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="co"># add a geometric object with some parameters</span>
@@ -220,7 +220,7 @@ d. size of an object (`size = `)</code></pre>
 <ol start="3" style="list-style-type: decimal">
 <li>Aesthetics of geometric objects can be defined <em>explicitly</em> as in the code above - this is different from assigning them to a variable. In cases where this is done, it must be <em>outside</em> the <code>mapping</code> argument.</li>
 </ol>
-<div class="sourceCode" id="cb1105"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1104"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># correct</span>
 <span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">linelist_cleaned</span>, mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">age</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">geom_histogram</span><span class="op">(</span>col <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span>
@@ -230,7 +230,7 @@ d. size of an object (`size = `)</code></pre>
 <span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">linelist_cleaned</span>, mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">age</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">geom_histogram</span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>col <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>An example of defining aesthetics with a variable can be seen here:</p>
-<div class="sourceCode" id="cb1106"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1105"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># read in dataset</span>
 
 <span class="co"># define base plot attributes and dataset</span>
@@ -258,7 +258,7 @@ d. size of an object (`size = `)</code></pre>
 </ol>
 <p>You can also add straight lines to your plot with <code>geom_hline()</code> (horizontal), <code>geom_vline()</code> (vertical) or <code>geom_abline()</code> (with a specified y intercept and slope)</p>
 <p>There is much more detail we could show here, but we’ll finish with an example that ties these concepts together by plotting a correlation between height and weight of all the patients. We can also colour the points by age in years</p>
-<div class="sourceCode" id="cb1108"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1107"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># set up the plot and define key variables</span>
 <span class="co"># colour is the outcome</span>
 <span class="va">wt_ht_plot</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">linelist_cleaned</span>,
@@ -292,7 +292,7 @@ d. size of an object (`size = `)</code></pre>
 <code>caption</code> - bottom of plot, on the right by default</li>
 </ol>
 <p>For example, we can update the plot we previously plotted with nice labels like this:</p>
-<div class="sourceCode" id="cb1110"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1109"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">wt_ht_plot</span> <span class="op">&lt;-</span> <span class="va">wt_ht_plot</span> <span class="op">+</span> 
   <span class="co"># set the theme to classic</span>
   <span class="fu">theme_classic</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
@@ -315,7 +315,7 @@ d. size of an object (`size = `)</code></pre>
 </ol>
 <p>For example, we increase the size of the plot title with <code>size</code>, make the subtitle italicised with <code>face</code>, and right
 justify the caption with <code>hjust</code>. We’ll also change the legend location for good measure!</p>
-<div class="sourceCode" id="cb1112"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1111"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">wt_ht_plot</span> <span class="op">+</span> 
     <span class="fu">theme</span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"bottom"</span>,
           <span class="co"># size of title is 30</span>
@@ -337,7 +337,7 @@ justify the caption with <code>hjust</code>. We’ll also change the legend loca
 <p>One of the most useful tricks is using manual scaling functions to explicity define colours. These are functions with the syntax <code>scale_xxx_manual()</code> (e.g. <code>scale_colour_manual()</code>). In this function you can explicitly define which colours map to which factor using the <code>values</code> argument. You can control the legend title with the <code>name</code> argument, and the order of factors with <code>breaks</code>.</p>
 <p>If you want predefined palettes, you can use the <code>scale_xxx_brewer</code> or <code>scale_xxx_viridis_y</code> functions. The brewer functions can draw from colorbrewer.org palettes, and the viridis functions can draw from viridis (colourblind friendly!) palettes. Remember to define if the palette is discrete, continuous, or binned by specifying this at the end of the function (e.g. discrete is <code>scale_xxx_viridis_d</code>)</p>
 <p>We can see this by using the symptom-specific dataframe we made in the previous section:</p>
-<div class="sourceCode" id="cb1114"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1113"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">symp_plot</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">linelist_sym</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">symptom_name</span>, fill <span class="op">=</span> <span class="va">symptom_is_present</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="co"># show as a portion of all</span>
   <span class="fu">geom_bar</span><span class="op">(</span>position <span class="op">=</span> <span class="st">"fill"</span>, col <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> <span class="op">+</span>
@@ -349,7 +349,7 @@ justify the caption with <code>hjust</code>. We’ll also change the legend loca
 
 <span class="va">symp_plot</span></code></pre></div>
 <div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-763-1.png" width="672"></div>
-<div class="sourceCode" id="cb1115"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1114"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">symp_plot</span> <span class="op">+</span>
   <span class="fu">scale_fill_manual</span><span class="op">(</span>
     <span class="co"># explicitly define colours</span>
@@ -362,7 +362,7 @@ justify the caption with <code>hjust</code>. We’ll also change the legend loca
     name <span class="op">=</span> <span class="st">""</span>
   <span class="op">)</span> </code></pre></div>
 <div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-763-2.png" width="672"></div>
-<div class="sourceCode" id="cb1116"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1115"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">symp_plot</span> <span class="op">+</span>
   <span class="fu">scale_fill_viridis_d</span><span class="op">(</span>
     breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"yes"</span>, <span class="st">"no"</span>, <span class="st">"unknown"</span><span class="op">)</span>,
@@ -377,7 +377,7 @@ justify the caption with <code>hjust</code>. We’ll also change the legend loca
 </h2>
 <p>Changing the order that discrete variables appear in is often difficult to understand for people who are new to <code>ggplot2</code> graphs. It’s easy to understand how to do this however once you understand how <code>ggplot2</code> handles discrete variables under the hood. Generally speaking, if a discrete varaible is used, it is automatically converted to a <code>factor</code> type - which orders factors by alphabetical order by default. To handle this, you simply have to reorder the factor levels to reflect the order you would like them to appear in the chart. For more detailed information on how to reorder <code>factor</code> objects, see the factor section of the guide.</p>
 <p>We can look at a common example using age groups - by default the 5-9 age group will be placed in the middle of the age groups (given alphabetical order), but we can move it behind the 0-4 age group of the chart by releveling the factors.</p>
-<div class="sourceCode" id="cb1117"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1116"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># remove the instances of age_cat5 where data is missing</span>
 <span class="fu">ggplot</span><span class="op">(</span><span class="va">linelist_cleaned</span> <span class="op">%&gt;%</span>
          <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">age_cat5</span><span class="op">)</span><span class="op">)</span>,
@@ -401,7 +401,7 @@ justify the caption with <code>hjust</code>. We’ll also change the legend loca
 <li><p><code>facet_grid()</code> This is used when you want to bring a second variable into the faceting arrangement. Here each element of a grid is shows the intersection between an x or y element of a grid. For example, this could involve showing a different epidemic curve for each hospital in a region, shown horizontally, for each age group, shown vertically.</p></li>
 </ol>
 <p>This can quickly become an overwhelming amount of information - its good to ensure you don’t have too many levels of each variable that you choose to facet by! Here are some quick examples with the malaria dataset:</p>
-<div class="sourceCode" id="cb1118"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1117"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">malaria_data</span> <span class="op">&lt;-</span> <span class="fu">rio</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/rio/man/import.html">import</a></span><span class="op">(</span><span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"data"</span>, <span class="st">"facility_count_data.rds"</span><span class="op">)</span><span class="op">)</span> 
 
 <span class="co"># show a wrapped plot with facets by district</span>
@@ -417,7 +417,7 @@ justify the caption with <code>hjust</code>. We’ll also change the legend loca
   <span class="fu">theme_minimal</span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-765-1.png" width="672"></div>
 <p>We can also use a <code>facet_grid()</code> approach with the different age groups - we need to do some data transformations first however, as the age groups all are in their own columns - we want them in a single column. When you pass the two variables to <code>facet_grid()</code>, you can use formula notation (e.g. <code>x ~ y</code>) or wrap the variables in <code>vars()</code>. For reference, this: <code>facet_grid(x ~ y)</code> is equivalent to <code>facet_grid(rows = vars(x), cols = vars(y))</code> Here’s how we can do this:</p>
-<div class="sourceCode" id="cb1119"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1118"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">malaria_age</span> <span class="op">&lt;-</span> <span class="va">malaria_data</span> <span class="op">%&gt;%</span>
   <span class="fu">pivot_longer</span><span class="op">(</span>
     <span class="co"># choose all the columns that start with malaria rdt (age group specific)</span>
@@ -448,7 +448,7 @@ justify the caption with <code>hjust</code>. We’ll also change the legend loca
 <div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-766-1.png" width="672"></div>
 <p>While faceting is a convenient approach to plotting, sometimes its not possible to get the results you want from its relatively restrictive approach. Here, you may choose to combine plots by sticking them together into a larger plot. There are three well known packages that are great for this - <code>cowplot</code>, <code>gridExtra</code>, and <code>patchwork</code>. However, these packages largely do the same things, so we’ll focus on <code>cowplot</code> for this section.</p>
 <p>The <code>cowplot</code> package has a fairly wide range of functions, but the easiest use of it can be achieved through the use of <code>plot_grid()</code>. This is effectively a way to arrange predefined plots in a grid formation. We can work through another example with the malaria dataset - here we can plot the total cases by district, and also show the epidemic curve over time.</p>
-<div class="sourceCode" id="cb1120"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1119"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># bar chart of total cases by district</span>
 <span class="va">p1</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span><span class="va">malaria_data</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">District</span>, y <span class="op">=</span> <span class="va">malaria_tot</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">geom_bar</span><span class="op">(</span>stat <span class="op">=</span> <span class="st">"identity"</span><span class="op">)</span> <span class="op">+</span>
@@ -484,7 +484,7 @@ justify the caption with <code>hjust</code>. We’ll also change the legend loca
 <p>In <code>ggplot2</code>, it is also possible to add text to plots. However, this comes with the notable limitation where text labels often clash with data points in a plot, making them look messy or hard to read. There is no ideal way to deal with this in the base package, but there is a <code>ggplot2</code> addon, known as <code>ggrepel</code> that makes dealing with this very simple!</p>
 <p>The <code>ggrepel</code> package provides two new functions, <code>geom_label_repel()</code> and <code>and geom_text_repel()</code>, which replace <code>geom_label()</code> and <code>geom_text()</code>. Simply use these functions instead of the base functions to produce neat labels. You can also use the <code>force</code> argument to change the degree of repulsion between labels and their respective points.</p>
 <p>For our example, we will make a scatterplot showing height against weight again. We’re also going to label each point with a patient id when the patient is over 70 years of age. We’ll use a trick with filter to only show these specific points!</p>
-<div class="sourceCode" id="cb1121"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1120"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span><span class="va">ggrepel</span><span class="op">)</span>
 
 <span class="fu">ggplot</span><span class="op">(</span><span class="va">linelist_cleaned</span>, 
@@ -509,7 +509,7 @@ justify the caption with <code>hjust</code>. We’ll also change the legend loca
 <li><p><code>date_breaks</code> allows you to specify how often axis breaks occur - you can pass a string here (e.g. <code>"3 months"</code>, or "<code>2 days"</code>)</p></li>
 <li><p><code>date_labels</code> allows you to define the format dates are shown in. You can pass a date format string to these arguments (e.g. <code>"%b-%d-%Y"</code>):</p></li>
 </ol>
-<div class="sourceCode" id="cb1122"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1121"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># make epi curve by date of onset when available</span>
 <span class="fu">ggplot</span><span class="op">(</span><span class="va">linelist_cleaned</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">date_onset</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">geom_bar</span><span class="op">(</span>stat <span class="op">=</span> <span class="st">"count"</span><span class="op">)</span> <span class="op">+</span>
@@ -529,7 +529,7 @@ justify the caption with <code>hjust</code>. We’ll also change the legend loca
 </h2>
 <p>Highlighting specific elements in a chart is a useful way to draw attention to a specific instance of a variable while also providing information on the dispersion of the full dataset. While this is not easily done in base <code>ggplot2</code>, there is an external package that can help to do this known as <code>gghighlight</code>. This is easy to use within the ggplot syntax.</p>
 <p>The <code>gghighlight</code> package uses the <code><a href="https://rdrr.io/pkg/gghighlight/man/gghighlight.html">gghighlight()</a></code> function to achieve this effect. To use this function, supply a logical statement to the function - this can have quite flexible outcomes, but here we’ll show an example of the age distribution of cases in our linelist, highlighting them by outcome.</p>
-<div class="sourceCode" id="cb1123"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1122"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># load gghighlight</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/yutannihilation/gghighlight/">gghighlight</a></span><span class="op">)</span>
 
@@ -546,7 +546,7 @@ justify the caption with <code>hjust</code>. We’ll also change the legend loca
   <span class="fu">gghighlight</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/gghighlight/man/gghighlight.html">gghighlight</a></span><span class="op">(</span><span class="va">outcome</span> <span class="op">==</span> <span class="st">"Death"</span><span class="op">)</span></code></pre></div>
 <div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-770-1.png" width="672"></div>
 <p>This also works well with faceting functions - it allows the user to produce facet plots with the background data highlighted that doesn’t apply to the facet!</p>
-<div class="sourceCode" id="cb1124"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1123"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># produce a histogram of all cases by age</span>
 <span class="fu">ggplot</span><span class="op">(</span><span class="va">linelist_cleaned</span>, 
        <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">age_years</span>, fill <span class="op">=</span> <span class="va">outcome</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
@@ -583,7 +583,7 @@ justify the caption with <code>hjust</code>. We’ll also change the legend loca
 <p>Note there is another example of this technique in the [Epicurves] page - overlaying cumulative incidence on top of the epicurve.</p>
 <p><strong>Make plot 1</strong><br>
 This is essentially the epicurve. We use <code>geom_area()</code> just to demonstrate its use (area under a line, by default)</p>
-<div class="sourceCode" id="cb1125"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1124"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span><span class="va">cowplot</span><span class="op">)</span>            <span class="co"># load/install cowplot</span>
 
 <span class="va">p1</span> <span class="op">&lt;-</span> <span class="va">linelist</span> <span class="op">%&gt;%</span>                 <span class="co"># save plot as object</span>
@@ -603,7 +603,7 @@ This is essentially the epicurve. We use <code>geom_area()</code> just to demons
 <div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-772-1.png" width="672"></div>
 <p><strong>Make plot 2</strong><br>
 Create the second plot showing a line of the weekly percent of cases who died.</p>
-<div class="sourceCode" id="cb1126"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1125"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">p2</span> <span class="op">&lt;-</span> <span class="va">linelist</span> <span class="op">%&gt;%</span>         <span class="co"># save plot as object</span>
      <span class="fu">group_by</span><span class="op">(</span>
        epiweek <span class="op">=</span> <span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="http://lubridate.tidyverse.org/reference/round_date.html">floor_date</a></span><span class="op">(</span><span class="va">date_onset</span>, <span class="st">"week"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
@@ -628,7 +628,7 @@ Create the second plot showing a line of the weekly percent of cases who died.</
 <div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-773-1.png" width="672"></div>
 <p>Now we align the plot using the function <code>align_plots()</code>, specifying horizontal and vertical alignment (“hv”, could also be “h”, “v”, “none”). We specify alignment of all axes as well (top, bottom, left, and right) with “tblr”. The output is of class list (2 elements).</p>
 <p>Then we draw the two plots together using <code>ggdraw()</code> (from <strong>cowplot</strong>) and referencing the two parts of the <code>aligned_plots</code> object.</p>
-<div class="sourceCode" id="cb1127"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1126"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">aligned_plots</span> <span class="op">&lt;-</span> <span class="fu">align_plots</span><span class="op">(</span><span class="va">p1</span>, <span class="va">p2</span>, align<span class="op">=</span><span class="st">"hv"</span>, axis<span class="op">=</span><span class="st">"tblr"</span><span class="op">)</span>                  <span class="co"># align the two plots and save them as list</span>
 <span class="va">aligned_plotted</span> <span class="op">&lt;-</span> <span class="fu">ggdraw</span><span class="op">(</span><span class="va">aligned_plots</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span> <span class="op">+</span> <span class="fu">draw_plot</span><span class="op">(</span><span class="va">aligned_plots</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>  <span class="co"># overlay them and save the visual plot</span>
 <span class="va">aligned_plotted</span>                                                                <span class="co"># print the overlayed plots</span></code></pre></div>
@@ -641,7 +641,7 @@ Create the second plot showing a line of the weekly percent of cases who died.</
 <p>Differences in axis values will be purely cosmetic - if you want to show two different variables on one graph, with different y-axis scales for each variable, this will not work without some work behind the scenes. To obtain this effect, you will have to transform one of your variables in the data, and apply the same transformation <em>in reverse</em> when specifying the axis labels. Based on this, you can either specify the transformation explicitly (e.g. variable a is around 10x as large as variable b) or calculate it in the code (e.g. what is the ratio between the maximum values of each dataset).</p>
 <p>The syntax for adding a secondary axis is very straightforward! When calling a <code>scale_xxx_xxx()</code> function (e.g. <code>scale_y_continuous()</code>), use the <code>sec.axis</code> argument to call the <code>sec_axis()</code> function. The <code>trans</code> argument in this function allows you to specify the label transformation for the axis - provide this in standard tidyverse syntax.</p>
 <p>For example, if we want to show the number of positive RDTs in the malaria dataset for facility 1, showing 0-4 year olds and all cases on chart:</p>
-<div class="sourceCode" id="cb1128"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1127"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># take malaria data from facility 1</span>
 <span class="va">malaria_facility_1</span> <span class="op">&lt;-</span> <span class="va">malaria_data</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">location_name</span> <span class="op">==</span> <span class="st">"Facility 1"</span><span class="op">)</span>
@@ -679,29 +679,29 @@ Create the second plot showing a line of the weekly percent of cases who died.</
 <h3>Numeric display<a class="anchor" aria-label="anchor" href="#numeric-display"><i class="fas fa-link"></i></a>
 </h3>
 <p>You can disable scientific notation by running this command prior to plotting.</p>
-<div class="sourceCode" id="cb1129"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1128"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>scipen<span class="op">=</span><span class="fl">999</span><span class="op">)</span></code></pre></div>
 <p>Or apply <code>number_format()</code> from the <strong>scales</strong> package to a specific value or column, as shown below.</p>
 <p>Use functions from the package <strong>scales</strong> to easily adjust how numbers are displayed. These can be applied to columns in your data frame, but are shown on individual numbers for purpose of example.</p>
-<div class="sourceCode" id="cb1130"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1129"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org//reference/number.html">number</a></span><span class="op">(</span><span class="fl">6.2e5</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] "620 000"</code></pre>
-<div class="sourceCode" id="cb1132"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1131"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org//reference/number.html">number</a></span><span class="op">(</span><span class="fl">1506800.62</span>,  accuracy <span class="op">=</span> <span class="fl">0.1</span>,<span class="op">)</span></code></pre></div>
 <pre><code>## [1] "1 506 800.6"</code></pre>
-<div class="sourceCode" id="cb1134"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1133"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org//reference/label_number.html">comma</a></span><span class="op">(</span><span class="fl">1506800.62</span>, accuracy <span class="op">=</span> <span class="fl">0.01</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] "1,506,800.62"</code></pre>
-<div class="sourceCode" id="cb1136"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1135"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org//reference/label_number.html">comma</a></span><span class="op">(</span><span class="fl">1506800.62</span>, accuracy <span class="op">=</span> <span class="fl">0.01</span>,  big.mark <span class="op">=</span> <span class="st">"."</span> , decimal.mark <span class="op">=</span> <span class="st">","</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] "1.506.800,62"</code></pre>
-<div class="sourceCode" id="cb1138"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1137"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org//reference/label_percent.html">percent</a></span><span class="op">(</span><span class="fl">0.1</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] "10%"</code></pre>
-<div class="sourceCode" id="cb1140"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1139"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org//reference/label_dollar.html">dollar</a></span><span class="op">(</span><span class="fl">56</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] "$56"</code></pre>
-<div class="sourceCode" id="cb1142"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1141"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org//reference/label_scientific.html">scientific</a></span><span class="op">(</span><span class="fl">100000</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] "1e+05"</code></pre>
 </div>
@@ -809,7 +809,7 @@ guides(colour = guide_legend(override.aes = list(linetype=c(1,0)
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>The Epidemiologist R Handbook</strong>" was written by the handbook team. It was last built on 2021-03-11.</p>
+    <p>"<strong>The Epidemiologist R Handbook</strong>" was written by the handbook team. It was last built on 2021-03-12.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

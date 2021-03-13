@@ -1,4 +1,4 @@
-tab:unnamed-chunk-105
+tab:unnamed-chunk-100
 tab:unnamed-chunk-537
 style-and-editorial-notes
 approach-and-style
@@ -35,6 +35,7 @@ missing-values-1
 google-sheets
 scraping-websites
 skip-rows
+multiple-files---import-export-split-combine
 manual-data-entry
 export
 rds-files
@@ -42,7 +43,7 @@ rdata-files
 saving-plots
 resources
 r-projects
-optimal-use
+suggested-use
 creating-an-r-project
 examples
 resources-1
@@ -130,8 +131,8 @@ probabilistic-de-duplication
 resources-8
 iteration-and-loops
 preparation-7
-for-loops
 purrr
+for-loops
 resources-9
 descriptive-analysis
 preparation-8
@@ -370,7 +371,7 @@ relational-databases
 resources-37
 shiny-and-dashboards
 resources-38
-collaboration
+collaboration-with-github
 overview-21
 using-github-and-r-to-contribute
 overview-of-github
