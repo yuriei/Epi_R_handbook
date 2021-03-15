@@ -1,5 +1,6 @@
-iteration-and-loops
+standardization
+overview
 preparation
-purrr
-for-loops
+dsr-package
+pheindicatormethods-package
 resources
