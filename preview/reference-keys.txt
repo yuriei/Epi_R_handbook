@@ -1,8 +1,7 @@
-survival-analysis
+
+standardization
 overview
 preparation
-basics-of-survival-analysis
-comparison-of-survival-curves
-cox-regression-analysis
-time-dependent-covariates-in-survival-models
+dsr-package
+pheindicatormethods-package
 resources
