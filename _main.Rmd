@@ -203,7 +203,9 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 <!--chapter:end:new_pages/cat_preview.Rmd-->
 
 
+
 # Standardization { }  
+
 
 This page will show you two ways to standardize an outcome, such as hospitalizations or mortality, by characteristics such as age and sex. 
 
@@ -224,6 +226,7 @@ Let's say we would like to standardize mortality by age and sex for country A an
 <!-- ======================================================= -->
 ## Preparation {  }
 
+
 To show how standardization is done, we will use fictitious population counts and death counts from  country A and country B, by age (in 5 year categories) and sex (female, male). To make the datasets ready for use, we will perform the following preparation steps:  
 
 1. Load packages  
@@ -240,6 +243,7 @@ We also need a reference population, the standard population. There are several 
 ### Load packages {-}
 
 This code chunk shows the loading of packages required for the analyses. In this handbook we emphasize `p_load()` from **pacman**, which installs the package if necessary and loads it for use. You can also load packages with `library()` from **base** R. See the page on [R basics] for more information on R packages.  
+
 
 ```{r}
 pacman::p_load(
@@ -311,9 +315,12 @@ countryB_demo <- rio::import(here::here("data", "country_demographics_2.csv")) %
 countryB_demo <- import("country_demographics_2.csv")
 ```
 
+
 ```{r message=FALSE, echo=F}
 DT::datatable(countryB_demo, rownames = FALSE, options = list(pageLength = 5, scrollX=T), class = 'white-space: nowrap' )
 ```
+
+Besides the `summary()` function, we can also use the `str()` function that gives more details on the structure of the `survfit()` object. Among those details is an important one: *cumhaz* which allows for instance to plot the **_cumulative hazard_**, with the **_hazard_** being the **_instantaneous rate of event occurrence_** (see references).
 
 
 
@@ -347,6 +354,7 @@ Deaths in Country B
 ```{r message=FALSE, echo=F}
 DT::datatable(B_deaths, rownames = FALSE, options = list(pageLength = 5, scrollX=T), class = 'white-space: nowrap' )
 ```
+
 
 
 
@@ -437,10 +445,15 @@ DT::datatable(country_data, rownames = FALSE, options = list(pageLength = 5, scr
 
 <span style="color: orange;">**_CAUTION:_** NB. If you have few deaths per stratum, use 10-, or 15-year categories, instead of 5-year categories for age, or combine categories</span>
 
+It was interesting to run the model and look at the results but a first look to verify whether the proportional hazards assumptions is respected could help saving time.
+
+```{r test_assumption}
+
 
 
 
 ### Load reference population {-}  
+
 
 Lastly, we import the reference population (world "standard population" by sex)
 
@@ -458,6 +471,12 @@ standard_pop_data <- import("world_standard_population_by_sex.csv")
 ```{r message=FALSE, echo=F}
 DT::datatable(standard_pop_data, rownames = FALSE, options = list(pageLength = 5, scrollX=T), class = 'white-space: nowrap' )
 ```
+
+#fit the model
+linelistsurv_cox <-  coxph(
+                        Surv(futime, event) ~ gender + age_years+ source + days_onset_hosp,
+                        data = linelist_surv
+                        )
 
 
 
@@ -494,8 +513,8 @@ DT::datatable(all_data, rownames = FALSE, options = list(pageLength = 5, scrollX
 ```
 
 
-
 <!-- ======================================================= -->
+
 ## **dsr** package {  }
  
 Below we demonstrate calculating and comparing directly standardized rates using the **dsr** package. The **dsr** package allows you to calculate and compare directly standardized rates (no indirectly standardized rates!).
@@ -540,6 +559,7 @@ knitr::kable(mortality_rate) # show mortality rate before and after direct stand
 Above, we see that while country A had a lower crude mortality rate than country B, it has a higher standardized rate after direct age and sex standardization.
 
 
+Analysis of time-dependent covariates in R requires setup of a special dataset. If interested, see the more detailed paper on this by the author of the **survival** package [Using Time Dependent Covariates and Time Dependent Coefficients in the Cox Model](https://cran.r-project.org/web/packages/survival/vignettes/timedep.pdf).
 
 
 <!-- ======================================================= -->
@@ -592,6 +612,10 @@ knitr::kable(mortality_rd)
 
 Country A has 4.24 additional deaths per 100.000 population (95% CI 3.24-5.24) compared to country A.
 
+
+```{r message=FALSE, echo=F}
+DT::datatable(bmt, rownames = FALSE, options = list(pageLength = 5, scrollX=T), class = 'white-space: nowrap' )
+```
 
 
 
@@ -658,13 +682,16 @@ knitr::kable(mortality_is_rate_phe_A)
 <!-- ======================================================= -->
 ## Resources {  }
 
+
 <span style="color: darkgreen;">**_TIP:_** If you would like to see another reproducible example using **dsr** than listed in this Handbook, please go to https://mran.microsoft.com/snapshot/2020-02-12/web/packages/dsr/vignettes/dsr.html.</span>
 
 <span style="color: darkgreen;">**_TIP:_** For another example using **PHEindicatormethods**, please go to https://mran.microsoft.com/snapshot/2018-10-22/web/packages/PHEindicatormethods/vignettes/IntroductiontoPHEindicatormethods.html</span>
 
 **PHEindicatormethods** reference file: https://cran.r-project.org/web/packages/PHEindicatormethods/PHEindicatormethods.pdf 
 
+[Survminer cheastsheet](https://paulvanderlaken.files.wordpress.com/2017/08/survminer_cheatsheet.pdf)
 
+[Paper on different survival measures for cancer registry data with Rcode provided as supplementary materials](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6322561/)
 ```{r include=FALSE, cache=FALSE}
 
 # clear workspace
@@ -696,6 +723,7 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 # import the count data - facility level
 #count_data <- rio::import(here::here("data", "facility_count_data.rds"))
 ```
+
 
 <!--chapter:end:new_pages/standardization.Rmd-->
 
