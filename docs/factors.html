@@ -146,7 +146,7 @@
 <p>We import the dataset of cases from a simulated Ebola epidemic. If you want to download the data to follow step-by-step, see instructions in the <a href="datasets-used.html#datasets-used">Datasets used</a> page. The dataset is imported using the <code>import()</code> function from the <strong>rio</strong> package. See the page on <a href="import-and-export.html#import-and-export">Import and export</a> for various ways to import data.</p>
 <div class="sourceCode" id="cb339"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># fake import the linelist</span>
-<span class="va">linelist</span> <span class="op">&lt;-</span> <span class="fu">rio</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/rio/man/import.html">import</a></span><span class="op">(</span><span class="st">"linelist_cleaned.xlsx"</span><span class="op">)</span></code></pre></div>
+<span class="va">linelist</span> <span class="op">&lt;-</span> <span class="fu">import</span><span class="op">(</span><span class="st">"linelist_cleaned.xlsx"</span><span class="op">)</span></code></pre></div>
 <!-- ======================================================= -->
 </div>
 </div>
@@ -176,7 +176,7 @@ This probably does not make sense to show.</p>
 <code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">linelist</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">delay</span><span class="op">)</span><span class="op">)</span><span class="op">+</span>
   <span class="fu">geom_bar</span><span class="op">(</span><span class="op">)</span><span class="op">+</span>
   <span class="fu">theme_classic</span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-242-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-240-1.png" width="672"></div>
 </div>
 <div id="convert-to-factor" class="section level2" number="10.3">
 <h2>
@@ -228,7 +228,7 @@ This probably does not make sense to show.</p>
 <div class="sourceCode" id="cb348"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">linelist</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="fu">fct_relevel</span><span class="op">(</span><span class="va">delay</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"&lt;2 days"</span>, <span class="st">"2-5 days"</span>, <span class="st">"&gt;5 days"</span>, <span class="st">"Missing"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">+</span>
   <span class="fu">geom_bar</span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-246-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-244-1.png" width="672"></div>
 <p>Note how the default x-axis label is now quite complicated - you can overwrite this with the <code>labs()</code> in ggplot.</p>
 <p><strong><code>fct_infreq()</code></strong></p>
 <p>To order by frequency that the value appears in the data, use <code>fct_infreq()</code>. Any missing values (<code>NA</code>) will automatically be included at the end.</p>
@@ -243,7 +243,7 @@ This probably does not make sense to show.</p>
 <span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">linelist</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="fu">fct_rev</span><span class="op">(</span><span class="fu">fct_infreq</span><span class="op">(</span><span class="va">delay</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">+</span>
   <span class="fu">geom_bar</span><span class="op">(</span><span class="op">)</span><span class="op">+</span>
   <span class="fu">labs</span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Delay onset to admission (days)"</span><span class="op">)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-247-1.png" width="50%"><img src="_main_files/figure-html/unnamed-chunk-247-2.png" width="50%"></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-245-1.png" width="50%"><img src="_main_files/figure-html/unnamed-chunk-245-2.png" width="50%"></p>
 <p><strong><code>fct_reorder()</code></strong></p>
 <p>Use this function to order the levels by another column. For example, to order boxplots showing delay <em>by the median CT value of each delay group</em>.</p>
 <p>In the examples below, the x-axis if delay group, and the y = axis is CT value. The boxplots are also colored by delay group.</p>
@@ -261,7 +261,7 @@ In the second example, the x-axis column has been wrapped in <code>fct_reorder()
        title <span class="op">=</span> <span class="st">"Ordered by increasing delay (original factor levels)"</span><span class="op">)</span><span class="op">+</span>
   <span class="fu">theme_classic</span><span class="op">(</span><span class="op">)</span><span class="op">+</span>
   <span class="fu">theme</span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-248-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-246-1.png" width="672"></div>
 <div class="sourceCode" id="cb351"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># boxplots ordered by median CT value</span>
 <span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">linelist</span><span class="op">)</span><span class="op">+</span>
@@ -273,7 +273,7 @@ In the second example, the x-axis column has been wrapped in <code>fct_reorder()
        title <span class="op">=</span> <span class="st">"Ordered by median CT value in group"</span><span class="op">)</span><span class="op">+</span>
   <span class="fu">theme_classic</span><span class="op">(</span><span class="op">)</span><span class="op">+</span>
   <span class="fu">theme</span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-248-2.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-246-2.png" width="672"></div>
 <p><strong><code>fct_reorder2()</code></strong></p>
 <p>Use this function to order the <em>legend colors</em> by the vertical order of groups at the “end” of the plot. For example, if you have lines showing case counts by hospital over time, you can apply <code>fct_reorder2()</code> to the <code>color =</code> argument within <code>aes()</code>, such that the vertical order of hospitals appearing in the legend aligns with the order of lines at the terminal end of the plot. Read more in the <a href="https://forcats.tidyverse.org/reference/fct_reorder.html">function documentation</a>.</p>
 <div class="sourceCode" id="cb352"><pre class="downlit sourceCode r">
@@ -289,7 +289,7 @@ In the second example, the x-axis column has been wrapped in <code>fct_reorder()
         y <span class="op">=</span> <span class="va">n</span>,        <span class="co"># height in number of rows</span>
         color <span class="op">=</span> <span class="fu">fct_reorder2</span><span class="op">(</span><span class="va">hospital</span>, <span class="va">epiweek</span>, <span class="va">n</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">+</span> <span class="co"># grouped by hospital and colors ordered by n value at end of plot</span>
   <span class="fu">labs</span><span class="op">(</span>color <span class="op">=</span> <span class="st">"Hospital"</span><span class="op">)</span>  <span class="co"># change legend title</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-249-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-247-1.png" width="672"></div>
 <p><strong><code>fct_lump()</code></strong></p>
 <p>To “lump” together many low-frequency levels into an “Other” group, you can use this function. Do one of the following:</p>
 <ul>
@@ -303,7 +303,7 @@ In the second example, the x-axis column has been wrapped in <code>fct_reorder()
   <span class="fu">geom_bar</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="fu">fct_lump</span><span class="op">(</span><span class="va">hospital</span>,    <span class="co"># column for x-axis</span>
                             n <span class="op">=</span> <span class="fl">2</span>,       <span class="co"># keep two most-frequent levels</span>
                             other_level <span class="op">=</span> <span class="st">"Other hospitals"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="co"># label for "Other" group</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-250-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-248-1.png" width="672"></div>
 <p>You can also use <code>fct_other()</code> to manually assign factor levels to an “Other” group. Below, all <code>hospital</code> values aside from “Port Hospital” and “Central Hospital” are combined into “Other”.</p>
 <p>You can use the arguments <code>keep =</code>, or <code>drop =</code>, and can change the label of “Other” with <code>other_label =</code>.</p>
 <div class="sourceCode" id="cb354"><pre class="downlit sourceCode r">
@@ -445,7 +445,7 @@ Below, the labels of the factor column <code>delay</code> (grouped days from ons
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>The Epidemiologist R Handbook</strong>" was written by the handbook team. It was last built on 2021-03-12.</p>
+    <p>"<strong>The Epidemiologist R Handbook</strong>" was written by the handbook team. It was last built on 2021-03-15.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

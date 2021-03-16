@@ -123,7 +123,7 @@
 <strong>fs</strong> package<a class="anchor" aria-label="anchor" href="#fs-package"><i class="fas fa-link"></i></a>
 </h3>
 <p>The <strong>fs</strong> package is a <strong>tidyverse</strong> package that facilitate directory interactions, improving on some of the <strong>base</strong> R functions. In the sections below we will often use functions from <strong>fs</strong>.</p>
-<div class="sourceCode" id="cb1436"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1446"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span><span class="va">fs</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="print-directory-as-a-dendrogram-tree" class="section level3" number="39.1.1">
@@ -132,7 +132,7 @@
 </h3>
 <p>Use the function <code>dir_tree()</code> from <strong>fs</strong>.</p>
 <p>Provide the folder filepath to <code>path =</code> and decide whether you want to show only one level (<code>recurse = FALSE</code>) or all files in all sub-levels (<code>recurse = TRUE</code>). Below we use <code>here("data)</code> as shorthand for the R project and it’s sub-folder “data”, which contains all the data used for this R handbook. We use set it to display all files within “data” and its sub-folders (e.g. “cache”, “epidemic models”, “population”, “shp”, and “weather”).</p>
-<div class="sourceCode" id="cb1437"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1447"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="http://fs.r-lib.org/reference/dir_tree.html">dir_tree</a></span><span class="op">(</span>path <span class="op">=</span> <span class="fu">here</span><span class="op">(</span><span class="st">"data"</span><span class="op">)</span>, recurse <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <pre><code>## C:/Users/Neale/OneDrive - Neale Batra/Documents/Analytic Software/R/Projects/R handbook/Epi_R_handbook/data
 ## +-- africa_countries.geo.json
@@ -206,8 +206,7 @@
 ## |   +-- germany_weather2009.nc
 ## |   +-- germany_weather2010.nc
 ## |   \-- germany_weather2011.nc
-## +-- world_standard_population_by_sex.csv
-## \-- ~$hospital_linelists.xlsx</code></pre>
+## \-- world_standard_population_by_sex.csv</code></pre>
 </div>
 </div>
 <div id="accessing-files-in-the-directory" class="section level2" number="39.2">
@@ -224,7 +223,7 @@
 <code>source()</code><a class="anchor" aria-label="anchor" href="#source"><i class="fas fa-link"></i></a>
 </h3>
 <p>To run one R script from another R script, you can use the <code><a href="https://rdrr.io/r/base/source.html">source()</a></code> command (from <strong>base</strong> R).</p>
-<div class="sourceCode" id="cb1439"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1449"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/source.html">source</a></span><span class="op">(</span><span class="fu">here</span><span class="op">(</span><span class="st">"scripts"</span>, <span class="st">"cleaning_scripts"</span>, <span class="st">"clean_testing_data.R"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>This is equivalent to viewing the above R script and clicking the “Source” button in the upper-right of the script. This will execute the script but will do it silently (no output to the R console) unless specifically intended. See the page on [Interactive console] for examples of using <code><a href="https://rdrr.io/r/base/source.html">source()</a></code> to interact with a user via the R console in question-and-answer mode.</p>
 <div class="inline-figure"><img src="images/source_button.png" width="82" style="display: block; margin: auto;"></div>
@@ -240,12 +239,12 @@
 <h3>Run files in a directory<a class="anchor" aria-label="anchor" href="#run-files-in-a-directory"><i class="fas fa-link"></i></a>
 </h3>
 <p>You can create a <em>for loop</em> and use it to <code><a href="https://rdrr.io/r/base/source.html">source()</a></code> every file in a directory, as identified with <code><a href="https://rdrr.io/r/base/list.files.html">dir()</a></code>.</p>
-<div class="sourceCode" id="cb1440"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1450"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw">for</span><span class="op">(</span><span class="va">script</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/list.files.html">dir</a></span><span class="op">(</span><span class="fu">here</span><span class="op">(</span><span class="st">"scripts"</span><span class="op">)</span>, pattern <span class="op">=</span> <span class="st">".R$"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>   <span class="co"># for each script name in the R Project's "scripts" folder (with .R extension)</span>
   <span class="kw"><a href="https://rdrr.io/r/base/source.html">source</a></span><span class="op">(</span><span class="fu">here</span><span class="op">(</span><span class="st">"scripts"</span>, <span class="va">script</span><span class="op">)</span><span class="op">)</span>                        <span class="co"># source the file with the matching name that exists in the scripts folder</span>
 <span class="op">}</span></code></pre></div>
 <p>If you only want to run certain scripts, you can identify them by name like this:</p>
-<div class="sourceCode" id="cb1441"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1451"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">scripts_to_run</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>
      <span class="st">"epicurves.R"</span>,
      <span class="st">"demographic_tables.R"</span>,
@@ -278,7 +277,7 @@ See the page on <a href="iteration-and-loops.html#iteration-and-loops">Iteration
 <span class="header-section-number">39.4</span> <strong>base</strong> R<a class="anchor" aria-label="anchor" href="#base-r-4"><i class="fas fa-link"></i></a>
 </h2>
 <p>See below the functions <code><a href="https://rdrr.io/r/base/list.files.html">list.files()</a></code> and <code><a href="https://rdrr.io/r/base/list.files.html">dir()</a></code>, which perform the same operation of listing files within a specified directory. You can specify <code>ignore.case =</code> or a specific patter to look for.</p>
-<div class="sourceCode" id="cb1442"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1452"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/list.files.html">list.files</a></span><span class="op">(</span>path <span class="op">=</span> <span class="fu">here</span><span class="op">(</span><span class="st">"data"</span><span class="op">)</span><span class="op">)</span>
 
 <span class="fu"><a href="https://rdrr.io/r/base/list.files.html">list.files</a></span><span class="op">(</span>path <span class="op">=</span> <span class="fu">here</span><span class="op">(</span><span class="st">"data"</span><span class="op">)</span>, pattern <span class="op">=</span> <span class="st">".csv"</span><span class="op">)</span>
@@ -336,7 +335,7 @@ See the page on <a href="iteration-and-loops.html#iteration-and-loops">Iteration
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>The Epidemiologist R Handbook</strong>" was written by the handbook team. It was last built on 2021-03-12.</p>
+    <p>"<strong>The Epidemiologist R Handbook</strong>" was written by the handbook team. It was last built on 2021-03-15.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

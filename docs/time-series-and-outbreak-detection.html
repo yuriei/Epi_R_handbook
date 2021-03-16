@@ -172,8 +172,8 @@ package to fit models that are more appropriate for infectious disease epidemiol
 <code class="sourceCode R"><span class="co"># import the linelist</span>
 <span class="va">counts</span> <span class="op">&lt;-</span> <span class="fu">rio</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/rio/man/import.html">import</a></span><span class="op">(</span><span class="st">"campylobacter_germany.xlsx"</span><span class="op">)</span></code></pre></div>
 <p>The first 10 rows of the counts are displayed below.</p>
-<div id="htmlwidget-6dd5a6479acea3424c2c" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-6dd5a6479acea3424c2c">{"x":{"filter":"none","data":[["2001-12-31T00:00:00Z","2002-01-07T00:00:00Z","2002-01-14T00:00:00Z","2002-01-21T00:00:00Z","2002-01-28T00:00:00Z","2002-02-04T00:00:00Z","2002-02-11T00:00:00Z","2002-02-18T00:00:00Z","2002-02-25T00:00:00Z","2002-03-04T00:00:00Z"],[514,913,1023,887,815,792,803,807,692,705]],"container":"<table class=\"white-space: nowrap\">\n  <thead>\n    <tr>\n      <th>date<\/th>\n      <th>case<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"scrollX":true,"columnDefs":[{"className":"dt-right","targets":1}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-5c5bc5d983a6969135cb" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-5c5bc5d983a6969135cb">{"x":{"filter":"none","data":[["2001-12-31T00:00:00Z","2002-01-07T00:00:00Z","2002-01-14T00:00:00Z","2002-01-21T00:00:00Z","2002-01-28T00:00:00Z","2002-02-04T00:00:00Z","2002-02-11T00:00:00Z","2002-02-18T00:00:00Z","2002-02-25T00:00:00Z","2002-03-04T00:00:00Z"],[514,913,1023,887,815,792,803,807,692,705]],"container":"<table class=\"white-space: nowrap\">\n  <thead>\n    <tr>\n      <th>date<\/th>\n      <th>case<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"scrollX":true,"columnDefs":[{"className":"dt-right","targets":1}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
 </div>
 <div id="clean-data-1" class="section level3 unnumbered">
 <h3>Clean data<a class="anchor" aria-label="anchor" href="#clean-data-1"><i class="fas fa-link"></i></a>
@@ -663,14 +663,14 @@ the observed counts.</p>
   <span class="fu">geom_line</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> 
   <span class="fu">labs</span><span class="op">(</span>x <span class="op">=</span> <span class="st">"epiweek"</span>, y <span class="op">=</span> <span class="st">"Residuals"</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-685-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-688-1.png" width="672"></div>
 <div class="sourceCode" id="cb934"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## is there autocorelation in the residuals (is there a pattern to the error?)  </span>
 <span class="va">observed</span> <span class="op">%&gt;%</span> 
   <span class="fu">as_tsibble</span><span class="op">(</span>index <span class="op">=</span> <span class="va">epiweek</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">ACF</span><span class="op">(</span><span class="va">resid</span>, lag_max <span class="op">=</span> <span class="fl">52</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">autoplot</span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-685-2.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-688-2.png" width="672"></div>
 <div class="sourceCode" id="cb935"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## are residuals normally distributed (are under or over estimating?)  </span>
 <span class="va">observed</span> <span class="op">%&gt;%</span>
@@ -678,7 +678,7 @@ the observed counts.</p>
   <span class="fu">geom_histogram</span><span class="op">(</span>binwidth <span class="op">=</span> <span class="fl">100</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">geom_rug</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">labs</span><span class="op">(</span>y <span class="op">=</span> <span class="st">"count"</span><span class="op">)</span> </code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-685-3.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-688-3.png" width="672"></div>
 <div class="sourceCode" id="cb936"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## compare observed counts to their residuals </span>
   <span class="co">## should also be no pattern </span>
@@ -686,7 +686,7 @@ the observed counts.</p>
   <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">estimate</span>, y <span class="op">=</span> <span class="va">resid</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">labs</span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Fitted"</span>, y <span class="op">=</span> <span class="st">"Residuals"</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-685-4.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-688-4.png" width="672"></div>
 <div class="sourceCode" id="cb937"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## formally test autocorrelation of the residuals</span>
 <span class="co">## H0 is that residuals are from a white-noise series (i.e. random)</span>
@@ -878,14 +878,14 @@ so it may be more feasible to stick with the simpler model without temperature.<
   <span class="fu">labs</span><span class="op">(</span>x <span class="op">=</span> <span class="st">"epiweek"</span>, y <span class="op">=</span> <span class="st">"Residuals"</span><span class="op">)</span></code></pre></div>
 <pre><code>## Warning: Removed 4 row(s) containing missing values (geom_path).</code></pre>
 <pre><code>## Warning: Removed 4 rows containing missing values (geom_point).</code></pre>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-686-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-689-1.png" width="672"></div>
 <div class="sourceCode" id="cb953"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## is there autocorelation in the residuals (is there a pattern to the error?)  </span>
 <span class="va">observed</span> <span class="op">%&gt;%</span> 
   <span class="fu">as_tsibble</span><span class="op">(</span>index <span class="op">=</span> <span class="va">epiweek</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">ACF</span><span class="op">(</span><span class="va">resid</span>, lag_max <span class="op">=</span> <span class="fl">52</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">autoplot</span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-686-2.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-689-2.png" width="672"></div>
 <div class="sourceCode" id="cb954"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## are residuals normally distributed (are under or over estimating?)  </span>
 <span class="va">observed</span> <span class="op">%&gt;%</span>
@@ -894,7 +894,7 @@ so it may be more feasible to stick with the simpler model without temperature.<
   <span class="fu">geom_rug</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">labs</span><span class="op">(</span>y <span class="op">=</span> <span class="st">"count"</span><span class="op">)</span> </code></pre></div>
 <pre><code>## Warning: Removed 4 rows containing non-finite values (stat_bin).</code></pre>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-686-3.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-689-3.png" width="672"></div>
 <div class="sourceCode" id="cb956"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## compare observed counts to their residuals </span>
   <span class="co">## should also be no pattern </span>
@@ -903,7 +903,7 @@ so it may be more feasible to stick with the simpler model without temperature.<
   <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">labs</span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Fitted"</span>, y <span class="op">=</span> <span class="st">"Residuals"</span><span class="op">)</span></code></pre></div>
 <pre><code>## Warning: Removed 4 rows containing missing values (geom_point).</code></pre>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-686-4.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-689-4.png" width="672"></div>
 <div class="sourceCode" id="cb958"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## formally test autocorrelation of the residuals</span>
 <span class="co">## H0 is that residuals are from a white-noise series (i.e. random)</span>
@@ -1639,7 +1639,7 @@ significant change.</p>
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>The Epidemiologist R Handbook</strong>" was written by the handbook team. It was last built on 2021-03-12.</p>
+    <p>"<strong>The Epidemiologist R Handbook</strong>" was written by the handbook team. It was last built on 2021-03-15.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
