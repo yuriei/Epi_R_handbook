@@ -1,7 +1,9 @@
-
-standardization
-overview
+tab:unnamed-chunk-12
+descriptive-analysis
 preparation
-dsr-package
-pheindicatormethods-package
+browse-data
+descriptive-tables
+simple-statistical-tests
+chi-squared-test-1
+correlations
 resources
