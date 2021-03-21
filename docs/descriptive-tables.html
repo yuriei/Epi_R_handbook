@@ -1,0 +1,3853 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>17 Descriptive tables | The Epidemiologist R Handbook</title>
+<meta name="author" content="the handbook team">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.2"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.6/header-attrs.js"></script><script src="libs/jquery-3.5.1/jquery-3.5.1.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.5.3/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.5.3/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.2.3.9000/tabs.js"></script><script src="libs/bs3compat-0.2.3.9000/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script><link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet">
+<script src="libs/datatables-binding-0.15/datatables.js"></script><link href="libs/dt-core-1.10.20/css/jquery.dataTables.min.css" rel="stylesheet">
+<link href="libs/dt-core-1.10.20/css/jquery.dataTables.extra.css" rel="stylesheet">
+<script src="libs/dt-core-1.10.20/js/jquery.dataTables.min.js"></script><link href="libs/nouislider-7.0.10/jquery.nouislider.min.css" rel="stylesheet">
+<script src="libs/nouislider-7.0.10/jquery.nouislider.min.js"></script><link href="libs/selectize-0.12.0/selectize.bootstrap3.css" rel="stylesheet">
+<script src="libs/selectize-0.12.0/selectize.min.js"></script><link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet">
+<script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+<link href="libs/tabwid-1.0.0/tabwid.css" rel="stylesheet">
+<link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet">
+<script src="libs/leaflet-1.3.1/leaflet.js"></script><link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet">
+<script src="libs/proj4-2.6.2/proj4.min.js"></script><script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script><link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet">
+<script src="libs/leaflet-binding-2.0.4.1/leaflet.js"></script><script src="libs/leaflet-providers-1.9.0/leaflet-providers_1.9.0.js"></script><script src="libs/leaflet-providers-plugin-2.0.4.1/leaflet-providers-plugin.js"></script><script src="libs/viz-1.8.2/viz.js"></script><link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet">
+<script src="libs/grViz-binding-1.0.6.1/grViz.js"></script><script src="libs/d3-4.5.0/d3.min.js"></script><script src="libs/sankey-1/sankey.js"></script><script src="libs/sankeyNetwork-binding-0.4/sankeyNetwork.js"></script><script src="libs/plotly-binding-4.9.3/plotly.js"></script><script src="libs/typedarray-0.1/typedarray.min.js"></script><link href="libs/plotly-htmlwidgets-css-1.57.1/plotly-htmlwidgets.css" rel="stylesheet">
+<script src="libs/plotly-main-1.57.1/plotly-latest.min.js"></script><link href="libs/vis-4.20.1/vis.css" rel="stylesheet">
+<script src="libs/vis-4.20.1/vis.min.js"></script><script src="libs/visNetwork-binding-2.0.9/visNetwork.js"></script><link href="libs/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<script src="libs/plotly-basic-1.57.1/plotly-basic-1.57.1.min.js"></script><script src="libs/plotly-cartesian-1.57.1/plotly-cartesian-1.57.1.min.js"></script><script src="https://cdn.jsdelivr.net/autocomplete.js/0/autocomplete.jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/mark.js@8.11.1/dist/mark.min.js"></script><!-- CSS --><link rel="stylesheet" href="style_bs4.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">The Epidemiologist R Handbook</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html"></a></li>
+<li class="book-part">About this book</li>
+<li><a class="" href="style-and-editorial-notes.html"><span class="header-section-number">1</span> Style and editorial notes</a></li>
+<li><a class="" href="datasets-used.html"><span class="header-section-number">2</span> Datasets used</a></li>
+<li class="book-part">Basics</li>
+<li><a class="" href="r-basics.html"><span class="header-section-number">3</span> R Basics</a></li>
+<li><a class="" href="transition-to-r.html"><span class="header-section-number">4</span> Transition to R</a></li>
+<li><a class="" href="import-and-export.html"><span class="header-section-number">5</span> Import and export</a></li>
+<li><a class="" href="r-projects.html"><span class="header-section-number">6</span> R projects</a></li>
+<li><a class="" href="suggested-packages-1.html"><span class="header-section-number">7</span> Suggested packages</a></li>
+<li class="book-part">Data Management</li>
+<li><a class="" href="cleaning-data-and-core-functions.html"><span class="header-section-number">8</span> Cleaning data and core functions</a></li>
+<li><a class="" href="working-with-dates.html"><span class="header-section-number">9</span> Working with dates</a></li>
+<li><a class="" href="factors.html"><span class="header-section-number">10</span> Factors</a></li>
+<li><a class="" href="pivoting-data.html"><span class="header-section-number">11</span> Pivoting data</a></li>
+<li><a class="" href="grouping-data.html"><span class="header-section-number">12</span> Grouping data</a></li>
+<li><a class="" href="joining-data.html"><span class="header-section-number">13</span> Joining data</a></li>
+<li><a class="" href="characters-and-strings.html"><span class="header-section-number">14</span> Characters and strings</a></li>
+<li><a class="" href="de-duplication.html"><span class="header-section-number">15</span> De-duplication</a></li>
+<li><a class="" href="iteration-and-loops.html"><span class="header-section-number">16</span> Iteration and loops</a></li>
+<li class="book-part">Analysis</li>
+<li><a class="active" href="descriptive-tables.html"><span class="header-section-number">17</span> Descriptive tables</a></li>
+<li><a class="" href="simple-statistical-tests.html"><span class="header-section-number">18</span> Simple statistical tests</a></li>
+<li><a class="" href="univariate-and-multivariate-regression.html"><span class="header-section-number">19</span> Univariate and multivariate regression</a></li>
+<li><a class="" href="missing-data.html"><span class="header-section-number">20</span> Missing data</a></li>
+<li><a class="" href="standardization.html"><span class="header-section-number">21</span> Standardization</a></li>
+<li><a class="" href="moving-averages.html"><span class="header-section-number">22</span> Moving averages</a></li>
+<li><a class="" href="time-series-and-outbreak-detection.html"><span class="header-section-number">23</span> Time series and outbreak detection</a></li>
+<li><a class="" href="epidemic-modeling.html"><span class="header-section-number">24</span> Epidemic modeling</a></li>
+<li><a class="" href="survey-analysis.html"><span class="header-section-number">25</span> Survey analysis</a></li>
+<li><a class="" href="survival-analysis.html"><span class="header-section-number">26</span> Survival analysis</a></li>
+<li><a class="" href="gis-basics.html"><span class="header-section-number">27</span> GIS basics</a></li>
+<li class="book-part">Data Visualization</li>
+<li><a class="" href="ggplot-tips.html"><span class="header-section-number">28</span> ggplot tips</a></li>
+<li><a class="" href="epidemic-curves.html"><span class="header-section-number">29</span> Epidemic curves</a></li>
+<li><a class="" href="plot-continuous-data.html"><span class="header-section-number">30</span> Plot continuous data</a></li>
+<li><a class="" href="plot-categorical-data.html"><span class="header-section-number">31</span> Plot categorical data</a></li>
+<li><a class="" href="tables.html"><span class="header-section-number">32</span> Tables</a></li>
+<li><a class="" href="age-pyramids-and-likert-scales.html"><span class="header-section-number">33</span> Age pyramids and Likert-scales</a></li>
+<li><a class="" href="diagrams.html"><span class="header-section-number">34</span> Diagrams</a></li>
+<li><a class="" href="combinations-analysis.html"><span class="header-section-number">35</span> Combinations analysis</a></li>
+<li><a class="" href="heatmaps.html"><span class="header-section-number">36</span> Heatmaps</a></li>
+<li><a class="" href="transmission-chains.html"><span class="header-section-number">37</span> Transmission chains</a></li>
+<li><a class="" href="phylogenetic-trees.html"><span class="header-section-number">38</span> Phylogenetic trees</a></li>
+<li><a class="" href="interactive-plots.html"><span class="header-section-number">39</span> Interactive plots</a></li>
+<li class="book-part">Advanced</li>
+<li><a class="" href="directory-interactions.html"><span class="header-section-number">40</span> Directory interactions</a></li>
+<li><a class="" href="r-markdown-1.html"><span class="header-section-number">41</span> R Markdown</a></li>
+<li><a class="" href="routine-reports.html"><span class="header-section-number">42</span> Routine reports</a></li>
+<li><a class="" href="errors-warnings-1.html"><span class="header-section-number">43</span> Errors &amp; warnings</a></li>
+<li><a class="" href="advanced-rstudio.html"><span class="header-section-number">44</span> Advanced RStudio</a></li>
+<li><a class="" href="relational-databases.html"><span class="header-section-number">45</span> Relational databases</a></li>
+<li><a class="" href="shiny-and-dashboards.html"><span class="header-section-number">46</span> Shiny and dashboards</a></li>
+<li><a class="" href="collaboration-with-github.html"><span class="header-section-number">47</span> Collaboration with Github</a></li>
+<li><a class="" href="writing-functions.html"><span class="header-section-number">48</span> Writing functions</a></li>
+<li><a class="" href="r-on-network-drives.html"><span class="header-section-number">49</span> R on network drives</a></li>
+</ul>
+
+        <div class="book-extra">
+          
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="descriptive-tables" class="section level1" number="17">
+<h1>
+<span class="header-section-number">17</span> Descriptive tables<a class="anchor" aria-label="anchor" href="#descriptive-tables"><i class="fas fa-link"></i></a>
+</h1>
+<p>This page demonstrates the use of <strong>janitor</strong>, <strong>dplyr</strong>, and <strong>gtsummary</strong> to produce tables and descriptive statistics. Each of these tools have advantages and disadvantages in the areas of code simplicity, accessibility of outputs, quality of printed outputs. We hope one of these approaches works for you.</p>
+<!-- ======================================================= -->
+<div id="preparation-8" class="section level2" number="17.1">
+<h2>
+<span class="header-section-number">17.1</span> Preparation<a class="anchor" aria-label="anchor" href="#preparation-8"><i class="fas fa-link"></i></a>
+</h2>
+<div id="load-packages-9" class="section level3 unnumbered">
+<h3>Load packages<a class="anchor" aria-label="anchor" href="#load-packages-9"><i class="fas fa-link"></i></a>
+</h3>
+<p>This code chunk shows the loading of packages required for the analyses. In this handbook we emphasize <code>p_load()</code> from <strong>pacman</strong>, which installs the package if necessary and loads it for use. You can also load packages with <code><a href="https://rdrr.io/r/base/library.html">library()</a></code> from <strong>base</strong> R. See the page on <a href="r-basics.html#r-basics">R basics</a> for more information on R packages.</p>
+<div class="sourceCode" id="cb703"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span>
+  <span class="va">rio</span>,          <span class="co"># File import</span>
+  <span class="va">here</span>,         <span class="co"># File locator</span>
+  <span class="va">skimr</span>,        <span class="co"># get overview of data</span>
+  <span class="va">tidyverse</span>,    <span class="co"># data management + ggplot2 graphics, </span>
+  <span class="va">gtsummary</span>,    <span class="co"># summary statistics and tests</span>
+  <span class="va">janitor</span>,      <span class="co"># adding totals and percents to tables</span>
+  <span class="va">flextable</span>,    <span class="co"># converting tables to HTML</span>
+  <span class="va">corrr</span>         <span class="co"># correlation analayis for numeric variables</span>
+  <span class="op">)</span></code></pre></div>
+</div>
+<div id="import-data-8" class="section level3 unnumbered">
+<h3>Import data<a class="anchor" aria-label="anchor" href="#import-data-8"><i class="fas fa-link"></i></a>
+</h3>
+<p>We import the dataset of cases from a simulated Ebola epidemic. If you want to download the data to follow step-by-step, see instructions in the <a href="datasets-used.html#datasets-used">Datasets used</a> page. The dataset is imported using the <code>import()</code> function from the <strong>rio</strong> package. See the page on <a href="import-and-export.html#import-and-export">Import and export</a> for various ways to import data.</p>
+<div class="sourceCode" id="cb704"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># import the linelist</span>
+<span class="va">linelist</span> <span class="op">&lt;-</span> <span class="fu">import</span><span class="op">(</span><span class="st">"linelist_cleaned.xlsx"</span><span class="op">)</span></code></pre></div>
+<p>The first 50 rows of the linelist are displayed below.</p>
+<div id="htmlwidget-71c840e59a3481f05810" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-71c840e59a3481f05810">{"x":{"filter":"top","filterHTML":"<tr>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"2\" data-max=\"12\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"date\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"1399075200000\" data-max=\"1406419200000\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"date\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"1399507200000\" data-max=\"1406505600000\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"date\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"1399680000000\" data-max=\"1406678400000\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"date\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"1400025600000\" data-max=\"1407715200000\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"0\" data-max=\"51\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"disabled\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"0\" data-max=\"51\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"factor\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"width: 100%; display: none;\">\n      <select multiple=\"multiple\" style=\"width: 100%;\" data-options=\"[&quot;0-4&quot;,&quot;5-9&quot;,&quot;10-14&quot;,&quot;15-19&quot;,&quot;20-29&quot;,&quot;30-49&quot;,&quot;50-69&quot;,&quot;70+&quot;]\"><\/select>\n    <\/div>\n  <\/td>\n  <td data-type=\"factor\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"width: 100%; display: none;\">\n      <select multiple=\"multiple\" style=\"width: 100%;\" data-options=\"[&quot;0-4&quot;,&quot;5-9&quot;,&quot;10-14&quot;,&quot;15-19&quot;,&quot;20-24&quot;,&quot;25-29&quot;,&quot;30-34&quot;,&quot;35-39&quot;,&quot;40-44&quot;,&quot;45-49&quot;,&quot;50-54&quot;,&quot;55-59&quot;,&quot;60-64&quot;,&quot;65-69&quot;,&quot;70-74&quot;,&quot;75-79&quot;,&quot;80-84&quot;,&quot;85+&quot;]\"><\/select>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"-13.2630592726116\" data-max=\"-13.2087039682346\" data-scale=\"13\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"8.45136291368722\" data-max=\"8.48802917129884\" data-scale=\"14\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"0\" data-max=\"92\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"22\" data-max=\"257\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"20\" data-max=\"23\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"36\" data-max=\"37.8\" data-scale=\"1\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"0\" data-max=\"486.111111111111\" data-scale=\"14\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"0\" data-max=\"2\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","data":[["a3c8b8","d8a13d","5fe599","8689b7","11f8ea","893f25","be99c8","d0523a","ce9c02","275cc7","07e3e8","8a4580","2b8773","057e7a","be502d","4cff96","bab455","a6c614","c15f36","2eaa9a","2ebf95","c36eb4","02d8fd","af9f9a","88eff2","f50e8a","bc648d","567136","b799eb","67184b","170473","42e1a9","64c8ef","8ebf6e","e56412","0b46a0","188619","62a2ef","da8ecb","148f18","a9feb3","92ab68","58b968","f81362","6670a5","92ddf7","386dfb","3ad520","ae50c8","2ed605"],[4,4,4,4,2,3,3,7,5,5,4,4,5,7,5,6,5,5,5,5,6,8,9,6,5,10,9,6,5,6,7,12,6,7,9,9,7,9,5,6,6,8,10,8,9,9,9,7,9,9],["2014-05-07","2014-05-06","2014-05-08",null,null,"2014-05-18","2014-05-03","2014-05-20","2014-05-27","2014-05-24","2014-05-22",null,"2014-05-31","2014-06-04","2014-06-09","2014-06-05",null,"2014-06-05",null,"2014-06-07",null,"2014-06-15","2014-06-14",null,null,null,null,null,"2014-06-27",null,"2014-07-05",null,null,"2014-07-02","2014-07-12","2014-07-12","2014-07-05","2014-07-02","2014-06-20",null,"2014-06-29",null,"2014-07-18",null,"2014-07-18","2014-07-19","2014-07-19","2014-07-12","2014-07-20","2014-07-27"],["2014-05-08","2014-05-08","2014-05-13","2014-05-13","2014-05-16","2014-05-21","2014-05-22","2014-05-24","2014-05-27","2014-05-27","2014-05-27","2014-06-02","2014-06-06","2014-06-14","2014-06-15","2014-06-15","2014-06-15","2014-06-16","2014-06-17","2014-06-17","2014-06-19","2014-06-20","2014-06-20","2014-06-20","2014-06-20","2014-06-22","2014-06-30","2014-07-02","2014-07-03","2014-07-04","2014-07-09","2014-07-12","2014-07-14","2014-07-14","2014-07-15","2014-07-16","2014-07-17","2014-07-17","2014-07-18","2014-07-19","2014-07-19","2014-07-19","2014-07-20","2014-07-20","2014-07-20","2014-07-23","2014-07-23","2014-07-24","2014-07-25","2014-07-28"],["2014-05-10","2014-05-10","2014-05-15","2014-05-14","2014-05-18","2014-05-22","2014-05-23","2014-05-26","2014-05-29","2014-05-28","2014-05-29","2014-06-02","2014-06-07","2014-06-15","2014-06-16","2014-06-16","2014-06-16","2014-06-18","2014-06-19","2014-06-17","2014-06-21","2014-06-21","2014-06-20","2014-06-20","2014-06-21","2014-06-23","2014-07-02","2014-07-03","2014-07-05","2014-07-06","2014-07-10","2014-07-14","2014-07-15","2014-07-14","2014-07-17","2014-07-16","2014-07-19","2014-07-19","2014-07-20","2014-07-20","2014-07-21","2014-07-20","2014-07-21","2014-07-21","2014-07-22","2014-07-25","2014-07-23","2014-07-24","2014-07-27","2014-07-30"],["2014-05-14",null,null,"2014-05-18","2014-05-30","2014-05-29","2014-05-24","2014-06-05","2014-06-17","2014-06-07","2014-06-01",null,"2014-06-16",null,"2014-06-19","2014-06-25","2014-06-18","2014-06-26","2014-06-28",null,"2014-06-23","2014-06-24","2014-07-01","2014-07-13","2014-06-24","2014-07-01","2014-07-14","2014-07-07","2014-07-12","2014-07-09","2014-08-09","2014-07-20","2014-07-25","2014-07-27","2014-07-19","2014-08-11","2014-07-24","2014-07-23","2014-08-01","2014-07-23","2014-08-03","2014-08-05","2014-07-28","2014-08-07","2014-08-01",null,null,null,"2014-08-08","2014-08-09"],["Recover",null,null,"Recover","Recover","Recover","Recover",null,"Death","Death","Recover","Death",null,"Recover","Death",null,"Death","Recover","Recover","Recover","Death","Death","Death",null,"Death",null,"Recover",null,"Recover","Death","Recover","Death","Recover","Recover","Death","Recover","Death","Death",null,"Death","Death",null,null,"Death","Death","Recover","Recover",null,"Death",null],["m","f","m","f","m","m","f","f","m","f","f","m","f","f","m","m","f","f","f","f","m","m","m","f","f","f","m","m","m","m","f","f","m","f","f","f","m","f","m","f","f","f","m","m","f","m","f","f","f","f"],[1,4,21,2,27,25,18,2,20,4,22,7,7,18,33,34,12,31,0,3,3,51,51,9,15,8,35,37,34,15,35,9,30,9,23,13,25,14,39,1,14,12,14,28,13,6,42,10,6,10],["years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years"],[1,4,21,2,27,25,18,2,20,4,22,7,7,18,33,34,12,31,0,3,3,51,51,9,15,8,35,37,34,15,35,9,30,9,23,13,25,14,39,1,14,12,14,28,13,6,42,10,6,10],["0-4","0-4","20-29","0-4","20-29","20-29","15-19","0-4","20-29","0-4","20-29","5-9","5-9","15-19","30-49","30-49","10-14","30-49","0-4","0-4","0-4","50-69","50-69","5-9","15-19","5-9","30-49","30-49","30-49","15-19","30-49","5-9","30-49","5-9","20-29","10-14","20-29","10-14","30-49","0-4","10-14","10-14","10-14","20-29","10-14","5-9","30-49","10-14","5-9","10-14"],["0-4","0-4","20-24","0-4","25-29","25-29","15-19","0-4","20-24","0-4","20-24","5-9","5-9","15-19","30-34","30-34","10-14","30-34","0-4","0-4","0-4","50-54","50-54","5-9","15-19","5-9","35-39","35-39","30-34","15-19","35-39","5-9","30-34","5-9","20-24","10-14","25-29","10-14","35-39","0-4","10-14","10-14","10-14","25-29","10-14","5-9","40-44","10-14","5-9","10-14"],["Port Hospital","St. Mark's Maternity Hospital (SMMH)","Other","Missing","St. Mark's Maternity Hospital (SMMH)","Military Hospital","Port Hospital","Missing","Port Hospital","Central Hospital","Missing","Military Hospital","Missing","Missing","Military Hospital","Port Hospital","Port Hospital","Other","Missing","Missing","Port Hospital","Port Hospital","Port Hospital","Missing","St. Mark's Maternity Hospital (SMMH)","Port Hospital","Port Hospital","Port Hospital","Missing","Other","Military Hospital","Military Hospital","Central Hospital","Military Hospital","Central Hospital","Missing","Military Hospital","Central Hospital","Missing","Missing","St. Mark's Maternity Hospital (SMMH)","Military Hospital","Port Hospital","Other","Military Hospital","Missing","Military Hospital","Missing","Port Hospital","Military Hospital"],[-13.2231931914572,-13.2354719577436,-13.2157351064963,-13.2152339775486,-13.212910703914,-13.2228638912441,-13.222625321098,-13.2565628977111,-13.2243703238737,-13.2369393782451,-13.2331547837254,-13.2222002700958,-13.2149474159902,-13.2180326141688,-13.2535215623253,-13.217651519706,-13.2372027220014,-13.2190654487695,-13.2189533374241,-13.209391925612,-13.2265780018024,-13.2619688324425,-13.2124311244169,-13.2371313571269,-13.2195578885261,-13.2336087079551,-13.2130045468176,-13.2160657166043,-13.2162953240809,-13.2355883289789,-13.247814368147,-13.2142410663192,-13.2614705796373,-13.2630592726116,-13.2343341712241,-13.2087039682346,-13.2581175859281,-13.2379376608352,-13.218781651651,-13.2483677722899,-13.2155668757305,-13.2333516655879,-13.238964614443,-13.2163318124535,-13.2217866965605,-13.2221173306518,-13.2510797882678,-13.262635786914,-13.2472895700622,-13.2597714344876],[8.47325128269697,8.4627682729487,8.46897295100924,8.45171855856465,8.46481700596819,8.46082377490923,8.46183062600728,8.48379248016347,8.47024789713924,8.46916113869591,8.46272931462646,8.46388925014565,8.45192988292173,8.47155535608018,8.45884880725177,8.46236804334872,8.46956119136946,8.47737640975659,8.45136291368722,8.47570184950483,8.48676680560442,8.48475855218221,8.45344099552146,8.48777544809491,8.46210832824745,8.47804840685363,8.47135450705077,8.48802917129884,8.46395131808455,8.4728562695215,8.47038713612408,8.4641347894342,8.45750552360835,8.47493999153642,8.47832062438022,8.4763997148275,8.45535258467199,8.4697737543226,8.48438437371817,8.48466158574339,8.4627846208641,8.46517148129756,8.48776686246878,8.4630635336683,8.4623972994508,8.46420961833913,8.47178418137766,8.4632880274758,8.48450777619227,8.45925216791802],["2ae019","20b688","f547d6",null,null,"11f8ea","aec8ec","4b38b7","53da57","e02f66","893f25",null,"5387a2","cbbe78","a2086d","ba7326",null,"3ff1bc",null,"9f6884",null,"057e7a","e61cb9",null,null,null,null,null,"ea3740",null,"71577a",null,null,"567136","894024","894024","71577a","b0c500","eb2277",null,"af1c1f",null,"62a2ef",null,"67be4e","d15be5","f36522","312ecf","26c588","e26da6"],["other","other","other",null,null,"other","other","other","other","other","other",null,"other","funeral","other","other",null,"funeral",null,"other",null,"other","other",null,null,null,null,null,"other",null,"other",null,null,"other","funeral","funeral","other","other","funeral",null,"other",null,"other",null,"other","other","other","other","other","other"],[18,35,78,18,68,66,57,25,64,41,72,45,29,53,71,77,52,71,0,35,45,82,92,34,40,42,67,75,66,52,84,39,66,52,55,60,67,59,75,28,61,55,77,68,51,44,88,46,33,53],[50,74,148,61,198,161,116,48,156,75,144,109,99,140,157,146,118,162,22,62,58,195,257,114,144,96,206,172,176,125,229,88,177,88,150,151,169,136,186,24,124,147,163,167,152,89,188,112,72,139],[22,21,22,23,21,21,22,20,22,23,22,20,22,22,21,22,22,23,23,21,23,20,22,22,22,22,22,22,22,22,23,23,23,22,23,23,20,22,21,22,23,23,23,20,21,21,22,21,22,23],[null,"no","no",null,null,"no",null,"no","no","no","no","no","no","no",null,null,null,"no","no",null,"no","no","no","no","no",null,"no",null,null,"no",null,null,"no",null,"no","no","no","no","no","no","no","no","no","no","no","no",null,"no","no","no"],[null,"no","yes",null,null,"no",null,"yes","no","no","no","no","yes","yes",null,null,null,"no","no",null,"no","no","no","no","no",null,"no",null,null,"no",null,null,"yes",null,"no","no","no","yes","no","no","no","yes","yes","yes","no","no",null,"no","no","yes"],[null,"yes","yes",null,null,"yes",null,"no","yes","yes","yes","no","yes","yes",null,null,null,"yes","yes",null,"yes","no","yes","yes","yes",null,"yes",null,null,"yes",null,null,"yes",null,"no","yes","yes","yes","yes","no","yes","yes","no","yes","yes","yes",null,"yes","yes","yes"],[null,"no","yes",null,null,"no",null,"no","no","no","no","no","no","no",null,null,null,"no","no",null,"no","no","no","no","no",null,"no",null,null,"no",null,null,"no",null,"no","no","no","no","no","no","no","no","yes","no","no","yes",null,"no","no","no"],[null,"yes","yes",null,null,"yes",null,"yes","yes","no","yes","no","yes","yes",null,null,null,"no","yes",null,"no","yes","yes","no","yes",null,"yes",null,null,"yes",null,null,"no",null,"yes","yes","no","no","no","no","yes","yes","no","yes","no","no",null,"no","yes","no"],[37.3,37.4,37,36,36.7,37.3,36.8,37,36.4,37.2,37.3,36.9,37,36.9,37.3,37.1,36.7,36.6,37.7,37.6,36.8,36.9,36.6,37.7,37,36.4,36.4,37.4,36.3,37,37.5,37.8,36.8,37.5,37.4,36.5,37.2,36.6,37.3,36.3,37.2,36.9,36.4,36.4,36.2,37,37.2,37.3,36.4,37.5],["20:35","14:16","09:17","11:32","18:52","16:51",null,"14:29","11:57","09:21","13:08","23:20","17:29",null,"18:39",null,"14:16",null,"08:00","11:43","11:10","15:10","11:53","19:11",null,"14:26","04:17","17:32",null,null,"12:28",null,"10:12","10:39","16:46","19:50","16:06","13:52","11:28","07:40","12:60","15:24","06:27","06:17","09:36","14:01","17:06","12:57","13:07",null],[72,63.9152666179693,35.6099342585829,48.3740929857565,17.3451688603204,25.4619806334632,42.3602853745541,108.506944444444,26.2984878369494,72.8888888888889,34.7222222222222,37.8755996969952,29.5888174676053,27.0408163265306,28.8044139721693,36.1231000187652,37.3455903476013,27.0538027739674,0,91.05098855359,133.769322235434,21.5647600262985,13.9290526730155,26.1618959679902,19.2901234567901,45.5729166666667,15.7884814779904,25.3515413737155,21.3068181818182,33.28,16.018001182281,50.3615702479339,21.0667432730058,67.1487603305785,24.4444444444444,26.3146353230121,23.458562375267,31.8987889273356,21.6788067984738,486.111111111111,39.6722164412071,25.4523578138738,28.9811434378411,24.3823729785937,22.0740997229917,55.5485418507764,24.8981439565414,36.6709183673469,63.6574074074074,27.431292376171],[2,2,2,1,2,1,1,2,2,1,2,0,1,1,1,1,1,2,2,0,2,1,0,0,1,1,2,1,2,2,1,2,1,0,2,0,2,2,2,1,2,1,1,1,2,2,0,0,2,2]],"container":"<table class=\"white-space: nowrap\">\n  <thead>\n    <tr>\n      <th>case_id<\/th>\n      <th>generation<\/th>\n      <th>date_infection<\/th>\n      <th>date_onset<\/th>\n      <th>date_hospitalisation<\/th>\n      <th>date_outcome<\/th>\n      <th>outcome<\/th>\n      <th>gender<\/th>\n      <th>age<\/th>\n      <th>age_unit<\/th>\n      <th>age_years<\/th>\n      <th>age_cat<\/th>\n      <th>age_cat5<\/th>\n      <th>hospital<\/th>\n      <th>lon<\/th>\n      <th>lat<\/th>\n      <th>infector<\/th>\n      <th>source<\/th>\n      <th>wt_kg<\/th>\n      <th>ht_cm<\/th>\n      <th>ct_blood<\/th>\n      <th>fever<\/th>\n      <th>chills<\/th>\n      <th>cough<\/th>\n      <th>aches<\/th>\n      <th>vomit<\/th>\n      <th>temp<\/th>\n      <th>time_admission<\/th>\n      <th>bmi<\/th>\n      <th>days_onset_hosp<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"scrollX":true,"columnDefs":[{"className":"dt-right","targets":[1,8,10,14,15,18,19,20,26,28,29]}],"order":[],"autoWidth":false,"orderClasses":false,"orderCellsTop":true,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script><!-- ======================================================= -->
+</div>
+</div>
+<div id="browse-data" class="section level2" number="17.2">
+<h2>
+<span class="header-section-number">17.2</span> Browse data<a class="anchor" aria-label="anchor" href="#browse-data"><i class="fas fa-link"></i></a>
+</h2>
+<div id="skimr-package" class="section level3 unnumbered">
+<h3>
+<code>skimr</code> package<a class="anchor" aria-label="anchor" href="#skimr-package"><i class="fas fa-link"></i></a>
+</h3>
+<p>Using the <strong>skimr</strong> package you can get a detailed and aesthetically pleasing overview of each of the variables in your dataset. Read more about <strong>skimr</strong> at its <a href="https://github.com/ropensci/skimr">github page</a>.</p>
+<p>Below, the function <code>skim()</code> is applied to the entire <code>linelist</code> data frame. An overview of the data frame and a summary of every column (by class) is produced.</p>
+<div class="sourceCode" id="cb705"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co">## get information about each variable in a dataset </span>
+<span class="fu">skim</span><span class="op">(</span><span class="va">linelist</span><span class="op">)</span></code></pre></div>
+<div class="inline-table"><table style="width: auto;" class="table table-condensed">
+<caption>
+<span id="tab:unnamed-chunk-568">Table 17.1: </span>Data summary
+</caption>
+<thead><tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:left;">
+</th>
+</tr></thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Name
+</td>
+<td style="text-align:left;">
+linelist
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Number of rows
+</td>
+<td style="text-align:left;">
+5888
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Number of columns
+</td>
+<td style="text-align:left;">
+30
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+_______________________
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Column type frequency:
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+character
+</td>
+<td style="text-align:left;">
+13
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Date
+</td>
+<td style="text-align:left;">
+4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+factor
+</td>
+<td style="text-align:left;">
+2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+numeric
+</td>
+<td style="text-align:left;">
+11
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+________________________
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Group variables
+</td>
+<td style="text-align:left;">
+None
+</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Variable type: character</strong></p>
+<div class="inline-table"><table class="table table-sm">
+<thead><tr>
+<th style="text-align:left;">
+skim_variable
+</th>
+<th style="text-align:right;">
+n_missing
+</th>
+<th style="text-align:right;">
+complete_rate
+</th>
+<th style="text-align:right;">
+min
+</th>
+<th style="text-align:right;">
+max
+</th>
+<th style="text-align:right;">
+empty
+</th>
+<th style="text-align:right;">
+n_unique
+</th>
+<th style="text-align:right;">
+whitespace
+</th>
+</tr></thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+case_id
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+5888
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+outcome
+</td>
+<td style="text-align:right;">
+1323
+</td>
+<td style="text-align:right;">
+0.78
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+gender
+</td>
+<td style="text-align:right;">
+284
+</td>
+<td style="text-align:right;">
+0.95
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+age_unit
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+hospital
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+36
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+infector
+</td>
+<td style="text-align:right;">
+2088
+</td>
+<td style="text-align:right;">
+0.65
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+2697
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+source
+</td>
+<td style="text-align:right;">
+2088
+</td>
+<td style="text-align:right;">
+0.65
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+fever
+</td>
+<td style="text-align:right;">
+246
+</td>
+<td style="text-align:right;">
+0.96
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+chills
+</td>
+<td style="text-align:right;">
+246
+</td>
+<td style="text-align:right;">
+0.96
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+cough
+</td>
+<td style="text-align:right;">
+246
+</td>
+<td style="text-align:right;">
+0.96
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+aches
+</td>
+<td style="text-align:right;">
+246
+</td>
+<td style="text-align:right;">
+0.96
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+vomit
+</td>
+<td style="text-align:right;">
+246
+</td>
+<td style="text-align:right;">
+0.96
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+3
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+time_admission
+</td>
+<td style="text-align:right;">
+744
+</td>
+<td style="text-align:right;">
+0.87
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1069
+</td>
+<td style="text-align:right;">
+0
+</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Variable type: Date</strong></p>
+<div class="inline-table"><table class="table table-sm">
+<thead><tr>
+<th style="text-align:left;">
+skim_variable
+</th>
+<th style="text-align:right;">
+n_missing
+</th>
+<th style="text-align:right;">
+complete_rate
+</th>
+<th style="text-align:left;">
+min
+</th>
+<th style="text-align:left;">
+max
+</th>
+<th style="text-align:left;">
+median
+</th>
+<th style="text-align:right;">
+n_unique
+</th>
+</tr></thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+date_infection
+</td>
+<td style="text-align:right;">
+2087
+</td>
+<td style="text-align:right;">
+0.65
+</td>
+<td style="text-align:left;">
+2014-03-19
+</td>
+<td style="text-align:left;">
+2015-04-27
+</td>
+<td style="text-align:left;">
+2014-10-11
+</td>
+<td style="text-align:right;">
+359
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+date_onset
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:left;">
+2014-04-07
+</td>
+<td style="text-align:left;">
+2015-04-30
+</td>
+<td style="text-align:left;">
+2014-10-21
+</td>
+<td style="text-align:right;">
+367
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+date_hospitalisation
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:left;">
+2014-04-17
+</td>
+<td style="text-align:left;">
+2015-04-30
+</td>
+<td style="text-align:left;">
+2014-10-23
+</td>
+<td style="text-align:right;">
+363
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+date_outcome
+</td>
+<td style="text-align:right;">
+936
+</td>
+<td style="text-align:right;">
+0.84
+</td>
+<td style="text-align:left;">
+2014-04-19
+</td>
+<td style="text-align:left;">
+2015-06-04
+</td>
+<td style="text-align:left;">
+2014-11-01
+</td>
+<td style="text-align:right;">
+371
+</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Variable type: factor</strong></p>
+<div class="inline-table"><table class="table table-sm">
+<thead><tr>
+<th style="text-align:left;">
+skim_variable
+</th>
+<th style="text-align:right;">
+n_missing
+</th>
+<th style="text-align:right;">
+complete_rate
+</th>
+<th style="text-align:left;">
+ordered
+</th>
+<th style="text-align:right;">
+n_unique
+</th>
+<th style="text-align:left;">
+top_counts
+</th>
+</tr></thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+age_cat
+</td>
+<td style="text-align:right;">
+87
+</td>
+<td style="text-align:right;">
+0.99
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:left;">
+5-9: 1103, 20-: 1102, 0-4: 1066, 10-: 918
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+age_cat5
+</td>
+<td style="text-align:right;">
+87
+</td>
+<td style="text-align:right;">
+0.99
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+<td style="text-align:right;">
+18
+</td>
+<td style="text-align:left;">
+5-9: 1103, 0-4: 1066, 10-: 918, 15-: 773
+</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Variable type: numeric</strong></p>
+<div class="inline-table"><table class="table table-sm">
+<thead><tr>
+<th style="text-align:left;">
+skim_variable
+</th>
+<th style="text-align:right;">
+n_missing
+</th>
+<th style="text-align:right;">
+complete_rate
+</th>
+<th style="text-align:right;">
+mean
+</th>
+<th style="text-align:right;">
+sd
+</th>
+<th style="text-align:right;">
+p0
+</th>
+<th style="text-align:right;">
+p25
+</th>
+<th style="text-align:right;">
+p50
+</th>
+<th style="text-align:right;">
+p75
+</th>
+<th style="text-align:right;">
+p100
+</th>
+</tr></thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+generation
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+16.559999999999999
+</td>
+<td style="text-align:right;">
+5.79
+</td>
+<td style="text-align:right;">
+0.000000000000000
+</td>
+<td style="text-align:right;">
+13.000000000000000
+</td>
+<td style="text-align:right;">
+16.000000000000000
+</td>
+<td style="text-align:right;">
+20.00
+</td>
+<td style="text-align:right;">
+37.00
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+age
+</td>
+<td style="text-align:right;">
+87
+</td>
+<td style="text-align:right;">
+0.99
+</td>
+<td style="text-align:right;">
+16.199999999999999
+</td>
+<td style="text-align:right;">
+12.71
+</td>
+<td style="text-align:right;">
+0.000000000000000
+</td>
+<td style="text-align:right;">
+6.000000000000000
+</td>
+<td style="text-align:right;">
+13.000000000000000
+</td>
+<td style="text-align:right;">
+23.00
+</td>
+<td style="text-align:right;">
+90.00
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+age_years
+</td>
+<td style="text-align:right;">
+87
+</td>
+<td style="text-align:right;">
+0.99
+</td>
+<td style="text-align:right;">
+16.140000000000001
+</td>
+<td style="text-align:right;">
+12.73
+</td>
+<td style="text-align:right;">
+0.000000000000000
+</td>
+<td style="text-align:right;">
+6.000000000000000
+</td>
+<td style="text-align:right;">
+13.000000000000000
+</td>
+<td style="text-align:right;">
+23.00
+</td>
+<td style="text-align:right;">
+90.00
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+lon
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+-13.230000000000000
+</td>
+<td style="text-align:right;">
+0.02
+</td>
+<td style="text-align:right;">
+-13.270000000000000
+</td>
+<td style="text-align:right;">
+-13.250000000000000
+</td>
+<td style="text-align:right;">
+-13.230000000000000
+</td>
+<td style="text-align:right;">
+-13.22
+</td>
+<td style="text-align:right;">
+-13.21
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+lat
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+8.470000000000001
+</td>
+<td style="text-align:right;">
+0.01
+</td>
+<td style="text-align:right;">
+8.449999999999999
+</td>
+<td style="text-align:right;">
+8.460000000000001
+</td>
+<td style="text-align:right;">
+8.470000000000001
+</td>
+<td style="text-align:right;">
+8.48
+</td>
+<td style="text-align:right;">
+8.49
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+wt_kg
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+53.149999999999999
+</td>
+<td style="text-align:right;">
+18.49
+</td>
+<td style="text-align:right;">
+-8.000000000000000
+</td>
+<td style="text-align:right;">
+42.000000000000000
+</td>
+<td style="text-align:right;">
+55.000000000000000
+</td>
+<td style="text-align:right;">
+66.00
+</td>
+<td style="text-align:right;">
+121.00
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ht_cm
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+124.799999999999997
+</td>
+<td style="text-align:right;">
+49.37
+</td>
+<td style="text-align:right;">
+6.000000000000000
+</td>
+<td style="text-align:right;">
+89.000000000000000
+</td>
+<td style="text-align:right;">
+130.000000000000000
+</td>
+<td style="text-align:right;">
+158.00
+</td>
+<td style="text-align:right;">
+335.00
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+ct_blood
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+21.190000000000001
+</td>
+<td style="text-align:right;">
+1.67
+</td>
+<td style="text-align:right;">
+16.000000000000000
+</td>
+<td style="text-align:right;">
+20.000000000000000
+</td>
+<td style="text-align:right;">
+22.000000000000000
+</td>
+<td style="text-align:right;">
+22.00
+</td>
+<td style="text-align:right;">
+26.00
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+temp
+</td>
+<td style="text-align:right;">
+135
+</td>
+<td style="text-align:right;">
+0.98
+</td>
+<td style="text-align:right;">
+38.539999999999999
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+35.200000000000003
+</td>
+<td style="text-align:right;">
+38.100000000000001
+</td>
+<td style="text-align:right;">
+38.799999999999997
+</td>
+<td style="text-align:right;">
+39.20
+</td>
+<td style="text-align:right;">
+40.90
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+bmi
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+48.109999999999999
+</td>
+<td style="text-align:right;">
+50.55
+</td>
+<td style="text-align:right;">
+-416.670000000000016
+</td>
+<td style="text-align:right;">
+24.809999999999999
+</td>
+<td style="text-align:right;">
+32.859999999999999
+</td>
+<td style="text-align:right;">
+51.02
+</td>
+<td style="text-align:right;">
+1234.57
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+days_onset_hosp
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1.00
+</td>
+<td style="text-align:right;">
+2.010000000000000
+</td>
+<td style="text-align:right;">
+2.22
+</td>
+<td style="text-align:right;">
+0.000000000000000
+</td>
+<td style="text-align:right;">
+1.000000000000000
+</td>
+<td style="text-align:right;">
+1.000000000000000
+</td>
+<td style="text-align:right;">
+3.00
+</td>
+<td style="text-align:right;">
+22.00
+</td>
+</tr>
+</tbody>
+</table></div>
+<p>You can also use the <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> function, from <strong>base</strong> R, to get information about an entire data sets, but this output can be more difficult to read than using <strong>skimr</strong>.</p>
+<div class="sourceCode" id="cb706"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co">## get information about each column in a dataset </span>
+<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">linelist</span><span class="op">)</span></code></pre></div>
+</div>
+<div id="summary-statistics" class="section level3 unnumbered">
+<h3>Summary statistics<a class="anchor" aria-label="anchor" href="#summary-statistics"><i class="fas fa-link"></i></a>
+</h3>
+<p>You can use <strong>base</strong> R functions to return summary statistics on a numeric column. These functions are also often used within more complex code operations, for example if grouping and summarising columns, or referencing a <code><a href="https://rdrr.io/r/base/Extremes.html">max()</a></code> value to calibrate plot height.</p>
+<p>See the <a href="r-basics.html#r-basics">R Basics</a> page for a complete list of mathematical operators such as <code><a href="https://rdrr.io/r/base/Extremes.html">max()</a></code>, <code><a href="https://rdrr.io/r/base/Extremes.html">min()</a></code>, <code><a href="https://rdrr.io/r/stats/median.html">median()</a></code>, <code><a href="https://rdrr.io/r/base/mean.html">mean()</a></code>, <code><a href="https://rdrr.io/r/stats/quantile.html">quantile()</a></code>, <code><a href="https://rdrr.io/r/stats/sd.html">sd()</a></code>, and <code><a href="https://rdrr.io/r/base/range.html">range()</a></code>.</p>
+<p><span style="color: orange;"><strong><em>CAUTION:</em></strong> If your data contain missing values, R wants you to know this and so will return <code>NA</code> unless you specify to the above mathematical functions that you want R to ignore missing values, via the argument <code>na.rm = TRUE</code>.</span></p>
+<p>You can return most of the useful summary statistics for a numeric column using <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code>, as below. Note that the dataframe must also be specified as shown below.</p>
+<div class="sourceCode" id="cb707"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">linelist</span><span class="op">$</span><span class="va">age_years</span><span class="op">)</span></code></pre></div>
+<pre><code>##           Min.        1st Qu.         Median           Mean        3rd Qu.           Max.           NA's 
+##  0.00000000000  6.00000000000 13.00000000000 16.14425673734 23.00000000000 90.00000000000             87</code></pre>
+<p>You can access and save one specific part of it with index brackets [ ]:</p>
+<div class="sourceCode" id="cb709"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">linelist</span><span class="op">$</span><span class="va">age_years</span><span class="op">)</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span></code></pre></div>
+<pre><code>## [1] 6</code></pre>
+<!-- ======================================================= -->
+</div>
+</div>
+<div id="descriptive-tables-1" class="section level2" number="17.3">
+<h2>
+<span class="header-section-number">17.3</span> Descriptive tables<a class="anchor" aria-label="anchor" href="#descriptive-tables-1"><i class="fas fa-link"></i></a>
+</h2>
+<p>You have several choices when producing tabulation and cross-tabulation summary tables. Some of the factors to consider include code simplicity and ease, the desired output (printed to R console, or as pretty HTML), and what you can do with the data afterward. Consider the thoughts below as you choose the tool for your situation.</p>
+<ul>
+<li>Use <code>tabyl()</code> from <strong>janitor</strong> to produce and “adorn” tabulations and cross-tabulations<br>
+</li>
+<li>Use <code>count()</code> and <code>summarise()</code> from <strong>dplyr</strong> if preparing data for <code>ggplot()</code> or calculating more complex statistics<br>
+</li>
+<li>Use <code>tbl_summary()</code> from <strong>gtsummary</strong> to produce detailed publication-ready tables</li>
+</ul>
+<div id="janitor" class="section level3 unnumbered">
+<h3>
+<strong>janitor</strong><a class="anchor" aria-label="anchor" href="#janitor"><i class="fas fa-link"></i></a>
+</h3>
+<p>The <strong>janitor</strong> packages offers the <code>tabyl()</code> function which produces clean tabulations and cross-tabulations, which can be “adorned” or modified with other functions to display percents, proportions, etc.</p>
+<p>Below, we pipe the <code>linelist</code> data frame to <strong>janitor</strong> functions and print the result. If desired, you can also save the resulting tables with the assignment operator <code><a href="https://rdrr.io/r/base/assignOps.html">&lt;-</a></code>.</p>
+<div id="simple-tabyl" class="section level4 unnumbered">
+<h4>Simple tabyl<a class="anchor" aria-label="anchor" href="#simple-tabyl"><i class="fas fa-link"></i></a>
+</h4>
+<p>The default use of <code>tabyl()</code> on a specific column produces the unique values, counts, and column-wise “percents” (actually proportions). The proportions may have many digits. You can adjust this with <code>adorn_rounding()</code> as described below.</p>
+<div class="sourceCode" id="cb711"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">linelist</span> <span class="op">%&gt;%</span> <span class="fu">tabyl</span><span class="op">(</span><span class="va">age_cat</span><span class="op">)</span></code></pre></div>
+<pre><code>##  age_cat    n              percent       valid_percent
+##      0-4 1066 0.181046195652173919 0.18376142044475091
+##      5-9 1103 0.187330163043478271 0.19013963109808654
+##    10-14  918 0.155910326086956513 0.15824857783140839
+##    15-19  773 0.131283967391304351 0.13325288743320118
+##    20-29 1102 0.187160326086956513 0.18996724702637477
+##    30-49  724 0.122961956521739135 0.12480606791932425
+##    50-69  102 0.017323369565217392 0.01758317531460093
+##      70+   13 0.002207880434782609 0.00224099293225306
+##     &lt;NA&gt;   87 0.014775815217391304                  NA</code></pre>
+<p>As you can see above, if there are missing values they display in a row labeled <code>&lt;NA&gt;</code>. You can suppress them with <code>show_na = FALSE</code>. If there are no missing values, this row will not appear. If there are missing values, proportions are given as both raw (denominator inclusive of <code>NA</code> counts) and “valid” (denominator excludes <code>NA</code> counts).</p>
+<p>If the column is class Factor and only certain levels are present in your data, they will still appear in the table. You can suppress this feature with <code>show_missing_levels = FALSE</code>.</p>
+</div>
+<div id="cross-tabulation" class="section level4 unnumbered">
+<h4>Cross-tabulation<a class="anchor" aria-label="anchor" href="#cross-tabulation"><i class="fas fa-link"></i></a>
+</h4>
+<p>Cross-tabulation counts are achieved by adding one or more additional within <code>tabyl()</code>. Note that only counts are returned - proportions and percents can be added with additional steps.</p>
+<div class="sourceCode" id="cb713"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">linelist</span> <span class="op">%&gt;%</span> <span class="fu">tabyl</span><span class="op">(</span><span class="va">age_cat</span>, <span class="va">gender</span><span class="op">)</span></code></pre></div>
+<pre><code>##  age_cat   f   m NA_
+##      0-4 624 404  38
+##      5-9 651 414  38
+##    10-14 555 334  29
+##    15-19 381 367  25
+##    20-29 440 626  36
+##    30-49 161 539  24
+##    50-69   3  93   6
+##      70+   0  12   1
+##     &lt;NA&gt;   0   0  87</code></pre>
+</div>
+<div id="adorning-the-tabyl" class="section level4 unnumbered">
+<h4>“Adorning” the tabyl<a class="anchor" aria-label="anchor" href="#adorning-the-tabyl"><i class="fas fa-link"></i></a>
+</h4>
+<p>Use <strong>janitor</strong>’s “adorn” functions to add totals or convert to proportions, percents, or otherwise adjust the display. Often you will pipe the tabyl through multiple of these functions.</p>
+<div class="inline-table"><table class="table table-sm">
+<colgroup>
+<col width="37%">
+<col width="62%">
+</colgroup>
+<thead><tr class="header">
+<th>Function</th>
+<th>Outcome</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td><code>adorn_totals()</code></td>
+<td>Adds totals (<code>where =</code> “row”, “col”, or “both”). Set <code>name =</code> for “Total”.</td>
+</tr>
+<tr class="even">
+<td><code>adorn_percentages()</code></td>
+<td>Convert counts to proportions, with <code>denominator =</code> “row”, “col”, or “all”</td>
+</tr>
+<tr class="odd">
+<td><code>adorn_pct_formatting()</code></td>
+<td>Converts proportions to percents. Specify <code>digits =</code>. Remove “%” with <code>affix_sign = F</code>.</td>
+</tr>
+<tr class="even">
+<td><code>adorn_rounding()</code></td>
+<td>To round counts, proportions to <code>digits =</code> places. To round percents use <code>adorn_pct_formatting()</code> as above.</td>
+</tr>
+<tr class="odd">
+<td><code>adorn_ns()</code></td>
+<td>Add counts to a table of proportions or percents. Indicate <code>position =</code> “rear” for counts in parentheses, or “front” to put the percent in parentheses.</td>
+</tr>
+<tr class="even">
+<td><code>adorn_title()</code></td>
+<td>add string <code>row_name =</code> and/or <code>col_name =</code>
+</td>
+</tr>
+</tbody>
+</table></div>
+<p>Be conscious of the order you apply the above functions. Below are some examples.</p>
+<p>A simple one-way table with percents instead of the default proportions.</p>
+<div class="sourceCode" id="cb715"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">linelist</span> <span class="op">%&gt;%</span>               <span class="co"># case linelist</span>
+  <span class="fu">tabyl</span><span class="op">(</span><span class="va">age_cat</span><span class="op">)</span> <span class="op">%&gt;%</span>       <span class="co"># tabulate counts and proportions by age category</span>
+  <span class="fu">adorn_pct_formatting</span><span class="op">(</span><span class="op">)</span>   <span class="co"># convert proportions to percents</span></code></pre></div>
+<pre><code>##  age_cat    n percent valid_percent
+##      0-4 1066   18.1%         18.4%
+##      5-9 1103   18.7%         19.0%
+##    10-14  918   15.6%         15.8%
+##    15-19  773   13.1%         13.3%
+##    20-29 1102   18.7%         19.0%
+##    30-49  724   12.3%         12.5%
+##    50-69  102    1.7%          1.8%
+##      70+   13    0.2%          0.2%
+##     &lt;NA&gt;   87    1.5%             -</code></pre>
+<p>A cross-tabulation with a total row and row percents.</p>
+<div class="sourceCode" id="cb717"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">linelist</span> <span class="op">%&gt;%</span>                                  
+  <span class="fu">tabyl</span><span class="op">(</span><span class="va">age_cat</span>, <span class="va">gender</span><span class="op">)</span> <span class="op">%&gt;%</span>                  <span class="co"># counts by age and gender</span>
+  <span class="fu">adorn_totals</span><span class="op">(</span>where <span class="op">=</span> <span class="st">"row"</span><span class="op">)</span> <span class="op">%&gt;%</span>             <span class="co"># add total row</span>
+  <span class="fu">adorn_percentages</span><span class="op">(</span>denominator <span class="op">=</span> <span class="st">"row"</span><span class="op">)</span> <span class="op">%&gt;%</span>  <span class="co"># convert counts to proportions</span>
+  <span class="fu">adorn_pct_formatting</span><span class="op">(</span>digits <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>            <span class="co"># convert proportions to percents</span></code></pre></div>
+<pre><code>##  age_cat     f                  m    NA_
+##      0-4 58.5% 37.90000000000000%   3.6%
+##      5-9 59.0% 37.50000000000000%   3.4%
+##    10-14 60.5% 36.40000000000000%   3.2%
+##    15-19 49.3% 47.50000000000000%   3.2%
+##    20-29 39.9% 56.80000000000000%   3.3%
+##    30-49 22.2% 74.40000000000001%   3.3%
+##    50-69  2.9% 91.20000000000000%   5.9%
+##      70+  0.0% 92.30000000000000%   7.7%
+##     &lt;NA&gt;  0.0%  0.00000000000000% 100.0%
+##    Total 47.8% 47.40000000000000%   4.8%</code></pre>
+<p>A cross-tabulation adjusted so that both counts and percents are displayed.</p>
+<div class="sourceCode" id="cb719"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">linelist</span> <span class="op">%&gt;%</span>                                  <span class="co"># case linelist</span>
+  <span class="fu">tabyl</span><span class="op">(</span><span class="va">age_cat</span>, <span class="va">gender</span><span class="op">)</span> <span class="op">%&gt;%</span>                  <span class="co"># cross-tabulate counts</span>
+  <span class="fu">adorn_totals</span><span class="op">(</span>where <span class="op">=</span> <span class="st">"row"</span><span class="op">)</span> <span class="op">%&gt;%</span>             <span class="co"># add a total row</span>
+  <span class="fu">adorn_percentages</span><span class="op">(</span>denominator <span class="op">=</span> <span class="st">"col"</span><span class="op">)</span> <span class="op">%&gt;%</span>  <span class="co"># convert to proportions</span>
+  <span class="fu">adorn_pct_formatting</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>                  <span class="co"># convert to percents</span>
+  <span class="fu">adorn_ns</span><span class="op">(</span>position <span class="op">=</span> <span class="st">"front"</span><span class="op">)</span> <span class="op">%&gt;%</span>            <span class="co"># display as: "count (percent)"</span>
+  <span class="fu">adorn_title</span><span class="op">(</span>                                <span class="co"># adjust titles</span>
+    row_name <span class="op">=</span> <span class="st">"Age Category"</span>,
+    col_name <span class="op">=</span> <span class="st">"Gender"</span><span class="op">)</span></code></pre></div>
+<pre><code>##                      Gender                                         
+##  Age Category             f             m                        NA_
+##           0-4  624  (22.2%)  404  (14.5%)  38  (13.400000000000000%)
+##           5-9  651  (23.1%)  414  (14.8%)  38  (13.400000000000000%)
+##         10-14  555  (19.7%)  334  (12.0%)  29  (10.199999999999999%)
+##         15-19  381  (13.5%)  367  (13.2%)  25   (8.800000000000001%)
+##         20-29  440  (15.6%)  626  (22.4%)  36  (12.699999999999999%)
+##         30-49  161   (5.7%)  539  (19.3%)  24   (8.500000000000000%)
+##         50-69    3   (0.1%)   93   (3.3%)   6   (2.100000000000000%)
+##           70+    0   (0.0%)   12   (0.4%)   1   (0.400000000000000%)
+##          &lt;NA&gt;    0   (0.0%)    0   (0.0%)  87  (30.600000000000001%)
+##         Total 2815 (100.0%) 2789 (100.0%) 284 (100.000000000000000%)</code></pre>
+</div>
+<div id="printing-the-tabyl" class="section level4 unnumbered">
+<h4>Printing the tabyl<a class="anchor" aria-label="anchor" href="#printing-the-tabyl"><i class="fas fa-link"></i></a>
+</h4>
+<p>By default, the tabyl will print raw to your R console. Alternatively, you can pass the tabyl to <strong>flextable</strong> or other package to print as HTML in the RStudio Viewer. Note that if using <code>adorn_titles()</code>, you must specify <code>placement = "combined"</code> in order to print in this manner.</p>
+<div class="sourceCode" id="cb721"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">linelist</span> <span class="op">%&gt;%</span>
+  <span class="fu">tabyl</span><span class="op">(</span><span class="va">age_cat</span>, <span class="va">gender</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">adorn_totals</span><span class="op">(</span>where <span class="op">=</span> <span class="st">"col"</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">adorn_percentages</span><span class="op">(</span>denominator <span class="op">=</span> <span class="st">"col"</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">adorn_pct_formatting</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">adorn_ns</span><span class="op">(</span>position <span class="op">=</span> <span class="st">"front"</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">adorn_title</span><span class="op">(</span>
+    row_name <span class="op">=</span> <span class="st">"Age Category"</span>,
+    col_name <span class="op">=</span> <span class="st">"Gender"</span>,
+    placement <span class="op">=</span> <span class="st">"combined"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="co"># this is necessary to print to HTML </span>
+  <span class="fu">flextable</span><span class="fu">::</span><span class="fu"><a href="https://davidgohel.github.io/flextable/reference/flextable.html">flextable</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>    <span class="co"># convert to HTML</span>
+  <span class="fu">flextable</span><span class="fu">::</span><span class="fu"><a href="https://davidgohel.github.io/flextable/reference/autofit.html">autofit</a></span><span class="op">(</span><span class="op">)</span>          <span class="co"># format to one line per row </span></code></pre></div>
+<template id="580f2961-0314-4afb-ab3e-46517120db48"><style>
+.tabwid table{
+  border-collapse:collapse;
+  line-height:1;
+  margin-left:auto;
+  margin-right:auto;
+  border-width: 0;
+  display: table;
+  margin-top: 1.275em;
+  margin-bottom: 1.275em;
+  border-spacing: 0;
+  border-color: transparent;
+}
+.tabwid_left table{
+  margin-left:0;
+}
+.tabwid_right table{
+  margin-right:0;
+}
+.tabwid td {
+    padding: 0;
+}
+.tabwid a {
+  text-decoration: none;
+}
+.tabwid thead {
+    background-color: transparent;
+}
+.tabwid tfoot {
+    background-color: transparent;
+}
+.tabwid table tr {
+background-color: transparent;
+}
+</style>
+<div class="tabwid">
+<style>.cl-c1f0af9c{border-collapse:collapse;}.cl-c1e58dba{font-family:'Arial';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-c1e5b4ac{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-c1e602c2{width:86.6pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1e602c3{width:160pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1e602c4{width:127.5pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1e602c5{width:80.5pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1e602c6{width:86.6pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1e602c7{width:80.5pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1e602c8{width:160pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1e602c9{width:127.5pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1e602ca{width:127.5pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 2pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1e602cb{width:80.5pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 2pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1e602cc{width:160pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 2pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c1e629d2{width:86.6pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 2pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}caption {color: #777;margin-top: 10px;margin-bottom: 10px;text-align: center;}</style>
+<div class="inline-table"><table class="cl-c1f0af9c">
+<thead><tr style="overflow-wrap:break-word;">
+<td class="cl-c1e602ca"><p class="cl-c1e5b4ac"><span class="cl-c1e58dba">Age Category/Gender</span></p></td>
+<td class="cl-c1e602cb"><p class="cl-c1e5b4ac"><span class="cl-c1e58dba">f</span></p></td>
+<td class="cl-c1e602cb"><p class="cl-c1e5b4ac"><span class="cl-c1e58dba">m</span></p></td>
+<td class="cl-c1e602cc"><p class="cl-c1e5b4ac"><span class="cl-c1e58dba">NA_</span></p></td>
+<td class="cl-c1e629d2"><p class="cl-c1e5b4ac"><span class="cl-c1e58dba">Total</span></p></td>
+</tr></thead>
+<tbody>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-c1e602c4"><p class="cl-c1e5b4ac"><span class="cl-c1e58dba">0-4</span></p></td>
+<td class="cl-c1e602c5"><p class="cl-c1e5b4ac"><span class="cl-c1e58dba">624 (22.2%)</span></p></td>
+<td class="cl-c1e602c5"><p class="cl-c1e5b4ac"><span class="cl-c1e58dba">404 (14.5%)</span></p></td>
+<td class="cl-c1e602c3"><p class="cl-c1e5b4ac"><span class="cl-c1e58dba">38 (13.400000000000000%)</span></p></td>
+<td class="cl-c1e602c2"><p class="cl-c1e5b4ac"><span class="cl-c1e58dba">1066 (18.1%)</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-c1e602c4"><p class="cl-c1e5b4ac"><span class="cl-c1e58dba">5-9</span></p></td>
+<td class="cl-c1e602c5"><p class="cl-c1e5b4ac"><span class="cl-c1e58dba">651 (23.1%)</span></p></td>
+<td class="cl-c1e602c5"><p class="cl-c1e5b4ac"><span class="cl-c1e58dba">414 (14.8%)</span></p></td>
+<td class="cl-c1e602c3"><p class="cl-c1e5b4ac"><span class="cl-c1e58dba">38 (13.400000000000000%)</span></p></td>
+<td class="cl-c1e602c2"><p class="cl-c1e5b4ac"><span class="cl-c1e58dba">1103 (18.7%)</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-c1e602c4"><p class="cl-c1e5b4ac"><span class="cl-c1e58dba">10-14</span></p></td>
+<td class="cl-c1e602c5"><p class="cl-c1e5b4ac"><span class="cl-c1e58dba">555 (19.7%)</span></p></td>
+<td class="cl-c1e602c5"><p class="cl-c1e5b4ac"><span class="cl-c1e58dba">334 (12.0%)</span></p></td>
+<td class="cl-c1e602c3"><p class="cl-c1e5b4ac"><span class="cl-c1e58dba">29 (10.199999999999999%)</span></p></td>
+<td class="cl-c1e602c2"><p class="cl-c1e5b4ac"><span class="cl-c1e58dba"> 918 (15.6%)</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-c1e602c4"><p class="cl-c1e5b4ac"><span class="cl-c1e58dba">15-19</span></p></td>
+<td class="cl-c1e602c5"><p class="cl-c1e5b4ac"><span class="cl-c1e58dba">381 (13.5%)</span></p></td>
+<td class="cl-c1e602c5"><p class="cl-c1e5b4ac"><span class="cl-c1e58dba">367 (13.2%)</span></p></td>
+<td class="cl-c1e602c3"><p class="cl-c1e5b4ac"><span class="cl-c1e58dba">25  (8.800000000000001%)</span></p></td>
+<td class="cl-c1e602c2"><p class="cl-c1e5b4ac"><span class="cl-c1e58dba"> 773 (13.1%)</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-c1e602c4"><p class="cl-c1e5b4ac"><span class="cl-c1e58dba">20-29</span></p></td>
+<td class="cl-c1e602c5"><p class="cl-c1e5b4ac"><span class="cl-c1e58dba">440 (15.6%)</span></p></td>
+<td class="cl-c1e602c5"><p class="cl-c1e5b4ac"><span class="cl-c1e58dba">626 (22.4%)</span></p></td>
+<td class="cl-c1e602c3"><p class="cl-c1e5b4ac"><span class="cl-c1e58dba">36 (12.699999999999999%)</span></p></td>
+<td class="cl-c1e602c2"><p class="cl-c1e5b4ac"><span class="cl-c1e58dba">1102 (18.7%)</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-c1e602c4"><p class="cl-c1e5b4ac"><span class="cl-c1e58dba">30-49</span></p></td>
+<td class="cl-c1e602c5"><p class="cl-c1e5b4ac"><span class="cl-c1e58dba">161  (5.7%)</span></p></td>
+<td class="cl-c1e602c5"><p class="cl-c1e5b4ac"><span class="cl-c1e58dba">539 (19.3%)</span></p></td>
+<td class="cl-c1e602c3"><p class="cl-c1e5b4ac"><span class="cl-c1e58dba">24  (8.500000000000000%)</span></p></td>
+<td class="cl-c1e602c2"><p class="cl-c1e5b4ac"><span class="cl-c1e58dba"> 724 (12.3%)</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-c1e602c4"><p class="cl-c1e5b4ac"><span class="cl-c1e58dba">50-69</span></p></td>
+<td class="cl-c1e602c5"><p class="cl-c1e5b4ac"><span class="cl-c1e58dba">  3  (0.1%)</span></p></td>
+<td class="cl-c1e602c5"><p class="cl-c1e5b4ac"><span class="cl-c1e58dba"> 93  (3.3%)</span></p></td>
+<td class="cl-c1e602c3"><p class="cl-c1e5b4ac"><span class="cl-c1e58dba"> 6  (2.100000000000000%)</span></p></td>
+<td class="cl-c1e602c2"><p class="cl-c1e5b4ac"><span class="cl-c1e58dba"> 102  (1.7%)</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-c1e602c4"><p class="cl-c1e5b4ac"><span class="cl-c1e58dba">70+</span></p></td>
+<td class="cl-c1e602c5"><p class="cl-c1e5b4ac"><span class="cl-c1e58dba">  0  (0.0%)</span></p></td>
+<td class="cl-c1e602c5"><p class="cl-c1e5b4ac"><span class="cl-c1e58dba"> 12  (0.4%)</span></p></td>
+<td class="cl-c1e602c3"><p class="cl-c1e5b4ac"><span class="cl-c1e58dba"> 1  (0.400000000000000%)</span></p></td>
+<td class="cl-c1e602c2"><p class="cl-c1e5b4ac"><span class="cl-c1e58dba">  13  (0.2%)</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-c1e602c9"><p class="cl-c1e5b4ac"><span class="cl-c1e58dba"></span></p></td>
+<td class="cl-c1e602c7"><p class="cl-c1e5b4ac"><span class="cl-c1e58dba">  0  (0.0%)</span></p></td>
+<td class="cl-c1e602c7"><p class="cl-c1e5b4ac"><span class="cl-c1e58dba">  0  (0.0%)</span></p></td>
+<td class="cl-c1e602c8"><p class="cl-c1e5b4ac"><span class="cl-c1e58dba">87 (30.600000000000001%)</span></p></td>
+<td class="cl-c1e602c6"><p class="cl-c1e5b4ac"><span class="cl-c1e58dba">  87  (1.5%)</span></p></td>
+</tr>
+</tbody>
+</table></div>
+</div></template><div id="4fe499f1-af0c-4b25-8881-33e1a4e7e272"></div>
+<script>
+var dest = document.getElementById("4fe499f1-af0c-4b25-8881-33e1a4e7e272");
+var template = document.getElementById("580f2961-0314-4afb-ab3e-46517120db48");
+var caption = template.content.querySelector("caption");
+if(caption) {
+  caption.style.cssText = "display:block;text-align:center;";
+  var newcapt = document.createElement("p");
+  newcapt.appendChild(caption)
+  dest.parentNode.insertBefore(newcapt, dest.previousSibling);
+}
+var fantome = dest.attachShadow({mode: 'open'});
+var templateContent = template.content;
+fantome.appendChild(templateContent);
+</script>
+</div>
+<div id="use-on-other-tables" class="section level4 unnumbered">
+<h4>Use on other tables<a class="anchor" aria-label="anchor" href="#use-on-other-tables"><i class="fas fa-link"></i></a>
+</h4>
+<p>You can use <strong>janitor</strong>’s <code>adorn_*()</code> functions on other tables, such as those created by <code>summarise()</code>, <code>count()</code>, or <code><a href="https://rdrr.io/r/base/table.html">table()</a></code>.</p>
+</div>
+<div id="saving-the-tabyl" class="section level4 unnumbered">
+<h4>Saving the tabyl<a class="anchor" aria-label="anchor" href="#saving-the-tabyl"><i class="fas fa-link"></i></a>
+</h4>
+<p>If you convert the table to HTML with a package like <strong>flextable</strong>, you can save it with functions <code>save_as_html()</code>, <code>save_as_word()</code>, <code>save_as_ppt</code>, and <code>save_as_image()</code>, as discussed more extensively in the <a href="tables.html#tables">Tables</a> page. Below, the table is saved as a Word document in which it can be hand-edited.</p>
+<div class="sourceCode" id="cb722"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">linelist</span> <span class="op">%&gt;%</span>
+  <span class="fu">tabyl</span><span class="op">(</span><span class="va">age_cat</span>, <span class="va">gender</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">adorn_totals</span><span class="op">(</span>where <span class="op">=</span> <span class="st">"col"</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">adorn_percentages</span><span class="op">(</span>denominator <span class="op">=</span> <span class="st">"col"</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">adorn_pct_formatting</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">adorn_ns</span><span class="op">(</span>position <span class="op">=</span> <span class="st">"front"</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">adorn_title</span><span class="op">(</span>
+    row_name <span class="op">=</span> <span class="st">"Age Category"</span>,
+    col_name <span class="op">=</span> <span class="st">"Gender"</span>,
+    placement <span class="op">=</span> <span class="st">"combined"</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">flextable</span><span class="fu">::</span><span class="fu"><a href="https://davidgohel.github.io/flextable/reference/flextable.html">flextable</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>                     <span class="co"># convert to HTML flextable</span>
+  <span class="fu">flextable</span><span class="fu">::</span><span class="fu"><a href="https://davidgohel.github.io/flextable/reference/autofit.html">autofit</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>                       <span class="co"># ensure only one line per row</span>
+  <span class="fu">flextable</span><span class="fu">::</span><span class="fu"><a href="https://davidgohel.github.io/flextable/reference/save_as_docx.html">save_as_docx</a></span><span class="op">(</span>path <span class="op">=</span> <span class="st">"tabyl.docx"</span><span class="op">)</span>   <span class="co"># save as Word document</span></code></pre></div>
+<div class="inline-figure"><img src="images/tabyl_word.png" width="50%" style="display: block; margin: auto;"></div>
+</div>
+<div id="statistics" class="section level4 unnumbered">
+<h4>Statistics<a class="anchor" aria-label="anchor" href="#statistics"><i class="fas fa-link"></i></a>
+</h4>
+<p>You can apply statistical tests on tabyls, like <code><a href="https://rdrr.io/r/stats/chisq.test.html">chisq.test()</a></code> or <code><a href="https://rdrr.io/r/stats/fisher.test.html">fisher.test()</a></code> from <strong>stats</strong> as shown below. Note missing values are not allowed.</p>
+<div class="sourceCode" id="cb723"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">age_by_outcome</span> <span class="op">&lt;-</span> <span class="va">linelist</span> <span class="op">%&gt;%</span> 
+  <span class="fu">tabyl</span><span class="op">(</span><span class="va">age_cat</span>, <span class="va">outcome</span>, show_na <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> 
+
+<span class="fu"><a href="https://rdrr.io/r/stats/chisq.test.html">chisq.test</a></span><span class="op">(</span><span class="va">age_by_outcome</span><span class="op">)</span></code></pre></div>
+<pre><code>## 
+##  Pearson's Chi-squared test
+## 
+## data:  age_by_outcome
+## X-squared = 12.01440968469, df = 7, p-value = 0.1000859928755</code></pre>
+</div>
+<div id="other-tips" class="section level4 unnumbered">
+<h4>Other tips<a class="anchor" aria-label="anchor" href="#other-tips"><i class="fas fa-link"></i></a>
+</h4>
+<ul>
+<li>Include the argument <code>na.rm = TRUE</code> to exclude missing values from any of the above calculations.<br>
+</li>
+<li>If applying <code>adorn_XXX()</code> to tables not created by <code>tabyl()</code>, you can specify particular column(s) to apply to like <code>adorn_percentage(,,,c(cases,deaths))</code>. The syntax is not simple. Consider using <code>summarise()</code> instead.<br>
+</li>
+<li>You can read more detail in the <a href="https://cran.r-project.org/web/packages/janitor/vignettes/janitor.html">janitor page</a> and the <a href="https://cran.r-project.org/web/packages/janitor/vignettes/tabyls.html">tabyl vignette</a>.</li>
+</ul>
+</div>
+</div>
+<div id="dplyr-package" class="section level3 unnumbered">
+<h3>
+<strong>dplyr</strong> package<a class="anchor" aria-label="anchor" href="#dplyr-package"><i class="fas fa-link"></i></a>
+</h3>
+<p><strong>dplyr</strong> is part of the <strong>tidyverse</strong> packages and is an extremely common data management tool. Creating tables with <strong>dplyr</strong> is useful if you are calculating summary statistics by group, or passing the results to <code>ggplot()</code> (which expects “long” data).</p>
+<div id="counts" class="section level4 unnumbered">
+<h4>Counts<a class="anchor" aria-label="anchor" href="#counts"><i class="fas fa-link"></i></a>
+</h4>
+<p>As explained in the <a href="grouping-data.html#grouping-data">Grouping data</a> page, you can use the <strong>dplyr</strong> function <code>count()</code> to return tabulated counts on one or more columns. The output returned is in a “long” format with a column <code>n</code> to hold the counts.</p>
+<div class="sourceCode" id="cb725"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">linelist</span> <span class="op">%&gt;%</span> 
+  <span class="fu">count</span><span class="op">(</span><span class="va">age_cat</span><span class="op">)</span></code></pre></div>
+<pre><code>##   age_cat    n
+## 1     0-4 1066
+## 2     5-9 1103
+## 3   10-14  918
+## 4   15-19  773
+## 5   20-29 1102
+## 6   30-49  724
+## 7   50-69  102
+## 8     70+   13
+## 9    &lt;NA&gt;   87</code></pre>
+<p>Tabulations of two or more columns are still returned in “long” format, with the counts in the <code>n</code> column.</p>
+<div class="sourceCode" id="cb727"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">linelist</span> <span class="op">%&gt;%</span> 
+  <span class="fu">count</span><span class="op">(</span><span class="va">age_cat</span>, <span class="va">gender</span><span class="op">)</span></code></pre></div>
+<pre><code>##    age_cat gender   n
+## 1      0-4      f 624
+## 2      0-4      m 404
+## 3      0-4   &lt;NA&gt;  38
+## 4      5-9      f 651
+## 5      5-9      m 414
+## 6      5-9   &lt;NA&gt;  38
+## 7    10-14      f 555
+## 8    10-14      m 334
+## 9    10-14   &lt;NA&gt;  29
+## 10   15-19      f 381
+## 11   15-19      m 367
+## 12   15-19   &lt;NA&gt;  25
+## 13   20-29      f 440
+## 14   20-29      m 626
+## 15   20-29   &lt;NA&gt;  36
+## 16   30-49      f 161
+## 17   30-49      m 539
+## 18   30-49   &lt;NA&gt;  24
+## 19   50-69      f   3
+## 20   50-69      m  93
+## 21   50-69   &lt;NA&gt;   6
+## 22     70+      m  12
+## 23     70+   &lt;NA&gt;   1
+## 24    &lt;NA&gt;   &lt;NA&gt;  87</code></pre>
+<p>To display this output of counts by group with <code>ggplot()</code> is relatively straight-forward. See further examples in the pages [Plotting categorical data] and <a href="ggplot-tips.html#ggplot-tips">ggplot tips</a>.</p>
+<div class="sourceCode" id="cb729"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">linelist</span> <span class="op">%&gt;%</span> 
+  <span class="fu">count</span><span class="op">(</span><span class="va">outcome</span>, <span class="va">age_cat</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span><span class="op">+</span>
+    <span class="fu">geom_bar</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">outcome</span>, fill <span class="op">=</span> <span class="va">age_cat</span>, y <span class="op">=</span> <span class="va">n</span><span class="op">)</span>, stat <span class="op">=</span> <span class="st">"identity"</span><span class="op">)</span></code></pre></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-583-1.png" width="672"></div>
+</div>
+<div id="within-group-proportions" class="section level4 unnumbered">
+<h4>Within-group proportions<a class="anchor" aria-label="anchor" href="#within-group-proportions"><i class="fas fa-link"></i></a>
+</h4>
+<p>You can calculate proportions <em>within groups</em> by having two levels of aggregation prior to using <code>mutate()</code>. The table below first groups the data frame by <code>outcome</code> and then groups again and counts by column <code>age_cat</code>, achieving the breakdown of age <em>by outcome</em>. Note that you can add more stratifications by adding columns to the <code>group_by()</code> command.</p>
+<div class="sourceCode" id="cb730"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">age_by_outcome</span> <span class="op">&lt;-</span> <span class="va">linelist</span> <span class="op">%&gt;%</span> 
+  <span class="fu">group_by</span><span class="op">(</span><span class="va">outcome</span><span class="op">)</span> <span class="op">%&gt;%</span>                  <span class="co"># group first by outcome </span>
+  <span class="fu">count</span><span class="op">(</span><span class="va">age_cat</span><span class="op">)</span> <span class="op">%&gt;%</span>                     <span class="co"># group again and count by gender (produces "n" column)</span>
+  <span class="fu">mutate</span><span class="op">(</span>percent <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org//reference/label_percent.html">percent</a></span><span class="op">(</span><span class="va">n</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="co"># calculate percent - note the denominator is by outcome group</span></code></pre></div>
+<div id="htmlwidget-9321789d8fab2f8224a5" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-9321789d8fab2f8224a5">{"x":{"filter":"none","data":[["Death","Death","Death","Death","Death","Death","Death","Death","Death","Recover","Recover","Recover","Recover","Recover","Recover","Recover","Recover","Recover",null,null,null,null,null,null,null,null,null],["0-4","5-9","10-14","15-19","20-29","30-49","50-69","70+",null,"0-4","5-9","10-14","15-19","20-29","30-49","50-69","70+",null,"0-4","5-9","10-14","15-19","20-29","30-49","50-69","70+",null],[482,526,384,326,469,316,49,6,24,361,329,307,268,392,252,31,5,38,223,248,227,179,241,156,22,2,25],["18.6700000000000017%","20.3700000000000010%","14.8699999999999992%","12.6299999999999990%","18.1600000000000001%","12.2400000000000002%","1.8999999999999999%","0.2300000000000000%","0.9300000000000000%","18.20%","16.59%","15.48%","13.51%","19.77%","12.71%","1.56%","0.25%","1.92%","16.86%","18.75%","17.16%","13.53%","18.22%","11.79%","1.66%","0.15%","1.89%"]],"container":"<table class=\"white-space: nowrap\">\n  <thead>\n    <tr>\n      <th>outcome<\/th>\n      <th>age_cat<\/th>\n      <th>n<\/th>\n      <th>percent<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":12,"scrollX":true,"columnDefs":[{"className":"dt-right","targets":2}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[10,12,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+</div>
+<div id="pivot-wider-1" class="section level4 unnumbered">
+<h4>Pivot wider<a class="anchor" aria-label="anchor" href="#pivot-wider-1"><i class="fas fa-link"></i></a>
+</h4>
+<p>If your <strong>dplyr</strong> table is in “long” format, you can “pivot” it to wide format using the <strong>tidyr</strong> <code>pivot_wider()</code> function. You will likely need to re-define the column names with <code>rename()</code>. For more information see the page on <a href="pivoting-data.html#pivoting-data">Pivoting data</a>.</p>
+<div class="sourceCode" id="cb731"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">age_by_outcome</span> <span class="op">%&gt;%</span> 
+  <span class="fu">pivot_wider</span><span class="op">(</span>names_from <span class="op">=</span> <span class="va">age_cat</span>, values_from <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">n</span>, <span class="va">percent</span><span class="op">)</span><span class="op">)</span>  </code></pre></div>
+<pre><code>## # A tibble: 3 x 19
+## # Groups:   outcome [3]
+##   outcome `n_0-4` `n_5-9` `n_10-14` `n_15-19` `n_20-29` `n_30-49` `n_50-69` `n_70+`  n_NA `percent_0-4` `percent_5-9` `percent_10-14` `percent_15-19`
+##   &lt;chr&gt;     &lt;int&gt;   &lt;int&gt;     &lt;int&gt;     &lt;int&gt;     &lt;int&gt;     &lt;int&gt;     &lt;int&gt;   &lt;int&gt; &lt;int&gt; &lt;chr&gt;         &lt;chr&gt;         &lt;chr&gt;           &lt;chr&gt;          
+## 1 Death       482     526       384       326       469       316        49       6    24 18.670000000~ 20.370000000~ 14.86999999999~ 12.62999999999~
+## 2 Recover     361     329       307       268       392       252        31       5    38 18.20%        16.59%        15.48%          13.51%         
+## 3 &lt;NA&gt;        223     248       227       179       241       156        22       2    25 16.86%        18.75%        17.16%          13.53%         
+## # ... with 5 more variables: `percent_20-29` &lt;chr&gt;, `percent_30-49` &lt;chr&gt;, `percent_50-69` &lt;chr&gt;, `percent_70+` &lt;chr&gt;, percent_NA &lt;chr&gt;</code></pre>
+</div>
+<div id="summary-statistics-with-summarise" class="section level4 unnumbered">
+<h4>Summary statistics with <code>summarise()</code><a class="anchor" aria-label="anchor" href="#summary-statistics-with-summarise"><i class="fas fa-link"></i></a>
+</h4>
+<p>One of the advantages of using <strong>dplyr</strong> to make your table is the flexibility to calculate statistics like <code><a href="https://rdrr.io/r/stats/median.html">median()</a></code>, <code><a href="https://rdrr.io/r/base/Extremes.html">max()</a></code>, <code><a href="https://rdrr.io/r/stats/sd.html">sd()</a></code>, within the context of <code>summarise()</code>. These statistics can be calculated for the whole dataset or by group.
+<code>summarise()</code> creates a <em>new</em> summary data frame consisting of only the columns you define within <code>summarise()</code> (and any grouping columns).</p>
+<p>Within the summarise statement, provide the name(s) of each <strong>new</strong> summary column, an equals sign, and then a statistical function to apply. Within the statistical function, list the column to be operated on and any relevant argument (e.g. <code>na.rm = TRUE</code>). You can use <code><a href="https://rdrr.io/r/base/sum.html">sum()</a></code> to count the number of rows that meet a logical criteria (use double equals <code><a href="https://rdrr.io/r/base/Comparison.html">==</a></code>).</p>
+<p>Below, <code>linelist</code> data on the delay from symptom onset to hospital admission (column <code>days_onset_hosp</code>, in days) are summarised.</p>
+<div class="sourceCode" id="cb733"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">summary_table</span> <span class="op">&lt;-</span> <span class="va">linelist</span> <span class="op">%&gt;%</span>                                        <span class="co"># begin with linelist, save out as new object</span>
+  <span class="fu">group_by</span><span class="op">(</span><span class="va">hospital</span><span class="op">)</span> <span class="op">%&gt;%</span>                                             <span class="co"># Group all calculations by hospital</span>
+  <span class="fu">summarise</span><span class="op">(</span>                                                         <span class="co"># only these summary columns will be returned</span>
+    cases       <span class="op">=</span> <span class="fu">n</span><span class="op">(</span><span class="op">)</span>,                                                <span class="co"># number of rows per group</span>
+    delay_3     <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">days_onset_hosp</span> <span class="op">&gt;=</span> <span class="fl">3</span>, na.rm <span class="op">=</span> <span class="cn">T</span><span class="op">)</span>,               <span class="co"># number of rows with male gender</span>
+    pct_delay_3 <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org//reference/label_percent.html">percent</a></span><span class="op">(</span><span class="va">delay_3</span> <span class="op">/</span> <span class="va">cases</span><span class="op">)</span>,                   <span class="co"># convert previously-defined column to percent </span>
+    delay_mean  <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">days_onset_hosp</span>, na.rm<span class="op">=</span><span class="cn">T</span><span class="op">)</span>, digits <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>,  <span class="co"># mean of delays column, by group and rounded</span>
+    delay_sd    <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op">(</span><span class="va">days_onset_hosp</span>, na.rm <span class="op">=</span> <span class="cn">T</span><span class="op">)</span>, digits <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>   <span class="co"># standard deviation of delays, by group and rounded</span>
+  <span class="op">)</span>
+
+<span class="va">summary_table</span>  <span class="co"># print</span></code></pre></div>
+<pre><code>## # A tibble: 6 x 6
+##   hospital                             cases delay_3 pct_delay_3 delay_mean delay_sd
+## * &lt;chr&gt;                                &lt;int&gt;   &lt;int&gt; &lt;chr&gt;            &lt;dbl&gt;    &lt;dbl&gt;
+## 1 Central Hospital                       454     108 24%                1.9      1.9
+## 2 Military Hospital                      896     253 28%                2.1      2.3
+## 3 Missing                               1469     399 27%                2        2.3
+## 4 Other                                  885     234 26%                2        2.2
+## 5 Port Hospital                         1762     470 27%                2        2.2
+## 6 St. Mark's Maternity Hospital (SMMH)   422     116 27%                2        2.3</code></pre>
+<p>Some tips:</p>
+<ul>
+<li>Use <code><a href="https://rdrr.io/r/base/sum.html">sum()</a></code> with a logic statement within to “count” rows that meet certain criteria<br>
+</li>
+<li>Note the use of argument <code>na.rm = TRUE</code> in mathematical functions like <code><a href="https://rdrr.io/r/base/sum.html">sum()</a></code>, otherwise <code>NA</code> will be returned if there are any missing values<br>
+</li>
+<li>Use the function <code>percent()</code> from the <strong>scales</strong> package to easily convert to percents<br>
+</li>
+<li>Use <code><a href="https://rdrr.io/r/base/Round.html">round()</a></code> from <strong>base</strong> R to specify decimals<br>
+</li>
+<li>To calculate these statistics on the entire dataset, use <code>summarise()</code> without <code>group_by()</code>
+</li>
+</ul>
+<p>Percentiles deserve a special mention. To return percentiles, use <code><a href="https://rdrr.io/r/stats/quantile.html">quantile()</a></code> with the defaults or specify the value(s) you would like with <code>probs =</code>.</p>
+<div class="sourceCode" id="cb735"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># get default percentile values of age (0%, 25%, 50%, 75%, 100%)</span>
+<span class="va">linelist</span> <span class="op">%&gt;%</span> 
+  <span class="fu">summarise</span><span class="op">(</span>age_percentiles <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/quantile.html">quantile</a></span><span class="op">(</span><span class="va">age_years</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<pre><code>##   age_percentiles
+## 1               0
+## 2               6
+## 3              13
+## 4              23
+## 5              90</code></pre>
+<div class="sourceCode" id="cb737"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># get specified percentile values of age (5%, 50%, 75%, 98%)</span>
+<span class="va">linelist</span> <span class="op">%&gt;%</span> 
+  <span class="fu">summarise</span><span class="op">(</span>
+    age_percentiles <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/quantile.html">quantile</a></span><span class="op">(</span>
+      <span class="va">age_years</span>,
+      probs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">.05</span>, <span class="fl">0.5</span>, <span class="fl">0.75</span>, <span class="fl">0.98</span><span class="op">)</span>, 
+      na.rm<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span>
+    <span class="op">)</span></code></pre></div>
+<pre><code>##   age_percentiles
+## 1               1
+## 2              13
+## 3              23
+## 4              49</code></pre>
+<p>You can also use <code>str_glue()</code> to combine columns into one new column - typically used <em>after</em> the <code>summarise()</code> command. Below, the <code>summary_table</code> data frame created above is mutated such that columns <code>delay_mean</code> and <code>delay_sd</code> are combined and their old columns removed. Then, to make the table more presentable, a total row is added with <code>adorn_totals()</code> from <strong>janitor</strong> (which ignores non-numeric columns). Lastly, we use <code>rename()</code> from <strong>dplyr</strong> to make the column names nicer. Now you could pass to <strong>flextable</strong> and print to Word, HTML, Powerpoint, etc.!</p>
+<div class="sourceCode" id="cb739"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">summary_table</span> <span class="op">%&gt;%</span> 
+  <span class="fu">mutate</span><span class="op">(</span>delay <span class="op">=</span> <span class="fu">str_glue</span><span class="op">(</span><span class="st">"{delay_mean} ({delay_sd})"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>  <span class="co"># combine and format other values</span>
+  <span class="fu">select</span><span class="op">(</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">delay_mean</span>, <span class="va">delay_sd</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>                       <span class="co"># remove two old columns   </span>
+  <span class="fu">adorn_totals</span><span class="op">(</span>where <span class="op">=</span> <span class="st">"row"</span><span class="op">)</span> <span class="op">%&gt;%</span>                            <span class="co"># add total row</span>
+  <span class="fu">rename</span><span class="op">(</span>                                                    <span class="co"># rename cols</span>
+    <span class="st">"Hospital Name"</span>   <span class="op">=</span> <span class="va">hospital</span>,
+    <span class="st">"Cases"</span>           <span class="op">=</span> <span class="va">cases</span>,
+    <span class="st">"Delay 3+ days"</span>   <span class="op">=</span> <span class="va">delay_3</span>,
+    <span class="st">"% delay 3+ days"</span> <span class="op">=</span> <span class="va">pct_delay_3</span>,
+    <span class="st">"Mean (sd)"</span>       <span class="op">=</span> <span class="va">delay</span><span class="op">)</span></code></pre></div>
+<pre><code>##                         Hospital Name Cases Delay 3+ days % delay 3+ days Mean (sd)
+##                      Central Hospital   454           108             24% 1.9 (1.9)
+##                     Military Hospital   896           253             28% 2.1 (2.3)
+##                               Missing  1469           399             27%   2 (2.3)
+##                                 Other   885           234             26%   2 (2.2)
+##                         Port Hospital  1762           470             27%   2 (2.2)
+##  St. Mark's Maternity Hospital (SMMH)   422           116             27%   2 (2.3)
+##                                 Total  5888          1580               -         -</code></pre>
+</div>
+<div id="using-summarise-on-aggregated-data" class="section level4 unnumbered">
+<h4>Using <code>summarise()</code> on aggregated data<a class="anchor" aria-label="anchor" href="#using-summarise-on-aggregated-data"><i class="fas fa-link"></i></a>
+</h4>
+<p><em>If you begin with aggregated data</em>, use <code><a href="https://rdrr.io/r/base/sum.html">sum()</a></code> on the counts column. For example, let’s say you are beginning with the table of counts below, called <code>linelist_agg</code> - it shows in “long” format the case counts by outcome and gender.</p>
+<pre><code>##   outcome gender    n
+## 1   Death      f 1246
+## 2   Death      m 1231
+## 3 Recover      f  946
+## 4 Recover      m  933</code></pre>
+<p>To sum the count values (in column <code>n</code>) by group you can use <code><a href="https://rdrr.io/r/base/sum.html">sum(n, na.rm=T)</a></code>. To sum those values by the grouping column <em>and within that by a specific subset</em>, you can use the subset bracket [ ] syntax on the count column as below:</p>
+<div class="sourceCode" id="cb742"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">linelist_agg</span> <span class="op">%&gt;%</span> 
+  <span class="fu">group_by</span><span class="op">(</span><span class="va">outcome</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">summarise</span><span class="op">(</span>
+    total_cases <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">n</span>, na.rm<span class="op">=</span><span class="cn">T</span><span class="op">)</span>,
+    male_cases <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">n</span><span class="op">[</span><span class="va">gender</span> <span class="op">==</span> <span class="st">"m"</span><span class="op">]</span>, na.rm<span class="op">=</span><span class="cn">T</span><span class="op">)</span>,
+    female_cases <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">n</span><span class="op">[</span><span class="va">gender</span> <span class="op">==</span> <span class="st">"f"</span><span class="op">]</span>, na.rm<span class="op">=</span><span class="cn">T</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<pre><code>## # A tibble: 2 x 4
+##   outcome total_cases male_cases female_cases
+## * &lt;chr&gt;         &lt;int&gt;      &lt;int&gt;        &lt;int&gt;
+## 1 Death          2477       1231         1246
+## 2 Recover        1879        933          946</code></pre>
+<p><span style="color: darkgreen;"><strong><em>TIP:</em></strong> The summarise function works with both UK and US spelling - <code>summarise()</code> and <code>summarize()</code> call the same function.</span></p>
+</div>
+<div id="summarise-across-multiple-columns" class="section level4 unnumbered">
+<h4>Summarise <code>across()</code> multiple columns<a class="anchor" aria-label="anchor" href="#summarise-across-multiple-columns"><i class="fas fa-link"></i></a>
+</h4>
+<p>You can use summarise across multiple columns using <code>across()</code>. This makes life easier when you want the same statistic for many columns. To specify which columns to operate across, either:</p>
+<ul>
+<li>Provide a vector of column names <code><a href="https://rdrr.io/r/base/c.html">c()</a></code>, or<br>
+</li>
+<li>Use the <code>select()</code> semantic helper functions (explained below) to select columns by criteria</li>
+</ul>
+<p>Below, <code><a href="https://rdrr.io/r/base/mean.html">mean()</a></code> is applied to grouped data. The columns are specified, a function is specified (no parentheses), and finally, any additional arguments for the function (e.g. <code>na.rm=TRUE</code>).</p>
+<p>It can be difficult to get the order of parentheses and commas correct when using <code>across()</code>. Remember that within <code>across()</code> you must include the columns, the functions, and any extra arguments needed for the functions.</p>
+<div class="sourceCode" id="cb744"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">linelist</span> <span class="op">%&gt;%</span> 
+  <span class="fu">group_by</span><span class="op">(</span><span class="va">outcome</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">summarise</span><span class="op">(</span><span class="fu">across</span><span class="op">(</span>.cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">age_years</span>, <span class="va">temp</span>, <span class="va">wt_kg</span>, <span class="va">ht_cm</span><span class="op">)</span>,
+                   .fns <span class="op">=</span> <span class="va">mean</span>,
+                   na.rm<span class="op">=</span><span class="cn">T</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<pre><code>## # A tibble: 3 x 5
+##   outcome age_years  temp wt_kg ht_cm
+## * &lt;chr&gt;       &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1 Death        16.0  38.5  52.8  124.
+## 2 Recover      16.4  38.6  53.5  126.
+## 3 &lt;NA&gt;         16.0  38.5  53.3  125.</code></pre>
+<p>Here are those <code>select()</code> helper functions that you can place <em>within</em> <code>across()</code>:</p>
+<p>These are helper functions available to assist you in specifying columns:</p>
+<ul>
+<li>
+<code>everything()</code> - all other columns not mentioned<br>
+</li>
+<li>
+<code>last_col()</code> - the last column<br>
+</li>
+<li>
+<code>where()</code> - applies a function to all columns and selects those which are TRUE<br>
+</li>
+<li>
+<code>starts_with()</code> - matches to a specified prefix. Example: <code>starts_with("date")</code>
+</li>
+<li>
+<code>ends_with()</code> - matches to a specified suffix. Example: <code>ends_with("_end")</code><br>
+</li>
+<li>
+<code>contains()</code> - columns containing a character string. Example: <code>contains("time")</code>
+</li>
+<li>
+<code>matches()</code> - to apply a regular expression (regex). Example: <code>contains("[pt]al")</code><br>
+</li>
+<li>
+<code>num_range()</code> -</li>
+<li>
+<code>any_of()</code> - matches if column is named. Useful if the name might not exist. Example: <code>any_of(date_onset, date_death, cardiac_arrest)</code>
+</li>
+</ul>
+<p>For example, to return the mean of every numeric column. The <code>where()</code> command takes the place of a vector of column names <code><a href="https://rdrr.io/r/base/c.html">c()</a></code>. The function and any additional arguments are all within the <code>across()</code>.</p>
+<div class="sourceCode" id="cb746"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">linelist</span> <span class="op">%&gt;%</span> 
+  <span class="fu">group_by</span><span class="op">(</span><span class="va">outcome</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">summarise</span><span class="op">(</span><span class="fu">across</span><span class="op">(</span>.cols <span class="op">=</span> <span class="fu">where</span><span class="op">(</span><span class="va">is.numeric</span><span class="op">)</span>, .fns <span class="op">=</span> <span class="va">mean</span>, na.rm<span class="op">=</span><span class="cn">T</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<pre><code>## # A tibble: 3 x 12
+##   outcome generation   age age_years   lon   lat wt_kg ht_cm ct_blood  temp   bmi days_onset_hosp
+## * &lt;chr&gt;        &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;           &lt;dbl&gt;
+## 1 Death         16.7  16.1      16.0 -13.2  8.47  52.8  124.     21.3  38.5  48.8            1.79
+## 2 Recover       16.4  16.5      16.4 -13.2  8.47  53.5  126.     21.1  38.6  47.7            2.28
+## 3 &lt;NA&gt;          16.5  16.0      16.0 -13.2  8.47  53.3  125.     21.2  38.5  47.4            2.04</code></pre>
+</div>
+</div>
+<div id="gtsummary-package" class="section level3 unnumbered">
+<h3>
+<strong>gtsummary</strong> package<a class="anchor" aria-label="anchor" href="#gtsummary-package"><i class="fas fa-link"></i></a>
+</h3>
+<p>If you want to print your summary statistics in a pretty, publication-ready graphic, you can use the <strong>gtsummary</strong> package and its function <code>tbl_summary()</code>. The code can seem complex at first, but the outputs look very nice and print to your RStudio Viewer panel as HTML. Read a <a href="http://www.danieldsjoberg.com/gtsummary/articles/tbl_summary.html">vignette here</a>.</p>
+<p>To introduce <code>tbl_summary()</code> we will show the most basic behavior first, which actually produces a large and beautiful table. Then, we will examine in detail how to make adjustments and more tailored tables.</p>
+<div id="summary-table" class="section level4 unnumbered">
+<h4>Summary table<a class="anchor" aria-label="anchor" href="#summary-table"><i class="fas fa-link"></i></a>
+</h4>
+<p>The default behavior of <code>tbl_summary()</code> is quite incredible - it takes the columns you provide and creates a summary table. The function prints statistics appropriate to the column class: median and inter-quartile range (IQR) for numeric columns, and counts (%) for categorical or binary columns. Missing values are converted to “Unknown”. Footnotes are added to the bottom to explain the statistics, while the total N is shown at the top.</p>
+<div class="sourceCode" id="cb748"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">linelist</span> <span class="op">%&gt;%</span> 
+  <span class="fu">select</span><span class="op">(</span><span class="va">age_years</span>, <span class="va">gender</span>, <span class="va">outcome</span>, <span class="va">fever</span>, <span class="va">temp</span>, <span class="va">hospital</span><span class="op">)</span> <span class="op">%&gt;%</span>  <span class="co"># keep columns of interest</span>
+  <span class="fu">tbl_summary</span><span class="op">(</span><span class="op">)</span>                                                  <span class="co"># default tbl_summary()</span></code></pre></div>
+<style>html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+}
+
+#irpfhhpisp .gt_table {
+  display: table;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#irpfhhpisp .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#irpfhhpisp .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#irpfhhpisp .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 0;
+  padding-bottom: 4px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#irpfhhpisp .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#irpfhhpisp .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#irpfhhpisp .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#irpfhhpisp .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#irpfhhpisp .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#irpfhhpisp .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#irpfhhpisp .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#irpfhhpisp .gt_group_heading {
+  padding: 8px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#irpfhhpisp .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#irpfhhpisp .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#irpfhhpisp .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#irpfhhpisp .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#irpfhhpisp .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 12px;
+}
+
+#irpfhhpisp .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#irpfhhpisp .gt_first_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+}
+
+#irpfhhpisp .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#irpfhhpisp .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#irpfhhpisp .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#irpfhhpisp .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#irpfhhpisp .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#irpfhhpisp .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding: 4px;
+}
+
+#irpfhhpisp .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#irpfhhpisp .gt_sourcenote {
+  font-size: 90%;
+  padding: 4px;
+}
+
+#irpfhhpisp .gt_left {
+  text-align: left;
+}
+
+#irpfhhpisp .gt_center {
+  text-align: center;
+}
+
+#irpfhhpisp .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#irpfhhpisp .gt_font_normal {
+  font-weight: normal;
+}
+
+#irpfhhpisp .gt_font_bold {
+  font-weight: bold;
+}
+
+#irpfhhpisp .gt_font_italic {
+  font-style: italic;
+}
+
+#irpfhhpisp .gt_super {
+  font-size: 65%;
+}
+
+#irpfhhpisp .gt_footnote_marks {
+  font-style: italic;
+  font-size: 65%;
+}
+</style>
+<div id="irpfhhpisp" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><div class="inline-table"><table class="gt_table">
+<thead class="gt_col_headings"><tr>
+<th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1"><strong>Characteristic</strong></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">
+<strong>N = 5,888</strong><sup class="gt_footnote_marks">1</sup>
+</th>
+    </tr></thead>
+<tbody class="gt_table_body">
+<tr>
+<td class="gt_row gt_left">age_years</td>
+      <td class="gt_row gt_center">13 (6, 23)</td>
+    </tr>
+<tr>
+<td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">Unknown</td>
+      <td class="gt_row gt_center">87</td>
+    </tr>
+<tr>
+<td class="gt_row gt_left">gender</td>
+      <td class="gt_row gt_center"></td>
+    </tr>
+<tr>
+<td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">f</td>
+      <td class="gt_row gt_center">2,815 (50%)</td>
+    </tr>
+<tr>
+<td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">m</td>
+      <td class="gt_row gt_center">2,789 (50%)</td>
+    </tr>
+<tr>
+<td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">Unknown</td>
+      <td class="gt_row gt_center">284</td>
+    </tr>
+<tr>
+<td class="gt_row gt_left">outcome</td>
+      <td class="gt_row gt_center"></td>
+    </tr>
+<tr>
+<td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">Death</td>
+      <td class="gt_row gt_center">2,582 (57%)</td>
+    </tr>
+<tr>
+<td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">Recover</td>
+      <td class="gt_row gt_center">1,983 (43%)</td>
+    </tr>
+<tr>
+<td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">Unknown</td>
+      <td class="gt_row gt_center">1,323</td>
+    </tr>
+<tr>
+<td class="gt_row gt_left">fever</td>
+      <td class="gt_row gt_center">4,492 (80%)</td>
+    </tr>
+<tr>
+<td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">Unknown</td>
+      <td class="gt_row gt_center">246</td>
+    </tr>
+<tr>
+<td class="gt_row gt_left">temp</td>
+      <td class="gt_row gt_center">38.80 (38.10, 39.20)</td>
+    </tr>
+<tr>
+<td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">Unknown</td>
+      <td class="gt_row gt_center">135</td>
+    </tr>
+<tr>
+<td class="gt_row gt_left">hospital</td>
+      <td class="gt_row gt_center"></td>
+    </tr>
+<tr>
+<td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">Central Hospital</td>
+      <td class="gt_row gt_center">454 (7.7%)</td>
+    </tr>
+<tr>
+<td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">Military Hospital</td>
+      <td class="gt_row gt_center">896 (15%)</td>
+    </tr>
+<tr>
+<td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">Missing</td>
+      <td class="gt_row gt_center">1,469 (25%)</td>
+    </tr>
+<tr>
+<td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">Other</td>
+      <td class="gt_row gt_center">885 (15%)</td>
+    </tr>
+<tr>
+<td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">Port Hospital</td>
+      <td class="gt_row gt_center">1,762 (30%)</td>
+    </tr>
+<tr>
+<td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">St. Mark's Maternity Hospital (SMMH)</td>
+      <td class="gt_row gt_center">422 (7.2%)</td>
+    </tr>
+</tbody>
+<tfoot><tr class="gt_footnotes">
+<td colspan="2">
+        <p class="gt_footnote">
+          <sup class="gt_footnote_marks"><em>1</em>
+          </sup>
+           
+          Median (IQR); n (%)
+          <br></p>
+      </td>
+    </tr></tfoot>
+</table></div></div>
+<p>Now we will explain how the function works and how to make adjustments. The key arguments are detailed below:</p>
+<p><strong><code>by =</code></strong><br>
+You can stratify your table by a column (e.g. by <code>outcome</code>), creating a 2-way table.</p>
+<p><strong><code>statistic =</code></strong><br>
+Indicate which statistics to show and how to display them with an equation. There are two sides to the equation, separated by a tilde <code><a href="https://rdrr.io/r/base/tilde.html">~</a></code>. On the right in quotes is the statistical display desired, and on the left are the columns to which that display will apply.</p>
+<ul>
+<li>The right side of the equation uses the syntax of <code>str_glue()</code> from <strong>stringr</strong> (see <a href="characters-and-strings.html#characters-and-strings">Characters and Strings</a>), with the desired display string in quotes and the statistics themselves within curly brackets. You can include statistics like “n” (for counts), “N” (for denominator), “mean”, “median”, “sd”, “max”, “min”, percentiles as “p##” like “p25”, or percent of total as “p”. See <code>?tbl_summary</code> for details.<br>
+</li>
+<li>For the left side of the equation, you can specify columns by name (e.g. <code>age</code> or <code><a href="https://rdrr.io/r/base/c.html">c(age, gender)</a></code>) or using helpers such as <code>all_continuous()</code>, <code>all_categorical()</code>, <code>contains()</code>, <code>starts_with()</code>, etc.</li>
+</ul>
+<p>A simple example of a <code>statistic =</code> equation might look like below, to only print the mean of column <code>age_years</code>:</p>
+<div class="sourceCode" id="cb749"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">linelist</span> <span class="op">%&gt;%</span> 
+  <span class="fu">select</span><span class="op">(</span><span class="va">age_years</span><span class="op">)</span> <span class="op">%&gt;%</span>         <span class="co"># keep only columns of interest </span>
+  <span class="fu">tbl_summary</span><span class="op">(</span>                  <span class="co"># create summary table</span>
+    statistic <span class="op">=</span> <span class="va">age_years</span> <span class="op">~</span> <span class="st">"{mean}"</span><span class="op">)</span> <span class="co"># print mean of age</span></code></pre></div>
+<style>html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+}
+
+#pzxkvgrzoz .gt_table {
+  display: table;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#pzxkvgrzoz .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#pzxkvgrzoz .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#pzxkvgrzoz .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 0;
+  padding-bottom: 4px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#pzxkvgrzoz .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#pzxkvgrzoz .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#pzxkvgrzoz .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#pzxkvgrzoz .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#pzxkvgrzoz .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#pzxkvgrzoz .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#pzxkvgrzoz .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#pzxkvgrzoz .gt_group_heading {
+  padding: 8px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#pzxkvgrzoz .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#pzxkvgrzoz .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#pzxkvgrzoz .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#pzxkvgrzoz .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#pzxkvgrzoz .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 12px;
+}
+
+#pzxkvgrzoz .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#pzxkvgrzoz .gt_first_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+}
+
+#pzxkvgrzoz .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#pzxkvgrzoz .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#pzxkvgrzoz .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#pzxkvgrzoz .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#pzxkvgrzoz .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#pzxkvgrzoz .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding: 4px;
+}
+
+#pzxkvgrzoz .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#pzxkvgrzoz .gt_sourcenote {
+  font-size: 90%;
+  padding: 4px;
+}
+
+#pzxkvgrzoz .gt_left {
+  text-align: left;
+}
+
+#pzxkvgrzoz .gt_center {
+  text-align: center;
+}
+
+#pzxkvgrzoz .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#pzxkvgrzoz .gt_font_normal {
+  font-weight: normal;
+}
+
+#pzxkvgrzoz .gt_font_bold {
+  font-weight: bold;
+}
+
+#pzxkvgrzoz .gt_font_italic {
+  font-style: italic;
+}
+
+#pzxkvgrzoz .gt_super {
+  font-size: 65%;
+}
+
+#pzxkvgrzoz .gt_footnote_marks {
+  font-style: italic;
+  font-size: 65%;
+}
+</style>
+<div id="pzxkvgrzoz" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><div class="inline-table"><table class="gt_table">
+<thead class="gt_col_headings"><tr>
+<th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1"><strong>Characteristic</strong></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">
+<strong>N = 5,888</strong><sup class="gt_footnote_marks">1</sup>
+</th>
+    </tr></thead>
+<tbody class="gt_table_body">
+<tr>
+<td class="gt_row gt_left">age_years</td>
+      <td class="gt_row gt_center">16</td>
+    </tr>
+<tr>
+<td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">Unknown</td>
+      <td class="gt_row gt_center">87</td>
+    </tr>
+</tbody>
+<tfoot><tr class="gt_footnotes">
+<td colspan="2">
+        <p class="gt_footnote">
+          <sup class="gt_footnote_marks"><em>1</em>
+          </sup>
+           
+          Mean
+          <br></p>
+      </td>
+    </tr></tfoot>
+</table></div></div>
+<p>A slightly more complex equation might look like this, incorporating the max and min values within parentheses and separated by a comma:</p>
+<div class="sourceCode" id="cb750"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">statistic</span> <span class="op">=</span> <span class="va">age_years</span> <span class="op">~</span> <span class="st">"({min}, {max})"</span></code></pre></div>
+<p>You can also differentiate syntax for separate columns or types of columns. In the more complex example below, the value provided to <code>statistc =</code> is a <strong>list</strong> indicating that for all continuous columns the table should print mean with standard deviation in parentheses, while for all categorical columns it should print the n, denominator, and percent.</p>
+<p><strong><code>digits =</code></strong><br>
+Adjust the digits and rounding. Optionally, this can be specified to be for continuous columns only (as below).</p>
+<p><strong><code>label =</code></strong><br>
+Adjust how the column name should be displayed. Provide the column name and its desired label separated by a tilde. The default is the column name.</p>
+<p><strong><code>missing_text =</code></strong><br>
+Adjust how missing values are displayed. The default is “Unknown”.</p>
+<p><strong><code>type =</code></strong><br>
+This is used to adjust how many levels of the statistics are shown. The syntax is similar to <code>statistic =</code> in that you provide an equation with columns on the left and a value on the right. Two common scenarios include:</p>
+<ul>
+<li>
+<code>type = all_categorical() ~ "categorical"</code> Forces dichotomous columns (e.g. fever) to show all levels instead of only the “yes” row<br>
+</li>
+<li>
+<code>type = all_continuous() ~ "continuous2"</code> Allows multi-line statistics per variable, as shown in a later section</li>
+</ul>
+<p>In the example below, each of these arguments is used to modify the original summary table:</p>
+<div class="sourceCode" id="cb751"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">linelist</span> <span class="op">%&gt;%</span> 
+  <span class="fu">select</span><span class="op">(</span><span class="va">age_years</span>, <span class="va">gender</span>, <span class="va">outcome</span>, <span class="va">fever</span>, <span class="va">temp</span>, <span class="va">hospital</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="co"># keep only columns of interest</span>
+  <span class="fu">tbl_summary</span><span class="op">(</span>     
+    by <span class="op">=</span> <span class="va">outcome</span>,                                               <span class="co"># stratify entire table by outcome</span>
+    statistic <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fu">all_continuous</span><span class="op">(</span><span class="op">)</span> <span class="op">~</span> <span class="st">"{mean} ({sd})"</span>,        <span class="co"># stats and format for continuous columns</span>
+                     <span class="fu">all_categorical</span><span class="op">(</span><span class="op">)</span> <span class="op">~</span> <span class="st">"{n} / {N} ({p}%)"</span><span class="op">)</span>,   <span class="co"># stats and format for categorical columns</span>
+    digits <span class="op">=</span> <span class="fu">all_continuous</span><span class="op">(</span><span class="op">)</span> <span class="op">~</span> <span class="fl">1</span>,                              <span class="co"># rounding for continuous columns</span>
+    type   <span class="op">=</span> <span class="fu">all_categorical</span><span class="op">(</span><span class="op">)</span> <span class="op">~</span> <span class="st">"categorical"</span>,                 <span class="co"># force all categorical levels to display</span>
+    label  <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>                                              <span class="co"># display labels for column names</span>
+      <span class="va">outcome</span>   <span class="op">~</span> <span class="st">"Outcome"</span>,                           
+      <span class="va">age_years</span> <span class="op">~</span> <span class="st">"Age (years)"</span>,
+      <span class="va">gender</span>    <span class="op">~</span> <span class="st">"Gender"</span>,
+      <span class="va">temp</span>      <span class="op">~</span> <span class="st">"Temperature"</span>,
+      <span class="va">hospital</span>  <span class="op">~</span> <span class="st">"Hospital"</span><span class="op">)</span>,
+    missing_text <span class="op">=</span> <span class="st">"Missing"</span>                                    <span class="co"># how missing values should display</span>
+  <span class="op">)</span></code></pre></div>
+<pre><code>## 1323 observations missing `outcome` have been removed. To include these observations, use `forcats::fct_explicit_na()` on `outcome` column before passing to `tbl_summary()`.</code></pre>
+<style>html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+}
+
+#kvjmvzltzn .gt_table {
+  display: table;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#kvjmvzltzn .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#kvjmvzltzn .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#kvjmvzltzn .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 0;
+  padding-bottom: 4px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#kvjmvzltzn .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#kvjmvzltzn .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#kvjmvzltzn .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#kvjmvzltzn .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#kvjmvzltzn .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#kvjmvzltzn .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#kvjmvzltzn .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#kvjmvzltzn .gt_group_heading {
+  padding: 8px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#kvjmvzltzn .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#kvjmvzltzn .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#kvjmvzltzn .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#kvjmvzltzn .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#kvjmvzltzn .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 12px;
+}
+
+#kvjmvzltzn .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#kvjmvzltzn .gt_first_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+}
+
+#kvjmvzltzn .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#kvjmvzltzn .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#kvjmvzltzn .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#kvjmvzltzn .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#kvjmvzltzn .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#kvjmvzltzn .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding: 4px;
+}
+
+#kvjmvzltzn .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#kvjmvzltzn .gt_sourcenote {
+  font-size: 90%;
+  padding: 4px;
+}
+
+#kvjmvzltzn .gt_left {
+  text-align: left;
+}
+
+#kvjmvzltzn .gt_center {
+  text-align: center;
+}
+
+#kvjmvzltzn .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#kvjmvzltzn .gt_font_normal {
+  font-weight: normal;
+}
+
+#kvjmvzltzn .gt_font_bold {
+  font-weight: bold;
+}
+
+#kvjmvzltzn .gt_font_italic {
+  font-style: italic;
+}
+
+#kvjmvzltzn .gt_super {
+  font-size: 65%;
+}
+
+#kvjmvzltzn .gt_footnote_marks {
+  font-style: italic;
+  font-size: 65%;
+}
+</style>
+<div id="kvjmvzltzn" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><div class="inline-table"><table class="gt_table">
+<thead class="gt_col_headings"><tr>
+<th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1"><strong>Characteristic</strong></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">
+<strong>Death</strong>, N = 2,582<sup class="gt_footnote_marks">1</sup>
+</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">
+<strong>Recover</strong>, N = 1,983<sup class="gt_footnote_marks">1</sup>
+</th>
+    </tr></thead>
+<tbody class="gt_table_body">
+<tr>
+<td class="gt_row gt_left">Age (years)</td>
+      <td class="gt_row gt_center">16.0 (13.0)</td>
+      <td class="gt_row gt_center">16.4 (12.7)</td>
+    </tr>
+<tr>
+<td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">Missing</td>
+      <td class="gt_row gt_center">24</td>
+      <td class="gt_row gt_center">38</td>
+    </tr>
+<tr>
+<td class="gt_row gt_left">Gender</td>
+      <td class="gt_row gt_center"></td>
+      <td class="gt_row gt_center"></td>
+    </tr>
+<tr>
+<td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">f</td>
+      <td class="gt_row gt_center">1,246 / 2,477 (50%)</td>
+      <td class="gt_row gt_center">946 / 1,879 (50%)</td>
+    </tr>
+<tr>
+<td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">m</td>
+      <td class="gt_row gt_center">1,231 / 2,477 (50%)</td>
+      <td class="gt_row gt_center">933 / 1,879 (50%)</td>
+    </tr>
+<tr>
+<td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">Missing</td>
+      <td class="gt_row gt_center">105</td>
+      <td class="gt_row gt_center">104</td>
+    </tr>
+<tr>
+<td class="gt_row gt_left">fever</td>
+      <td class="gt_row gt_center"></td>
+      <td class="gt_row gt_center"></td>
+    </tr>
+<tr>
+<td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">no</td>
+      <td class="gt_row gt_center">513 / 2,479 (21%)</td>
+      <td class="gt_row gt_center">368 / 1,892 (19%)</td>
+    </tr>
+<tr>
+<td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">yes</td>
+      <td class="gt_row gt_center">1,966 / 2,479 (79%)</td>
+      <td class="gt_row gt_center">1,524 / 1,892 (81%)</td>
+    </tr>
+<tr>
+<td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">Missing</td>
+      <td class="gt_row gt_center">103</td>
+      <td class="gt_row gt_center">91</td>
+    </tr>
+<tr>
+<td class="gt_row gt_left">Temperature</td>
+      <td class="gt_row gt_center">38.5 (1.0)</td>
+      <td class="gt_row gt_center">38.6 (1.0)</td>
+    </tr>
+<tr>
+<td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">Missing</td>
+      <td class="gt_row gt_center">55</td>
+      <td class="gt_row gt_center">52</td>
+    </tr>
+<tr>
+<td class="gt_row gt_left">Hospital</td>
+      <td class="gt_row gt_center"></td>
+      <td class="gt_row gt_center"></td>
+    </tr>
+<tr>
+<td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">Central Hospital</td>
+      <td class="gt_row gt_center">193 / 2,582 (7.5%)</td>
+      <td class="gt_row gt_center">165 / 1,983 (8.300000000000001%)</td>
+    </tr>
+<tr>
+<td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">Military Hospital</td>
+      <td class="gt_row gt_center">399 / 2,582 (15%)</td>
+      <td class="gt_row gt_center">309 / 1,983 (16%)</td>
+    </tr>
+<tr>
+<td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">Missing</td>
+      <td class="gt_row gt_center">611 / 2,582 (24%)</td>
+      <td class="gt_row gt_center">514 / 1,983 (26%)</td>
+    </tr>
+<tr>
+<td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">Other</td>
+      <td class="gt_row gt_center">395 / 2,582 (15%)</td>
+      <td class="gt_row gt_center">290 / 1,983 (15%)</td>
+    </tr>
+<tr>
+<td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">Port Hospital</td>
+      <td class="gt_row gt_center">785 / 2,582 (30%)</td>
+      <td class="gt_row gt_center">579 / 1,983 (29%)</td>
+    </tr>
+<tr>
+<td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">St. Mark's Maternity Hospital (SMMH)</td>
+      <td class="gt_row gt_center">199 / 2,582 (7.7%)</td>
+      <td class="gt_row gt_center">126 / 1,983 (6.4%)</td>
+    </tr>
+</tbody>
+<tfoot><tr class="gt_footnotes">
+<td colspan="3">
+        <p class="gt_footnote">
+          <sup class="gt_footnote_marks"><em>1</em>
+          </sup>
+           
+          Mean (SD); n / N (%)
+          <br></p>
+      </td>
+    </tr></tfoot>
+</table></div></div>
+</div>
+<div id="multi-line-stats-for-continuous-variables" class="section level4 unnumbered">
+<h4>Multi-line stats for continuous variables<a class="anchor" aria-label="anchor" href="#multi-line-stats-for-continuous-variables"><i class="fas fa-link"></i></a>
+</h4>
+<p>If you want to print multiple lines of statistics for continuous variables, you can indicate this by setting the <code>type =</code> to “continuous2”. You can combine all of the previously shown elements in one table by choosing which statistics you want to show. To do this you need to tell the function that you want to get a table back by entering the type as “continuous2”. The number of missing values is shown as “Unknown”.</p>
+<div class="sourceCode" id="cb753"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">linelist</span> <span class="op">%&gt;%</span> 
+  <span class="fu">select</span><span class="op">(</span><span class="va">age_years</span>, <span class="va">temp</span><span class="op">)</span> <span class="op">%&gt;%</span>                      <span class="co"># keep only columns of interest</span>
+  <span class="fu">tbl_summary</span><span class="op">(</span>                                     <span class="co"># create summary table</span>
+    type <span class="op">=</span> <span class="fu">all_continuous</span><span class="op">(</span><span class="op">)</span> <span class="op">~</span> <span class="st">"continuous2"</span>,       <span class="co"># indicate that you want to print multiple statistics </span>
+    statistic <span class="op">=</span> <span class="fu">all_continuous</span><span class="op">(</span><span class="op">)</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>
+      <span class="st">"{mean} ({sd})"</span>,                             <span class="co"># line 1: mean and SD</span>
+      <span class="st">"{median} ({p25}, {p75})"</span>,                   <span class="co"># line 2: median and IQR</span>
+      <span class="st">"{min}, {max}"</span><span class="op">)</span>                              <span class="co"># line 3: min and max</span>
+    <span class="op">)</span></code></pre></div>
+<style>html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+}
+
+#hvgacsvbtq .gt_table {
+  display: table;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#hvgacsvbtq .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#hvgacsvbtq .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#hvgacsvbtq .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 0;
+  padding-bottom: 4px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#hvgacsvbtq .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#hvgacsvbtq .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#hvgacsvbtq .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#hvgacsvbtq .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#hvgacsvbtq .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#hvgacsvbtq .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#hvgacsvbtq .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#hvgacsvbtq .gt_group_heading {
+  padding: 8px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#hvgacsvbtq .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#hvgacsvbtq .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#hvgacsvbtq .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#hvgacsvbtq .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#hvgacsvbtq .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 12px;
+}
+
+#hvgacsvbtq .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#hvgacsvbtq .gt_first_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+}
+
+#hvgacsvbtq .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#hvgacsvbtq .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#hvgacsvbtq .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#hvgacsvbtq .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#hvgacsvbtq .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#hvgacsvbtq .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding: 4px;
+}
+
+#hvgacsvbtq .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#hvgacsvbtq .gt_sourcenote {
+  font-size: 90%;
+  padding: 4px;
+}
+
+#hvgacsvbtq .gt_left {
+  text-align: left;
+}
+
+#hvgacsvbtq .gt_center {
+  text-align: center;
+}
+
+#hvgacsvbtq .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#hvgacsvbtq .gt_font_normal {
+  font-weight: normal;
+}
+
+#hvgacsvbtq .gt_font_bold {
+  font-weight: bold;
+}
+
+#hvgacsvbtq .gt_font_italic {
+  font-style: italic;
+}
+
+#hvgacsvbtq .gt_super {
+  font-size: 65%;
+}
+
+#hvgacsvbtq .gt_footnote_marks {
+  font-style: italic;
+  font-size: 65%;
+}
+</style>
+<div id="hvgacsvbtq" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><div class="inline-table"><table class="gt_table">
+<thead class="gt_col_headings"><tr>
+<th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1"><strong>Characteristic</strong></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1"><strong>N = 5,888</strong></th>
+    </tr></thead>
+<tbody class="gt_table_body">
+<tr>
+<td class="gt_row gt_left">age_years</td>
+      <td class="gt_row gt_center"></td>
+    </tr>
+<tr>
+<td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">Mean (SD)</td>
+      <td class="gt_row gt_center">16 (13)</td>
+    </tr>
+<tr>
+<td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">Median (IQR)</td>
+      <td class="gt_row gt_center">13 (6, 23)</td>
+    </tr>
+<tr>
+<td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">Range</td>
+      <td class="gt_row gt_center">0, 90</td>
+    </tr>
+<tr>
+<td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">Unknown</td>
+      <td class="gt_row gt_center">87</td>
+    </tr>
+<tr>
+<td class="gt_row gt_left">temp</td>
+      <td class="gt_row gt_center"></td>
+    </tr>
+<tr>
+<td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">Mean (SD)</td>
+      <td class="gt_row gt_center">38.54 (1.00)</td>
+    </tr>
+<tr>
+<td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">Median (IQR)</td>
+      <td class="gt_row gt_center">38.80 (38.10, 39.20)</td>
+    </tr>
+<tr>
+<td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">Range</td>
+      <td class="gt_row gt_center">35.20, 40.90</td>
+    </tr>
+<tr>
+<td class="gt_row gt_left" style="text-align: left; text-indent: 10px;">Unknown</td>
+      <td class="gt_row gt_center">135</td>
+    </tr>
+</tbody>
+</table></div></div>
+<p>There are many other ways to modify these tables, including adding p-values, adjusting color and headings, etc. Many of these are described in the documentation (enter <code>?tbl_summary</code> in Console), and some are given in the section on statistical tests.</p>
+</div>
+</div>
+<div id="base-r" class="section level3 unnumbered">
+<h3>
+<strong>base</strong> R<a class="anchor" aria-label="anchor" href="#base-r"><i class="fas fa-link"></i></a>
+</h3>
+<p>You can use the function <code><a href="https://rdrr.io/r/base/table.html">table()</a></code> to tabulate and cross-tabulate columns. Unlike the options above, you must specify the dataframe, as shown below.</p>
+<p><span style="color: orange;"><strong><em>CAUTION:</em></strong> <code>NA</code> (missing) values will <strong>not</strong> be tabulated unless you include the argument <code>useNA = "always"</code> (which could also be set to “no” or “ifany”).</span></p>
+<div class="sourceCode" id="cb754"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">linelist</span><span class="op">$</span><span class="va">outcome</span>, useNA <span class="op">=</span> <span class="st">"always"</span><span class="op">)</span></code></pre></div>
+<pre><code>## 
+##   Death Recover    &lt;NA&gt; 
+##    2582    1983    1323</code></pre>
+<p>Multiple columns can be cross-tabulated by listing them one after the other, separated by commas. Optionally, you can assign each column a “name” like <code>Outcome = linelist$outcome</code>.</p>
+<div class="sourceCode" id="cb756"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">age_by_outcome</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">linelist</span><span class="op">$</span><span class="va">age_cat</span>, <span class="va">linelist</span><span class="op">$</span><span class="va">outcome</span>, useNA <span class="op">=</span> <span class="st">"always"</span><span class="op">)</span> <span class="co"># save table as object</span>
+<span class="va">age_by_outcome</span>   <span class="co"># print table</span></code></pre></div>
+<pre><code>##        
+##         Death Recover &lt;NA&gt;
+##   0-4     482     361  223
+##   5-9     526     329  248
+##   10-14   384     307  227
+##   15-19   326     268  179
+##   20-29   469     392  241
+##   30-49   316     252  156
+##   50-69    49      31   22
+##   70+       6       5    2
+##   &lt;NA&gt;     24      38   25</code></pre>
+<p>To return proportions, passing the above table to the function <code><a href="https://rdrr.io/r/base/proportions.html">prop.table()</a></code>. Use the <code>margins =</code> argument to specify whether you want the proportions to be of rows (1), of columns (2), or of the whole table (3). For clarity, we pipe the table to the <code><a href="https://rdrr.io/r/base/Round.html">round()</a></code> function from <strong>base</strong> R, specifying 2 digits.</p>
+<div class="sourceCode" id="cb758"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># get proportions of table defined above, by rows, rounded</span>
+<span class="fu"><a href="https://rdrr.io/r/base/proportions.html">prop.table</a></span><span class="op">(</span><span class="va">age_by_outcome</span>, <span class="fl">1</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span></code></pre></div>
+<pre><code>##        
+##         Death Recover &lt;NA&gt;
+##   0-4    0.45    0.34 0.21
+##   5-9    0.48    0.30 0.22
+##   10-14  0.42    0.33 0.25
+##   15-19  0.42    0.35 0.23
+##   20-29  0.43    0.36 0.22
+##   30-49  0.44    0.35 0.22
+##   50-69  0.48    0.30 0.22
+##   70+    0.46    0.38 0.15
+##   &lt;NA&gt;   0.28    0.44 0.29</code></pre>
+<p>To add row and column totals, pass the table to <code><a href="https://rdrr.io/r/stats/addmargins.html">addmargins()</a></code>. This works for both counts and proportions.</p>
+<div class="sourceCode" id="cb760"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/addmargins.html">addmargins</a></span><span class="op">(</span><span class="va">age_by_outcome</span><span class="op">)</span></code></pre></div>
+<pre><code>##        
+##         Death Recover &lt;NA&gt;  Sum
+##   0-4     482     361  223 1066
+##   5-9     526     329  248 1103
+##   10-14   384     307  227  918
+##   15-19   326     268  179  773
+##   20-29   469     392  241 1102
+##   30-49   316     252  156  724
+##   50-69    49      31   22  102
+##   70+       6       5    2   13
+##   &lt;NA&gt;     24      38   25   87
+##   Sum    2582    1983 1323 5888</code></pre>
+<p>Converting a <code><a href="https://rdrr.io/r/base/table.html">table()</a></code> object directly to a data frame is not straight-forward. One approach is demonstrated below:</p>
+<ol style="list-style-type: decimal">
+<li>Create the table, <em>without using</em> <code>useNA = "always"</code>. Instead convert <code>NA</code> values to “(Missing)” with <code>fct_explicit_na()</code> from <strong>forcats</strong>.<br>
+</li>
+<li>Add totals (optional) by piping to <code><a href="https://rdrr.io/r/stats/addmargins.html">addmargins()</a></code><br>
+</li>
+<li>Pipe to the <strong>base</strong> R function <code><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame.matrix()</a></code><br>
+</li>
+<li>Pipe the table to the <strong>dplyr</strong> function <code>add_rownames()</code>, specifying the name for the first column<br>
+</li>
+<li>Print, View, or export as desired. In this example we use <code>flextable()</code> from package <strong>flextable</strong> as described in the <a href="tables.html#tables">Tables</a> page. This will print to the RStudio viewer pane as a pretty HTML.</li>
+</ol>
+<div class="sourceCode" id="cb762"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="fu">fct_explicit_na</span><span class="op">(</span><span class="va">linelist</span><span class="op">$</span><span class="va">age_cat</span><span class="op">)</span>, <span class="fu">fct_explicit_na</span><span class="op">(</span><span class="va">linelist</span><span class="op">$</span><span class="va">outcome</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://rdrr.io/r/stats/addmargins.html">addmargins</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame.matrix</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/add_rownames.html">add_rownames</a></span><span class="op">(</span>var <span class="op">=</span> <span class="st">"Age Category"</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+  <span class="fu">flextable</span><span class="fu">::</span><span class="fu"><a href="https://davidgohel.github.io/flextable/reference/flextable.html">flextable</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<template id="630e72fa-b12b-42c4-baf3-92c8957384b4"><style>
+.tabwid table{
+  border-collapse:collapse;
+  line-height:1;
+  margin-left:auto;
+  margin-right:auto;
+  border-width: 0;
+  display: table;
+  margin-top: 1.275em;
+  margin-bottom: 1.275em;
+  border-spacing: 0;
+  border-color: transparent;
+}
+.tabwid_left table{
+  margin-left:0;
+}
+.tabwid_right table{
+  margin-right:0;
+}
+.tabwid td {
+    padding: 0;
+}
+.tabwid a {
+  text-decoration: none;
+}
+.tabwid thead {
+    background-color: transparent;
+}
+.tabwid tfoot {
+    background-color: transparent;
+}
+.tabwid table tr {
+background-color: transparent;
+}
+</style>
+<div class="tabwid">
+<style>.cl-c9203c38{border-collapse:collapse;}.cl-c913bb02{font-family:'Arial';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-c913e212{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-c913e213{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-c9143028{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c9143029{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c914302a{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c914302b{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c914302c{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 2pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-c914302d{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 2pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}caption {color: #777;margin-top: 10px;margin-bottom: 10px;text-align: center;}</style>
+<div class="inline-table"><table class="cl-c9203c38">
+<thead><tr style="overflow-wrap:break-word;">
+<td class="cl-c914302d"><p class="cl-c913e212"><span class="cl-c913bb02">Age Category</span></p></td>
+<td class="cl-c914302c"><p class="cl-c913e213"><span class="cl-c913bb02">Death</span></p></td>
+<td class="cl-c914302c"><p class="cl-c913e213"><span class="cl-c913bb02">Recover</span></p></td>
+<td class="cl-c914302c"><p class="cl-c913e213"><span class="cl-c913bb02">(Missing)</span></p></td>
+<td class="cl-c914302c"><p class="cl-c913e213"><span class="cl-c913bb02">Sum</span></p></td>
+</tr></thead>
+<tbody>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-c9143028"><p class="cl-c913e212"><span class="cl-c913bb02">0-4</span></p></td>
+<td class="cl-c9143029"><p class="cl-c913e213"><span class="cl-c913bb02">482.0</span></p></td>
+<td class="cl-c9143029"><p class="cl-c913e213"><span class="cl-c913bb02">361.0</span></p></td>
+<td class="cl-c9143029"><p class="cl-c913e213"><span class="cl-c913bb02">223.0</span></p></td>
+<td class="cl-c9143029"><p class="cl-c913e213"><span class="cl-c913bb02">1,066.0</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-c9143028"><p class="cl-c913e212"><span class="cl-c913bb02">5-9</span></p></td>
+<td class="cl-c9143029"><p class="cl-c913e213"><span class="cl-c913bb02">526.0</span></p></td>
+<td class="cl-c9143029"><p class="cl-c913e213"><span class="cl-c913bb02">329.0</span></p></td>
+<td class="cl-c9143029"><p class="cl-c913e213"><span class="cl-c913bb02">248.0</span></p></td>
+<td class="cl-c9143029"><p class="cl-c913e213"><span class="cl-c913bb02">1,103.0</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-c9143028"><p class="cl-c913e212"><span class="cl-c913bb02">10-14</span></p></td>
+<td class="cl-c9143029"><p class="cl-c913e213"><span class="cl-c913bb02">384.0</span></p></td>
+<td class="cl-c9143029"><p class="cl-c913e213"><span class="cl-c913bb02">307.0</span></p></td>
+<td class="cl-c9143029"><p class="cl-c913e213"><span class="cl-c913bb02">227.0</span></p></td>
+<td class="cl-c9143029"><p class="cl-c913e213"><span class="cl-c913bb02">918.0</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-c9143028"><p class="cl-c913e212"><span class="cl-c913bb02">15-19</span></p></td>
+<td class="cl-c9143029"><p class="cl-c913e213"><span class="cl-c913bb02">326.0</span></p></td>
+<td class="cl-c9143029"><p class="cl-c913e213"><span class="cl-c913bb02">268.0</span></p></td>
+<td class="cl-c9143029"><p class="cl-c913e213"><span class="cl-c913bb02">179.0</span></p></td>
+<td class="cl-c9143029"><p class="cl-c913e213"><span class="cl-c913bb02">773.0</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-c9143028"><p class="cl-c913e212"><span class="cl-c913bb02">20-29</span></p></td>
+<td class="cl-c9143029"><p class="cl-c913e213"><span class="cl-c913bb02">469.0</span></p></td>
+<td class="cl-c9143029"><p class="cl-c913e213"><span class="cl-c913bb02">392.0</span></p></td>
+<td class="cl-c9143029"><p class="cl-c913e213"><span class="cl-c913bb02">241.0</span></p></td>
+<td class="cl-c9143029"><p class="cl-c913e213"><span class="cl-c913bb02">1,102.0</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-c9143028"><p class="cl-c913e212"><span class="cl-c913bb02">30-49</span></p></td>
+<td class="cl-c9143029"><p class="cl-c913e213"><span class="cl-c913bb02">316.0</span></p></td>
+<td class="cl-c9143029"><p class="cl-c913e213"><span class="cl-c913bb02">252.0</span></p></td>
+<td class="cl-c9143029"><p class="cl-c913e213"><span class="cl-c913bb02">156.0</span></p></td>
+<td class="cl-c9143029"><p class="cl-c913e213"><span class="cl-c913bb02">724.0</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-c9143028"><p class="cl-c913e212"><span class="cl-c913bb02">50-69</span></p></td>
+<td class="cl-c9143029"><p class="cl-c913e213"><span class="cl-c913bb02">49.0</span></p></td>
+<td class="cl-c9143029"><p class="cl-c913e213"><span class="cl-c913bb02">31.0</span></p></td>
+<td class="cl-c9143029"><p class="cl-c913e213"><span class="cl-c913bb02">22.0</span></p></td>
+<td class="cl-c9143029"><p class="cl-c913e213"><span class="cl-c913bb02">102.0</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-c9143028"><p class="cl-c913e212"><span class="cl-c913bb02">70+</span></p></td>
+<td class="cl-c9143029"><p class="cl-c913e213"><span class="cl-c913bb02">6.0</span></p></td>
+<td class="cl-c9143029"><p class="cl-c913e213"><span class="cl-c913bb02">5.0</span></p></td>
+<td class="cl-c9143029"><p class="cl-c913e213"><span class="cl-c913bb02">2.0</span></p></td>
+<td class="cl-c9143029"><p class="cl-c913e213"><span class="cl-c913bb02">13.0</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-c9143028"><p class="cl-c913e212"><span class="cl-c913bb02">(Missing)</span></p></td>
+<td class="cl-c9143029"><p class="cl-c913e213"><span class="cl-c913bb02">24.0</span></p></td>
+<td class="cl-c9143029"><p class="cl-c913e213"><span class="cl-c913bb02">38.0</span></p></td>
+<td class="cl-c9143029"><p class="cl-c913e213"><span class="cl-c913bb02">25.0</span></p></td>
+<td class="cl-c9143029"><p class="cl-c913e213"><span class="cl-c913bb02">87.0</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-c914302b"><p class="cl-c913e212"><span class="cl-c913bb02">Sum</span></p></td>
+<td class="cl-c914302a"><p class="cl-c913e213"><span class="cl-c913bb02">2,582.0</span></p></td>
+<td class="cl-c914302a"><p class="cl-c913e213"><span class="cl-c913bb02">1,983.0</span></p></td>
+<td class="cl-c914302a"><p class="cl-c913e213"><span class="cl-c913bb02">1,323.0</span></p></td>
+<td class="cl-c914302a"><p class="cl-c913e213"><span class="cl-c913bb02">5,888.0</span></p></td>
+</tr>
+</tbody>
+</table></div>
+</div></template><div id="4ae767ba-2157-48e5-9eca-c2de607178e3"></div>
+<script>
+var dest = document.getElementById("4ae767ba-2157-48e5-9eca-c2de607178e3");
+var template = document.getElementById("630e72fa-b12b-42c4-baf3-92c8957384b4");
+var caption = template.content.querySelector("caption");
+if(caption) {
+  caption.style.cssText = "display:block;text-align:center;";
+  var newcapt = document.createElement("p");
+  newcapt.appendChild(caption)
+  dest.parentNode.insertBefore(newcapt, dest.previousSibling);
+}
+var fantome = dest.attachShadow({mode: 'open'});
+var templateContent = template.content;
+fantome.appendChild(templateContent);
+</script><!-- ======================================================= -->
+</div>
+</div>
+<div id="resources-10" class="section level2" number="17.4">
+<h2>
+<span class="header-section-number">17.4</span> Resources<a class="anchor" aria-label="anchor" href="#resources-10"><i class="fas fa-link"></i></a>
+</h2>
+<p>Much of the information in this page is adapted from these resources and vignettes online:</p>
+<p><a href="http://www.danieldsjoberg.com/gtsummary/articles/tbl_summary.html">gtsummary</a>
+<a href="https://dplyr.tidyverse.org/articles/grouping.html">dplyr</a></p>
+
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="iteration-and-loops.html"><span class="header-section-number">16</span> Iteration and loops</a></div>
+<div class="next"><a href="simple-statistical-tests.html"><span class="header-section-number">18</span> Simple statistical tests</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#descriptive-tables"><span class="header-section-number">17</span> Descriptive tables</a></li>
+<li>
+<a class="nav-link" href="#preparation-8"><span class="header-section-number">17.1</span> Preparation</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#load-packages-9">Load packages</a></li>
+<li><a class="nav-link" href="#import-data-8">Import data</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#browse-data"><span class="header-section-number">17.2</span> Browse data</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#skimr-package">skimr package</a></li>
+<li><a class="nav-link" href="#summary-statistics">Summary statistics</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#descriptive-tables-1"><span class="header-section-number">17.3</span> Descriptive tables</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#janitor">janitor</a></li>
+<li><a class="nav-link" href="#dplyr-package">dplyr package</a></li>
+<li><a class="nav-link" href="#gtsummary-package">gtsummary package</a></li>
+<li><a class="nav-link" href="#base-r">base R</a></li>
+</ul>
+</li>
+<li><a class="nav-link" href="#resources-10"><span class="header-section-number">17.4</span> Resources</a></li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+          
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>The Epidemiologist R Handbook</strong>" was written by the handbook team. It was last built on 2021-03-20.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+</html>
