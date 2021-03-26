@@ -12,11 +12,11 @@
 <script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script><link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet">
 <script src="libs/datatables-binding-0.15/datatables.js"></script><link href="libs/dt-core-1.10.20/css/jquery.dataTables.min.css" rel="stylesheet">
 <link href="libs/dt-core-1.10.20/css/jquery.dataTables.extra.css" rel="stylesheet">
-<script src="libs/dt-core-1.10.20/js/jquery.dataTables.min.js"></script><link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet">
-<script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script><link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet">
-<script src="libs/leaflet-1.3.1/leaflet.js"></script><link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet">
-<script src="libs/proj4-2.6.2/proj4.min.js"></script><script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script><link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet">
-<script src="libs/leaflet-binding-2.0.4.1/leaflet.js"></script><script src="libs/leaflet-providers-1.9.0/leaflet-providers_1.9.0.js"></script><script src="libs/leaflet-providers-plugin-2.0.4.1/leaflet-providers-plugin.js"></script><script src="https://cdn.jsdelivr.net/autocomplete.js/0/autocomplete.jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/mark.js@8.11.1/dist/mark.min.js"></script><!-- CSS --><link rel="stylesheet" href="style_bs4.css">
+<script src="libs/dt-core-1.10.20/js/jquery.dataTables.min.js"></script><link href="libs/nouislider-7.0.10/jquery.nouislider.min.css" rel="stylesheet">
+<script src="libs/nouislider-7.0.10/jquery.nouislider.min.js"></script><link href="libs/selectize-0.12.0/selectize.bootstrap3.css" rel="stylesheet">
+<script src="libs/selectize-0.12.0/selectize.min.js"></script><link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet">
+<script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script><link href="libs/tabwid-1.0.0/tabwid.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/autocomplete.js/0/autocomplete.jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/mark.js@8.11.1/dist/mark.min.js"></script><!-- CSS --><link rel="stylesheet" href="style_bs4.css">
 </head>
 <body data-spy="scroll" data-target="#toc">
 
@@ -40,7 +40,7 @@
         <ul class="book-toc list-unstyled">
 <li><a class="active" href="index.html"></a></li>
 <li class="book-part">Preview pages</li>
-<li><a class="" href="gis-basics.html"><span class="header-section-number">1</span> GIS basics</a></li>
+<li><a class="" href="descriptive-tables.html"><span class="header-section-number">1</span> Descriptive tables</a></li>
 </ul>
 
         <div class="book-extra">
@@ -93,24 +93,20 @@
 </li>
 <li>See the “Resources” section of each page for further resources<br>
 </li>
-<li>To download data and “follow-along”, see the [Data and session info]" page</li>
+<li>To download data and “follow-along”, see the [Download book and data] page</li>
 </ul>
-<p><strong>To download the <em>offline version</em> follow these steps</strong>:</p>
-<ol style="list-style-type: decimal">
-<li>Click on <a href="https://github.com/nsbatra/Epi_R_handbook/tree/master/offline_long">the html file</a> in our Github repository<br>
-</li>
-<li>Click the “Download” button. A window will open with HTML source code.<br>
-</li>
-<li>“Save As” the webpage, via right-click (windows) or Cmd-s (mac) - ensure the file type is “Webpage, Complete”<br>
-</li>
-<li>The file is large (&gt;40MB) so content may take time to appear. It displays as one long page, so search with Ctrl+f (Cmd-f).</li>
-</ol>
+<p><strong>Offline version</strong></p>
+<p>To download the offline version, follow step-by-step instructions in the [Download book and data] page.</p>
+<p><strong>Languages</strong></p>
+<p>We are actively seeking to translate this book into languages other than English. If you can help, please contact us at <strong><a href="mailto:epiRhandbook@gmail.com" class="email">epiRhandbook@gmail.com</a></strong>.</p>
 <!-- ======================================================= -->
 </div>
 <div id="edit-or-contribute" class="section level2 unnumbered">
 <h2>Edit or contribute<a class="anchor" aria-label="anchor" href="#edit-or-contribute"><i class="fas fa-link"></i></a>
 </h2>
-<p>We welcome your comments and suggestions. You can submit an issue or pull request at our <a href="https://github.com/nsbatra/R_epi_handbook">Github repository</a>, or provide feedback via this <a href="https://forms.gle/4RNdRRLGx67xW9yq9">Google survey</a>.</p>
+<p>Want to share how you use this book? Want to offer a fix or addition?<br>
+Email us at <strong><a href="mailto:epiRhandbook@gmail.com" class="email">epiRhandbook@gmail.com</a></strong>. We welcome your comments and suggestions.</p>
+<p>You can also submit an issue or pull request at our <a href="https://github.com/nsbatra/R_epi_handbook">Github repository</a>, or provide structured feedback via this <a href="https://forms.gle/4RNdRRLGx67xW9yq9">Google survey</a>.</p>
 <!-- ======================================================= -->
 </div>
 <div id="acknowledgements" class="section level2 unnumbered">
@@ -142,7 +138,7 @@
 <div id="image-credits" class="section level3 unnumbered">
 <h3>Image credits<a class="anchor" aria-label="anchor" href="#image-credits"><i class="fas fa-link"></i></a>
 </h3>
-<p>Logo (US CDC Public Health Image Library):<br><a href="https://phil.cdc.gov/Details.aspx?pid=19623">2013 Yemen looking for mosquito breeding sites</a><br><a href="https://phil.cdc.gov/Details.aspx?pid=23186">Ebola virus</a><br><a href="https://phil.cdc.gov/Details.aspx?pid=19838">Survey in Rajasthan</a></p>
+<p>Images in logo (from US CDC Public Health Image Library):<br><a href="https://phil.cdc.gov/Details.aspx?pid=19623">2013 Yemen looking for mosquito breeding sites</a><br><a href="https://phil.cdc.gov/Details.aspx?pid=23186">Ebola virus</a><br><a href="https://phil.cdc.gov/Details.aspx?pid=19838">Survey in Rajasthan</a></p>
 </div>
 <div id="terms-of-use-and-license" class="section level3 unnumbered">
 <h3>Terms of Use and License<a class="anchor" aria-label="anchor" href="#terms-of-use-and-license"><i class="fas fa-link"></i></a>
@@ -157,7 +153,7 @@
 
 <div class="chapter-nav">
 <div class="empty"></div>
-<div class="next"><a href="gis-basics.html"><span class="header-section-number">1</span> GIS basics</a></div>
+<div class="next"><a href="descriptive-tables.html"><span class="header-section-number">1</span> Descriptive tables</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
@@ -194,7 +190,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>The Epidemiologist R Handbook</strong>" was written by the handbook team. It was last built on 2021-03-22.</p>
+    <p>"<strong>The Epidemiologist R Handbook</strong>" was written by the handbook team. It was last built on 2021-03-25.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
