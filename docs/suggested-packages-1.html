@@ -49,8 +49,8 @@
         <ul class="book-toc list-unstyled">
 <li><a class="" href="index.html"></a></li>
 <li class="book-part">About this book</li>
-<li><a class="" href="style-and-editorial-notes.html"><span class="header-section-number">1</span> Style and editorial notes</a></li>
-<li><a class="" href="data-and-session-info.html"><span class="header-section-number">2</span> Data and session info</a></li>
+<li><a class="" href="editorial-and-technical-notes.html"><span class="header-section-number">1</span> Editorial and technical notes</a></li>
+<li><a class="" href="download-book-and-data.html"><span class="header-section-number">2</span> Download book and data</a></li>
 <li class="book-part">Basics</li>
 <li><a class="" href="r-basics.html"><span class="header-section-number">3</span> R Basics</a></li>
 <li><a class="" href="transition-to-r.html"><span class="header-section-number">4</span> Transition to R</a></li>
@@ -124,11 +124,12 @@
 </li>
 <li>The code below only installs packages available on CRAN - not from Github<br>
 </li>
-<li>If multiple packages have functions with the same name, <em>masking</em> can occur where the function from the more recently-loaded package takes precedent. Consider using the package <strong>conflicted</strong> to manage such conflicts.<br>
+<li>If multiple packages have functions with the same name, <em>masking</em> can occur when the function from the more recently-loaded package takes precedent. Read more in the <a href="r-basics.html#r-basics">R Basics</a> page. Consider using the package <strong>conflicted</strong> to manage such conflicts.<br>
 </li>
 <li>See the <a href="r-basics.html#r-basics">R basics</a> section on packages for more information on <strong>pacman</strong> and masking.</li>
 </ul>
-<div class="sourceCode" id="cb139"><pre class="downlit sourceCode r">
+<p>To see the versions of R, RStudio, and R packages used during the production of this handbook, see the page on <a href="editorial-and-technical-notes.html#editorial-and-technical-notes">Editorial and technical notes</a>.</p>
+<div class="sourceCode" id="cb140"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># List of useful epidemiology R packages  </span>
 
 <span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span>
@@ -234,7 +235,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>The Epidemiologist R Handbook</strong>" was written by the handbook team. It was last built on 2021-03-22.</p>
+    <p>"<strong>The Epidemiologist R Handbook</strong>" was written by the handbook team. It was last built on 2021-03-25.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
