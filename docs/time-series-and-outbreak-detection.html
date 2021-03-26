@@ -84,11 +84,11 @@
 <li><a class="" href="epidemic-curves.html"><span class="header-section-number">29</span> Epidemic curves</a></li>
 <li><a class="" href="plot-continuous-data.html"><span class="header-section-number">30</span> Plot continuous data</a></li>
 <li><a class="" href="plot-categorical-data.html"><span class="header-section-number">31</span> Plot categorical data</a></li>
-<li><a class="" href="tables.html"><span class="header-section-number">32</span> Tables</a></li>
+<li><a class="" href="html-tables.html"><span class="header-section-number">32</span> HTML tables</a></li>
 <li><a class="" href="age-pyramids-and-likert-scales.html"><span class="header-section-number">33</span> Age pyramids and Likert-scales</a></li>
-<li><a class="" href="diagrams.html"><span class="header-section-number">34</span> Diagrams</a></li>
+<li><a class="" href="diagrams-and-charts.html"><span class="header-section-number">34</span> Diagrams and charts</a></li>
 <li><a class="" href="combinations-analysis.html"><span class="header-section-number">35</span> Combinations analysis</a></li>
-<li><a class="" href="heatmaps.html"><span class="header-section-number">36</span> Heatmaps</a></li>
+<li><a class="" href="heat-tiles.html"><span class="header-section-number">36</span> Heat tiles</a></li>
 <li><a class="" href="transmission-chains.html"><span class="header-section-number">37</span> Transmission chains</a></li>
 <li><a class="" href="phylogenetic-trees.html"><span class="header-section-number">38</span> Phylogenetic trees</a></li>
 <li><a class="" href="interactive-plots.html"><span class="header-section-number">39</span> Interactive plots</a></li>
@@ -173,8 +173,8 @@ package to fit models that are more appropriate for infectious disease epidemiol
 <code class="sourceCode R"><span class="co"># import the linelist</span>
 <span class="va">counts</span> <span class="op">&lt;-</span> <span class="fu">rio</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/rio/man/import.html">import</a></span><span class="op">(</span><span class="st">"campylobacter_germany.xlsx"</span><span class="op">)</span></code></pre></div>
 <p>The first 10 rows of the counts are displayed below.</p>
-<div id="htmlwidget-d324dcab2edca3909abc" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-d324dcab2edca3909abc">{"x":{"filter":"none","data":[["2001-12-31T00:00:00Z","2002-01-07T00:00:00Z","2002-01-14T00:00:00Z","2002-01-21T00:00:00Z","2002-01-28T00:00:00Z","2002-02-04T00:00:00Z","2002-02-11T00:00:00Z","2002-02-18T00:00:00Z","2002-02-25T00:00:00Z","2002-03-04T00:00:00Z"],[514,913,1023,887,815,792,803,807,692,705]],"container":"<table class=\"white-space: nowrap\">\n  <thead>\n    <tr>\n      <th>date<\/th>\n      <th>case<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"scrollX":true,"columnDefs":[{"className":"dt-right","targets":1}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-cf53bacbd43b84f9eb5f" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-cf53bacbd43b84f9eb5f">{"x":{"filter":"none","data":[["2001-12-31T00:00:00Z","2002-01-07T00:00:00Z","2002-01-14T00:00:00Z","2002-01-21T00:00:00Z","2002-01-28T00:00:00Z","2002-02-04T00:00:00Z","2002-02-11T00:00:00Z","2002-02-18T00:00:00Z","2002-02-25T00:00:00Z","2002-03-04T00:00:00Z"],[514,913,1023,887,815,792,803,807,692,705]],"container":"<table class=\"white-space: nowrap\">\n  <thead>\n    <tr>\n      <th>date<\/th>\n      <th>case<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"scrollX":true,"columnDefs":[{"className":"dt-right","targets":1}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
 </div>
 <div id="clean-data-1" class="section level3 unnumbered">
 <h3>Clean data<a class="anchor" aria-label="anchor" href="#clean-data-1"><i class="fas fa-link"></i></a>
@@ -334,7 +334,7 @@ seems to be an issue with reporting at the beginning of each year; cases drop
 in the last week of the year and then increase for the first week of the next year.</p>
 <div class="sourceCode" id="cb963"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## plot a line graph of cases by week</span>
-<span class="fu">ggplot</span><span class="op">(</span><span class="va">counts</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">epiweek</span>, y <span class="op">=</span> <span class="va">case</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+<span class="fu">ggplot</span><span class="op">(</span><span class="va">counts</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">epiweek</span>, y <span class="op">=</span> <span class="va">case</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
      <span class="fu">geom_line</span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <div class="inline-figure"><img src="_main_files/figure-html/basic_plot-1.png" width="672"></div>
 <p><span style="color: red;"><strong><em>DANGER:</em></strong> Most datasets aren’t as clean as this example.
@@ -421,9 +421,9 @@ See the <a href="epidemic-curves.html#moving-averages-2">Moving averages</a> pag
                                .before <span class="op">=</span> <span class="fl">4</span><span class="op">)</span><span class="op">)</span>
 
 <span class="co">## make a quick visualisation of the difference </span>
-<span class="fu">ggplot</span><span class="op">(</span><span class="va">counts</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">epiweek</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
-     <span class="fu">geom_line</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>y <span class="op">=</span> <span class="va">case</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
-     <span class="fu">geom_line</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>y <span class="op">=</span> <span class="va">ma_4wk</span><span class="op">)</span>, colour <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span></code></pre></div>
+<span class="fu">ggplot</span><span class="op">(</span><span class="va">counts</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">epiweek</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+     <span class="fu">geom_line</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">case</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+     <span class="fu">geom_line</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">ma_4wk</span><span class="op">)</span>, colour <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span></code></pre></div>
 <div class="inline-figure"><img src="_main_files/figure-html/moving_averages-1.png" width="672"></div>
 <!-- ======================================================= -->
 </div>
@@ -479,7 +479,7 @@ See the <a href="epidemic-curves.html#moving-averages-2">Moving averages</a> pag
 
 <span class="co">## plot a periodogram showing the most frequently occuring periodicity </span>
 <span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">periodo</span>, 
-                <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="op">(</span><span class="va">periodo.freq</span><span class="op">/</span><span class="fl">52</span><span class="op">)</span>,  y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">periodo.spec</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+                <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="op">(</span><span class="va">periodo.freq</span><span class="op">/</span><span class="fl">52</span><span class="op">)</span>,  y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">periodo.spec</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
   <span class="fu">geom_line</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> 
   <span class="fu">labs</span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Period (Weeks)"</span>, y <span class="op">=</span> <span class="st">"Log(density)"</span><span class="op">)</span></code></pre></div>
 <div class="inline-figure"><img src="_main_files/figure-html/periodogram-1.png" width="672"></div>
@@ -624,16 +624,16 @@ as ARIMA or prophet, see the <a href="https://fable.tidyverts.org/index.html"><s
 <span class="va">observed</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">fitted_model</span><span class="op">)</span>
 
 <span class="co">## plot your regression </span>
-<span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">observed</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">epiweek</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+<span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">observed</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">epiweek</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
   <span class="co">## add in a line for the model estimate</span>
-  <span class="fu">geom_line</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>y <span class="op">=</span> <span class="va">estimate</span><span class="op">)</span>,
+  <span class="fu">geom_line</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">estimate</span><span class="op">)</span>,
             col <span class="op">=</span> <span class="st">"Red"</span><span class="op">)</span> <span class="op">+</span> 
   <span class="co">## add in a band for the prediction intervals </span>
-  <span class="fu">geom_ribbon</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>ymin <span class="op">=</span> <span class="va">lower_pi</span>, 
+  <span class="fu">geom_ribbon</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>ymin <span class="op">=</span> <span class="va">lower_pi</span>, 
                   ymax <span class="op">=</span> <span class="va">upper_pi</span><span class="op">)</span>, 
               alpha <span class="op">=</span> <span class="fl">0.25</span><span class="op">)</span> <span class="op">+</span> 
   <span class="co">## add in a line for your observed case counts</span>
-  <span class="fu">geom_line</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>y <span class="op">=</span> <span class="va">case_int</span><span class="op">)</span>, 
+  <span class="fu">geom_line</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">case_int</span><span class="op">)</span>, 
             col <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> <span class="op">+</span> 
   <span class="co">## make a traditional plot (with black axes and white background)</span>
   <span class="fu">theme_classic</span><span class="op">(</span><span class="op">)</span></code></pre></div>
@@ -660,7 +660,7 @@ the observed counts.</p>
 
 <span class="co">## are the residuals fairly constant over time (if not: outbreaks? change in practice?)</span>
 <span class="va">observed</span> <span class="op">%&gt;%</span>
-  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">epiweek</span>, y <span class="op">=</span> <span class="va">resid</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">ggplot</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">epiweek</span>, y <span class="op">=</span> <span class="va">resid</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">geom_line</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> 
   <span class="fu">labs</span><span class="op">(</span>x <span class="op">=</span> <span class="st">"epiweek"</span>, y <span class="op">=</span> <span class="st">"Residuals"</span><span class="op">)</span></code></pre></div>
@@ -675,7 +675,7 @@ the observed counts.</p>
 <div class="sourceCode" id="cb978"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## are residuals normally distributed (are under or over estimating?)  </span>
 <span class="va">observed</span> <span class="op">%&gt;%</span>
-  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">resid</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">ggplot</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">resid</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">geom_histogram</span><span class="op">(</span>binwidth <span class="op">=</span> <span class="fl">100</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">geom_rug</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">labs</span><span class="op">(</span>y <span class="op">=</span> <span class="st">"count"</span><span class="op">)</span> </code></pre></div>
@@ -684,7 +684,7 @@ the observed counts.</p>
 <code class="sourceCode R"><span class="co">## compare observed counts to their residuals </span>
   <span class="co">## should also be no pattern </span>
 <span class="va">observed</span> <span class="op">%&gt;%</span>
-  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">estimate</span>, y <span class="op">=</span> <span class="va">resid</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">ggplot</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">estimate</span>, y <span class="op">=</span> <span class="va">resid</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">labs</span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Fitted"</span>, y <span class="op">=</span> <span class="st">"Residuals"</span><span class="op">)</span></code></pre></div>
 <div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-732-4.png" width="672"></div>
@@ -743,7 +743,7 @@ For more on pivoting data, see the handbook section on [cleaning data].</p>
     values_to <span class="op">=</span> <span class="st">"value"</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="co">## create a plot with the dataset above</span>
   <span class="co">## plot epiweek on the x axis and values (counts/celsius) on the y </span>
-  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">epiweek</span>, y <span class="op">=</span> <span class="va">value</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu">ggplot</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">epiweek</span>, y <span class="op">=</span> <span class="va">value</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
     <span class="co">## create a separate plot for temperate and case counts </span>
     <span class="co">## let them set their own y-axes</span>
     <span class="fu">facet_grid</span><span class="op">(</span><span class="va">measure</span> <span class="op">~</span> <span class="va">.</span>, scales <span class="op">=</span> <span class="st">"free_y"</span><span class="op">)</span> <span class="op">+</span>
@@ -832,8 +832,8 @@ numbers (as climate forecasts are readily available).</p>
   <span class="co">## get a tidy dataframe of results</span>
   <span class="fu">tidy</span><span class="op">(</span>exponentiate <span class="op">=</span> <span class="cn">TRUE</span>, 
        conf.int <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
-<pre><code>## Warning: Tidiers for objects of class negbin are not maintained by the broom team, and are only supported through the glmlm tidier method.
-## Please be cautious in interpreting and reporting broom output.</code></pre>
+<pre><code>## Warning: Tidiers for objects of class negbin are not maintained by the broom team, and are only supported through the glmlm tidier method. Please be cautious in
+## interpreting and reporting broom output.</code></pre>
 <pre><code>## # A tibble: 5 x 7
 ##   term         estimate  std.error statistic  p.value conf.low conf.high
 ##   &lt;chr&gt;           &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;
@@ -846,16 +846,16 @@ numbers (as climate forecasts are readily available).</p>
 estimating the observed case counts.</p>
 <div class="sourceCode" id="cb992"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## plot your regression </span>
-<span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">observed</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">epiweek</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+<span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">observed</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">epiweek</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
   <span class="co">## add in a line for the model estimate</span>
-  <span class="fu">geom_line</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>y <span class="op">=</span> <span class="va">estimate</span><span class="op">)</span>,
+  <span class="fu">geom_line</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">estimate</span><span class="op">)</span>,
             col <span class="op">=</span> <span class="st">"Red"</span><span class="op">)</span> <span class="op">+</span> 
   <span class="co">## add in a band for the prediction intervals </span>
-  <span class="fu">geom_ribbon</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>ymin <span class="op">=</span> <span class="va">lower_pi</span>, 
+  <span class="fu">geom_ribbon</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>ymin <span class="op">=</span> <span class="va">lower_pi</span>, 
                   ymax <span class="op">=</span> <span class="va">upper_pi</span><span class="op">)</span>, 
               alpha <span class="op">=</span> <span class="fl">0.25</span><span class="op">)</span> <span class="op">+</span> 
   <span class="co">## add in a line for your observed case counts</span>
-  <span class="fu">geom_line</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>y <span class="op">=</span> <span class="va">case_int</span><span class="op">)</span>, 
+  <span class="fu">geom_line</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">case_int</span><span class="op">)</span>, 
             col <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> <span class="op">+</span> 
   <span class="co">## make a traditional plot (with black axes and white background)</span>
   <span class="fu">theme_classic</span><span class="op">(</span><span class="op">)</span></code></pre></div>
@@ -873,7 +873,7 @@ so it may be more feasible to stick with the simpler model without temperature.<
 
 <span class="co">## are the residuals fairly constant over time (if not: outbreaks? change in practice?)</span>
 <span class="va">observed</span> <span class="op">%&gt;%</span>
-  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">epiweek</span>, y <span class="op">=</span> <span class="va">resid</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">ggplot</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">epiweek</span>, y <span class="op">=</span> <span class="va">resid</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">geom_line</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> 
   <span class="fu">labs</span><span class="op">(</span>x <span class="op">=</span> <span class="st">"epiweek"</span>, y <span class="op">=</span> <span class="st">"Residuals"</span><span class="op">)</span></code></pre></div>
@@ -890,7 +890,7 @@ so it may be more feasible to stick with the simpler model without temperature.<
 <div class="sourceCode" id="cb997"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## are residuals normally distributed (are under or over estimating?)  </span>
 <span class="va">observed</span> <span class="op">%&gt;%</span>
-  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">resid</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">ggplot</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">resid</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">geom_histogram</span><span class="op">(</span>binwidth <span class="op">=</span> <span class="fl">100</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">geom_rug</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">labs</span><span class="op">(</span>y <span class="op">=</span> <span class="st">"count"</span><span class="op">)</span> </code></pre></div>
@@ -900,7 +900,7 @@ so it may be more feasible to stick with the simpler model without temperature.<
 <code class="sourceCode R"><span class="co">## compare observed counts to their residuals </span>
   <span class="co">## should also be no pattern </span>
 <span class="va">observed</span> <span class="op">%&gt;%</span>
-  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">estimate</span>, y <span class="op">=</span> <span class="va">resid</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu">ggplot</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">estimate</span>, y <span class="op">=</span> <span class="va">resid</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">labs</span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Fitted"</span>, y <span class="op">=</span> <span class="st">"Residuals"</span><span class="op">)</span></code></pre></div>
 <pre><code>## Warning: Removed 4 rows containing missing values (geom_point).</code></pre>
@@ -1064,21 +1064,21 @@ red dots for observed counts above the 95% prediction interval.
 This time we also add a vertical line to label when the forecast starts.</p>
 <div class="sourceCode" id="cb1006"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## plot your regression </span>
-<span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">observed</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">epiweek</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+<span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">observed</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">epiweek</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
   <span class="co">## add in a line for the model estimate</span>
-  <span class="fu">geom_line</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>y <span class="op">=</span> <span class="va">estimate</span><span class="op">)</span>,
+  <span class="fu">geom_line</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">estimate</span><span class="op">)</span>,
             col <span class="op">=</span> <span class="st">"grey"</span><span class="op">)</span> <span class="op">+</span> 
   <span class="co">## add in a band for the prediction intervals </span>
-  <span class="fu">geom_ribbon</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>ymin <span class="op">=</span> <span class="va">lower_pi</span>, 
+  <span class="fu">geom_ribbon</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>ymin <span class="op">=</span> <span class="va">lower_pi</span>, 
                   ymax <span class="op">=</span> <span class="va">upper_pi</span><span class="op">)</span>, 
               alpha <span class="op">=</span> <span class="fl">0.25</span><span class="op">)</span> <span class="op">+</span> 
   <span class="co">## add in a line for your observed case counts</span>
-  <span class="fu">geom_line</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>y <span class="op">=</span> <span class="va">case_int</span><span class="op">)</span>, 
+  <span class="fu">geom_line</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">case_int</span><span class="op">)</span>, 
             col <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> <span class="op">+</span> 
   <span class="co">## plot in points for the observed counts above expected</span>
   <span class="fu">geom_point</span><span class="op">(</span>
     data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">observed</span>, <span class="va">case_int</span> <span class="op">&gt;</span> <span class="va">upper_pi</span><span class="op">)</span>, 
-    <span class="fu">aes</span><span class="op">(</span>y <span class="op">=</span> <span class="va">case_int</span><span class="op">)</span>, 
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">case_int</span><span class="op">)</span>, 
     colour <span class="op">=</span> <span class="st">"red"</span>, 
     size <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span> 
   <span class="co">## add vertical line and label to show where forecasting started</span>
@@ -1355,11 +1355,11 @@ an alert (was above the threshold) using <code>farringtonmethod@alarm</code>.</p
               <span class="st">"threshold"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">farringtonmethod</span><span class="op">@</span><span class="va">upperbound</span></code></pre></div>
 <p>We can then visualise the results in ggplot as done previously.</p>
 <div class="sourceCode" id="cb1011"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span><span class="va">counts</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">epiweek</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+<code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span><span class="va">counts</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">epiweek</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
   <span class="co">## add in observed case counts as a line</span>
-  <span class="fu">geom_line</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>y <span class="op">=</span> <span class="va">case_int</span>, colour <span class="op">=</span> <span class="st">"Observed"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu">geom_line</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">case_int</span>, colour <span class="op">=</span> <span class="st">"Observed"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
   <span class="co">## add in upper bound of aberration algorithm</span>
-  <span class="fu">geom_line</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>y <span class="op">=</span> <span class="va">threshold</span>, colour <span class="op">=</span> <span class="st">"Alert threshold"</span><span class="op">)</span>, 
+  <span class="fu">geom_line</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">threshold</span>, colour <span class="op">=</span> <span class="st">"Alert threshold"</span><span class="op">)</span>, 
             linetype <span class="op">=</span> <span class="st">"dashed"</span>, 
             size <span class="op">=</span> <span class="fl">1.5</span><span class="op">)</span> <span class="op">+</span>
   <span class="co">## define colours</span>
@@ -1406,11 +1406,11 @@ for details.</p>
               <span class="st">"threshold_glrnb"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">glrnbmethod</span><span class="op">@</span><span class="va">upperbound</span></code></pre></div>
 <p>Visualise the outputs as previously.</p>
 <div class="sourceCode" id="cb1013"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span><span class="va">counts</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">epiweek</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+<code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span><span class="va">counts</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">epiweek</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
   <span class="co">## add in observed case counts as a line</span>
-  <span class="fu">geom_line</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>y <span class="op">=</span> <span class="va">case_int</span>, colour <span class="op">=</span> <span class="st">"Observed"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu">geom_line</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">case_int</span>, colour <span class="op">=</span> <span class="st">"Observed"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
   <span class="co">## add in upper bound of aberration algorithm</span>
-  <span class="fu">geom_line</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>y <span class="op">=</span> <span class="va">threshold_glrnb</span>, colour <span class="op">=</span> <span class="st">"Alert threshold"</span><span class="op">)</span>, 
+  <span class="fu">geom_line</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">threshold_glrnb</span>, colour <span class="op">=</span> <span class="st">"Alert threshold"</span><span class="op">)</span>, 
             linetype <span class="op">=</span> <span class="st">"dashed"</span>, 
             size <span class="op">=</span> <span class="fl">1.5</span><span class="op">)</span> <span class="op">+</span>
   <span class="co">## define colours</span>
@@ -1533,13 +1533,13 @@ significant change.</p>
 ## 1 0.958       0.896         1.03               -4.17              -10.4                2.53     0.220</code></pre>
 <p>As previously we can visualise the outputs of the regression.</p>
 <div class="sourceCode" id="cb1017"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span><span class="va">observed</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">epiweek</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+<code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span><span class="va">observed</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">epiweek</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
   <span class="co">## add in observed case counts as a line</span>
-  <span class="fu">geom_line</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>y <span class="op">=</span> <span class="va">case_int</span>, colour <span class="op">=</span> <span class="st">"Observed"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu">geom_line</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">case_int</span>, colour <span class="op">=</span> <span class="st">"Observed"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
   <span class="co">## add in a line for the model estimate</span>
-  <span class="fu">geom_line</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>y <span class="op">=</span> <span class="va">estimate</span>, col <span class="op">=</span> <span class="st">"Estimate"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu">geom_line</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">estimate</span>, col <span class="op">=</span> <span class="st">"Estimate"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
   <span class="co">## add in a band for the prediction intervals </span>
-  <span class="fu">geom_ribbon</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>ymin <span class="op">=</span> <span class="va">lower_pi</span>, 
+  <span class="fu">geom_ribbon</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>ymin <span class="op">=</span> <span class="va">lower_pi</span>, 
                   ymax <span class="op">=</span> <span class="va">upper_pi</span><span class="op">)</span>, 
               alpha <span class="op">=</span> <span class="fl">0.25</span><span class="op">)</span> <span class="op">+</span> 
   <span class="co">## add vertical line and label to show where forecasting started</span>
@@ -1640,7 +1640,7 @@ significant change.</p>
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>The Epidemiologist R Handbook</strong>" was written by the handbook team. It was last built on 2021-03-25.</p>
+    <p>"<strong>The Epidemiologist R Handbook</strong>" was written by the handbook team. It was last built on 2021-03-26.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

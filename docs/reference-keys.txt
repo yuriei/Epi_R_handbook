@@ -40,7 +40,7 @@ scraping-websites
 skip-rows
 multiple-files---import-export-split-combine
 import-from-github
-csv-files
+csv-files-1
 xlsx-files
 manual-data-entry
 export
@@ -231,6 +231,7 @@ themes-and-labels
 colour-schemes
 change-order-of-discrete-variables
 multiple-plots
+marginal-distributions
 smart-labeling
 time-axes
 highlighting
@@ -252,13 +253,8 @@ resources-22
 plot-continuous-data
 preparation-21
 plotting-with-ggplot2
-code-syntax-1
 plotting-one-continuous-variable
-plotting-one-continuous-variable-within-facets
-plotting-two-continuous-variables
 plotting-with-base-graphics
-plotting-one-continuous-variable-1
-plotting-two-continuous-variables-1
 resources-23
 plot-categorical-data
 overview-13
@@ -274,7 +270,7 @@ bar-charts-using-processed-data
 facetting
 plotting-with-base-graphics-1
 resources-24
-tables
+html-tables
 overview-14
 preparation-23
 basic-flextable
@@ -292,7 +288,7 @@ constructing-the-plot
 compare-to-baseline
 likert-scale
 resources-26
-diagrams
+diagrams-and-charts
 overview-16
 preparation-25
 flow-diagrams
@@ -313,7 +309,7 @@ preparation-26
 ggupset
 upsetr
 resources-28
-heatmaps
+heat-tiles
 preparation-27
 transmission-matrix
 reporting-metrics-over-time
@@ -378,6 +374,16 @@ package-masked-errors
 plotting-errors
 resources-36
 advanced-rstudio
+find-in-files
+keyboard-shortcuts-1
+connections
+customize-appearance
+package-management-with-renv
+view-function-source-code
+environments
+rstudio-connect-and-cloud
+using-python-with-rstudio
+github
 resources-37
 relational-databases
 resources-38

@@ -1,6 +1,4 @@
-tab:unnamed-chunk-66
-descriptive-tables
-preparation
-browse-data
-descriptive-tables-1
-resources
+download-book-and-data
+download-offline-handbook
+download-data-to-follow-along
+background-information
