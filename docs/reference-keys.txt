@@ -345,12 +345,10 @@ example-subtree-with-sample-data-annotation
 more-complex-trees-adding-heatmaps-of-sample-data
 resources-31
 interactive-plots
-overview-19
 preparation-31
-plot
+plot-with-ggplotly
 modifications
-example
-maps---preparation
+heat-tiles-1
 maps---plot
 resources-32
 directory-interactions
@@ -361,7 +359,7 @@ running-other-files
 base-r-5
 resources-33
 r-markdown-1
-overview-20
+overview-19
 preparation-33
 the-r-markdown-file
 parametrised-reports
@@ -390,7 +388,7 @@ resources-38
 shiny-and-dashboards
 resources-39
 collaboration-with-github
-overview-21
+overview-20
 using-github-and-r-to-contribute
 overview-of-github
 first-steps
@@ -399,7 +397,7 @@ resources-40
 writing-functions
 resources-41
 r-on-network-drives
-overview-22
+overview-21
 preparation-34
 troubleshooting-common-errors
 resources-42

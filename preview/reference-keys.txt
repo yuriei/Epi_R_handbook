@@ -1,4 +1,7 @@
-download-book-and-data
-download-offline-handbook
-download-data-to-follow-along
-background-information
+html-tables
+overview
+preparation
+basic-flextable
+conditional-flextable-formatting
+saving-your-table
+resources
