@@ -114,10 +114,57 @@
 <h1>
 <span class="header-section-number">4</span> Transition to R<a class="anchor" aria-label="anchor" href="#transition-to-r"><i class="fas fa-link"></i></a>
 </h1>
-<p>Below, we provide some advice and resources if you are transitioning to R from another statistical language.</p>
-<div id="from-stata" class="section level2" number="4.1">
+<p>Below, we provide some advice and resources if you are transitioning to R.</p>
+<div id="from-excel" class="section level2" number="4.1">
 <h2>
-<span class="header-section-number">4.1</span> From Stata<a class="anchor" aria-label="anchor" href="#from-stata"><i class="fas fa-link"></i></a>
+<span class="header-section-number">4.1</span> From Excel<a class="anchor" aria-label="anchor" href="#from-excel"><i class="fas fa-link"></i></a>
+</h2>
+<p>Transitioning from Excel directly to R can seem daunting, but is a very achievable goal.</p>
+<p>You will find that using R (or another coding language) offers immense benefits in time saved, more consistent and accurate analysis, reproducibility, shareability, and faster error-correction. Like any new software there is a learning “curve” of time you must invest to become familiar. The dividends will be significant and immense scope of new possibilities will open to you with R.</p>
+<p>Excel is a well-known software that can be easy for a beginner to use to produce simple analysis and visualizations with “point-and-click”. In comparison, it can take a couple weeks to become comfortable with R functions and interface. However, R has evolved in recent years to become much more friendly to beginners.</p>
+<p>Many Excel workflows rely on memory and on repetition - thus, there is much opportunity for error. Furthermore, in general Excel use the data cleaning, analysis methodology, and equations used are hidden from view. It can require substantial time for a new colleague to learn what an Excel workbook is doing and how to troubleshoot it. With R, all the steps are explicitly written in the script and can be easily viewed, edited, corrected, and applied to other datasets.</p>
+<div id="mindset-changes" class="section level3 unnumbered">
+<h3>Mindset changes<a class="anchor" aria-label="anchor" href="#mindset-changes"><i class="fas fa-link"></i></a>
+</h3>
+<p>To begin your transition from Excel to R you must adjust your mindset in a few important ways:</p>
+<ol style="list-style-type: decimal">
+<li>Instead of clicking buttons and dragging cells you will be writing <em>every</em> step and procedure into a “script”. <em>The script is step-by-step instructions.</em> This allows any colleague to read the script and easily see the steps you took. This also helps de-bug errors or inaccurate calculations. See the <a href="r-basics.html#r-basics">R Basics</a> section on scripts for examples.</li>
+</ol>
+<p>Here is an example of an R script:</p>
+<div class="inline-figure"><img src="images/example_script.png" width="75%" height="50%" style="display: block; margin: auto;"></div>
+<ol start="2" style="list-style-type: decimal">
+<li>Use machine-readable “tidy” data over messy “human-readable” data. These are the three main requirements for “tidy” data, as explained in this tutorial on <a href="https://r4ds.had.co.nz/tidy-data.html">“tidy” data in R</a>:</li>
+</ol>
+<ul>
+<li>Each variable must have its own column<br>
+</li>
+<li>Each observation must have its own row<br>
+</li>
+<li>Each value must have its own cell</li>
+</ul>
+<p><em>The main reason one encounters non-tidy data is because many Excel spreadsheets are designed to prioritize easy reading by humans, not easy reading by machines/software.</em></p>
+<p>To help you see the difference, below are some fictional examples of <strong>non-tidy data</strong> that prioritize <em>human</em>-readability over <em>machine</em>-readability:</p>
+<div class="inline-figure"><img src="images/Excel_nonTidy_1.png" width="75%" height="75%" style="display: block; margin: auto;"></div>
+<p><em>Problems:</em> In the spreadsheet above, there are <em>merged cells</em> which are not easily digested by R. Which row should be considered the “header” is not clear. A color-based dictionary is to the right side and cell values are represented by colors - which is also not easily interpreted by R. Furthermore, different piece of information are combined into one cell (multiple partner organizations working in one area, or the status “TBC” in the same cell as “Partner D”).</p>
+<div class="inline-figure"><img src="images/Excel_nonTidy_2.png" width="75%" height="75%" style="display: block; margin: auto;"></div>
+<p><em>Problems:</em> In the spreadsheet above, there are numerous extra empty rows and columns within the dataset - this will cause cleaning headaches in R. Furthermore, the GPS coordinates are spread across two rows for a given treatment center. As a side note - the GPS coordinates are in two different formats!</p>
+<p>“Tidy” datasets may not be as readable to a human eye, but they make data cleaning and analysis much easier!</p>
+</div>
+<div id="excel-to-r-resources" class="section level3 unnumbered">
+<h3>Excel-to-R resources<a class="anchor" aria-label="anchor" href="#excel-to-r-resources"><i class="fas fa-link"></i></a>
+</h3>
+<p>Here are some links to tutorials to help you transition to R from Excel:</p>
+<ul>
+<li>
+<a href="https://www.northeastern.edu/graduate/blog/r-vs-excel/">R vs. Excel</a><br>
+</li>
+<li><a href="https://rstudio-conf-2020.github.io/r-for-excel/">RStudio course in R for Excel users</a></li>
+</ul>
+</div>
+</div>
+<div id="from-stata" class="section level2" number="4.2">
+<h2>
+<span class="header-section-number">4.2</span> From Stata<a class="anchor" aria-label="anchor" href="#from-stata"><i class="fas fa-link"></i></a>
 </h2>
 <!-- ======================================================= -->
 <p><strong>Coming to R from Stata</strong></p>
@@ -308,9 +355,9 @@
 <li><a href="http://r4stats.com/books/r4stata/" class="uri">http://r4stats.com/books/r4stata/</a></li>
 </ul>
 </div>
-<div id="from-sas" class="section level2" number="4.2">
+<div id="from-sas" class="section level2" number="4.3">
 <h2>
-<span class="header-section-number">4.2</span> From SAS<a class="anchor" aria-label="anchor" href="#from-sas"><i class="fas fa-link"></i></a>
+<span class="header-section-number">4.3</span> From SAS<a class="anchor" aria-label="anchor" href="#from-sas"><i class="fas fa-link"></i></a>
 </h2>
 <!-- ======================================================= -->
 <p><strong>Coming from SAS to R</strong></p>
@@ -488,12 +535,6 @@ Browse your data in a new window by opening the Explorer window and select desir
 <p><a href="https://www.amazon.com/SAS-SPSS-Users-Statistics-Computing/dp/1461406846/ref=sr_1_1?dchild=1&amp;gclid=EAIaIQobChMIoqLOvf6u7wIVAhLnCh1c9w_DEAMYASAAEgJLIfD_BwE&amp;hvadid=241675955927&amp;hvdev=c&amp;hvlocphy=9032185&amp;hvnetw=g&amp;hvqmt=e&amp;hvrand=16854847287059617468&amp;hvtargid=kwd-44746119007&amp;hydadcr=16374_10302157&amp;keywords=r+for+sas+users&amp;qid=1615698213&amp;sr=8-1">R for SAS and SPSS Users (2011)</a></p>
 <p><a href="https://www.amazon.com/SAS-Management-Statistical-Analysis-Graphics-dp-1466584491/dp/1466584491/ref=dp_ob_title_bk">SAS and R, Second Edition (2014)</a></p>
 </div>
-<div id="from-excel" class="section level2" number="4.3">
-<h2>
-<span class="header-section-number">4.3</span> From Excel<a class="anchor" aria-label="anchor" href="#from-excel"><i class="fas fa-link"></i></a>
-</h2>
-<p>UNDER CONSTRUCTION</p>
-</div>
 <div id="data-interoperability" class="section level2" number="4.4">
 <h2>
 <span class="header-section-number">4.4</span> Data interoperability<a class="anchor" aria-label="anchor" href="#data-interoperability"><i class="fas fa-link"></i></a>
@@ -510,9 +551,14 @@ Browse your data in a new window by opening the Explorer window and select desir
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
 <li><a class="nav-link" href="#transition-to-r"><span class="header-section-number">4</span> Transition to R</a></li>
-<li><a class="nav-link" href="#from-stata"><span class="header-section-number">4.1</span> From Stata</a></li>
-<li><a class="nav-link" href="#from-sas"><span class="header-section-number">4.2</span> From SAS</a></li>
-<li><a class="nav-link" href="#from-excel"><span class="header-section-number">4.3</span> From Excel</a></li>
+<li>
+<a class="nav-link" href="#from-excel"><span class="header-section-number">4.1</span> From Excel</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#mindset-changes">Mindset changes</a></li>
+<li><a class="nav-link" href="#excel-to-r-resources">Excel-to-R resources</a></li>
+</ul>
+</li>
+<li><a class="nav-link" href="#from-stata"><span class="header-section-number">4.2</span> From Stata</a></li>
+<li><a class="nav-link" href="#from-sas"><span class="header-section-number">4.3</span> From SAS</a></li>
 <li><a class="nav-link" href="#data-interoperability"><span class="header-section-number">4.4</span> Data interoperability</a></li>
 </ul>
 
@@ -530,7 +576,7 @@ Browse your data in a new window by opening the Explorer window and select desir
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>The Epidemiologist R Handbook</strong>" was written by the handbook team. It was last built on 2021-03-26.</p>
+    <p>"<strong>The Epidemiologist R Handbook</strong>" was written by the handbook team. It was last built on 2021-03-27.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

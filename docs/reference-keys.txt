@@ -1,5 +1,5 @@
-tab:unnamed-chunk-117
-tab:unnamed-chunk-564
+tab:unnamed-chunk-120
+tab:unnamed-chunk-567
 editorial-and-technical-notes
 approach-and-style
 editorial-decisions
@@ -25,9 +25,9 @@ statistical-functions
 other-useful-functions
 errors-warnings
 transition-to-r
+from-excel
 from-stata
 from-sas
-from-excel
 data-interoperability
 import-and-export
 overview-1
