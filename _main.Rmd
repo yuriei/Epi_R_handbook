@@ -2073,23 +2073,23 @@ Excel is a well-known software that can be easy for a beginner to use to produce
 Many Excel workflows rely on memory and on repetition - thus, there is much opportunity for error. Furthermore, in general Excel use the data cleaning, analysis methodology, and equations used are hidden from view. It can require substantial time for a new colleague to learn what an Excel workbook is doing and how to troubleshoot it. With R, all the steps are explicitly written in the script and can be easily viewed, edited, corrected, and applied to other datasets.   
 
 
+**To begin your transition from Excel to R you must adjust your mindset in a few important ways:**  
 
 
-### Mindset changes {-}  
+### Scripts {-}  
 
-To begin your transition from Excel to R you must adjust your mindset in a few important ways:  
-
-1) Instead of clicking buttons and dragging cells you will be writing *every* step and procedure into a "script". *The script is step-by-step instructions.* This allows any colleague to read the script and easily see the steps you took. This also helps de-bug errors or inaccurate calculations. See the [R Basics] section on scripts for examples.  
+Instead of clicking buttons and dragging cells you will be writing *every* step and procedure into a "script". *The script is step-by-step instructions.* This allows any colleague to read the script and easily see the steps you took. This also helps de-bug errors or inaccurate calculations. See the [R Basics] section on scripts for examples.  
 
 Here is an example of an R script:  
 
-```{r, echo=F, out.width = "75%", out.height="50%", fig.align = "center"}
+```{r, echo=F, out.width = "75%", out.height="75%", fig.align = "center"}
 knitr::include_graphics(here::here("images", "example_script.png"))
 ```
 
 
+### Tidy data {-}  
 
-2) Use machine-readable "tidy" data over messy "human-readable" data. These are the three main requirements for "tidy" data, as explained in this tutorial on ["tidy" data in R](https://r4ds.had.co.nz/tidy-data.html):  
+Use machine-readable "tidy" data instead of messy "human-readable" data. These are the three main requirements for "tidy" data, as explained in this tutorial on ["tidy" data in R](https://r4ds.had.co.nz/tidy-data.html):  
 
 * Each variable must have its own column  
 * Each observation must have its own row  
@@ -2099,7 +2099,7 @@ knitr::include_graphics(here::here("images", "example_script.png"))
 
 To help you see the difference, below are some fictional examples of **non-tidy data** that prioritize *human*-readability over *machine*-readability:  
 
-```{r, echo=F, out.width = "75%", out.height="75%", fig.align = "center"}
+```{r, echo=F, out.width = "100%", out.height="75%", fig.align = "center"}
 knitr::include_graphics(here::here("images", "Excel_nonTidy_1.png"))
 ```
 
@@ -2107,7 +2107,7 @@ knitr::include_graphics(here::here("images", "Excel_nonTidy_1.png"))
 *Problems:* In the spreadsheet above, there are *merged cells* which are not easily digested by R. Which row should be considered the "header" is not clear. A color-based dictionary is to the right side and cell values are represented by colors - which is also not easily interpreted by R. Furthermore, different piece of information are combined into one cell (multiple partner organizations working in one area, or the status "TBC" in the same cell as "Partner D").  
 
 
-```{r, echo=F, out.width = "75%", out.height="75%", fig.align = "center"}
+```{r, echo=F, out.width = "100%", out.height="100%", fig.align = "center"}
 knitr::include_graphics(here::here("images", "Excel_nonTidy_2.png"))
 ```
 
@@ -2650,7 +2650,7 @@ names(df) <- paste(names(df), df[1, ], sep = "_")
 
 ## Multiple files - import, export, split, combine  
 
-See the page on [Iteration] for examples of how to import and combine multiple files, or multiple Excel workbook files. This page also has examples on how to split a data frame into parts and export each one separately, or as named sheets in an Excel workbook.  
+See the page on [Iteration and loops] for examples of how to import and combine multiple files, or multiple Excel workbook files. That page also has examples on how to split a data frame into parts and export each one separately, or as named sheets in an Excel workbook.  
 
 
 
@@ -2658,9 +2658,9 @@ See the page on [Iteration] for examples of how to import and combine multiple f
 <!-- ======================================================= -->
 ## Import from Github {}
 
-Importing data directly from Github into R can be easy or annoying, depending on the file type or file size. Below are some approaches:  
+Importing data directly from Github into R can be very easy or can require a few steps - depending on the file type. Below are some approaches:  
 
-### CSV files  
+### CSV files {-}  
 
 It can be easy to import a .csv file directly from Github into R with an R command.  
 
@@ -2673,13 +2673,13 @@ It can be easy to import a .csv file directly from Github into R with an R comma
 knitr::include_graphics(here::here("images", "download_csv_raw.png"))
 ```
 
-### XLSX files  
+### XLSX files {-}  
 
-You may not be able to view the "Raw" data for some files (e.g. .xlsx, .rds, .nwk)
-1) Go to the **["data" folder](https://github.com/nsbatra/Epi_R_handbook/tree/master/data)** of our Github repository  
-2) Click on "linelist_raw.xlsx"  
-3) Click the "Download" button as shown below  
-4) Save the file on your computer, and import it into R with the `import()` function from **rio**, as described in the page on [Import and export].  
+You may not be able to view the "Raw" data for some files (e.g. .xlsx, .rds, .nwk, .shp)  
+
+1) Go to the Github repo, locate the file of interest, and click on it  
+2) Click the "Download" button, as shown below  
+3) Save the file on your computer, and import it into R  
 
 
 ```{r out.height = "50%", fig.align = "center", echo=F}
@@ -2770,6 +2770,112 @@ df_from_clipboard <- read.table(
 ```
 
 
+
+
+
+
+
+
+## Import most recent file {-}  
+
+Often you may receive daily updates to your datasets. In this case you will want to write code that imports the most recent file. Below we present two ways to approach this:  
+
+* Selecting the file based on the date in the file name  
+* Selecting the file based on file metadata (last modification)  
+
+
+### Dates in file name {-}  
+
+This approach depends on three premises:  
+
+1) You trust the dates in the file names  
+2) The dates are numeric and appear in *generally* the same format (e.g. year then month then day)  
+3) There are no other numbers in the file name  
+
+We will explain each step, and then show you them combined at the end. First, use `dir()` from **base** R to extract just the file names for each file in the folder of interest. See the page on [Directory interactions] for more details about `dir()`. In this example, the folder of interest is the folder "linelists" within the folder "data" within the R project. 
+
+```{r}
+linelist_filenames <- dir(here("data", "linelists")) # get file names from folder
+linelist_filenames                                   # print
+```
+
+Once you have this vector of names, you can extract the dates by applying `str_extract()` from **stringr** using this regular expression. It extracts any numbers in the file name (including any other characters in the middle such as dashes or slashes). You can read more about **stringr** in the [Strings and characters] page.  
+
+```{r}
+linelist_dates_raw <- stringr::str_extract(linelist_filenames, "[0-9].*[0-9]") # extract numbers and any characters in between
+linelist_dates_raw  # print
+```
+
+Assuming  dates are written in the same date general format (e.g. Year Month Day) you can use **lubridate**'s flexible `ymd()` function (or `dmy()` or `mdy()`) to convert them to dates. For these functions, the dashes, spaces, or slashes do not matter, only of order of the numbers. Read more in [Working with dates].  
+
+```{r}
+linelist_dates_clean <- lubridate::ymd(linelist_dates_raw)
+linelist_dates_clean
+```
+
+
+The **base** R function `which.max()` can then be used to return the index position (e.g. 1st, 2nd, 3rd, ...) of the maximum date value. The latest file is correctly identified as the 6th file - "case_linelist_2020-10-08.xlsx".  
+
+```{r}
+index_latest_file <- which.max(linelist_dates_clean)
+index_latest_file
+```
+
+If we condense all these commands, the complete code could look like below. Note that the `.` in the last line is a placeholder for the piped object at that point in the pipe sequence. At that point the value is simply the number 6. This is placed in double brackets to extract the 6th element of the vector of file names produced by `dir()`.    
+
+```{r}
+# load packages
+pacman::p_load(
+  tidyverse,         # data management
+  stringr,           # work with strings/characters
+  lubridate,         # work with dates
+  rio,               # import / export
+  here,              # relative file paths
+  fs)                # directory interactions
+
+# extract the file name of latest file
+latest_file <- dir(here("data", "linelists")) %>%  # file names from "linelists" sub-folder          
+  str_extract("[0-9].*[0-9]") %>%                  # pull out dates (numbers)
+  ymd() %>%                                        # convert numbers to dates (assuming year-month-day format)
+  which.max() %>%                                  # get index of max date (latest file)
+  dir(here("data", "linelists"))[[.]]              # return the filename of latest linelist
+
+latest_file  # print name of latest file
+```
+
+You can now use this name to finish the relative file path, with `here()`:  
+
+```{r}
+here("data", "linelists", latest_file) 
+```
+
+And you can now import the latest file:  
+
+```{r, eval=F}
+# import
+import(here("data", "linelists", latest_file)) # import 
+```
+
+ 
+
+
+
+### Use the file info {-}  
+
+If your files do not have dates in their names (or you do not trust those dates), you can try to extract the last modification date from the file metadata. Use functions from the package **fs** to examine the metadata information for each file, which includes the last modification time and the file path.  
+
+Below, we provide the folder of interest to **fs**'s `dir_info()`. In this case, the folder of interest is the sub-folder "linelists" within the folder "data" within the R project. The result is a data frame with one line per file and columns for `modification_time`, `path`, etc. You can see a visual example of this in the page on [Directory interactions].    
+
+We can sort this data frame of files by the column `modification_time`, and then keep only the top/latest row (file) with **base** R's `head()`. Then we can extract the file path of this latest file only with the **dplyr** function `pull()` on the column `path`. Finally we can pass this file path to `import()`. The imported file is saved as `latest_file`.  
+
+```{r, eval=F}
+latest_file <- dir_info(here("data", "linelists")) %>%  # collect file info on all files in directory
+  arrange(desc(modification_time)) %>%      # sort by modification time
+  head(1) %>%                               # keep only the top (latest) file
+  pull(path) %>%                            # extract only the file path
+  import()                                  # import the file
+
+```
 
 
 <!-- ======================================================= -->
@@ -10710,7 +10816,8 @@ summary(linelist$age_years)
 You can access and save one specific part of it with index brackets [ ]:  
 
 ```{r}
-summary(linelist$age_years)[[2]]
+summary(linelist$age_years)[[2]]            # return only the 2nd element
+# summary(linelist$age_years)[["1st Qu."]]  # equivalent, alternative to above by element name
 ```
 
 You can return individual statistics with **base** R functions like `max()`, `min()`, `median()`, `mean()`, `quantile()`, `sd()`, and `range()`. See the [R Basics] page for a complete list.  
@@ -10924,15 +11031,13 @@ age_summary <- linelist %>%
 age_summary
 ```
 
-You can calculate proportions *within groups* by having two levels of aggregation prior to using `mutate()`. The table below first groups the data frame by `outcome` and then groups again and counts by column `age_cat`, achieving the breakdown of age *by outcome*. Note that you can add more stratifications by adding columns to the `group_by()` command.  
+Below is a method to calculate proportions *within groups*. It relies on different levels of data grouping being selectively applied and removed. First, the data are grouped on `outcome` via `group_by()`. Then, `count()` is applied. This function further groups the data by `age_cat` and returns counts for each `outcome`-`age-cat` combination. Importantly - as it finishes its process, `count()` also *ungroups* the `age_cat` grouping, so the only remaining data grouping is the original grouping by `outcome`. Thus, the final step of calculating percents (over `sum(n)`) is still grouped by `outcome`.  
 
 ```{r}
-age_by_outcome <- linelist %>% 
-  group_by(outcome) %>%                  # group first by outcome 
-  count(age_cat) %>%                     # group again and count by gender (produces "n" column)
-  mutate(                                # calculate percent - note the denominator is by outcome group
-    percent = scales::percent(n / sum(n))
-    ) 
+age_by_outcome <- linelist %>%                  # begin with linelist
+  group_by(outcome) %>%                         # group by outcome 
+  count(age_cat) %>%                            # group and count by age_cat, and then remove age_cat grouping
+  mutate(percent = scales::percent(n / sum(n))) # calculate percent - note the denominator is by outcome group
 ```
 
 ```{r, echo=F}
@@ -10994,7 +11099,7 @@ Some tips:
 * To calculate these statistics on the entire dataset, use `summarise()` without `group_by()`  
 
 
-### Glueing together {-}  
+#### Glueing together {-}  
 
 You can also use `str_glue()` from **stringr** to combine columns into one new column - typically used *after* the `summarise()` command.  
 
@@ -11037,7 +11142,6 @@ linelist %>%
       na.rm=TRUE)
     )
 ```
-
 
 
 ### On aggregated data {-}  
@@ -11134,6 +11238,193 @@ age_by_outcome %>%
   select(-percent) %>%   # keep only counts for simplicity
   pivot_wider(names_from = age_cat, values_from = n)  
 ```
+
+
+### Total rows {-}  
+
+When `summarise()` operates on grouped data it does not automatically produce "total" statistics. Below, two approaches to adding a total row are presented:  
+
+#### **janitor**'s `adorn_totals()` {-}  
+
+If your table consists only of counts or proportions/percents that can be summed into a total, then you can add *sum* totals using **janitor**'s `adorn_totals()` as described in the section above. Note that this function can only sum the numeric columns - if you want to calculate total summary statistics see the next section.  
+
+Below, `linelist` is grouped by gender and summarised into a table that described the numer of cases with known outcome, deaths, and recovered. Piping the table to `adorn_totals()` adds a total row at the bottom reflecting the sum of each column. The further `adorn_*()` functions adjust the display as noted in the code.  
+```{r}
+linelist %>% 
+  group_by(gender) %>%
+  summarise(
+    known_outcome = sum(!is.na(outcome)),           # Number of rows in group where outcome is not missing
+    n_death  = sum(outcome == "Death", na.rm=T),    # Number of rows in group where outcome is Death
+    n_recover = sum(outcome == "Recover", na.rm=T), # Number of rows in group where outcome is Recovered
+  ) %>% 
+  adorn_totals() %>%                                # Adorn total row (sums of each numeric column)
+  adorn_percentages("col") %>%                      # Get column proportions
+  adorn_pct_formatting() %>%                        # Convert proportions to percents
+  adorn_ns(position = "front")                      # display % and counts (with counts in front)
+```
+
+#### `summarise()` on "total" data and then `bind_rows()` {-}  
+
+If your table consists of summary statistics such as `median()`, `mean()`, etc, the `adorn_totals()` approach shown above will *not* be sufficient. Instead, to get summary statistics for the entire dataset you must calculate them with a separate `summarise()` command and then bind the results to the original grouped summary table. To do the binding you can use `bind_rows()` from **dplyr**. Below is an example:  
+
+You can make a summary table of outcome *by hospital* with `group_by()` and `summarise()` like this:  
+
+```{r, warning=F, message=F}
+by_hospital <- linelist %>% 
+  filter(!is.na(outcome) & hospital != "Missing") %>%  # Remove cases with missing outcome or hospital
+  group_by(hospital, outcome) %>%                      # Group data
+  summarise(                                           # Create new summary columns of indicators of interest
+    N = n(),                                            # Number of rows per hospital-outcome group     
+    ct_value = median(ct_blood, na.rm=T))               # median CT value per group
+  
+by_hospital # print table
+```
+
+To get the totals, run the same `summarise()` command but only group the data by outcome (not by hospital), like this:  
+
+```{r}
+totals <- linelist %>% 
+      filter(!is.na(outcome) & hospital != "Missing") %>%
+      group_by(outcome) %>%                            # Grouped only by outcome, not by hospital    
+      summarise(
+        N = n(),                                       # These statistics are now by outcome only     
+        ct_value = median(ct_blood, na.rm=T))
+
+totals # print table
+```
+
+We can bind these two data frames together. Note that `by_hospital` has 4 columns whereas `totals` has 3 columns. By using `bind_rows()`, the columns are combined by name, and any extra space is filled in with `NA` (e.g the column `hospital` values for the two new `totals` rows). After binding the rows, we convert these empty spaces to "Total"  using `replace_na()` (see [Cleaning data and core functions] page).  
+
+```{r}
+table_long <- bind_rows(by_hospital, totals) %>% 
+  mutate(hospital = replace_na(hospital, "Total"))
+```
+
+Here is the new table with "Total" rows at the bottom.  
+
+```{r, message=FALSE, echo=F}
+DT::datatable(table_long, rownames = FALSE, options = list(pageLength = 12, scrollX=T), class = 'white-space: nowrap' )
+```
+
+This table is in a "long" format, which may be what you want. *Optionally*, you can *pivot* this table *wider* to make it more readable. See the section on pivoting wider above, and the [Pivoting data] page. You can also add more columns, and arrange it nicely.  
+
+```{r}
+table_long %>% 
+  
+  # Pivot wider and format
+  ########################
+  mutate(hospital = replace_na(hospital, "Total")) %>% 
+  pivot_wider(                                         # Pivot from long to wide
+    values_from = c(ct_value, N),                       # new values are from ct and count columns
+    names_from = outcome) %>%                           # new column names are from outcomes
+  mutate(                                              # Add new columns
+    N_Known = N_Death + N_Recover,                      # number with known outcome
+    Pct_Death = N_Death / N_Known * 100,               # percent cases who died
+    Pct_Recover = N_Recover/N_Known * 100) %>%         # percent who recovered
+  select(                                              # Re-order columns
+    hospital, N_Known,                                   # Intro columns
+    N_Recover, Pct_Recover, ct_value_Recover,            # Recovered columns
+    N_Death, Pct_Death, ct_value_Death)  %>%             # Death columns
+  arrange(N_Known)                                  # Arrange rows from lowest to highest (Total row at bottom)
+
+```
+
+And then you can print this nicely with HTML - below is the output printed with **flextable**. You can read more in depth about this example and how to achieve this nice table in the [HTML tables] page.  
+
+```{r echo=FALSE, fig.show='hold', message=FALSE, warning=FALSE, out.width=c('50%', '50%')}
+
+linelist <- rio::import(here::here("data", "linelist_cleaned.rds")) 
+
+border_style = officer::fp_border(color="black", width=1)
+
+pacman::p_load(
+  rio,            # import/export
+  here,           # file pathways
+  flextable,      # make HTML tables 
+  officer,        # helper functions for tables
+  tidyverse)      # data management, summary, and visualization
+
+table <- linelist %>% 
+  # filter
+  ########
+  filter(!is.na(outcome) & hospital != "Missing") %>%  # Remove cases with missing outcome or hospital
+  
+  # Get summary values per hospital-outcome group
+  ###############################################
+  group_by(hospital, outcome) %>%                      # Group data
+  summarise(                                           # Create new summary columns of indicators of interest
+    N = n(),                                            # Number of rows per hospital-outcome group     
+    ct_value = median(ct_blood, na.rm=T)) %>%           # median CT value per group
+  
+  # add totals
+  ############
+  bind_rows(                                           # Bind the previous table with this mini-table of totals
+    linelist %>% 
+      filter(!is.na(outcome) & hospital != "Missing") %>%
+      group_by(outcome) %>%                            # Grouped only by outcome, not by hospital    
+      summarise(
+        N = n(),                                       # Number of rows for whole dataset     
+        ct_value = median(ct_blood, na.rm=T))) %>%     # Median CT for whole dataset
+  
+  # Pivot wider and format
+  ########################
+  mutate(hospital = replace_na(hospital, "Total")) %>% 
+  pivot_wider(                                         # Pivot from long to wide
+    values_from = c(ct_value, N),                       # new values are from ct and count columns
+    names_from = outcome) %>%                           # new column names are from outcomes
+  mutate(                                              # Add new columns
+    N_Known = N_Death + N_Recover,                      # number with known outcome
+    Pct_Death = N_Death / N_Known * 100,               # percent cases who died
+    Pct_Recover = N_Recover/N_Known * 100) %>%         # percent who recovered
+  select(                                              # Re-order columns
+    hospital, N_Known,                                   # Intro columns
+    N_Recover, Pct_Recover, ct_value_Recover,            # Recovered columns
+    N_Death, Pct_Death, ct_value_Death)  %>%             # Death columns
+  arrange(N_Known) %>%                                 # Arrange rows from lowest to highest (Total row at bottom)
+
+  # formatting
+  ############
+  flextable() %>% 
+  add_header_row(
+    top = TRUE,                # New header goes on top of existing header row
+    values = c("Hospital",     # Header values for each column below
+               "Total cases with known outcome", 
+               "Recovered",    # This will be the top-level header for this and two next columns
+               "",
+               "",
+               "Died",         # This will be the top-level header for this and two next columns
+               "",             # Leave blank, as it will be merged with "Died"
+               "")) %>% 
+    set_header_labels(         # Rename the columns in original header row
+      hospital = "", 
+      N_Known = "",                  
+      N_Recover = "Total",
+      Pct_Recover = "% of cases",
+      ct_value_Recover = "Median CT values",
+      N_Death = "Total",
+      Pct_Death = "% of cases",
+      ct_value_Death = "Median CT values")  %>% 
+  merge_at(i = 1, j = 3:5, part = "header") %>% # Horizontally merge columns 3 to 5 in new header row
+  merge_at(i = 1, j = 6:8, part = "header") %>%  
+  border_remove() %>%  
+  theme_booktabs() %>% 
+  vline(part = "all", j = 2, border = border_style) %>%   # at column 2 
+  vline(part = "all", j = 5, border = border_style) %>%   # at column 5
+  merge_at(i = 1:2, j = 1, part = "header") %>% 
+  merge_at(i = 1:2, j = 2, part = "header") %>% 
+  width(j=1, width = 2.7) %>% 
+  width(j=2, width = 1.5) %>% 
+  width(j=c(4,5,7,8), width = 1) %>% 
+  flextable::align(., align = "center", j = c(2:8), part = "all") %>% 
+  bg(., part = "body", bg = "gray95")  %>% 
+  colformat_num(., j = c(4,7), digits = 1) %>% 
+  bold(i = 1, bold = TRUE, part = "header") %>% 
+  bold(i = 6, bold = TRUE, part = "body")
+
+
+table
+```
+
 
 
 ## **gtsummary** package   
@@ -11290,14 +11581,14 @@ Converting a `table()` object directly to a data frame is not straight-forward. 
 1) Create the table, *without using* `useNA = "always"`. Instead convert `NA` values to "(Missing)" with `fct_explicit_na()` from **forcats**.  
 2) Add totals (optional) by piping to `addmargins()`  
 3) Pipe to the **base** R function `as.data.frame.matrix()`  
-4) Pipe the table to the **dplyr** function `add_rownames()`, specifying the name for the first column  
+4) Pipe the table to the **tibble** function `rownames_to_column()`, specifying the name for the first column  
 5) Print, View, or export as desired. In this example we use `flextable()` from package **flextable** as described in the [HTML tables] page. This will print to the RStudio viewer pane as a pretty HTML.  
 
 ```{r, warning=F, message=F}
 table(fct_explicit_na(linelist$age_cat), fct_explicit_na(linelist$outcome)) %>% 
   addmargins() %>% 
   as.data.frame.matrix() %>% 
-  dplyr::add_rownames(var = "Age Category") %>% 
+  tibble::rownames_to_column(var = "Age Category") %>% 
   flextable::flextable()
 ```
 
@@ -22211,8 +22502,9 @@ table <- linelist %>%
   flextable::align(., align = "center", j = c(2:8), part = "all") %>% 
   bg(., part = "body", bg = "gray95")  %>% 
   bg(., j=c(1:8), i= ~ hospital == "Military Hospital", part = "body", bg = "#91c293") %>% 
-  colformat_num(., j = c(4,7), digits = 1) %>% 
-  bold(i = 1, bold = TRUE, part = "header")
+  colformat_num(., j = c(4,7), digits = 1) %>%
+  bold(i = 1, bold = TRUE, part = "header") %>% 
+  bold(i = 6, bold = TRUE, part = "body")
 
 table
 ```
@@ -22512,24 +22804,24 @@ There are different ways the table can be integrated into your output.
 
 You can export the tables to Word, PowerPoint or HTML or as an image (PNG) files. To do this, one of the following functions is used:
 
-* save_as_docx
-* save_as_pptx
-* save_as_image
-* save_as_html
+* `save_as_docx()`  
+* `save_as_pptx()`  
+* `save_as_image()`  
+* `save_as_html()`  
 
 For instance: 
-```{r message=FALSE, warning=FALSE}
+```{r message=FALSE, warning=FALSE, eval=F}
 save_as_docx("my table" = my_table, path = "file.docx")
 # Edit the 'my table' as needed for the title of table. If not specified the whole file will be blank. 
 
 save_as_image(my_table, path = "file.png")
 ```
 
-Note the packages `webshot` or `webshot2` are required to save a flextable as an image.Images may come out with transparent backgrounds.
+Note the packages `webshot` or `webshot2` are required to save a flextable as an image. Images may come out with transparent backgrounds.
 
 If you want to view a 'live' versions of the flextable output in the intended document format, for instance so you can see if it fits in the page or so you can copy it into another document, you can use the print method with the argument preview set to “pptx” or “docx”. The document will pop up.
 
-```
+```{r, eval=F}
 print(my_table, preview = "docx") # Word document example
 print(my_table, preview = "pptx") # Powerpoint example
 ```
@@ -22538,7 +22830,7 @@ print(my_table, preview = "pptx") # Powerpoint example
 
 This table can be integrated into your an automated document, an R markdown output, if the table object is called within the R markdown chunk. This means the table can be updated as part of a report where the data might change, so the numbers can be refreshed.
 
-See detail in the R markdown section of this handbook. 
+See detail in the [R Markdown] page of this handbook. 
 
 <!-- ======================================================= -->
 ## Resources {  }
@@ -26345,7 +26637,8 @@ options(scipen=1, digits=3)
 Data visualisation is increasingly required to be interrogable by the audience. Consequently, is is becoming common to create interactive plots. There are several ways to include these but the two most common are **plotly** and **shiny**. 
 
 In this page we will focus on converting an existing `ggplot()` plot into an interactive plot with **plotly**. You can read more about **shiny** in the [Shiny and dashboards] page.  
-Below is a basic epicurve that has been transformed to be interactive using the integration of **ggplot2** and **plotly** (hover your mouse over the plot). 
+
+Below is a basic epicurve that has been transformed to be interactive using the integration of **ggplot2** and **plotly** (hover your mouse over the plot, or click items in the legend). 
 
 ```{r plotly_demo, out.width=c('75%'), out.height=c('500px'), echo=F, warning=F, message=F}
 pacman::p_load(plotly, rio, here, ggplot2, dplyr, lubridate)
@@ -26419,33 +26712,6 @@ DT::datatable(head(linelist, 50), rownames = FALSE, filter="top", options = list
 ```
 
 
-Manipulate and add columns (best taught in the epicurves section).  
-
-```{r manipulate_show, eval=F}
-# linelist <- linelist %>% 
-#   dplyr::mutate(
-#     ## If the outcome column is NA, change to "Unknown"
-#     outcome = dplyr::if_else(condition = is.na(outcome),
-#                              true = "Unknown",
-#                              false = outcome),
-#     ## If the date of infection is NA, use the date of onset instead
-#     date_earliest = dplyr::if_else(condition = is.na(date_infection),
-#                                    true = date_onset,
-#                                    false = date_infection),
-#     ## Summarise earliest date to earliest week 
-#     week_earliest = lubridate::floor_date(x = date_earliest,
-#                                           unit = "week",
-#                                           week_start = 1)
-#     )
-```
-  
-Count for plotting
-```{r manipulate_show2, eval=F}
-## Find number of cases in each week by their outcome
-# linelist <- linelist %>% 
-#   dplyr::count(week_earliest, outcome)
-```
-
 
   
 <!-- ======================================================= -->
@@ -26460,11 +26726,11 @@ We begin by creating a summary dataset of each epidemiological week, and the per
 
 ```{r}
 weekly_deaths <- linelist %>%
-  group_by(epiweek = floor_date(date_onset, "week")) %>% 
-  summarise(
-    n_known_outcome = sum(!is.na(outcome), na.rm=T),
-    n_death  = sum(outcome == "Death", na.rm=T),
-    pct_death = 100*(n_death / n_known_outcome)
+  group_by(epiweek = floor_date(date_onset, "week")) %>%  # create and group data by epiweek column
+  summarise(                                           # create new summary data frame:
+    n_known_outcome = sum(!is.na(outcome), na.rm=T),     # number of cases per group with known outcome
+    n_death  = sum(outcome == "Death", na.rm=T),         # number of cases per group who died
+    pct_death = 100*(n_death / n_known_outcome)          # percent of cases with known outcome who died
   )
 ```
 Here is the first 50 rows of the `weekly_deaths` dataset.  
@@ -26484,9 +26750,7 @@ deaths_plot   # print
 ```
 
 
-We can make this interactive by simply passing this plot to `ggplotly()`, as below. Hover your mouse over the line to show the x and y values. 
-
-You can also see icons in the upper-right of the plot. In order, they allow you to:  
+We can make this interactive by simply passing this plot to `ggplotly()`, as below. Hover your mouse over the line to show the x and y values. You can zoom in on the plot, and drag it around. You can also see icons in the upper-right of the plot. In order, they allow you to:  
 
 * Download the current view as a PNG image  
 * Zoom in with a select box  
@@ -26501,7 +26765,7 @@ You can also see icons in the upper-right of the plot. In order, they allow you 
 deaths_plot %>% plotly::ggplotly()
 ```
 
-Grouped data work with plotly as well. Below, a weekly epicurve is made, grouped by outcome. The stacked bars are interactive. Try clicking on the different items in the legend (they will appear/disappear).  
+Grouped data work with `ggplotly()` as well. Below, a weekly epicurve is made, grouped by outcome. The stacked bars are interactive. Try clicking on the different items in the legend (they will appear/disappear).  
 
 
 ```{r plot_show, eval=F}
@@ -26518,7 +26782,7 @@ p <- incidence2::incidence(
 p %>% ggplotly()
 ```
   
-```{r, eval=TRUE, out.width=c('95%'), out.height=c('500px'), echo=FALSE}
+```{r, warning = F, message = F, eval=TRUE, out.width=c('95%'), out.height=c('500px'), echo=FALSE}
 p %>% 
   plotly::ggplotly() %>% 
   plotly::partial_bundle() 
@@ -26539,7 +26803,7 @@ p <- p %>%
 
 ### Buttons {-}  
 
-Some of the buttons on a standard plotly are superfluous and can be distracting, so it's best to remove them. You can do this simply by piping the output into `config()` from **plotly** and specifying which buttons to remove. In the below example we specify in advance the names of the buttons to remove, and provide them to the argument `modeBarButtonsToRemove = `. We also set `displaylogo = FALSE` to remove the plotly logo.  
+Some of the buttons on a standard plotly are superfluous and can be distracting, so you can remove them. You can do this simply by piping the output into `config()` from **plotly** and specifying which buttons to remove. In the below example we specify in advance the names of the buttons to remove, and provide them to the argument `modeBarButtonsToRemove = `. We also set `displaylogo = FALSE` to remove the plotly logo.  
 
 ```{r plot_tidyshow2, eval=F}
 ## these buttons are distracting and we want to remove them
@@ -26556,7 +26820,7 @@ p <- p %>%          # re-define interactive plot without these buttons
 <!-- ======================================================= -->
 ## Heat tiles {  }
 
-You can make almost any `ggplot()` plot interactive, including heat tiles. In the page on [Heat tiles] you can read about how to make the below `ggplot()`, which displays the proportion of days per week that certain facilities reported data to their province.  
+You can make almost any `ggplot()` plot interactive, including heat tiles. In the page on [Heat tiles] you can read about how to make the below plot, which displays the proportion of days per week that certain facilities reported data to their province.  
 
 Here is the code, although we will not describe it in depth here.  
 
@@ -26780,7 +27044,7 @@ options(scipen=1, digits=3)
 
 # Directory interactions { }  
 
-In this page we cover common scenarios where you interact with, save, and import with directories (folders).  
+In this page we cover common scenarios where you create, interact with, save, and import with directories (folders).  
 
 
 ## Preparation  
@@ -26790,14 +27054,19 @@ In this page we cover common scenarios where you interact with, save, and import
 The **fs** package is a **tidyverse** package that facilitate directory interactions, improving on some of the **base** R functions. In the sections below we will often use functions from **fs**.  
 
 ```{r}
-pacman::p_load(fs)
+pacman::p_load(
+  fs,             # file/directory interactions
+  rio,            # import/export
+  here,           # relative file pathways
+  tidyverse)      # data management and visualization
 ```
 
 
-### Print directory as a dendrogram tree
+### Print directory as a dendrogram tree {-}  
+
 Use the function `dir_tree()` from **fs**.  
 
-Provide the folder filepath to `path = ` and decide whether you want to show only one level (`recurse = FALSE`) or all files in all sub-levels (`recurse = TRUE`). Below we use `here("data)` as shorthand for the R project and it's sub-folder "data", which contains all the data used for this R handbook. We use set it to display all files within "data" and its sub-folders (e.g. "cache", "epidemic models", "population", "shp", and "weather").  
+Provide the folder filepath to `path = ` and decide whether you want to show only one level (`recurse = FALSE`) or all files in all sub-levels (`recurse = TRUE`). Below we use `here("data)` as shorthand for the R project and it's sub-folder "data", which contains all the data used for this R handbook. We set it to display all files within "data" and its sub-folders (e.g. "cache", "epidemic models", "population", "shp", and "weather").  
 
 
 ```{r}
@@ -26805,7 +27074,145 @@ fs::dir_tree(path = here("data"), recurse = TRUE)
 ```
 
 
-## Accessing files in the directory
+## List files in a directory  
+
+To list just the file names in a directory you can use `dir()` from **base** R. For example, this command lists the file names of the files in the "population" subfolder of the "data" folder in an R project. The relative filepath is provided using `here()` (which you can read about more in the [Import and export] page.  
+
+```{r}
+# file names
+dir(here("data", "population"))
+```
+
+To list the full file paths of the directory's files, you can use you can use `dir_ls()` from **fs**.  
+
+```{r}
+# file paths
+dir_ls(here("data", "population"))
+```
+
+To get all the metadata information about each file in a directory, (e.g. path, modification date, etc.) you can use `dir_info()` from **fs**. This can be particularly useful if you want to extract the last modification time of the file, for example if you want to import the most recent version of a file. For an example   
+
+```{r, eval=F}
+# file info
+dir_info(here("data", "population"))
+```
+
+Here is the data frame returned. Scroll to the right to see all the columns.  
+
+```{r, echo=F}
+DT::datatable(dir_info(here("data", "population")), rownames = FALSE, options = list(pageLength = 5, scrollX=T), class = 'white-space: nowrap' )
+```
+
+## File information  
+
+To extract metadata information about a specific file, you can use `file_info()` from **fs** (or `file.info()` from **base** R).  
+
+```{r, eval=F}
+file_info(here("data", "linelist_cleaned.rds"))
+```
+
+```{r, echo=F}
+DT::datatable(file_info(here("data", "linelist_cleaned.rds")), rownames = FALSE, options = list(pageLength = 5, scrollX=T), class = 'white-space: nowrap' )
+```
+
+Here we use the `$` to index the result and return only the `modification_time` value.  
+
+```{r}
+file_info(here("data", "linelist_cleaned.rds"))$modification_time
+```
+
+
+
+
+## Check if exists  
+
+### R objects {-}  
+
+You can use `exists()` from **base** R to check whether an R object exists *within* R (supply the object name in quotes).  
+
+```{r}
+exists("linelist")
+```
+
+Note that some **base** R packages use generic object names like "data" behind the scenes, that will appear as TRUE unless `inherit = FALSE` is specified. This is one reason to not name your dataset "data".  
+
+```{r}
+exists("data")
+exists("data", inherit = FALSE)
+```
+
+If you are writing a function, you should use `missing()` from **base** R to check if an argument is present or not, instead of `exists()`.  
+
+
+
+### Directories {-}  
+
+To check whether a directory exists, provide the file path (and file name) to `is_dir()` from **fs**. Scroll to the right to see that `TRUE` is printed.    
+
+```{r}
+is_dir(here("data"))
+```
+
+An alternative is `file.exists()` from **base** R.  
+
+
+### Files {-}  
+
+To check if a specific file exists, use `is_file()` from **fs**. Scroll to the right to see that `TRUE` is printed.  
+
+```{r}
+is_file(here("data", "linelist_cleaned.rds"))
+```
+
+A **base** R alternative is `file.exists()`.  
+
+
+
+## Create  
+
+### Directories {-}  
+
+To create a new directory (folder) you can use `dir_create()` from **fs**. If the directory already exists, it will not be overwritten and no error will be returned. 
+
+```{r}
+dir_create(here("data", "test"))
+```
+
+An alternative is `dir.create()` from **base** R, which will show an error if the directory already exists. In contrast, `dir_create()` in this scenario will be silent.  
+
+### Files {-}  
+
+You can create an (empty) file with `file_create()` from **fs**. If the file already exists, it will not be over-written or changed.  
+
+```{r}
+file_create(here("data", "test.rds"))
+```
+
+A **base** R alternative is `file.create()`. But if the file already exists, this option will truncate it. If you use `file_create()` the file will be left unchanged.  
+
+
+### Create if does not exists {-}  
+
+Here is an example of creating a folder if it does not already exist:  
+
+```{r}
+
+```
+
+## Delete
+
+### R objects {-}  
+
+Use `rm()` from **base** R to remove an R object.  
+
+### Directories {-}  
+
+Use `dir_delete()` from **fs**. 
+
+
+### Files {-}  
+
+You can delete files with `file_delete()` from **fs**.  
 
 
 
@@ -26821,7 +27228,7 @@ source(here("scripts", "cleaning_scripts", "clean_testing_data.R"))
 
 This is equivalent to viewing the above R script and clicking the "Source" button in the upper-right of the script. This will execute the script but will do it silently (no output to the R console) unless specifically intended. See the page on [Interactive console] for examples of using `source()` to interact with a user via the R console in question-and-answer mode.  
 
-```{r, fig.align = "center", echo=F}
+```{r, fig.align = "center", out.height = '300%', echo=F}
 knitr::include_graphics(here::here("images", "source_button.png"))
 ```
 
@@ -26869,7 +27276,7 @@ Here is a [comparison](https://cran.r-project.org/web/packages/fs/vignettes/func
 See the page on [Import and export] for importing and exporting individual files.  
 See the page on [Iteration and loops] for an example with the package **purrr** demonstrating:  
 
-* Splitting a dataframe and saving it as multiple CSV files  
+* Splitting a dataframe and saving it out as multiple CSV files  
 * Splitting a dataframe and saving each part as a separate sheet within one Excel workbook  
 * Importing multiple CSV files and combining them into one dataframe  
 * Importing an Excel workbook with multiple sheets and combining them into one dataframe  
@@ -26879,7 +27286,7 @@ See the page on [Iteration and loops] for an example with the package **purrr** 
 
 ## **base** R  
 
-See below the functions `list.files()` and `dir()`, which perform the same operation of listing files within a specified directory. You can specify `ignore.case =` or a specific patter to look for. 
+See below the functions `list.files()` and `dir()`, which perform the same operation of listing files within a specified directory. You can specify `ignore.case =` or a specific pattern to look for. 
 
 ```{r, eval=F}
 list.files(path = here("data"))

@@ -1,5 +1,5 @@
-tab:unnamed-chunk-120
-tab:unnamed-chunk-567
+tab:unnamed-chunk-128
+tab:unnamed-chunk-575
 editorial-and-technical-notes
 approach-and-style
 editorial-decisions
@@ -40,8 +40,6 @@ scraping-websites
 skip-rows
 multiple-files---import-export-split-combine
 import-from-github
-csv-files-1
-xlsx-files
 manual-data-entry
 export
 rds-files
@@ -353,8 +351,11 @@ maps---plot
 resources-32
 directory-interactions
 preparation-32
-print-directory-as-a-dendrogram-tree
-accessing-files-in-the-directory
+list-files-in-a-directory
+file-information
+check-if-exists
+create
+delete
 running-other-files
 base-r-5
 resources-33

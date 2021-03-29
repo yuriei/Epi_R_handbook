@@ -143,7 +143,7 @@
 <li>the <strong>rmarkdown</strong> package must not be in a "\" library, as then it can’t talk to TinyTex or Pandoc.</li>
 </ol>
 <p><strong>Useful commands</strong></p>
-<div class="sourceCode" id="cb1524"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1564"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Find libraries</span>
 <span class="fu"><a href="https://rdrr.io/r/base/libPaths.html">.libPaths</a></span><span class="op">(</span><span class="op">)</span>                   <span class="co"># Your library paths, listed in order that R installs/searches. </span>
                               <span class="co"># Note: all libraries will be listed, but to install to some (e.g. C:) you </span>
@@ -170,7 +170,7 @@
 </h2>
 <p><strong>“Failed to compile…tex in rmarkdown”</strong></p>
 <p>check/install tinytex, to C: location</p>
-<div class="sourceCode" id="cb1525"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1565"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># check/install tinytex, to C: location</span>
 <span class="fu">tinytex</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/tinytex/man/install_tinytex.html">install_tinytex</a></span><span class="op">(</span><span class="op">)</span>
 <span class="fu">tinytex</span><span class="fu">:::</span><span class="fu"><a href="https://rdrr.io/pkg/tinytex/man/is_tinytex.html">is_tinytex</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># should return TRUE (note three colons)</span></code></pre></div>
@@ -201,7 +201,7 @@
 <li>See <a href="https://ciser.cornell.edu/rmarkdown-knit-to-html-word-pdf/" class="uri">https://ciser.cornell.edu/rmarkdown-knit-to-html-word-pdf/</a>
 </li>
 </ul>
-<div class="sourceCode" id="cb1526"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1566"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">myPaths</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/libPaths.html">.libPaths</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># get the library paths</span>
 <span class="va">myPaths</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">myPaths</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>, <span class="va">myPaths</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span> <span class="co"># switch them</span>
 <span class="fu"><a href="https://rdrr.io/r/base/libPaths.html">.libPaths</a></span><span class="op">(</span><span class="va">myPaths</span><span class="op">)</span> <span class="co"># reassign them</span></code></pre></div>
@@ -296,7 +296,7 @@ Links to other online tutorials or resources.</p>
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>The Epidemiologist R Handbook</strong>" was written by the handbook team. It was last built on 2021-03-27.</p>
+    <p>"<strong>The Epidemiologist R Handbook</strong>" was written by the handbook team. It was last built on 2021-03-28.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

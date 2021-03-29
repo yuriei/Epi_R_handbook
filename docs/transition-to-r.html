@@ -123,18 +123,18 @@
 <p>You will find that using R (or another coding language) offers immense benefits in time saved, more consistent and accurate analysis, reproducibility, shareability, and faster error-correction. Like any new software there is a learning “curve” of time you must invest to become familiar. The dividends will be significant and immense scope of new possibilities will open to you with R.</p>
 <p>Excel is a well-known software that can be easy for a beginner to use to produce simple analysis and visualizations with “point-and-click”. In comparison, it can take a couple weeks to become comfortable with R functions and interface. However, R has evolved in recent years to become much more friendly to beginners.</p>
 <p>Many Excel workflows rely on memory and on repetition - thus, there is much opportunity for error. Furthermore, in general Excel use the data cleaning, analysis methodology, and equations used are hidden from view. It can require substantial time for a new colleague to learn what an Excel workbook is doing and how to troubleshoot it. With R, all the steps are explicitly written in the script and can be easily viewed, edited, corrected, and applied to other datasets.</p>
-<div id="mindset-changes" class="section level3 unnumbered">
-<h3>Mindset changes<a class="anchor" aria-label="anchor" href="#mindset-changes"><i class="fas fa-link"></i></a>
+<p><strong>To begin your transition from Excel to R you must adjust your mindset in a few important ways:</strong></p>
+<div id="scripts-1" class="section level3 unnumbered">
+<h3>Scripts<a class="anchor" aria-label="anchor" href="#scripts-1"><i class="fas fa-link"></i></a>
 </h3>
-<p>To begin your transition from Excel to R you must adjust your mindset in a few important ways:</p>
-<ol style="list-style-type: decimal">
-<li>Instead of clicking buttons and dragging cells you will be writing <em>every</em> step and procedure into a “script”. <em>The script is step-by-step instructions.</em> This allows any colleague to read the script and easily see the steps you took. This also helps de-bug errors or inaccurate calculations. See the <a href="r-basics.html#r-basics">R Basics</a> section on scripts for examples.</li>
-</ol>
+<p>Instead of clicking buttons and dragging cells you will be writing <em>every</em> step and procedure into a “script”. <em>The script is step-by-step instructions.</em> This allows any colleague to read the script and easily see the steps you took. This also helps de-bug errors or inaccurate calculations. See the <a href="r-basics.html#r-basics">R Basics</a> section on scripts for examples.</p>
 <p>Here is an example of an R script:</p>
-<div class="inline-figure"><img src="images/example_script.png" width="75%" height="50%" style="display: block; margin: auto;"></div>
-<ol start="2" style="list-style-type: decimal">
-<li>Use machine-readable “tidy” data over messy “human-readable” data. These are the three main requirements for “tidy” data, as explained in this tutorial on <a href="https://r4ds.had.co.nz/tidy-data.html">“tidy” data in R</a>:</li>
-</ol>
+<div class="inline-figure"><img src="images/example_script.png" width="75%" height="75%" style="display: block; margin: auto;"></div>
+</div>
+<div id="tidy-data" class="section level3 unnumbered">
+<h3>Tidy data<a class="anchor" aria-label="anchor" href="#tidy-data"><i class="fas fa-link"></i></a>
+</h3>
+<p>Use machine-readable “tidy” data instead of messy “human-readable” data. These are the three main requirements for “tidy” data, as explained in this tutorial on <a href="https://r4ds.had.co.nz/tidy-data.html">“tidy” data in R</a>:</p>
 <ul>
 <li>Each variable must have its own column<br>
 </li>
@@ -144,9 +144,9 @@
 </ul>
 <p><em>The main reason one encounters non-tidy data is because many Excel spreadsheets are designed to prioritize easy reading by humans, not easy reading by machines/software.</em></p>
 <p>To help you see the difference, below are some fictional examples of <strong>non-tidy data</strong> that prioritize <em>human</em>-readability over <em>machine</em>-readability:</p>
-<div class="inline-figure"><img src="images/Excel_nonTidy_1.png" width="75%" height="75%" style="display: block; margin: auto;"></div>
+<div class="inline-figure"><img src="images/Excel_nonTidy_1.png" width="100%" height="75%" style="display: block; margin: auto;"></div>
 <p><em>Problems:</em> In the spreadsheet above, there are <em>merged cells</em> which are not easily digested by R. Which row should be considered the “header” is not clear. A color-based dictionary is to the right side and cell values are represented by colors - which is also not easily interpreted by R. Furthermore, different piece of information are combined into one cell (multiple partner organizations working in one area, or the status “TBC” in the same cell as “Partner D”).</p>
-<div class="inline-figure"><img src="images/Excel_nonTidy_2.png" width="75%" height="75%" style="display: block; margin: auto;"></div>
+<div class="inline-figure"><img src="images/Excel_nonTidy_2.png" width="100%" height="100%" style="display: block; margin: auto;"></div>
 <p><em>Problems:</em> In the spreadsheet above, there are numerous extra empty rows and columns within the dataset - this will cause cleaning headaches in R. Furthermore, the GPS coordinates are spread across two rows for a given treatment center. As a side note - the GPS coordinates are in two different formats!</p>
 <p>“Tidy” datasets may not be as readable to a human eye, but they make data cleaning and analysis much easier!</p>
 </div>
@@ -553,7 +553,8 @@ Browse your data in a new window by opening the Explorer window and select desir
 <li><a class="nav-link" href="#transition-to-r"><span class="header-section-number">4</span> Transition to R</a></li>
 <li>
 <a class="nav-link" href="#from-excel"><span class="header-section-number">4.1</span> From Excel</a><ul class="nav navbar-nav">
-<li><a class="nav-link" href="#mindset-changes">Mindset changes</a></li>
+<li><a class="nav-link" href="#scripts-1">Scripts</a></li>
+<li><a class="nav-link" href="#tidy-data">Tidy data</a></li>
 <li><a class="nav-link" href="#excel-to-r-resources">Excel-to-R resources</a></li>
 </ul>
 </li>
@@ -576,7 +577,7 @@ Browse your data in a new window by opening the Explorer window and select desir
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>The Epidemiologist R Handbook</strong>" was written by the handbook team. It was last built on 2021-03-27.</p>
+    <p>"<strong>The Epidemiologist R Handbook</strong>" was written by the handbook team. It was last built on 2021-03-28.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
