@@ -206,8 +206,7 @@
 
 <span class="co"># extract 1st to 3rd words of each string</span>
 <span class="fu">word</span><span class="op">(</span><span class="va">chief_complaints</span>, start <span class="op">=</span> <span class="fl">1</span>, end <span class="op">=</span> <span class="fl">3</span>, sep <span class="op">=</span> <span class="st">" "</span><span class="op">)</span></code></pre></div>
-<pre><code>## [1] "I just got"       "My stomach hurts"
-## [3] "Severe ear pain"</code></pre>
+<pre><code>## [1] "I just got"       "My stomach hurts" "Severe ear pain"</code></pre>
 </div>
 <div id="replace-by-character-position" class="section level3 unnumbered">
 <h3>Replace by character position<a class="anchor" aria-label="anchor" href="#replace-by-character-position"><i class="fas fa-link"></i></a>
@@ -306,15 +305,15 @@
 <p>A simple example, of a dynamic plot caption:</p>
 <div class="sourceCode" id="cb551"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">str_glue</span><span class="op">(</span><span class="st">"The linelist is current to {format(Sys.Date(), '%d %b %Y')} and includes {nrow(linelist)} cases."</span><span class="op">)</span></code></pre></div>
-<pre><code>## The linelist is current to 28 Mar 2021 and includes 5888 cases.</code></pre>
+<pre><code>## The linelist is current to 30 Mar 2021 and includes 5888 cases.</code></pre>
 <p>An alternative format is to use placeholders within the brackets and define the code in separate arguments at the end of the <code>str_glue()</code> function, as below. This can improve code readability if the codes are long.</p>
 <div class="sourceCode" id="cb553"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">str_glue</span><span class="op">(</span><span class="st">"Data source is the confirmed case linelist as of {current_date}.\nThe last case was reported hospitalized on {last_hospital}.\n{n_missing_onset} cases are missing date of onset and not shown"</span>,
          current_date <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/format.html">format</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.Date</a></span><span class="op">(</span><span class="op">)</span>, <span class="st">'%d %b %Y'</span><span class="op">)</span>,
          last_hospital <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/format.html">format</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.Date.html">as.Date</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">linelist</span><span class="op">$</span><span class="va">date_hospitalisation</span>, na.rm<span class="op">=</span><span class="cn">T</span><span class="op">)</span><span class="op">)</span>, <span class="st">'%d %b %Y'</span><span class="op">)</span>,
-         n_missing_onset <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">linelist</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">date_onset</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+         n_missing_onset <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">linelist</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">date_onset</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
          <span class="op">)</span></code></pre></div>
-<pre><code>## Data source is the confirmed case linelist as of 28 Mar 2021.
+<pre><code>## Data source is the confirmed case linelist as of 30 Mar 2021.
 ## The last case was reported hospitalized on 30 Apr 2015.
 ## 256 cases are missing date of onset and not shown</code></pre>
 <p><strong>Pulling from a dataframe</strong></p>
@@ -325,8 +324,8 @@
   zone       <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Zone 1"</span>, <span class="st">"Zone 2"</span>, <span class="st">"Zone 3"</span>, <span class="st">"Zone 4"</span>, <span class="st">"Zone 5"</span><span class="op">)</span>,
   new_cases <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">0</span>, <span class="fl">7</span>, <span class="fl">0</span>, <span class="fl">15</span><span class="op">)</span>,
   total_cases <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">40</span>, <span class="fl">4</span>, <span class="fl">25</span>, <span class="fl">10</span>, <span class="fl">103</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<div id="htmlwidget-fa1000f5df366014735a" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-fa1000f5df366014735a">{"x":{"filter":"top","filterHTML":"<tr>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"0\" data-max=\"15\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"4\" data-max=\"103\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","data":[["Zone 1","Zone 2","Zone 3","Zone 4","Zone 5"],[3,0,7,0,15],[40,4,25,10,103]],"container":"<table class=\"white-space: nowrap\">\n  <thead>\n    <tr>\n      <th>zone<\/th>\n      <th>new_cases<\/th>\n      <th>total_cases<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"scrollX":true,"columnDefs":[{"className":"dt-right","targets":[1,2]}],"order":[],"autoWidth":false,"orderClasses":false,"orderCellsTop":true,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script><p><strong>Option 1:</strong></p>
+<div id="htmlwidget-96c359b27a07d76ea7a3" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-96c359b27a07d76ea7a3">{"x":{"filter":"top","filterHTML":"<tr>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"0\" data-max=\"15\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"4\" data-max=\"103\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","data":[["Zone 1","Zone 2","Zone 3","Zone 4","Zone 5"],[3,0,7,0,15],[40,4,25,10,103]],"container":"<table class=\"white-space: nowrap\">\n  <thead>\n    <tr>\n      <th>zone<\/th>\n      <th>new_cases<\/th>\n      <th>total_cases<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"scrollX":true,"columnDefs":[{"className":"dt-right","targets":[1,2]}],"order":[],"autoWidth":false,"orderClasses":false,"orderCellsTop":true,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script><p><strong>Option 1:</strong></p>
 <p>Use <code>str_c()</code> with the dataframe and column names. Provide <code>sep</code> and <code>collapse</code> arguments.</p>
 <div class="sourceCode" id="cb556"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">str_c</span><span class="op">(</span><span class="va">case_table</span><span class="op">$</span><span class="va">zone</span>, <span class="va">case_table</span><span class="op">$</span><span class="va">new_cases</span>, sep <span class="op">=</span> <span class="st">" = "</span>, collapse <span class="op">=</span> <span class="st">";  "</span><span class="op">)</span></code></pre></div>
@@ -374,8 +373,8 @@
 <code>na.rm =</code> removes missing values while uniting (FALSE by default)</li>
 </ul>
 <p>Below, we unite the three symptom columns in this dataframe.</p>
-<div id="htmlwidget-271efbefbdacd73e3b80" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-271efbefbdacd73e3b80">{"x":{"filter":"none","data":[[1,2,3,4,5,6],["jaundice","chills","fever","vomiting","bleeding","rapid"],["fever","aches",null,"diarrhoea","from","pulse"],["chills","pains",null,null,"gums, fever","headache"],["Success","Failure","Failure","Success","Success","Success"]],"container":"<table class=\"white-space: nowrap\">\n  <thead>\n    <tr>\n      <th>case_ID<\/th>\n      <th>sym_1<\/th>\n      <th>sym_2<\/th>\n      <th>sym_3<\/th>\n      <th>outcome<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"scrollX":true,"columnDefs":[{"className":"dt-right","targets":0}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script><div class="sourceCode" id="cb564"><pre class="downlit sourceCode r">
+<div id="htmlwidget-e998da25100932964a8c" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-e998da25100932964a8c">{"x":{"filter":"none","data":[[1,2,3,4,5,6],["jaundice","chills","fever","vomiting","bleeding","rapid"],["fever","aches",null,"diarrhoea","from","pulse"],["chills","pains",null,null,"gums, fever","headache"],["Success","Failure","Failure","Success","Success","Success"]],"container":"<table class=\"white-space: nowrap\">\n  <thead>\n    <tr>\n      <th>case_ID<\/th>\n      <th>sym_1<\/th>\n      <th>sym_2<\/th>\n      <th>sym_3<\/th>\n      <th>outcome<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"scrollX":true,"columnDefs":[{"className":"dt-right","targets":0}],"order":[],"autoWidth":false,"orderClasses":false,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script><div class="sourceCode" id="cb564"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">df_split</span> <span class="op">%&gt;%</span> 
   <span class="fu">unite</span><span class="op">(</span>
     col <span class="op">=</span> <span class="st">"all_symptoms"</span>,         <span class="co"># name of the new united column</span>
@@ -467,8 +466,8 @@
 </h3>
 <p>Use <code>separate()</code> from <strong>dplyr</strong> within a dataframe, to split one character column into other columns.</p>
 <p>If we have a simple dataframe <code>df</code> consisting of a case ID column, one character column with symptoms, and one outcome column:</p>
-<div id="htmlwidget-4f52caaee88eca0c9f03" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-4f52caaee88eca0c9f03">{"x":{"filter":"top","filterHTML":"<tr>\n  <td data-type=\"integer\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"1\" data-max=\"6\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","data":[[1,2,3,4,5,6],["jaundice, fever, chills","chills, aches, pains","fever","vomiting, diarrhoea","bleeding from gums, fever","rapid pulse, headache"],["Success","Failure","Failure","Success","Success","Success"]],"container":"<table class=\"white-space: nowrap\">\n  <thead>\n    <tr>\n      <th>case_ID<\/th>\n      <th>symptoms<\/th>\n      <th>outcome<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"scrollX":true,"columnDefs":[{"className":"dt-right","targets":0}],"order":[],"autoWidth":false,"orderClasses":false,"orderCellsTop":true,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script><p>First, provide the column to be separated. Then provide <code>into =</code> as a vector <code><a href="https://rdrr.io/r/base/c.html">c( )</a></code> containing the <em>new</em> columns names, as shown below.</p>
+<div id="htmlwidget-076fbd26b064954f097a" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-076fbd26b064954f097a">{"x":{"filter":"top","filterHTML":"<tr>\n  <td data-type=\"integer\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"1\" data-max=\"6\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","data":[[1,2,3,4,5,6],["jaundice, fever, chills","chills, aches, pains","fever","vomiting, diarrhoea","bleeding from gums, fever","rapid pulse, headache"],["Success","Failure","Failure","Success","Success","Success"]],"container":"<table class=\"white-space: nowrap\">\n  <thead>\n    <tr>\n      <th>case_ID<\/th>\n      <th>symptoms<\/th>\n      <th>outcome<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"scrollX":true,"columnDefs":[{"className":"dt-right","targets":0}],"order":[],"autoWidth":false,"orderClasses":false,"orderCellsTop":true,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script><p>First, provide the column to be separated. Then provide <code>into =</code> as a vector <code><a href="https://rdrr.io/r/base/c.html">c( )</a></code> containing the <em>new</em> columns names, as shown below.</p>
 <ul>
 <li>
 <code>sep =</code> the separator, can be a character, or a number (interpreted as the character position to split at).</li>
@@ -496,8 +495,7 @@
 <code class="sourceCode R"><span class="co"># third symptoms combined into second new column</span>
 <span class="va">df</span> <span class="op">%&gt;%</span> 
   <span class="fu">separate</span><span class="op">(</span><span class="va">symptoms</span>, into <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"sym_1"</span>, <span class="st">"sym_2"</span><span class="op">)</span>, sep<span class="op">=</span><span class="st">","</span>, extra <span class="op">=</span> <span class="st">"merge"</span><span class="op">)</span></code></pre></div>
-<pre><code>## Warning: Expected 2 pieces. Missing pieces filled with
-## `NA` in 1 rows [3].</code></pre>
+<pre><code>## Warning: Expected 2 pieces. Missing pieces filled with `NA` in 1 rows [3].</code></pre>
 <pre><code>##   case_ID              sym_1          sym_2 outcome
 ## 1       1           jaundice  fever, chills Success
 ## 2       2             chills   aches, pains Failure
@@ -510,10 +508,8 @@
 <code class="sourceCode R"><span class="co"># third symptoms are lost</span>
 <span class="va">df</span> <span class="op">%&gt;%</span> 
   <span class="fu">separate</span><span class="op">(</span><span class="va">symptoms</span>, into <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"sym_1"</span>, <span class="st">"sym_2"</span><span class="op">)</span>, sep<span class="op">=</span><span class="st">","</span><span class="op">)</span></code></pre></div>
-<pre><code>## Warning: Expected 2 pieces. Additional pieces
-## discarded in 2 rows [1, 2].</code></pre>
-<pre><code>## Warning: Expected 2 pieces. Missing pieces filled with
-## `NA` in 1 rows [3].</code></pre>
+<pre><code>## Warning: Expected 2 pieces. Additional pieces discarded in 2 rows [1, 2].</code></pre>
+<pre><code>## Warning: Expected 2 pieces. Missing pieces filled with `NA` in 1 rows [3].</code></pre>
 <pre><code>##   case_ID              sym_1      sym_2 outcome
 ## 1       1           jaundice      fever Success
 ## 2       2             chills      aches Failure
@@ -540,7 +536,7 @@
 <span class="fu">str_sort</span><span class="op">(</span><span class="va">health_zones</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] "Alba"   "Delta"  "Takota"</code></pre>
 <p>To use a different alphabet, add the argument <code>locale =</code>. See the full list of locales by entering <code><a href="https://rdrr.io/pkg/stringi/man/stri_locale_list.html">stringi::stri_locale_list()</a></code> in the R console.</p>
-<p>To arrange strings in order of their value in another column, use <code>arrange()</code> like this: TO DO</p>
+<p>To arrange strings in order of their value in another column, use <code><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange()</a></code> like this: TO DO</p>
 <!-- ======================================================= -->
 </div>
 <div id="base-r-functions" class="section level3" number="14.3.2">
@@ -728,8 +724,7 @@
 
 <span class="co"># Detect presence of pattern "teach" in each string - output is vector of TRUE/FALSE</span>
 <span class="fu">str_detect</span><span class="op">(</span><span class="va">occupations</span>, <span class="st">"teach"</span><span class="op">)</span></code></pre></div>
-<pre><code>##  [1] FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE
-##  [9] FALSE FALSE</code></pre>
+<pre><code>##  [1] FALSE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE</code></pre>
 <p>If you need to count these, apply <code><a href="https://rdrr.io/r/base/sum.html">sum()</a></code> to the output. This counts the number TRUE.</p>
 <div class="sourceCode" id="cb629"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="fu">str_detect</span><span class="op">(</span><span class="va">occupations</span>, <span class="st">"teach"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
@@ -785,8 +780,7 @@
             <span class="st">"Marco: not dead"</span><span class="op">)</span>
 
 <span class="fu">str_replace_all</span><span class="op">(</span><span class="va">outcome</span>, <span class="st">"dead"</span>, <span class="st">"deceased"</span><span class="op">)</span></code></pre></div>
-<pre><code>## [1] "Karl: deceased"      "Samantha: deceased" 
-## [3] "Marco: not deceased"</code></pre>
+<pre><code>## [1] "Karl: deceased"      "Samantha: deceased"  "Marco: not deceased"</code></pre>
 <p>To replace a pattern with <code>NA</code>, use <code>str_replace_na()</code>. The function <code>str_replace()</code> replaces only the first instance of the pattern within each evaluated string.</p>
 <!-- ======================================================= -->
 </div>
@@ -794,10 +788,10 @@
 <h3>Detect within logic<a class="anchor" aria-label="anchor" href="#detect-within-logic"><i class="fas fa-link"></i></a>
 </h3>
 <p><strong>Within <code>case_when()</code></strong></p>
-<p><code>str_detect()</code> is often used within <code>case_when()</code> (from <strong>dplyr</strong>). Let’s say the occupations are a column in the linelist called <code>occupations</code>. The <code>mutate()</code> below creates a new column called <code>is_educator</code> by using conditional logic via <code>case_when()</code>. See the page on data cleaning to learn more about <code>case_when()</code>.</p>
+<p><code>str_detect()</code> is often used within <code>case_when()</code> (from <strong>dplyr</strong>). Let’s say the occupations are a column in the linelist called <code>occupations</code>. The <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> below creates a new column called <code>is_educator</code> by using conditional logic via <code>case_when()</code>. See the page on data cleaning to learn more about <code>case_when()</code>.</p>
 <div class="sourceCode" id="cb640"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">df</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op">%&gt;%</span> 
-  <span class="fu">mutate</span><span class="op">(</span>is_educator <span class="op">=</span> <span class="fu">case_when</span><span class="op">(</span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>is_educator <span class="op">=</span> <span class="fu">case_when</span><span class="op">(</span>
     <span class="co"># term search within occupation, not case sensitive</span>
     <span class="fu">str_detect</span><span class="op">(</span><span class="va">occupations</span>,
                <span class="fu"><a href="https://rdrr.io/r/base/regex.html">regex</a></span><span class="op">(</span><span class="st">"teach|prof|tutor|university"</span>,
@@ -901,8 +895,7 @@
 <p><code>str_extract()</code> extracts <em>only the first match</em> in each evaluated string, producing a character vector with one element for each evaluated string. It returns <code>NA</code> where there was no match. The <code>NA</code>s can be removed by wrapping the returned vector with <code><a href="https://rdrr.io/r/stats/na.fail.html">na.exclude()</a></code>. Note how the second of occupation 3’s matches is not shown.</p>
 <div class="sourceCode" id="cb650"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">str_extract</span><span class="op">(</span><span class="va">occupations</span>, <span class="st">"teach|prof|tutor"</span><span class="op">)</span></code></pre></div>
-<pre><code>##  [1] NA      "prof"  "teach" "tutor" NA      NA     
-##  [7] NA      NA      NA      NA</code></pre>
+<pre><code>##  [1] NA      "prof"  "teach" "tutor" NA      NA      NA      NA      NA      NA</code></pre>
 <!-- ======================================================= -->
 </div>
 <div id="subset-and-count" class="section level3 unnumbered">
@@ -913,9 +906,7 @@
 <p><code>str_subset()</code> returns the actual values which contained the pattern:</p>
 <div class="sourceCode" id="cb652"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">str_subset</span><span class="op">(</span><span class="va">occupations</span>, <span class="st">"teach|prof|tutor"</span><span class="op">)</span></code></pre></div>
-<pre><code>## [1] "university professor"          
-## [2] "primary school teacher &amp; tutor"
-## [3] "tutor"</code></pre>
+<pre><code>## [1] "university professor"           "primary school teacher &amp; tutor" "tutor"</code></pre>
 <p>`str_count() returns a vector of numbers: the <strong>number of times</strong> a search term appears in each evaluated value.</p>
 <div class="sourceCode" id="cb654"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">str_count</span><span class="op">(</span><span class="va">occupations</span>, <span class="fu"><a href="https://rdrr.io/r/base/regex.html">regex</a></span><span class="op">(</span><span class="st">"teach|prof|tutor"</span>, ignore_case <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></code></pre></div>
@@ -1098,8 +1089,7 @@
 <div class="sourceCode" id="cb663"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">str_extract_all</span><span class="op">(</span><span class="va">test</span>, <span class="st">""</span><span class="op">)</span></code></pre></div>
 <pre><code>## [[1]]
-##  [1] "A" "-" "A" "A" "-" "A" "A" "A" "-" "A" "A" "A"
-## [13] "A"</code></pre>
+##  [1] "A" "-" "A" "A" "-" "A" "A" "A" "-" "A" "A" "A" "A"</code></pre>
 <div class="inline-table"><table class="table table-sm">
 <thead><tr class="header">
 <th>Position statement</th>
@@ -1134,49 +1124,26 @@
 <div class="sourceCode" id="cb666"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">str_extract_all</span><span class="op">(</span><span class="va">pt_note</span>, <span class="st">"[A-Za-z]+"</span><span class="op">)</span></code></pre></div>
 <pre><code>## [[1]]
-##  [1] "Patient"     "arrived"     "at"         
-##  [4] "Broward"     "Hospital"    "emergency"  
-##  [7] "ward"        "at"          "on"         
-## [10] "Patient"     "presented"   "with"       
-## [13] "radiating"   "abdominal"   "pain"       
-## [16] "from"        "LR"          "quadrant"   
-## [19] "Patient"     "skin"        "was"        
-## [22] "pale"        "cool"        "and"        
-## [25] "clammy"      "Patient"     "temperature"
-## [28] "was"         "degrees"     "farinheit"  
-## [31] "Patient"     "pulse"       "rate"       
-## [34] "was"         "bpm"         "and"        
-## [37] "thready"     "Respiratory" "rate"       
-## [40] "was"         "per"         "minute"</code></pre>
+##  [1] "Patient"     "arrived"     "at"          "Broward"     "Hospital"    "emergency"   "ward"        "at"          "on"          "Patient"    
+## [11] "presented"   "with"        "radiating"   "abdominal"   "pain"        "from"        "LR"          "quadrant"    "Patient"     "skin"       
+## [21] "was"         "pale"        "cool"        "and"         "clammy"      "Patient"     "temperature" "was"         "degrees"     "farinheit"  
+## [31] "Patient"     "pulse"       "rate"        "was"         "bpm"         "and"         "thready"     "Respiratory" "rate"        "was"        
+## [41] "per"         "minute"</code></pre>
 <p>The expression <code>"[0-9]{1,2}"</code> matches to consecutive numbers that are 1 or 2 digits in length. It could also be written <code>"\\d{1,2}"</code>, or <code>"[:digit:]{1,2}"</code>.</p>
 <div class="sourceCode" id="cb668"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">str_extract_all</span><span class="op">(</span><span class="va">pt_note</span>, <span class="st">"[0-9]{1,2}"</span><span class="op">)</span></code></pre></div>
 <pre><code>## [[1]]
-##  [1] "18" "00" "6"  "12" "20" "05" "99" "8"  "10" "0" 
-## [11] "29"</code></pre>
+##  [1] "18" "00" "6"  "12" "20" "05" "99" "8"  "10" "0"  "29"</code></pre>
 <div class="sourceCode" id="cb670"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">str_split</span><span class="op">(</span><span class="va">pt_note</span>, <span class="st">"."</span><span class="op">)</span></code></pre></div>
 <pre><code>## [[1]]
-##   [1] "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" ""
-##  [17] "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" ""
-##  [33] "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" ""
-##  [49] "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" ""
-##  [65] "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" ""
-##  [81] "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" ""
-##  [97] "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" ""
-## [113] "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" ""
-## [129] "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" ""
-## [145] "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" ""
-## [161] "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" ""
-## [177] "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" ""
-## [193] "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" ""
-## [209] "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" ""
-## [225] "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" ""
-## [241] "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" ""
-## [257] "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" ""
-## [273] "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" ""
-## [289] "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" ""
-## [305] "" "" "" "" ""</code></pre>
+##   [1] "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" ""
+##  [48] "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" ""
+##  [95] "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" ""
+## [142] "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" ""
+## [189] "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" ""
+## [236] "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" ""
+## [283] "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" ""</code></pre>
 <p>This expression will extract all sentences (assuming first letter is capitalized, and the sentence ends with a period). The pattern reads in English as: "A capital letter followed by some lowercase letters, a space, some letters, a space,</p>
 <div class="sourceCode" id="cb672"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">str_extract_all</span><span class="op">(</span><span class="va">pt_note</span>, <span class="st">"[A-Z][a-z]+\\s\\w+\\s\\d{1,2}\\s\\w+\\s*\\w*"</span><span class="op">)</span></code></pre></div>
@@ -1268,7 +1235,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>The Epidemiologist R Handbook</strong>" was written by the handbook team. It was last built on 2021-03-28.</p>
+    <p>"<strong>The Epidemiologist R Handbook</strong>" was written by the handbook team. It was last built on 2021-03-30.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
