@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>1 Collaboration with Github | The Epidemiologist R Handbook</title>
+<meta name="author" content="the handbook team">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.2"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.7/header-attrs.js"></script><script src="libs/jquery-3.5.1/jquery-3.5.1.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.5.3/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.5.3/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.2.3.9000/tabs.js"></script><script src="libs/bs3compat-0.2.3.9000/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdn.jsdelivr.net/autocomplete.js/0/autocomplete.jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/mark.js@8.11.1/dist/mark.min.js"></script><!-- CSS --><link rel="stylesheet" href="style_bs4.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">The Epidemiologist R Handbook</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html"></a></li>
+<li class="book-part">Preview pages</li>
+<li><a class="active" href="collaboration-with-github.html"><span class="header-section-number">1</span> Collaboration with Github</a></li>
+</ul>
+
+        <div class="book-extra">
+          
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="collaboration-with-github" class="section level1" number="1">
+<h1>
+<span class="header-section-number">1</span> Collaboration with Github<a class="anchor" aria-label="anchor" href="#collaboration-with-github"><i class="fas fa-link"></i></a>
+</h1>
+<p>This page presents an overview of using Github to collaborate with others. More extensive tutorials, which informed the writing of this page, can be found at the bottom in the Resources section.</p>
+<div id="why-use-github" class="section level2" number="1.1">
+<h2>
+<span class="header-section-number">1.1</span> Why use Github<a class="anchor" aria-label="anchor" href="#why-use-github"><i class="fas fa-link"></i></a>
+</h2>
+<p>Github is a website that supports <strong>collaborative projects</strong> with <strong>version control</strong>. Basically, it facilitates:</p>
+<ol style="list-style-type: decimal">
+<li>Archiving versions with incremental changes so that you can easily revert backwards<br>
+</li>
+<li>Collaboration so that others can review, comment on, accept/decline changes to code<br>
+</li>
+<li>Having parallel versions of your code with structured ways to integrate changes after review<br>
+</li>
+<li>Publicly sharing your code, data, and outputs, and inviting feedback from the public</li>
+</ol>
+<p>Using Github is helpful if working within a team, if you want to have a system for code review, and if you want Github to take care of version control and archiving. This can avoid the situation of having many versions of scripts saved with various dates - which can be so confusing!</p>
+<p>Github’s value as a collaboration and quality-control tool does come at the cost of some speed - the processes of uploading and reviewing may not be optimal for some teams working in emergency settings.</p>
+</div>
+<div id="github-basics" class="section level2" number="1.2">
+<h2>
+<span class="header-section-number">1.2</span> Github basics<a class="anchor" aria-label="anchor" href="#github-basics"><i class="fas fa-link"></i></a>
+</h2>
+<div id="what-is-git" class="section level3 unnumbered">
+<h3>What is Git?<a class="anchor" aria-label="anchor" href="#what-is-git"><i class="fas fa-link"></i></a>
+</h3>
+<p><em>Git</em> is a software for tracking changes in files, usually used for coordinating work between programmers. You must install <em>Git</em> to use Github with R. You can install Git for your computer at <a href="https://git-scm.com/downloads">https://git-scm.com/downloads</a>.</p>
+<p><em>Github</em> is a website (<a href="github.com">github.com</a>) that facilitates and enhances the use of Git, including capabilities for code review, issue-tracking, and sharing with the public.</p>
+<p>The software <em>Git</em> on your computer is the engine behind the scenes. Git receives commands in it’s own language/syntax, but you do not typically need to interact with Git via it’s “command line” interface. Instead, you can interact with it via point-and-click buttons through either RStudio or Github Desktop. As noted below, you may <em>occasionally</em> have to write Git commands into a terminal such as the RStudio terminal. To learn Git commands see this online <a href="learngitbranching.js.org">interactive tutorial</a>.</p>
+</div>
+<div id="account" class="section level3 unnumbered">
+<h3>Account<a class="anchor" aria-label="anchor" href="#account"><i class="fas fa-link"></i></a>
+</h3>
+<p>You can sign-up for a free account at <a href="github.com">github.com</a>.</p>
+<p>You may be requested to set-up two-factor authentication with an app on your phone. Read more in the Github <a href="https://docs.github.com/en/github/authenticating-to-github/securing-your-account-with-two-factor-authentication-2fa">help documents</a>.</p>
+</div>
+<div id="repositories" class="section level3 unnumbered">
+<h3>Repositories<a class="anchor" aria-label="anchor" href="#repositories"><i class="fas fa-link"></i></a>
+</h3>
+<p>A Github repository (“repo”) is like a folder that contains all the sub-folders and files for your project (data, code, images, etc.) and their revision histories. A Github repository aligns nicely with an <em>R Project</em> (see handbook page on [R projects].</p>
+<p>To create a new repository, log-in to Github and look for the green button to create a new repository.</p>
+<div class="inline-figure"><img src="images/github_new.png" width="276" style="display: block; margin: auto;"></div>
+<div id="public-or-private" class="section level4 unnumbered">
+<h4>Public or private<a class="anchor" aria-label="anchor" href="#public-or-private"><i class="fas fa-link"></i></a>
+</h4>
+<p>You must choose if you want your repository to be public (visible to everyone on the internet) or private (only visible to those with permission). This has important implications if your data are sensitive. If your repository is private you will encounter some quotas in advanced special circumstances, such as if you are using Github <em>actions</em> to automatically run your code in the cloud.</p>
+</div>
+<div id="start-up-files" class="section level4 unnumbered">
+<h4>Start-up files<a class="anchor" aria-label="anchor" href="#start-up-files"><i class="fas fa-link"></i></a>
+</h4>
+<p>All of the below files are offered when you create a new repository, are optional, and you can also add them to your repository at a later stage. They would typically live in the “root” folder of the repository. Brief descriptions are below:</p>
+<ul>
+<li><p>A <em>README</em> file. This is a file that someone can read to understand why your project exists and what else they should know to use it. It will be empty at first, but you can complete it later.</p></li>
+<li><p>A <em>.gitignore</em> file is a text file where each line would contain folders or files that Github should ignore (not track changes). Read more about it and see examples <a href="https://www.freecodecamp.org/news/gitignore-what-is-it-and-how-to-add-to-repo/">here</a>.</p></li>
+<li><p>You can choose a <em>license</em> for your work, so that it is not reproduced by others without due acknowledgment. For more information, see the <a href="https://creativecommons.org/licenses/">Creative Commons licenses</a>.</p></li>
+</ul>
+</div>
+</div>
+<div id="key-vocabulary" class="section level3 unnumbered">
+<h3>Key vocabulary<a class="anchor" aria-label="anchor" href="#key-vocabulary"><i class="fas fa-link"></i></a>
+</h3>
+<ul>
+<li>
+<p>Your project files will exist in two places:</p>
+<pre><code>  * *REMOTE* - the versions of your Project files that exist online in the Github repository  
+  * *LOCAL* - this is a *clone* of the online repository that exists on your physical computer. This is where you make the actual changes to the files/code.  </code></pre>
+</li>
+<li><p><em>Pull</em> and <em>push</em> - these are how the REMOTE repository syncs changes with the LOCAL repository<br></p></li>
+<li>
+<p><em>Branches</em> - these are parallel, alternate versions of your project files</p>
+<pre><code>  * The *"main" branch* is the primary/final/"live" version of your files  
+  * Other branches are made to test changes before they are incorporated into the "main" branch  </code></pre>
+</li>
+<li><p>A <em>commit</em> - is a unit of trackable changes. For example, perhaps you edit some lines of code and update a related dataset. You can bundle these changes into one “commit”. For version control purposes, you can revert your project back in time based on commits, so it is best to keep them relatively small. You will also attach a brief description of the changes as the “commit message”.<br></p></li>
+<li><p>To <em>merge</em> - To adopt changes from one branch into another (e.g. into “main”), you <em>merge</em> one branch into the other.<br></p></li>
+<li><p>A <em>pull request</em> - (a “PR”) is a request to merge one branch into another. A pull request typically involves multiple commits, which each contain changes to certain files. A pull request usually begins a conversation and review process before the it is accepted and the branch is merged.</p></li>
+</ul>
+</div>
+</div>
+<div id="github-workflow" class="section level2" number="1.3">
+<h2>
+<span class="header-section-number">1.3</span> Github workflow<a class="anchor" aria-label="anchor" href="#github-workflow"><i class="fas fa-link"></i></a>
+</h2>
+<p>Familiarize yourself to the Github workflow by reading this interactive example at <a href="https://guides.github.com/introduction/flow/">the Github website</a></p>
+<div id="orientation" class="section level3 unnumbered">
+<h3>Orientation<a class="anchor" aria-label="anchor" href="#orientation"><i class="fas fa-link"></i></a>
+</h3>
+<p>When using Github your R project files will exist in several dimensions:</p>
+<ul>
+<li>
+<p>The files will exist in the <em>online</em> Github repository <strong>and</strong> on your computer in a <em>local clone</em> of that repository</p>
+<pre><code>  * Remote and local versions are synced by *pushing* and *pulling* changes  </code></pre>
+</li>
+<li>
+<p>The files will also exist as a <em>“main” branch</em> (version), and also in other “working” <em>branches</em></p>
+<pre><code>  * Changes made to working branches can be merged into Main branch  </code></pre>
+</li>
+</ul>
+<p>In brief:<br>
+Initial setup involves cloning an online Github repository as a new R project on your computer. When you want to add/delete/make changes to files, you will sync your R project to the most current (online) version of “main” branch. Then on your computer you will make a new branch from “main” (like “Make a Copy”). You can then make changes to the code, files, etc. in that new “working” branch locally on your computer. When satisfied with your changes, packet-ize them as <em>commits</em>, and <em>push</em> them up to the working branch’s online version. Then you can merge the online working branch into the online “main” branch to transfer the changes. Other team members may be doing the same thing with their own branches, or perhaps contributing commits into your working branch as well.</p>
+<p>Here is a schematic we’ve developed - it’s in the format of a two-way table so it should help epidemiologists understand…</p>
+<div class="inline-figure"><img src="images/github_table.png" width="100%" height="150%" style="display: block; margin: auto;"></div>
+<p>Here’s another diagram from <a href="https://build5nines.com/introduction-to-git-version-control-workflow/">this website</a>. Until recently, the term “master” branch was used, but it is now referred to as “main” branch.</p>
+<p><img src="images/GitHub-Flow.png" width="100%" height="100%" style="display: block; margin: auto;">
+Image <a href="https://build5nines.com/introduction-to-git-version-control-workflow/">source</a></p>
+</div>
+<div id="first-steps" class="section level3 unnumbered">
+<h3>First steps<a class="anchor" aria-label="anchor" href="#first-steps"><i class="fas fa-link"></i></a>
+</h3>
+<ol style="list-style-type: decimal">
+<li>Register for a free account with Github</li>
+<li>Have R and RStudio installed/updated<br>
+</li>
+<li>Install <em>Git</em> to your computer (Git is a software on your computer, Github is a website with optional Desktop client)<br>
+</li>
+<li>Create an empty Github repository, or go to the Github repository you want to clone/work on</li>
+</ol>
+</div>
+<div id="clone-the-github-repo-as-a-local-r-project" class="section level3 unnumbered">
+<h3>Clone the Github repo as a local R project<a class="anchor" aria-label="anchor" href="#clone-the-github-repo-as-a-local-r-project"><i class="fas fa-link"></i></a>
+</h3>
+<ol start="5" style="list-style-type: decimal">
+<li>In RStudio start a new R project by clicking <em>File &gt; New Project &gt; Version Control &gt; Git</em>
+<ul>
+<li>In Github, copy the repository URL by copying the link as shown in image below<br>
+</li>
+<li>In RStudio, when prompted for “Repository URL”, paste the URL<br>
+</li>
+<li>Assign the R project name<br>
+</li>
+<li>Designate where the new R Project will be saved locally<br>
+</li>
+<li>Check “Open in new session” and click “Create project”<br>
+</li>
+<li>You should now be in a new local RStudio project that is a clone of the Github repository</li>
+</ul>
+</li>
+</ol>
+<p>Below is how to copy the repository URL from Github, to provide to RStudio when making the new R project.</p>
+<div class="inline-figure"><img src="images/github_clone.png" width="100%" height="100%" style="display: block; margin: auto;"></div>
+<p>In RStudio, you will now have a “Git” tab, in the same pane as your R Environment:</p>
+<div class="inline-figure"><img src="images/Git_console.png" width="75%" height="75%" style="display: block; margin: auto;"></div>
+<p>Please note the buttons circled in the image above, as they will be referenced later (from left to right):</p>
+<ul>
+<li>Button to begin “committing” the saved file changes to the local branch (this will open a new window)<br>
+</li>
+<li>Blue arrow to <em>pull</em> (update your local version of the branch with any changes made to that branch by others)<br>
+</li>
+<li>Green arrow to <em>push</em> (send any commits/changes for your local version of the branch to the remote/Github version of the branch)</li>
+<li>The Git tab in RStudio<br>
+</li>
+<li>Button to create a NEW branch using whichever local branch is shown to the right as the base. <em>You almost always want to branch off of the main branch (after you first pull to update the main branch)</em>.<br>
+</li>
+<li>The branch you are currently working in.<br>
+</li>
+<li>Below all this, changes you make to code or other files will appear</li>
+</ul>
+</div>
+<div id="make-changes" class="section level3 unnumbered">
+<h3>Make changes<a class="anchor" aria-label="anchor" href="#make-changes"><i class="fas fa-link"></i></a>
+</h3>
+<p>To make a change to your files and have it reflected in the online main branch, you can do the following steps. These steps assume you are using Github with RStudio. For the slight variation if you are using Github Desktop instead of RStudio, see the next section.</p>
+<ol start="6" style="list-style-type: decimal">
+<li>Create a branch</li>
+</ol>
+<p>Be in “main” branch and then click the new branch icon (see image above).</p>
+<ul>
+<li>You will be prompted to name your branch with a one-word descriptive name (can use underscores if needed).<br>
+</li>
+<li>You will see that locally, you are still in the same R project, but you are no longer working on the “main” branch.<br>
+</li>
+<li>Once created, the new branch will also appear in the Github website as a branch.</li>
+</ul>
+<ol start="7" style="list-style-type: decimal">
+<li>Make your changes… edit code, add new files, update datasets, etc. Every one of these changes is tracked, once the respective file is saved. Changed files will appear in the RStudio Git tab.</li>
+</ol>
+</div>
+<div id="commit-changes" class="section level3 unnumbered">
+<h3>Commit changes<a class="anchor" aria-label="anchor" href="#commit-changes"><i class="fas fa-link"></i></a>
+</h3>
+<ol start="8" style="list-style-type: decimal">
+<li>Commit your changes. Every bunch of changes that you make that are substantial (e.g. adding or updating a section of code), pause and <em>commit</em> those changes. Think of a commit as a “batch” of changes related to a common purpose. You can always continue to revise a file after having committed changes on it.
+<ul>
+<li>Press “Commit” in the Git tab (see image above), which opens a new window (shown below)<br>
+</li>
+<li>Click on a file name in the upper-left box<br>
+</li>
+<li>Review the changes you made to that file (green, red etc.)<br>
+</li>
+<li>“Stage” the file to include in the commit by checking the box next to it, or click multiple file names and click “Stage”<br>
+</li>
+<li>Write a commit message that is short but descriptive (required)</li>
+<li>Press the “Commit” button. A pop-up box will appear showing success or an error message.<br>
+</li>
+<li>Make and commit more changes, as many times as you would like</li>
+</ul>
+</li>
+</ol>
+<div class="inline-figure"><img src="images/github_commit.png" width="100%" height="150%" style="display: block; margin: auto;"></div>
+</div>
+<div id="push-changes-to-github" class="section level3 unnumbered">
+<h3>Push changes to Github<a class="anchor" aria-label="anchor" href="#push-changes-to-github"><i class="fas fa-link"></i></a>
+</h3>
+<p>“First PULL, then PUSH”</p>
+<ol start="9" style="list-style-type: decimal">
+<li><p><em>PULL</em> - First, click the PULL icon (downward arrow) which updates the branch version on your local computer with any changes that have been made to it in the remote/Github version. PULL often. Don’t hesitate. <em>Always pull before pushing</em>.</p></li>
+<li>
+<p><em>PUSH</em> your changes up to the remote/Github version of your branch. You may be asked to enter your Github username and password.</p>
+<pre><code>* The first time you are asked, you may need to enter two Git command lines into the *Terminal* (the tab next to the R Console):  
+        * **git config --global user.email "you@example.com"**   (your Github email address), and  
+        * **git config --global user.name "Your Github username"**  </code></pre>
+</li>
+</ol>
+<p><span style="color: darkgreen;"><strong><em>TIP:</em></strong> Asked to provide your password too often? See these chapters 10 &amp; 11 of this <a href="https://happygitwithr.com/credential-caching.html#credential-caching">tutorial</a> to connect to a repository via SSH key (more complicated)</span></p>
+</div>
+<div id="merge-changes-to-main" class="section level3 unnumbered">
+<h3>Merge changes to Main<a class="anchor" aria-label="anchor" href="#merge-changes-to-main"><i class="fas fa-link"></i></a>
+</h3>
+<p>If you have finished making changes, you can begin the process of merging those changes into the main branch. Depending on your situation, this may be fast, or you may build-in review and approval steps involving teammates.</p>
+<div id="submit-a-pull-request" class="section level4 unnumbered">
+<h4>Submit a Pull Request<a class="anchor" aria-label="anchor" href="#submit-a-pull-request"><i class="fas fa-link"></i></a>
+</h4>
+<p>Once done with your commits and you have <em>pushed</em> the commits up to the remote Github repository, you can request that your branch be merged with the main branch.</p>
+<ul>
+<li>Go to Github repository<br>
+</li>
+<li>Use the branch drop-down menu to view your branch, not main</li>
+<li>At the top click the green button saying “Compare and Pull Request” for your branch. If you do not see this, look for another button that says “Pull requests” and click that to see the “New pull request” button (you can use this to set up your pull request).<br>
+</li>
+<li>Write a detailed Pull Request comment and click “Create Pull Request”.</li>
+</ul>
+<p>Now you can see the pull request (example image below):</p>
+<ul>
+<li>Review the tab “Files changed” to see how the “main” branch would change if the branch is merged.<br>
+</li>
+<li>On the right, you can request a review from members of your team by tagging their Github ID. If you like, you can set the repository settings to require one approving review in order to merge into main.<br>
+</li>
+<li>Once the pull request is approved you will see a button available to “Merge pull request”. Click this.<br>
+</li>
+<li>Once completed, delete your branch as explained below</li>
+</ul>
+<div class="inline-figure"><img src="images/github_pull_request.png" width="100%" height="150%" style="display: block; margin: auto;"></div>
+</div>
+<div id="delete-your-branch" class="section level4 unnumbered">
+<h4>Delete your branch<a class="anchor" aria-label="anchor" href="#delete-your-branch"><i class="fas fa-link"></i></a>
+</h4>
+<p>Go to the repository on Github and click the button to view all the branches (next to the drop-down to select branches). Now find your branch and click the trash icon next to it. Read more detail on deleting a branch <a href="https://docs.github.com/en/free-pro-team@latest/github/collaborating-with-issues-and-pull-requests/creating-and-deleting-branches-within-your-repository#deleting-a-branch">here</a></p>
+<p>Be sure to also delete the branch locally on your computer. This will not happen automatically.</p>
+<ul>
+<li>From RStudio, make sure you are in the Main branch</li>
+<li>Switch to typing Git commands in the RStudio “Terminal” (the tab adjacent to the R console), and enter this: <strong>git branch -d branch_name</strong> , where “branch_name” is the name of your branch to be deleted<br>
+</li>
+<li>Refresh your Git tab and this branch should be gone</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="github-desktop" class="section level2" number="1.4">
+<h2>
+<span class="header-section-number">1.4</span> Github Desktop<a class="anchor" aria-label="anchor" href="#github-desktop"><i class="fas fa-link"></i></a>
+</h2>
+</div>
+<div id="package-management-with-renv" class="section level2" number="1.5">
+<h2>
+<span class="header-section-number">1.5</span> Package management with <strong>renv</strong><a class="anchor" aria-label="anchor" href="#package-management-with-renv"><i class="fas fa-link"></i></a>
+</h2>
+<!-- ======================================================= -->
+</div>
+<div id="resources" class="section level2" number="1.6">
+<h2>
+<span class="header-section-number">1.6</span> Resources<a class="anchor" aria-label="anchor" href="#resources"><i class="fas fa-link"></i></a>
+</h2>
+<p><a href="https://www.rstudio.com/wp-content/uploads/2016/01/rstudio-IDE-cheatsheet.pdf" class="uri">https://www.rstudio.com/wp-content/uploads/2016/01/rstudio-IDE-cheatsheet.pdf</a></p>
+<p><a href="https://happygitwithr.com/reset.html" class="uri">https://happygitwithr.com/reset.html</a></p>
+<p><a href="https://ohi-science.org/news/github-going-back-in-time" class="uri">https://ohi-science.org/news/github-going-back-in-time</a></p>
+<p>learngitbranching.js.org</p>
+
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="index.html"></a></div>
+<div class="empty"></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#collaboration-with-github"><span class="header-section-number">1</span> Collaboration with Github</a></li>
+<li><a class="nav-link" href="#why-use-github"><span class="header-section-number">1.1</span> Why use Github</a></li>
+<li>
+<a class="nav-link" href="#github-basics"><span class="header-section-number">1.2</span> Github basics</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#what-is-git">What is Git?</a></li>
+<li><a class="nav-link" href="#account">Account</a></li>
+<li><a class="nav-link" href="#repositories">Repositories</a></li>
+<li><a class="nav-link" href="#key-vocabulary">Key vocabulary</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#github-workflow"><span class="header-section-number">1.3</span> Github workflow</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#orientation">Orientation</a></li>
+<li><a class="nav-link" href="#first-steps">First steps</a></li>
+<li><a class="nav-link" href="#clone-the-github-repo-as-a-local-r-project">Clone the Github repo as a local R project</a></li>
+<li><a class="nav-link" href="#make-changes">Make changes</a></li>
+<li><a class="nav-link" href="#commit-changes">Commit changes</a></li>
+<li><a class="nav-link" href="#push-changes-to-github">Push changes to Github</a></li>
+<li><a class="nav-link" href="#merge-changes-to-main">Merge changes to Main</a></li>
+</ul>
+</li>
+<li><a class="nav-link" href="#github-desktop"><span class="header-section-number">1.4</span> Github Desktop</a></li>
+<li><a class="nav-link" href="#package-management-with-renv"><span class="header-section-number">1.5</span> Package management with renv</a></li>
+<li><a class="nav-link" href="#resources"><span class="header-section-number">1.6</span> Resources</a></li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+          
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>The Epidemiologist R Handbook</strong>" was written by the handbook team. It was last built on 2021-04-01.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer>
+</body>
+</html>

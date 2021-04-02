@@ -75,7 +75,7 @@
 <h3>Resources within RStudio<a class="anchor" aria-label="anchor" href="#resources-within-rstudio"><i class="fas fa-link"></i></a>
 </h3>
 <p><strong>Help documentation</strong></p>
-<p>Search the RStudio “Help” tab for documentation on R packages and specific functions. This is within the pane that also contains Files, Plots, and Packages (typically in the lower-right pane). As a shortcut, you can also type the name of a package or function into the R console after a question-mark to open the relevant Help page. For example: <code><a href="https://dplyr.tidyverse.org/reference/filter.html">?filter</a></code> or <code>?diagrammeR</code>.</p>
+<p>Search the RStudio “Help” tab for documentation on R packages and specific functions. This is within the pane that also contains Files, Plots, and Packages (typically in the lower-right pane). As a shortcut, you can also type the name of a package or function into the R console after a question-mark to open the relevant Help page. For example: <code><a href="https://rdrr.io/r/stats/filter.html">?filter</a></code> or <code>?diagrammeR</code>.</p>
 <p><strong>Interactive tutorials</strong></p>
 <p>RStudio has built-in interative tutorials via the <strong>learnr</strong> package. If this package is installed, you can go through these tutorials via the “Tutorial” tab in the upper-right RStudio pane (which also contains Environment and History tabs).</p>
 </div>
@@ -186,7 +186,7 @@ See <a href="https://yihui.org/tinytex/">https://yihui.org/tinytex/</a> for more
 </h3>
 <p><strong>First, open RStudio.</strong> As their icons can look very similar, be sure you are opening <em>RStudio</em> and not R.</p>
 <p>For RStudio to work you must also have R installed on the computer (see above for installation instructions).</p>
-<p><strong>RStudio</strong> is an interface (GUI) for easier use of <strong>R</strong>. You can think of R as being the engine of a vehicle, doing the crucial work, and RStudio as the body of the vehicle (with seats, accessories, etc.) that helps you actually use the engine to move forward!</p>
+<p><strong>RStudio</strong> is an interface (GUI) for easier use of <strong>R</strong>. You can think of R as being the engine of a vehicle, doing the crucial work, and RStudio as the body of the vehicle (with seats, accessories, etc.) that helps you actually use the engine to move forward! You can see the complete RStudio user-interface cheatsheet (PDF) <a href="https://www.rstudio.com/wp-content/uploads/2016/01/rstudio-IDE-cheatsheet.pdf">here</a></p>
 <p>By default RStudio displays four rectangle panes.</p>
 <div class="inline-figure"><img src="images/RStudio_overview.PNG" width="100%" style="display: block; margin: auto;"></div>
 <p><span style="color: black;"><strong><em>TIP:</em></strong> If your RStudio displays only one left pane it is because you have no scripts open yet.</span></p>
@@ -215,7 +215,98 @@ The lower-right pane includes several tabs. Typical plot graphics including maps
 <div id="keyboard-shortcuts" class="section level3 unnumbered">
 <h3>Keyboard shortcuts<a class="anchor" aria-label="anchor" href="#keyboard-shortcuts"><i class="fas fa-link"></i></a>
 </h3>
-<p>UNDER CONSTRUCTION</p>
+<p>Some very useful keyboard shortcuts are below. See all the keyboard shortcuts for Windows, Max, and Linux in the second page of this RStudio <a href="https://www.rstudio.com/wp-content/uploads/2016/01/rstudio-IDE-cheatsheet.pdf">user interface cheatsheet</a>.</p>
+<div class="inline-table"><table class="table table-sm">
+<colgroup>
+<col width="24%">
+<col width="21%">
+<col width="54%">
+</colgroup>
+<thead><tr class="header">
+<th>Windows/Linux</th>
+<th>Mac</th>
+<th>Action</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>Esc</td>
+<td>Esc</td>
+<td>Interrupt current command (useful if you ran an incomplete command and see “+” in the R console)</td>
+</tr>
+<tr class="even">
+<td>Ctrl + Enter</td>
+<td>Cmd + Enter</td>
+<td>Run current line(s)/selection of code</td>
+</tr>
+<tr class="odd">
+<td>Ctrl + Shift + C</td>
+<td>Cmd + Shift + c</td>
+<td>(un)comment the highlighted lines</td>
+</tr>
+<tr class="even">
+<td>Alt + -</td>
+<td>Option + -</td>
+<td>Insert <code><a href="https://rdrr.io/r/base/assignOps.html">&lt;-</a></code>
+</td>
+</tr>
+<tr class="odd">
+<td>Ctrl + Shift + m</td>
+<td>Cmd + Shift + m</td>
+<td>Insert <code>%&gt;%</code>
+</td>
+</tr>
+<tr class="even">
+<td>Ctrl + l</td>
+<td>Cmd + l</td>
+<td>Clear the R console</td>
+</tr>
+<tr class="odd">
+<td>Ctrl + Alt + b</td>
+<td>Cmd + Option + b</td>
+<td>Run from start to current line</td>
+</tr>
+<tr class="even">
+<td>Ctrl + Alt + t</td>
+<td>Cmd + Option + t</td>
+<td>Run the current code section (R Markdown)</td>
+</tr>
+<tr class="odd">
+<td>Ctrl + Alt + i</td>
+<td>Cmd + Shift + r</td>
+<td>Insert code chunk (into R Markdown)</td>
+</tr>
+<tr class="even">
+<td>Ctrl + Alt + c</td>
+<td>Cmd + Option + c</td>
+<td>Run current code chunk (R Markdown)</td>
+</tr>
+<tr class="odd">
+<td>Use your up and down arrows within R console</td>
+<td>same</td>
+<td>Toggle through recently run commands</td>
+</tr>
+<tr class="even">
+<td>Ctrl + f</td>
+<td>Cmd + f</td>
+<td>Find and replace in current script</td>
+</tr>
+<tr class="odd">
+<td>Ctrl + Shift + f</td>
+<td>Cmd + Shift + f</td>
+<td>Find in files (search/replace across many scripts)</td>
+</tr>
+<tr class="even">
+<td>Alt + l</td>
+<td>Cmd + Option + l</td>
+<td>Fold selected code</td>
+</tr>
+<tr class="odd">
+<td>Shift + Alt + l</td>
+<td>Cmd + Shift + Option + l</td>
+<td>Unfold selected code</td>
+</tr>
+</tbody>
+</table></div>
 <!-- ======================================================= -->
 </div>
 </div>
@@ -223,16 +314,16 @@ The lower-right pane includes several tabs. Typical plot graphics including maps
 <h2>
 <span class="header-section-number">1.6</span> Functions<a class="anchor" aria-label="anchor" href="#functions"><i class="fas fa-link"></i></a>
 </h2>
-<p>Functions are at the core of using R. Functions are how you perform tasks and operations. Many functions come installed with R, many more are available for download in <em>packages</em> (explained in the next section), and you can even write your own custom functions!</p>
+<p>Functions are at the core of using R. Functions are how you perform tasks and operations. Many functions come installed with R, many more are available for download in <em>packages</em> (explained in the <a href="r-basics.html#packages">next section</a>), and you can even write your own custom functions!</p>
 <p>This basics section on functions explains:</p>
 <ul>
 <li>What a function is and how they work<br>
 </li>
-<li>What arguments are<br>
+<li>What function <em>arguments</em> are<br>
 </li>
 <li>How to get help understanding a function</li>
 </ul>
-<p>In this handbook, functions are written in code-text with open parentheses, like this: <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code>. As explained in the <a href="r-basics.html#packages">packages</a> section, functions are downloaded within <em>packages</em>. In this handbook, package names are written in <strong>bold</strong>, like <strong>dplyr</strong>. Sometimes in code you may see the function name linked explicitly to the name of its package with two colons (<code><a href="https://rdrr.io/r/base/ns-dblcolon.html">::</a></code>) like this: <code><a href="https://dplyr.tidyverse.org/reference/filter.html">dplyr::filter()</a></code>. The purpose of this linkage is explained in the packages section.</p>
+<p><em>A quick note on syntax:</em> In this handbook, functions are written in code-text with open parentheses, like this: <code><a href="https://rdrr.io/r/stats/filter.html">filter()</a></code>. As explained in the <a href="r-basics.html#packages">packages</a> section, functions are downloaded within <em>packages</em>. In this handbook, package names are written in <strong>bold</strong>, like <strong>dplyr</strong>. Sometimes in example code you may see the function name linked explicitly to the name of its package with two colons (<code><a href="https://rdrr.io/r/base/ns-dblcolon.html">::</a></code>) like this: <code><a href="https://dplyr.tidyverse.org/reference/filter.html">dplyr::filter()</a></code>. The purpose of this linkage is explained in the packages section.</p>
 <p>To learn about how to write functions, see the page [Writing functions].</p>
 <!-- ======================================================= -->
 <div id="simple-functions" class="section level3 unnumbered">
@@ -268,8 +359,8 @@ The lower-right pane includes several tabs. Typical plot graphics including maps
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Create an age pyramid</span>
 <span class="fu">age_pyramid</span><span class="op">(</span>data <span class="op">=</span> <span class="va">linelist</span>, age_group <span class="op">=</span> <span class="st">"age_cat5"</span>, split_by <span class="op">=</span> <span class="st">"gender"</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-8-1.png" width="75%" height="75%"></div>
-<p>The above command can be equivalently written as below, with newlines. This can be easier to read and to write <code># comments</code>. To run this command you can highlight the entire command, or just place your cursor in the first line and then press Ctrl and Enter keys simultaneously.</p>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-11-1.png" width="75%" height="75%"></div>
+<p>The above command can be equivalently written as below, with newlines. This can be easier to read and to write <code># comments</code>. To run this command you can highlight the entire command and click “Run”, or just place your cursor in the first line and then press Ctrl and Enter keys simultaneously.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Create an age pyramid</span>
 <span class="fu">age_pyramid</span><span class="op">(</span>
@@ -277,7 +368,7 @@ The lower-right pane includes several tabs. Typical plot graphics including maps
   age_group <span class="op">=</span> <span class="st">"age_cat5"</span>, <span class="co"># age group column</span>
   split_by <span class="op">=</span> <span class="st">"gender"</span>     <span class="co"># two sides to pyramid</span>
   <span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-9-1.png" width="75%" height="75%"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-12-1.png" width="75%" height="75%"></div>
 <p>The first half of an argument assignment (e.g. <code>data =</code>) does not need to be specified if the arguments are written in a specific order (specified in the function’s documentation). The below code produces the exact same pyramid as above, because the function expects the argument order: data frame, <code>age_group</code> variable, <code>split_by</code> variable.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># This command will produce the exact same graphic as above</span>
@@ -297,7 +388,7 @@ The lower-right pane includes several tabs. Typical plot graphics including maps
   proportional <span class="op">=</span> <span class="cn">TRUE</span>,         <span class="co"># percents instead of counts</span>
   pal <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"orange"</span>, <span class="st">"purple"</span><span class="op">)</span>  <span class="co"># colors</span>
   <span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-10-1.png" width="75%" height="75%"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-13-1.png" width="75%" height="75%"></div>
 <!-- ======================================================= -->
 <!-- ======================================================= -->
 <!-- ======================================================= -->
@@ -400,7 +491,7 @@ The lower-right pane includes several tabs. Typical plot graphics including maps
 <div id="masked-functions" class="section level3 unnumbered">
 <h3>Masked functions<a class="anchor" aria-label="anchor" href="#masked-functions"><i class="fas fa-link"></i></a>
 </h3>
-<p>It is not uncommon that two or more packages contain the same function name. For example, the package <strong>dplyr</strong> has a <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> function, but so does the package <strong>stats</strong>. The default <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> function depends on the order these packages are first loaded in the R session - the later one will be the default for the command <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code>.</p>
+<p>It is not uncommon that two or more packages contain the same function name. For example, the package <strong>dplyr</strong> has a <code><a href="https://rdrr.io/r/stats/filter.html">filter()</a></code> function, but so does the package <strong>stats</strong>. The default <code><a href="https://rdrr.io/r/stats/filter.html">filter()</a></code> function depends on the order these packages are first loaded in the R session - the later one will be the default for the command <code><a href="https://rdrr.io/r/stats/filter.html">filter()</a></code>.</p>
 <p>You can check the order in your Environment pane of R Studio - click the drop-down for “Global Environment” and see the order of the packages. Functions from packages <em>lower</em> on that drop-down list will mask functions of the same name in packages that appear higher in the drop-down list. When first loading a package, R will warn you in the console if masking is occurring, but this can be easy to miss.</p>
 <div class="inline-figure"><img src="images/masking_functions.png" width="50%" style="display: block; margin: auto;"></div>
 <p>Here are ways you can fix masking:</p>
@@ -434,7 +525,7 @@ The lower-right pane includes several tabs. Typical plot graphics including maps
 <h2>
 <span class="header-section-number">1.8</span> Scripts<a class="anchor" aria-label="anchor" href="#scripts"><i class="fas fa-link"></i></a>
 </h2>
-<p>Scripts are a fundamental part of programming. They hold your commands (e.g. functions to create and modify datasets, print visualizations, etc). Storing and running you code from a script (vs. typing in the R console “command line”) has many advantages:</p>
+<p>Scripts are a fundamental part of programming. They are documents that hold your commands (e.g. functions to create and modify datasets, print visualizations, etc). You can save a script and run it again later. There are many advantages to storing and running your commands from a script (vs. typing commands one-by-one into the R console “command line”):</p>
 <ul>
 <li>Portability - you can share your work with others by sending them your scripts<br>
 </li>
@@ -444,13 +535,31 @@ The lower-right pane includes several tabs. Typical plot graphics including maps
 </li>
 <li>Commenting/annotation - to explain to your colleagues what you have done</li>
 </ul>
+<div id="commenting" class="section level3 unnumbered">
+<h3>Commenting<a class="anchor" aria-label="anchor" href="#commenting"><i class="fas fa-link"></i></a>
+</h3>
+<p>In a script you can also annotate (“comment”) around your R code. Commenting is helpful to explain to yourself and other readers what you are doing. You can add a comment by typing the hash symbol (#) and writing your comment after it. The commented text should appear in a different color than the R code. Any code written after the # will not be run. Therefore, placing a # before code is a useful way to temporarily not run a line of code (perhaps you do not want to run the line, but also do not want to delete it).</p>
+</div>
+<div id="code-folding" class="section level3 unnumbered">
+<h3>Code folding<a class="anchor" aria-label="anchor" href="#code-folding"><i class="fas fa-link"></i></a>
+</h3>
+<p>You can collapse portions of code to make your script easier to read.</p>
+<p>To do this, create a text header with #, write your header, and follow it with at least 4 of either dashes (-), hashes (#) or equals (=). When you have done this, a small arrow will appear in the “gutter” to the left (by the row number). You can click this arrow and the code below until the next header will collapse and an icon will appear. To expand the code, either click the arrow in the gutter again, or the dual-arrow icon. There are also keyboard shortcuts as explained in the <a href="r-basics.html#rstudio">RStudio section</a> of this page.</p>
+<p>By creating headers with #, you will also activate the Table of Contents at the bottom of your script (see below) that you can use to navigate your script. You can create sub-headers by adding more # symbols, for example # for primary, ## for seconary, and ### for tertiary headers.</p>
+<p><img src="images/code_folding1.png" width="50%"><img src="images/code_folding2.png" width="50%"></p>
+<p>Other areas of code that are automatically eligible for folding include “braced” regions with brackets <code>{ }</code> such as function definitions or conditional blocks (if else statements). You can read more about code folding at the RStudio <a href="https://support.rstudio.com/hc/en-us/articles/200484568-Code-Folding-and-Sections">site</a>.</p>
+</div>
+<div id="example" class="section level3 unnumbered">
+<h3>Example<a class="anchor" aria-label="anchor" href="#example"><i class="fas fa-link"></i></a>
+</h3>
 <p>Below is an example of a short R script. Remember, the better you succinctly explain your code in comments, the more your colleagues will like you!</p>
 <div class="inline-figure"><img src="images/example_script.png" width="100%" style="display: block; margin: auto;"></div>
 <!-- ======================================================= -->
+</div>
 <div id="r-markdown" class="section level3 unnumbered">
 <h3>R markdown<a class="anchor" aria-label="anchor" href="#r-markdown"><i class="fas fa-link"></i></a>
 </h3>
-<p>R markdown is a type of script in which the script itself <em>becomes</em> a document (PDF, Word, HTML, Powerpoint, etc.). These are incredibly useful and versatile tools often used to create dynamic and automated reports. Even this website and handbook is produced with R markdown scripts!</p>
+<p>An R markdown script is a type of R script in which the script itself <em>becomes</em> an output document (PDF, Word, HTML, Powerpoint, etc.). These are incredibly useful and versatile tools often used to create dynamic and automated reports. Even this website and handbook is produced with R markdown scripts!</p>
 <p>To learn more, see the handbook page on <a href="r-basics.html#r-markdown">R Markdown</a> documents.</p>
 <!-- ======================================================= -->
 </div>
@@ -619,11 +728,11 @@ You can think of the assignment operator <code><a href="https://rdrr.io/r/base/a
 <div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># create new "bmi" column using base R syntax</span>
 <span class="va">linelist</span><span class="op">$</span><span class="va">bmi</span> <span class="op">&lt;-</span> <span class="va">linelist</span><span class="op">$</span><span class="va">wt_kg</span> <span class="op">/</span> <span class="op">(</span><span class="va">linelist</span><span class="op">$</span><span class="va">ht_cm</span><span class="op">/</span><span class="fl">100</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span></code></pre></div>
-<p>However, in this handbook, we emphasize a different approach to defining columns, which uses the function <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> from the <strong>dplyr</strong> package and <em>piping</em> with the pipe operator (<code><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></code>). The syntax is easier to read and there are other advantages explained in the page on [Cleaning data and core functions]. You can read more about <em>piping</em> in the Piping section below.</p>
+<p>However, in this handbook, we emphasize a different approach to defining columns, which uses the function <code>mutate()</code> from the <strong>dplyr</strong> package and <em>piping</em> with the pipe operator (<code>%&gt;%</code>). The syntax is easier to read and there are other advantages explained in the page on [Cleaning data and core functions]. You can read more about <em>piping</em> in the Piping section below.</p>
 <div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># create new "bmi" column using dplyr syntax</span>
 <span class="va">linelist</span> <span class="op">&lt;-</span> <span class="va">linelist</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>bmi <span class="op">=</span> <span class="va">wt_kg</span> <span class="op">/</span> <span class="op">(</span><span class="va">ht_cm</span><span class="op">/</span><span class="fl">100</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span></code></pre></div>
+  <span class="fu">mutate</span><span class="op">(</span>bmi <span class="op">=</span> <span class="va">wt_kg</span> <span class="op">/</span> <span class="op">(</span><span class="va">ht_cm</span><span class="op">/</span><span class="fl">100</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span></code></pre></div>
 <!-- ======================================================= -->
 </div>
 <div id="object-structure" class="section level3 unnumbered">
@@ -941,8 +1050,8 @@ Brackets can also be written after one another, as demonstrated below.</p>
 <h3>
 <strong>Pipes</strong><a class="anchor" aria-label="anchor" href="#pipes"><i class="fas fa-link"></i></a>
 </h3>
-<p><strong>Simply explained, the pipe operator (<code><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></code>) passes an intermediate output from one function to the next.</strong><br>
-You can think of it as saying “then”. Many functions can be linked together with <code><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></code>.</p>
+<p><strong>Simply explained, the pipe operator (<code>%&gt;%</code>) passes an intermediate output from one function to the next.</strong><br>
+You can think of it as saying “then”. Many functions can be linked together with <code>%&gt;%</code>.</p>
 <ul>
 <li>
 <strong>Piping emphasizes a sequence of actions, not the object the actions are being performed on</strong><br>
@@ -1053,10 +1162,10 @@ We also advise surrounding such operators with spaces, for readability.</p>
 <p>This is an “assignment pipe” from the <strong>magrittr</strong> package, which pipes an object forward and <em>also re-defines the object</em>. It must be the first pipe operator in the chain. It is shorthand, as shown below in two equivalent examples:</p>
 <div class="sourceCode" id="cb75"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">linelist</span> <span class="op">&lt;-</span> <span class="va">linelist</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>age_months <span class="op">=</span> <span class="va">age_years</span> <span class="op">*</span> <span class="fl">12</span><span class="op">)</span></code></pre></div>
+  <span class="fu">mutate</span><span class="op">(</span>age_months <span class="op">=</span> <span class="va">age_years</span> <span class="op">*</span> <span class="fl">12</span><span class="op">)</span></code></pre></div>
 <p>The above is equivalent to the below:</p>
 <div class="sourceCode" id="cb76"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">linelist</span> <span class="op">%&lt;&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>age_months <span class="op">=</span> <span class="va">age_years</span> <span class="op">*</span> <span class="fl">12</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="va">linelist</span> <span class="op">%&lt;&gt;%</span> <span class="fu">mutate</span><span class="op">(</span>age_months <span class="op">=</span> <span class="va">age_years</span> <span class="op">*</span> <span class="fl">12</span><span class="op">)</span></code></pre></div>
 <p><strong><code>%&lt;+%</code></strong></p>
 <p>This is used to add data to phylogenetic trees with the <strong>ggtree</strong> package. See the page on [Phylogenetic trees] or this online <a href="https://yulab-smu.top/treedata-book/">resource book</a>.</p>
 <!-- ======================================================= -->
@@ -1162,7 +1271,7 @@ We also advise surrounding such operators with spaces, for readability.</p>
 <p>For example, below, we have a linelist with two variables we want to use to create our case definition, <code>hep_e_rdt</code>, a test result and <code>other_cases_in_hh</code>, which will tell us if there are other cases in the household. The command below uses the function <code>case_when()</code> to create the new variable <code>case_def</code> such that:</p>
 <div class="sourceCode" id="cb77"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">linelist_cleaned</span> <span class="op">&lt;-</span> <span class="va">linelist</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>case_def <span class="op">=</span> <span class="fu">case_when</span><span class="op">(</span>
+  <span class="fu">mutate</span><span class="op">(</span>case_def <span class="op">=</span> <span class="fu">case_when</span><span class="op">(</span>
     <span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">rdt_result</span><span class="op">)</span> <span class="op">&amp;</span> <span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">other_case_in_home</span><span class="op">)</span>            <span class="op">~</span> <span class="cn">NA_character_</span>,
     <span class="va">rdt_result</span> <span class="op">==</span> <span class="st">"Positive"</span>                                 <span class="op">~</span> <span class="st">"Confirmed"</span>,
     <span class="va">rdt_result</span> <span class="op">!=</span> <span class="st">"Positive"</span> <span class="op">&amp;</span> <span class="va">other_cases_in_home</span> <span class="op">==</span> <span class="st">"Yes"</span>  <span class="op">~</span> <span class="st">"Probable"</span>,
@@ -1459,7 +1568,7 @@ We also advise surrounding such operators with spaces, for readability.</p>
 <code class="sourceCode R"><span class="va">affirmative</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"1"</span>, <span class="st">"Yes"</span>, <span class="st">"YES"</span>, <span class="st">"yes"</span>, <span class="st">"y"</span>, <span class="st">"Y"</span>, <span class="st">"oui"</span>, <span class="st">"Oui"</span>, <span class="st">"Si"</span><span class="op">)</span>
 
 <span class="va">linelist</span> <span class="op">&lt;-</span> <span class="va">linelist</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>child_hospitaled <span class="op">=</span> <span class="fu">case_when</span><span class="op">(</span>
+  <span class="fu">mutate</span><span class="op">(</span>child_hospitaled <span class="op">=</span> <span class="fu">case_when</span><span class="op">(</span>
     <span class="va">hospitalized</span> <span class="op">%in%</span> <span class="va">affirmative</span> <span class="op">&amp;</span> <span class="va">age</span> <span class="op">&lt;</span> <span class="fl">18</span> <span class="op">~</span> <span class="st">"Hospitalized Child"</span>,
     <span class="cn">TRUE</span>                                      <span class="op">~</span> <span class="st">"Not"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>Note: If you want to detect a partial string, perhaps using <code>str_detect()</code> from <strong>stringr</strong>, it will not accept a character vector like <code><a href="https://rdrr.io/r/base/c.html">c("1", "Yes", "yes", "y")</a></code>. Instead, it must be given a <em>regular expression</em> - one condensed string with OR bars, such as “1|Yes|yes|y”. For example, <code>str_detect(hospitalized, "1|Yes|yes|y")</code>. See the page on [Characters and strings] for more information.</p>
@@ -1579,6 +1688,9 @@ We also advise surrounding such operators with spaces, for readability.</p>
 </li>
 <li>
 <a class="nav-link" href="#scripts"><span class="header-section-number">1.8</span> Scripts</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#commenting">Commenting</a></li>
+<li><a class="nav-link" href="#code-folding">Code folding</a></li>
+<li><a class="nav-link" href="#example">Example</a></li>
 <li><a class="nav-link" href="#r-markdown">R markdown</a></li>
 <li><a class="nav-link" href="#r-notebooks">R notebooks</a></li>
 <li><a class="nav-link" href="#shiny">Shiny</a></li>
@@ -1642,7 +1754,7 @@ We also advise surrounding such operators with spaces, for readability.</p>
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>The Epidemiologist R Handbook</strong>" was written by the handbook team. It was last built on 2021-03-30.</p>
+    <p>"<strong>The Epidemiologist R Handbook</strong>" was written by the handbook team. It was last built on 2021-04-01.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
