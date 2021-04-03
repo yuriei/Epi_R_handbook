@@ -16,8 +16,7 @@
 <script src="libs/nouislider-7.0.10/jquery.nouislider.min.js"></script><link href="libs/selectize-0.12.0/selectize.bootstrap3.css" rel="stylesheet">
 <script src="libs/selectize-0.12.0/selectize.min.js"></script><link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet">
 <script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
-<link href="libs/bsTable-3.3.7/bootstrapTable.min.css" rel="stylesheet">
-<script src="libs/bsTable-3.3.7/bootstrapTable.js"></script><link href="libs/tabwid-1.0.0/tabwid.css" rel="stylesheet">
+<link href="libs/tabwid-1.0.0/tabwid.css" rel="stylesheet">
 <link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet">
 <script src="libs/leaflet-1.3.1/leaflet.js"></script><link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet">
 <script src="libs/proj4-2.6.2/proj4.min.js"></script><script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script><link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet">
@@ -136,7 +135,7 @@
 <li>The <strong>rio</strong> package for importing/exporting
 <ul>
 <li>
-<code>import()</code> and <code><a href="https://docs.ropensci.org/plotly/reference/export.html">export()</a></code> handle any file type by by its extension (e.g. .csv, .xlsx, .png)</li>
+<code>import()</code> and <code>export()</code> handle any file type by by its extension (e.g. .csv, .xlsx, .png)</li>
 </ul>
 </li>
 </ol>
@@ -193,13 +192,13 @@
 </h2>
 <p>Below are some examples of import/export/saving using <code>here()</code> from within an R projct. Read more about using the <strong>here</strong> package in the <a href="import-and-export.html#import-and-export">Import and export</a> page.</p>
 <p><em>Importing <code>linelist_raw.xlsx</code> from the “data” folder in your R project</em></p>
-<div class="sourceCode" id="cb151"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb152"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">linelist</span> <span class="op">&lt;-</span> <span class="fu">import</span><span class="op">(</span><span class="fu">here</span><span class="op">(</span><span class="st">"data"</span>, <span class="st">"linelist_raw.xlsx"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p><em>Exporting the R object <code>linelist</code> as “my_linelist.rds” to the “clean” folder within the “data” folder in your R project.</em></p>
-<div class="sourceCode" id="cb152"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://docs.ropensci.org/plotly/reference/export.html">export</a></span><span class="op">(</span><span class="va">linelist</span>, <span class="fu">here</span><span class="op">(</span><span class="st">"data"</span>,<span class="st">"clean"</span>, <span class="st">"my_linelist.rds"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p><em>Saving the most recently printed plot as “epicurve_2021-02-15.png” within the “epicurves” folder in “outputs” folder in your R project.</em></p>
 <div class="sourceCode" id="cb153"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">export</span><span class="op">(</span><span class="va">linelist</span>, <span class="fu">here</span><span class="op">(</span><span class="st">"data"</span>,<span class="st">"clean"</span>, <span class="st">"my_linelist.rds"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<p><em>Saving the most recently printed plot as “epicurve_2021-02-15.png” within the “epicurves” folder in “outputs” folder in your R project.</em></p>
+<div class="sourceCode" id="cb154"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">ggsave</span><span class="op">(</span><span class="fu">here</span><span class="op">(</span><span class="st">"outputs"</span>, <span class="st">"epicurves"</span>, <span class="st">"epicurve_2021-02-15.png"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <!-- ======================================================= -->
 </div>
@@ -245,7 +244,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>The Epidemiologist R Handbook</strong>" was written by the handbook team. It was last built on 2021-03-30.</p>
+    <p>"<strong>The Epidemiologist R Handbook</strong>" was written by the handbook team. It was last built on 2021-04-02.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
