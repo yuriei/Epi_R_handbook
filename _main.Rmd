@@ -94,10 +94,7 @@ This book is produced by a collaboration of epidemiologists from around the worl
 
 **Authors**: Neale Batra, Alex Spina, Paula Blomquist, Finlay Campbell, Henry Laurenson-Schafer, Isaac Florence, Natalie Fischer, Aminata Ndiaye, Liza Coyer, Jonny Polonski, Yurie Izawa, Daniel Molling, Sara Hollis, Isha Berry, Wen Lin  
 
-**Reviewers**:  
-
-**Advisers**:     
-
+**Reviewers**: 
 
 ### Funding and programmatic support {-}  
 
@@ -1257,15 +1254,15 @@ It is much easier to just use the R markdown within an R project and use the **h
 <!-- ======================================================= -->
 ### Providing file paths {-}  
 
-Perhaps the most common source of frustration for an R beginner (at least on a Windows machine) is typing in a filepath to import data. Note the following:  
+Perhaps the most common source of frustration for an R beginner (at least on a Windows machine) is typing in a filepath to import data. There is a thorough explanation of how to best input file paths in the [Import and export] page, but here are a few key points:  
 
-**Slash direction** - *If typing in a filepath, beware the direction of the slashes.* Enter them using *forward slashes* to separate the components ("data/provincial.csv"). For Windows users, the default way that filepaths are displayed and copied is with *backslashes* ("\\") - so this means you will need to change the direction of each slash.  
+**Slash direction** - *If typing in a file path, beware the direction of the slashes.* Enter them using *forward slashes* to separate the components ("data/provincial.csv"). For Windows users, the default way that filepaths are displayed and copied is with *backslashes* ("\\") - so this means you will need to change the direction of each slash.  
 
 If you use the **here** package as described in [R projects] the slash direction is not an issue.  
 
 **Broken paths** - 
 
-Below is an example of an "absolute" or "full address" filepath. These will likely break if used by another computer.  
+Below is an example of an "absolute" or "full address" file path. These will likely break if used by another computer.  
 
 ```
 C:/Users/Name/Document/Analytic Software/R/Projects/Analysis2019/data/March2019.csv  
@@ -1416,7 +1413,7 @@ Vectors | A container for a sequence of singular objects, all of the same class 
 Data Frames | Vectors (e.g. columns) that are bound together that all have the same number of rows. | `linelist` is a data frame.
 
 Note that to create a vector that "stands alone" (is not part of a data frame) the function `c()` is used to combine the different elements. For example, if creating a vector of colors plot's color scale: 
-`list_of_names <- c("blue", "red2", "orange", "grey")`  
+`vector_of_colors <- c("blue", "red2", "orange", "grey")`  
 
 
 <!-- ======================================================= -->
@@ -1440,7 +1437,7 @@ list | A list is like vector, but holds other objects that can be other differen
 **You can test the class of an object by providing its name to the function `class()`**. Note: you can reference a specific column within a dataset using the `$` notation to separate the name of the dataset and the name of the column.
 
 ```{r, echo=TRUE, eval=T}
-class(linelist)         # class should be a data frame
+class(linelist)         # class should be a data frame or tibble
 
 class(linelist$age)     # class should be numeric
 
@@ -1448,8 +1445,6 @@ class(linelist$gender)  # class should be character
 ```
 
 Sometimes, a column will be converted to a different class automatically by R. Watch out for this! For example, if you have a vector or column of numbers, but a character value is inserted... the entire column will change to class character.  
-
-One common example of this is when manipulating a data frame in order to print a table - if you make a total row and try paste/glue together percents in the same cell as numbers (e.g. `23 (40%)`), the entire numeric column above will convert to character and can no longer be used for mathematical calculations.
 
 ```{r}
 num_vector <- c(1,2,3,4,5) # define vector as all numbers
@@ -1459,7 +1454,7 @@ class(num_vector)          # vector is now character class
 ```
 
 
-**Sometimes, you will need to convert objects or columns to another class.**
+One common example of this is when manipulating a data frame in order to print a table - if you make a total row and try paste/glue together percents in the same cell as numbers (e.g. `23 (40%)`), the entire numeric column above will convert to character and can no longer be used for mathematical calculations.**Sometimes, you will need to convert objects or columns to another class.**
 
 Function | Action  
 ----------------- | --------------------------------------------------------------    
@@ -1526,11 +1521,15 @@ Square brackets also work to return specific parts of an returned output, such a
 # All of the summary
 summary(linelist$age)
 
-# Just one part of the summary
+# Just the second element of the summary, with name (using only single brackets)
 summary(linelist$age)[2]
 
-# One part without its "name"
+# Just the second element, without name (using double brackets)
 summary(linelist$age)[[2]]
+
+# Extract an element by name, without showing the name
+summary(linelist$age)[["Median"]]
+
 ```
 
 Brackets also work on data frames to view specific rows and columns. You can do this using the syntax `dataframe[rows, columns]`:  
@@ -1562,6 +1561,22 @@ View(linelist[2:20, "date_onset"])
 # Save as a new object
 new_table <- linelist[2:20, c("date_onset")] 
 ```
+
+Note that you can also achieve the above row/column indexing on data frames and tibbles using **dplyr** syntax (functions `filter()` for rows, and `select()` for columns). Read more about these core functions in the [Cleaning data and core functions] page.  
+
+To filter based on "row number", you can use the **dplyr** function `row_number()` with open parentheses as part of a logical filtering statement. Often you will use the `%in%` operator and a range of numbers as part of that logical statement, as shown below. To see the *first* N rows, you can also use the special **dplyr** function `head()`.   
+
+```{r, eval=F}
+# View first 100 rows
+linelist %>% head(100)
+
+# Show row 5 only
+linelist %>% filter(row_number() == 5)
+
+# View rows 2 through 20, and three specific columns (note no quotes necessary on column names)
+linelist %>% filter(row_number() %in% 2:20) %>% select(date_onset, outcome, age)
+```
+
 
 When indexing an object of class **list**, single brackets always return with class list, even if only a single object is returned. Double brackets, however, can be used to access a single element and return a different class than list.  
 Brackets can also be written after one another, as demonstrated below.  
@@ -1668,7 +1683,7 @@ cake <- flour %>%       # to define cake, start with flour, and then...
 
 Here is another [link](https://cfss.uchicago.edu/notes/pipes/#:~:text=Pipes%20are%20an%20extremely%20useful,code%20and%20combine%20multiple%20operations) describing the utility of pipes.  
 
-Piping is not a **base** function. To use piping, the **magrittr** package must be installed and loaded (this is typically done by loading **tidyverse** or **dplyr** package). You can [read more about piping in the magrittr documentation](https://magrittr.tidyverse.org/).
+Piping is not a **base** function. To use piping, the **magrittr** package must be installed and loaded (this is typically done by loading **tidyverse** or **dplyr** package which include it). You can [read more about piping in the magrittr documentation](https://magrittr.tidyverse.org/).
 
 Note that just like other R commands, pipes can be used to just display the result, or to save/re-save an object, depending on whether the assignment operator `<-` is involved. See both below:  
 
@@ -1678,17 +1693,25 @@ linelist_summary <- linelist %>%
   count(age_cat)
 ```
 
-```{R, eval=F}
+```{r}
 # Print the table of counts in the console, but don't save it
 linelist %>% 
   count(age_cat)
 ```
 
-<span style="color: orange;">**_CAUTION:_** Remember that even when using piping to link functions, if the assignment operator (`<-`) is present, the object to the left will still be over-written (re-defined) by the right side.</span>
-
 
 **`%<>%`**  
-This is an "assignment pipe" from the **magritter** package, which pipes an object forward and also re-defines the object. It must be the first pipe operator in the chain. It is shorthand, so `object %<>% function() %>% function()` is the same as `object <- object %>% function() %>% function()`.  
+This is an "assignment pipe" from the **magrittr** package, which *pipes an object forward and also re-defines the object*. It must be the first pipe operator in the chain. It is shorthand. The below two commands are equivalent:  
+
+```{r, eval=F}
+linelist %<>% 
+  count() %>%
+  filter(n > 10)
+
+sobject <- object %>%
+  count() %>%
+  filter(n > 10)
+```
 
 
 <!-- ======================================================= -->
@@ -2585,6 +2608,18 @@ Scraping data from a website - TBD - Under construction
 
 
 <!-- ======================================================= -->
+## API {}
+
+TBD - Under construction
+
+An Automated Programming Interface (API) is commonly used to directly request clean data from a website. You can use R with the packages **httr** and **jsonlite** to pull directly via an API.  
+
+
+This section was informed by [this tutorial](https://www.dataquest.io/blog/r-api-tutorial/) and [this tutorial](https://medium.com/@traffordDataLab/querying-apis-in-r-39029b73d5f1).  
+
+
+
+<!-- ======================================================= -->
 ## Skip rows  
 
 Sometimes, you may want to avoid importing a row of data. You can do this with the argument `skip = ` if using `import()` from **rio** on a .xlsx or .csv file. Provide the number of rows you want to skip. 
@@ -2824,8 +2859,18 @@ DT::datatable(manual_entry_cols)
 
 ### Pasting from clipboard {-}  
 
+If you copy data from elsewhere and have it on your clipboard, you can try one of the two ways below:  
 
-If you copy data from elsewhere and have it on your clipboard, you can try the following function from **base** R to convert those data into an R data frame:  
+From the **clipr** package, you can use `read_clip_tbl()` to import as a data frame, or just just `read_clip()` to import as a character vector. In both cases, leave the parentheses empty.    
+
+```{r, eval=F}
+linelist <- clipr::read_clip_tbl()  # imports current clipboard as data frame
+linelist <- clipr::read_clip()      # imports as character vector
+```
+You can also easily export to your system's clipboard with **clipr**. See the section below on Export.  
+
+
+Alternatively, you can use the the `read.table()` function from **base** R with `file = "clipboard")` to import as a data frame:  
 
 ```{r, eval=F}
 df_from_clipboard <- read.table(
@@ -2833,8 +2878,6 @@ df_from_clipboard <- read.table(
   sep = "t",           # separator could be tab, or commas, etc.
   header=TRUE)         # if there is a header row
 ```
-
-
 
 
 
@@ -2946,6 +2989,7 @@ latest_file <- dir_info(here("data", "linelists")) %>%  # collect file info on a
 <!-- ======================================================= -->
 ## Export {}  
 
+### With **rio** package {-}
 With **rio**, you can use the `export()` function in a very similar way to `import()`. First give the name of the R object you want to save (e.g. `linelist`) and then in quote the filepath including name and file extension. For example:  
 
 ```{r, eval=F}
@@ -2958,6 +3002,15 @@ You could save the same dataframe as a .csv, and to a folder specified by **here
 export(linelist, here("data","clean", "my_linelist.csv")
 ```
 
+
+### To clipboard {-}
+
+To export a data frame to your computer's "clipboard" (to then paste into another software like Excel, Google Spreadsheets, etc.) you can use `write_clip()` from the **clipr** package. 
+
+```{r}
+# export the linelist data frame to your system's clipboard
+clipr::write_clip(linelist)
+```
 
 
 ## RDS files {}
@@ -2990,6 +3043,8 @@ Note: if you are trying to *import* a list, use `import_list()` from **rio** to 
 ```{r, eval=F}
 rio::import_list("my_list.Rdata")
 ```
+
+
 
 
 
@@ -3969,7 +4024,7 @@ linelist <- linelist %>%
 
 ```{r message=FALSE, echo=F}
 # display the linelist data as a table
-DT::datatable(head(linelist,50), rownames = FALSE, filter="top", options = list(pageLength = 5, scrollX=T), class = 'white-space: nowrap' )
+DT::datatable(head(linelist,50), rownames = FALSE, options = list(pageLength = 5, scrollX=T), class = 'white-space: nowrap' )
 ```
 
 <span style="color: darkgreen;">**_TIP:_** A variation on `mutate()` is the function `transmute()`. This function adds a new column just like `mutate()`, but also drops/removes all other columns that you do not mention within its parentheses.</span>
@@ -5045,6 +5100,24 @@ linelist <- linelist %>%
 
 After the filter is applied, the number of rows in `linelist` is `r nrow(linelist)`. 
 
+#### Filter by row number {-}  
+
+In a data frame or tibble, each row will usually have a "row number" that (when seen in R Viewer) appears to the left of the first column. It is not itself a true column in the data, but it can be used in a filter statement.  
+
+To filter based on "row number", you can use the **dplyr** function `row_number()` with open parentheses as part of a logical filtering statement. Often you will use the `%in%` operator and a range of numbers as part of that logical statement, as shown below. To see the *first* N rows, you can also use the special **dplyr** function `head()`.   
+
+```{r, eval=F}
+# View first 100 rows
+linelist %>% head(100)
+
+# Show row 5 only
+linelist %>% filter(row_number() == 5)
+
+# View rows 2 through 20, and three specific columns
+linelist %>% filter(row_number() %in% 2:20) %>% select(date_onset, outcome, age)
+```
+
+You can also convert the row numbers to a true column by piping your data frame to the **tibble** function `rownames_to_column()` (do not put anything in the parentheses).  
 
 
 <!-- ======================================================= -->
@@ -17649,6 +17722,38 @@ knitr::include_graphics(here::here("images", "gis_hf_catchment.png"))
 ```
 
 
+## Key terms {}  
+
+THIS KEY TERMS SECTION IS UNDER CONSTRUCTION  
+
+Below we introduce some key terminology. For a thorough introduction to GIS and spatial analysis, we suggest that you review one of the longer tutorials or courses listed in the References section.  
+
+**Geographic Information System (GIS)** - A GIS is a framework or environment for gathering, managing, analyzing, and visualizing spatial data.   
+
+Some popular GIS software allow point-and-click interaction for map development and spatial analysis. These tools comes with advantages such as not needing to learn code and the ease of manually selecting and placing icons and features on a map. Here are two popular ones:  
+
+**ArcGIS** - A commercial GIS software developed by the company ESRI, which is very popular but quite expensive  
+**QGIS** - A free open-source GIS software that can do almost anything that ArcGIS can do. You can [download QGIS here](https://qgis.org/en/site/forusers/download.html)  
+
+Using R as a GIS can seem more intimidating at first because instead of "point-and-click", it has a "command-line interface" (you must code to acquire the desired outcome). However, this is a major advantage if you need to repetitively produce maps or have an analysis that is reproducible.  
+
+**Shapefiles** - A shapefile is a common data format for storing "vector" spatial data consisting or lines, points, or polygons. A single shapefile is actually a collection of at least three files - .shp, .shx, and .dbf. All of these sub-component files must be present in a given directory (folder) for the shapefile to be readable. These associated files can be compressed into a ZIP folder to be sent via email or download from a website.  
+
+**Coordinate Reference Systems (CRS)** - A CRS is a coordinate-based system used to locate geographical features on the Earth's surface. It has a few key components:  
+
+  * *Coordinate System** - There are many many different coordinate systems, so make sure you know which system your coordinates are from. Degrees of latitude/longitude are common, but you could also see [UTM](https://www.maptools.com/tutorials/utm/quick_guide) coordinates.  
+  
+  * *Units* - Know what the units are for your coordinate system (e.g. decimal degrees, meters)  
+
+  * *Datum* - A particular modeled version of the Earth. These have been revised over the years, so ensure that your map layers are using the same datum.  
+
+  * *Projection* - A reference to the mathematical equation that was used to project the truly round earth onto a flat surface (map).  
+
+**Raster** - An alternative format for spatial data, raster data is a matrix of cells (e.g. pixels) with each cell containing information such as height, temperature, slope, forest cover, etc. These are often aerial photographs, satellite imagery, etc. Rasters can also be used as "base maps" below vector data.   
+
+
+Remember that you can summarise spatial data without using the mapping tools shown below. Sometimes a simple table by geography (e.g. district, country, etc.) is all that is needed!  
+
 
 <!-- ======================================================= -->
 ## Preparation {  }
@@ -17670,6 +17775,7 @@ pacman::p_load(
                   
 ```
 
+You can see an overview of all the R packages that deal with spatial data at the [CRAN "Spatial Task View"](https://cran.r-project.org/web/views/Spatial.html).  
 
 
 ### Sample case data {-}
@@ -18337,17 +18443,18 @@ autoplot.OpenStreetMap(map_latlon)+
 <!-- ======================================================= -->
 ## Resources {  }
 
-* R Simple Features and sf package
-https://cran.r-project.org/web/packages/sf/vignettes/sf1.html
+* R Simple Features and sf package [vignette](https://cran.r-project.org/web/packages/sf/vignettes/sf1.html)
 
-* R tmap package
-https://cran.r-project.org/web/packages/tmap/vignettes/tmap-getstarted.html
 
-* ggmap: Spatial Visualization with ggplot2
-https://journal.r-project.org/archive/2013-1/kahle-wickham.pdf
+* R tmap package [vignette](https://cran.r-project.org/web/packages/tmap/vignettes/tmap-getstarted.html)
+
+
+* ggmap: [Spatial Visualization with ggplot2](https://journal.r-project.org/archive/2013-1/kahle-wickham.pdf)
+
 
 * [Intro to making maps with R, overview of different packages](https://bookdown.org/nicohahn/making_maps_with_r5/docs/introduction.html)  
 
+* Spatial Data in R [(EarthLab course)](https://www.earthdatascience.org/courses/earth-analytics/spatial-data-r/)  
 
 
 ```{r include=FALSE, cache=FALSE}
@@ -27686,19 +27793,117 @@ options(scipen=1, digits=3)
 
 # Routine reports {  }  
 
-UNDER CONSTRUCTION  
+THIS PAGE IS UNDER CONSTRUCTION  
 
-This page will cover the **reportfactory** package and other tips for routinizing your data flows and reports. **reportfactory** is a package developed by RECON (R Epidemics Consortium). It "facilitates workflows for handling multiple .Rmd reports, compiling one or several reports in one go, and storing outputs in well-organised, timestamped folders."  
+This page will cover the **reportfactory** package and other tips for routinizing your data flows and reports. **reportfactory** is a package developed by RECON (R Epidemics Consortium). It "facilitates workflows for handling multiple .Rmd reports, compiling one or several reports in one go, and storing outputs in well-organised, time-stamped folders."  
 
+
+
+## Preparation
+
+To begin, we install and/or load the **reportfactory** package from CRAN.  
 
 ```{r, eval=FALSE}
 pacman::p_load(reportfactory)
 ```
 
+## New factory  
+
+Adding a new report factory will add a self-contained folder to the file path that you specify. Therefore, you can add a factory within an existing R project, or you can add it to a folder that is *not* an R project. Below we will create a factory within the empty folder "factory_demo".  
+
+After loading **reportfactory**, you can run the function `new_factory()` and specify the file path for where to build the factory. If you are in an R project, the factory will be built in the root folder by default.  
+
+```{r, eval=F}
+# This will create the factory folder in the current directory
+new_factory()
+```
+
+```{r, eval=F}
+# Here we specify that the factory should be made at this file path
+new_factory(path = "C:/R handbook/factory demo")
+```
+
+Below see that the folder "new_factory" has been created
+
+```{r, warning=F, message=F, echo=F}
+knitr::include_graphics(here::here("images", "factory_new1.png"))
+```
+There are several defaults that you can change in the `new_factory()` command:  
+
+* `factory = ` - you can provide a name for the factory folder. The default is as shown above: "new_factory".  
+* `path = ` - as shown above, you can designate a file path for the new factory. The default is the current directory.  
+* `report_sources = ` You can provide an alternate name for the folder which holds the R Markdown scripts that create the reports. The default is "report_sources".  
+* `outputs = ` You can provide an alternate name for the folder which holds the output reports. The default is "outputs".  
+
+
+Looking inside the "new_factory" folder we can see that sub-folders were created automatically:  
+
+* The *report_sources* folder should hold your R Markdown scripts, which generate your reports  
+* The *outputs* folder will the report outputs (e.g. HTML, Word, PDF, etc.) - it will contain automatically-generated sub-folder organized by report and date-time stamp  
+* The *scripts* folder can be used to store other R scripts that can be sourced/run by the R Markdown scripts (optional)  
+* The *data* folder can be used to hold your data (optional)  
+* A *.here* file was created, so now can reference any files in the sub-folders by their relation to this factory root folder (see [R projects] for more details about the **here** package)  
+* A *gitignore* file was created in case you decide to link this to a Github repository (see [Collaboration with Github])  
+* An empty README markdown file was created, to assist if using a Github repository  
+
+```{r, warning=F, message=F, echo=F}
+knitr::include_graphics(here::here("images", "factory_new2.png"))
+```
+ 
+Within R, you can run a command to see the structure of the report factory. Because the factory is very simple at the moment, this is useful to explore the remaining contents of the folders:  
+
+```{r, eval=F}
+reportfactory::factory_overview()
+```
+
+The following "tree" of the factory's folders and files is printed to the R console. You can see that there sub-folders for "raw" and "clean" data, some example CSV data. There is also an "example_report.Rmd" in the "report_sources" folder.    
+
+```{r, warning=F, message=F, echo=F}
+knitr::include_graphics(here::here("images", "factory_overview.png"))
+```
+
+## Create a report  
+
+Let's begin by creating a report
+Naming 
+
+
+Create RMD
+
+## Compile a report  
+
+compile_reports()
+
+
+### By name {-} 
+
+### By number {-}
+
+### All reports {-}  
+
+### Parameterization {-}
+ 
+## Review  
+
+list_outputs()
+
+## Extras  
+
+There is an accompanying package in development called **rfextras** that offers helper functions to assist you in building reports:  
+
+* 
+
+## Alternatives  
+
+Here are some alternative ways of preparing routine reports without **reportfactory**.  
+
+
 <!-- ======================================================= -->
 ## Resources {  }
 
-See the package's [Github page](https://github.com/reconverse/reportfactory)
+See the **reportfactory** package's [Github page](https://github.com/reconverse/reportfactory)
+
+See the **rfextras** package's [Github page](https://github.com/reconhub/rfextras)  
 
 ```{r include=FALSE, cache=FALSE}
 
@@ -28606,27 +28811,30 @@ options(scipen=1, digits=3)
 <!-- ======================================================= -->
 ## Overview {  }
 
-Using R on network or "company" shared drives can be extremely frustrating. This page contains approaches, common errors, and suggestions on troubleshooting, including for the particularly delicate situations involving Rmarkdown.  
-
-**Using R on Network Drives: Overarching principles**  
-
-1) Must have administrator access on your computer. Setup RStudio specifically to run as administrator.  
-2) Use your "\\\" package library as little as possible, save packages to "C:" library when possible.  
-3) the **rmarkdown** package must not be in a "\\\" library, as then it can't talk to TinyTex or Pandoc.  
-
-
-
-<!-- ======================================================= -->
-## Preparation {  }
+Using R on network or "company" shared drives can present additional challenges. This page contains approaches, common errors, and suggestions on troubleshooting gained from our experience working through these issues. These include tips for the particularly delicate situations involving R Markdown.  
 
 
 **Using R on Network Drives: Overarching principles**  
 
-1) Must have administrator access on your computer. Setup RStudio specifically to run as administrator.  
-2) Use your "\\\" package library as little as possible, save packages to "C:" library when possible.  
-3) the **rmarkdown** package must not be in a "\\\" library, as then it can't talk to TinyTex or Pandoc.  
+1) You must get administrator access for your computer. Setup RStudio specifically to run as administrator.  
+2) Save packages to a library on a lettered drive (e.g. "C:") when possible. Use a package library whose path begins with "\\\" as little as possible.  
+3) the **rmarkdown** package must **not** be in a "\\\" package library, as then it can't connect to TinyTex or Pandoc.  
 
-**Useful commands**
+
+
+
+## RStudio as administrator  
+
+When you click the RStudio icon to open RStudio, do so with a right-click. Depending on your machine, you may see an option to "Run as Administrator". Otherwise, you may see an option to select Properties (then there should appear a window with the option "Compatibility", and you can select a checkbox "Run as Administrator").  
+
+
+
+
+## Useful commands 
+
+Below are some useful commands when trying to troubleshoot issues using R on network drives.  
+
+You can return the path(s) to package libraries that R is using. They will be listed in the order that R is using to install/load/search for packages. Thus, if you want R to use a different default library, you can switch the order of these paths (see below).  
 
 ```{r, eval=F}
 # Find libraries
@@ -28634,16 +28842,28 @@ Using R on network or "company" shared drives can be extremely frustrating. This
                               # Note: all libraries will be listed, but to install to some (e.g. C:) you 
                               # may need to be running RStudio as an administrator (it won't appear in the 
                               # install packages library drop-down menu) 
+```
 
+You may want to switch the order of the package libraries used by R. For example if R is picking up a library location that begins with "\\\" and one that begins with a letter e.g. "D:". You can adjust the order of `.libPaths()` with the following code.  
+
+````{r, eval=F}
 # Switch order of libraries
 # this can effect the priority of R finding a package. E.g. you may want your C: library to be listed first
 myPaths <- .libPaths() # get the paths
 myPaths <- c(myPaths[2], myPaths[1]) # switch them
 .libPaths(myPaths) # reassign them
+```
 
+If you are having difficulties with R Markdown connecting to Pandoc, begin with this code to find out where RStudio thinks your Pandoc installation is.  
+
+```{r, eval=F}
 # Find Pandoc
 Sys.getenv("RSTUDIO_PANDOC")  # Find where RStudio thinks your Pandoc installation is
+```
 
+If you want to see which library a package is loading from, try the below code:  
+
+```{r, eval=F}
 # Find a package
 # gives first location of package (note order of your libraries)
 find.package("rmarkdown", lib.loc = NULL, quiet = FALSE, verbose = getOption("verbose")) 
@@ -28657,7 +28877,7 @@ find.package("rmarkdown", lib.loc = NULL, quiet = FALSE, verbose = getOption("ve
 
 **"Failed to compile...tex in rmarkdown"**  
 
-check/install tinytex, to C: location
+* Check the installation of TinyTex, or install TinyTex to C: location. See the [R Basics] page on how to install TinyTex.  
 
 ```{r, eval=F}
 # check/install tinytex, to C: location
@@ -28668,36 +28888,35 @@ tinytex:::is_tinytex() # should return TRUE (note three colons)
 
 **Internet routines cannot be loaded**  
 
-For example, "Error in tools::startDynamicHelp() : internet routines cannot be loaded"  
+For example, `Error in tools::startDynamicHelp() : internet routines cannot be loaded`  
 
 * Try selecting 32-bit version from RStudio via Tools/Global Options.  
-  * note: if 32-bit version does not appear in menu, make sure not using RStudio v1.2.  
-* Or try uninstalling R and re-installing with different bit (32 instead of 64)
+  * note: if 32-bit version does not appear in menu, make sure you are not using RStudio v1.2.  
+* Alternatively, try uninstalling R and re-installing with different bit version (32 instead of 64)
 
 
 **C: library does not appear as an option when I try to install packages manually**
 
-* Must run RStudio as an administrator, then it will appear.  
-* To set-up RStudio to always run as administrator (advantageous when using an Rproject where you don't click RStudio icon to open)... right-click the Rstudio icon, open properties, compatibility, and click the checkbox Run as Administrator.  
+* Run RStudio as an administrator, then this option will appear.  
+* To set-up RStudio to always run as administrator (advantageous when using an Rproject where you don't click RStudio icon to open)... right-click the Rstudio icon 
 
+The image below shows how you can manually select the library to install a package to. This window appears when you open the Packages RStudio pane and click "Install".  
+
+```{r, warning=F, message=F, echo=F}
+knitr::include_graphics(here::here("images", "network_install.png"))
+```
 
 **Pandoc 1 error**  
 
-If you are getting pandoc error 1 when knitting Rmarkdowns on network drives:  
+If you are getting "pandoc error 1" when knitting R Markdowns scripts on network drives:  
 
-* this can help (of two library locations, have the one with lettered drive listed first)  
-* This worked when knitting on local drive but while on network internet connection  
-* See https://ciser.cornell.edu/rmarkdown-knit-to-html-word-pdf/  
+* Of multiple library locations, have the one with a lettered drive listed first (see codes above)  
+* The above solution worked when knitting on local drive but while on a networked internet connection  
+* See more tips here: https://ciser.cornell.edu/rmarkdown-knit-to-html-word-pdf/  
 
-```{r, eval=F}
-myPaths <- .libPaths() # get the library paths
-myPaths <- c(myPaths[2], myPaths[1]) # switch them
-.libPaths(myPaths) # reassign them
-```
+**Pandoc Error 83**  
 
-
-**Pandoc Error 83 (can't find file...rmarkdown...lua...)**  
-This means that it was unable to find this file.  
+The error will look something like this: `can't find file...rmarkdown...lua...`. This means that it was unable to find this file.  
 
 See https://stackoverflow.com/questions/58830927/rmarkdown-unable-to-locate-lua-filter-when-knitting-to-word  
 
@@ -28705,35 +28924,36 @@ Possibilities:
 
 1) Rmarkdown package is not installed  
 2) Rmarkdown package is not findable  
-3) an admin rights issue.  
+3) An admin rights issue.  
 
-R is not able to find the 'rmarkdown' package file, so check which library the rmarkdown package lives. 
-If it is in a library that in inaccessible (e.g. starts with "\\\") consider manually moving it to C: or other named drive library.  
-But be aware that the rmarkdown package has to be able to reach tinytex, so rmarkdown package can't live on a network drive.
+It is possible that R is not able to find the **rmarkdown** package file, so check which library the **rmarkdown** package lives (see code above). If the package is installed to a library that in inaccessible (e.g. starts with "\\\") consider manually moving it to C: or other named drive library. Be aware that the **rmarkdown** package has to be able to connect to TinyTex installation, so can not live in a library on a network drive.
 
 
-**Pandoc Error 61**
-For example: "Error: pandoc document conversion failed with error 61"  
+**Pandoc Error 61**  
 
-"Could not fetch..."  
+For example: `Error: pandoc document conversion failed with error 61`  or `Could not fetch...`  
 
 * Try running RStudio as administrator (right click icon, select run as admin, see above instructions)  
 * Also see if the specific package that was unable to be reached can be moved to C: library.
 
 **LaTex error (see below)**
 
-"! Package pdftex.def Error: File `cict_qm2_2020-06-29_files/figure-latex/unnamed-chunk-5-1.png' not found: using draft setting."
+An error like: `! Package pdftex.def Error: File 'cict_qm2_2020-06-29_files/figure-latex/unnamed-chunk-5-1.png' not found: using draft setting.` or `Error: LaTeX failed to compile file_name.tex.`  
 
-"Error: LaTeX failed to compile file_name.tex."  
-See https://yihui.org/tinytex/r/#debugging for debugging tips. 
-See file_name.log for more info.
+* See https://yihui.org/tinytex/r/#debugging for debugging tips.  
+* See file_name.log for more info.
 
 
-**Pandoc Error 127**
+**Pandoc Error 127**  
+
 This could be a RAM (space) issue. Re-start your R session and try again. 
 
 
 **Mapping network drives**
+
+Mapping a network drive can be risky. Consult with your IT department before attempting this.  
+
+A tip borrowed from this [forum discussion](https://stackoverflow.com/questions/48161177/r-markdown-openbinaryfile-does-not-exist-no-such-file-or-directory/55616529?noredirect=1#comment97966859_55616529): 
 
 How does one open a file "through a mapped network drive"?  
 
@@ -28742,27 +28962,19 @@ How does one open a file "through a mapped network drive"?
 * Go through the dialogue to define the network location from earlier as a lettered drive.  
 * Now you have two ways to get to the file you're opening. Using the drive-letter path should work.  
 
-From: https://stackoverflow.com/questions/48161177/r-markdown-openbinaryfile-does-not-exist-no-such-file-or-directory/55616529?noredirect=1#comment97966859_55616529
-
-
-**ISSUES WITH HAVING A SHARED LIBRARY LOCATION ON NETWORK DRIVE**  
 
 **Error in install.packages()**  
 
-Try removing... /../.../00LOCK (directory)  
+If you get an error that includes mention of a "lock" directory, for example: `Error in install.packages : ERROR: failed to lock directory...`
 
-* Manually delete the 00LOCK folder directory from your package the library. Try installing again.  
-* You can try the command pacman::p_unlock() (you can also put this command in the Rprofile so it runs every time project opens.)  
-* Then try installing the package again. It may take several tries.  
-* If all else fails, install the package to another library and then manually copy it over.  
+Look in your package library and you will see a folder whose name begins with "00LOCK". Try the following tips:  
+
+* Manually delete the "00LOCK" folder directory from your package library. Try installing the package again.  
+* You can also try the command `pacman::p_unlock()` (you can also put this command in the Rprofile so it runs every time project opens.). Then try installing the package again. It may take several tries.  
+* Try running RStudio in Administrator mode, and try installing the packages one-by-one.  
+* If all else fails, install the package to another library or folder (e.g. Temp) and then manually copy the package's folder over to the desired library.  
 
 
-
-<!-- ======================================================= -->
-## Resources {  }
-
-This tab should stay with the name "Resources".
-Links to other online tutorials or resources.
 
 
 

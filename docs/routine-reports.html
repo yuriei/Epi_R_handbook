@@ -113,16 +113,125 @@
 <h1>
 <span class="header-section-number">42</span> Routine reports<a class="anchor" aria-label="anchor" href="#routine-reports"><i class="fas fa-link"></i></a>
 </h1>
-<p>UNDER CONSTRUCTION</p>
-<p>This page will cover the <strong>reportfactory</strong> package and other tips for routinizing your data flows and reports. <strong>reportfactory</strong> is a package developed by RECON (R Epidemics Consortium). It “facilitates workflows for handling multiple .Rmd reports, compiling one or several reports in one go, and storing outputs in well-organised, timestamped folders.”</p>
-<div class="sourceCode" id="cb1562"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span><span class="va">reportfactory</span><span class="op">)</span></code></pre></div>
-<!-- ======================================================= -->
-<div id="resources-35" class="section level2" number="42.1">
+<p>THIS PAGE IS UNDER CONSTRUCTION</p>
+<p>This page will cover the <strong>reportfactory</strong> package and other tips for routinizing your data flows and reports. <strong>reportfactory</strong> is a package developed by RECON (R Epidemics Consortium). It “facilitates workflows for handling multiple .Rmd reports, compiling one or several reports in one go, and storing outputs in well-organised, time-stamped folders.”</p>
+<div id="preparation-34" class="section level2" number="42.1">
 <h2>
-<span class="header-section-number">42.1</span> Resources<a class="anchor" aria-label="anchor" href="#resources-35"><i class="fas fa-link"></i></a>
+<span class="header-section-number">42.1</span> Preparation<a class="anchor" aria-label="anchor" href="#preparation-34"><i class="fas fa-link"></i></a>
 </h2>
-<p>See the package’s <a href="https://github.com/reconverse/reportfactory">Github page</a></p>
+<p>To begin, we install and/or load the <strong>reportfactory</strong> package from CRAN.</p>
+<div class="sourceCode" id="cb1570"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span><span class="va">reportfactory</span><span class="op">)</span></code></pre></div>
+</div>
+<div id="new-factory" class="section level2" number="42.2">
+<h2>
+<span class="header-section-number">42.2</span> New factory<a class="anchor" aria-label="anchor" href="#new-factory"><i class="fas fa-link"></i></a>
+</h2>
+<p>Adding a new report factory will add a self-contained folder to the file path that you specify. Therefore, you can add a factory within an existing R project, or you can add it to a folder that is <em>not</em> an R project. Below we will create a factory within the empty folder “factory_demo”.</p>
+<p>After loading <strong>reportfactory</strong>, you can run the function <code>new_factory()</code> and specify the file path for where to build the factory. If you are in an R project, the factory will be built in the root folder by default.</p>
+<div class="sourceCode" id="cb1571"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># This will create the factory folder in the current directory</span>
+<span class="fu">new_factory</span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb1572"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Here we specify that the factory should be made at this file path</span>
+<span class="fu">new_factory</span><span class="op">(</span>path <span class="op">=</span> <span class="st">"C:/R handbook/factory demo"</span><span class="op">)</span></code></pre></div>
+<p>Below see that the folder “new_factory” has been created</p>
+<p><img src="images/factory_new1.png" width="350">
+There are several defaults that you can change in the <code>new_factory()</code> command:</p>
+<ul>
+<li>
+<code>factory =</code> - you can provide a name for the factory folder. The default is as shown above: “new_factory”.<br>
+</li>
+<li>
+<code>path =</code> - as shown above, you can designate a file path for the new factory. The default is the current directory.<br>
+</li>
+<li>
+<code>report_sources =</code> You can provide an alternate name for the folder which holds the R Markdown scripts that create the reports. The default is “report_sources”.<br>
+</li>
+<li>
+<code>outputs =</code> You can provide an alternate name for the folder which holds the output reports. The default is “outputs”.</li>
+</ul>
+<p>Looking inside the “new_factory” folder we can see that sub-folders were created automatically:</p>
+<ul>
+<li>The <em>report_sources</em> folder should hold your R Markdown scripts, which generate your reports<br>
+</li>
+<li>The <em>outputs</em> folder will the report outputs (e.g. HTML, Word, PDF, etc.) - it will contain automatically-generated sub-folder organized by report and date-time stamp<br>
+</li>
+<li>The <em>scripts</em> folder can be used to store other R scripts that can be sourced/run by the R Markdown scripts (optional)<br>
+</li>
+<li>The <em>data</em> folder can be used to hold your data (optional)<br>
+</li>
+<li>A <em>.here</em> file was created, so now can reference any files in the sub-folders by their relation to this factory root folder (see <a href="r-projects.html#r-projects">R projects</a> for more details about the <strong>here</strong> package)<br>
+</li>
+<li>A <em>gitignore</em> file was created in case you decide to link this to a Github repository (see <a href="collaboration-with-github.html#collaboration-with-github">Collaboration with Github</a>)<br>
+</li>
+<li>An empty README markdown file was created, to assist if using a Github repository</li>
+</ul>
+<div class="inline-figure"><img src="images/factory_new2.png" width="322"></div>
+<p>Within R, you can run a command to see the structure of the report factory. Because the factory is very simple at the moment, this is useful to explore the remaining contents of the folders:</p>
+<div class="sourceCode" id="cb1573"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">reportfactory</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/reportfactory/man/factory_overview.html">factory_overview</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<p>The following “tree” of the factory’s folders and files is printed to the R console. You can see that there sub-folders for “raw” and “clean” data, some example CSV data. There is also an “example_report.Rmd” in the “report_sources” folder.</p>
+<div class="inline-figure"><img src="images/factory_overview.png" width="202"></div>
+</div>
+<div id="create-a-report" class="section level2" number="42.3">
+<h2>
+<span class="header-section-number">42.3</span> Create a report<a class="anchor" aria-label="anchor" href="#create-a-report"><i class="fas fa-link"></i></a>
+</h2>
+<p>Let’s begin by creating a report
+Naming</p>
+<p>Create RMD</p>
+</div>
+<div id="compile-a-report" class="section level2" number="42.4">
+<h2>
+<span class="header-section-number">42.4</span> Compile a report<a class="anchor" aria-label="anchor" href="#compile-a-report"><i class="fas fa-link"></i></a>
+</h2>
+<p>compile_reports()</p>
+<div id="by-name" class="section level3 unnumbered">
+<h3>By name<a class="anchor" aria-label="anchor" href="#by-name"><i class="fas fa-link"></i></a>
+</h3>
+</div>
+<div id="by-number" class="section level3 unnumbered">
+<h3>By number<a class="anchor" aria-label="anchor" href="#by-number"><i class="fas fa-link"></i></a>
+</h3>
+</div>
+<div id="all-reports" class="section level3 unnumbered">
+<h3>All reports<a class="anchor" aria-label="anchor" href="#all-reports"><i class="fas fa-link"></i></a>
+</h3>
+</div>
+<div id="parameterization" class="section level3 unnumbered">
+<h3>Parameterization<a class="anchor" aria-label="anchor" href="#parameterization"><i class="fas fa-link"></i></a>
+</h3>
+</div>
+</div>
+<div id="review-1" class="section level2" number="42.5">
+<h2>
+<span class="header-section-number">42.5</span> Review<a class="anchor" aria-label="anchor" href="#review-1"><i class="fas fa-link"></i></a>
+</h2>
+<p>list_outputs()</p>
+</div>
+<div id="extras" class="section level2" number="42.6">
+<h2>
+<span class="header-section-number">42.6</span> Extras<a class="anchor" aria-label="anchor" href="#extras"><i class="fas fa-link"></i></a>
+</h2>
+<p>There is an accompanying package in development called <strong>rfextras</strong> that offers helper functions to assist you in building reports:</p>
+<ul>
+<li>
+</ul>
+</div>
+<div id="alternatives" class="section level2" number="42.7">
+<h2>
+<span class="header-section-number">42.7</span> Alternatives<a class="anchor" aria-label="anchor" href="#alternatives"><i class="fas fa-link"></i></a>
+</h2>
+<p>Here are some alternative ways of preparing routine reports without <strong>reportfactory</strong>.</p>
+<!-- ======================================================= -->
+</div>
+<div id="resources-35" class="section level2" number="42.8">
+<h2>
+<span class="header-section-number">42.8</span> Resources<a class="anchor" aria-label="anchor" href="#resources-35"><i class="fas fa-link"></i></a>
+</h2>
+<p>See the <strong>reportfactory</strong> package’s <a href="https://github.com/reconverse/reportfactory">Github page</a></p>
+<p>See the <strong>rfextras</strong> package’s <a href="https://github.com/reconhub/rfextras">Github page</a></p>
 
 </div>
 </div>
@@ -133,7 +242,21 @@
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
 <li><a class="nav-link" href="#routine-reports"><span class="header-section-number">42</span> Routine reports</a></li>
-<li><a class="nav-link" href="#resources-35"><span class="header-section-number">42.1</span> Resources</a></li>
+<li><a class="nav-link" href="#preparation-34"><span class="header-section-number">42.1</span> Preparation</a></li>
+<li><a class="nav-link" href="#new-factory"><span class="header-section-number">42.2</span> New factory</a></li>
+<li><a class="nav-link" href="#create-a-report"><span class="header-section-number">42.3</span> Create a report</a></li>
+<li>
+<a class="nav-link" href="#compile-a-report"><span class="header-section-number">42.4</span> Compile a report</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#by-name">By name</a></li>
+<li><a class="nav-link" href="#by-number">By number</a></li>
+<li><a class="nav-link" href="#all-reports">All reports</a></li>
+<li><a class="nav-link" href="#parameterization">Parameterization</a></li>
+</ul>
+</li>
+<li><a class="nav-link" href="#review-1"><span class="header-section-number">42.5</span> Review</a></li>
+<li><a class="nav-link" href="#extras"><span class="header-section-number">42.6</span> Extras</a></li>
+<li><a class="nav-link" href="#alternatives"><span class="header-section-number">42.7</span> Alternatives</a></li>
+<li><a class="nav-link" href="#resources-35"><span class="header-section-number">42.8</span> Resources</a></li>
 </ul>
 
       <div class="book-extra">
@@ -150,7 +273,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>The Epidemiologist R Handbook</strong>" was written by the handbook team. It was last built on 2021-04-02.</p>
+    <p>"<strong>The Epidemiologist R Handbook</strong>" was written by the handbook team. It was last built on 2021-04-05.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

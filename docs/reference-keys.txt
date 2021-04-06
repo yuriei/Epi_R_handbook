@@ -1,5 +1,5 @@
-tab:unnamed-chunk-132
-tab:unnamed-chunk-579
+tab:unnamed-chunk-192
+tab:unnamed-chunk-640
 editorial-and-technical-notes
 approach-and-style
 editorial-decisions
@@ -37,6 +37,7 @@ excel-sheets
 missing-values-1
 google-sheets
 scraping-websites
+api
 skip-rows
 multiple-files---import-export-split-combine
 import-from-github
@@ -213,6 +214,7 @@ time-dependent-covariates-in-survival-models
 resources-19
 gis-basics
 overview-11
+key-terms
 preparation-18
 plotting-coordinates
 spatial-joins
@@ -366,6 +368,13 @@ the-r-markdown-file
 parametrised-reports
 resources-34
 routine-reports
+preparation-34
+new-factory
+create-a-report
+compile-a-report
+review-1
+extras
+alternatives
 resources-35
 errors-warnings-1
 data-management-errors
@@ -399,12 +408,12 @@ git
 package-management-with-renv-1
 resources-40
 writing-functions
-preparation-34
+preparation-35
 functions-1
 major-header
 resources-41
 r-on-network-drives
 overview-20
-preparation-35
+rstudio-as-administrator
+useful-commands
 troubleshooting-common-errors
-resources-42
