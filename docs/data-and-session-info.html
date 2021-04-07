@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>2 Data and session info | The Epidemiologist R Handbook</title>
+<meta name="author" content="the handbook team">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.2"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.7/header-attrs.js"></script><script src="libs/jquery-3.5.1/jquery-3.5.1.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.5.3/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.5.3/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.2.3.9000/tabs.js"></script><script src="libs/bs3compat-0.2.3.9000/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script><link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet">
+<script src="libs/datatables-binding-0.15/datatables.js"></script><link href="libs/dt-core-1.10.20/css/jquery.dataTables.min.css" rel="stylesheet">
+<link href="libs/dt-core-1.10.20/css/jquery.dataTables.extra.css" rel="stylesheet">
+<script src="libs/dt-core-1.10.20/js/jquery.dataTables.min.js"></script><link href="libs/nouislider-7.0.10/jquery.nouislider.min.css" rel="stylesheet">
+<script src="libs/nouislider-7.0.10/jquery.nouislider.min.js"></script><link href="libs/selectize-0.12.0/selectize.bootstrap3.css" rel="stylesheet">
+<script src="libs/selectize-0.12.0/selectize.min.js"></script><link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet">
+<script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+<link href="libs/bsTable-3.3.7/bootstrapTable.min.css" rel="stylesheet">
+<script src="libs/bsTable-3.3.7/bootstrapTable.js"></script><link href="libs/tabwid-1.0.0/tabwid.css" rel="stylesheet">
+<link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet">
+<script src="libs/leaflet-1.3.1/leaflet.js"></script><link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet">
+<script src="libs/proj4-2.6.2/proj4.min.js"></script><script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script><link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet">
+<script src="libs/leaflet-binding-2.0.4.1/leaflet.js"></script><script src="libs/leaflet-providers-1.9.0/leaflet-providers_1.9.0.js"></script><script src="libs/leaflet-providers-plugin-2.0.4.1/leaflet-providers-plugin.js"></script><script src="libs/viz-1.8.2/viz.js"></script><link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet">
+<script src="libs/grViz-binding-1.0.6.1/grViz.js"></script><script src="libs/d3-4.5.0/d3.min.js"></script><script src="libs/sankey-1/sankey.js"></script><script src="libs/sankeyNetwork-binding-0.4/sankeyNetwork.js"></script><script src="libs/plotly-binding-4.9.3/plotly.js"></script><script src="libs/typedarray-0.1/typedarray.min.js"></script><link href="libs/plotly-htmlwidgets-css-1.57.1/plotly-htmlwidgets.css" rel="stylesheet">
+<script src="libs/plotly-main-1.57.1/plotly-latest.min.js"></script><link href="libs/vis-4.20.1/vis.css" rel="stylesheet">
+<script src="libs/vis-4.20.1/vis.min.js"></script><script src="libs/visNetwork-binding-2.0.9/visNetwork.js"></script><link href="libs/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<script src="libs/plotly-basic-1.57.1/plotly-basic-1.57.1.min.js"></script><script src="libs/plotly-cartesian-1.57.1/plotly-cartesian-1.57.1.min.js"></script><script src="https://cdn.jsdelivr.net/autocomplete.js/0/autocomplete.jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/mark.js@8.11.1/dist/mark.min.js"></script><!-- CSS --><link rel="stylesheet" href="style_bs4.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">The Epidemiologist R Handbook</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html"></a></li>
+<li class="book-part">About this book</li>
+<li><a class="" href="style-and-editorial-notes.html"><span class="header-section-number">1</span> Style and editorial notes</a></li>
+<li><a class="active" href="data-and-session-info.html"><span class="header-section-number">2</span> Data and session info</a></li>
+<li class="book-part">Basics</li>
+<li><a class="" href="r-basics.html"><span class="header-section-number">3</span> R Basics</a></li>
+<li><a class="" href="transition-to-r.html"><span class="header-section-number">4</span> Transition to R</a></li>
+<li><a class="" href="import-and-export.html"><span class="header-section-number">5</span> Import and export</a></li>
+<li><a class="" href="r-projects.html"><span class="header-section-number">6</span> R projects</a></li>
+<li><a class="" href="suggested-packages-1.html"><span class="header-section-number">7</span> Suggested packages</a></li>
+<li class="book-part">Data Management</li>
+<li><a class="" href="cleaning-data-and-core-functions.html"><span class="header-section-number">8</span> Cleaning data and core functions</a></li>
+<li><a class="" href="working-with-dates.html"><span class="header-section-number">9</span> Working with dates</a></li>
+<li><a class="" href="factors.html"><span class="header-section-number">10</span> Factors</a></li>
+<li><a class="" href="pivoting-data.html"><span class="header-section-number">11</span> Pivoting data</a></li>
+<li><a class="" href="grouping-data.html"><span class="header-section-number">12</span> Grouping data</a></li>
+<li><a class="" href="joining-data.html"><span class="header-section-number">13</span> Joining data</a></li>
+<li><a class="" href="characters-and-strings.html"><span class="header-section-number">14</span> Characters and strings</a></li>
+<li><a class="" href="de-duplication.html"><span class="header-section-number">15</span> De-duplication</a></li>
+<li><a class="" href="iteration-and-loops.html"><span class="header-section-number">16</span> Iteration and loops</a></li>
+<li class="book-part">Analysis</li>
+<li><a class="" href="descriptive-tables.html"><span class="header-section-number">17</span> Descriptive tables</a></li>
+<li><a class="" href="simple-statistical-tests.html"><span class="header-section-number">18</span> Simple statistical tests</a></li>
+<li><a class="" href="univariate-and-multivariate-regression.html"><span class="header-section-number">19</span> Univariate and multivariate regression</a></li>
+<li><a class="" href="missing-data.html"><span class="header-section-number">20</span> Missing data</a></li>
+<li><a class="" href="standardization.html"><span class="header-section-number">21</span> Standardization</a></li>
+<li><a class="" href="moving-averages.html"><span class="header-section-number">22</span> Moving averages</a></li>
+<li><a class="" href="time-series-and-outbreak-detection.html"><span class="header-section-number">23</span> Time series and outbreak detection</a></li>
+<li><a class="" href="epidemic-modeling.html"><span class="header-section-number">24</span> Epidemic modeling</a></li>
+<li><a class="" href="survey-analysis.html"><span class="header-section-number">25</span> Survey analysis</a></li>
+<li><a class="" href="survival-analysis.html"><span class="header-section-number">26</span> Survival analysis</a></li>
+<li><a class="" href="gis-basics.html"><span class="header-section-number">27</span> GIS basics</a></li>
+<li class="book-part">Data Visualization</li>
+<li><a class="" href="ggplot-tips.html"><span class="header-section-number">28</span> ggplot tips</a></li>
+<li><a class="" href="epidemic-curves.html"><span class="header-section-number">29</span> Epidemic curves</a></li>
+<li><a class="" href="plot-continuous-data.html"><span class="header-section-number">30</span> Plot continuous data</a></li>
+<li><a class="" href="plot-categorical-data.html"><span class="header-section-number">31</span> Plot categorical data</a></li>
+<li><a class="" href="tables.html"><span class="header-section-number">32</span> Tables</a></li>
+<li><a class="" href="age-pyramids-and-likert-scales.html"><span class="header-section-number">33</span> Age pyramids and Likert-scales</a></li>
+<li><a class="" href="diagrams.html"><span class="header-section-number">34</span> Diagrams</a></li>
+<li><a class="" href="combinations-analysis.html"><span class="header-section-number">35</span> Combinations analysis</a></li>
+<li><a class="" href="heatmaps.html"><span class="header-section-number">36</span> Heatmaps</a></li>
+<li><a class="" href="transmission-chains.html"><span class="header-section-number">37</span> Transmission chains</a></li>
+<li><a class="" href="phylogenetic-trees.html"><span class="header-section-number">38</span> Phylogenetic trees</a></li>
+<li><a class="" href="interactive-plots.html"><span class="header-section-number">39</span> Interactive plots</a></li>
+<li class="book-part">Advanced</li>
+<li><a class="" href="directory-interactions.html"><span class="header-section-number">40</span> Directory interactions</a></li>
+<li><a class="" href="r-markdown-1.html"><span class="header-section-number">41</span> R Markdown</a></li>
+<li><a class="" href="routine-reports.html"><span class="header-section-number">42</span> Routine reports</a></li>
+<li><a class="" href="errors-warnings-1.html"><span class="header-section-number">43</span> Errors &amp; warnings</a></li>
+<li><a class="" href="advanced-rstudio.html"><span class="header-section-number">44</span> Advanced RStudio</a></li>
+<li><a class="" href="relational-databases.html"><span class="header-section-number">45</span> Relational databases</a></li>
+<li><a class="" href="shiny-and-dashboards.html"><span class="header-section-number">46</span> Shiny and dashboards</a></li>
+<li><a class="" href="collaboration-with-github.html"><span class="header-section-number">47</span> Collaboration with Github</a></li>
+<li><a class="" href="writing-functions.html"><span class="header-section-number">48</span> Writing functions</a></li>
+<li><a class="" href="r-on-network-drives.html"><span class="header-section-number">49</span> R on network drives</a></li>
+</ul>
+
+        <div class="book-extra">
+          
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="data-and-session-info" class="section level1" number="2">
+<h1>
+<span class="header-section-number">2</span> Data and session info<a class="anchor" aria-label="anchor" href="#data-and-session-info"><i class="fas fa-link"></i></a>
+</h1>
+<div id="data-to-follow-along" class="section level2" number="2.1">
+<h2>
+<span class="header-section-number">2.1</span> Data to follow along<a class="anchor" aria-label="anchor" href="#data-to-follow-along"><i class="fas fa-link"></i></a>
+</h2>
+<p>All the data in this handbook can be downloaded from the <strong><a href="https://github.com/nsbatra/Epi_R_handbook/tree/master/data">“data” folder</a></strong> of our Github repository.</p>
+<p>To “follow along” with any of the handbook examples that use the <code>linelist</code> dataset, download and load either the “linelist_raw.xlsx” (for the Cleaning page), or “linelist_cleaned.rds” (for any other page).</p>
+<div id="background-information" class="section level3" number="2.1.1">
+<h3>
+<span class="header-section-number">2.1.1</span> Background information<a class="anchor" aria-label="anchor" href="#background-information"><i class="fas fa-link"></i></a>
+</h3>
+<p>Below are more details about some of the data:</p>
+<ul>
+<li>The case linelist
+<ul>
+<li>A <em>simulated</em> Ebola outbreak, expanded by the handbook team from the <code>ebola_sim</code> practice dataset in the <strong>outbreaks</strong> package</li>
+</ul>
+</li>
+<li>Aggregated counts
+<ul>
+<li>A simulated dataset of malaria counts by age, day, and facility in a fictional region, which can be downloaded from the data folder noted above as “district_count_data.xlsx”</li>
+</ul>
+</li>
+<li>Time series and outbreak detection
+<ul>
+<li>Campylobacter cases reported in Germany 2002-2011. Available from <strong>surveillance</strong> package</li>
+<li>Climate data (temperature in degrees celsius and rain fail in millimetres) in Germany 2002-2011. Downloaded from the EU Copernicus satellite reanalysis dataset using the <strong>ecmwfr</strong> package as explained in the time series page.</li>
+</ul>
+</li>
+<li>GIS page shapefiles
+<ul>
+<li>Downloaded from the Humanitarian Data Exchange (HDX) - see links in the GIS basics page</li>
+</ul>
+</li>
+<li>Phylogenetic tree data
+<ul>
+<li>Newick file of phylogenetic tree constructed from whole genome sequencing of 299 Shigella sonnei samples and corresponding sample data.</li>
+<li>The Belgian samples and resulting data are kindly provided by the Belgian NRC for Salmonella and Shigella in the scope of a project conducted by an ECDC EUPHEM Fellow, and will also be published in a manuscript.<br>
+</li>
+<li>The international data are openly available on public databases (ncbi) and have been previously published.</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="session-info-r-rstudio-packages" class="section level2" number="2.2">
+<h2>
+<span class="header-section-number">2.2</span> Session info (R, RStudio, packages)<a class="anchor" aria-label="anchor" href="#session-info-r-rstudio-packages"><i class="fas fa-link"></i></a>
+</h2>
+<p>Below is the information on the versions of R, RStudio, and R packages used during this rendering of the Handbook.</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">sessioninfo</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/sessioninfo/man/session_info.html">session_info</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<pre><code>## - Session info ------------------------------------------------------------------------------------------------
+##  setting  value                       
+##  version  R version 4.0.2 (2020-06-22)
+##  os       Windows 10 x64              
+##  system   x86_64, mingw32             
+##  ui       RStudio                     
+##  language (EN)                        
+##  collate  English_United States.1252  
+##  ctype    English_United States.1252  
+##  tz       America/New_York            
+##  date     2021-03-22                  
+## 
+## - Packages ----------------------------------------------------------------------------------------------------
+##  ! package              * version     date       lib source                               
+##    abind                * 1.4-5       2016-07-21 [1] CRAN (R 4.0.0)                       
+##    ada                    2.0-5       2016-05-13 [1] CRAN (R 4.0.3)                       
+##    adagio                 0.7.1       2018-05-17 [1] CRAN (R 4.0.3)                       
+##    ade4                   1.7-16      2020-10-28 [1] CRAN (R 4.0.3)                       
+##    anytime                0.3.9       2020-08-27 [1] CRAN (R 4.0.2)                       
+##    ape                    5.4-1       2020-08-13 [1] CRAN (R 4.0.3)                       
+##    apyramid             * 0.1.2       2020-05-08 [1] CRAN (R 4.0.2)                       
+##    assertthat             0.2.1       2019-03-21 [1] CRAN (R 4.0.0)                       
+##    aweek                * 1.0.2       2021-01-04 [1] CRAN (R 4.0.3)                       
+##    backports              1.2.0       2020-11-02 [1] CRAN (R 4.0.3)                       
+##    base64enc              0.1-3       2015-07-28 [1] CRAN (R 4.0.0)                       
+##    bayestestR             0.8.2       2021-01-26 [1] CRAN (R 4.0.3)                       
+##    bit                  * 4.0.4       2020-08-04 [1] CRAN (R 4.0.3)                       
+##    bit64                  4.0.5       2020-08-30 [1] CRAN (R 4.0.3)                       
+##    blob                   1.2.1       2020-01-20 [1] CRAN (R 4.0.2)                       
+##    bookdown               0.21.4      2021-01-23 [1] Github (rstudio/bookdown@cc0f6d4)    
+##    boot                 * 1.3-25      2020-04-26 [2] CRAN (R 4.0.2)                       
+##    broom                * 0.7.3       2020-12-16 [1] CRAN (R 4.0.3)                       
+##    broom.helpers          1.1.0       2020-11-24 [1] CRAN (R 4.0.3)                       
+##    bslib                  0.2.3.9000  2021-01-23 [1] Github (rstudio/bslib@4c5d15d)       
+##    callr                  3.5.1       2020-10-13 [1] CRAN (R 4.0.3)                       
+##    car                    3.0-10      2020-09-29 [1] CRAN (R 4.0.3)                       
+##    carData                3.0-4       2020-05-22 [1] CRAN (R 4.0.0)                       
+##    cellranger             1.1.0       2016-07-27 [1] CRAN (R 4.0.0)                       
+##    checkmate              2.0.0       2020-02-06 [1] CRAN (R 4.0.2)                       
+##    class                  7.3-17      2020-04-26 [2] CRAN (R 4.0.2)                       
+##    classInt               0.4-3       2020-04-07 [1] CRAN (R 4.0.0)                       
+##    cli                    2.3.1       2021-02-23 [1] CRAN (R 4.0.4)                       
+##    cmprsk                 2.2-10      2020-06-09 [1] CRAN (R 4.0.4)                       
+##    coarseDataTools        0.6-5       2019-12-06 [1] CRAN (R 4.0.2)                       
+##    coda                   0.19-4      2020-09-30 [1] CRAN (R 4.0.3)                       
+##    codetools              0.2-16      2018-12-24 [2] CRAN (R 4.0.2)                       
+##    colorspace             2.0-0       2020-11-11 [1] CRAN (R 4.0.3)                       
+##    commonmark             1.7         2018-12-01 [1] CRAN (R 4.0.2)                       
+##    conquer                1.0.2       2020-08-27 [1] CRAN (R 4.0.2)                       
+##    corrr                * 0.4.3       2020-11-24 [1] CRAN (R 4.0.3)                       
+##    cowplot              * 1.1.1       2020-12-30 [1] CRAN (R 4.0.3)                       
+##    crayon                 1.4.1       2021-02-08 [1] CRAN (R 4.0.4)                       
+##    crosstalk              1.1.1       2021-01-12 [1] CRAN (R 4.0.3)                       
+##    curl                   4.3         2019-12-02 [1] CRAN (R 4.0.0)                       
+##    data.table             1.14.0      2021-02-21 [1] CRAN (R 4.0.4)                       
+##    DBI                  * 1.1.1       2021-01-15 [1] CRAN (R 4.0.3)                       
+##    dbplyr                 2.0.0       2020-11-03 [1] CRAN (R 4.0.3)                       
+##    deldir                 0.2-9       2021-01-16 [1] CRAN (R 4.0.3)                       
+##    Deriv                  4.1.2       2020-12-10 [1] CRAN (R 4.0.3)                       
+##    DiagrammeR             1.0.6.1     2020-05-08 [1] CRAN (R 4.0.3)                       
+##    dichromat              2.0-0       2013-01-24 [1] CRAN (R 4.0.3)                       
+##    digest                 0.6.27      2020-10-24 [1] CRAN (R 4.0.3)                       
+##    distcrete            * 1.0.3       2017-11-23 [1] CRAN (R 4.0.2)                       
+##    distributional         0.2.2       2021-02-02 [1] CRAN (R 4.0.3)                       
+##    doBy                 * 4.6.8       2020-11-10 [1] CRAN (R 4.0.3)                       
+##    doParallel             1.0.16      2020-10-16 [1] CRAN (R 4.0.3)                       
+##    downlit                0.2.1       2020-11-04 [1] CRAN (R 4.0.3)                       
+##    dplyr                * 1.0.5       2021-03-05 [1] CRAN (R 4.0.4)                       
+##    dsr                  * 0.2.2       2019-08-23 [1] CRAN (R 4.0.2)                       
+##    DT                   * 0.15        2020-08-05 [1] CRAN (R 4.0.2)                       
+##    e1071                  1.7-4       2020-10-14 [1] CRAN (R 4.0.3)                       
+##    ecmwfr               * 1.3.0       2020-07-13 [1] CRAN (R 4.0.3)                       
+##    effectsize             0.4.3       2021-01-18 [1] CRAN (R 4.0.3)                       
+##    ellipsis               0.3.1       2020-05-15 [1] CRAN (R 4.0.2)                       
+##    Epi                  * 2.44        2021-02-27 [1] CRAN (R 4.0.4)                       
+##    epicontacts          * 1.2.0       2021-02-18 [1] Github (reconhub/epicontacts@facf491)
+##    EpiEstim             * 2.2-4       2021-01-07 [1] CRAN (R 4.0.3)                       
+##    epikit               * 0.1.2       2020-09-07 [1] CRAN (R 4.0.3)                       
+##    EpiNow2              * 1.3.2       2020-12-14 [1] CRAN (R 4.0.3)                       
+##    epitrix              * 0.2.2       2019-01-15 [1] CRAN (R 4.0.2)                       
+##    etm                    1.1.1       2020-09-08 [1] CRAN (R 4.0.4)                       
+##    evaluate               0.14        2019-05-28 [1] CRAN (R 4.0.0)                       
+##    evd                    2.3-3       2018-04-25 [1] CRAN (R 4.0.3)                       
+##    fabletools           * 0.3.0       2021-01-19 [1] CRAN (R 4.0.3)                       
+##    FactoClass             1.2.7       2018-10-01 [1] CRAN (R 4.0.3)                       
+##    fansi                  0.4.2       2021-01-15 [1] CRAN (R 4.0.3)                       
+##    farver                 2.1.0       2021-02-28 [1] CRAN (R 4.0.4)                       
+##    fastLink             * 0.6.0       2020-04-29 [1] CRAN (R 4.0.3)                       
+##    feasts               * 0.1.7       2021-02-05 [1] CRAN (R 4.0.3)                       
+##    ff                   * 4.0.4       2020-10-13 [1] CRAN (R 4.0.3)                       
+##    fitdistrplus           1.1-3       2020-12-05 [1] CRAN (R 4.0.3)                       
+##    flextable            * 0.6.2       2021-01-25 [1] CRAN (R 4.0.2)                       
+##    forcats              * 0.5.0       2020-03-01 [1] CRAN (R 4.0.0)                       
+##    foreach                1.5.1       2020-10-15 [1] CRAN (R 4.0.3)                       
+##    forecast             * 8.13        2020-09-12 [1] CRAN (R 4.0.2)                       
+##    foreign                0.8-80      2020-05-24 [2] CRAN (R 4.0.2)                       
+##    formatR                1.7         2019-06-11 [1] CRAN (R 4.0.3)                       
+##    Formula              * 1.2-4       2020-10-16 [1] CRAN (R 4.0.3)                       
+##    fracdiff               1.5-1       2020-01-24 [1] CRAN (R 4.0.2)                       
+##    frailtypack          * 3.3.2       2020-10-14 [1] CRAN (R 4.0.3)                       
+##    fs                     1.5.0       2020-07-31 [1] CRAN (R 4.0.2)                       
+##    futile.logger          1.4.3       2016-07-10 [1] CRAN (R 4.0.3)                       
+##    futile.options         1.0.1       2018-04-20 [1] CRAN (R 4.0.3)                       
+##    future                 1.21.0      2020-12-10 [1] CRAN (R 4.0.3)                       
+##    future.apply           1.7.0       2021-01-04 [1] CRAN (R 4.0.3)                       
+##    gdtools                0.2.3       2021-01-06 [1] CRAN (R 4.0.3)                       
+##    generics               0.1.0       2020-10-31 [1] CRAN (R 4.0.3)                       
+##    gghighlight          * 0.3.1       2020-12-12 [1] CRAN (R 4.0.3)                       
+##    ggplot2              * 3.3.3       2020-12-30 [1] CRAN (R 4.0.3)                       
+##    ggpubr               * 0.4.0       2020-06-27 [1] CRAN (R 4.0.2)                       
+##    ggrepel              * 0.9.1       2021-01-15 [1] CRAN (R 4.0.3)                       
+##    ggridges               0.5.3       2021-01-08 [1] CRAN (R 4.0.3)                       
+##    ggsignif               0.6.0       2019-08-08 [1] CRAN (R 4.0.2)                       
+##    ggtext                 0.1.1       2020-12-17 [1] CRAN (R 4.0.3)                       
+##    globals                0.14.0      2020-11-22 [1] CRAN (R 4.0.3)                       
+##    glue                   1.4.2       2020-08-27 [1] CRAN (R 4.0.2)                       
+##    goftest                1.2-2       2019-12-02 [1] CRAN (R 4.0.3)                       
+##    gridExtra              2.3         2017-09-09 [1] CRAN (R 4.0.0)                       
+##    gridtext               0.1.4       2020-12-10 [1] CRAN (R 4.0.3)                       
+##    gt                     0.2.2       2020-08-05 [1] CRAN (R 4.0.2)                       
+##    gtable                 0.3.0       2019-03-25 [1] CRAN (R 4.0.0)                       
+##    gtools                 3.8.2       2020-03-31 [1] CRAN (R 4.0.3)                       
+##    gtsummary            * 1.3.6       2021-01-08 [1] CRAN (R 4.0.3)                       
+##    haven                  2.3.1       2020-06-01 [1] CRAN (R 4.0.2)                       
+##    here                 * 1.0.1       2020-12-13 [1] CRAN (R 4.0.3)                       
+##    highr                  0.8         2019-03-20 [1] CRAN (R 4.0.0)                       
+##    hms                    1.0.0       2021-01-13 [1] CRAN (R 4.0.3)                       
+##    htmltools              0.5.1.1     2021-01-22 [1] CRAN (R 4.0.4)                       
+##    htmlwidgets            1.5.3       2020-12-10 [1] CRAN (R 4.0.3)                       
+##    httr                   1.4.2       2020-07-20 [1] CRAN (R 4.0.2)                       
+##    i2extras             * 0.0.2       2020-10-30 [1] CRAN (R 4.0.4)                       
+##    igraph                 1.2.6       2020-10-06 [1] CRAN (R 4.0.3)                       
+##    imputeTS             * 3.2         2021-01-16 [1] CRAN (R 4.0.3)                       
+##    incidence              1.7.3       2020-11-04 [1] CRAN (R 4.0.3)                       
+##    incidence2           * 0.2.2       2020-11-12 [1] CRAN (R 4.0.4)                       
+##    inline                 0.3.17      2020-12-01 [1] CRAN (R 4.0.3)                       
+##    insight                0.12.0      2021-01-14 [1] CRAN (R 4.0.3)                       
+##    ipred                  0.9-9       2019-04-28 [1] CRAN (R 4.0.2)                       
+##    isoband                0.2.4       2021-03-03 [1] CRAN (R 4.0.4)                       
+##    iterators              1.0.13      2020-10-15 [1] CRAN (R 4.0.3)                       
+##    janitor              * 2.1.0       2021-01-05 [1] CRAN (R 4.0.3)                       
+##    jquerylib              0.1.3       2020-12-17 [1] CRAN (R 4.0.3)                       
+##    jsonlite               1.7.2       2020-12-09 [1] CRAN (R 4.0.3)                       
+##    kableExtra             1.3.1       2020-10-22 [1] CRAN (R 4.0.3)                       
+##    KernSmooth             2.23-17     2020-04-26 [2] CRAN (R 4.0.2)                       
+##    km.ci                  0.5-2       2009-08-30 [1] CRAN (R 4.0.4)                       
+##    KMsurv                 0.1-5       2012-12-03 [1] CRAN (R 4.0.3)                       
+##    knitr                  1.31        2021-01-27 [1] CRAN (R 4.0.4)                       
+##    labeling               0.4.2       2020-10-20 [1] CRAN (R 4.0.3)                       
+##    labelled               2.7.0       2020-09-21 [1] CRAN (R 4.0.3)                       
+##    lambda.r               1.2.4       2019-09-18 [1] CRAN (R 4.0.3)                       
+##    lattice                0.20-41     2020-04-02 [2] CRAN (R 4.0.2)                       
+##    lava                   1.6.8.1     2020-11-04 [1] CRAN (R 4.0.3)                       
+##    lazyeval               0.2.2       2019-03-15 [1] CRAN (R 4.0.0)                       
+##    leafem                 0.1.3       2020-07-26 [1] CRAN (R 4.0.3)                       
+##    leaflet                2.0.4.1     2021-01-07 [1] CRAN (R 4.0.3)                       
+##    leaflet.providers      1.9.0       2019-11-09 [1] CRAN (R 4.0.3)                       
+##    leafsync               0.1.0       2019-03-05 [1] CRAN (R 4.0.3)                       
+##    lifecycle              1.0.0       2021-02-15 [1] CRAN (R 4.0.4)                       
+##    linelist             * 0.0.40.9000 2020-09-18 [1] Github (reconhub/linelist@cae034d)   
+##    listenv                0.8.0       2019-12-05 [1] CRAN (R 4.0.2)                       
+##    lmtest               * 0.9-38      2020-09-09 [1] CRAN (R 4.0.2)                       
+##    loo                    2.4.1       2020-12-09 [1] CRAN (R 4.0.3)                       
+##    lubridate            * 1.7.9.2     2020-11-13 [1] CRAN (R 4.0.3)                       
+##    lwgeom                 0.2-5       2020-06-12 [1] CRAN (R 4.0.2)                       
+##    magrittr               2.0.1       2020-11-17 [1] CRAN (R 4.0.3)                       
+##    markdown               1.1         2019-08-07 [1] CRAN (R 4.0.0)                       
+##    MASS                 * 7.3-51.6    2020-04-26 [2] CRAN (R 4.0.2)                       
+##    matchmaker             0.1.1       2020-02-21 [1] CRAN (R 4.0.2)                       
+##    Matrix               * 1.2-18      2019-11-27 [2] CRAN (R 4.0.2)                       
+##    MatrixModels           0.4-1       2015-08-22 [1] CRAN (R 4.0.2)                       
+##    matrixStats            0.57.0      2020-09-25 [1] CRAN (R 4.0.3)                       
+##    mcmc                   0.9-7       2020-03-21 [1] CRAN (R 4.0.2)                       
+##    MCMCpack               1.4-9       2020-08-02 [1] CRAN (R 4.0.3)                       
+##    memoise                1.1.0       2017-04-21 [1] CRAN (R 4.0.2)                       
+##    mgcv                   1.8-31      2019-11-09 [2] CRAN (R 4.0.2)                       
+##    mice                 * 3.13.0      2021-01-27 [1] CRAN (R 4.0.3)                       
+##    mime                   0.10        2021-02-13 [1] CRAN (R 4.0.4)                       
+##    modelr                 0.1.8       2020-05-19 [1] CRAN (R 4.0.2)                       
+##    munsell                0.5.0       2018-06-12 [1] CRAN (R 4.0.0)                       
+##    naniar               * 0.6.0       2020-09-02 [1] CRAN (R 4.0.3)                       
+##    nlme                   3.1-148     2020-05-24 [2] CRAN (R 4.0.2)                       
+##    nnet                   7.3-14      2020-04-26 [2] CRAN (R 4.0.2)                       
+##    numDeriv               2016.8-1.1  2019-06-06 [1] CRAN (R 4.0.0)                       
+##    officer                0.3.16      2021-01-04 [1] CRAN (R 4.0.3)                       
+##    OpenStreetMap        * 0.3.4       2019-05-31 [1] CRAN (R 4.0.3)                       
+##    openxlsx               4.2.3       2020-10-27 [1] CRAN (R 4.0.3)                       
+##    pacman                 0.5.1       2019-03-11 [1] CRAN (R 4.0.0)                       
+##    parallelly             1.23.0      2021-01-04 [1] CRAN (R 4.0.3)                       
+##    parameters           * 0.11.0      2021-01-15 [1] CRAN (R 4.0.3)                       
+##    patchwork              1.1.1       2020-12-17 [1] CRAN (R 4.0.3)                       
+##    PerformanceAnalytics * 2.0.4       2020-02-06 [1] CRAN (R 4.0.2)                       
+##    PHEindicatormethods  * 1.3.2       2020-06-25 [1] CRAN (R 4.0.3)                       
+##    pillar                 1.5.1       2021-03-05 [1] CRAN (R 4.0.4)                       
+##    pkgbuild               1.2.0       2020-12-15 [1] CRAN (R 4.0.3)                       
+##    pkgconfig              2.0.3       2019-09-22 [1] CRAN (R 4.0.0)                       
+##    plotly                 4.9.3       2021-01-10 [1] CRAN (R 4.0.3)                       
+##    plotrix                3.8-1       2021-01-21 [1] CRAN (R 4.0.3)                       
+##    plyr                   1.8.6       2020-03-03 [1] CRAN (R 4.0.0)                       
+##    png                    0.1-7       2013-12-03 [1] CRAN (R 4.0.0)                       
+##    polyclip               1.10-0      2019-03-14 [1] CRAN (R 4.0.3)                       
+##    polyCub                0.7.1       2019-02-07 [1] CRAN (R 4.0.3)                       
+##    prettyunits            1.1.1       2020-01-24 [1] CRAN (R 4.0.0)                       
+##    pROC                   1.17.0.1    2021-01-13 [1] CRAN (R 4.0.3)                       
+##    processx               3.4.5       2020-11-30 [1] CRAN (R 4.0.3)                       
+##    prodlim                2019.11.13  2019-11-17 [1] CRAN (R 4.0.2)                       
+##    progress               1.2.2       2019-05-16 [1] CRAN (R 4.0.0)                       
+##    progressr              0.7.0       2020-12-11 [1] CRAN (R 4.0.3)                       
+##    projections          * 0.5.2       2020-12-17 [1] CRAN (R 4.0.3)                       
+##    ps                     1.6.0       2021-02-28 [1] CRAN (R 4.0.4)                       
+##    purrr                * 0.3.4       2020-04-17 [1] CRAN (R 4.0.0)                       
+##    quadprog               1.5-8       2019-11-20 [1] CRAN (R 4.0.0)                       
+##    Quandl                 2.10.0      2019-06-12 [1] CRAN (R 4.0.2)                       
+##    quantmod             * 0.4.18      2020-12-09 [1] CRAN (R 4.0.3)                       
+##    quantreg               5.82        2021-01-10 [1] CRAN (R 4.0.3)                       
+##    R.methodsS3            1.8.1       2020-08-26 [1] CRAN (R 4.0.3)                       
+##    R.oo                   1.24.0      2020-08-26 [1] CRAN (R 4.0.3)                       
+##    R.utils                2.10.1      2020-08-26 [1] CRAN (R 4.0.3)                       
+##    R6                     2.5.0       2020-10-28 [1] CRAN (R 4.0.3)                       
+##    rappdirs               0.3.1       2016-03-28 [1] CRAN (R 4.0.3)                       
+##    raster                 3.4-5       2020-11-14 [1] CRAN (R 4.0.3)                       
+##    RColorBrewer         * 1.1-2       2014-12-07 [1] CRAN (R 4.0.0)                       
+##    Rcpp                 * 1.0.6       2021-01-15 [1] CRAN (R 4.0.3)                       
+##  D RcppParallel           5.0.2       2020-06-24 [1] CRAN (R 4.0.3)                       
+##    readr                * 1.4.0       2020-10-05 [1] CRAN (R 4.0.3)                       
+##    readxl               * 1.3.1       2019-03-13 [1] CRAN (R 4.0.0)                       
+##    RecordLinkage        * 0.4-12.1    2020-08-25 [1] CRAN (R 4.0.3)                       
+##    remotes                2.2.0       2020-07-21 [1] CRAN (R 4.0.2)                       
+##    repr                   1.1.3       2021-01-21 [1] CRAN (R 4.0.3)                       
+##    reprex                 0.3.0       2019-05-16 [1] CRAN (R 4.0.0)                       
+##    reshape2               1.4.4       2020-04-09 [1] CRAN (R 4.0.0)                       
+##    rgdal                  1.5-19      2021-01-05 [1] CRAN (R 4.0.3)                       
+##    rio                  * 0.5.26      2021-03-01 [1] CRAN (R 4.0.4)                       
+##  D rJava                  0.9-13      2020-07-06 [1] CRAN (R 4.0.3)                       
+##    rjson                  0.2.20      2018-06-08 [1] CRAN (R 4.0.0)                       
+##    rlang                  0.4.10      2020-12-30 [1] CRAN (R 4.0.3)                       
+##    rmarkdown              2.7         2021-02-19 [1] CRAN (R 4.0.4)                       
+##    rootSolve              1.8.2.1     2020-04-27 [1] CRAN (R 4.0.3)                       
+##    rpart                  4.1-15      2019-04-12 [2] CRAN (R 4.0.2)                       
+##    rprojroot              2.0.2       2020-11-15 [1] CRAN (R 4.0.3)                       
+##    RSQLite              * 2.2.3       2021-01-24 [1] CRAN (R 4.0.3)                       
+##    rstan                  2.21.2      2020-07-27 [1] CRAN (R 4.0.3)                       
+##    rstatix                0.6.0       2020-06-18 [1] CRAN (R 4.0.2)                       
+##    rstudioapi             0.13        2020-11-12 [1] CRAN (R 4.0.3)                       
+##    runner                 0.3.7       2020-05-17 [1] CRAN (R 4.0.3)                       
+##    rvest                  0.3.6       2020-07-25 [1] CRAN (R 4.0.2)                       
+##    sass                   0.3.0       2021-01-13 [1] CRAN (R 4.0.3)                       
+##    scales               * 1.1.1       2020-05-11 [1] CRAN (R 4.0.2)                       
+##    scatterplot3d          0.3-41      2018-03-14 [1] CRAN (R 4.0.3)                       
+##    see                  * 0.6.1       2020-12-06 [1] CRAN (R 4.0.3)                       
+##    SemiCompRisks        * 3.4         2021-02-03 [1] CRAN (R 4.0.4)                       
+##    sessioninfo            1.1.1       2018-11-05 [1] CRAN (R 4.0.2)                       
+##    sf                   * 0.9-7       2021-01-06 [1] CRAN (R 4.0.3)                       
+##    skimr                * 2.1.2       2020-07-06 [1] CRAN (R 4.0.3)                       
+##    slider               * 0.1.5       2020-07-21 [1] CRAN (R 4.0.2)                       
+##    snakecase              0.11.0      2019-05-25 [1] CRAN (R 4.0.0)                       
+##    sp                   * 1.4-5       2021-01-10 [1] CRAN (R 4.0.3)                       
+##    SparseM                1.78        2019-12-13 [1] CRAN (R 4.0.0)                       
+##    spatstat               1.64-1      2020-05-12 [1] CRAN (R 4.0.3)                       
+##    spatstat.data          1.7-0       2020-12-16 [1] CRAN (R 4.0.3)                       
+##    spatstat.utils         1.20-2      2021-01-07 [1] CRAN (R 4.0.3)                       
+##    StanHeaders            2.21.0-7    2020-12-17 [1] CRAN (R 4.0.3)                       
+##    stars                * 0.5-1       2021-01-25 [1] CRAN (R 4.0.3)                       
+##    statmod                1.4.35      2020-10-19 [1] CRAN (R 4.0.3)                       
+##    stinepack              1.4         2018-07-30 [1] CRAN (R 4.0.3)                       
+##    stringdist           * 0.9.6.3     2020-10-09 [1] CRAN (R 4.0.3)                       
+##    stringi                1.5.3       2020-09-09 [1] CRAN (R 4.0.2)                       
+##    stringr              * 1.4.0       2019-02-10 [1] CRAN (R 4.0.0)                       
+##    survC1               * 1.0-2       2013-02-14 [1] CRAN (R 4.0.3)                       
+##    surveillance         * 1.18.0      2020-03-19 [1] CRAN (R 4.0.3)                       
+##    survival             * 3.1-12      2020-04-10 [2] CRAN (R 4.0.2)                       
+##    survminer            * 0.4.8       2020-07-25 [1] CRAN (R 4.0.4)                       
+##    survMisc               0.5.5       2018-07-05 [1] CRAN (R 4.0.4)                       
+##    systemfonts            0.3.2       2020-09-29 [1] CRAN (R 4.0.3)                       
+##    tensor                 1.5         2012-05-05 [1] CRAN (R 4.0.3)                       
+##    tibble               * 3.1.0       2021-02-25 [1] CRAN (R 4.0.4)                       
+##    tidyquant            * 1.0.2       2020-10-21 [1] CRAN (R 4.0.3)                       
+##    tidyr                * 1.1.2       2020-08-27 [1] CRAN (R 4.0.2)                       
+##    tidyselect             1.1.0       2020-05-11 [1] CRAN (R 4.0.2)                       
+##    tidyverse            * 1.3.0       2019-11-21 [1] CRAN (R 4.0.4)                       
+##    timeDate               3043.102    2018-02-21 [1] CRAN (R 4.0.2)                       
+##    tmap                 * 3.3-1       2021-03-15 [1] CRAN (R 4.0.4)                       
+##    tmaptools            * 3.1-1       2021-01-19 [1] CRAN (R 4.0.3)                       
+##    trending             * 0.0.2.9     2021-03-01 [1] Github (reconhub/trending@b34f471)   
+##    truncnorm              1.0-8       2018-02-27 [1] CRAN (R 4.0.3)                       
+##    tseries                0.10-48     2020-12-04 [1] CRAN (R 4.0.3)                       
+##    tsibble              * 0.9.3       2020-10-06 [1] CRAN (R 4.0.3)                       
+##    TTR                  * 0.24.2      2020-09-01 [1] CRAN (R 4.0.2)                       
+##    units                * 0.6-7       2020-06-13 [1] CRAN (R 4.0.2)                       
+##    UpSetR                 1.4.0       2019-05-22 [1] CRAN (R 4.0.2)                       
+##    urca                   1.3-0       2016-09-06 [1] CRAN (R 4.0.2)                       
+##    usethis                2.0.0       2020-12-10 [1] CRAN (R 4.0.3)                       
+##    utf8                   1.1.4       2018-05-24 [1] CRAN (R 4.0.4)                       
+##    uuid                   0.1-4       2020-02-26 [1] CRAN (R 4.0.3)                       
+##    V8                     3.4.0       2020-11-04 [1] CRAN (R 4.0.3)                       
+##    vctrs                  0.3.6       2020-12-17 [1] CRAN (R 4.0.3)                       
+##    viridis              * 0.5.1       2018-03-29 [1] CRAN (R 4.0.3)                       
+##    viridisLite          * 0.3.0       2018-02-01 [1] CRAN (R 4.0.0)                       
+##    visdat                 0.5.3       2019-02-15 [1] CRAN (R 4.0.3)                       
+##    visNetwork             2.0.9       2019-12-06 [1] CRAN (R 4.0.0)                       
+##    warp                   0.2.0       2020-10-21 [1] CRAN (R 4.0.3)                       
+##    webshot                0.5.2       2019-11-22 [1] CRAN (R 4.0.0)                       
+##    withr                  2.4.1       2021-01-26 [1] CRAN (R 4.0.4)                       
+##    writexl              * 1.3.1       2020-08-26 [1] CRAN (R 4.0.3)                       
+##    xfun                   0.22        2021-03-11 [1] CRAN (R 4.0.4)                       
+##    XML                    3.99-0.5    2020-07-23 [1] CRAN (R 4.0.2)                       
+##    xml2                   1.3.2       2020-04-23 [1] CRAN (R 4.0.2)                       
+##    xtable               * 1.8-4       2019-04-21 [1] CRAN (R 4.0.0)                       
+##    xts                  * 0.12.1      2020-09-09 [1] CRAN (R 4.0.2)                       
+##    yaml                   2.2.1       2020-02-01 [1] CRAN (R 4.0.0)                       
+##    yardstick            * 0.0.7       2020-07-13 [1] CRAN (R 4.0.3)                       
+##    zip                    2.1.1       2020-08-27 [1] CRAN (R 4.0.2)                       
+##    zoo                  * 1.8-8       2020-05-02 [1] CRAN (R 4.0.2)                       
+## 
+## [1] C:/Users/Neale/OneDrive - Neale Batra/Documents/R/win-library/4.0
+## [2] C:/Program Files/R/R-4.0.2/library
+## 
+##  D -- DLL MD5 mismatch, broken installation.</code></pre>
+
+</div>
+</div>
+
+
+
+<div class="chapter-nav">
+<div class="prev"><a href="style-and-editorial-notes.html"><span class="header-section-number">1</span> Style and editorial notes</a></div>
+<div class="next"><a href="r-basics.html"><span class="header-section-number">3</span> R Basics</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#data-and-session-info"><span class="header-section-number">2</span> Data and session info</a></li>
+<li>
+<a class="nav-link" href="#data-to-follow-along"><span class="header-section-number">2.1</span> Data to follow along</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#background-information"><span class="header-section-number">2.1.1</span> Background information</a></li></ul>
+</li>
+<li><a class="nav-link" href="#session-info-r-rstudio-packages"><span class="header-section-number">2.2</span> Session info (R, RStudio, packages)</a></li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+          
+        </ul>
+</div>
+    </nav>
+</div>
+</div>
+  
+
+  
+
+</div>
+ <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>The Epidemiologist R Handbook</strong>" was written by the handbook team. It was last built on 2021-03-22.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+</html>
