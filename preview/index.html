@@ -9,7 +9,11 @@
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.2"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.7/header-attrs.js"></script><script src="libs/jquery-3.5.1/jquery-3.5.1.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.5.3/bootstrap.min.css" rel="stylesheet">
 <script src="libs/bootstrap-4.5.3/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.2.3.9000/tabs.js"></script><script src="libs/bs3compat-0.2.3.9000/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
-<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdn.jsdelivr.net/autocomplete.js/0/autocomplete.jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/mark.js@8.11.1/dist/mark.min.js"></script><!-- CSS --><link rel="stylesheet" href="style_bs4.css">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script><link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet">
+<script src="libs/datatables-binding-0.15/datatables.js"></script><link href="libs/dt-core-1.10.20/css/jquery.dataTables.min.css" rel="stylesheet">
+<link href="libs/dt-core-1.10.20/css/jquery.dataTables.extra.css" rel="stylesheet">
+<script src="libs/dt-core-1.10.20/js/jquery.dataTables.min.js"></script><link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet">
+<script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script><script src="https://cdn.jsdelivr.net/autocomplete.js/0/autocomplete.jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/mark.js@8.11.1/dist/mark.min.js"></script><!-- CSS --><link rel="stylesheet" href="style_bs4.css">
 </head>
 <body data-spy="scroll" data-target="#toc">
 
@@ -33,7 +37,7 @@
         <ul class="book-toc list-unstyled">
 <li><a class="active" href="index.html"></a></li>
 <li class="book-part">Preview pages</li>
-<li><a class="" href="collaboration-with-github.html"><span class="header-section-number">1</span> Collaboration with Github</a></li>
+<li><a class="" href="iteration-and-loops.html"><span class="header-section-number">1</span> Iteration and loops</a></li>
 </ul>
 
         <div class="book-extra">
@@ -51,22 +55,16 @@
 <div id="about-this-handbook" class="section level2 unnumbered">
 <h2>About this handbook<a class="anchor" aria-label="anchor" href="#about-this-handbook"><i class="fas fa-link"></i></a>
 </h2>
-<p><span style="color: brown;"><strong>This is a free open-access R reference manual for applied epidemiologists and public health practitioners.</strong></span></p>
+<p><span style="color: brown;"><strong>This is an open-access R reference manual for applied epidemiologists and public health practitioners.</strong></span></p>
 <p><strong>This book strives to:</strong></p>
 <ul>
-<li>Serve as a quick reference manual - not as a textbook or comprehensive R training<br>
+<li>Serve as a quick R code reference manual<br>
 </li>
-<li>Address common epidemiological problems via task-centered examples<br>
+<li>Provide task-centered examples for addressing common epidemiological problems<br>
 </li>
-<li>Be accessible in settings with low internet-connectivity via an <a href="https://github.com/nsbatra/Epi_R_handbook/tree/master/offline_long">offline version</a> (instructions below)</li>
-</ul>
-<p><strong>What challenges does this book try to address?</strong></p>
-<ul>
-<li>Many epidemiologists are transitioning to R from SAS, STATA, SPSS, Excel, or other software<br>
+<li>Assist epidemiologists transitioning to R from SAS, STATA, SPSS, and Excel<br>
 </li>
-<li>Epidemiologists should not need to spend hours searching online for code relevant to the common epi user<br>
-</li>
-<li>Epidemiologists sometimes work in low internet-connectivity environments and have limited support</li>
+<li>Be accessible in settings with low internet-connectivity via an <strong>offline version</strong> ([instructions here][Download book and data])</li>
 </ul>
 <p><strong>How is this different than other R books?</strong></p>
 <ul>
@@ -113,7 +111,6 @@ Email us at <strong><a href="mailto:epiRhandbook@gmail.com" class="email">epiRha
 <p><strong>Core team:</strong> Neale Batra, Alex Spina, Amrish Baidjoe, Pat Keating, Henry Laurenson-Schafer, Finlay Campbell</p>
 <p><strong>Authors</strong>: Neale Batra, Alex Spina, Paula Blomquist, Finlay Campbell, Henry Laurenson-Schafer, Isaac Florence, Natalie Fischer, Aminata Ndiaye, Liza Coyer, Jonny Polonski, Yurie Izawa, Daniel Molling, Sara Hollis, Isha Berry, Wen Lin</p>
 <p><strong>Reviewers</strong>:</p>
-<p><strong>Advisers</strong>:</p>
 </div>
 <div id="funding-and-programmatic-support" class="section level3 unnumbered">
 <h3>Funding and programmatic support<a class="anchor" aria-label="anchor" href="#funding-and-programmatic-support"><i class="fas fa-link"></i></a>
@@ -146,7 +143,7 @@ Email us at <strong><a href="mailto:epiRhandbook@gmail.com" class="email">epiRha
 
 <div class="chapter-nav">
 <div class="empty"></div>
-<div class="next"><a href="collaboration-with-github.html"><span class="header-section-number">1</span> Collaboration with Github</a></div>
+<div class="next"><a href="iteration-and-loops.html"><span class="header-section-number">1</span> Iteration and loops</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
@@ -183,7 +180,7 @@ Email us at <strong><a href="mailto:epiRhandbook@gmail.com" class="email">epiRha
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>The Epidemiologist R Handbook</strong>" was written by the handbook team. It was last built on 2021-04-02.</p>
+    <p>"<strong>The Epidemiologist R Handbook</strong>" was written by the handbook team. It was last built on 2021-04-07.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
