@@ -1,11 +1,7 @@
-routine-reports
+phylogenetic-trees
+overview
 preparation
-new-factory
-review-the-factory
-create-a-report
-review
-compile
-outputs
-review-1
-extras
+simple-tree-visualization
+tree-manipulation
+more-complex-trees-adding-heatmaps-of-sample-data
 resources

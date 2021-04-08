@@ -207,228 +207,616 @@ options(scipen=1, digits=3)
 <!--chapter:end:new_pages/cat_preview.Rmd-->
 
 
-# Routine reports {  }  
-
-This page will cover the **reportfactory** package. **reportfactory** is a package developed by RECON (R Epidemics Consortium).  
-
-**reportfactory** is an *accompaniment to using R Markdowns for reports*. It is built for scenarios where you are running routine reports (daily, weekly, etc.). It makes easier the organization and compilation of multiple R Markdown files and their outputs. In essence, it provides a "factory" from which you can run the Rmd reports and automatically get organized date- and time-stamped folders with the outputs.  
+# Phylogenetic trees {}  
 
 
-## Preparation
+<!-- ======================================================= -->
 
-### Packages {-}  
+## Overview {}
 
-To begin, we install and/or load the **reportfactory** package from CRAN.  
 
-```{r, eval=FALSE}
-pacman::p_load(reportfactory)
+**Phylogenetic trees** are used to visualize and describe the relatedness and evolution of organisms based on the sequence of their genetic code.  
+
+They can be constructed from genetic sequences using distance-based methods (such as neighbor-joining method) or character-based methods (such as maximum likelihood and Bayesian Markov Chain Monte Carlo method). Next-generation sequencing (NGS) has become more affordable and is becoming more widely used in public health to describe pathogens causing infectious diseases. Portable sequencing devices decrease the turn around time and hold promises to make data available for the support of outbreak investigation in real-time. NGS data can be used to identify the origin or source of an outbreak strain and its propagation, as well as determine presence of antimicrobial resistance genes. To visualize the genetic relatedness between samples a phylogenetic tree is constructed.  
+
+In this page we will learn how to use the **ggtree* package, which allows for combined visualization of phylogenetic trees with additional sample data in form of a dataframe in order to help observe patterns and improve understanding of the outbreak dynamic.
+
+```{r, phylogenetic_trees_overview_graph, out.width=c('80%'), fig.align='center', fig.show='hold', echo = FALSE}
+
+pacman::p_load(here, ggplot2, dplyr, ape, ggtree, treeio, ggnewscale)
+
+tree <- ape::read.tree(here::here("data", "Shigella_tree.txt"))
+
+sample_data <- read.csv(here::here("data","sample_data_Shigella_tree.csv"),sep=",", na.strings=c("NA"), head = TRUE, stringsAsFactors=F)
+
+
+ggtree(tree, layout="circular", branch.length='none') %<+% sample_data + # the %<+% is used to add your dataframe with sample data to the tree
+  aes(color=I(Belgium))+ # color the branches according to a variable in your dataframe
+  scale_color_manual(name = "Sample Origin", # name of your color scheme (will show up in the legend like this)
+                    breaks = c("Yes", "No"), # the different options in your variable
+                   labels = c("NRCSS Belgium", "Other"), # how you want the different options named in your legend, allows for formatting
+                 values= c("blue", "black"), # the color you want to assign to the variable 
+                 na.value = "black") + # color NA values in black as well
+  new_scale_color()+ # allows to add an additional color scheme for another variable
+     geom_tippoint(aes(color=Continent), size=1.5)+ # color the tip point by continent, you may change shape adding "shape = "
+scale_color_brewer(name = "Continent",  # name of your color scheme (will show up in the legend like this)
+                       palette="Set1", # we choose a set of colors coming with the brewer package
+                   na.value="grey")+ # for the NA values we choose the color grey
+  theme(legend.position= "bottom")
+
 ```
 
-### R project {-} 
+<!-- ======================================================= -->
 
-Open a new R project, or have an existing one. See the page on [R projects] for instructions on how to create an R project. The report factory will live within the R project.  
+## Preparation {}
 
-Below, we have created an R project called "demo_factory". Currently there are no other files within the project.  
+### Load packages {-}  
 
+This code chunk shows the loading of required packages. In this handbook we emphasize `p_load()` from **pacman**, which installs the package if necessary and loads it for use. You can also load packages with `library()` from **base** R. See the page on [R basics] for more information on R packages.  
 
-```{r, warning=F, message=F, echo=F}
-knitr::include_graphics(here::here("images", "factory_new1.png"))
+```{r, phylogenetic_trees_loading_packages}
+pacman::p_load(
+  rio,             # import/export
+  here,            # relative file paths
+  tidyverse,       # general data management and visualization
+  ape,           
+  ggtree,
+  treeio,
+  ggnewscale)
+
 ```
 
-## New factory  
+### Import data {-}  
 
-Adding a new report factory will add a self-contained folder to the R project. Below we will create a factory within the empty "demo_factory" R project. The report factory itself will be called "new_factory" (the default name - this can be changed).  
+There are several different formats in which a phylogenetic tree can be stored (eg. Newick, NEXUS, Phylip). A common one, which we will also use here in this example is the Newick file format (.nwk), which is the standard for representing trees in computer-readable form. This means an entire tree can be expressed in a string format such as  "((t2:0.04,t1:0.34):0.89,(t5:0.37,(t4:0.03,t3:0.67):0.9):0.59); ", listing all nodes and tips and their relationship (branch length) to each other.  
 
-1) Within the R project, load the **reportfactory** package by entering `library(reportfactory)` or `pacman::p_load(reportfactory)` into the console.  
-2) Run the function `new_factory()`. The factory will be added as a folder to the R project root folder by default.  
+It is important to understand that the phylogenetic tree file in itself does not contain sequencing data, but is merely the result of the genetic distances between the sequences. We therefore cannot extract sequencing data from a tree file.
+
+We use the **ape()** package to import a Newick phylogenetic tree file in .txt format, and store it in a list object of class "phylo". 
+
+```{r, echo=F}
+# read in the tree: we use the here() package to specify the location of our R project and data files. In this case the newick tree is saved as a .txt file for easier handling and downloading.
+tree <- ape::read.tree(here::here("data", "Shigella_tree.txt"))
+```
 
 ```{r, eval=F}
-# This will create the factory folder in the current directory
-new_factory()
+# In this case the newick tree is saved as a .txt file for easier handling and downloading.
+tree <- ape::read.tree("Shigella_tree.txt")
+```
+
+We inspect our tree object and see it contains 299 tips (or samples) and 236 nodes.  
+
+```{r}
+# inspect the tree file:
+tree
+```
+
+Second we import a table with additional information for each sequenced sample, such as gender, country of origin and attributes for antimicrobial resistance:  
+
+```{r, echo=F}
+# We read in a .csv file into a dataframe format:
+# sample_data <- read.csv(here::here("data","sample_data_Shigella_tree.csv"),sep=",", na.strings=c("NA"), head = TRUE, stringsAsFactors=F)
+
+sample_data <- import(here("data","sample_data_Shigella_tree.csv"))
 ```
 
 ```{r, eval=F}
-# Alternatively, you can specify that the factory be made at a specific file path
-new_factory(path = "C:/R handbook/demo_factory")
+# We read in a .csv file into a dataframe format:
+sample_data <- import("sample_data_Shigella_tree.csv")
 ```
 
-Below see that the folder "new_factory" has been created
+Below are the first 50 rows of the data:  
 
-```{r, warning=F, message=F, echo=F}
-knitr::include_graphics(here::here("images", "factory_new2.png"))
+```{r message=FALSE, echo=F}
+DT::datatable(head(sample_data,50), rownames = FALSE, options = list(pageLength = 5, scrollX=T), class = 'white-space: nowrap' )
 ```
 
-There are several defaults that you can change in the `new_factory()` command:  
+### Clean and inspect {-}  
 
-* `factory = ` - you can provide a name for the factory folder. The default is as shown above: "new_factory".  
-* `path = ` - as shown above, you can designate a file path for the new factory. The default is the current directory.  
-* `report_sources = ` You can provide an alternate name for the folder which holds the R Markdown scripts that create the reports. The default is "report_sources".  
-* `outputs = ` You can provide an alternate name for the folder which holds the output reports. The default is "outputs".  
+We clean and inspect our data: In order to assign the correct sample data to the phylogenetic tree, the values in the column `Sample_ID` in the `sample_data` data frame need to match the `tip.labels` values in the `tree` file: 
 
-See `?new_factory` for a complete list of the function arguments.  
-
-
-## Review the factory  
-
-Looking inside the "new_factory" folder we can see that sub-folders were created automatically. You can adjust in the `new_factory()` command if you do not want these sub-folders to be created.    
-
-* The *report_sources* folder should hold your R Markdown scripts, which generate your reports  
-* The *outputs* folder will the report outputs (e.g. HTML, Word, PDF, etc.) - it will contain automatically-generated sub-folder organized by report and date-time stamp  
-* The *scripts* folder can be used to store other R scripts that can be sourced/run by the R Markdown scripts (optional)  
-* The *data* folder can be used to hold your data (optional)  
-* A *.here* file was created, so now can reference any files in the sub-folders by their relation to this factory root folder (see [R projects] for more details about the **here** package)  
-* A *gitignore* file was created in case you decide to link this to a Github repository (see [Collaboration with Github])  
-* An empty README markdown file was created, to assist if using a Github repository  
-
-```{r, warning=F, message=F, echo=F}
-knitr::include_graphics(here::here("images", "factory_new3.png"))
+```{r, phylogenetic_trees_inspect_sampledata}
+# We check the formatting of the tip labels in the tree file: 
+head(tree$tip.label) # these are the sample names in the tree - we inspect the first 6 with head()
 ```
- 
-Within R, you can run a command to see the structure (folders and files) in the report factory.  
+
+We also make sure the first column in our `sample_data` data frame is `Sample_ID`.  
+
+```{r}
+colnames(sample_data)   
+```
+
+We look at the `Sample_IDs` in the data frame to make sure the formatting is the same than in the `tip.label` (eg. letters are all capitals, no extra underscores `_` between letters and numbers, etc.)
+
+```{r}
+head(sample_data$Sample_ID) # we inspect only the first 6 using head()
+```
+
+We can also compare if all samples are present in the tree file and vice versa by generating a logical vector of TRUE or FALSE where they do or do not match. These are not printed here, for simplicity.  
 
 ```{r, eval=F}
-reportfactory::factory_overview()
+sample_data$Sample_ID %in% tree$tip.label
+
+tree$tip.label %in% sample_data$Sample_ID
 ```
 
-The following "tree" of the factory's folders and files is printed to the R console. You can see that there sub-folders for "raw" and "clean" data, some example CSV data. There is also an "example_report.Rmd" in the "report_sources" folder.    
+We can use these vectors to show any sample IDs that are not on the tree (there are none).  
 
-```{r, warning=F, message=F, echo=F}
-knitr::include_graphics(here::here("images", "factory_overview.png"))
+```{r}
+sample_data$Sample_ID[!tree$tip.label %in% sample_data$Sample_ID]
 ```
 
+Upon inspection we can see that the format of Sample_ID in the dataframe corresponds to the format of sample names at the tree tips. These do not have to be sorted in the same order to be matched.
 
-## Create a report  
-
-For purposes of example, we create a new R markdown script entitled "daily_sitrep.Rmd" and save it within the "report_sources" folder of the report factory. In it, the case linelist is imported from the "data" folder, summary tables and epicurves are printed in the report HTML output and exported as .csv and .png files respectively.
-
-We also have added the data for the report ("linelist_cleaned.rds") to the "clean" sub-folder within the "data" folder. The new R Markdown script can source this data with the following command. To read more about importing data with the **rio** package and the **here** package see the page on [Import and export].  
-
-```{r, eval=F}
-linelist <- import(here("data", "clean", "linelist_cleaned.rds"))
-```
-
-Below is a screenshot of the beginning of the new R Markdown "daily_sitrep.Rmd". You can see that the output format is set to be HTML, via the YAML header `output: html_document`. Later in the report, there are commands to:  
-
-* Print a summary table of cases, also exporting the table as a .csv file  
-* Print an epicurve, also saving it as a .png image file  
-
-```{r, warning=F, message=F, echo=F}
-knitr::include_graphics(here::here("images", "factory_new_rmd.png"))
-```
-
-We can now see in the factory overview that a Rmd has been added to "report_sources" and the data file has been added as well (highlighted):
-
-```{r, warning=F, message=F, echo=F}
-knitr::include_graphics(here::here("images", "factory_overview2.png"))
-```
-
-## Review
-
-You can review the R Markdown reports in the report_sources folder with this command:  
-
-```{r, eval=F}
-list_reports()
-```
-
-
-
-## Compile  
-
-In a report factory, to "compile" a R Markdown report means that the .Rmd will be rendered (as HTML, Word, PDF, etc - however it is indicated in the YAML of the Rmd script). The report factory will auto-create a date- and time-stamped folder for the output in the "outputs" folder. The output and any exported files (e.g. csv, png, xlsx, etc. will be saved in this folder. The Rmd itself will also be saved in this folder, so you have a record of that version of the Rmd, as it was at that moment.  
-
-This contrasts with the normal behavior of a rendered R Markdown, which will save to the location of the .Rmd. This default behavior can result in crowded, messy folders. The report factory aims to improve organization when one needs to run reports frequently.  
-
-### Compile by name {-}  
-
-You can compile a specific report by running `compile_reports()` and providing the name (without .rmd extension) to `reports = `. Below, this command would compile only the "daily_sitrep.rmd" report, rendering the HTML and saving all the products into a date- and time-stamped sub-folder specific to the report, within the "outputs" folder.  
-
-```{r, warning=F, message=F, echo=F}
-knitr::include_graphics(here::here("images", "factory_compile1.png"))
-```
-
-
-Note that when you compile, you will see several files temporarily appear in the "report_sources" folder - but they will soon disappear. 
-
-### Compile by number {-}
-
-You can also specify the Rmd to compile by feeding a number or vector of numbers to `reports = `. The numbers must align with the order the reports appear when you run `list_reports()`.  
-
-```{r, eval=F}
-# Run the second and fourth Rmds in the "report_sources" folder
-compile_reports(reports = c(2, 4))
-```
-
-### Compile from sub-folder {-}  
-
-You can add sub-folders to the "report_sources" folder. To run an R Markdown report from a subfolder, simply provide the name of the folder to `subfolder = `. Below is an example of code to compile a Rmd report that lives in a sub_folder of "report_sources".  
-
-```{r, eval=F}
-compile_reports(
-     reports = "summary_for_partners.Rmd",
-     subfolder = "for_partners")
-```
-
-
-### Compile all {-}
-
-You can compile *all* the R Markdown reports in the "report_sources" folder by setting the `reports = ` argument to TRUE.  
-
-```{r, warning=F, message=F, echo=F}
-knitr::include_graphics(here::here("images", "factory_compile_all.png"))
-```
-
-
-### Parameterization {-}
-
-As noted in the page on [R Markdown], you can run reports with specified parameters. You can pass these parameters as a list to `compile_reports()` via the `params = ` argument. For example, in this fictional report there are three parameters provided to the R Markdown reports.  
-
-```{r, eval=F}
-compile_reports(
-  reports = "daily_sitrep.Rmd",
-  params = list(most_recent_data = TRUE,
-                region = "NORTHERN",
-                rates_denominator = 10000),
-  subfolder = "regional"
-)
-```
-
-## Outputs  
-
-After we have compiled the reports are few times, the "outputs" folder might look like this (highlights added for clarity):  
-
-* Folders have been created for the outputs of each Rmd report  
-* Sub-folders have been created for each unique compiling - these folders are date- and time-stamped ("2021-04-07_T20-11-25" means 7th April 2021 at 20:11:25)  
-* Within each date/time compiled folder, the rendered output is stored (HTML, PDF, Word, etc.) along with the Rmd and any other exported files from the rendering (e.g. csv, png)  
-
-
-```{r, warning=F, message=F, echo=F}
-knitr::include_graphics(here::here("images", "factory_overview_all.png"))
-```
-
-
-
-## Review  
-
-You can use `list_outputs()` to review a list of the outputs.  
-
-
-## Extras  
-
-* With **reportfactory**, you can use the function `list_deps()` to list all packages required across all the reports in the entire factory.  
-
-* There is an accompanying package in development called **rfextras** that offers more helper functions to assist you in building reports, such as:  
-  * `load_scripts()` - sources/loads all .R scripts in a given folder (the "scripts" folder by default)  
-  * `find_latest()` - finds the latest version of a file (e.g. the latest dataset)
+We are ready to go!
 
 
 
 
 <!-- ======================================================= -->
-## Resources {  }
 
-See the **reportfactory** package's [Github page](https://github.com/reconverse/reportfactory)
+## Simple tree visualization {}
 
-See the **rfextras** package's [Github page](https://github.com/reconhub/rfextras)  
+
+### Different tree layouts {-}  
+
+**ggtree** offers many different layout formats and some may be more suitable for your specific purpose than others. Below are a few demonstrations. For other options see this [online book](http://yulab-smu.top/treedata-book/chapter4.html).  
+
+
+```{r, phylogenetic_trees_example_formats, out.width=c('50%'), fig.show='hold'}
+# Example tree layouts:
+ggtree(tree)                                            # simple linear tree
+ggtree(tree,  branch.length = "none")                   # simple linear tree with all tips aligned
+ggtree(tree, layout="circular")                         # simple circular tree
+ggtree(tree, layout="circular", branch.length = "none") # simple circular tree with all tips aligned
+
+
+```
+
+### Simple tree with addition of sample data {-}  
+
+The most easy annotation of your tree is the addition of the sample names at the tips, as well as coloring of tip points and if desired the branches:
+
+```{r, phylogenetic_trees_adding_sampledata, fig.align='center', warning=F, message=F}
+
+# A: Plot Circular tree:
+ggtree(tree, layout = "circular", branch.length = 'none') %<+% sample_data + # %<+% adds dataframe with sample data to tree
+  aes(color = I(Belgium))+                       # color the branches according to a variable in your dataframe
+  scale_color_manual(
+    name = "Sample Origin",                      # name of your color scheme (will show up in the legend like this)
+    breaks = c("Yes", "No"),                     # the different options in your variable
+    labels = c("NRCSS Belgium", "Other"),        # how you want the different options named in your legend, allows for formatting
+    values= c("blue", "black"),                  # the color you want to assign to the variable 
+    na.value = "black") +                        # color NA values in black as well
+  new_scale_color()+                             # allows to add an additional color scheme for another variable
+    geom_tippoint(
+      mapping = aes(color = Continent),          # tip color by continent. You may change shape adding "shape = "
+      size = 1.5)+
+  scale_color_brewer(
+    name = "Continent",                    # name of your color scheme (will show up in the legend like this)
+    palette = "Set1",                      # we choose a set of colors coming with the brewer package
+    na.value = "grey")+                    # for the NA values we choose the color grey
+  geom_tiplab(                             # adds name of sample to tip of its branch 
+    color = 'black',                       # (add as many text lines as you wish with + , but you may need to adjust offset value to place them next to each other)
+    offset = 1,
+    size = 1,
+    geom = "text",
+    align = TRUE)+    
+  ggtitle("Phylogenetic tree of Shigella sonnei")+       # title of your graph
+  theme(
+    axis.title.x = element_blank(), # removes x-axis title
+    axis.title.y = element_blank(), # removes y-axis title
+    legend.title = element_text(    # defines font size and format of the legend title
+      face = "bold",
+      size =12),   
+    legend.text=element_text(       # defines font size and format of the legend text
+      face = "bold",
+      size =10),  
+    plot.title = element_text(      # defines font size and format of the plot title
+      size = 12,
+      face = "bold"),  
+    legend.position = "bottom",     # defines placement of the legend
+    legend.box = "vertical",        # defines placement of the legend
+    legend.margin = margin())   
+```
+
+You can export your tree plot with `ggsave()` as you would any other ggplot object. Writen this way, `ggsave()` saves the last image produced to the file path you specify. Remember that you can use `here()` and relative file paths to easily save in subfolders, etc.  
+
+```{r, eval=F}
+# Export your tree graph:
+ggsave("example_tree_circular_1.png", width = 12, height = 14)
+
+```
+
+
+<!-- ======================================================= -->
+
+## Tree manipulation {}
+
+Sometimes you may have a very large phylogenetic tree and you are only interested in one part of the tree. For example if you produced a tree including historical or international samples to get a large overview of where your dataset might fit in the bigger picture. But then to look closer at your data you want to inspect only that portion of the bigger tree.
+
+Since the phylogenetic tree file is just the output of sequencing data analysis, we can not manipulate the order of the nodes and branches in the file itself. These have already been determined in previous analysis from the raw NGS data. We are able though to zoom into parts, hide parts and even subset part of the tree. 
+
+### Zoom in {-}  
+
+If you don't want to "cut" your tree, but only inspect part of it more closely you can zoom in to view a specific part:
+
+```{r, phylogenetic_trees_zoom_in, out.width=c('50%'), fig.show='hold', fig.align='center'}
+
+# First we plot the whole tree:
+p <- ggtree(tree,) %<+% sample_data +
+  geom_tiplab(size =1.5) +                # labels the tips of all branches with the sample name in the tree file
+  geom_text2(
+    mapping = aes(subset = !isTip,
+                  label=node),
+    size = 5,
+    color = "darkred",
+    hjust = 1,
+    vjust = 1)                            # labels all the nodes in the tree
+
+p  # print
+
+```
+
+To zoom in to one particular branch (sticking out to the right), use `viewClade()` on the ggtree object `p` and provide the node number to get a closer look:
+```{r phylogenetic_trees_zoom_in_452, out.width=c('50%'), fig.show='hold', fig.align='center'}
+
+viewClade(p, node = 452)
+
+```
+
+### Collapsing branches {-} 
+
+However, we may want to ignore this branch and can collapse it at that same node using `collapse()`. This tree is defined as `p_collapsed`. For clarity, when we print `p_collapsed`, we add a `geom_point2()` (a blue diamond) at the node of the collapsed branch.  
+
+```{r phylogenetic_trees_collapse_452, out.width=c('50%'), fig.show='hold', fig.align='center'}
+#First we collapse at node 452
+p_collapsed <- collapse(p, node=452)
+
+#To not forget that we collapsed this node we assign a symbol to it:
+p_collapsed + geom_point2(aes(subset=(node == 452)), size=5, shape=23, fill="steelblue")
+
+```
+
+### Subsetting a tree {-} 
+
+If we want to make a more permanent change and create a new, reduced tree to work with we can subset part of it with `tree_subset()`. Then you can save it as new newick tree file.  
+
+First, we inspect the tree nodes and tip labels in order to decide what to subset.  
+
+```{r, phylogenetic_trees_subsetting, out.width=c('50%'), fig.show='hold', fig.align='center'}
+ggtree(
+  tree,
+  branch.length = 'none',
+  layout = 'circular') %<+% sample_data +
+  geom_tiplab(size = 1)+                                # label tips of all branches with sample name in tree file
+  geom_text2(
+    mapping = aes(subset = !isTip, label=node),
+    size = 3,
+    color = "darkred") +                                # labels all the nodes in the tree
+ theme(
+   legend.position = "none",                            # removes the legend all together
+   axis.title.x = element_blank(),
+   axis.title.y = element_blank(),
+   plot.title = element_text(size =12, face="bold"))
+```
+
+Now, say we have decided to subset the tree at node 528 (keep only tips within this branch after node 528).
+
+```{r}
+# A: Subset tree based on node:
+sub_tree1 <- tree_subset(
+  tree,
+  node = 528)                                            # we subset the tree at node 528
+```
+
+Lets have a look at the subset tree:
+
+```{r}
+ggtree(sub_tree1)+
+  geom_tiplab(size =3) +
+  ggtitle("Subset tree 1")
+```
+
+You can also subset based on one particular sample, specifying how many nodes "backwards" you want to include. Let's subset the same part of the tree based on a sample, in this case S17BD07692, going back 9 nodes:  
+
+```{r}
+sub_tree2 <- tree_subset(
+  tree,
+  "S17BD07692",
+  levels_back = 9) # levels back defines how many nodes backwards from the sample tip you want to go
+```
+
+Lets have a look at the subset tree:
+
+```{r}
+ggtree(sub_tree2)+  geom_tiplab(size =3)  +
+  ggtitle("Subset tree 2")
+
+```
+
+You can also save your new tree either as a Newick type or even a text file:  
+
+```{r, eval=F, phylogenetic_trees_write_tree}
+# to save in .nwk format
+ape::write.tree(sub_tree2, file='data/Shigella_subtree_2.nwk')
+
+# to save in .txt format
+ape::write.tree(sub_tree2, file='data/Shigella_subtree_2.txt')
+
+```
+
+### Rotating nodes in a tree {-} 
+
+
+As mentioned before we cannot change the order of tips or nodes in the tree, as this is based on their genetic relatedness and is not subject to visual manipulation. But we can rote branches around nodes if that eases our visualization.
+
+First we plot our new subset tree with node labels to choose the node we want to manipulate:
+
+```{r, phylogenetic_trees_rotating_1, out.width=c('50%'), fig.show='hold', fig.align='center'}
+
+p <- ggtree(sub_tree2) +  geom_tiplab(size =4) +
+  geom_text2(aes(subset=!isTip, label=node), size =5, color = "darkred", hjust =1, vjust =1) # labels all the nodes in the tree
+p
+```
+
+We can then manipulate nodes by applying **ggtree::rotate()** or **ggtree::flip()**:
+
+```{r, phylogenetic_trees_rotating_2, eval=F, out.width=c('50%'), fig.show='hold', fig.align='center'}
+
+# here we apply the geom_hilight() function to highlight the samples in the nodes we are interested in 
+p1 <- p + geom_hilight(39, "steelblue", extend =0.0015)+  # highlights the node 39 in blue
+geom_hilight(37, "yellow", extend =0.0015)  +             # highlights the node 37 in yellow
+ggtitle("Original tree")
+p1
+
+# we can rotate node 37 so that the samples on node 38 move to the top:
+
+p2 <- rotate(p1, 37)+ggtitle("Rotated Node 37")
+p2
+
+# or we can use the flip command to rotate node 36 and switch node 37 to the top and node 39 to the bottom:
+p3 <-  flip(p1, 39, 37)+ggtitle("Rotated Node 36")
+p3
+
+```
+
+### Example subtree with sample data annotation {-} 
+
+Lets say we are investigating the cluster of cases with clonal expansion which occurred in 2017 and 2018 at node 39 in our sub-tree. We add the year of strain isolation as well as travel history and color by country to see origin of other closely related strains:
+
+```{r, phylogenetic_trees_inspect_subset_example, out.width=c('80%'), fig.show='hold', fig.align='center'}
+
+# Add sample data:
+ggtree(sub_tree2) %<+% sample_data + 
+  geom_tiplab(                          # labels the tips of all branches with the sample name in the tree file
+    size = 2.5,
+    offset = 0.001,
+    align = TRUE) + 
+  theme_tree2()+
+  xlim(0, 0.015)+                       # set the x-axis limits of our tree
+  geom_tippoint(aes(color=Country),     # color the tip point by continent
+                size=1.5)+ 
+  scale_color_brewer(
+    name = "Country", 
+    palette = "Set1", 
+    na.value = "grey")+
+  geom_tiplab(                          # add isolation year
+    aes(label = Year),
+    color='blue',
+    offset = 0.0045,
+    size = 3,
+    linetype = "blank" ,
+    geom = "text",
+    align=TRUE)+ 
+  geom_tiplab(                          # add travel history
+    aes(label = Travel_history),
+    color = 'red',
+    offset = 0.006,
+    size = 3,
+    linetype = "blank",
+    geom = "text",
+    align = TRUE)+ 
+  ggtitle("Phylogenetic tree of Belgian S. sonnei strains with travel history")+  # add plot title
+  xlab("genetic distance (0.001 = 4 nucleotides difference)")+                    # add a label to the x-axis 
+  theme(
+    axis.title.x=element_text(size = 10),
+    axis.title.y=element_blank(),
+    legend.title=element_text(face="bold", size =12),
+    legend.text=element_text(face="bold", size =10),
+    plot.title = element_text(size =12, face="bold"))
+
+```
+
+Our observation points towards an import event of strains from Asia, which then circulated in Belgium over the years and seem to have caused our latest outbreak.
+
+<!-- ======================================================= -->
+
+## More complex trees: adding heatmaps of sample data {}
+
+
+We can add more complex information, such as categorical presence of antimicrobial resistance genes and numeric values for actually  measured resistance to antimicrobials in form of a heatmap using the **ggtree::gheatmap()** function.
+
+First we need to plot our tree (this can be either linear or circular): We will use the sub_tree from part 3.)
+```{r, phylogenetic_trees_sampledata_heatmap, out.width=c('60%'), fig.align='center', fig.show='hold'}
+# A: Circular tree:
+p <- ggtree(sub_tree2, branch.length='none', layout='circular') %<+% sample_data +
+  geom_tiplab(size =3) + 
+ theme(
+   legend.position = "none",
+    axis.title.x=element_blank(),
+    axis.title.y=element_blank(),
+    plot.title = element_text(
+      size = 12,
+      face = "bold",
+      hjust = 0.5,
+      vjust = -15))
+p
+
+```
+
+Second we prepare our data. To visualize different variables with new color schemes, we subset our dataframe to the desired variable.
+
+For example we want to look at gender and mutations that could confer resistance to Ciprofloxacin, an important first line antibiotic used to treat Shigella infections:
+
+```{r, phylogenetic_trees_sampledata_heatmap_data}
+
+# Create your gender dataframe:
+gender <- data.frame("gender" = sample_data[,c("Gender")])
+# Its important to add the Sample_ID as rownames otherwise it cannot match the data to the tree tip.labels:
+rownames(gender) <- sample_data$Sample_ID
+
+# Create your Ciprofloxacin dataframe based on mutations in the gyrA gene:
+cipR <- data.frame("cipR" = sample_data[,c("gyrA_mutations")])
+rownames(cipR) <- sample_data$Sample_ID
+
+# Create your Ciprofloxacin dataframe based on the measured minimum inhibitory concentration (MIC) from the laboratory:
+MIC_Cip <- data.frame("mic_cip" = sample_data[,c("MIC_CIP")])
+rownames(MIC_Cip) <- sample_data$Sample_ID
+
+```
+
+We create a first plot adding a binary heatmap for gender to the phylogenetic tree:
+```{r, phylogenetic_trees_sampledata_heatmap_gender, out.width=c('70%'), fig.show='hold', fig.align='center'}
+
+# First we add gender:
+h1 <-  gheatmap(p, gender, offset = 10, # offset shifts the heatmap to the right,
+                width=0.10, #width defines the width of the heatmap column,
+                color=NULL, #  color defines the boarder of the heatmap columns
+         colnames = FALSE)+ # hides column names for the heatmap
+  scale_fill_manual(name = "Gender", # define the coloring scheme and legend for gender
+                    values = c("#00d1b1", "purple"),
+                    breaks = c("Male", "Female"),
+                    labels = c("Male", "Female"))+
+   theme(legend.position="bottom",
+        legend.title = element_text(size=12),
+        legend.text = element_text(size =10),
+        legend.box="vertical", legend.margin=margin())
+h1
+
+```
+
+Then we add information on mutations in the gyrA gene, which confer resistance to Ciprofloxacin:
+
+Note: The presence of chromosomal point mutations in WGS data was prior determined using the PointFinder tool developed by Zankari et al. (see reference in the additional references section)
+```{r, phylogenetic_trees_sampledata_heatmap_cip_genes, out.width=c('80%'), fig.show='hold', fig.align='center'}
+
+# First we assign a new color scheme to our existing plot, this enables us to define and change the colors for our second variable
+h2 <- h1 + new_scale_fill() 
+
+# then we combine these into a new plot:
+h3 <- gheatmap(h2, cipR,  offset = 12, width=0.10, # adds the second row of heatmap describing Ciprofloxacin resistance mutations
+                colnames = FALSE)+
+  scale_fill_manual(name = "Ciprofloxacin resistance \n conferring mutation",
+                    values = c("#fe9698","#ea0c92"),
+                    breaks = c( "gyrA D87Y", "gyrA S83L"),
+                    labels = c( "gyrA d87y", "gyrA s83l"))+
+   theme(legend.position="bottom",
+        legend.title = element_text(size=12),
+        legend.text = element_text(size =10),
+        legend.box="vertical", legend.margin=margin())+
+  guides(fill=guide_legend(nrow=2,byrow=TRUE))
+h3
+```
+
+Next we add continuous data on actual measured resistance, as determined by the laboratory 
+through establishment of the minimum inhibitory concentration (MIC) of Ciprofloxacin for each strain in the sample set:
+```{r, phylogenetic_trees_sampledata_heatmap_cip_MIC, out.width=c('90%'), fig.show='hold', fig.align='center'}
+# First we add the new coloring scheme:
+h4 <- h3 + new_scale_fill()
+
+# then we combine the two into a new plot:
+h5 <- gheatmap(h4, MIC_Cip,  offset = 14, width=0.10,
+                colnames = FALSE)+
+  scale_fill_continuous(name = "MIC for Ciprofloxacin",
+                      low = "yellow", high = "red",
+                      breaks = c(0, 0.50, 1.00),
+                      na.value = "white")+
+   guides(fill = guide_colourbar(barwidth = 5, barheight = 1))+
+   theme(legend.position="bottom",
+        legend.title = element_text(size=12),
+        legend.text = element_text(size =10),
+        legend.box="vertical", legend.margin=margin())
+h5
+
+```
+
+We can do the same exercise for a linear tree:
+```{r, phylogenetic_trees_sampledata_heatmap_linear_1, out.width=c('80%'), fig.show='hold', fig.align='center'}
+# B: Linear tree:
+p <- ggtree(sub_tree2) %<+% sample_data +
+  geom_tiplab(size =3) + # labels the tips
+  theme_tree2()+
+  xlab("genetic distance (0.001 = 4 nucleotides difference)")+
+  xlim(0, 0.015)+
+ theme(legend.position = "none",
+      axis.title.y=element_blank(),
+      plot.title = element_text(size =12, face="bold",hjust = 0.5, vjust = -15))
+
+
+# First we add gender:
+
+h1 <-  gheatmap(p, gender, offset = 0.003, width=0.1, color="black", 
+         colnames = FALSE)+
+  scale_fill_manual(name = "Gender",
+                    values = c("#00d1b1", "purple"),
+                    breaks = c("Male", "Female"),
+                    labels = c("Male", "Female"))+
+   theme(legend.position="bottom",
+        legend.title = element_text(size=12),
+        legend.text = element_text(size =10),
+        legend.box="vertical", legend.margin=margin())
+h1
+```
+Then we add Ciprofloxacin resistnce mutations after adding another color scheme layer:
+```{r, phylogenetic_trees_sampledata_heatmap_linear_2, out.width=c('80%'), fig.show='hold', fig.align='center'}
+
+h2 <- h1 + new_scale_fill()
+h3 <- gheatmap(h2, cipR,  offset = 0.004, width=0.1,color="black",
+                colnames = FALSE)+
+  scale_fill_manual(name = "Ciprofloxacin resistance \n conferring mutation",
+                    values = c("#fe9698","#ea0c92"),
+                    breaks = c( "gyrA D87Y", "gyrA S83L"),
+                    labels = c( "gyrA d87y", "gyrA s83l"))+
+   theme(legend.position="bottom",
+        legend.title = element_text(size=12),
+        legend.text = element_text(size =10),
+        legend.box="vertical", legend.margin=margin())+
+  guides(fill=guide_legend(nrow=2,byrow=TRUE))
+ h3
+```
+
+Then we add the minimum inhibitory concentration determined by the laboratory (MIC):
+```{r, phylogenetic_trees_sampledata_heatmap_linear_3, out.width=c('80%'), fig.show='hold', fig.align='center'}
+
+h4 <- h3 + new_scale_fill()
+h5 <- gheatmap(h4, MIC_Cip, offset = 0.005, width=0.1, color="black", 
+                colnames = FALSE)+
+  scale_fill_continuous(name = "MIC for Ciprofloxacin",
+                      low = "yellow", high = "red",
+                      breaks = c(0,0.50,1.00),
+                      na.value = "white")+
+   guides(fill = guide_colourbar(barwidth = 5, barheight = 1))+
+   theme(legend.position="bottom",
+        legend.title = element_text(size=10),
+        legend.text = element_text(size =8),
+        legend.box="horizontal", legend.margin=margin())+
+  guides(shape = guide_legend(override.aes = list(size = 2)))
+h5
+
+```
+
+
+<!-- ======================================================= -->
+## Resources {}
+
+http://hydrodictyon.eeb.uconn.edu/eebedia/index.php/Ggtree# Clade_Colors
+https://bioconductor.riken.jp/packages/3.2/bioc/vignettes/ggtree/inst/doc/treeManipulation.html
+https://guangchuangyu.github.io/ggtree-book/chapter-ggtree.html
+https://bioconductor.riken.jp/packages/3.8/bioc/vignettes/ggtree/inst/doc/treeManipulation.html
+
+Ea Zankari, Rosa Allesøe, Katrine G Joensen, Lina M Cavaco, Ole Lund, Frank M Aarestrup, PointFinder: a novel web tool for WGS-based detection of antimicrobial resistance associated with chromosomal point mutations in bacterial pathogens, Journal of Antimicrobial Chemotherapy, Volume 72, Issue 10, October 2017, Pages 2764–2768, https://doi.org/10.1093/jac/dkx217
+
 
 ```{r include=FALSE, cache=FALSE}
 
@@ -467,5 +855,5 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 options(scipen=1, digits=3)
 ```
 
-<!--chapter:end:new_pages/reportfactory.Rmd-->
+<!--chapter:end:new_pages/phylogenetic_trees.Rmd-->
 
