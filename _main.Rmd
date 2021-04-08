@@ -81,7 +81,7 @@ You can also submit an issue or pull request at our [Github repository](https://
 
 ### Contributors {-}  
 
-This book is produced by a collaboration of epidemiologists from around the world, drawing upon experiences with organizations including local/state/provincial/national health departments and ministries, the World Health Organization (WHO), MSF (Médecins Sans Frontières / Doctors without Borders), hospital systems, and academic institutions.
+This book is produced by a collaboration of epidemiologists from around the world, drawing upon experiences with organizations including local, state, provincial, and national health departments and ministries, the World Health Organization (WHO), MSF (Médecins Sans Frontières / Doctors without Borders), hospital systems, and academic institutions.
 
 **Editor-in-Chief:** Neale Batra 
 
@@ -207,795 +207,224 @@ options(scipen=1, digits=3)
 <!--chapter:end:new_pages/cat_preview.Rmd-->
 
 
-# Iteration and loops { }  
+# Routine reports {  }  
 
-PAGE IS CURRENTLY UNDER CONSTRUCTION
+This page will cover the **reportfactory** package. **reportfactory** is a package developed by RECON (R Epidemics Consortium).  
 
-This page will introduce two approaches to iterative operations - using *for loops* and using the package **purrr**. Iterative operations help you perform repetitive tasks, reduce the chances of error, reduce code length, and maximize efficiency.  
-
-1) **purrr** facilitates "mapping" a function across many inputs (columns, datasets, etc.)  
-
-2) *for loops* also iterate code across a series of inputs, but are less common in R than in other programming languages because R can wrap up such processes into functions  
+**reportfactory** is an *accompaniment to using R Markdowns for reports*. It is built for scenarios where you are running routine reports (daily, weekly, etc.). It makes easier the organization and compilation of multiple R Markdown files and their outputs. In essence, it provides a "factory" from which you can run the Rmd reports and automatically get organized date- and time-stamped folders with the outputs.  
 
 
-<!-- ======================================================= -->
-## Preparation {  }
+## Preparation
 
+### Packages {-}  
 
-### Load packages {-}  
+To begin, we install and/or load the **reportfactory** package from CRAN.  
 
-This code chunk shows the loading of packages required for the analyses. In this handbook we emphasize `p_load()` from **pacman**, which installs the package if necessary and loads it for use. You can also load packages with `library()` from **base** R. See the page on [R basics] for more information on R packages.  
-
-```{r}
-pacman::p_load(
-     rio,         # import/export
-     here,        # file locator
-     purrr,       # iteration
-     tidyverse    # data management and visualization
-)
+```{r, eval=FALSE}
+pacman::p_load(reportfactory)
 ```
 
+### R project {-} 
 
-### Import data {-}  
+Open a new R project, or have an existing one. See the page on [R projects] for instructions on how to create an R project. The report factory will live within the R project.  
 
-We import the dataset of cases from a simulated Ebola epidemic. If you want to download the data to follow step-by-step, see instructions in the [Download book and data] page. The dataset is imported using the `import()` function from the **rio** package. See the page on [Import and export] for various ways to import data.
+Below, we have created an R project called "demo_factory". Currently there are no other files within the project.  
 
-```{r, echo=F}
-# import the linelist into R
-linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
+
+```{r, warning=F, message=F, echo=F}
+knitr::include_graphics(here::here("images", "factory_new1.png"))
+```
+
+## New factory  
+
+Adding a new report factory will add a self-contained folder to the R project. Below we will create a factory within the empty "demo_factory" R project. The report factory itself will be called "new_factory" (the default name - this can be changed).  
+
+1) Within the R project, load the **reportfactory** package by entering `library(reportfactory)` or `pacman::p_load(reportfactory)` into the console.  
+2) Run the function `new_factory()`. The factory will be added as a folder to the R project root folder by default.  
+
+```{r, eval=F}
+# This will create the factory folder in the current directory
+new_factory()
 ```
 
 ```{r, eval=F}
-# import the linelist
-linelist <- import("linelist_cleaned.xlsx")
+# Alternatively, you can specify that the factory be made at a specific file path
+new_factory(path = "C:/R handbook/demo_factory")
 ```
 
-The first 50 rows of the linelist are displayed below.
+Below see that the folder "new_factory" has been created
+
+```{r, warning=F, message=F, echo=F}
+knitr::include_graphics(here::here("images", "factory_new2.png"))
+```
+
+There are several defaults that you can change in the `new_factory()` command:  
+
+* `factory = ` - you can provide a name for the factory folder. The default is as shown above: "new_factory".  
+* `path = ` - as shown above, you can designate a file path for the new factory. The default is the current directory.  
+* `report_sources = ` You can provide an alternate name for the folder which holds the R Markdown scripts that create the reports. The default is "report_sources".  
+* `outputs = ` You can provide an alternate name for the folder which holds the output reports. The default is "outputs".  
+
+See `?new_factory` for a complete list of the function arguments.  
+
+
+## Review the factory  
+
+Looking inside the "new_factory" folder we can see that sub-folders were created automatically. You can adjust in the `new_factory()` command if you do not want these sub-folders to be created.    
+
+* The *report_sources* folder should hold your R Markdown scripts, which generate your reports  
+* The *outputs* folder will the report outputs (e.g. HTML, Word, PDF, etc.) - it will contain automatically-generated sub-folder organized by report and date-time stamp  
+* The *scripts* folder can be used to store other R scripts that can be sourced/run by the R Markdown scripts (optional)  
+* The *data* folder can be used to hold your data (optional)  
+* A *.here* file was created, so now can reference any files in the sub-folders by their relation to this factory root folder (see [R projects] for more details about the **here** package)  
+* A *gitignore* file was created in case you decide to link this to a Github repository (see [Collaboration with Github])  
+* An empty README markdown file was created, to assist if using a Github repository  
+
+```{r, warning=F, message=F, echo=F}
+knitr::include_graphics(here::here("images", "factory_new3.png"))
+```
  
-
-```{r, message=FALSE, echo=F}
-# display the linelist data as a table
-DT::datatable(head(linelist, 50), rownames = FALSE, options = list(pageLength = 5, scrollX=T), class = 'white-space: nowrap')
-```
-
-
-
-<!-- ======================================================= -->
-## **purrr** { }
-
-One approach to iterative operations is the **purrr** package. If you are faced with performing the same task several times, it is probably worth creating a generalised solution that you can use across many inputs. For example, producing plots for multiple jurisdictions, or importing and combining many files.  
-
-If you are using a *for loop*, you can probably do it more cleanly with **purrr**! 
-
-### Load packages {-}  
-
-**purrr** is part of the **tidyverse**, so there is no need to install/load a separate package.  
-
-```{r}
-pacman::p_load(
-  rio,            # import/export
-  here,           # relative filepaths
-  tidyverse,      # data mgmt and viz
-  writexl,        # write Excel file with multiple sheets
-  readxl          # import Excel with multiple sheets
-  )
-```
-
-
-### `map()` {-}  
-
-One core **purrr** function is `map()`, which "maps" (applies) a function to each input element you provide.  
-The basic syntax is `map(.x = SEQUENCE, .f = FUNCTION, OTHER ARGUMENTS)`. In a bit more detail:  
-
-* `.x = ` are the inputs upon which the `.f` function will be iteratively applied - e.g. a vector of jurisdiction names, columns in a data frame, or a list of data frames  
-* `.f = ` is the function to apply to each element of the `.x` input - it could be a function you define. It is written after a tilde `~`. 
-
-A few more notes on syntax:  
-
-* If `.f` needs no arguments specified, it can be written with no parentheses (e.g. `map(.x, ~mean)`)  
-* To provide arguments that will be the same value for each iteration, provide them outside the `.f` function `map(.x ~mean, na.rm=T)`   
-* If the value of an argument will change each iteration, or is the value of `.x` itself, provide it within the `.f` function parentheses  
-  * You can use `.x` (or simply `.`) *within* the `.f` function as a placeholder for the `.x` value of that iteration  
-
-
-**Let's demonstrate with a common epidemiologist task:** *you want to import an Excel workbook with case data, but the data are split across different named sheets in the workbook. How do you efficiently import and combine the sheets into one data frame?*  
-
-Let's say we are sent the below Excel workbook. Each sheet contains cases from a given hospital.  
-
-```{r, fig.align = "center", echo=F}
-knitr::include_graphics(here::here("images", "hospital_linelists_excel_sheets.png"))
-```
-
-Here is one approach that uses `map()`:  
-
-1) `map()` the function `import()` on to each Excel sheet  
-2) Combine the data frames into one using `bind_rows()`  
-3) Along the way, we preserve the sheet name of origin for each case, storing this in a new column in the data frame  
-
-First, we need to extract the sheet names and save them. We provide the Excel workbook's file path to the function `excel_sheets()` from the package **readxl**, which extracts the sheet names. We store them in a character vector called `sheet_names`.  
-
-```{r, echo=F}
-sheet_names <- readxl::excel_sheets(here("data", "hospital_linelists.xlsx"))
-
-```
-
+Within R, you can run a command to see the structure (folders and files) in the report factory.  
 
 ```{r, eval=F}
-sheet_names <- readxl::excel_sheets("hospital_linelists.xlsx")
+reportfactory::factory_overview()
 ```
 
-Here are the names:  
+The following "tree" of the factory's folders and files is printed to the R console. You can see that there sub-folders for "raw" and "clean" data, some example CSV data. There is also an "example_report.Rmd" in the "report_sources" folder.    
 
-```{r}
-sheet_names
+```{r, warning=F, message=F, echo=F}
+knitr::include_graphics(here::here("images", "factory_overview.png"))
 ```
 
-Now that we have this vector of names, `map()` can provide them one-by-one to the function `import()`. In this example, the `sheet_names` are `.x` and `import()` is the function `.f`.  
 
-Recall from the [Import and export] page that when used on Excel workbooks, `import()` can accept the argument `which = ` specifying the sheet to import. Within the `.f` function (`import()`), we provide `which = .x`, whose value will change with each iteration through the vector `sheet_names` - first "Central Hospital", then "Military Hospital", etc.  
+## Create a report  
 
-Of note - because we have used `map()`, the data in each Excel sheet will be saved into R as a separate data frame within a List. We want each of these list elements (data frames) to have a *name*, so before we pass `sheet_names` to `map()` we pass it through `set_names()`, which ensures that each list elements gets the appropriate name.  
+For purposes of example, we create a new R markdown script entitled "daily_sitrep.Rmd" and save it within the "report_sources" folder of the report factory. In it, the case linelist is imported from the "data" folder, summary tables and epicurves are printed in the report HTML output and exported as .csv and .png files respectively.
 
-We save the output List as `combined`.  
-
-```{r, echo=F}
-combined <- sheet_names %>% 
-  set_names() %>% 
-  map(.f = ~import(here("data", "hospital_linelists.xlsx"), which = .x))
-```
+We also have added the data for the report ("linelist_cleaned.rds") to the "clean" sub-folder within the "data" folder. The new R Markdown script can source this data with the following command. To read more about importing data with the **rio** package and the **here** package see the page on [Import and export].  
 
 ```{r, eval=F}
-combined <- sheet_names %>% 
-  set_names() %>% 
-  map(.f = ~import("hospital_linelists.xlsx", which = .x))
+linelist <- import(here("data", "clean", "linelist_cleaned.rds"))
 ```
 
-When we inspect the `combined` List output, we see that the data from each Excel sheet is saved as *named* data frames within the List. This is good, but we are not quite finished.  
+Below is a screenshot of the beginning of the new R Markdown "daily_sitrep.Rmd". You can see that the output format is set to be HTML, via the YAML header `output: html_document`. Later in the report, there are commands to:  
 
-```{r, fig.align = "center", echo=F}
-knitr::include_graphics(here::here("images", "sheets_as_list.png"))
+* Print a summary table of cases, also exporting the table as a .csv file  
+* Print an epicurve, also saving it as a .png image file  
+
+```{r, warning=F, message=F, echo=F}
+knitr::include_graphics(here::here("images", "factory_new_rmd.png"))
 ```
 
-Lastly, we use the function `bind_rows()` (from **dplyr**) which accepts the list of data frames and combines them into one data frame. To create a column from the list element *names*, we use the argument `.id = ` and provide it with the desired name of the new column.  
+We can now see in the factory overview that a Rmd has been added to "report_sources" and the data file has been added as well (highlighted):
 
-Below is the whole sequence of commands:  
-
-```{r, echo=F}
-sheet_names <- readxl::excel_sheets(here("data", "hospital_linelists.xlsx"))
-
-combined <- sheet_names %>% 
-  set_names() %>% 
-  map(.f = ~import(here("data", "hospital_linelists.xlsx"), which = .x)) %>% 
-  bind_rows(.id = "origin_sheet")
+```{r, warning=F, message=F, echo=F}
+knitr::include_graphics(here::here("images", "factory_overview2.png"))
 ```
 
+## Review
+
+You can review the R Markdown reports in the report_sources folder with this command:  
 
 ```{r, eval=F}
-sheet_names <- readxl::excel_sheets("hospital_linelists.xlsx")
-
-combined <- sheet_names %>% 
-  set_names() %>% 
-  map(.f = ~import("hospital_linelists.xlsx", which = .x)) %>% 
-  bind_rows(.id = "origin_sheet")
-```
-
-And now we have one data frame with a column containing the sheet of origin! 
-```{r, fig.align = "center", echo=F}
-knitr::include_graphics(here::here("images", "sheets_as_df.png"))
-```
-
-There are variations of `map()` that you should be aware of. For example - `map_dfr()` returns a data frame, not a list. Thus, we could have used it for the task above and not have to bind rows. But then we would not have been able to capture which sheet (hospital) each case came from.  
-
-Other variations include `map_chr()`, `map_dbl()`, and `map_if()`. TO DO - MORE EXPLANATION  
-
-
-
-### Mapping a function across columns {-}  
-
-Another common use-case is to map a function across many columns. Below, we `map()` the function `t.test()` across numeric columns in the data frame `linelist`, comparing the numeric values by gender.  
-
-Recall from the page on [Simple statistical tests] that `t.test()` can take inputs in a formula format, such as `t.test(numeric column ~ binary column)`. In this example, we do the following:    
-
-* The numeric columns of interest are selected from `linelist` - these become the `.x` inputs to `map()`  
-* The function `t.test()` is supplied as the `.f` function, which is applied to each numeric column  
-* Within the parentheses of `t.test()`:  
-  * the first `~` preceedes the `.f` that map will iterate over `.x`  
-  * the `.x` represents the current column being supplied to the function `t.test()`  
-  * the second `~` is part of the t-test equation described above  
-  * the `t.test()` function expects a binary column on the right-hand side of the equation. We supply the vector `linelist$gender` independently and statically (note that it is not included in `select()`).  
-  
-`map()` returns a List, so the output is a list of t-test results - one list element for each numeric column analysed.  
-
-
-```{r}
-# Results are saved as a list
-t.test_results <- linelist %>% 
-  select(age, wt_kg, ht_cm, ct_blood, temp) %>%  # keep only the numeric columns to map across
-  map(.f = ~t.test(.x ~ linelist$gender))        # t.test function, with equation NUMERIC ~ CATEGORICAL
-```
-
-Here is what the list `t.test_results` looks like when opened (Viewed) in RStudio. We have highlighted parts that are important for the examples in this page.  
-
-* You can see at the top that the whole list is named `t.test_results` and has five elements. Those five elements are named `age`, `wt_km`, `ht_cm`, `ct_blood`, `temp` after each variable that was used in a t-test with `gender` from the `linelist`.  
-* Each of those five elements are themselves lists, with elements within them such as `p.value` and `conf.int`. Some of these elements like `p.value` are single numbers, whereas some such as `estimate` consist of two or more elements (`mean in group f` and `mean in group m`).  
-
-```{r, fig.align = "center", echo=F}
-knitr::include_graphics(here::here("images", "purrr_ttest.png"))
+list_reports()
 ```
 
 
-Note:  
-Remember that if you want to apply a function to only certain columns in a data frame, you can also use `mutate()` and `across()`, as explained in the [Cleaning data and core functions] page. Below is an example of applying `as.character()` to only the "age" columns. Note the placement of the parentheses and commas.  
+
+## Compile  
+
+In a report factory, to "compile" a R Markdown report means that the .Rmd will be rendered (as HTML, Word, PDF, etc - however it is indicated in the YAML of the Rmd script). The report factory will auto-create a date- and time-stamped folder for the output in the "outputs" folder. The output and any exported files (e.g. csv, png, xlsx, etc. will be saved in this folder. The Rmd itself will also be saved in this folder, so you have a record of that version of the Rmd, as it was at that moment.  
+
+This contrasts with the normal behavior of a rendered R Markdown, which will save to the location of the .Rmd. This default behavior can result in crowded, messy folders. The report factory aims to improve organization when one needs to run reports frequently.  
+
+### Compile by name {-}  
+
+You can compile a specific report by running `compile_reports()` and providing the name (without .rmd extension) to `reports = `. Below, this command would compile only the "daily_sitrep.rmd" report, rendering the HTML and saving all the products into a date- and time-stamped sub-folder specific to the report, within the "outputs" folder.  
+
+```{r, warning=F, message=F, echo=F}
+knitr::include_graphics(here::here("images", "factory_compile1.png"))
+```
+Note that when you compile, you will see several files temporarily appear in the "report_sources" folder - but they will soon disappear. 
+
+### Compile by number {-}
+
+You can also specify the Rmd to compile by feeding a number or vector of numbers to `reports = `. The numbers must align with the order the reports appear when you run `list_reports()`.  
 
 ```{r, eval=F}
-# convert columns with column name containing "age" to class Character
-linelist <- linelist %>% 
-  mutate(across(.cols = contains("age"), .fns = as.character))  
+# Run the second and fourth Rmds in the "report_sources" folder
+compile_reports(reports = c(2, 4))
+```
+
+### Compile by folder {-}  
+
+You can add sub-folders to the "report_sources" folder. To run an R Markdown report from a subfolder, simply provide the name of the folder to `subfolder = `. Below is an example of code to compile a Rmd report that lives in a sub_folder of "report_sources".  
+
+```{r, eval=F}
+compile_reports(
+     reports = "summary_for_partners.Rmd",
+     subfolder = "for_partners")
 ```
 
 
-### Extract from list {-}  
+### Compile all {-}
 
-As `map()` produces an output of class List, we will spend some time discussing how to extract data from lists using accompanying **purrr** functions. To demonstrate this, we will use the list `t.test_results` from the previous section. This is a list of 5 lists - each of the 5 lists contains the results of a t-test between the a column from `linelist` data frame and its binary column `gender`. See the image in the section above for a visual of the list structure.  
+You can compile *all* the R Markdown reports in the "report_sources" folder by setting the `reports = ` argument to TRUE.  
 
-#### Names of elements {-}  
-
-To extract the names of the elements themselves, simply use `names()` from **base** R. In this case, we use `names()` on `t.test_results` to return the names of each sub-list, which are the names of the 5 variables that had t-tests performed.  
-
-```{r}
-names(t.test_results)
-```
-
-#### Elements by name or position {-}  
-
-To extract list elements by name or by position you can use brackets `[[ ]]` as described in the [R Basics] page. Below we use double brackets to index the list `t.tests_results` and display the first element which is the results of the t-test on `age`.  
-
-```{r}
-t.test_results[[1]] # first element by position
-t.test_results[[1]]["p.value"] # return element named "p.value" from first element  
-```
-
-However, below we will use **purrr** functions `map()` and `pluck()` to achieve the same outcomes.  
-
-1) `pluck()` pulls out elements by name or by position  
-
-For example - to extract the t-test results for age, you can use `pluck()` like this:  
-
-```{r}
-t.test_results %>% 
-  pluck("age")        # alternatively, use pluck(1)
-```
-Index deeper levels by specifying the further levels with commas. The below extracts the element named "p.value" from the list `age` within the list `t.test_results`.  
-
-```{r}
-t.test_results %>% 
-  pluck("age", "p.value")
-```
-
-You can extract such inner elements from *all* first-level elements by using `map()` to run the `pluck()` function across each first-level element. For example, the below code extracts the "p.value" elements from all lists within `t.test_results`.  
-
-```{r}
-t.test_results %>%
-  map(pluck, "p.value")   # return every p-value
-```
-As another alternative, `map()` offers a shorthand where you can write the element name in quotes, and it will pluck it out. If you use `map()` the output will be a List, whereas if you use `map_chr()` it will be a named character vector and if you use `map_dbl()` it will be a named numeric vector.  
-
-```{r}
-t.test_results %>% 
-  map_dbl("p.value")   # return p-values as a named numeric vector
+```{r, warning=F, message=F, echo=F}
+knitr::include_graphics(here::here("images", "factory_compile_all.png"))
 ```
 
 
-### Convert list to data frame {-}  
+### Parameterization {-}
 
-This is a complicated topic - see the Resources section for more complete tutorials. Nevertheless, we will demonstrate converting the list of t-test results into a data frame. We will create a data frame with columns for the variable, its p-value, and the means from the two groups (male and female).  
+As noted in the page on [R Markdown], you can run reports with specified parameters. You can pass these parameters as a list to `compile_reports()` via the `params = ` argument. For example, in this fictional report there are three parameters provided to the R Markdown reports.  
 
-Here are some of the new approaches and functions that will be used:  
-
-* The function `tibble()` will be used to create a tibble (like a data frame)  
-  * We surround the `tibble()` function with curly brackets `{ }` to prevent the entire `t.test_results` from being stored as the first tibble column  
-* Within `tibble()`, each column is created explicitly, similar to the syntax of `mutate()`:  
-  * The `.` represents `t.test_results`
-  * To create a column with the variable names (the list names) we use `names()` as described above  
-  * To create a column with the p-values we use `map_dbl()` as described above to pull the `p.value` elements and convert them to a numeric vector  
-
-```{r}
-t.test_results %>% {
-  tibble(
-    variables = names(.),
-    p         = map_dbl(., "p.value"))
-  }
-```
-
-But now let's say we want to add columns containing the means for each group (males and females). We would need to extract the element `estimate`, but this actually contains *two* elements within it (`mean in group f` and `mean in group m`). So it cannot be simplified into a vector with `map_chr()` or `map_dbl()`. Instead, we use `map()`, which will create *a column of class List within the tibble*! Yes, this is possible!  
-
-```{r}
-t.test_results %>% 
-  {tibble(
-    variables = names(.),
-    p = map_dbl(., "p.value"),
-    means = map(., "estimate"))}
-```
-
-Once you have this list column, there are several **tidyr** functions (part of **tidyverse**) that help you "rectangle" or "un-nest" these "nested list" columns. Read more about them [here](), or by running `vignette("rectangle")`. In brief:  
-
-* `unnest_wider()` - gives each element of a list-column its own column  
-* `unnest_longer()` - gives each element of a list-column its own row
-* `hoist()` - acts like `unnest_wider()` but you specify which elements to unnest  
-
-Below, we pass the tibble to `unnest_wider()` specifying the `means` column (which is a nested list). The result is that `means` is replaced by two new columns, each reflecting the two elements that were previously in each `means` cell.  
-
-```{r}
-t.test_results %>% 
-  {tibble(
-    variables = names(.),
-    p = map_dbl(., "p.value"),
-    means = map(., "estimate")
-    )} %>% 
-  unnest_wider(means)
-```
-
-You can read more about `pluck()` in it's **purrr** [documentation](https://purrr.tidyverse.org/reference/pluck.html). It has a sibling function `chuck()` that will return an error instead of NULL if an element does not exist.  
-
-
-### Custom functions {-}  
-
-You will often want to create your own function to provide to `map()`. One example of making a purely custom plotting function to provide to `map()` is shown below.  
-
-Let's say we want to create epidemic curves for each hospital's cases. To do this using **purrr**, our `.f` function can be `ggplot()` and extensions with `+` as usual. As the output of `map()` is always a list, the plots are stored in a list. They can be extracted and plotted with the `ggarrange()` function from the **ggpubr** package ([documentation](https://rpkgs.datanovia.com/ggpubr/reference/ggarrange.html)).  
-
-
-```{r, message = F, warning=F}
-
-# load package for plotting elements from list
-pacman::p_load(ggpubr)
-
-# map across the vector of 6 hospital "names" (created earlier)
-# use the ggplot function specified
-# output is a list with 6 ggplots
-
-hospital_names <- unique(linelist$hospital)
-
-my_plots <- map(
-  .x = hospital_names,
-  .f = ~ggplot(data = linelist %>% filter(hospital == .x))+
-                geom_histogram(aes(x = date_onset)) +
-                labs(title = .x)
+```{r, eval=F}
+compile_reports(
+  reports = "daily_sitrep.Rmd",
+  params = list(most_recent_data = TRUE,
+                region = "NORTHERN",
+                rates_denominator = 10000),
+  subfolder = "regional"
 )
-
-# print the ggplots (they are stored in a list)
-ggarrange(plotlist = my_plots, ncol = 2, nrow = 3)
 ```
 
-If this code style looks too messy, you can achieve the same result by saving your specific `ggplot()` command as a custom user-defined function, for example we can name it `make_epicurve())`. This function is then used within the `map()`. `.x` will be iteratively replaced by the hospital name, and used as `hosp_name` in the `make_epicurve()` function. See the page on [Writing functions].
+## Outputs  
 
-```{r, eval=F}
-make_epicurve <- function(hosp_name){
-  
-  ggplot(data = linelist %>% filter(hospital == hosp_name)) +
-    geom_histogram(aes(x = date_onset)) +
-    theme_classic()+
-    labs(title = hosp_name)
-  
-}
-```
+After we have compiled the reports are few times, the "outputs" folder might look like this (highlights added for clarity):  
 
-```{r, eval=F}
-# mapping
-my_plots <- map(hospital_names, ~make_epicurve(hosp_name = .x))
-
-# print the ggplots (they are stored in a list)
-ggarrange(plotlist = my_plots, ncol = 2, nrow = 3)
+* Folders have been created for the outputs of each Rmd report  
+* Sub-folders have been created for each unique compiling - these folders are date- and time-stamped  
+* Within each date/time compiled folder, the rendered output is stored (HTML, PDF, Word, etc.) along with the Rmd and any other exported files from the rendering (e.g. csv, png)  
+```{r, warning=F, message=F, echo=F}
+knitr::include_graphics(here::here("images", "factory_overview_all.png"))
 ```
 
 
 
-### Split datasets {-}  
+## Review  
 
-#### Split dataset and export CSV files {-}  
-
-Here is a more complex **purrr** `map()` example that involves splitting a dataset and mapping functions to each part.  
-
-Let's say we have the complete case `linelist` as a data frame, and  we now want to create a separate linelist for each hospital and export each as a separate CSV file. Below, we do the following steps:  
-
-Use `group_split()` (from **dplyr**) to split the `linelist` data frame by unique values in column `hospital`. The output is a List containing one data frame per hospital subset.  
-
-```{r}
-linelist_split <- linelist %>% 
-  group_split(hospital)
-```
-
-You can `View(linelsit_split)` and see that this list contains 6 data frames, each representing the cases from one hospital. 
-
-```{r, fig.align = "center", echo=F}
-knitr::include_graphics(here::here("images", "purrr_linelist_split.png"))
-```
-
-However, note that the data frames in the list do not have names by default! We want each to have a name, and then to use that name when saving the CSV file.  
-
-So, we use `pull()` (from **purrr**) to extract the `hospital` column from each data frame in the list. Then, to be safe, we convert the values to character and then use `unique()` to get the name for that particular dataset. All of these steps are applied to each data frame via `map()`  
+You can use `list_outputs()` to review a list of the outputs.  
 
 
-```{r}
-names(linelist_split) <- linelist_split %>%   # Assign the names of each data frame in the list linelist_split 
-                                              # Extract the names by doing the following to each data frame: 
-  map(.f = ~pull(.x, hospital)) %>%             # Pull out hospital column
-  map(.f = ~as.character(.x)) %>%               # Convert to character
-  map(.f = ~unique(.x))                         # Take the unique hospital name
-```
+## Extras  
 
-We can now see that each of the list elements has a name. These names can be accessed via `names(linelist_split)`.  
+* With **reportfactory**, you can use the function `list_deps()` to list all packages required across all the reports in the entire factory.  
 
-```{r, fig.align = "center", echo=F}
-knitr::include_graphics(here::here("images", "purrr_linelist_split_named.png"))
-```
-
-```{r}
-names(linelist_split)
-```
-
-Lastly, we will export each data frame as a .csv file, with a name specific to the hospital. Again we use `map()`: we take the vector of list element names (shown above) and use `map()` to iterate through them, applying `export()` (from **rio** package, see [Import and export] page) on the data frame in the list `linelist_split` that has that name. We also use the name to create a unique file name. Here is how it works:  
-
-* We begin with the vector of character names, passed to `map()` as `.x`  
-* The `.f` function is `export()` , which requires a data frame and a file path to write to  
-* The input `.x` (the hospital name) is used *within* `.f` to extract/index that specific element of `linelist_split` list. This results in only one data frame at a time being provided to `export()`.  
-  * For example, when `map()` iterates for "Military Hospital", then `linelist_split[[.x]]` is actually `linelist_split[["Military Hospital"]]`, thus returning the second element of `linelist_split` - which is all the cases from that Military Hospital.  
-* The file path provided to `export()` is dynamic via use of `str_glue()` (see [Characters and strings] page):  
-  * `here()` is used to get the base of the file path and specify the "data" folder (note single quotes to not interrupt the `str_glue()` double quotes)  
-  * Then a slash `/`, and then again the `.x` which prints the current hospital name to make the file identifiable  
-  * Finally the extension ".csv" which `export()` uses to create a CSV file  
-  
-```{r, eval=F, message = F, warning=F}
-names(linelist_split) %>%
-  map(.f = ~export(linelist_split[[.x]], file= str_glue("{here('data')}/{.x}.csv")))
-```
-Now you can see that each file is saved in the "data" folder of the R Project "Epi_R_handbook"!  
-
-```{r, fig.align = "center", echo=F}
-knitr::include_graphics(here::here("images", "purrr_export_csv.png"))
-```
-
-
-#### Split dataset and export as Excel sheets {-}  
-
-To export the hospital linelists as *an Excel workbook with one linelist per sheet*, we can just provide the named list `linelist_split` to the `write_xlsx()` function from the **writexl** package. This has the ability to save one Excel workbook with multiple sheets. The list element names are automatically applied as the sheet names.  
-
-```{r, eval=F}
-linelist_split %>% 
-  writexl::write_xlsx(path = here("data", "hospital_linelists.xlsx"))
-```
-
-You can now open the Excel file and see that each hospital has its own sheet.  
-
-```{r, fig.align = "center", echo=F}
-knitr::include_graphics(here::here("images", "purrr_export_sheets.png"))
-```
-
-#### More than one `group_split()` column {-}  
-
-If you wanted to split the linelist by *more than one grouping column*, such as to produce subset linelist by intersection of hospital AND gender, you will need a different approach to naming the list elements. This involves collecting the unique "group keys" using `group_keys()` from **dplyr** - they are returned as a data frame. Then you can combine the group keys into values with `unite()` as shown below, and assign these conglomerate names to `linelist_split`.  
-
-
-```{r}
-# split linelist by unique hospital-gender combinations
-linelist_split <- linelist %>% 
-  group_split(hospital, gender)
-
-# extract group_keys() as a dataframe
-groupings <- linelist %>% 
-  group_by(hospital, gender) %>%       
-  group_keys()
-
-groupings      # show unique groupings 
-```
-
-Now we combine the groupings together, separated by dashes, and assign them as the names of list elements in `linelist_split`. This takes some extra lines as we replace `NA` with "Missing", use `unite()` from **dplyr** to combine the column values together (separated by dashes), and then convert into an un-named vector so it can be used as names of `linelist_split`.  
-
-```{r, eval=F}
-# Combine into one name value 
-names(linelist_split) <- groupings %>% 
-  mutate(across(everything(), replace_na, "Missing")) %>%  # replace NA with "Missing" in all columns
-  unite("combined", sep = "-") %>%                         # Unite all column values into one
-  setNames(NULL) %>% 
-  as_vector() %>% 
-  as.list()
-```
-
-
-### `pmap()` {-}
-
-THIS SECTION IS UNDER CONSTRUCTION  
+* There is an accompanying package in development called **rfextras** that offers more helper functions to assist you in building reports, such as:  
+  * `load_scripts()` - sources/loads all .R scripts in a given folder (the "scripts" folder by default)  
+  * `find_latest()` - finds the latest version of a file (e.g. the latest dataset)
 
 
 
 
 <!-- ======================================================= -->
-## *for loops* {  }
+## Resources {  }
 
-As an epidemiologist, it is a common need to repeat analyses on sub-groups (e.g. jurisdictions or sub-populations). Iterating with a *for loop* is one method to automate this process.
+See the **reportfactory** package's [Github page](https://github.com/reconverse/reportfactory)
 
-A *for loop* has three core parts:  
-
-1) The **container** for the results (optional)  
-2) The **sequence** of items to iterate through  
-3) The **operations** to conduct per item in the sequence  
-
-The basic syntax is: `for (item in sequence) {do operations using item}`. Note the parentheses and the curly brackets. The results could be printed to console, or stored in a container R object.   
-
-
-### Container {-}
-
-Sometimes the results of your *for loop* will be printed to the console or Plots pane. Other times, you will want to store the outputs in a container for later use. Such a container could be a vector, a data frame, or even a list.  
-
-It is most efficient to create the container for the results *before* even beginning the *for loop*. In practice, this means creating an empty vector, data frame, or list. These can be created with the functions `vector()` for vectors or lists, or with `matrix()` and `data.frame()` for a data frame. 
-
-**Empty vector**  
-Say you want to store the median delay-to-admission for each hospital in a new vector. Use `vector()` and specify the class as either "double" (to hold numbers), "character", or "logical". In this case we would use "double" and set the length to be the number of expected outputs (length of the *sequence*, or in this case the number of unique hospitals in the data set).  
-
-```{r}
-delays <- vector(mode = "double",
-                 length = length(unique(linelist$hospital))) # this is the number of unique hospitals in the dataset
-```
-
-**Empty data frame**  
-
-You can make an empty data frame by specifying the number of rows and columns like this:  
-
-```{r, eval=F}
-delays <- data.frame(matrix(ncol = 2, nrow = 3))
-```
-
-
-**Empty list**  
-
-Say you want to store some plots created by a *for loop* in a list. You actually initialize the container using the same `vector()` command as above, but with `mode = "list"`. Specify the length however you wish.  
-
-```{r, eval=F}
-plots <- vector(mode = "list", length = 16)
-```
-
-
-
-
-
-### Sequence {-}  
-
-This is the "for" part of a *for loop* - the operations will run for each item in the sequence. The sequence can be a series of character values (e.g. of jurisdictions, diseases, etc), or R object names (e.g. column names or list element names), or the sequence can be a series of consecutive numbers (e.g. 1,2,3,4,5). Each approach has their own utilities, described below.  
-
-**Sequence of character values**  
-
-In this case, the loop is applied for each value in a character vector.  
-```{r}
-# make vector of the hospital names
-hospital_names <- unique(linelist$hospital)
-hospital_names # print
-```
-
-The value of the "item", whose value changes each iteration of the loop, proceeds through each value in the character vector. In this example, the term `hosp` represents a value from the vector `hospital_names`. For the first iteration of the loop the value would be "Port Hospital". TFor the second loop it would be "St. Mark's Maternity Hospital (SMMH)". And so on...  
-
-```{r, eval=F}
-# 'for loop'
-for (hosp in hospital_names){       # sequence
-  
-  # OPERATIONS HERE
-  
-}
-```
-
-**Sequence of names**  
-
-This is a variation on the character sequence above, in which the names of an existing R object are extracted and become the character vector. For example, the column names of a data frame. This is useful because you know the names are exact matches to the column names and thus can be used to *index* the R object within the *for loop*.  
-
-Below, the sequence is the `names()` (column names) of `linelist`. Inside the *for loop*, the column names are used to *index* (subset) `linelist` one-at-a-time. In this example, we demonstrate an *if* conditional statement as part of the operations code within the *for loop*. **If** the column of interest is class Numeric, then the mean of the column is printed to the console. If the column is not class Numeric then another statement is printed to the console.  
-
-*A note on indexing with column names* - whenever referencing the column itself (e.g. within `mean()`) *do not just write "col"! `col` is just the character column name! To refer to the entire column you use the column name as an *index* on `linelist` via `linelist[[col]]`.  
-
-```{r}
-for (col in names(linelist)){ 
-  
-  # if column is class Numeric, print the mean value
-  if(is.numeric(linelist[[col]])) {
-    print(mean(linelist[[col]], na.rm=T))     # don't forget to index with [[col]]
-    } else {        
-    print("Column not numeric")            # if column is not numeric, print this
-  }
-  
-}
-```
-
-**Sequence of numbers**  
-
-Use this approach if you plan to do more complicated operations or to store the results of the *for loop*. In this approach, the sequence is a series of consecutive numbers. Thus, the value of the "item" is not a character value (e.g. "Central Hospital" or "date_onset") but is a number. This is useful for looping through data frames, as you can use the numeric item inside the *for loop* to index the dataframe by *row number*.  
-
-For example, let's say that you want to loop over every row in your data frame and extract certain information. Your "items" would be numeric row numbers. The process could be explained as "for every item in a sequence of numbers from 1 to the total number of rows in my data frame, do X". The first iteration of the loop, `i` would be 1. For the second iteration, `i` would be 2, etc.    
-
-Whew, that was a mouthful of words! Here is what it looks like in code: `for (i in seq_len(nrow(linelist)) {}` where `i` represents the item and `seq_len()` produces a sequence of consecutive numbers from 1 to the number of rows in `linelist`. If using this approach on a named vector (not a data frame), use `seq_along()`, like `for (i in seq_along(hospital_names) {}`.  
-
-```{r, eval=F}
-for (i in seq_len(nrow(linelist)) {  # use on a data frame
-  # OPERATIONS HERE
-}  
-```
-
-The below code actually returns numbers, which become the value of `i` in their respective loop.  
-
-```{r}
-seq_along(hospital_names)  # use on a named vector
-```
-
-
-
-
-
-
-### Operations  {-}  
-
-This is code within the *for loop*. You want this to run for each item in the *sequence*. Therefore, be careful that every part of your code that changes by the item is correctly coded such that it changes! Remember to use `[[ ]]` for indexing. For example, 
-
-Below, we use `seq_len()` on the linelist. The gender and age of each row is pasted together and stored the container character vector `cases_demographics`.  
-
-```{r}
-# create container to store results - a character vector
-cases_demographics <- vector(mode = "character", length = nrow(linelist))
-
-# the for loop
-for (i in seq_len(nrow(linelist))){
-  
-  # OPERATIONS
-  # extract values from linelist for i using indexing
-  row_gender  <- linelist$gender[[i]]
-  row_age     <- linelist$age_years[[i]]    # don't forget to index!
-  
-  # store the gender-age in container at indexed location
-  cases_demographics[[i]] <- str_c(row_gender, row_age, sep = ", ") 
-
-}  # end for loop
-
-# display first 10 rows of container
-head(cases_demographics, 10)
-```
-
-
-### Printing {-}  
-
-Note that to print from within a *for loop* you will likely need to explicitly wrap with the function `print()`.  
-
-In this example below, the sequence is an explicit character vector, which is used to subset the linelist by hospital.The results are not stored in a container, but rather print to console with the `print()` function.    
-
-```{r}
-for (hosp in hospital_names){ 
-  hospital_cases <- linelist %>% filter(hospital == hosp)
-  print(nrow(hospital_cases))
-}
-```
-
-
-### Testing your for loop {-}
-
-To test your loop, you can make a temporarily assignment of the item, such as `i <- 10` or `hosp <- "Central Hospital"` and run your operations code to see if the expected results are produced.  
-
-
-
-
-### Looping plots {-}
-
-To put all three components together (container, sequence, and operations) let's try to plot an epicurve for each hospital (see page on [Epidemic curves].  
-
-Of course, we can make an epicurve of all the cases using the **incidence2** package as below:  
-
-```{r, warning=F, message=F}
-# create 'incidence' object
-outbreak <- incidence2::incidence(   
-     x = linelist,                   # dataframe - complete linelist
-     date_index = date_onset,        # date column
-     interval = "week",              # aggregate counts weekly
-     groups = gender,                # group values by gender
-     na_as_group = TRUE)             # missing gender is own group
-
-# plot epi curve
-plot(outbreak,                       # name of incidence object
-     fill = "gender",                # color bars by gender
-     color = "black",                # outline color of bars
-     title = "Outbreak of ALL cases" # title
-     )
-```
-
-To produce a separate plot for each hospital's cases, we can put this epicurve code within a *for loop*. 
-
-First, we save a named vector of the unique hospital names, `hospital_names`. The *for loop* will run once for each of these names (`for (hosp in hospital_names)`). Each iteration of the *for loop*, the current hospital name from the vector will be represented as "hosp" for use within the loop.  
-
-Within the loop, you can write R code as normal, but use the item (`hosp` in this case) knowing that its value will be changing. Within this loop:  
-
-* A `filter()` is applied to `linelist`, such that column `hospital` must equal the current value of `hosp`  
-* The incidence object is created on the filtered linelist  
-* The plot for the current hospital is created, with an auto-adjusting title  
-* The plot for the current hospital is temporarily saved and then printed  
-* The loop then moves onward to repeat with the next hospital in `hospital_names`  
-
-```{r, out.width='50%', message = F}
-# make vector of the hospital names
-hospital_names <- unique(linelist$hospital)
-
-# for each name ("hosp") in hospital_names, create and print the epi curve
-for (hosp in hospital_names) {
-     
-     # create incidence object specific to the current hospital
-     outbreak_hosp <- incidence2::incidence(
-                    x = linelist %>% filter(hospital == hosp),   # linelist is filtered to the current hospital
-                    date_index = date_onset,
-                    interval = "week", 
-                    groups = gender,
-                    na_as_group = TRUE
-     )
-     
-     # Create and save the plot. Title automatically adjusts to the current hospital
-     plot_hosp <- plot(outbreak_hosp,
-                       fill = "gender",
-                       color = "black",
-                       title = stringr::str_glue("Epidemic of cases admitted to {hosp}")
-                       )
-     
-     # print the plot for the current hospital
-     print(plot_hosp)
-
-} # end the for loop when it has been run for every hospital in hospital_names 
-```
-
-
-
-### Tracking progress of a loop {-} 
-
-A loop with many iterations can run for many minutes or even hours. Thus, it can be helpful to print the progress to the R console. This code can be placed *within* the loop to print every 100th number.  
-
-```{r, eval=F}
-# loop with code to print progress every 100 iterations
-for (row in 1:nrow(linelist)){
-
-  # print progress
-  if(row %% 100==0){    # The %% operator is the remainder
-    print(row)
-
-}
-```
-
-
-
-
-
-
-
-
-<!-- ======================================================= -->
-## Resources { }
-
-[for loops with Data Carpentry](https://datacarpentry.org/semester-biology/materials/for-loops-R/)  
-
-The [R for Data Science page on iteration](https://r4ds.had.co.nz/iteration.html#iteration)  
-
-[Vignette on write/read Excel files](https://martinctc.github.io/blog/vignette-write-and-read-multiple-excel-files-with-purrr/)  
-
-A purrr [tutorial](https://jennybc.github.io/purrr-tutorial/index.html) by jennybc 
-
-Another purrr [tutorial](http://www.rebeccabarter.com/blog/2019-08-19_purrr/) by Rebecca Barter  
-
-A purrr [tutorial](http://zevross.com/blog/2019/06/11/the-power-of-three-purrr-poseful-iteration-in-r-with-map-pmap-and-imap/) on map, pmap, and imap  
-
-[purrr cheatsheet](https://raw.githubusercontent.com/rstudio/cheatsheets/master/pngs/thumbnails/purrr-cheatsheet-thumbs.png)
-
-
-
-
-TO DO
-group_split
-collapse
-pluck
-
-set_names()
-vars = linelist %>%
-     select_if(is.numeric) %>%
-     select(-cyl, - year) %>%
-     names() %>%
-     set_names()
+See the **rfextras** package's [Github page](https://github.com/reconhub/rfextras)  
 
 ```{r include=FALSE, cache=FALSE}
 
@@ -1034,5 +463,5 @@ linelist <- rio::import(here::here("data", "linelist_cleaned.rds"))
 options(scipen=1, digits=3)
 ```
 
-<!--chapter:end:new_pages/iteration.Rmd-->
+<!--chapter:end:new_pages/reportfactory.Rmd-->
 

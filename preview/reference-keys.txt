@@ -1,5 +1,0 @@
-iteration-and-loops
-preparation
-purrr
-for-loops
-resources
