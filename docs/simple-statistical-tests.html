@@ -16,7 +16,8 @@
 <script src="libs/nouislider-7.0.10/jquery.nouislider.min.js"></script><link href="libs/selectize-0.12.0/selectize.bootstrap3.css" rel="stylesheet">
 <script src="libs/selectize-0.12.0/selectize.min.js"></script><link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet">
 <script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
-<link href="libs/tabwid-1.0.0/tabwid.css" rel="stylesheet">
+<link href="libs/bsTable-3.3.7/bootstrapTable.min.css" rel="stylesheet">
+<script src="libs/bsTable-3.3.7/bootstrapTable.js"></script><link href="libs/tabwid-1.0.0/tabwid.css" rel="stylesheet">
 <link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet">
 <script src="libs/leaflet-1.3.1/leaflet.js"></script><link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet">
 <script src="libs/proj4-2.6.2/proj4.min.js"></script><script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script><link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet">
@@ -95,7 +96,7 @@
 <li><a class="" href="directory-interactions.html"><span class="header-section-number">40</span> Directory interactions</a></li>
 <li><a class="" href="r-markdown-1.html"><span class="header-section-number">41</span> R Markdown</a></li>
 <li><a class="" href="routine-reports.html"><span class="header-section-number">42</span> Routine reports</a></li>
-<li><a class="" href="errors-warnings-1.html"><span class="header-section-number">43</span> Errors &amp; warnings</a></li>
+<li><a class="" href="errors-help.html"><span class="header-section-number">43</span> Errors &amp; help</a></li>
 <li><a class="" href="advanced-rstudio.html"><span class="header-section-number">44</span> Advanced RStudio</a></li>
 <li><a class="" href="relational-databases.html"><span class="header-section-number">45</span> Relational databases</a></li>
 <li><a class="" href="shiny-and-dashboards.html"><span class="header-section-number">46</span> Shiny and dashboards</a></li>
@@ -123,7 +124,7 @@
 <h3>Load packages<a class="anchor" aria-label="anchor" href="#load-packages-10"><i class="fas fa-link"></i></a>
 </h3>
 <p>This code chunk shows the loading of packages required for the analyses. In this handbook we emphasize <code>p_load()</code> from <strong>pacman</strong>, which installs the package if necessary and loads it for use. You can also load packages with <code><a href="https://rdrr.io/r/base/library.html">library()</a></code> from <strong>base</strong> R. See the page on <a href="r-basics.html#r-basics">R basics</a> for more information on R packages.</p>
-<div class="sourceCode" id="cb831"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb857"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span>
   <span class="va">rio</span>,          <span class="co"># File import</span>
   <span class="va">here</span>,         <span class="co"># File locator</span>
@@ -139,12 +140,12 @@
 <h3>Import data<a class="anchor" aria-label="anchor" href="#import-data-9"><i class="fas fa-link"></i></a>
 </h3>
 <p>We import the dataset of cases from a simulated Ebola epidemic. If you want to download the data to follow step-by-step, see instructions in the <a href="download-book-and-data.html#download-book-and-data">Download book and data</a> page. The dataset is imported using the <code>import()</code> function from the <strong>rio</strong> package. See the page on <a href="import-and-export.html#import-and-export">Import and export</a> for various ways to import data.</p>
-<div class="sourceCode" id="cb832"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb858"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># import the linelist</span>
 <span class="va">linelist</span> <span class="op">&lt;-</span> <span class="fu">import</span><span class="op">(</span><span class="st">"linelist_cleaned.xlsx"</span><span class="op">)</span></code></pre></div>
 <p>The first 50 rows of the linelist are displayed below.</p>
-<div id="htmlwidget-d0686a2632eaa57451d9" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-d0686a2632eaa57451d9">{"x":{"filter":"top","filterHTML":"<tr>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"2\" data-max=\"13\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"date\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"1399075200000\" data-max=\"1406419200000\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"date\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"1399939200000\" data-max=\"1407024000000\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"date\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"1400025600000\" data-max=\"1407110400000\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"date\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"1400371200000\" data-max=\"1410566400000\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"0\" data-max=\"67\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"disabled\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"0\" data-max=\"67\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"factor\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"width: 100%; display: none;\">\n      <select multiple=\"multiple\" style=\"width: 100%;\" data-options=\"[&quot;0-4&quot;,&quot;5-9&quot;,&quot;10-14&quot;,&quot;15-19&quot;,&quot;20-29&quot;,&quot;30-49&quot;,&quot;50-69&quot;,&quot;70+&quot;]\"><\/select>\n    <\/div>\n  <\/td>\n  <td data-type=\"factor\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"width: 100%; display: none;\">\n      <select multiple=\"multiple\" style=\"width: 100%;\" data-options=\"[&quot;0-4&quot;,&quot;5-9&quot;,&quot;10-14&quot;,&quot;15-19&quot;,&quot;20-24&quot;,&quot;25-29&quot;,&quot;30-34&quot;,&quot;35-39&quot;,&quot;40-44&quot;,&quot;45-49&quot;,&quot;50-54&quot;,&quot;55-59&quot;,&quot;60-64&quot;,&quot;65-69&quot;,&quot;70-74&quot;,&quot;75-79&quot;,&quot;80-84&quot;,&quot;85+&quot;]\"><\/select>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"-13.2697246824573\" data-max=\"-13.209391925612\" data-scale=\"13\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"8.45171855856465\" data-max=\"8.48802917129884\" data-scale=\"14\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"0\" data-max=\"100\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"11\" data-max=\"241\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"20\" data-max=\"24\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"35.9\" data-max=\"38\" data-scale=\"1\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"0\" data-max=\"428.994082840237\" data-scale=\"14\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"0\" data-max=\"2\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","data":[["5fe599","8689b7","11f8ea","b8812a","893f25","be99c8","07e3e8","369449","f393b4","1389ca","2978ac","57a565","fc15ef","2eaa9a","bbfa93","c97dd9","f50e8a","3a7673","7f5a01","ddddee","99e8fa","567136","9371a9","bc2adf","403057","8bd1e8","f327be","42e1a9","90e5fe","959170","8ebf6e","e56412","6d788e","a47529","67be4e","da8ecb","148f18","2cb9a5","f5c142","70a9fe","3ad520","062638","c76676","baacc1","497372","23e499","38cc4a","3789ee","c71dcd","6b70f0"],[4,4,2,3,3,3,4,4,4,4,4,4,6,5,6,9,10,8,7,6,7,6,8,6,10,8,6,12,5,8,7,9,11,5,8,5,6,11,7,9,7,8,9,12,13,9,8,10,8,7],["2014-05-08",null,null,"2014-05-04","2014-05-18","2014-05-03","2014-05-22","2014-05-28",null,null,"2014-05-30","2014-05-28","2014-06-14","2014-06-07","2014-06-09",null,null,null,"2014-06-23","2014-06-18","2014-06-24",null,null,"2014-07-03",null,"2014-07-10","2014-06-14",null,"2014-06-18","2014-06-29","2014-07-02","2014-07-12","2014-07-12","2014-06-13","2014-07-15","2014-06-20",null,null,"2014-07-20",null,"2014-07-12","2014-07-19","2014-07-18","2014-07-18","2014-07-27",null,"2014-07-19","2014-07-26","2014-07-24",null],["2014-05-13","2014-05-13","2014-05-16","2014-05-18","2014-05-21","2014-05-22","2014-05-27","2014-06-02","2014-06-05","2014-06-05","2014-06-06","2014-06-13","2014-06-16","2014-06-17","2014-06-18","2014-06-19","2014-06-22","2014-06-23","2014-06-25","2014-06-26","2014-06-28","2014-07-02","2014-07-08","2014-07-09","2014-07-09","2014-07-10","2014-07-12","2014-07-12","2014-07-13","2014-07-13","2014-07-14","2014-07-15","2014-07-16","2014-07-17","2014-07-17","2014-07-18","2014-07-19","2014-07-22","2014-07-22","2014-07-24","2014-07-24","2014-07-25","2014-07-25","2014-07-27","2014-07-29","2014-07-30",null,"2014-08-01","2014-08-02","2014-08-03"],["2014-05-15","2014-05-14","2014-05-18","2014-05-20","2014-05-22","2014-05-23","2014-05-29","2014-06-03","2014-06-06","2014-06-07","2014-06-08","2014-06-15","2014-06-17","2014-06-17","2014-06-20","2014-06-19","2014-06-23","2014-06-24","2014-06-27","2014-06-28","2014-06-29","2014-07-03","2014-07-09","2014-07-09","2014-07-11","2014-07-11","2014-07-13","2014-07-14","2014-07-14","2014-07-13","2014-07-14","2014-07-17","2014-07-17","2014-07-18","2014-07-19","2014-07-20","2014-07-20","2014-07-22","2014-07-24","2014-07-26","2014-07-24","2014-07-27","2014-07-25","2014-07-27","2014-07-31","2014-08-01","2014-08-03","2014-08-02","2014-08-02","2014-08-04"],[null,"2014-05-18","2014-05-30",null,"2014-05-29","2014-05-24","2014-06-01","2014-06-07","2014-06-18","2014-06-09","2014-06-15",null,"2014-07-09",null,"2014-06-30","2014-07-11","2014-07-01","2014-06-25","2014-07-06","2014-07-02","2014-07-09","2014-07-07","2014-07-20",null,"2014-07-22","2014-07-16","2014-07-14","2014-07-20","2014-07-16","2014-07-19","2014-07-27","2014-07-19",null,"2014-07-26","2014-08-14","2014-08-01","2014-07-23","2014-08-28","2014-07-28","2014-07-19",null,"2014-08-03",null,null,null,"2014-08-06","2014-08-21","2014-09-13","2014-08-04",null],[null,"Recover","Recover",null,"Recover","Recover","Recover","Death","Recover","Death","Death","Death","Recover","Recover",null,"Recover",null,null,"Death","Death","Recover",null,null,null,"Death",null,"Death","Death",null,"Death","Recover","Death","Recover","Death","Recover",null,"Death","Recover","Recover","Death",null,null,"Death","Death","Death","Death","Recover",null,"Death","Death"],["m","f","m","f","m","f","f","f","m","f","m","m","m","f","f","m","f","f","f","f","m","m","f","m","f","m","m","f","m","f","f","f","m","m","f","m","f","f","f","m","f","m","f","m","m","f","m","f","m","m"],[2,3,56,18,3,16,16,0,61,27,12,42,19,7,7,13,35,17,11,11,19,54,14,28,6,3,31,6,67,14,10,21,20,45,1,12,3,15,20,36,7,13,14,3,10,1,0,20,26,14],["years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years"],[2,3,56,18,3,16,16,0,61,27,12,42,19,7,7,13,35,17,11,11,19,54,14,28,6,3,31,6,67,14,10,21,20,45,1,12,3,15,20,36,7,13,14,3,10,1,0,20,26,14],["0-4","0-4","50-69","15-19","0-4","15-19","15-19","0-4","50-69","20-29","10-14","30-49","15-19","5-9","5-9","10-14","30-49","15-19","10-14","10-14","15-19","50-69","10-14","20-29","5-9","0-4","30-49","5-9","50-69","10-14","10-14","20-29","20-29","30-49","0-4","10-14","0-4","15-19","20-29","30-49","5-9","10-14","10-14","0-4","10-14","0-4","0-4","20-29","20-29","10-14"],["0-4","0-4","55-59","15-19","0-4","15-19","15-19","0-4","60-64","25-29","10-14","40-44","15-19","5-9","5-9","10-14","35-39","15-19","10-14","10-14","15-19","50-54","10-14","25-29","5-9","0-4","30-34","5-9","65-69","10-14","10-14","20-24","20-24","45-49","0-4","10-14","0-4","15-19","20-24","35-39","5-9","10-14","10-14","0-4","10-14","0-4","0-4","20-24","25-29","10-14"],["Other","Missing","St. Mark's Maternity Hospital (SMMH)","Port Hospital","Military Hospital","Port Hospital","Missing","Missing","Missing","Missing","Port Hospital","Military Hospital","Missing","Missing","Other","Port Hospital","Port Hospital","Port Hospital","Missing","Other","Port Hospital","Port Hospital","St. Mark's Maternity Hospital (SMMH)","Missing","Other","Missing","St. Mark's Maternity Hospital (SMMH)","Military Hospital","Port Hospital","Central Hospital","Military Hospital","Central Hospital","Missing","Military Hospital","Other","Missing","Missing","Port Hospital","Port Hospital","Port Hospital","Missing","Central Hospital","Military Hospital","Other","Other","Other","Missing","St. Mark's Maternity Hospital (SMMH)","St. Mark's Maternity Hospital (SMMH)","Missing"],[-13.2157351064963,-13.2152339775486,-13.212910703914,-13.2363711169728,-13.2228638912441,-13.222625321098,-13.2331547837254,-13.2320975453153,-13.2225511595637,-13.2572163655863,-13.2206286746001,-13.253989309478,-13.2385127873491,-13.209391925612,-13.2157278814899,-13.2243437095992,-13.2336087079551,-13.21422143145,-13.2339681355349,-13.2535640411465,-13.2250089377786,-13.2160657166043,-13.2680671272333,-13.2266742923612,-13.2160179088168,-13.2482584611565,-13.2156319199566,-13.2142410663192,-13.2614879104088,-13.2452992638476,-13.2630592726116,-13.2343341712241,-13.2199077448676,-13.2227293309912,-13.2343062806506,-13.218781651651,-13.2483677722899,-13.2097478342339,-13.2680867723786,-13.2587535457526,-13.262635786914,-13.2697246824573,-13.2209026809759,-13.2330734719715,-13.2680923666905,-13.2547212675054,-13.2573683214693,-13.2137356012883,-13.2175973322257,-13.2486407324245],[8.46897295100924,8.45171855856465,8.46481700596819,8.4754761613651,8.46082377490923,8.46183062600728,8.46272931462646,8.46144367534271,8.46191259217774,8.47292327643506,8.48401630165138,8.45837125340844,8.47761705512509,8.47570184950483,8.47779946878972,8.47145134147474,8.47804840685363,8.48528034195779,8.46957530395867,8.45957352078114,8.47404889511544,8.48802917129884,8.473437335922,8.48408263734462,8.46242233645879,8.47026822126572,8.46398447480533,8.4641347894342,8.45623094629607,8.48334624336805,8.47493999153642,8.47832062438022,8.4693933891765,8.48480589906514,8.47121232619015,8.48438437371817,8.48466158574339,8.47714159984428,8.46238127010609,8.45568597813113,8.4632880274758,8.47940722413856,8.46353857052336,8.46178968158864,8.47508713872833,8.45825808128071,8.4532568143863,8.4732571907655,8.47911586641933,8.48480340615605],["f547d6",null,null,"f90f5f","11f8ea","aec8ec","893f25","133ee7",null,null,"996f3a","133ee7","37a6f6","9f6884","4802b1",null,null,null,"a75c7f","8e104d","ab634e",null,null,"b799eb",null,"5d9e4d","a15e13",null,"ea3740","beb26e","567136","894024","36e2e7","a2086d","7baf73","eb2277",null,null,"d6584f",null,"312ecf","52ea64","cfd79c","d145b7","174288",null,"53608c","3b096b","f5c142",null],["other",null,null,"other","other","other","other","other",null,null,"other","other","other","other","other",null,null,null,"other","other","other",null,null,"other",null,"other","other",null,"other","funeral","other","funeral","other","other","other","funeral",null,null,"other",null,"other","other","other","other","other",null,"funeral","other","other",null],[27,25,91,41,36,56,47,0,86,69,67,84,68,44,34,66,78,47,53,47,71,86,53,69,38,46,68,37,100,56,50,57,65,72,29,69,37,48,54,71,47,61,47,35,53,16,13,59,69,67],[48,59,238,135,71,116,87,11,226,174,112,186,174,90,91,152,214,137,117,131,150,241,131,161,80,69,188,66,233,142,110,182,164,214,26,157,39,154,133,168,100,125,123,67,134,31,36,125,183,169],[22,22,21,23,23,21,21,22,22,22,22,22,22,21,23,22,23,21,22,23,21,23,21,24,23,22,24,23,20,24,24,20,24,21,22,21,23,22,23,23,23,22,23,22,22,22,23,22,22,22],["no",null,null,"no","no","no",null,"no","no","no","no","no","no","no","no","no","no","no",null,"no","no","no","no","no",null,"no","no","no",null,null,"no","no",null,"no","no",null,null,"no","no",null,"no","no",null,"no","no","no","no","no","no",null],["no",null,null,"no","no","no",null,"no","no","no","no","no","no","no","no","no","yes","no",null,"no","no","no","yes","no",null,"no","no","yes",null,null,"no","no",null,"no","no",null,null,"no","no",null,"no","no",null,"no","yes","no","no","no","no",null],["yes",null,null,"no","yes","yes",null,"yes","yes","yes","yes","yes","yes","yes","yes","yes","yes","yes",null,"yes","yes","yes","yes","yes",null,"yes","yes","yes",null,null,"yes","yes",null,"yes","yes",null,null,"yes","yes",null,"yes","yes",null,"yes","yes","yes","yes","yes","no",null],["no",null,null,"no","no","no",null,"no","no","no","no","no","no","no","no","yes","no","no",null,"no","no","no","no","no",null,"no","no","no",null,null,"no","no",null,"no","no",null,null,"yes","yes",null,"no","no",null,"no","no","no","no","no","no",null],["yes",null,null,"no","yes","yes",null,"yes","yes","no","yes","no","no","no","yes","no","no","no",null,"no","yes","no","no","no",null,"no","no","no",null,null,"no","yes",null,"yes","yes",null,null,"yes","yes",null,"yes","yes",null,"yes","yes","no","yes","yes","yes",null],[36.8,36.9,36.9,36.8,36.9,37.6,37.3,37,36.4,35.9,36.5,36.9,36.5,37.1,36.5,37.3,37,38,38,36,37,36.7,36.9,36.5,37,36.5,37.6,36.6,36.6,36.2,36.4,37.1,37.5,37.5,37.4,36.9,36.4,37.3,37,37.8,36.5,37.5,36.7,37,37.3,36.6,36.5,36.6,37.6,36.8],[null,"09:36","16:48","11:22","12:60","14:13","14:33","09:25","11:16","10:55","16:03","11:14","12:42","11:06","09:10","08:45",null,"15:41","13:34","18:58","12:43","16:33","14:29","07:18","08:11","16:32","16:17","07:32","17:45",null,"13:24","14:43","02:33","11:36","17:28","16:27",null,"20:49",null,"11:38","14:25","13:42","21:22","13:33","19:06","17:14","20:09",null,"10:23","09:09"],[117.1875,71.8184429761563,16.0652496292635,22.4965706447188,71.4144019043841,41.6171224732461,62.0953890870657,0,16.8376536925366,22.7903289734443,53.4119897959184,24.2802636142907,22.4600343506408,54.320987654321,41.0578432556455,28.5664819944598,17.0320552013276,25.0412914912888,38.7172182043977,27.3876813705495,31.5555555555556,14.8069075945662,30.8839811199813,26.6193433895297,59.375,96.6183574879227,19.2394748755093,84.9403122130395,18.4199377406104,27.7722674072605,41.3223140495868,17.2080666586161,24.1671624033314,15.7218971089178,428.994082840237,27.9930220292912,243.261012491782,20.2395007589813,30.527446435638,25.15589569161,47,39.04,31.0661643201798,77.9683671196257,29.5165961238583,166.493236212279,100.308641975309,37.76,20.6037803457852,23.458562375267],[2,1,2,2,1,1,2,1,1,2,2,2,1,0,2,0,1,1,2,2,1,1,1,0,2,1,1,2,1,0,0,2,1,1,2,2,1,0,2,2,0,2,0,0,2,2,null,1,0,1]],"container":"<table class=\"white-space: nowrap\">\n  <thead>\n    <tr>\n      <th>case_id<\/th>\n      <th>generation<\/th>\n      <th>date_infection<\/th>\n      <th>date_onset<\/th>\n      <th>date_hospitalisation<\/th>\n      <th>date_outcome<\/th>\n      <th>outcome<\/th>\n      <th>gender<\/th>\n      <th>age<\/th>\n      <th>age_unit<\/th>\n      <th>age_years<\/th>\n      <th>age_cat<\/th>\n      <th>age_cat5<\/th>\n      <th>hospital<\/th>\n      <th>lon<\/th>\n      <th>lat<\/th>\n      <th>infector<\/th>\n      <th>source<\/th>\n      <th>wt_kg<\/th>\n      <th>ht_cm<\/th>\n      <th>ct_blood<\/th>\n      <th>fever<\/th>\n      <th>chills<\/th>\n      <th>cough<\/th>\n      <th>aches<\/th>\n      <th>vomit<\/th>\n      <th>temp<\/th>\n      <th>time_admission<\/th>\n      <th>bmi<\/th>\n      <th>days_onset_hosp<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"scrollX":true,"columnDefs":[{"className":"dt-right","targets":[1,8,10,14,15,18,19,20,26,28,29]}],"order":[],"autoWidth":false,"orderClasses":false,"orderCellsTop":true,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-0b8c8934ebc5953cd236" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-0b8c8934ebc5953cd236">{"x":{"filter":"top","filterHTML":"<tr>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"2\" data-max=\"13\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"date\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"1399075200000\" data-max=\"1406419200000\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"date\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"1399939200000\" data-max=\"1407024000000\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"date\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"1400025600000\" data-max=\"1407110400000\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"date\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"1400371200000\" data-max=\"1410566400000\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"0\" data-max=\"67\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"disabled\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"0\" data-max=\"67\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"factor\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"width: 100%; display: none;\">\n      <select multiple=\"multiple\" style=\"width: 100%;\" data-options=\"[&quot;0-4&quot;,&quot;5-9&quot;,&quot;10-14&quot;,&quot;15-19&quot;,&quot;20-29&quot;,&quot;30-49&quot;,&quot;50-69&quot;,&quot;70+&quot;]\"><\/select>\n    <\/div>\n  <\/td>\n  <td data-type=\"factor\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"width: 100%; display: none;\">\n      <select multiple=\"multiple\" style=\"width: 100%;\" data-options=\"[&quot;0-4&quot;,&quot;5-9&quot;,&quot;10-14&quot;,&quot;15-19&quot;,&quot;20-24&quot;,&quot;25-29&quot;,&quot;30-34&quot;,&quot;35-39&quot;,&quot;40-44&quot;,&quot;45-49&quot;,&quot;50-54&quot;,&quot;55-59&quot;,&quot;60-64&quot;,&quot;65-69&quot;,&quot;70-74&quot;,&quot;75-79&quot;,&quot;80-84&quot;,&quot;85+&quot;]\"><\/select>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"-13.2697246824573\" data-max=\"-13.209391925612\" data-scale=\"13\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"8.45171855856465\" data-max=\"8.48802917129884\" data-scale=\"14\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"0\" data-max=\"100\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"11\" data-max=\"241\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"20\" data-max=\"24\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"35.9\" data-max=\"38\" data-scale=\"1\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"0\" data-max=\"428.994082840237\" data-scale=\"14\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"0\" data-max=\"2\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","data":[["5fe599","8689b7","11f8ea","b8812a","893f25","be99c8","07e3e8","369449","f393b4","1389ca","2978ac","57a565","fc15ef","2eaa9a","bbfa93","c97dd9","f50e8a","3a7673","7f5a01","ddddee","99e8fa","567136","9371a9","bc2adf","403057","8bd1e8","f327be","42e1a9","90e5fe","959170","8ebf6e","e56412","6d788e","a47529","67be4e","da8ecb","148f18","2cb9a5","f5c142","70a9fe","3ad520","062638","c76676","baacc1","497372","23e499","38cc4a","3789ee","c71dcd","6b70f0"],[4,4,2,3,3,3,4,4,4,4,4,4,6,5,6,9,10,8,7,6,7,6,8,6,10,8,6,12,5,8,7,9,11,5,8,5,6,11,7,9,7,8,9,12,13,9,8,10,8,7],["2014-05-08",null,null,"2014-05-04","2014-05-18","2014-05-03","2014-05-22","2014-05-28",null,null,"2014-05-30","2014-05-28","2014-06-14","2014-06-07","2014-06-09",null,null,null,"2014-06-23","2014-06-18","2014-06-24",null,null,"2014-07-03",null,"2014-07-10","2014-06-14",null,"2014-06-18","2014-06-29","2014-07-02","2014-07-12","2014-07-12","2014-06-13","2014-07-15","2014-06-20",null,null,"2014-07-20",null,"2014-07-12","2014-07-19","2014-07-18","2014-07-18","2014-07-27",null,"2014-07-19","2014-07-26","2014-07-24",null],["2014-05-13","2014-05-13","2014-05-16","2014-05-18","2014-05-21","2014-05-22","2014-05-27","2014-06-02","2014-06-05","2014-06-05","2014-06-06","2014-06-13","2014-06-16","2014-06-17","2014-06-18","2014-06-19","2014-06-22","2014-06-23","2014-06-25","2014-06-26","2014-06-28","2014-07-02","2014-07-08","2014-07-09","2014-07-09","2014-07-10","2014-07-12","2014-07-12","2014-07-13","2014-07-13","2014-07-14","2014-07-15","2014-07-16","2014-07-17","2014-07-17","2014-07-18","2014-07-19","2014-07-22","2014-07-22","2014-07-24","2014-07-24","2014-07-25","2014-07-25","2014-07-27","2014-07-29","2014-07-30",null,"2014-08-01","2014-08-02","2014-08-03"],["2014-05-15","2014-05-14","2014-05-18","2014-05-20","2014-05-22","2014-05-23","2014-05-29","2014-06-03","2014-06-06","2014-06-07","2014-06-08","2014-06-15","2014-06-17","2014-06-17","2014-06-20","2014-06-19","2014-06-23","2014-06-24","2014-06-27","2014-06-28","2014-06-29","2014-07-03","2014-07-09","2014-07-09","2014-07-11","2014-07-11","2014-07-13","2014-07-14","2014-07-14","2014-07-13","2014-07-14","2014-07-17","2014-07-17","2014-07-18","2014-07-19","2014-07-20","2014-07-20","2014-07-22","2014-07-24","2014-07-26","2014-07-24","2014-07-27","2014-07-25","2014-07-27","2014-07-31","2014-08-01","2014-08-03","2014-08-02","2014-08-02","2014-08-04"],[null,"2014-05-18","2014-05-30",null,"2014-05-29","2014-05-24","2014-06-01","2014-06-07","2014-06-18","2014-06-09","2014-06-15",null,"2014-07-09",null,"2014-06-30","2014-07-11","2014-07-01","2014-06-25","2014-07-06","2014-07-02","2014-07-09","2014-07-07","2014-07-20",null,"2014-07-22","2014-07-16","2014-07-14","2014-07-20","2014-07-16","2014-07-19","2014-07-27","2014-07-19",null,"2014-07-26","2014-08-14","2014-08-01","2014-07-23","2014-08-28","2014-07-28","2014-07-19",null,"2014-08-03",null,null,null,"2014-08-06","2014-08-21","2014-09-13","2014-08-04",null],[null,"Recover","Recover",null,"Recover","Recover","Recover","Death","Recover","Death","Death","Death","Recover","Recover",null,"Recover",null,null,"Death","Death","Recover",null,null,null,"Death",null,"Death","Death",null,"Death","Recover","Death","Recover","Death","Recover",null,"Death","Recover","Recover","Death",null,null,"Death","Death","Death","Death","Recover",null,"Death","Death"],["m","f","m","f","m","f","f","f","m","f","m","m","m","f","f","m","f","f","f","f","m","m","f","m","f","m","m","f","m","f","f","f","m","m","f","m","f","f","f","m","f","m","f","m","m","f","m","f","m","m"],[2,3,56,18,3,16,16,0,61,27,12,42,19,7,7,13,35,17,11,11,19,54,14,28,6,3,31,6,67,14,10,21,20,45,1,12,3,15,20,36,7,13,14,3,10,1,0,20,26,14],["years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years","years"],[2,3,56,18,3,16,16,0,61,27,12,42,19,7,7,13,35,17,11,11,19,54,14,28,6,3,31,6,67,14,10,21,20,45,1,12,3,15,20,36,7,13,14,3,10,1,0,20,26,14],["0-4","0-4","50-69","15-19","0-4","15-19","15-19","0-4","50-69","20-29","10-14","30-49","15-19","5-9","5-9","10-14","30-49","15-19","10-14","10-14","15-19","50-69","10-14","20-29","5-9","0-4","30-49","5-9","50-69","10-14","10-14","20-29","20-29","30-49","0-4","10-14","0-4","15-19","20-29","30-49","5-9","10-14","10-14","0-4","10-14","0-4","0-4","20-29","20-29","10-14"],["0-4","0-4","55-59","15-19","0-4","15-19","15-19","0-4","60-64","25-29","10-14","40-44","15-19","5-9","5-9","10-14","35-39","15-19","10-14","10-14","15-19","50-54","10-14","25-29","5-9","0-4","30-34","5-9","65-69","10-14","10-14","20-24","20-24","45-49","0-4","10-14","0-4","15-19","20-24","35-39","5-9","10-14","10-14","0-4","10-14","0-4","0-4","20-24","25-29","10-14"],["Other","Missing","St. Mark's Maternity Hospital (SMMH)","Port Hospital","Military Hospital","Port Hospital","Missing","Missing","Missing","Missing","Port Hospital","Military Hospital","Missing","Missing","Other","Port Hospital","Port Hospital","Port Hospital","Missing","Other","Port Hospital","Port Hospital","St. Mark's Maternity Hospital (SMMH)","Missing","Other","Missing","St. Mark's Maternity Hospital (SMMH)","Military Hospital","Port Hospital","Central Hospital","Military Hospital","Central Hospital","Missing","Military Hospital","Other","Missing","Missing","Port Hospital","Port Hospital","Port Hospital","Missing","Central Hospital","Military Hospital","Other","Other","Other","Missing","St. Mark's Maternity Hospital (SMMH)","St. Mark's Maternity Hospital (SMMH)","Missing"],[-13.2157351064963,-13.2152339775486,-13.212910703914,-13.2363711169728,-13.2228638912441,-13.222625321098,-13.2331547837254,-13.2320975453153,-13.2225511595637,-13.2572163655863,-13.2206286746001,-13.253989309478,-13.2385127873491,-13.209391925612,-13.2157278814899,-13.2243437095992,-13.2336087079551,-13.21422143145,-13.2339681355349,-13.2535640411465,-13.2250089377786,-13.2160657166043,-13.2680671272333,-13.2266742923612,-13.2160179088168,-13.2482584611565,-13.2156319199566,-13.2142410663192,-13.2614879104088,-13.2452992638476,-13.2630592726116,-13.2343341712241,-13.2199077448676,-13.2227293309912,-13.2343062806506,-13.218781651651,-13.2483677722899,-13.2097478342339,-13.2680867723786,-13.2587535457526,-13.262635786914,-13.2697246824573,-13.2209026809759,-13.2330734719715,-13.2680923666905,-13.2547212675054,-13.2573683214693,-13.2137356012883,-13.2175973322257,-13.2486407324245],[8.46897295100924,8.45171855856465,8.46481700596819,8.4754761613651,8.46082377490923,8.46183062600728,8.46272931462646,8.46144367534271,8.46191259217774,8.47292327643506,8.48401630165138,8.45837125340844,8.47761705512509,8.47570184950483,8.47779946878972,8.47145134147474,8.47804840685363,8.48528034195779,8.46957530395867,8.45957352078114,8.47404889511544,8.48802917129884,8.473437335922,8.48408263734462,8.46242233645879,8.47026822126572,8.46398447480533,8.4641347894342,8.45623094629607,8.48334624336805,8.47493999153642,8.47832062438022,8.4693933891765,8.48480589906514,8.47121232619015,8.48438437371817,8.48466158574339,8.47714159984428,8.46238127010609,8.45568597813113,8.4632880274758,8.47940722413856,8.46353857052336,8.46178968158864,8.47508713872833,8.45825808128071,8.4532568143863,8.4732571907655,8.47911586641933,8.48480340615605],["f547d6",null,null,"f90f5f","11f8ea","aec8ec","893f25","133ee7",null,null,"996f3a","133ee7","37a6f6","9f6884","4802b1",null,null,null,"a75c7f","8e104d","ab634e",null,null,"b799eb",null,"5d9e4d","a15e13",null,"ea3740","beb26e","567136","894024","36e2e7","a2086d","7baf73","eb2277",null,null,"d6584f",null,"312ecf","52ea64","cfd79c","d145b7","174288",null,"53608c","3b096b","f5c142",null],["other",null,null,"other","other","other","other","other",null,null,"other","other","other","other","other",null,null,null,"other","other","other",null,null,"other",null,"other","other",null,"other","funeral","other","funeral","other","other","other","funeral",null,null,"other",null,"other","other","other","other","other",null,"funeral","other","other",null],[27,25,91,41,36,56,47,0,86,69,67,84,68,44,34,66,78,47,53,47,71,86,53,69,38,46,68,37,100,56,50,57,65,72,29,69,37,48,54,71,47,61,47,35,53,16,13,59,69,67],[48,59,238,135,71,116,87,11,226,174,112,186,174,90,91,152,214,137,117,131,150,241,131,161,80,69,188,66,233,142,110,182,164,214,26,157,39,154,133,168,100,125,123,67,134,31,36,125,183,169],[22,22,21,23,23,21,21,22,22,22,22,22,22,21,23,22,23,21,22,23,21,23,21,24,23,22,24,23,20,24,24,20,24,21,22,21,23,22,23,23,23,22,23,22,22,22,23,22,22,22],["no",null,null,"no","no","no",null,"no","no","no","no","no","no","no","no","no","no","no",null,"no","no","no","no","no",null,"no","no","no",null,null,"no","no",null,"no","no",null,null,"no","no",null,"no","no",null,"no","no","no","no","no","no",null],["no",null,null,"no","no","no",null,"no","no","no","no","no","no","no","no","no","yes","no",null,"no","no","no","yes","no",null,"no","no","yes",null,null,"no","no",null,"no","no",null,null,"no","no",null,"no","no",null,"no","yes","no","no","no","no",null],["yes",null,null,"no","yes","yes",null,"yes","yes","yes","yes","yes","yes","yes","yes","yes","yes","yes",null,"yes","yes","yes","yes","yes",null,"yes","yes","yes",null,null,"yes","yes",null,"yes","yes",null,null,"yes","yes",null,"yes","yes",null,"yes","yes","yes","yes","yes","no",null],["no",null,null,"no","no","no",null,"no","no","no","no","no","no","no","no","yes","no","no",null,"no","no","no","no","no",null,"no","no","no",null,null,"no","no",null,"no","no",null,null,"yes","yes",null,"no","no",null,"no","no","no","no","no","no",null],["yes",null,null,"no","yes","yes",null,"yes","yes","no","yes","no","no","no","yes","no","no","no",null,"no","yes","no","no","no",null,"no","no","no",null,null,"no","yes",null,"yes","yes",null,null,"yes","yes",null,"yes","yes",null,"yes","yes","no","yes","yes","yes",null],[36.8,36.9,36.9,36.8,36.9,37.6,37.3,37,36.4,35.9,36.5,36.9,36.5,37.1,36.5,37.3,37,38,38,36,37,36.7,36.9,36.5,37,36.5,37.6,36.6,36.6,36.2,36.4,37.1,37.5,37.5,37.4,36.9,36.4,37.3,37,37.8,36.5,37.5,36.7,37,37.3,36.6,36.5,36.6,37.6,36.8],[null,"09:36","16:48","11:22","12:60","14:13","14:33","09:25","11:16","10:55","16:03","11:14","12:42","11:06","09:10","08:45",null,"15:41","13:34","18:58","12:43","16:33","14:29","07:18","08:11","16:32","16:17","07:32","17:45",null,"13:24","14:43","02:33","11:36","17:28","16:27",null,"20:49",null,"11:38","14:25","13:42","21:22","13:33","19:06","17:14","20:09",null,"10:23","09:09"],[117.1875,71.8184429761563,16.0652496292635,22.4965706447188,71.4144019043841,41.6171224732461,62.0953890870657,0,16.8376536925366,22.7903289734443,53.4119897959184,24.2802636142907,22.4600343506408,54.320987654321,41.0578432556455,28.5664819944598,17.0320552013276,25.0412914912888,38.7172182043977,27.3876813705495,31.5555555555556,14.8069075945662,30.8839811199813,26.6193433895297,59.375,96.6183574879227,19.2394748755093,84.9403122130395,18.4199377406104,27.7722674072605,41.3223140495868,17.2080666586161,24.1671624033314,15.7218971089178,428.994082840237,27.9930220292912,243.261012491782,20.2395007589813,30.527446435638,25.15589569161,47,39.04,31.0661643201798,77.9683671196257,29.5165961238583,166.493236212279,100.308641975309,37.76,20.6037803457852,23.458562375267],[2,1,2,2,1,1,2,1,1,2,2,2,1,0,2,0,1,1,2,2,1,1,1,0,2,1,1,2,1,0,0,2,1,1,2,2,1,0,2,2,0,2,0,0,2,2,null,1,0,1]],"container":"<table class=\"white-space: nowrap\">\n  <thead>\n    <tr>\n      <th>case_id<\/th>\n      <th>generation<\/th>\n      <th>date_infection<\/th>\n      <th>date_onset<\/th>\n      <th>date_hospitalisation<\/th>\n      <th>date_outcome<\/th>\n      <th>outcome<\/th>\n      <th>gender<\/th>\n      <th>age<\/th>\n      <th>age_unit<\/th>\n      <th>age_years<\/th>\n      <th>age_cat<\/th>\n      <th>age_cat5<\/th>\n      <th>hospital<\/th>\n      <th>lon<\/th>\n      <th>lat<\/th>\n      <th>infector<\/th>\n      <th>source<\/th>\n      <th>wt_kg<\/th>\n      <th>ht_cm<\/th>\n      <th>ct_blood<\/th>\n      <th>fever<\/th>\n      <th>chills<\/th>\n      <th>cough<\/th>\n      <th>aches<\/th>\n      <th>vomit<\/th>\n      <th>temp<\/th>\n      <th>time_admission<\/th>\n      <th>bmi<\/th>\n      <th>days_onset_hosp<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"scrollX":true,"columnDefs":[{"className":"dt-right","targets":[1,8,10,14,15,18,19,20,26,28,29]}],"order":[],"autoWidth":false,"orderClasses":false,"orderCellsTop":true,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <div id="base-r-2" class="section level2 unnumbered">
@@ -156,7 +157,7 @@
 <h3>T-tests<a class="anchor" aria-label="anchor" href="#t-tests"><i class="fas fa-link"></i></a>
 </h3>
 <p><strong>Syntax 1:</strong> Best is your numeric and categorical columns are in the same data frame. Provide the numeric column on the left side of the equation and the categorical column on the right side. Specify the dataset to <code>data =</code>. Optionally, set <code>paired = TRUE</code>, and <code>conf.level =</code> (0.95 default), and <code>alternative =</code> (either “two.sided”, “less”, or “greater”). Enter <code><a href="https://rdrr.io/r/stats/t.test.html">?t.test</a></code> for more details.</p>
-<div class="sourceCode" id="cb833"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb859"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## compare mean age by outcome group with a t-test</span>
 <span class="fu"><a href="https://rdrr.io/r/stats/t.test.html">t.test</a></span><span class="op">(</span><span class="va">age_years</span> <span class="op">~</span> <span class="va">outcome</span>, data <span class="op">=</span> <span class="va">linelist</span><span class="op">)</span></code></pre></div>
 <pre><code>## 
@@ -171,22 +172,22 @@
 ##   mean in group Death mean in group Recover 
 ##                  15.9                  16.1</code></pre>
 <p><strong>Syntax 2:</strong> You can compare two separate numeric vectors using this alternative syntax. For example, if the two columns are in different data sets.</p>
-<div class="sourceCode" id="cb835"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb861"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/t.test.html">t.test</a></span><span class="op">(</span><span class="va">df1</span><span class="op">$</span><span class="va">age_years</span>, <span class="va">df2</span><span class="op">$</span><span class="va">age_years</span><span class="op">)</span></code></pre></div>
 <p>Conduct a one-sample t-test with the known/hypothesized populaton mean on the right side of the equation:</p>
-<div class="sourceCode" id="cb836"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb862"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/t.test.html">t.test</a></span><span class="op">(</span><span class="va">linelist</span><span class="op">$</span><span class="va">age_years</span>, mu <span class="op">=</span> <span class="fl">45</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="shapiro-wilks-test" class="section level3 unnumbered">
 <h3>Shapiro-Wilk’s test<a class="anchor" aria-label="anchor" href="#shapiro-wilks-test"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb837"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb863"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/shapiro.test.html">shapiro.test</a></span><span class="op">(</span><span class="va">linelist</span><span class="op">$</span><span class="va">age_years</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="wilcoxon-rank-sum-test" class="section level3 unnumbered">
 <h3>Wilcoxon rank sum test<a class="anchor" aria-label="anchor" href="#wilcoxon-rank-sum-test"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb838"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb864"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## compare age distribution by outcome group with a wilcox test</span>
 <span class="fu"><a href="https://rdrr.io/r/stats/wilcox.test.html">wilcox.test</a></span><span class="op">(</span><span class="va">age_years</span> <span class="op">~</span> <span class="va">outcome</span>, data <span class="op">=</span> <span class="va">linelist</span><span class="op">)</span></code></pre></div>
 <pre><code>## 
@@ -199,7 +200,7 @@
 <div id="kruskal-wallis-test" class="section level3 unnumbered">
 <h3>Kruskal-wallis test<a class="anchor" aria-label="anchor" href="#kruskal-wallis-test"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb840"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb866"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## compare age distribution by outcome group with a kruskal-wallis test</span>
 <span class="fu"><a href="https://rdrr.io/r/stats/kruskal.test.html">kruskal.test</a></span><span class="op">(</span><span class="va">age_years</span> <span class="op">~</span> <span class="va">outcome</span>, <span class="va">linelist</span><span class="op">)</span></code></pre></div>
 <pre><code>## 
@@ -211,7 +212,7 @@
 <div id="chi-squared-test" class="section level3 unnumbered">
 <h3>Chi-squared test<a class="anchor" aria-label="anchor" href="#chi-squared-test"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb842"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb868"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## compare the proportions in each group with a chi-squared test</span>
 <span class="fu"><a href="https://rdrr.io/r/stats/chisq.test.html">chisq.test</a></span><span class="op">(</span><span class="va">linelist</span><span class="op">$</span><span class="va">gender</span>, <span class="va">linelist</span><span class="op">$</span><span class="va">outcome</span><span class="op">)</span></code></pre></div>
 <pre><code>## 
@@ -236,7 +237,7 @@ Performing statistical tests of comparison with <code>tbl_summary</code> is done
 <p>Compare the proportions of a categorical variable in two groups. The default statistical test for
 <code>add_p()</code> is to perform a chi-squared test of independence with continuity correction, but if
 any expected call count is below 5 then a Fisher’s exact test is used.</p>
-<div class="sourceCode" id="cb844"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb870"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">linelist</span> <span class="op">%&gt;%</span> 
   <span class="fu">select</span><span class="op">(</span><span class="va">gender</span>, <span class="va">outcome</span><span class="op">)</span> <span class="op">%&gt;%</span>    <span class="co"># keep variables of interest</span>
   <span class="fu">tbl_summary</span><span class="op">(</span>by <span class="op">=</span> <span class="va">outcome</span><span class="op">)</span> <span class="op">%&gt;%</span>  <span class="co"># produce summary table and specify grouping variable</span>
@@ -246,7 +247,7 @@ any expected call count is below 5 then a Fisher’s exact test is used.</p>
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#yzuftrdjfp .gt_table {
+#ewnqhmowtv .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -271,7 +272,7 @@ any expected call count is below 5 then a Fisher’s exact test is used.</p>
   border-left-color: #D3D3D3;
 }
 
-#yzuftrdjfp .gt_heading {
+#ewnqhmowtv .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -283,7 +284,7 @@ any expected call count is below 5 then a Fisher’s exact test is used.</p>
   border-right-color: #D3D3D3;
 }
 
-#yzuftrdjfp .gt_title {
+#ewnqhmowtv .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -293,7 +294,7 @@ any expected call count is below 5 then a Fisher’s exact test is used.</p>
   border-bottom-width: 0;
 }
 
-#yzuftrdjfp .gt_subtitle {
+#ewnqhmowtv .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -303,13 +304,13 @@ any expected call count is below 5 then a Fisher’s exact test is used.</p>
   border-top-width: 0;
 }
 
-#yzuftrdjfp .gt_bottom_border {
+#ewnqhmowtv .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#yzuftrdjfp .gt_col_headings {
+#ewnqhmowtv .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -324,7 +325,7 @@ any expected call count is below 5 then a Fisher’s exact test is used.</p>
   border-right-color: #D3D3D3;
 }
 
-#yzuftrdjfp .gt_col_heading {
+#ewnqhmowtv .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -344,7 +345,7 @@ any expected call count is below 5 then a Fisher’s exact test is used.</p>
   overflow-x: hidden;
 }
 
-#yzuftrdjfp .gt_column_spanner_outer {
+#ewnqhmowtv .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -356,15 +357,15 @@ any expected call count is below 5 then a Fisher’s exact test is used.</p>
   padding-right: 4px;
 }
 
-#yzuftrdjfp .gt_column_spanner_outer:first-child {
+#ewnqhmowtv .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#yzuftrdjfp .gt_column_spanner_outer:last-child {
+#ewnqhmowtv .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#yzuftrdjfp .gt_column_spanner {
+#ewnqhmowtv .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -376,7 +377,7 @@ any expected call count is below 5 then a Fisher’s exact test is used.</p>
   width: 100%;
 }
 
-#yzuftrdjfp .gt_group_heading {
+#ewnqhmowtv .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -398,7 +399,7 @@ any expected call count is below 5 then a Fisher’s exact test is used.</p>
   vertical-align: middle;
 }
 
-#yzuftrdjfp .gt_empty_group_heading {
+#ewnqhmowtv .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -413,15 +414,15 @@ any expected call count is below 5 then a Fisher’s exact test is used.</p>
   vertical-align: middle;
 }
 
-#yzuftrdjfp .gt_from_md > :first-child {
+#ewnqhmowtv .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#yzuftrdjfp .gt_from_md > :last-child {
+#ewnqhmowtv .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#yzuftrdjfp .gt_row {
+#ewnqhmowtv .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -440,7 +441,7 @@ any expected call count is below 5 then a Fisher’s exact test is used.</p>
   overflow-x: hidden;
 }
 
-#yzuftrdjfp .gt_stub {
+#ewnqhmowtv .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -452,7 +453,7 @@ any expected call count is below 5 then a Fisher’s exact test is used.</p>
   padding-left: 12px;
 }
 
-#yzuftrdjfp .gt_summary_row {
+#ewnqhmowtv .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -462,7 +463,7 @@ any expected call count is below 5 then a Fisher’s exact test is used.</p>
   padding-right: 5px;
 }
 
-#yzuftrdjfp .gt_first_summary_row {
+#ewnqhmowtv .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -472,7 +473,7 @@ any expected call count is below 5 then a Fisher’s exact test is used.</p>
   border-top-color: #D3D3D3;
 }
 
-#yzuftrdjfp .gt_grand_summary_row {
+#ewnqhmowtv .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -482,7 +483,7 @@ any expected call count is below 5 then a Fisher’s exact test is used.</p>
   padding-right: 5px;
 }
 
-#yzuftrdjfp .gt_first_grand_summary_row {
+#ewnqhmowtv .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -492,11 +493,11 @@ any expected call count is below 5 then a Fisher’s exact test is used.</p>
   border-top-color: #D3D3D3;
 }
 
-#yzuftrdjfp .gt_striped {
+#ewnqhmowtv .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#yzuftrdjfp .gt_table_body {
+#ewnqhmowtv .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -505,7 +506,7 @@ any expected call count is below 5 then a Fisher’s exact test is used.</p>
   border-bottom-color: #D3D3D3;
 }
 
-#yzuftrdjfp .gt_footnotes {
+#ewnqhmowtv .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -519,13 +520,13 @@ any expected call count is below 5 then a Fisher’s exact test is used.</p>
   border-right-color: #D3D3D3;
 }
 
-#yzuftrdjfp .gt_footnote {
+#ewnqhmowtv .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#yzuftrdjfp .gt_sourcenotes {
+#ewnqhmowtv .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -539,46 +540,46 @@ any expected call count is below 5 then a Fisher’s exact test is used.</p>
   border-right-color: #D3D3D3;
 }
 
-#yzuftrdjfp .gt_sourcenote {
+#ewnqhmowtv .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#yzuftrdjfp .gt_left {
+#ewnqhmowtv .gt_left {
   text-align: left;
 }
 
-#yzuftrdjfp .gt_center {
+#ewnqhmowtv .gt_center {
   text-align: center;
 }
 
-#yzuftrdjfp .gt_right {
+#ewnqhmowtv .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#yzuftrdjfp .gt_font_normal {
+#ewnqhmowtv .gt_font_normal {
   font-weight: normal;
 }
 
-#yzuftrdjfp .gt_font_bold {
+#ewnqhmowtv .gt_font_bold {
   font-weight: bold;
 }
 
-#yzuftrdjfp .gt_font_italic {
+#ewnqhmowtv .gt_font_italic {
   font-style: italic;
 }
 
-#yzuftrdjfp .gt_super {
+#ewnqhmowtv .gt_super {
   font-size: 65%;
 }
 
-#yzuftrdjfp .gt_footnote_marks {
+#ewnqhmowtv .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="yzuftrdjfp" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><div class="inline-table"><table class="gt_table">
+<div id="ewnqhmowtv" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><div class="inline-table"><table class="gt_table">
 <thead class="gt_col_headings"><tr>
 <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1"><strong>Characteristic</strong></th>
       <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">
@@ -640,7 +641,7 @@ any expected call count is below 5 then a Fisher’s exact test is used.</p>
 </h3>
 <p>Compare the difference in means for a continuous variable in two groups.
 For example, compare the mean age by patient outcome.</p>
-<div class="sourceCode" id="cb846"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb872"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">linelist</span> <span class="op">%&gt;%</span> 
   <span class="fu">select</span><span class="op">(</span><span class="va">age_years</span>, <span class="va">outcome</span><span class="op">)</span> <span class="op">%&gt;%</span>             <span class="co"># keep variables of interest</span>
   <span class="fu">tbl_summary</span><span class="op">(</span>                               <span class="co"># produce summary table</span>
@@ -652,7 +653,7 @@ For example, compare the mean age by patient outcome.</p>
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#rpfeiljnyc .gt_table {
+#hkpksthqwd .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -677,7 +678,7 @@ For example, compare the mean age by patient outcome.</p>
   border-left-color: #D3D3D3;
 }
 
-#rpfeiljnyc .gt_heading {
+#hkpksthqwd .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -689,7 +690,7 @@ For example, compare the mean age by patient outcome.</p>
   border-right-color: #D3D3D3;
 }
 
-#rpfeiljnyc .gt_title {
+#hkpksthqwd .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -699,7 +700,7 @@ For example, compare the mean age by patient outcome.</p>
   border-bottom-width: 0;
 }
 
-#rpfeiljnyc .gt_subtitle {
+#hkpksthqwd .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -709,13 +710,13 @@ For example, compare the mean age by patient outcome.</p>
   border-top-width: 0;
 }
 
-#rpfeiljnyc .gt_bottom_border {
+#hkpksthqwd .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#rpfeiljnyc .gt_col_headings {
+#hkpksthqwd .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -730,7 +731,7 @@ For example, compare the mean age by patient outcome.</p>
   border-right-color: #D3D3D3;
 }
 
-#rpfeiljnyc .gt_col_heading {
+#hkpksthqwd .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -750,7 +751,7 @@ For example, compare the mean age by patient outcome.</p>
   overflow-x: hidden;
 }
 
-#rpfeiljnyc .gt_column_spanner_outer {
+#hkpksthqwd .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -762,15 +763,15 @@ For example, compare the mean age by patient outcome.</p>
   padding-right: 4px;
 }
 
-#rpfeiljnyc .gt_column_spanner_outer:first-child {
+#hkpksthqwd .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#rpfeiljnyc .gt_column_spanner_outer:last-child {
+#hkpksthqwd .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#rpfeiljnyc .gt_column_spanner {
+#hkpksthqwd .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -782,7 +783,7 @@ For example, compare the mean age by patient outcome.</p>
   width: 100%;
 }
 
-#rpfeiljnyc .gt_group_heading {
+#hkpksthqwd .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -804,7 +805,7 @@ For example, compare the mean age by patient outcome.</p>
   vertical-align: middle;
 }
 
-#rpfeiljnyc .gt_empty_group_heading {
+#hkpksthqwd .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -819,15 +820,15 @@ For example, compare the mean age by patient outcome.</p>
   vertical-align: middle;
 }
 
-#rpfeiljnyc .gt_from_md > :first-child {
+#hkpksthqwd .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#rpfeiljnyc .gt_from_md > :last-child {
+#hkpksthqwd .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#rpfeiljnyc .gt_row {
+#hkpksthqwd .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -846,7 +847,7 @@ For example, compare the mean age by patient outcome.</p>
   overflow-x: hidden;
 }
 
-#rpfeiljnyc .gt_stub {
+#hkpksthqwd .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -858,7 +859,7 @@ For example, compare the mean age by patient outcome.</p>
   padding-left: 12px;
 }
 
-#rpfeiljnyc .gt_summary_row {
+#hkpksthqwd .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -868,7 +869,7 @@ For example, compare the mean age by patient outcome.</p>
   padding-right: 5px;
 }
 
-#rpfeiljnyc .gt_first_summary_row {
+#hkpksthqwd .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -878,7 +879,7 @@ For example, compare the mean age by patient outcome.</p>
   border-top-color: #D3D3D3;
 }
 
-#rpfeiljnyc .gt_grand_summary_row {
+#hkpksthqwd .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -888,7 +889,7 @@ For example, compare the mean age by patient outcome.</p>
   padding-right: 5px;
 }
 
-#rpfeiljnyc .gt_first_grand_summary_row {
+#hkpksthqwd .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -898,11 +899,11 @@ For example, compare the mean age by patient outcome.</p>
   border-top-color: #D3D3D3;
 }
 
-#rpfeiljnyc .gt_striped {
+#hkpksthqwd .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#rpfeiljnyc .gt_table_body {
+#hkpksthqwd .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -911,7 +912,7 @@ For example, compare the mean age by patient outcome.</p>
   border-bottom-color: #D3D3D3;
 }
 
-#rpfeiljnyc .gt_footnotes {
+#hkpksthqwd .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -925,13 +926,13 @@ For example, compare the mean age by patient outcome.</p>
   border-right-color: #D3D3D3;
 }
 
-#rpfeiljnyc .gt_footnote {
+#hkpksthqwd .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#rpfeiljnyc .gt_sourcenotes {
+#hkpksthqwd .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -945,46 +946,46 @@ For example, compare the mean age by patient outcome.</p>
   border-right-color: #D3D3D3;
 }
 
-#rpfeiljnyc .gt_sourcenote {
+#hkpksthqwd .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#rpfeiljnyc .gt_left {
+#hkpksthqwd .gt_left {
   text-align: left;
 }
 
-#rpfeiljnyc .gt_center {
+#hkpksthqwd .gt_center {
   text-align: center;
 }
 
-#rpfeiljnyc .gt_right {
+#hkpksthqwd .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#rpfeiljnyc .gt_font_normal {
+#hkpksthqwd .gt_font_normal {
   font-weight: normal;
 }
 
-#rpfeiljnyc .gt_font_bold {
+#hkpksthqwd .gt_font_bold {
   font-weight: bold;
 }
 
-#rpfeiljnyc .gt_font_italic {
+#hkpksthqwd .gt_font_italic {
   font-style: italic;
 }
 
-#rpfeiljnyc .gt_super {
+#hkpksthqwd .gt_super {
   font-size: 65%;
 }
 
-#rpfeiljnyc .gt_footnote_marks {
+#hkpksthqwd .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="rpfeiljnyc" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><div class="inline-table"><table class="gt_table">
+<div id="hkpksthqwd" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><div class="inline-table"><table class="gt_table">
 <thead class="gt_col_headings"><tr>
 <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1"><strong>Characteristic</strong></th>
       <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">
@@ -1036,7 +1037,7 @@ For example, compare the mean age by patient outcome.</p>
 is to use the Wilcoxon rank sum test and the median (IQR) when comparing two
 groups. However for non-normally distributed data or comparing multiple groups,
 the Kruskal-wallis test is more appropriate.</p>
-<div class="sourceCode" id="cb848"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb874"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">linelist</span> <span class="op">%&gt;%</span> 
   <span class="fu">select</span><span class="op">(</span><span class="va">age_years</span>, <span class="va">outcome</span><span class="op">)</span> <span class="op">%&gt;%</span>                       <span class="co"># keep variables of interest</span>
   <span class="fu">tbl_summary</span><span class="op">(</span>                                         <span class="co"># produce summary table</span>
@@ -1048,7 +1049,7 @@ the Kruskal-wallis test is more appropriate.</p>
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#twpsnxdtgm .gt_table {
+#zubvljauiz .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -1073,7 +1074,7 @@ the Kruskal-wallis test is more appropriate.</p>
   border-left-color: #D3D3D3;
 }
 
-#twpsnxdtgm .gt_heading {
+#zubvljauiz .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1085,7 +1086,7 @@ the Kruskal-wallis test is more appropriate.</p>
   border-right-color: #D3D3D3;
 }
 
-#twpsnxdtgm .gt_title {
+#zubvljauiz .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1095,7 +1096,7 @@ the Kruskal-wallis test is more appropriate.</p>
   border-bottom-width: 0;
 }
 
-#twpsnxdtgm .gt_subtitle {
+#zubvljauiz .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1105,13 +1106,13 @@ the Kruskal-wallis test is more appropriate.</p>
   border-top-width: 0;
 }
 
-#twpsnxdtgm .gt_bottom_border {
+#zubvljauiz .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#twpsnxdtgm .gt_col_headings {
+#zubvljauiz .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1126,7 +1127,7 @@ the Kruskal-wallis test is more appropriate.</p>
   border-right-color: #D3D3D3;
 }
 
-#twpsnxdtgm .gt_col_heading {
+#zubvljauiz .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1146,7 +1147,7 @@ the Kruskal-wallis test is more appropriate.</p>
   overflow-x: hidden;
 }
 
-#twpsnxdtgm .gt_column_spanner_outer {
+#zubvljauiz .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1158,15 +1159,15 @@ the Kruskal-wallis test is more appropriate.</p>
   padding-right: 4px;
 }
 
-#twpsnxdtgm .gt_column_spanner_outer:first-child {
+#zubvljauiz .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#twpsnxdtgm .gt_column_spanner_outer:last-child {
+#zubvljauiz .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#twpsnxdtgm .gt_column_spanner {
+#zubvljauiz .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1178,7 +1179,7 @@ the Kruskal-wallis test is more appropriate.</p>
   width: 100%;
 }
 
-#twpsnxdtgm .gt_group_heading {
+#zubvljauiz .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1200,7 +1201,7 @@ the Kruskal-wallis test is more appropriate.</p>
   vertical-align: middle;
 }
 
-#twpsnxdtgm .gt_empty_group_heading {
+#zubvljauiz .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1215,15 +1216,15 @@ the Kruskal-wallis test is more appropriate.</p>
   vertical-align: middle;
 }
 
-#twpsnxdtgm .gt_from_md > :first-child {
+#zubvljauiz .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#twpsnxdtgm .gt_from_md > :last-child {
+#zubvljauiz .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#twpsnxdtgm .gt_row {
+#zubvljauiz .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1242,7 +1243,7 @@ the Kruskal-wallis test is more appropriate.</p>
   overflow-x: hidden;
 }
 
-#twpsnxdtgm .gt_stub {
+#zubvljauiz .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1254,7 +1255,7 @@ the Kruskal-wallis test is more appropriate.</p>
   padding-left: 12px;
 }
 
-#twpsnxdtgm .gt_summary_row {
+#zubvljauiz .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1264,7 +1265,7 @@ the Kruskal-wallis test is more appropriate.</p>
   padding-right: 5px;
 }
 
-#twpsnxdtgm .gt_first_summary_row {
+#zubvljauiz .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1274,7 +1275,7 @@ the Kruskal-wallis test is more appropriate.</p>
   border-top-color: #D3D3D3;
 }
 
-#twpsnxdtgm .gt_grand_summary_row {
+#zubvljauiz .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1284,7 +1285,7 @@ the Kruskal-wallis test is more appropriate.</p>
   padding-right: 5px;
 }
 
-#twpsnxdtgm .gt_first_grand_summary_row {
+#zubvljauiz .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1294,11 +1295,11 @@ the Kruskal-wallis test is more appropriate.</p>
   border-top-color: #D3D3D3;
 }
 
-#twpsnxdtgm .gt_striped {
+#zubvljauiz .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#twpsnxdtgm .gt_table_body {
+#zubvljauiz .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1307,7 +1308,7 @@ the Kruskal-wallis test is more appropriate.</p>
   border-bottom-color: #D3D3D3;
 }
 
-#twpsnxdtgm .gt_footnotes {
+#zubvljauiz .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1321,13 +1322,13 @@ the Kruskal-wallis test is more appropriate.</p>
   border-right-color: #D3D3D3;
 }
 
-#twpsnxdtgm .gt_footnote {
+#zubvljauiz .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#twpsnxdtgm .gt_sourcenotes {
+#zubvljauiz .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1341,46 +1342,46 @@ the Kruskal-wallis test is more appropriate.</p>
   border-right-color: #D3D3D3;
 }
 
-#twpsnxdtgm .gt_sourcenote {
+#zubvljauiz .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#twpsnxdtgm .gt_left {
+#zubvljauiz .gt_left {
   text-align: left;
 }
 
-#twpsnxdtgm .gt_center {
+#zubvljauiz .gt_center {
   text-align: center;
 }
 
-#twpsnxdtgm .gt_right {
+#zubvljauiz .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#twpsnxdtgm .gt_font_normal {
+#zubvljauiz .gt_font_normal {
   font-weight: normal;
 }
 
-#twpsnxdtgm .gt_font_bold {
+#zubvljauiz .gt_font_bold {
   font-weight: bold;
 }
 
-#twpsnxdtgm .gt_font_italic {
+#zubvljauiz .gt_font_italic {
   font-style: italic;
 }
 
-#twpsnxdtgm .gt_super {
+#zubvljauiz .gt_super {
   font-size: 65%;
 }
 
-#twpsnxdtgm .gt_footnote_marks {
+#zubvljauiz .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="twpsnxdtgm" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><div class="inline-table"><table class="gt_table">
+<div id="zubvljauiz" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><div class="inline-table"><table class="gt_table">
 <thead class="gt_col_headings"><tr>
 <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1"><strong>Characteristic</strong></th>
       <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">
@@ -1430,7 +1431,7 @@ the Kruskal-wallis test is more appropriate.</p>
 </h3>
 <p>Compare the distribution of a continuous variable in two or more groups,
 regardless of whether the data is normally distributed.</p>
-<div class="sourceCode" id="cb850"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb876"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">linelist</span> <span class="op">%&gt;%</span> 
   <span class="fu">select</span><span class="op">(</span><span class="va">age_years</span>, <span class="va">outcome</span><span class="op">)</span> <span class="op">%&gt;%</span>                       <span class="co"># keep variables of interest</span>
   <span class="fu">tbl_summary</span><span class="op">(</span>                                         <span class="co"># produce summary table</span>
@@ -1442,7 +1443,7 @@ regardless of whether the data is normally distributed.</p>
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#qimcmlzjxp .gt_table {
+#svnwgtznbn .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -1467,7 +1468,7 @@ regardless of whether the data is normally distributed.</p>
   border-left-color: #D3D3D3;
 }
 
-#qimcmlzjxp .gt_heading {
+#svnwgtznbn .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1479,7 +1480,7 @@ regardless of whether the data is normally distributed.</p>
   border-right-color: #D3D3D3;
 }
 
-#qimcmlzjxp .gt_title {
+#svnwgtznbn .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1489,7 +1490,7 @@ regardless of whether the data is normally distributed.</p>
   border-bottom-width: 0;
 }
 
-#qimcmlzjxp .gt_subtitle {
+#svnwgtznbn .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1499,13 +1500,13 @@ regardless of whether the data is normally distributed.</p>
   border-top-width: 0;
 }
 
-#qimcmlzjxp .gt_bottom_border {
+#svnwgtznbn .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#qimcmlzjxp .gt_col_headings {
+#svnwgtznbn .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1520,7 +1521,7 @@ regardless of whether the data is normally distributed.</p>
   border-right-color: #D3D3D3;
 }
 
-#qimcmlzjxp .gt_col_heading {
+#svnwgtznbn .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1540,7 +1541,7 @@ regardless of whether the data is normally distributed.</p>
   overflow-x: hidden;
 }
 
-#qimcmlzjxp .gt_column_spanner_outer {
+#svnwgtznbn .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1552,15 +1553,15 @@ regardless of whether the data is normally distributed.</p>
   padding-right: 4px;
 }
 
-#qimcmlzjxp .gt_column_spanner_outer:first-child {
+#svnwgtznbn .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#qimcmlzjxp .gt_column_spanner_outer:last-child {
+#svnwgtznbn .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#qimcmlzjxp .gt_column_spanner {
+#svnwgtznbn .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1572,7 +1573,7 @@ regardless of whether the data is normally distributed.</p>
   width: 100%;
 }
 
-#qimcmlzjxp .gt_group_heading {
+#svnwgtznbn .gt_group_heading {
   padding: 8px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1594,7 +1595,7 @@ regardless of whether the data is normally distributed.</p>
   vertical-align: middle;
 }
 
-#qimcmlzjxp .gt_empty_group_heading {
+#svnwgtznbn .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1609,15 +1610,15 @@ regardless of whether the data is normally distributed.</p>
   vertical-align: middle;
 }
 
-#qimcmlzjxp .gt_from_md > :first-child {
+#svnwgtznbn .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#qimcmlzjxp .gt_from_md > :last-child {
+#svnwgtznbn .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#qimcmlzjxp .gt_row {
+#svnwgtznbn .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1636,7 +1637,7 @@ regardless of whether the data is normally distributed.</p>
   overflow-x: hidden;
 }
 
-#qimcmlzjxp .gt_stub {
+#svnwgtznbn .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1648,7 +1649,7 @@ regardless of whether the data is normally distributed.</p>
   padding-left: 12px;
 }
 
-#qimcmlzjxp .gt_summary_row {
+#svnwgtznbn .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1658,7 +1659,7 @@ regardless of whether the data is normally distributed.</p>
   padding-right: 5px;
 }
 
-#qimcmlzjxp .gt_first_summary_row {
+#svnwgtznbn .gt_first_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1668,7 +1669,7 @@ regardless of whether the data is normally distributed.</p>
   border-top-color: #D3D3D3;
 }
 
-#qimcmlzjxp .gt_grand_summary_row {
+#svnwgtznbn .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1678,7 +1679,7 @@ regardless of whether the data is normally distributed.</p>
   padding-right: 5px;
 }
 
-#qimcmlzjxp .gt_first_grand_summary_row {
+#svnwgtznbn .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1688,11 +1689,11 @@ regardless of whether the data is normally distributed.</p>
   border-top-color: #D3D3D3;
 }
 
-#qimcmlzjxp .gt_striped {
+#svnwgtznbn .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#qimcmlzjxp .gt_table_body {
+#svnwgtznbn .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1701,7 +1702,7 @@ regardless of whether the data is normally distributed.</p>
   border-bottom-color: #D3D3D3;
 }
 
-#qimcmlzjxp .gt_footnotes {
+#svnwgtznbn .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1715,13 +1716,13 @@ regardless of whether the data is normally distributed.</p>
   border-right-color: #D3D3D3;
 }
 
-#qimcmlzjxp .gt_footnote {
+#svnwgtznbn .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding: 4px;
 }
 
-#qimcmlzjxp .gt_sourcenotes {
+#svnwgtznbn .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1735,46 +1736,46 @@ regardless of whether the data is normally distributed.</p>
   border-right-color: #D3D3D3;
 }
 
-#qimcmlzjxp .gt_sourcenote {
+#svnwgtznbn .gt_sourcenote {
   font-size: 90%;
   padding: 4px;
 }
 
-#qimcmlzjxp .gt_left {
+#svnwgtznbn .gt_left {
   text-align: left;
 }
 
-#qimcmlzjxp .gt_center {
+#svnwgtznbn .gt_center {
   text-align: center;
 }
 
-#qimcmlzjxp .gt_right {
+#svnwgtznbn .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#qimcmlzjxp .gt_font_normal {
+#svnwgtznbn .gt_font_normal {
   font-weight: normal;
 }
 
-#qimcmlzjxp .gt_font_bold {
+#svnwgtznbn .gt_font_bold {
   font-weight: bold;
 }
 
-#qimcmlzjxp .gt_font_italic {
+#svnwgtznbn .gt_font_italic {
   font-style: italic;
 }
 
-#qimcmlzjxp .gt_super {
+#svnwgtznbn .gt_super {
   font-size: 65%;
 }
 
-#qimcmlzjxp .gt_footnote_marks {
+#svnwgtznbn .gt_footnote_marks {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="qimcmlzjxp" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><div class="inline-table"><table class="gt_table">
+<div id="svnwgtznbn" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><div class="inline-table"><table class="gt_table">
 <thead class="gt_col_headings"><tr>
 <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1"><strong>Characteristic</strong></th>
       <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1">
@@ -1831,7 +1832,7 @@ a list of dataframes for each of the subgroups you want to compare. See the page
 <div id="t-tests-2" class="section level3 unnumbered">
 <h3>T-tests<a class="anchor" aria-label="anchor" href="#t-tests-2"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb852"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb878"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">linelist</span> <span class="op">%&gt;%</span> 
   <span class="co">## only keep variables of interest</span>
   <span class="fu">select</span><span class="op">(</span><span class="va">age</span>, <span class="va">outcome</span><span class="op">)</span> <span class="op">%&gt;%</span> 
@@ -1868,7 +1869,7 @@ a list of dataframes for each of the subgroups you want to compare. See the page
 <div id="wilcoxon-rank-sum-test-2" class="section level3 unnumbered">
 <h3>Wilcoxon rank sum test<a class="anchor" aria-label="anchor" href="#wilcoxon-rank-sum-test-2"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb854"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb880"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">linelist</span> <span class="op">%&gt;%</span> 
   <span class="co">## only keep variables of interest</span>
   <span class="fu">select</span><span class="op">(</span><span class="va">age</span>, <span class="va">outcome</span><span class="op">)</span> <span class="op">%&gt;%</span> 
@@ -1911,7 +1912,7 @@ a list of dataframes for each of the subgroups you want to compare. See the page
 <div id="kruskal-wallis-test-2" class="section level3 unnumbered">
 <h3>Kruskal-wallis test<a class="anchor" aria-label="anchor" href="#kruskal-wallis-test-2"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb856"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb882"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">linelist</span> <span class="op">%&gt;%</span> 
   <span class="co">## only keep variables of interest</span>
   <span class="fu">select</span><span class="op">(</span><span class="va">age</span>, <span class="va">outcome</span><span class="op">)</span> <span class="op">%&gt;%</span> 
@@ -1954,7 +1955,7 @@ a list of dataframes for each of the subgroups you want to compare. See the page
 <div id="chi-squared-test-2" class="section level3 unnumbered">
 <h3>Chi-squared test<a class="anchor" aria-label="anchor" href="#chi-squared-test-2"><i class="fas fa-link"></i></a>
 </h3>
-<div class="sourceCode" id="cb858"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb884"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">linelist</span> <span class="op">%&gt;%</span> 
   <span class="co">## do everything by gender </span>
   <span class="fu">group_by</span><span class="op">(</span><span class="va">outcome</span><span class="op">)</span> <span class="op">%&gt;%</span> 
@@ -1981,7 +1982,7 @@ a list of dataframes for each of the subgroups you want to compare. See the page
 <p>Correlation between numeric variables can be investigated using the tidyverse<br><code>corrr</code> package. It allows you to compute correlations using Pearson, Kendall
 tau or Spearman rho. The package creates a table and also has a function to
 automatically plot the values.</p>
-<div class="sourceCode" id="cb860"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb886"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">correlation_tab</span> <span class="op">&lt;-</span> <span class="va">linelist</span> <span class="op">%&gt;%</span> 
   <span class="fu">select</span><span class="op">(</span><span class="va">generation</span>, <span class="va">age</span>, <span class="va">ct_blood</span>, <span class="va">days_onset_hosp</span>, <span class="va">wt_kg</span>, <span class="va">ht_cm</span><span class="op">)</span> <span class="op">%&gt;%</span>   <span class="co"># keep numeric variables of interest</span>
   <span class="fu">correlate</span><span class="op">(</span><span class="op">)</span>      <span class="co"># create correlation table (using default pearson)</span>
@@ -1996,7 +1997,7 @@ automatically plot the values.</p>
 ## 4 days_onset_hosp   -0.288   -0.000635 -0.600         NA         0.0153  -0.00953
 ## 5 wt_kg             -0.0302   0.833    -0.00636        0.0153   NA        0.884  
 ## 6 ht_cm             -0.00942  0.877     0.0181        -0.00953   0.884   NA</code></pre>
-<div class="sourceCode" id="cb862"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb888"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## remove duplicate entries (the table above is mirrored) </span>
 <span class="va">correlation_tab</span> <span class="op">&lt;-</span> <span class="va">correlation_tab</span> <span class="op">%&gt;%</span> 
   <span class="fu">shave</span><span class="op">(</span><span class="op">)</span>
@@ -2012,10 +2013,10 @@ automatically plot the values.</p>
 ## 4 days_onset_hosp   -0.288   -0.000635 -0.600          NA       NA        NA
 ## 5 wt_kg             -0.0302   0.833    -0.00636         0.0153  NA        NA
 ## 6 ht_cm             -0.00942  0.877     0.0181         -0.00953  0.884    NA</code></pre>
-<div class="sourceCode" id="cb864"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb890"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">## plot correlations </span>
 <span class="fu">rplot</span><span class="op">(</span><span class="va">correlation_tab</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-699-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-660-1.png" width="672"></div>
 <!-- ======================================================= -->
 </div>
 <div id="resources-11" class="section level2" number="18.3">
@@ -2086,7 +2087,7 @@ automatically plot the values.</p>
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>The Epidemiologist R Handbook</strong>" was written by the handbook team. It was last built on 2021-04-05.</p>
+    <p>"<strong>The Epidemiologist R Handbook</strong>" was written by the handbook team. It was last built on 2021-04-07.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

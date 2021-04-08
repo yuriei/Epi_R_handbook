@@ -16,7 +16,8 @@
 <script src="libs/nouislider-7.0.10/jquery.nouislider.min.js"></script><link href="libs/selectize-0.12.0/selectize.bootstrap3.css" rel="stylesheet">
 <script src="libs/selectize-0.12.0/selectize.min.js"></script><link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet">
 <script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
-<link href="libs/tabwid-1.0.0/tabwid.css" rel="stylesheet">
+<link href="libs/bsTable-3.3.7/bootstrapTable.min.css" rel="stylesheet">
+<script src="libs/bsTable-3.3.7/bootstrapTable.js"></script><link href="libs/tabwid-1.0.0/tabwid.css" rel="stylesheet">
 <link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet">
 <script src="libs/leaflet-1.3.1/leaflet.js"></script><link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet">
 <script src="libs/proj4-2.6.2/proj4.min.js"></script><script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script><link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet">
@@ -95,7 +96,7 @@
 <li><a class="" href="directory-interactions.html"><span class="header-section-number">40</span> Directory interactions</a></li>
 <li><a class="" href="r-markdown-1.html"><span class="header-section-number">41</span> R Markdown</a></li>
 <li><a class="" href="routine-reports.html"><span class="header-section-number">42</span> Routine reports</a></li>
-<li><a class="" href="errors-warnings-1.html"><span class="header-section-number">43</span> Errors &amp; warnings</a></li>
+<li><a class="" href="errors-help.html"><span class="header-section-number">43</span> Errors &amp; help</a></li>
 <li><a class="" href="advanced-rstudio.html"><span class="header-section-number">44</span> Advanced RStudio</a></li>
 <li><a class="" href="relational-databases.html"><span class="header-section-number">45</span> Relational databases</a></li>
 <li><a class="" href="shiny-and-dashboards.html"><span class="header-section-number">46</span> Shiny and dashboards</a></li>
@@ -180,7 +181,7 @@
 <div class="sourceCode" id="cb381"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">linelist</span><span class="op">)</span><span class="op">+</span>
   <span class="fu">geom_bar</span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">delay</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-335-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-279-1.png" width="672"></div>
 </div>
 <div id="convert-to-factor" class="section level2" number="10.3">
 <h2>
@@ -247,7 +248,7 @@
 <span class="co"># Factor level order adjusted within ggplot</span>
 <span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">linelist</span><span class="op">)</span><span class="op">+</span>
   <span class="fu">geom_bar</span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="fu">fct_relevel</span><span class="op">(</span><span class="va">delay</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"&lt;2 days"</span>, <span class="st">"2-5 days"</span>, <span class="st">"&gt;5 days"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-342-1.png" width="50%"><img src="_main_files/figure-html/unnamed-chunk-342-2.png" width="50%"></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-286-1.png" width="50%"><img src="_main_files/figure-html/unnamed-chunk-286-2.png" width="50%"></p>
 <p>Note how the default x-axis label is now quite complicated - you can overwrite this with the <code>labs()</code> in ggplot.</p>
 <p><strong><code>fct_infreq()</code></strong></p>
 <p>To order by frequency that the value appears in the data, use <code>fct_infreq()</code>. Any missing values (<code>NA</code>) will automatically be included at the end. You can reverse this order by further modifying with <code>fct_rev()</code>.</p>
@@ -262,7 +263,7 @@
 <span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">linelist</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="fu">fct_rev</span><span class="op">(</span><span class="fu">fct_infreq</span><span class="op">(</span><span class="va">delay</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">+</span>
   <span class="fu">geom_bar</span><span class="op">(</span><span class="op">)</span><span class="op">+</span>
   <span class="fu">labs</span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Delay onset to admission (days)"</span><span class="op">)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-343-1.png" width="50%"><img src="_main_files/figure-html/unnamed-chunk-343-2.png" width="50%"></p>
+<p><img src="_main_files/figure-html/unnamed-chunk-287-1.png" width="50%"><img src="_main_files/figure-html/unnamed-chunk-287-2.png" width="50%"></p>
 <p>Here is an example within a data frame:</p>
 <div class="sourceCode" id="cb393"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">linelist</span> <span class="op">%&gt;%</span> 
@@ -285,7 +286,7 @@ In the second example, the x-axis column has been wrapped in <code>fct_reorder()
        title <span class="op">=</span> <span class="st">"Ordered by increasing delay (original factor levels)"</span><span class="op">)</span><span class="op">+</span>
   <span class="fu">theme_classic</span><span class="op">(</span><span class="op">)</span><span class="op">+</span>
   <span class="fu">theme</span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-345-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-289-1.png" width="672"></div>
 <div class="sourceCode" id="cb395"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># boxplots ordered by median CT value</span>
 <span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">linelist</span><span class="op">)</span><span class="op">+</span>
@@ -297,7 +298,7 @@ In the second example, the x-axis column has been wrapped in <code>fct_reorder()
        title <span class="op">=</span> <span class="st">"Ordered by median CT value in group"</span><span class="op">)</span><span class="op">+</span>
   <span class="fu">theme_classic</span><span class="op">(</span><span class="op">)</span><span class="op">+</span>
   <span class="fu">theme</span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-345-2.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-289-2.png" width="672"></div>
 <p><strong><code>fct_reorder2()</code></strong></p>
 <p>Use this function to order the <em>legend colors</em> by the vertical order of groups at the “end” of the plot. For example, if you have lines showing case counts by hospital over time, you can apply <code>fct_reorder2()</code> to the <code>color =</code> argument within <code>aes()</code>, such that the vertical order of hospitals appearing in the legend aligns with the order of lines at the terminal end of the plot. Read more in the <a href="https://forcats.tidyverse.org/reference/fct_reorder.html">function documentation</a>.</p>
 <div class="sourceCode" id="cb396"><pre class="downlit sourceCode r">
@@ -313,7 +314,7 @@ In the second example, the x-axis column has been wrapped in <code>fct_reorder()
         y <span class="op">=</span> <span class="va">n</span>,        <span class="co"># height in number of rows</span>
         color <span class="op">=</span> <span class="fu">fct_reorder2</span><span class="op">(</span><span class="va">hospital</span>, <span class="va">epiweek</span>, <span class="va">n</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">+</span> <span class="co"># grouped by hospital and colors ordered by n value at end of plot</span>
   <span class="fu">labs</span><span class="op">(</span>color <span class="op">=</span> <span class="st">"Hospital"</span><span class="op">)</span>  <span class="co"># change legend title</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-346-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-290-1.png" width="672"></div>
 <p><strong><code>fct_lump()</code></strong></p>
 <p>To “lump” together many low-frequency levels into an “Other” group, you can use this function. Do one of the following:</p>
 <ul>
@@ -327,7 +328,7 @@ In the second example, the x-axis column has been wrapped in <code>fct_reorder()
   <span class="fu">geom_bar</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="fu">fct_lump</span><span class="op">(</span><span class="va">hospital</span>,    <span class="co"># column for x-axis</span>
                             n <span class="op">=</span> <span class="fl">2</span>,       <span class="co"># keep two most-frequent levels</span>
                             other_level <span class="op">=</span> <span class="st">"Other hospitals"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="co"># label for "Other" group</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-347-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-291-1.png" width="672"></div>
 <p>You can also use <code>fct_other()</code> to manually assign factor levels to an “Other” group. Below, all <code>hospital</code> values aside from “Port Hospital” and “Central Hospital” are combined into “Other”.</p>
 <p>You can use the arguments <code>keep =</code>, or <code>drop =</code>, and can change the label of “Other” with <code>other_label =</code>.</p>
 <div class="sourceCode" id="cb398"><pre class="downlit sourceCode r">
@@ -417,7 +418,7 @@ Please also see the <a href="working-with-dates.html#working-with-dates-1">Worki
   <span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span><span class="op">+</span>                                                  <span class="co"># begin ggplot</span>
   <span class="fu">geom_histogram</span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">epiweek_date</span><span class="op">)</span><span class="op">)</span><span class="op">+</span>           <span class="co"># histogram of date of onset</span>
   <span class="fu">scale_x_date</span><span class="op">(</span>date_labels <span class="op">=</span> <span class="st">"%Y-W%W"</span><span class="op">)</span>                       <span class="co"># adjust disply of dates to be YYYY-WWw</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-354-1.png" width="672"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-298-1.png" width="672"></div>
 <p>However, if your purpose in factoring is <em>not</em> to plot, you may convert this epiweek column (YYYY-MM-DD) to a different display format (YYYY-WWw) <em>within the data frame itself</em>, and convert it to class Factor. Use <code><a href="https://rdrr.io/r/base/format.html">format()</a></code> from <strong>base</strong> R to convert the display, then convert to class Factor with <code><a href="https://rdrr.io/r/base/factor.html">factor()</a></code>.</p>
 <div class="sourceCode" id="cb411"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">linelist</span> <span class="op">&lt;-</span> <span class="va">linelist</span> <span class="op">%&gt;%</span> 
@@ -427,10 +428,10 @@ Please also see the <a href="working-with-dates.html#working-with-dates-1">Worki
 
 <span class="co"># Display levels</span>
 <span class="fu"><a href="https://rdrr.io/r/base/levels.html">levels</a></span><span class="op">(</span><span class="va">linelist</span><span class="op">$</span><span class="va">epiweek_formatted</span><span class="op">)</span></code></pre></div>
-<pre><code>##  [1] "2014-W13" "2014-W14" "2014-W15" "2014-W16" "2014-W17" "2014-W18" "2014-W19" "2014-W20" "2014-W21" "2014-W22" "2014-W23" "2014-W24" "2014-W25" "2014-W26" "2014-W27" "2014-W28"
-## [17] "2014-W29" "2014-W30" "2014-W31" "2014-W32" "2014-W33" "2014-W34" "2014-W35" "2014-W36" "2014-W37" "2014-W38" "2014-W39" "2014-W40" "2014-W41" "2014-W42" "2014-W43" "2014-W44"
-## [33] "2014-W45" "2014-W46" "2014-W47" "2014-W48" "2014-W49" "2014-W50" "2014-W51" "2015-W00" "2015-W01" "2015-W02" "2015-W03" "2015-W04" "2015-W05" "2015-W06" "2015-W07" "2015-W08"
-## [49] "2015-W09" "2015-W10" "2015-W11" "2015-W12" "2015-W13" "2015-W14" "2015-W15" "2015-W16"</code></pre>
+<pre><code>##  [1] "2014-W13" "2014-W14" "2014-W15" "2014-W16" "2014-W17" "2014-W18" "2014-W19" "2014-W20" "2014-W21" "2014-W22" "2014-W23" "2014-W24" "2014-W25" "2014-W26" "2014-W27"
+## [16] "2014-W28" "2014-W29" "2014-W30" "2014-W31" "2014-W32" "2014-W33" "2014-W34" "2014-W35" "2014-W36" "2014-W37" "2014-W38" "2014-W39" "2014-W40" "2014-W41" "2014-W42"
+## [31] "2014-W43" "2014-W44" "2014-W45" "2014-W46" "2014-W47" "2014-W48" "2014-W49" "2014-W50" "2014-W51" "2015-W00" "2015-W01" "2015-W02" "2015-W03" "2015-W04" "2015-W05"
+## [46] "2015-W06" "2015-W07" "2015-W08" "2015-W09" "2015-W10" "2015-W11" "2015-W12" "2015-W13" "2015-W14" "2015-W15" "2015-W16"</code></pre>
 <p><span style="color: red;"><strong><em>DANGER:</em></strong> If you use “Www-YYYY” (“%W-%Y”) display format instead, the default alpha-numeric level ordering will be incorrect (e.g. 01-2015 will be before 35-2014).</span></p>
 </div>
 <div id="aweek" class="section level4 unnumbered">
@@ -501,7 +502,7 @@ Please also see the <a href="working-with-dates.html#working-with-dates-1">Worki
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>The Epidemiologist R Handbook</strong>" was written by the handbook team. It was last built on 2021-04-05.</p>
+    <p>"<strong>The Epidemiologist R Handbook</strong>" was written by the handbook team. It was last built on 2021-04-07.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

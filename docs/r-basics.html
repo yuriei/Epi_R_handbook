@@ -16,7 +16,8 @@
 <script src="libs/nouislider-7.0.10/jquery.nouislider.min.js"></script><link href="libs/selectize-0.12.0/selectize.bootstrap3.css" rel="stylesheet">
 <script src="libs/selectize-0.12.0/selectize.min.js"></script><link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet">
 <script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
-<link href="libs/tabwid-1.0.0/tabwid.css" rel="stylesheet">
+<link href="libs/bsTable-3.3.7/bootstrapTable.min.css" rel="stylesheet">
+<script src="libs/bsTable-3.3.7/bootstrapTable.js"></script><link href="libs/tabwid-1.0.0/tabwid.css" rel="stylesheet">
 <link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet">
 <script src="libs/leaflet-1.3.1/leaflet.js"></script><link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet">
 <script src="libs/proj4-2.6.2/proj4.min.js"></script><script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script><link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet">
@@ -95,7 +96,7 @@
 <li><a class="" href="directory-interactions.html"><span class="header-section-number">40</span> Directory interactions</a></li>
 <li><a class="" href="r-markdown-1.html"><span class="header-section-number">41</span> R Markdown</a></li>
 <li><a class="" href="routine-reports.html"><span class="header-section-number">42</span> Routine reports</a></li>
-<li><a class="" href="errors-warnings-1.html"><span class="header-section-number">43</span> Errors &amp; warnings</a></li>
+<li><a class="" href="errors-help.html"><span class="header-section-number">43</span> Errors &amp; help</a></li>
 <li><a class="" href="advanced-rstudio.html"><span class="header-section-number">44</span> Advanced RStudio</a></li>
 <li><a class="" href="relational-databases.html"><span class="header-section-number">45</span> Relational databases</a></li>
 <li><a class="" href="shiny-and-dashboards.html"><span class="header-section-number">46</span> Shiny and dashboards</a></li>
@@ -427,7 +428,7 @@ The lower-right pane includes several tabs. Typical plot graphics including maps
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Create an age pyramid</span>
 <span class="fu">age_pyramid</span><span class="op">(</span>data <span class="op">=</span> <span class="va">linelist</span>, age_group <span class="op">=</span> <span class="st">"age_cat5"</span>, split_by <span class="op">=</span> <span class="st">"gender"</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-78-1.png" width="75%" height="75%"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-22-1.png" width="75%" height="75%"></div>
 <p>The above command can be equivalently written as below, with newlines. This can be easier to read and to write <code># comments</code>. To run this command you can highlight the entire command and click “Run”, or just place your cursor in the first line and then press Ctrl and Enter keys simultaneously.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Create an age pyramid</span>
@@ -436,7 +437,7 @@ The lower-right pane includes several tabs. Typical plot graphics including maps
   age_group <span class="op">=</span> <span class="st">"age_cat5"</span>, <span class="co"># age group column</span>
   split_by <span class="op">=</span> <span class="st">"gender"</span>     <span class="co"># two sides to pyramid</span>
   <span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-79-1.png" width="75%" height="75%"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-23-1.png" width="75%" height="75%"></div>
 <p>The first half of an argument assignment (e.g. <code>data =</code>) does not need to be specified if the arguments are written in a specific order (specified in the function’s documentation). The below code produces the exact same pyramid as above, because the function expects the argument order: data frame, <code>age_group</code> variable, <code>split_by</code> variable.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># This command will produce the exact same graphic as above</span>
@@ -456,7 +457,7 @@ The lower-right pane includes several tabs. Typical plot graphics including maps
   proportional <span class="op">=</span> <span class="cn">TRUE</span>,         <span class="co"># percents instead of counts</span>
   pal <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"orange"</span>, <span class="st">"purple"</span><span class="op">)</span>  <span class="co"># colors</span>
   <span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-80-1.png" width="75%" height="75%"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-24-1.png" width="75%" height="75%"></div>
 <!-- ======================================================= -->
 <!-- ======================================================= -->
 <!-- ======================================================= -->
@@ -610,6 +611,14 @@ The lower-right pane includes several tabs. Typical plot graphics including maps
 <code class="sourceCode R"><span class="co"># A comment can be on a line by itself</span>
 <span class="co"># import data</span>
 <span class="va">linelist</span> <span class="op">&lt;-</span> <span class="fu">import</span><span class="op">(</span><span class="st">"linelist_raw.xlsx"</span><span class="op">)</span>  <span class="co"># a comment can also come after code</span></code></pre></div>
+</div>
+<div id="style" class="section level3 unnumbered">
+<h3>Style<a class="anchor" aria-label="anchor" href="#style"><i class="fas fa-link"></i></a>
+</h3>
+<p>It is important to be conscious of your coding style - especially if working on a team. We advocate for the <strong>tidyverse</strong> <a href="https://style.tidyverse.org/">style guide</a>. There are also packages such as <strong>styler</strong> and <strong>lintr</strong> which help you conform to this style.</p>
+<p>A few very basic points to make your code readable to others:<br>
+* When naming objects, use only lowercase letters, numbers, and underscores <code>_</code>, e.g. <code>my_data</code><br>
+* Use frequent spaces, including around operators, e.g. <code>n = 1</code> and <code>age_new &lt;- age_old + 3</code></p>
 </div>
 <div id="example-script" class="section level3 unnumbered">
 <h3>Example Script<a class="anchor" aria-label="anchor" href="#example-script"><i class="fas fa-link"></i></a>
@@ -1705,7 +1714,7 @@ We also advise surrounding such operators with spaces, for readability.</p>
 </li>
 <li>Code assists</li>
 </ul>
-<p>Common errors and warnings and troubleshooting tips can be found in the page on [Errors and warnings].</p>
+<p>Common errors and warnings and troubleshooting tips can be found in the page on [Errors and help].</p>
 <!-- ======================================================= -->
 <div id="error-versus-warning" class="section level3 unnumbered">
 <h3>Error versus Warning<a class="anchor" aria-label="anchor" href="#error-versus-warning"><i class="fas fa-link"></i></a>
@@ -1796,6 +1805,7 @@ We also advise surrounding such operators with spaces, for readability.</p>
 <li>
 <a class="nav-link" href="#scripts"><span class="header-section-number">3.8</span> Scripts</a><ul class="nav navbar-nav">
 <li><a class="nav-link" href="#commenting">Commenting</a></li>
+<li><a class="nav-link" href="#style">Style</a></li>
 <li><a class="nav-link" href="#example-script">Example Script</a></li>
 <li><a class="nav-link" href="#r-markdown">R markdown</a></li>
 <li><a class="nav-link" href="#r-notebooks">R notebooks</a></li>
@@ -1861,7 +1871,7 @@ We also advise surrounding such operators with spaces, for readability.</p>
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>The Epidemiologist R Handbook</strong>" was written by the handbook team. It was last built on 2021-04-05.</p>
+    <p>"<strong>The Epidemiologist R Handbook</strong>" was written by the handbook team. It was last built on 2021-04-07.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

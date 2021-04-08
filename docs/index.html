@@ -16,7 +16,8 @@
 <script src="libs/nouislider-7.0.10/jquery.nouislider.min.js"></script><link href="libs/selectize-0.12.0/selectize.bootstrap3.css" rel="stylesheet">
 <script src="libs/selectize-0.12.0/selectize.min.js"></script><link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet">
 <script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script><script src="libs/kePrint-0.0.1/kePrint.js"></script><link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet">
-<link href="libs/tabwid-1.0.0/tabwid.css" rel="stylesheet">
+<link href="libs/bsTable-3.3.7/bootstrapTable.min.css" rel="stylesheet">
+<script src="libs/bsTable-3.3.7/bootstrapTable.js"></script><link href="libs/tabwid-1.0.0/tabwid.css" rel="stylesheet">
 <link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet">
 <script src="libs/leaflet-1.3.1/leaflet.js"></script><link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet">
 <script src="libs/proj4-2.6.2/proj4.min.js"></script><script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script><link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet">
@@ -95,7 +96,7 @@
 <li><a class="" href="directory-interactions.html"><span class="header-section-number">40</span> Directory interactions</a></li>
 <li><a class="" href="r-markdown-1.html"><span class="header-section-number">41</span> R Markdown</a></li>
 <li><a class="" href="routine-reports.html"><span class="header-section-number">42</span> Routine reports</a></li>
-<li><a class="" href="errors-warnings-1.html"><span class="header-section-number">43</span> Errors &amp; warnings</a></li>
+<li><a class="" href="errors-help.html"><span class="header-section-number">43</span> Errors &amp; help</a></li>
 <li><a class="" href="advanced-rstudio.html"><span class="header-section-number">44</span> Advanced RStudio</a></li>
 <li><a class="" href="relational-databases.html"><span class="header-section-number">45</span> Relational databases</a></li>
 <li><a class="" href="shiny-and-dashboards.html"><span class="header-section-number">46</span> Shiny and dashboards</a></li>
@@ -119,22 +120,16 @@
 <div id="about-this-handbook" class="section level2 unnumbered">
 <h2>About this handbook<a class="anchor" aria-label="anchor" href="#about-this-handbook"><i class="fas fa-link"></i></a>
 </h2>
-<p><span style="color: brown;"><strong>This is a free open-access R reference manual for applied epidemiologists and public health practitioners.</strong></span></p>
+<p><span style="color: brown;"><strong>This is an open-access R reference manual for applied epidemiologists and public health practitioners.</strong></span></p>
 <p><strong>This book strives to:</strong></p>
 <ul>
-<li>Serve as a quick reference manual - not as a textbook or comprehensive R training<br>
+<li>Serve as a quick R code reference manual<br>
 </li>
-<li>Address common epidemiological problems via task-centered examples<br>
+<li>Provide task-centered examples for addressing common epidemiological problems<br>
 </li>
-<li>Be accessible in settings with low internet-connectivity via an <a href="https://github.com/nsbatra/Epi_R_handbook/tree/master/offline_long">offline version</a> (instructions below)</li>
-</ul>
-<p><strong>What challenges does this book try to address?</strong></p>
-<ul>
-<li>Many epidemiologists are transitioning to R from SAS, STATA, SPSS, Excel, or other software<br>
+<li>Assist epidemiologists transitioning to R from SAS, STATA, SPSS, and Excel<br>
 </li>
-<li>Epidemiologists should not need to spend hours searching online for code relevant to the common epi user<br>
-</li>
-<li>Epidemiologists sometimes work in low internet-connectivity environments and have limited support</li>
+<li>Be accessible in settings with low internet-connectivity via an <strong>offline version</strong> (<a href="download-book-and-data.html#download-book-and-data">instructions here</a>)</li>
 </ul>
 <p><strong>How is this different than other R books?</strong></p>
 <ul>
@@ -176,7 +171,7 @@ Email us at <strong><a href="mailto:epiRhandbook@gmail.com" class="email">epiRha
 <div id="contributors" class="section level3 unnumbered">
 <h3>Contributors<a class="anchor" aria-label="anchor" href="#contributors"><i class="fas fa-link"></i></a>
 </h3>
-<p>This book is produced by a collaboration of epidemiologists from around the world, drawing upon experiences with organizations including local/state/provincial/national health departments and ministries, the World Health Organization (WHO), MSF (Médecins Sans Frontières / Doctors without Borders), hospital systems, and academic institutions.</p>
+<p>This book is produced by a collaboration of epidemiologists from around the world, drawing upon experiences with organizations including local, state, provincial, and national health departments and ministries, the World Health Organization (WHO), MSF (Médecins Sans Frontières / Doctors without Borders), hospital systems, and academic institutions.</p>
 <p><strong>Editor-in-Chief:</strong> Neale Batra</p>
 <p><strong>Core team:</strong> Neale Batra, Alex Spina, Amrish Baidjoe, Pat Keating, Henry Laurenson-Schafer, Finlay Campbell</p>
 <p><strong>Authors</strong>: Neale Batra, Alex Spina, Paula Blomquist, Finlay Campbell, Henry Laurenson-Schafer, Isaac Florence, Natalie Fischer, Aminata Ndiaye, Liza Coyer, Jonny Polonski, Yurie Izawa, Daniel Molling, Sara Hollis, Isha Berry, Wen Lin</p>
@@ -250,7 +245,7 @@ Email us at <strong><a href="mailto:epiRhandbook@gmail.com" class="email">epiRha
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>The Epidemiologist R Handbook</strong>" was written by the handbook team. It was last built on 2021-04-05.</p>
+    <p>"<strong>The Epidemiologist R Handbook</strong>" was written by the handbook team. It was last built on 2021-04-07.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
