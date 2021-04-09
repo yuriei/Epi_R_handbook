@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>1 Errors &amp; help | The Epidemiologist R Handbook</title>
+<meta name="author" content="the handbook team">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.2"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.7/header-attrs.js"></script><script src="libs/jquery-3.5.1/jquery-3.5.1.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.5.3/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.5.3/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.2.4/tabs.js"></script><script src="libs/bs3compat-0.2.4/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="https://cdn.jsdelivr.net/autocomplete.js/0/autocomplete.jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/mark.js@8.11.1/dist/mark.min.js"></script><!-- CSS --><link rel="stylesheet" href="style_bs4.css">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="">The Epidemiologist R Handbook</a>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html"></a></li>
+<li class="book-part">Preview pages</li>
+<li><a class="active" href="errors-help.html"><span class="header-section-number">1</span> Errors &amp; help</a></li>
+</ul>
+
+        <div class="book-extra">
+          
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="errors-help" class="section level1" number="1">
+<h1>
+<span class="header-section-number">1</span> Errors &amp; help<a class="anchor" aria-label="anchor" href="#errors-help"><i class="fas fa-link"></i></a>
+</h1>
+<p>THIS PAGE IS UNDER CONSTRUCTION</p>
+<p>This page covers:</p>
+<ul>
+<li>Common errors and suggests solutions for troubleshooting them<br>
+</li>
+<li>How to get help by posting a reproducible example (“reprex”) to an online forum</li>
+</ul>
+<div id="interpreting-error-messages" class="section level2" number="1.1">
+<h2>
+<span class="header-section-number">1.1</span> Interpreting error messages<a class="anchor" aria-label="anchor" href="#interpreting-error-messages"><i class="fas fa-link"></i></a>
+</h2>
+<p>R errors can be cryptic at times, so Google is your friend. Search the error message with “R” and look for recent posts in <a href="StackExchange.com">StackExchange.com</a>, <a href="stackoverflow.com">stackoverflow.com</a>, <a href="community.rstudio.com">community.rstudio.com</a>, twitter (#rstats), and other forums used by programmers to filed questions and answers. Try to find recent posts that have solved similar problems.</p>
+<p>If after much searching you cannot find an answer to your problem, consider creating a <em>reproducible example</em> (“reprex”) and posting the question yourself. See the sections below on posting reproducible examples to forums.</p>
+</div>
+<div id="common-errors" class="section level2" number="1.2">
+<h2>
+<span class="header-section-number">1.2</span> Common errors<a class="anchor" aria-label="anchor" href="#common-errors"><i class="fas fa-link"></i></a>
+</h2>
+<p>Below, we list some common errors and potential explanations/solutions. Some of these are borrowed from Noam Ross who analyzed the most common forum posts on Stack Overflow about R error messages (see analysis <a href="https://github.com/noamross/zero-dependency-problems/blob/master/misc/stack-overflow-common-r-errors.md">here</a>)</p>
+<div id="typo-errors" class="section level3 unnumbered">
+<h3>Typo errors<a class="anchor" aria-label="anchor" href="#typo-errors"><i class="fas fa-link"></i></a>
+</h3>
+<pre><code>Error: unexpected symbol in:
+"  geom_histogram(stat = "identity")+
+  tidyquant::geom_ma(n=7, size = 2, color = "red" lty"</code></pre>
+<p>If you see “unexpected symbol”, check for missing commas</p>
+</div>
+<div id="package-errors" class="section level3 unnumbered">
+<h3>Package errors<a class="anchor" aria-label="anchor" href="#package-errors"><i class="fas fa-link"></i></a>
+</h3>
+<pre><code>could not find function "x"...</code></pre>
+<p>This likely means that you typed the function name incorrectly, or forgot to install or load a package.</p>
+<pre><code>Error in select(data, var) : unused argument (var)</code></pre>
+<p>You think you are using <code><a href="https://dplyr.tidyverse.org/reference/select.html">dplyr::select()</a></code> but the <code>select()</code> function has been masked by <code><a href="https://rdrr.io/pkg/MASS/man/lm.ridge.html">MASS::select()</a></code> - specify <code>dplyr::</code> or re-order your package loading so that dplyr is after all the others.</p>
+<p>Other common masking errors stem from: <code><a href="https://rdrr.io/pkg/plyr/man/summarise.html">plyr::summarise()</a></code> and <code><a href="https://rdrr.io/r/stats/filter.html">stats::filter()</a></code>. Consider using the <a href="https://www.tidyverse.org/blog/2018/06/conflicted/"><strong>conflicted</strong> package</a>.</p>
+</div>
+<div id="object-errors" class="section level3 unnumbered">
+<h3>Object errors<a class="anchor" aria-label="anchor" href="#object-errors"><i class="fas fa-link"></i></a>
+</h3>
+<pre><code>No such file or directory:</code></pre>
+<p>If you see an error like this when you try to export or import: Check the spelling of the file and filepath, and if the path contains slashes make sure they are forward <code><a href="https://rdrr.io/r/base/Arithmetic.html">/</a></code> and not backward <code>\</code>. Also make sure you used the correct file extension (e.g. .csv, .xlsx).</p>
+<pre><code>object 'x' not found </code></pre>
+<p>This means that an object you are referencing does not exist. Perhaps code above did not run properly?</p>
+<pre><code>Error in 'x': subscript out of bounds</code></pre>
+<p>This means you tried to access something (an element of a vector or a list) that was not there.</p>
+</div>
+<div id="function-syntax-errors" class="section level3 unnumbered">
+<h3>Function syntax errors<a class="anchor" aria-label="anchor" href="#function-syntax-errors"><i class="fas fa-link"></i></a>
+</h3>
+<pre><code># ran recode without re-stating the x variable in mutate(x = recode(x, OLD = NEW)
+Error: Problem with `mutate()` input `hospital`.
+x argument ".x" is missing, with no default
+i Input `hospital` is `recode(...)`.</code></pre>
+<p>This error above (<code>argument .x is missing, with no default</code>) is common in <code>mutate()</code> if you are supplying a function like <code>recode()</code> or <code>replace_na()</code> where it expects you to provide the column name as the first argument. This is easy to forget.</p>
+</div>
+<div id="logic-errors" class="section level3 unnumbered">
+<h3>Logic errors<a class="anchor" aria-label="anchor" href="#logic-errors"><i class="fas fa-link"></i></a>
+</h3>
+<pre><code>Error in if</code></pre>
+<p>This likely means an <code>if</code> statement was applied to something that was not TRUE or FALSE.</p>
+</div>
+<div id="factor-errors" class="section level3 unnumbered">
+<h3>Factor errors<a class="anchor" aria-label="anchor" href="#factor-errors"><i class="fas fa-link"></i></a>
+</h3>
+<pre><code>#Tried to add a value ("Missing") to a factor (with replace_na operating on a factor)
+Problem with `mutate()` input `age_cat`.
+i invalid factor level, NA generated
+i Input `age_cat` is `replace_na(age_cat, "Missing")`.invalid factor level, NA generated</code></pre>
+<p>If you see this error about invalid factor levels, you likely have a column of class Factor (which contains pre-defined levels) and tried to add a new value to it. Convert it to class Character before adding a new value.</p>
+</div>
+<div id="plotting-errors" class="section level3 unnumbered">
+<h3>Plotting errors<a class="anchor" aria-label="anchor" href="#plotting-errors"><i class="fas fa-link"></i></a>
+</h3>
+<p><code>Error: Insufficient values in manual scale. 3 needed but only 2 provided.</code>
+ggplot() scale_fill_manual() values = c(“orange”, “purple”) … insufficient for number of factor levels … consider whether NA is now a factor level…</p>
+<pre><code>Can't add x object</code></pre>
+<p>You probably have an extra <code><a href="https://rdrr.io/r/base/Arithmetic.html">+</a></code> at the end of a ggplot command that you need to delete.</p>
+</div>
+<div id="miscellaneous" class="section level3 unnumbered">
+<h3>Miscellaneous<a class="anchor" aria-label="anchor" href="#miscellaneous"><i class="fas fa-link"></i></a>
+</h3>
+<p>Consider whether you re-arranged piped <strong>dplyr</strong> verbs and didn’t replace a pipe in the middle, or didn’t remove a pipe from the end after re-arranging.</p>
+</div>
+</div>
+<div id="github-issues" class="section level2" number="1.3">
+<h2>
+<span class="header-section-number">1.3</span> Github issues<a class="anchor" aria-label="anchor" href="#github-issues"><i class="fas fa-link"></i></a>
+</h2>
+<p>Many R packages and projects have their code hosted on the website Github.com. You can communicate directly with authors via this website by posting an “Issue”.</p>
+<p>Read more about how to store your work on Github in the page [Collaboration and Github].</p>
+<p>On Github, each project is contained within a <em>repository</em>. Each repository contains code, data, outputs, help documentation, etc. There is also a vehicle to communicate with the authors called “Issues”. See below the Github page for the <strong>incidence2</strong> package (used to make epidemic curves). You can see the “Issues” tab highlighted in yellow. You can see that there are 5 open issues.</p>
+<div class="inline-figure"><img src="images/errors_Github_issues.png" width="948"></div>
+<p>Once in the Issues tab, you can see the open issues. Review them to ensure your problem is not already being addressed. You can open a new issue by clicking the green button on the right. You will need a Github account to do this.</p>
+<div class="inline-figure">
+<img src="images/errors_Github_issues2.png" width="910">
+In your issue, follow the instructions below to provide a minimal, reproducible example. And please be courteous! Most people developing R packages and projects are doing so in their spare time (like this handbook!).</div>
+<p>To read more advanced materials about handling issues in your own Github repository, check out the Github <a href="https://guides.github.com/features/issues/">documentation on Issues</a>.</p>
+</div>
+<div id="reproducible-example" class="section level2" number="1.4">
+<h2>
+<span class="header-section-number">1.4</span> Reproducible example<a class="anchor" aria-label="anchor" href="#reproducible-example"><i class="fas fa-link"></i></a>
+</h2>
+<p>Providing a reproducible example (“reprex”) is key to getting help when posting in a forum or in a Github issue. People want to help you, but you have to give them an example that they can work with on their own computer. The example should:</p>
+<ul>
+<li>Demonstrate the problem you encountered<br>
+</li>
+<li>Be <em>minimal</em>, in that it includes only the data and code required to reproduce your problem<br>
+</li>
+<li>Be <em>reproducible</em>, such that all objects (e.g. data), package calls (e.g. <code><a href="https://rdrr.io/r/base/library.html">library()</a></code> or <code>p_load()</code>) are included</li>
+</ul>
+<p><em>Also, be sure you do not post any sensitive data with the reprex!</em> You can create example data frames, or use one of the data frames built into R (enter <code><a href="https://rdrr.io/r/utils/data.html">data()</a></code> to open a list of these datasets).</p>
+<div id="the-reprex-package" class="section level3 unnumbered">
+<h3>The <strong>reprex</strong> package<a class="anchor" aria-label="anchor" href="#the-reprex-package"><i class="fas fa-link"></i></a>
+</h3>
+<p>The <strong>reprex</strong> package can assist you with making a reproducible example:</p>
+<ol style="list-style-type: decimal">
+<li>
+<strong>reprex</strong> is installed with <strong>tidyverse</strong>, so load either package</li>
+</ol>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># install/load tidyverse (which includes reprex)</span>
+<span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span><span class="va">tidyverse</span><span class="op">)</span></code></pre></div>
+<ol start="2" style="list-style-type: decimal">
+<li>Begin an R script that creates your problem, step-by-step, starting from loading packages and data.</li>
+</ol>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># load packages</span>
+<span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span>
+     <span class="va">tidyverse</span>,  <span class="co"># data mgmt and vizualization</span>
+     <span class="va">outbreaks</span><span class="op">)</span>  <span class="co"># example outbreak datasets</span>
+
+<span class="co"># flu epidemic case linelist</span>
+<span class="va">outbreak_raw</span> <span class="op">&lt;-</span> <span class="fu">outbreaks</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/outbreaks/man/fluH7N9_china_2013.html">fluH7N9_china_2013</a></span>  <span class="co"># retrieve dataset from outbreaks package</span>
+
+<span class="co"># Clean dataset</span>
+<span class="va">outbreak</span> <span class="op">&lt;-</span> <span class="va">outbreak_raw</span> <span class="op">%&gt;%</span> 
+     <span class="fu">mutate</span><span class="op">(</span><span class="fu">across</span><span class="op">(</span><span class="fu">contains</span><span class="op">(</span><span class="st">"date"</span><span class="op">)</span>, <span class="va">as.Date</span><span class="op">)</span><span class="op">)</span>
+
+<span class="co"># Plot epidemic</span>
+
+<span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">outbreak</span><span class="op">)</span><span class="op">+</span>
+     <span class="fu">geom_histogram</span><span class="op">(</span>
+          mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">date_of_onset</span><span class="op">)</span>,
+          binwidth <span class="op">=</span> <span class="fl">7</span>
+     <span class="op">)</span><span class="op">+</span>
+  <span class="fu">scale_x_date</span><span class="op">(</span>
+    date_format <span class="op">=</span> <span class="st">"%d %m"</span>
+  <span class="op">)</span></code></pre></div>
+<p><em>Copy</em> all the code to your clipboard, and run the following command:</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">reprex</span><span class="fu">::</span><span class="fu"><a href="https://reprex.tidyverse.org/reference/reprex.html">reprex</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<p>You will see an HTML output appear in the RStudio Viewer pane. It will contain all your code and any warnings, errors, or plot outputs. This output is also copied to your clipboard, so you can post it directly into a Github issue or a forum post.</p>
+<div class="inline-figure"><img src="images/errors_reprex_RStudio1.png" width="420"></div>
+<ul>
+<li>If you set <code>session_info = TRUE</code> the output of <code><a href="https://rdrr.io/pkg/sessioninfo/man/session_info.html">sessioninfo::session_info()</a></code> with your R and R package versions will be included<br>
+</li>
+<li>You can provide a working directory to <code>wd =</code><br>
+</li>
+<li>You can read more about the arguments and possible variations at the <a href="">documentation</a> or by entering <code>?reprex</code>
+</li>
+</ul>
+<p>In the example above, the <code>ggplot()</code> command did not run because the arguemnt <code>date_format =</code> is not correct - it should be <code>date_labels =</code>.</p>
+</div>
+</div>
+<div id="posting-to-a-forum" class="section level2 unnumbered">
+<h2>Posting to a forum<a class="anchor" aria-label="anchor" href="#posting-to-a-forum"><i class="fas fa-link"></i></a>
+</h2>
+<p>Read lots of forum posts. Get an understanding for which posts are well-written, and which ones are not.</p>
+<ol style="list-style-type: decimal">
+<li><p>First, decide whether to ask the question at all. Have you <em>thoroughly</em> reviewed the forum website, trying various search terms, to see if your question has already been asked?</p></li>
+<li><p>Give your question an informative title (not “Help! this isn’t working”).</p></li>
+<li><p>Write your question:</p></li>
+</ol>
+<ul>
+<li>Introduce your situation and problem<br>
+</li>
+<li>Link to posts of similar issues and explain how they do not answer your question<br>
+</li>
+<li>Include any relevant information to help someone who does not know the context of your work<br>
+</li>
+<li>Give a minimal reproducible example with your R session information<br>
+</li>
+<li>Use proper spelling, grammar, punctuation, and break your question into paragraphs so that it is easier to read</li>
+</ul>
+<ol start="4" style="list-style-type: decimal">
+<li><p>Monitor your question once posted to respond to any requests for clarification. Be courteous and gracious - often the people answering are volunteering their time to help you. If you have a follow-up question consider whether it should be a separate posted question.</p></li>
+<li><p>Mark the question as answered, <em>if</em> you get an answer that meets the <em>original</em> request. This helps others later quickly recognize the solution.</p></li>
+</ol>
+<p>Read these posts about <a href="https://stackoverflow.com/help/how-to-ask">how to ask a good question</a> the <a href="https://stackoverflow.com/conduct">Stack overflow code of conduct</a>.</p>
+<!-- ======================================================= -->
+</div>
+<div id="resources" class="section level2" number="1.5">
+<h2>
+<span class="header-section-number">1.5</span> Resources<a class="anchor" aria-label="anchor" href="#resources"><i class="fas fa-link"></i></a>
+</h2>
+<p><a href="https://www.r-bloggers.com/2016/06/common-r-programming-errors-faced-by-beginners/" class="uri">https://www.r-bloggers.com/2016/06/common-r-programming-errors-faced-by-beginners/</a></p>
+<p>Tidyverse how to <a href="https://www.tidyverse.org/help/#:~:text=When%20you%20want%20to%20make,to%20load%20the%20reprex%20package.&amp;text=Enter%20reprex()%20in%20the,preview%20of%20your%20rendered%20reprex.">get help!</a></p>
+
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="index.html"></a></div>
+<div class="empty"></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#errors-help"><span class="header-section-number">1</span> Errors &amp; help</a></li>
+<li><a class="nav-link" href="#interpreting-error-messages"><span class="header-section-number">1.1</span> Interpreting error messages</a></li>
+<li>
+<a class="nav-link" href="#common-errors"><span class="header-section-number">1.2</span> Common errors</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#typo-errors">Typo errors</a></li>
+<li><a class="nav-link" href="#package-errors">Package errors</a></li>
+<li><a class="nav-link" href="#object-errors">Object errors</a></li>
+<li><a class="nav-link" href="#function-syntax-errors">Function syntax errors</a></li>
+<li><a class="nav-link" href="#logic-errors">Logic errors</a></li>
+<li><a class="nav-link" href="#factor-errors">Factor errors</a></li>
+<li><a class="nav-link" href="#plotting-errors">Plotting errors</a></li>
+<li><a class="nav-link" href="#miscellaneous">Miscellaneous</a></li>
+</ul>
+</li>
+<li><a class="nav-link" href="#github-issues"><span class="header-section-number">1.3</span> Github issues</a></li>
+<li>
+<a class="nav-link" href="#reproducible-example"><span class="header-section-number">1.4</span> Reproducible example</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#the-reprex-package">The reprex package</a></li></ul>
+</li>
+<li><a class="nav-link" href="#posting-to-a-forum">Posting to a forum</a></li>
+<li><a class="nav-link" href="#resources"><span class="header-section-number">1.5</span> Resources</a></li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+          
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>The Epidemiologist R Handbook</strong>" was written by the handbook team. It was last built on 2021-04-09.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer>
+</body>
+</html>
