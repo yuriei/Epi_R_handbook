@@ -8,7 +8,7 @@
 <meta name="author" content="the handbook team">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.2"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.7/header-attrs.js"></script><script src="libs/jquery-3.5.1/jquery-3.5.1.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.5.3/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.5.3/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.2.3.9000/tabs.js"></script><script src="libs/bs3compat-0.2.3.9000/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bootstrap-4.5.3/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.2.4/tabs.js"></script><script src="libs/bs3compat-0.2.4/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
 <script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script><link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet">
 <script src="libs/datatables-binding-0.15/datatables.js"></script><link href="libs/dt-core-1.10.20/css/jquery.dataTables.min.css" rel="stylesheet">
 <link href="libs/dt-core-1.10.20/css/jquery.dataTables.extra.css" rel="stylesheet">
@@ -428,7 +428,7 @@ The lower-right pane includes several tabs. Typical plot graphics including maps
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Create an age pyramid</span>
 <span class="fu">age_pyramid</span><span class="op">(</span>data <span class="op">=</span> <span class="va">linelist</span>, age_group <span class="op">=</span> <span class="st">"age_cat5"</span>, split_by <span class="op">=</span> <span class="st">"gender"</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-22-1.png" width="75%" height="75%"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-135-1.png" width="75%" height="75%"></div>
 <p>The above command can be equivalently written as below, with newlines. This can be easier to read and to write <code># comments</code>. To run this command you can highlight the entire command and click “Run”, or just place your cursor in the first line and then press Ctrl and Enter keys simultaneously.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Create an age pyramid</span>
@@ -437,7 +437,7 @@ The lower-right pane includes several tabs. Typical plot graphics including maps
   age_group <span class="op">=</span> <span class="st">"age_cat5"</span>, <span class="co"># age group column</span>
   split_by <span class="op">=</span> <span class="st">"gender"</span>     <span class="co"># two sides to pyramid</span>
   <span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-23-1.png" width="75%" height="75%"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-136-1.png" width="75%" height="75%"></div>
 <p>The first half of an argument assignment (e.g. <code>data =</code>) does not need to be specified if the arguments are written in a specific order (specified in the function’s documentation). The below code produces the exact same pyramid as above, because the function expects the argument order: data frame, <code>age_group</code> variable, <code>split_by</code> variable.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># This command will produce the exact same graphic as above</span>
@@ -457,7 +457,7 @@ The lower-right pane includes several tabs. Typical plot graphics including maps
   proportional <span class="op">=</span> <span class="cn">TRUE</span>,         <span class="co"># percents instead of counts</span>
   pal <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"orange"</span>, <span class="st">"purple"</span><span class="op">)</span>  <span class="co"># colors</span>
   <span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-24-1.png" width="75%" height="75%"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-137-1.png" width="75%" height="75%"></div>
 <!-- ======================================================= -->
 <!-- ======================================================= -->
 <!-- ======================================================= -->
@@ -1871,7 +1871,7 @@ We also advise surrounding such operators with spaces, for readability.</p>
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>The Epidemiologist R Handbook</strong>" was written by the handbook team. It was last built on 2021-04-07.</p>
+    <p>"<strong>The Epidemiologist R Handbook</strong>" was written by the handbook team. It was last built on 2021-04-09.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
