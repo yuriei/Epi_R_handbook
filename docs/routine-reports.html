@@ -8,7 +8,7 @@
 <meta name="author" content="the handbook team">
 <!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.2"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.7/header-attrs.js"></script><script src="libs/jquery-3.5.1/jquery-3.5.1.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.5.3/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.5.3/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.2.3.9000/tabs.js"></script><script src="libs/bs3compat-0.2.3.9000/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bootstrap-4.5.3/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.2.4/tabs.js"></script><script src="libs/bs3compat-0.2.4/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
 <script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script><link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet">
 <script src="libs/datatables-binding-0.15/datatables.js"></script><link href="libs/dt-core-1.10.20/css/jquery.dataTables.min.css" rel="stylesheet">
 <link href="libs/dt-core-1.10.20/css/jquery.dataTables.extra.css" rel="stylesheet">
@@ -115,18 +115,11 @@
 <span class="header-section-number">42</span> Routine reports<a class="anchor" aria-label="anchor" href="#routine-reports"><i class="fas fa-link"></i></a>
 </h1>
 <p>This page will cover the <strong>reportfactory</strong> package. <strong>reportfactory</strong> is a package developed by RECON (R Epidemics Consortium).</p>
-<p><strong>reportfactory</strong> is an <em>accompaniment to using R Markdowns for reports</em>. It is built for scenarios where you are running routine reports (daily, weekly, etc.). It makes easier the organization and compilation of multiple R Markdown files and their outputs. In essence, it provides a “factory” from which you can run the Rmd reports and automatically get organized date- and time-stamped folders with the outputs.</p>
+<p><strong>reportfactory</strong> is an <em>accompaniment to using R Markdowns for reports</em>. It is built for scenarios where you are running routine reports (daily, weekly, etc.). It makes easier the organization and compilation of multiple R Markdown files and their outputs. In essence, it provides a “factory” from which you can run the R Markdown reports and automatically get organized date- and time-stamped folders with the outputs.</p>
 <div id="preparation-34" class="section level2" number="42.1">
 <h2>
 <span class="header-section-number">42.1</span> Preparation<a class="anchor" aria-label="anchor" href="#preparation-34"><i class="fas fa-link"></i></a>
 </h2>
-<div id="packages-3" class="section level3 unnumbered">
-<h3>Packages<a class="anchor" aria-label="anchor" href="#packages-3"><i class="fas fa-link"></i></a>
-</h3>
-<p>To begin, we install and/or load the <strong>reportfactory</strong> package from CRAN.</p>
-<div class="sourceCode" id="cb1596"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span><span class="va">reportfactory</span><span class="op">)</span></code></pre></div>
-</div>
 <div id="r-project" class="section level3 unnumbered">
 <h3>R project<a class="anchor" aria-label="anchor" href="#r-project"><i class="fas fa-link"></i></a>
 </h3>
@@ -134,32 +127,33 @@
 <p>Below, we have created an R project called “demo_factory”. Currently there are no other files within the project.</p>
 <div class="inline-figure"><img src="images/factory_new1.png" width="472"></div>
 </div>
+<div id="packages-3" class="section level3 unnumbered">
+<h3>Packages<a class="anchor" aria-label="anchor" href="#packages-3"><i class="fas fa-link"></i></a>
+</h3>
+<p>From within the open R project, install and/or load the <strong>reportfactory</strong> package from CRAN.</p>
+<p>In this handbook we emphasize <code>p_load()</code> from <strong>pacman</strong>, which installs the package if necessary and loads it for use. You can also load packages with <code><a href="https://rdrr.io/r/base/library.html">library()</a></code> from <strong>base</strong> R. See the page on <a href="r-basics.html#r-basics">R basics</a> for more information on R packages.</p>
+<div class="sourceCode" id="cb1612"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span><span class="va">reportfactory</span><span class="op">)</span></code></pre></div>
+</div>
 </div>
 <div id="new-factory" class="section level2" number="42.2">
 <h2>
 <span class="header-section-number">42.2</span> New factory<a class="anchor" aria-label="anchor" href="#new-factory"><i class="fas fa-link"></i></a>
 </h2>
 <p>Adding a new report factory will add a self-contained folder to the R project. Below we will create a factory within the empty “demo_factory” R project. The report factory itself will be called “new_factory” (the default name - this can be changed).</p>
-<ol style="list-style-type: decimal">
-<li>Within the R project, load the <strong>reportfactory</strong> package by entering <code><a href="https://github.com/reconverse/reportfactory">library(reportfactory)</a></code> or <code><a href="https://rdrr.io/pkg/pacman/man/p_load.html">pacman::p_load(reportfactory)</a></code> into the console.<br>
-</li>
-<li>Run the function <code>new_factory()</code>. The factory will be added as a folder to the R project root folder by default.</li>
-</ol>
-<div class="sourceCode" id="cb1597"><pre class="downlit sourceCode r">
+<p>Run the function <code>new_factory()</code>. You can run it with empty parentheses, or specifying argument values as explained below. By default, the factory will be a folder called “new_factory”, added to the R project root folder.</p>
+<div class="sourceCode" id="cb1613"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># This will create the factory folder in the current directory</span>
 <span class="fu">new_factory</span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb1598"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Alternatively, you can specify that the factory be made at a specific file path</span>
-<span class="fu">new_factory</span><span class="op">(</span>path <span class="op">=</span> <span class="st">"C:/R handbook/demo_factory"</span><span class="op">)</span></code></pre></div>
 <p>Below see that the folder “new_factory” has been created</p>
 <div class="inline-figure"><img src="images/factory_new2.png" width="664"></div>
 <p>There are several defaults that you can change in the <code>new_factory()</code> command:</p>
 <ul>
 <li>
-<code>factory =</code> - you can provide a name for the factory folder. The default is as shown above: “new_factory”.<br>
+<code>factory =</code> - You can provide a name for the factory folder. The default is as shown above: “new_factory”.<br>
 </li>
 <li>
-<code>path =</code> - as shown above, you can designate a file path for the new factory. The default is the current directory.<br>
+<code>path =</code> - You can designate a file path for the new factory. The default is the current directory.<br>
 </li>
 <li>
 <code>report_sources =</code> You can provide an alternate name for the folder which holds the R Markdown scripts that create the reports. The default is “report_sources”.<br>
@@ -191,7 +185,7 @@
 </ul>
 <div class="inline-figure"><img src="images/factory_new3.png" width="436"></div>
 <p>Within R, you can run a command to see the structure (folders and files) in the report factory.</p>
-<div class="sourceCode" id="cb1599"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1614"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">reportfactory</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/reportfactory/man/factory_overview.html">factory_overview</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p>The following “tree” of the factory’s folders and files is printed to the R console. You can see that there sub-folders for “raw” and “clean” data, some example CSV data. There is also an “example_report.Rmd” in the “report_sources” folder.</p>
 <div class="inline-figure"><img src="images/factory_overview.png" width="202"></div>
@@ -202,7 +196,7 @@
 </h2>
 <p>For purposes of example, we create a new R markdown script entitled “daily_sitrep.Rmd” and save it within the “report_sources” folder of the report factory. In it, the case linelist is imported from the “data” folder, summary tables and epicurves are printed in the report HTML output and exported as .csv and .png files respectively.</p>
 <p>We also have added the data for the report (“linelist_cleaned.rds”) to the “clean” sub-folder within the “data” folder. The new R Markdown script can source this data with the following command. To read more about importing data with the <strong>rio</strong> package and the <strong>here</strong> package see the page on <a href="import-and-export.html#import-and-export">Import and export</a>.</p>
-<div class="sourceCode" id="cb1600"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1615"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">linelist</span> <span class="op">&lt;-</span> <span class="fu">import</span><span class="op">(</span><span class="fu">here</span><span class="op">(</span><span class="st">"data"</span>, <span class="st">"clean"</span>, <span class="st">"linelist_cleaned.rds"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>Below is a screenshot of the beginning of the new R Markdown “daily_sitrep.Rmd”. You can see that the output format is set to be HTML, via the YAML header <code>output: html_document</code>. Later in the report, there are commands to:</p>
 <ul>
@@ -219,7 +213,7 @@
 <span class="header-section-number">42.5</span> Review<a class="anchor" aria-label="anchor" href="#review-1"><i class="fas fa-link"></i></a>
 </h2>
 <p>You can review the R Markdown reports in the report_sources folder with this command:</p>
-<div class="sourceCode" id="cb1601"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1616"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">list_reports</span><span class="op">(</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="compile" class="section level2" number="42.6">
@@ -239,7 +233,7 @@
 <h3>Compile by number<a class="anchor" aria-label="anchor" href="#compile-by-number"><i class="fas fa-link"></i></a>
 </h3>
 <p>You can also specify the Rmd to compile by feeding a number or vector of numbers to <code>reports =</code>. The numbers must align with the order the reports appear when you run <code>list_reports()</code>.</p>
-<div class="sourceCode" id="cb1602"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1617"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Run the second and fourth Rmds in the "report_sources" folder</span>
 <span class="fu">compile_reports</span><span class="op">(</span>reports <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">4</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 </div>
@@ -247,7 +241,7 @@
 <h3>Compile from sub-folder<a class="anchor" aria-label="anchor" href="#compile-from-sub-folder"><i class="fas fa-link"></i></a>
 </h3>
 <p>You can add sub-folders to the “report_sources” folder. To run an R Markdown report from a subfolder, simply provide the name of the folder to <code>subfolder =</code>. Below is an example of code to compile a Rmd report that lives in a sub_folder of “report_sources”.</p>
-<div class="sourceCode" id="cb1603"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1618"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">compile_reports</span><span class="op">(</span>
      reports <span class="op">=</span> <span class="st">"summary_for_partners.Rmd"</span>,
      subfolder <span class="op">=</span> <span class="st">"for_partners"</span><span class="op">)</span></code></pre></div>
@@ -262,7 +256,7 @@
 <h3>Parameterization<a class="anchor" aria-label="anchor" href="#parameterization"><i class="fas fa-link"></i></a>
 </h3>
 <p>As noted in the page on <a href="r-markdown-1.html#r-markdown-1">R Markdown</a>, you can run reports with specified parameters. You can pass these parameters as a list to <code>compile_reports()</code> via the <code>params =</code> argument. For example, in this fictional report there are three parameters provided to the R Markdown reports.</p>
-<div class="sourceCode" id="cb1604"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb1619"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">compile_reports</span><span class="op">(</span>
   reports <span class="op">=</span> <span class="st">"daily_sitrep.Rmd"</span>,
   params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>most_recent_data <span class="op">=</span> <span class="cn">TRUE</span>,
@@ -280,11 +274,20 @@
 <ul>
 <li>Folders have been created for the outputs of each Rmd report<br>
 </li>
-<li>Sub-folders have been created for each unique compiling - these folders are date- and time-stamped (“2021-04-07_T20-11-25” means 7th April 2021 at 20:11:25)<br>
+<li>Sub-folders have been created for each unique compiling - these folders are date- and time-stamped (“2021-04-07_T20-11-25” means 7th April 2021 at 20:11:25)
+<ul>
+<li>You can edit the date/time-stamp format. See <code>?compile_reports</code>
+</li>
+</ul>
 </li>
 <li>Within each date/time compiled folder, the rendered output is stored (HTML, PDF, Word, etc.) along with the Rmd and any other exported files from the rendering (e.g. csv, png)</li>
 </ul>
 <div class="inline-figure"><img src="images/factory_overview_all.png" width="314"></div>
+<p>Here is a view inside one of the date/time-stamped folders, for the “daily_sitrep” report. File path folders are highlighted in yellow for emphasis.</p>
+<div class="inline-figure">
+<img src="images/factory_compile_folder.png" width="551">
+Finally, below is a screenshot of the HTML report output. It is produced as normal for any R Markdown report.</div>
+<div class="inline-figure"><img src="images/factory_html.png" width="377"></div>
 </div>
 <div id="review-2" class="section level2" number="42.8">
 <h2>
@@ -329,8 +332,8 @@
 <li><a class="nav-link" href="#routine-reports"><span class="header-section-number">42</span> Routine reports</a></li>
 <li>
 <a class="nav-link" href="#preparation-34"><span class="header-section-number">42.1</span> Preparation</a><ul class="nav navbar-nav">
-<li><a class="nav-link" href="#packages-3">Packages</a></li>
 <li><a class="nav-link" href="#r-project">R project</a></li>
+<li><a class="nav-link" href="#packages-3">Packages</a></li>
 </ul>
 </li>
 <li><a class="nav-link" href="#new-factory"><span class="header-section-number">42.2</span> New factory</a></li>
@@ -366,7 +369,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>The Epidemiologist R Handbook</strong>" was written by the handbook team. It was last built on 2021-04-07.</p>
+    <p>"<strong>The Epidemiologist R Handbook</strong>" was written by the handbook team. It was last built on 2021-04-09.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

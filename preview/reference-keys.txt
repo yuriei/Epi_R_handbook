@@ -1,7 +1,0 @@
-phylogenetic-trees
-overview
-preparation
-simple-tree-visualization
-tree-manipulation
-more-complex-trees-adding-heatmaps-of-sample-data
-resources
