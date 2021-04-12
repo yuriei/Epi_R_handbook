@@ -70,7 +70,7 @@
 <li class="book-part">Analysis</li>
 <li><a class="" href="descriptive-tables.html"><span class="header-section-number">17</span> Descriptive tables</a></li>
 <li><a class="" href="simple-statistical-tests.html"><span class="header-section-number">18</span> Simple statistical tests</a></li>
-<li><a class="" href="univariate-and-multivariate-regression.html"><span class="header-section-number">19</span> Univariate and multivariate regression</a></li>
+<li><a class="" href="univariate-and-multivariable-regression.html"><span class="header-section-number">19</span> Univariate and multivariable regression</a></li>
 <li><a class="" href="missing-data.html"><span class="header-section-number">20</span> Missing data</a></li>
 <li><a class="" href="standardization.html"><span class="header-section-number">21</span> Standardization</a></li>
 <li><a class="" href="moving-averages.html"><span class="header-section-number">22</span> Moving averages</a></li>
@@ -203,8 +203,15 @@
 <p>Alternatively, you can download the shapefiles from the R Handbook Github “data” folder (see the “shp” sub-folder). However, be aware that you will need to download <em>each</em> sub-file individually to your computer. In Github, click on each file individually and download them by clicking on the “Download” button. Below, you can see how the shapefile “sle_adm3” consists of many files - each of which must be downloaded from Github.</p>
 <div class="inline-figure"><img src="images/download_shp.png" width="918" height="50%" style="display: block; margin: auto;"></div>
 </div>
-<div id="nwk-and-other-files" class="section level3 unnumbered">
-<h3>NWK and other files<a class="anchor" aria-label="anchor" href="#nwk-and-other-files"><i class="fas fa-link"></i></a>
+<div id="phylogenetic-trees-newick-files-saved-as-.txt" class="section level3 unnumbered">
+<h3>Phylogenetic trees (newick files, saved as .txt)<a class="anchor" aria-label="anchor" href="#phylogenetic-trees-newick-files-saved-as-.txt"><i class="fas fa-link"></i></a>
+</h3>
+<p>See the page on <a href="phylogenetic-trees.html#phylogenetic-trees">Phylogenetic trees</a>. In Github, navigate to the .txt file, click “Raw”, and right-click to download as for the HTML handbook file - save the .txt file on your computer. Then import it with <code>read.tree()</code> from the <strong>ape</strong> package.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">ape</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ape/man/read.tree.html">read.tree</a></span><span class="op">(</span><span class="st">"Shigella_tree.txt"</span><span class="op">)</span></code></pre></div>
+</div>
+<div id="other-files" class="section level3 unnumbered">
+<h3>Other files<a class="anchor" aria-label="anchor" href="#other-files"><i class="fas fa-link"></i></a>
 </h3>
 <p>Click on the file in the Gitub “data” folder, and use the “Download” button, as described above for .xlsx files.</p>
 </div>
@@ -264,7 +271,8 @@
 <li><a class="nav-link" href="#clean-linelist-.rds">Clean linelist (.rds)</a></li>
 <li><a class="nav-link" href="#csv-files">.csv files</a></li>
 <li><a class="nav-link" href="#shapefiles">Shapefiles</a></li>
-<li><a class="nav-link" href="#nwk-and-other-files">NWK and other files</a></li>
+<li><a class="nav-link" href="#phylogenetic-trees-newick-files-saved-as-.txt">Phylogenetic trees (newick files, saved as .txt)</a></li>
+<li><a class="nav-link" href="#other-files">Other files</a></li>
 </ul>
 </li>
 <li><a class="nav-link" href="#background-information"><span class="header-section-number">2.3</span> Background information</a></li>
@@ -288,7 +296,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>The Epidemiologist R Handbook</strong>" was written by the handbook team. It was last built on 2021-04-09.</p>
+    <p>"<strong>The Epidemiologist R Handbook</strong>" was written by the handbook team. It was last built on 2021-04-11.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">

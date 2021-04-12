@@ -1,5 +1,5 @@
-tab:unnamed-chunk-249
-tab:unnamed-chunk-729
+tab:unnamed-chunk-137
+tab:unnamed-chunk-617
 editorial-and-technical-notes
 approach-and-style
 editorial-decisions
@@ -12,6 +12,7 @@ background-information
 r-basics
 overview
 why-use-r
+key-terms
 recommended-training
 installation
 rstudio
@@ -158,12 +159,12 @@ preparation-9
 chi-squared-test-1
 correlations
 resources-11
-univariate-and-multivariate-regression
+univariate-and-multivariable-regression
 overview-5
 preparation-10
 univariate
 stratified
-multivariate
+multivariable
 forest-plot
 resources-12
 missing-data
@@ -218,7 +219,7 @@ time-dependent-covariates-in-survival-models
 resources-19
 gis-basics
 overview-11
-key-terms
+key-terms-1
 preparation-18
 plotting-coordinates
 spatial-joins
@@ -341,13 +342,10 @@ identifying-clusters
 calculating-degrees
 resources-30
 phylogenetic-trees
+overview-19
 preparation-30
 simple-tree-visualization
-manipulation-of-phylogenetic-trees
-zooming-in-on-one-part-of-the-tree
-collapsing-one-part-of-the-tree
-example-subtree-with-sample-data-annotation
-more-complex-trees-adding-heatmaps-of-sample-data
+tree-manipulation
 resources-31
 interactive-plots
 preparation-31
@@ -367,7 +365,7 @@ running-other-files
 base-r-5
 resources-33
 r-markdown-1
-overview-19
+overview-20
 preparation-33
 the-r-markdown-file
 parametrised-reports
@@ -426,7 +424,7 @@ functions-1
 major-header
 resources-41
 r-on-network-drives
-overview-20
+overview-21
 rstudio-as-administrator
 useful-commands
 troubleshooting-common-errors

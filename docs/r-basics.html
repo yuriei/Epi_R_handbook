@@ -70,7 +70,7 @@
 <li class="book-part">Analysis</li>
 <li><a class="" href="descriptive-tables.html"><span class="header-section-number">17</span> Descriptive tables</a></li>
 <li><a class="" href="simple-statistical-tests.html"><span class="header-section-number">18</span> Simple statistical tests</a></li>
-<li><a class="" href="univariate-and-multivariate-regression.html"><span class="header-section-number">19</span> Univariate and multivariate regression</a></li>
+<li><a class="" href="univariate-and-multivariable-regression.html"><span class="header-section-number">19</span> Univariate and multivariable regression</a></li>
 <li><a class="" href="missing-data.html"><span class="header-section-number">20</span> Missing data</a></li>
 <li><a class="" href="standardization.html"><span class="header-section-number">21</span> Standardization</a></li>
 <li><a class="" href="moving-averages.html"><span class="header-section-number">22</span> Moving averages</a></li>
@@ -136,9 +136,19 @@
 <p><strong>Community</strong></p>
 <p>The R community of users is enormous and collaborative. New packages and tools to address real-life problems are developed daily, and vetted by the community of users. As one example, <a href="https://rladies.org/">R-Ladies</a> is a worldwide organization whose mission is to promote gender diversity in the R community, and is one of the largest organizations of R users. It likely has a chapter near you!</p>
 </div>
-<div id="recommended-training" class="section level2" number="3.3">
+<div id="key-terms" class="section level2" number="3.3">
 <h2>
-<span class="header-section-number">3.3</span> Recommended training<a class="anchor" aria-label="anchor" href="#recommended-training"><i class="fas fa-link"></i></a>
+<span class="header-section-number">3.3</span> Key terms<a class="anchor" aria-label="anchor" href="#key-terms"><i class="fas fa-link"></i></a>
+</h2>
+<p><strong>RStudio</strong> - RStudio is an interface (GUI) for easier use of <strong>R</strong>. Read more <a href="r-basics.html#rstudio">in this section</a>.</p>
+<p><strong>Objects</strong> - Everything you store in R - datasets, variables, a list of village names, a total population number, even outputs such as graphs - are <em>objects</em> which are <em>assigned a name</em> and <em>can be referenced</em> in later commands. Read more <a href="r-basics.html#objects">in this section</a>.</p>
+<p><strong>Functions</strong> - A function is a code operation that accept inputs and returns a transformed output. Read more <a href="r-basics.html#functions">in this section</a>.</p>
+<p><strong>Packages</strong> - An R package is a shareable bundle of functions. Read more <a href="editorial-and-technical-notes.html#packages">in this section</a>.</p>
+<p><strong>Scripts</strong> - Scripts are the document files that hold your commands. Read more <a href="r-basics.html#scripts">in this section</a></p>
+</div>
+<div id="recommended-training" class="section level2" number="3.4">
+<h2>
+<span class="header-section-number">3.4</span> Recommended training<a class="anchor" aria-label="anchor" href="#recommended-training"><i class="fas fa-link"></i></a>
 </h2>
 <div id="resources-within-rstudio" class="section level3 unnumbered">
 <h3>Resources within RStudio<a class="anchor" aria-label="anchor" href="#resources-within-rstudio"><i class="fas fa-link"></i></a>
@@ -188,9 +198,9 @@
 <!-- ======================================================= -->
 </div>
 </div>
-<div id="installation" class="section level2" number="3.4">
+<div id="installation" class="section level2" number="3.5">
 <h2>
-<span class="header-section-number">3.4</span> Installation<a class="anchor" aria-label="anchor" href="#installation"><i class="fas fa-link"></i></a>
+<span class="header-section-number">3.5</span> Installation<a class="anchor" aria-label="anchor" href="#installation"><i class="fas fa-link"></i></a>
 </h2>
 <p><strong>How to install R</strong></p>
 <p>Visit this website <a href="https://www.r-project.org/">https://www.r-project.org/</a> and download the latest version of R suitable for your computer.</p>
@@ -222,7 +232,7 @@ Note that you should install R and RStudio to a drive where you have read and wr
 <p>TinyTex is a custom LaTeX distribution, useful when trying to produce PDFs from R.<br>
 See <a href="https://yihui.org/tinytex/">https://yihui.org/tinytex/</a> for more informaton.</p>
 <p>To install TinyTex from R:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">'tinytex'</span><span class="op">)</span>
 <span class="fu">tinytex</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/tinytex/man/install_tinytex.html">install_tinytex</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co"># to uninstall TinyTeX, run tinytex::uninstall_tinytex()</span></code></pre></div>
@@ -246,9 +256,9 @@ See <a href="https://yihui.org/tinytex/">https://yihui.org/tinytex/</a> for more
 </div>
 </div>
 </div>
-<div id="rstudio" class="section level2" number="3.5">
+<div id="rstudio" class="section level2" number="3.6">
 <h2>
-<span class="header-section-number">3.5</span> RStudio<a class="anchor" aria-label="anchor" href="#rstudio"><i class="fas fa-link"></i></a>
+<span class="header-section-number">3.6</span> RStudio<a class="anchor" aria-label="anchor" href="#rstudio"><i class="fas fa-link"></i></a>
 </h2>
 <div id="rstudio-orientation" class="section level3 unnumbered">
 <h3>RStudio Orientation<a class="anchor" aria-label="anchor" href="#rstudio-orientation"><i class="fas fa-link"></i></a>
@@ -379,9 +389,9 @@ The lower-right pane includes several tabs. Typical plot graphics including maps
 <!-- ======================================================= -->
 </div>
 </div>
-<div id="functions" class="section level2" number="3.6">
+<div id="functions" class="section level2" number="3.7">
 <h2>
-<span class="header-section-number">3.6</span> Functions<a class="anchor" aria-label="anchor" href="#functions"><i class="fas fa-link"></i></a>
+<span class="header-section-number">3.7</span> Functions<a class="anchor" aria-label="anchor" href="#functions"><i class="fas fa-link"></i></a>
 </h2>
 <p>Functions are at the core of using R. Functions are how you perform tasks and operations. Many functions come installed with R, many more are available for download in <em>packages</em> (explained in the <a href="editorial-and-technical-notes.html#packages">next section</a>), and you can even write your own custom functions!</p>
 <p>This basics section on functions explains:</p>
@@ -400,11 +410,11 @@ The lower-right pane includes several tabs. Typical plot graphics including maps
 </h3>
 <p><strong>A function is like a machine that receives inputs, does some action with those inputs, and produces an output.</strong> What the output is depends on the function.</p>
 <p><strong>Functions typically operate upon some object placed within the function’s parentheses</strong>. For example, the function <code><a href="https://rdrr.io/r/base/MathFun.html">sqrt()</a></code> calculates the square root of a number:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="fl">49</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] 7</code></pre>
 <p>The object provided to a function also can be a column in a dataset. Read the <a href="r-basics.html#objects">objects</a> section for a detail on all the kinds of objects. For example, when the function <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> is applied to the numeric column <code>age</code> in the dataset <code>linelist</code>, the output is a summary of the columns’s numeric and missing values.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">linelist</span><span class="op">$</span><span class="va">age</span><span class="op">)</span></code></pre></div>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
 ##     0.0     6.0    13.0    16.1    23.0    84.0      86</code></pre>
@@ -425,21 +435,21 @@ The lower-right pane includes several tabs. Typical plot graphics including maps
 <p>Here is a fun fictional function, called <code>oven_bake()</code>, as an example of a typical function. It takes an input object (e.g. a dataset, or in this example “dough”) and performs operations on it as specified by additional arguments (<code>minutes =</code> and <code>temperature =</code>). The output can be printed to the console, or saved as an object using the assignment operator <code><a href="https://rdrr.io/r/base/assignOps.html">&lt;-</a></code>.</p>
 <div class="inline-figure"><img src="images/Function_Bread_Example.png" width="75%" style="display: block; margin: auto;"></div>
 <p><strong>In a more realistic example</strong>, the <code>age_pyramid()</code> command below produces an age pyramid plot based on defined age groups and a binary split column, such as <code>gender</code>. The function is given three arguments within the parentheses, separated by commas. The values supplied to the arguments establish <code>linelist</code> as the dataframe to use, <code>age_cat5</code> as the column to count, and <code>gender</code> as the binary column to use for splitting the pyramid by color.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Create an age pyramid</span>
 <span class="fu">age_pyramid</span><span class="op">(</span>data <span class="op">=</span> <span class="va">linelist</span>, age_group <span class="op">=</span> <span class="st">"age_cat5"</span>, split_by <span class="op">=</span> <span class="st">"gender"</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-135-1.png" width="75%" height="75%"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-23-1.png" width="75%" height="75%"></div>
 <p>The above command can be equivalently written as below, with newlines. This can be easier to read and to write <code># comments</code>. To run this command you can highlight the entire command and click “Run”, or just place your cursor in the first line and then press Ctrl and Enter keys simultaneously.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Create an age pyramid</span>
 <span class="fu">age_pyramid</span><span class="op">(</span>
   data <span class="op">=</span> <span class="va">linelist</span>,        <span class="co"># case linelist</span>
   age_group <span class="op">=</span> <span class="st">"age_cat5"</span>, <span class="co"># age group column</span>
   split_by <span class="op">=</span> <span class="st">"gender"</span>     <span class="co"># two sides to pyramid</span>
   <span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-136-1.png" width="75%" height="75%"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-24-1.png" width="75%" height="75%"></div>
 <p>The first half of an argument assignment (e.g. <code>data =</code>) does not need to be specified if the arguments are written in a specific order (specified in the function’s documentation). The below code produces the exact same pyramid as above, because the function expects the argument order: data frame, <code>age_group</code> variable, <code>split_by</code> variable.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># This command will produce the exact same graphic as above</span>
 <span class="fu">age_pyramid</span><span class="op">(</span><span class="va">linelist</span>, <span class="st">"age_cat5"</span>, <span class="st">"gender"</span><span class="op">)</span></code></pre></div>
 <p><strong>A more complex <code>age_pyramid()</code> command might include the <em>optional</em> arguments to:</strong></p>
@@ -449,7 +459,7 @@ The lower-right pane includes several tabs. Typical plot graphics including maps
 <li>Specify the two colors to use (<code>pal =</code> is short for “palette” and is supplied with a vector of two color names. See the <a href="#objectstructure">objects</a> page for how the function <code><a href="https://rdrr.io/r/base/c.html">c()</a></code> makes a vector)</li>
 </ul>
 <p><span style="color: black;"><strong><em>NOTE:</em></strong> For arguments that you specify with both parts of the argument (e.g. <code>proportional = TRUE</code>), their order among all the arguments does not matter.</span></p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">age_pyramid</span><span class="op">(</span>
   <span class="va">linelist</span>,                    <span class="co"># use case linelist</span>
   <span class="st">"age_cat5"</span>,                  <span class="co"># age group column</span>
@@ -457,15 +467,15 @@ The lower-right pane includes several tabs. Typical plot graphics including maps
   proportional <span class="op">=</span> <span class="cn">TRUE</span>,         <span class="co"># percents instead of counts</span>
   pal <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"orange"</span>, <span class="st">"purple"</span><span class="op">)</span>  <span class="co"># colors</span>
   <span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-137-1.png" width="75%" height="75%"></div>
+<div class="inline-figure"><img src="_main_files/figure-html/unnamed-chunk-25-1.png" width="75%" height="75%"></div>
 <!-- ======================================================= -->
 <!-- ======================================================= -->
 <!-- ======================================================= -->
 </div>
 </div>
-<div id="packages" class="section level2" number="3.7">
+<div id="packages" class="section level2" number="3.8">
 <h2>
-<span class="header-section-number">3.7</span> Packages<a class="anchor" aria-label="anchor" href="#packages"><i class="fas fa-link"></i></a>
+<span class="header-section-number">3.8</span> Packages<a class="anchor" aria-label="anchor" href="#packages"><i class="fas fa-link"></i></a>
 </h2>
 <p><strong>Packages contain functions.</strong></p>
 <p>An R package is a shareable bundle of code and documentation that contains pre-defined functions. Users in the R community develop and share packages all the time, so chances are likely that a solution exists for you! You will install and use hundreds of packages in your use of R.</p>
@@ -487,23 +497,23 @@ The lower-right pane includes several tabs. Typical plot graphics including maps
 <li>The package must be <strong>loaded</strong> (each R session)</li>
 </ol>
 <p>The <strong>base</strong> R function for installing a package is <code><a href="https://rdrr.io/r/utils/install.packages.html">install.packages()</a></code>, where the name of the package is provided <em>in quotes</em>. This can also be accomplished point-and-click by going to the RStudio “Packages” pane and clicking “Install” and typing the package name. Note all this is case-sensitive.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"tidyverse"</span><span class="op">)</span></code></pre></div>
 <p>The basic function to <strong>load</strong> a package for use (after it has been installed) is <code><a href="https://rdrr.io/r/base/library.html">library()</a></code>, with the name of the package <em>NOT in quotes</em>.</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></code></pre></div>
 <p>To check whether a package in installed or loaded, you can view the Packages pane in RStudio. If the package is installed, it is shown there with version number. If the box is checked, it is loaded for the current session.</p>
 <p><strong>We suggest using pacman</strong></p>
 <p>This handbook emphasizes use of the package <strong>pacman</strong> (abbreviation for “package manager”), which offers the useful function <code>p_load()</code>. <strong>This function combines the above two steps into one - it <em>installs and/or loads packages</em>, depending on what is needed.</strong> If the package has not yet been installed, it will attempt to install from CRAN, and then will load it for use. This is really useful if sharing your script with someone else who may not have all the packages.</p>
 <p>Below, we use <code>p_load()</code> on three packages often used in this handbook. Note that we have used the syntax <code><a href="https://rdrr.io/pkg/pacman/man/p_load.html">pacman::p_load()</a></code> which explicitly writes the package name prior to the function name, connected by two colons <code><a href="https://rdrr.io/r/base/ns-dblcolon.html">::</a></code>. This syntax is useful in that it also functions to load the package (<strong>pacman</strong> in this case), so this command can stand alone at the top of your script. You do not need to load <strong>pacman</strong> before running this command to load the other three packages.</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">pacman</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pacman/man/p_load.html">p_load</a></span><span class="op">(</span><span class="va">tidyverse</span>, <span class="va">rio</span>, <span class="va">here</span><span class="op">)</span></code></pre></div>
-<p><strong>Install from github</strong></p>
+<p><strong>Install from Github</strong></p>
 <p>Sometimes, you need to install a package that is not yet available from CRAN. Or perhaps the package is available on CRAN but you want the <em>development version</em> with new features not yet offered in the more stable published CRAN version. These are often hosted on the website Github in a public-facing code “repository”.</p>
 <p>To download these packages, you can use <code>p_load_gh()</code> from <strong>pacman</strong>. You may also see guidance to use the <strong>remotes</strong> or <strong>devtools</strong> packages. In the background, this <strong>pacman</strong> function utilizes <code>install_github()</code> from <strong>devtools</strong>.</p>
 <p>To install from github, you have to provide different information to the function. You must provide the Github ID of the repository owner, and the name of the code repository which contains the package.</p>
 <p>In the examples below, the first name listed in the quotation marks is the Github ID of the repository owner, and after the slash is the name of the repository. If you want to install from a branch other than the main/master branch, add the branch name after an “@” after the repository name.</p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># install/load package from github repository</span>
 <span class="fu">p_load_gh</span><span class="op">(</span><span class="st">"reconhub/epicontacts"</span><span class="op">)</span>
 
@@ -515,15 +525,15 @@ The lower-right pane includes several tabs. Typical plot graphics including maps
 <p>Read more about <strong>pacman</strong> in this <a href="http://trinker.github.io/pacman/vignettes/Introduction_to_pacman.html">online vignette</a></p>
 <p><strong>Install from ZIP or TAR</strong></p>
 <p>You could install the package from a URL:</p>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">packageurl</span> <span class="op">&lt;-</span> <span class="st">"https://cran.r-project.org/src/contrib/Archive/dsr/dsr_0.2.2.tar.gz"</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="va">packageurl</span>, repos<span class="op">=</span><span class="cn">NULL</span>, type<span class="op">=</span><span class="st">"source"</span><span class="op">)</span></code></pre></div>
 <p>Or, download it to your computer in a zipped file:</p>
 <p>Option 1: using <code>install_local()</code> from the <strong>remotes</strong> package</p>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_local.html">install_local</a></span><span class="op">(</span><span class="st">"~/Downloads/dplyr-master.zip"</span><span class="op">)</span></code></pre></div>
 <p>Option 2: using <code><a href="https://rdrr.io/r/utils/install.packages.html">install.packages()</a></code> from <strong>base</strong> R, providing the file path to the ZIP file and setting <code>type = "source</code> and <code>repos = NULL</code>.</p>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"~/Downloads/dplyr-master.zip"</span>, repos<span class="op">=</span><span class="cn">NULL</span>, type<span class="op">=</span><span class="st">"source"</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="code-syntax" class="section level3 unnumbered">
@@ -531,7 +541,7 @@ The lower-right pane includes several tabs. Typical plot graphics including maps
 </h3>
 <p>For clarity in this handbook, functions are sometimes preceded by the name of their package using the <code><a href="https://rdrr.io/r/base/ns-dblcolon.html">::</a></code> symbol in the following way: <code>package_name::function_name()</code></p>
 <p>Once a package is loaded for a session, this explicit style is not necessary. One can just use <code>function_name()</code>. However writing the package name is useful when a function name is common and may exist in multiple packages (e.g. <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code>). Writing the package name will also load the package if it is not already loaded.</p>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># This command uses the package "rio" and its function "import()" to import a dataset</span>
 <span class="va">linelist</span> <span class="op">&lt;-</span> <span class="fu">rio</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/rio/man/import.html">import</a></span><span class="op">(</span><span class="st">"linelist.xlsx"</span>, which <span class="op">=</span> <span class="st">"Sheet1"</span><span class="op">)</span></code></pre></div>
 </div>
@@ -574,7 +584,7 @@ The lower-right pane includes several tabs. Typical plot graphics including maps
 <h3>Detach / unload<a class="anchor" aria-label="anchor" href="#detach-unload"><i class="fas fa-link"></i></a>
 </h3>
 <p>To detach (unload) a package, use this command, with the correct package name and only one colon. Note that this may not resolve masking.</p>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/detach.html">detach</a></span><span class="op">(</span><span class="va">package</span><span class="op">:</span><span class="va">PACKAGE_NAME_HERE</span>, unload<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="install-older-version" class="section level3 unnumbered">
@@ -589,9 +599,9 @@ The lower-right pane includes several tabs. Typical plot graphics including maps
 <!-- ======================================================= -->
 </div>
 </div>
-<div id="scripts" class="section level2" number="3.8">
+<div id="scripts" class="section level2" number="3.9">
 <h2>
-<span class="header-section-number">3.8</span> Scripts<a class="anchor" aria-label="anchor" href="#scripts"><i class="fas fa-link"></i></a>
+<span class="header-section-number">3.9</span> Scripts<a class="anchor" aria-label="anchor" href="#scripts"><i class="fas fa-link"></i></a>
 </h2>
 <p>Scripts are a fundamental part of programming. They are documents that hold your commands (e.g. functions to create and modify datasets, print visualizations, etc). You can save a script and run it again later. There are many advantages to storing and running your commands from a script (vs. typing commands one-by-one into the R console “command line”):</p>
 <ul>
@@ -607,7 +617,7 @@ The lower-right pane includes several tabs. Typical plot graphics including maps
 <h3>Commenting<a class="anchor" aria-label="anchor" href="#commenting"><i class="fas fa-link"></i></a>
 </h3>
 <p>In a script you can also annotate (“comment”) around your R code. Commenting is helpful to explain to yourself and other readers what you are doing. You can add a comment by typing the hash symbol (#) and writing your comment after it. The commented text should appear in a different color than the R code. Any code written after the # will not be run. Therefore, placing a # before code is a useful way to temporarily not run a line of code (perhaps you do not want to run the line, but also do not want to delete it).</p>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># A comment can be on a line by itself</span>
 <span class="co"># import data</span>
 <span class="va">linelist</span> <span class="op">&lt;-</span> <span class="fu">import</span><span class="op">(</span><span class="st">"linelist_raw.xlsx"</span><span class="op">)</span>  <span class="co"># a comment can also come after code</span></code></pre></div>
@@ -669,9 +679,9 @@ The lower-right pane includes several tabs. Typical plot graphics including maps
 <!-- ======================================================= -->
 </div>
 </div>
-<div id="working-directory" class="section level2" number="3.9">
+<div id="working-directory" class="section level2" number="3.10">
 <h2>
-<span class="header-section-number">3.9</span> Working directory<a class="anchor" aria-label="anchor" href="#working-directory"><i class="fas fa-link"></i></a>
+<span class="header-section-number">3.10</span> Working directory<a class="anchor" aria-label="anchor" href="#working-directory"><i class="fas fa-link"></i></a>
 </h2>
 <p>The working directory is the root folder location used by R for your work - where R looks for and saves files by default. By default, it will save new files and outputs to this location, and will look for files to import (e.g. datasets) here as well.</p>
 <p>The working directory appears in grey text at the top of the RStudio Console pane. You can also return the current working directory with <code><a href="https://rdrr.io/r/base/getwd.html">getwd()</a></code> (leave the parentheses empty).</p>
@@ -682,7 +692,7 @@ The lower-right pane includes several tabs. Typical plot graphics including maps
 <h3>Set by command<a class="anchor" aria-label="anchor" href="#set-by-command"><i class="fas fa-link"></i></a>
 </h3>
 <p>Although we do not recommend this approach in most circumstances, you can use the command <code><a href="https://rdrr.io/r/base/getwd.html">setwd()</a></code> with the desired folder file path in quotations, for example:</p>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/getwd.html">setwd</a></span><span class="op">(</span><span class="st">"C:/Documents/R Files/My analysis"</span><span class="op">)</span></code></pre></div>
 <!-- ======================================================= -->
 </div>
@@ -703,7 +713,7 @@ The lower-right pane includes several tabs. Typical plot graphics including maps
 </h3>
 <p>In an R markdown script, the default working directory is the folder the Rmarkdown file (<code>.Rmd</code>) is saved within. If using an R project and <strong>here</strong> package, this does not apply and the working directory will be <code>here()</code> as explained in the <a href="r-projects.html#r-projects">R projects</a> page.</p>
 <p>If you want to change the working directory of a stand-alone R markdown (not in an R project), if you use <code><a href="https://rdrr.io/r/base/getwd.html">setwd()</a></code> this will only apply to that specific code chunk. To make the change for all code chunks in an R markdown, edit the setup chunk to add the <code>root.dir =</code> parameter, such as below:</p>
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">knitr</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/knitr/man/opts_knit.html">opts_knit</a></span><span class="op">$</span><span class="fu">set</span><span class="op">(</span>root.dir <span class="op">=</span> <span class="st">'desired/directorypath'</span><span class="op">)</span></code></pre></div>
 <p>It is much easier to just use the R markdown within an R project and use the <strong>here</strong> package.</p>
 <!-- ======================================================= -->
@@ -722,9 +732,9 @@ The lower-right pane includes several tabs. Typical plot graphics including maps
 <!-- ======================================================= -->
 </div>
 </div>
-<div id="objects" class="section level2" number="3.10">
+<div id="objects" class="section level2" number="3.11">
 <h2>
-<span class="header-section-number">3.10</span> Objects<a class="anchor" aria-label="anchor" href="#objects"><i class="fas fa-link"></i></a>
+<span class="header-section-number">3.11</span> Objects<a class="anchor" aria-label="anchor" href="#objects"><i class="fas fa-link"></i></a>
 </h2>
 <p>Everything in R is an object, and R is an “object-oriented” language. These sections will explain:</p>
 <ul>
@@ -751,14 +761,14 @@ You can think of the assignment operator <code><a href="https://rdrr.io/r/base/a
 <p><strong>object_name</strong> &lt;- <strong>value</strong> (or process/calculation that produce a value)</p>
 <p>For example, you may want to record the current epidemiological reporting week as an object for reference in later code. In this example, the object <code>current_week</code> is created when it is assigned the character value <code>"2018-W10"</code> (the quote marks make these a character value). The object <code>current_week</code> will then appear in the RStudio Environment pane (upper-right) and can be referenced in later commands.</p>
 <p>See the R commands and their output in the boxes below.</p>
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">current_week</span> <span class="op">&lt;-</span> <span class="st">"2018-W10"</span>   <span class="co"># this command creates the object current_week by assigning it a value</span>
 <span class="va">current_week</span>                 <span class="co"># this command prints the current value of current_week object in the console</span></code></pre></div>
 <pre><code>## [1] "2018-W10"</code></pre>
 <p><span style="color: black;"><strong><em>NOTE:</em></strong> Note the <code>[1]</code> in the R console output is simply indicating that you are viewing the first item of the output</span></p>
 <p><span style="color: orange;"><strong><em>CAUTION:</em></strong> <strong>An object’s value can be over-written</strong> at any time by running an assignment command to re-define its value. Thus, the <strong>order of the commands run is very important</strong>.</span></p>
 <p>The following command will re-define the value of <code>current_week</code>:</p>
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">current_week</span> <span class="op">&lt;-</span> <span class="st">"2018-W51"</span>   <span class="co"># assigns a NEW value to the object current_week</span>
 <span class="va">current_week</span>                 <span class="co"># prints the current value of current_week in the console</span></code></pre></div>
 <pre><code>## [1] "2018-W51"</code></pre>
@@ -773,7 +783,7 @@ You can think of the assignment operator <code><a href="https://rdrr.io/r/base/a
 </ul>
 <p><strong>Datasets</strong></p>
 <p>Datasets are also objects (typically “dataframes”) and must be assigned names when they are imported. In the code below, the object <code>linelist</code> is created and assigned the value of a CSV file imported with the <strong>rio</strong> package and its <code>import()</code> function.</p>
-<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># linelist is created and assigned the value of the imported CSV file</span>
 <span class="va">linelist</span> <span class="op">&lt;-</span> <span class="fu">import</span><span class="op">(</span><span class="st">"my_linelist.csv"</span><span class="op">)</span></code></pre></div>
 <p>You can read more about importing and exporting datasets with the section on <a href="import-and-export.html#import-and-export">Import and export</a>.</p>
@@ -786,7 +796,7 @@ You can think of the assignment operator <code><a href="https://rdrr.io/r/base/a
 </ul>
 <p><strong>Outputs</strong></p>
 <p>Outputs like tables and plots provide an example of how outputs can be saved as objects, or just be printed without being saved. A cross-tabulation of gender and outcome using the <strong>base</strong> R function <code><a href="https://rdrr.io/r/base/table.html">table()</a></code> can be printed directly to the R console (<em>without</em> being saved).</p>
-<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># printed to R console only</span>
 <span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">linelist</span><span class="op">$</span><span class="va">gender</span>, <span class="va">linelist</span><span class="op">$</span><span class="va">outcome</span><span class="op">)</span></code></pre></div>
 <pre><code>##    
@@ -794,7 +804,7 @@ You can think of the assignment operator <code><a href="https://rdrr.io/r/base/a
 ##   f  1227     953
 ##   m  1228     950</code></pre>
 <p>But the same table can be saved as a named object. Then, optionally, it can be printed.</p>
-<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># save</span>
 <span class="va">gen_out_table</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">linelist</span><span class="op">$</span><span class="va">gender</span>, <span class="va">linelist</span><span class="op">$</span><span class="va">outcome</span><span class="op">)</span>
 
@@ -807,11 +817,11 @@ You can think of the assignment operator <code><a href="https://rdrr.io/r/base/a
 <p><strong>Columns</strong></p>
 <p>Columns in a dataset are also objects and can be defined, over-written, and created as described below in the section on Columns.</p>
 <p>You can use the assignment operator from <strong>base</strong> R to create a new column. Below, the new column <code>bmi</code> (Body Mass Index) is created, and for each row the new value is result of a mathematical operation on the row’s value in the <code>wt_kg</code> and <code>ht_cm</code> columns.</p>
-<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># create new "bmi" column using base R syntax</span>
 <span class="va">linelist</span><span class="op">$</span><span class="va">bmi</span> <span class="op">&lt;-</span> <span class="va">linelist</span><span class="op">$</span><span class="va">wt_kg</span> <span class="op">/</span> <span class="op">(</span><span class="va">linelist</span><span class="op">$</span><span class="va">ht_cm</span><span class="op">/</span><span class="fl">100</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span></code></pre></div>
 <p>However, in this handbook, we emphasize a different approach to defining columns, which uses the function <code>mutate()</code> from the <strong>dplyr</strong> package and <em>piping</em> with the pipe operator (<code>%&gt;%</code>). The syntax is easier to read and there are other advantages explained in the page on <a href="cleaning-data-and-core-functions.html#cleaning-data-and-core-functions">Cleaning data and core functions</a>. You can read more about <em>piping</em> in the Piping section below.</p>
-<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># create new "bmi" column using dplyr syntax</span>
 <span class="va">linelist</span> <span class="op">&lt;-</span> <span class="va">linelist</span> <span class="op">%&gt;%</span> 
   <span class="fu">mutate</span><span class="op">(</span>bmi <span class="op">=</span> <span class="va">wt_kg</span> <span class="op">/</span> <span class="op">(</span><span class="va">ht_cm</span><span class="op">/</span><span class="fl">100</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span></code></pre></div>
@@ -920,21 +930,21 @@ You can think of the assignment operator <code><a href="https://rdrr.io/r/base/a
 </tbody>
 </table></div>
 <p><strong>You can test the class of an object by providing its name to the function <code><a href="https://rdrr.io/r/base/class.html">class()</a></code></strong>. Note: you can reference a specific column within a dataset using the <code><a href="https://rdrr.io/r/base/Extract.html">$</a></code> notation to separate the name of the dataset and the name of the column.</p>
-<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">linelist</span><span class="op">)</span>         <span class="co"># class should be a data frame or tibble</span></code></pre></div>
 <pre><code>## [1] "data.frame"</code></pre>
-<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">linelist</span><span class="op">$</span><span class="va">age</span><span class="op">)</span>     <span class="co"># class should be numeric</span></code></pre></div>
 <pre><code>## [1] "numeric"</code></pre>
-<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">linelist</span><span class="op">$</span><span class="va">gender</span><span class="op">)</span>  <span class="co"># class should be character</span></code></pre></div>
 <pre><code>## [1] "character"</code></pre>
 <p>Sometimes, a column will be converted to a different class automatically by R. Watch out for this! For example, if you have a vector or column of numbers, but a character value is inserted… the entire column will change to class character.</p>
-<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">num_vector</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">3</span>,<span class="fl">4</span>,<span class="fl">5</span><span class="op">)</span> <span class="co"># define vector as all numbers</span>
 <span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">num_vector</span><span class="op">)</span>          <span class="co"># vector is numeric class</span></code></pre></div>
 <pre><code>## [1] "numeric"</code></pre>
-<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">num_vector</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"three"</span>   <span class="co"># convert the third element to a character</span>
 <span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">num_vector</span><span class="op">)</span>          <span class="co"># vector is now character class</span></code></pre></div>
 <pre><code>## [1] "character"</code></pre>
@@ -980,7 +990,7 @@ You can think of the assignment operator <code><a href="https://rdrr.io/r/base/a
 </h3>
 <p><strong>A column in a data frame is technically a “vector” (see table above)</strong> - a series of values that must all be the same class (either character, numeric, logical, etc).</p>
 <p>A vector can exist independent of a data frame, for example a vector of column names that you want to include as explanatory variables in a model. To create a “stand alone” vector, use the <code><a href="https://rdrr.io/r/base/c.html">c()</a></code> function as below:</p>
-<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># define the stand-alone vector of character values</span>
 <span class="va">explanatory_vars</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"gender"</span>, <span class="st">"fever"</span>, <span class="st">"chills"</span>, <span class="st">"cough"</span>, <span class="st">"aches"</span>, <span class="st">"vomit"</span><span class="op">)</span>
 
@@ -988,7 +998,7 @@ You can think of the assignment operator <code><a href="https://rdrr.io/r/base/a
 <span class="va">explanatory_vars</span></code></pre></div>
 <pre><code>## [1] "gender" "fever"  "chills" "cough"  "aches"  "vomit"</code></pre>
 <p><strong>Columns in a data frame are also vectors and can be called, referenced, extracted, or created using the <code><a href="https://rdrr.io/r/base/Extract.html">$</a></code> symbol.</strong> The <code><a href="https://rdrr.io/r/base/Extract.html">$</a></code> symbol connects the name of the column to the name of its data frame. In this handbook, we try to use the word “column” instead of “variable”.</p>
-<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Retrieve the length of the vector age_years</span>
 <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">linelist</span><span class="op">$</span><span class="va">age</span><span class="op">)</span> <span class="co"># (age is a column in the linelist data frame)</span></code></pre></div>
 <p>By typing the name of the dataframe followed by <code><a href="https://rdrr.io/r/base/Extract.html">$</a></code> you will also see a drop-down menu of all columns in the data frame. You can scroll through them using your arrow key, select one with your Enter key, and avoid spelling mistakes!</p>
@@ -1000,31 +1010,31 @@ You can think of the assignment operator <code><a href="https://rdrr.io/r/base/a
 <h3>Access/index with brackets (<code>[ ]</code>)<a class="anchor" aria-label="anchor" href="#accessindex-with-brackets"><i class="fas fa-link"></i></a>
 </h3>
 <p>You may need to view parts of objects, also called “indexing”, which is often done using the square brackets <code>[ ]</code>. Using <code><a href="https://rdrr.io/r/base/Extract.html">$</a></code> on a dataframe to access a column is also a type of indexing.</p>
-<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">my_vector</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"c"</span>, <span class="st">"d"</span>, <span class="st">"e"</span>, <span class="st">"f"</span><span class="op">)</span>  <span class="co"># define the vector</span>
 <span class="va">my_vector</span><span class="op">[</span><span class="fl">5</span><span class="op">]</span>                                  <span class="co"># print the 5th element</span></code></pre></div>
 <pre><code>## [1] "e"</code></pre>
 <p>Square brackets also work to return specific parts of an returned output, such as the output of a <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> function:</p>
-<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># All of the summary</span>
 <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">linelist</span><span class="op">$</span><span class="va">age</span><span class="op">)</span></code></pre></div>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
 ##     0.0     6.0    13.0    16.1    23.0    84.0      86</code></pre>
-<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Just the second element of the summary, with name (using only single brackets)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">linelist</span><span class="op">$</span><span class="va">age</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span></code></pre></div>
 <pre><code>## 1st Qu. 
 ##       6</code></pre>
-<div class="sourceCode" id="cb58"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Just the second element, without name (using double brackets)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">linelist</span><span class="op">$</span><span class="va">age</span><span class="op">)</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span></code></pre></div>
 <pre><code>## [1] 6</code></pre>
-<div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Extract an element by name, without showing the name</span>
 <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">linelist</span><span class="op">$</span><span class="va">age</span><span class="op">)</span><span class="op">[[</span><span class="st">"Median"</span><span class="op">]</span><span class="op">]</span></code></pre></div>
 <pre><code>## [1] 13</code></pre>
 <p>Brackets also work on data frames to view specific rows and columns. You can do this using the syntax <code>dataframe[rows, columns]</code>:</p>
-<div class="sourceCode" id="cb62"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># View a specific row (2) from dataset, with all columns (don't forget the comma!)</span>
 <span class="va">linelist</span><span class="op">[</span><span class="fl">2</span>,<span class="op">]</span>
 
@@ -1052,7 +1062,7 @@ You can think of the assignment operator <code><a href="https://rdrr.io/r/base/a
 <span class="va">new_table</span> <span class="op">&lt;-</span> <span class="va">linelist</span><span class="op">[</span><span class="fl">2</span><span class="op">:</span><span class="fl">20</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"date_onset"</span><span class="op">)</span><span class="op">]</span> </code></pre></div>
 <p>Note that you can also achieve the above row/column indexing on data frames and tibbles using <strong>dplyr</strong> syntax (functions <code><a href="https://rdrr.io/r/stats/filter.html">filter()</a></code> for rows, and <code>select()</code> for columns). Read more about these core functions in the <a href="cleaning-data-and-core-functions.html#cleaning-data-and-core-functions">Cleaning data and core functions</a> page.</p>
 <p>To filter based on “row number”, you can use the <strong>dplyr</strong> function <code>row_number()</code> with open parentheses as part of a logical filtering statement. Often you will use the <code><a href="https://rdrr.io/r/base/match.html">%in%</a></code> operator and a range of numbers as part of that logical statement, as shown below. To see the <em>first</em> N rows, you can also use the special <strong>dplyr</strong> function <code><a href="https://rdrr.io/r/utils/head.html">head()</a></code>.</p>
-<div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb64"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># View first 100 rows</span>
 <span class="va">linelist</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span>
 
@@ -1064,7 +1074,7 @@ You can think of the assignment operator <code><a href="https://rdrr.io/r/base/a
 <p>When indexing an object of class <strong>list</strong>, single brackets always return with class list, even if only a single object is returned. Double brackets, however, can be used to access a single element and return a different class than list.<br>
 Brackets can also be written after one another, as demonstrated below.</p>
 <p>This <a href="https://r4ds.had.co.nz/vectors.html#lists-of-condiments">visual explanation of lists indexing, with pepper shakers</a> is humorous and helpful.</p>
-<div class="sourceCode" id="cb64"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb65"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># define demo list</span>
 <span class="va">my_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
   <span class="co"># First element in the list is a character vector</span>
@@ -1084,7 +1094,7 @@ Brackets can also be written after one another, as demonstrated below.</p>
 <li>
 <code>addresses</code>, a data frame of addresses</li>
 </ul>
-<div class="sourceCode" id="cb65"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb66"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">my_list</span></code></pre></div>
 <pre><code>## $hospitals
 ## [1] "Central"    "Empire"     "Santa Anna"
@@ -1095,20 +1105,20 @@ Brackets can also be written after one another, as demonstrated below.</p>
 ## 2  1048 Brown Ave Hamilton
 ## 3   999 El Camino  El Paso</code></pre>
 <p>Now we extract, using various methods:</p>
-<div class="sourceCode" id="cb67"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb68"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">my_list</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="co"># this returns the element in class "list" - the element name is still displayed</span></code></pre></div>
 <pre><code>## $hospitals
 ## [1] "Central"    "Empire"     "Santa Anna"</code></pre>
-<div class="sourceCode" id="cb69"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb70"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">my_list</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span> <span class="co"># this returns only the (unnamed) character vector</span></code></pre></div>
 <pre><code>## [1] "Central"    "Empire"     "Santa Anna"</code></pre>
-<div class="sourceCode" id="cb71"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb72"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">my_list</span><span class="op">[[</span><span class="st">"hospitals"</span><span class="op">]</span><span class="op">]</span> <span class="co"># you can also index by name of the list element</span></code></pre></div>
 <pre><code>## [1] "Central"    "Empire"     "Santa Anna"</code></pre>
-<div class="sourceCode" id="cb73"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb74"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">my_list</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span> <span class="co"># this returns the third element of the "hospitals" character vector</span></code></pre></div>
 <pre><code>## [1] "Santa Anna"</code></pre>
-<div class="sourceCode" id="cb75"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb76"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">my_list</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="co"># This returns the first column ("street") of the address data frame</span></code></pre></div>
 <pre><code>##            street
 ## 1 145 Medical Way
@@ -1120,19 +1130,19 @@ Brackets can also be written after one another, as demonstrated below.</p>
 <h3>Remove objects<a class="anchor" aria-label="anchor" href="#remove-objects"><i class="fas fa-link"></i></a>
 </h3>
 <p>You can remove individual objects from your R environment by putting the name in the <code><a href="https://rdrr.io/r/base/rm.html">rm()</a></code> function (no quote marks):</p>
-<div class="sourceCode" id="cb77"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb78"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/rm.html">rm</a></span><span class="op">(</span><span class="va">object_name</span><span class="op">)</span></code></pre></div>
 <p>You can remove all objects (clear your workspace) by running:</p>
-<div class="sourceCode" id="cb78"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb79"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/rm.html">rm</a></span><span class="op">(</span>list <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ls.html">ls</a></span><span class="op">(</span>all <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <!-- ======================================================= -->
 <!-- ======================================================= -->
 <!-- ======================================================= -->
 </div>
 </div>
-<div id="piping" class="section level2" number="3.11">
+<div id="piping" class="section level2" number="3.12">
 <h2>
-<span class="header-section-number">3.11</span> Piping (<code>%&gt;%</code>)<a class="anchor" aria-label="anchor" href="#piping"><i class="fas fa-link"></i></a>
+<span class="header-section-number">3.12</span> Piping (<code>%&gt;%</code>)<a class="anchor" aria-label="anchor" href="#piping"><i class="fas fa-link"></i></a>
 </h2>
 <p><strong>Two general approaches to working with objects are:</strong></p>
 <ol style="list-style-type: decimal">
@@ -1160,7 +1170,7 @@ You can think of it as saying “then”. Many functions can be linked together 
 </ul>
 <p>Read more on this approach in the tidyverse <a href="https://style.tidyverse.org/pipes.html">style guide</a></p>
 <p>Here is a fake example for comparison, using fictional functions to “bake a cake”. First, the pipe method:</p>
-<div class="sourceCode" id="cb79"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb80"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># A fake example of how to bake a care using piping syntax</span>
 
 <span class="va">cake</span> <span class="op">&lt;-</span> <span class="va">flour</span> <span class="op">%&gt;%</span>       <span class="co"># to define cake, start with flour, and then...</span>
@@ -1177,11 +1187,11 @@ You can think of it as saying “then”. Many functions can be linked together 
 <p>Here is another <a href="https://cfss.uchicago.edu/notes/pipes/#:~:text=Pipes%20are%20an%20extremely%20useful,code%20and%20combine%20multiple%20operations">link</a> describing the utility of pipes.</p>
 <p>Piping is not a <strong>base</strong> function. To use piping, the <strong>magrittr</strong> package must be installed and loaded (this is typically done by loading <strong>tidyverse</strong> or <strong>dplyr</strong> package which include it). You can <a href="https://magrittr.tidyverse.org/">read more about piping in the magrittr documentation</a>.</p>
 <p>Note that just like other R commands, pipes can be used to just display the result, or to save/re-save an object, depending on whether the assignment operator <code><a href="https://rdrr.io/r/base/assignOps.html">&lt;-</a></code> is involved. See both below:</p>
-<div class="sourceCode" id="cb80"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb81"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Create or overwrite object, defining as aggregate counts by age category (not printed)</span>
 <span class="va">linelist_summary</span> <span class="op">&lt;-</span> <span class="va">linelist</span> <span class="op">%&gt;%</span> 
   <span class="fu">count</span><span class="op">(</span><span class="va">age_cat</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb81"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb82"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Print the table of counts in the console, but don't save it</span>
 <span class="va">linelist</span> <span class="op">%&gt;%</span> 
   <span class="fu">count</span><span class="op">(</span><span class="va">age_cat</span><span class="op">)</span></code></pre></div>
@@ -1197,7 +1207,7 @@ You can think of it as saying “then”. Many functions can be linked together 
 ## 9    &lt;NA&gt;   86</code></pre>
 <p><strong><code>%&lt;&gt;%</code></strong><br>
 This is an “assignment pipe” from the <strong>magrittr</strong> package, which <em>pipes an object forward and also re-defines the object</em>. It must be the first pipe operator in the chain. It is shorthand. The below two commands are equivalent:</p>
-<div class="sourceCode" id="cb83"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb84"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">linelist</span> <span class="op">%&lt;&gt;%</span> 
   <span class="fu">count</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">n</span> <span class="op">&gt;</span> <span class="fl">10</span><span class="op">)</span>
@@ -1226,7 +1236,7 @@ This is an “assignment pipe” from the <strong>magrittr</strong> package, whi
 </ul>
 <p>Either name each intermediate object, or overwrite the original, or combine all the functions together. All come with their own risks.</p>
 <p>Below is the same fake “cake” example as above, but using this style:</p>
-<div class="sourceCode" id="cb84"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb85"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># a fake example of how to bake a cake using this method (defining intermediate objects)</span>
 <span class="va">batter_1</span> <span class="op">&lt;-</span> <span class="fu">left_join</span><span class="op">(</span><span class="va">flour</span>, <span class="va">eggs</span><span class="op">)</span>
 <span class="va">batter_2</span> <span class="op">&lt;-</span> <span class="fu">left_join</span><span class="op">(</span><span class="va">batter_1</span>, <span class="va">oil</span><span class="op">)</span>
@@ -1238,15 +1248,15 @@ This is an “assignment pipe” from the <strong>magrittr</strong> package, whi
 
 <span class="va">cake</span> <span class="op">&lt;-</span> <span class="fu">let_cool</span><span class="op">(</span><span class="va">cake</span><span class="op">)</span></code></pre></div>
 <p>Combine all functions together - this is difficult to read:</p>
-<div class="sourceCode" id="cb85"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb86"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># an example of combining/nesting mutliple functions together - difficult to read</span>
 <span class="va">cake</span> <span class="op">&lt;-</span> <span class="fu">let_cool</span><span class="op">(</span><span class="fu">bake</span><span class="op">(</span><span class="fu">mix_together</span><span class="op">(</span><span class="va">batter_3</span>, utensil <span class="op">=</span> <span class="va">spoon</span>, minutes <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>, degrees <span class="op">=</span> <span class="fl">350</span>, system <span class="op">=</span> <span class="st">"fahrenheit"</span>, minutes <span class="op">=</span> <span class="fl">35</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <!-- ======================================================= -->
 </div>
 </div>
-<div id="operators" class="section level2" number="3.12">
+<div id="operators" class="section level2" number="3.13">
 <h2>
-<span class="header-section-number">3.12</span> Key operators and functions<a class="anchor" aria-label="anchor" href="#operators"><i class="fas fa-link"></i></a>
+<span class="header-section-number">3.13</span> Key operators and functions<a class="anchor" aria-label="anchor" href="#operators"><i class="fas fa-link"></i></a>
 </h2>
 <p>This section details operators in R, such as:</p>
 <ul>
@@ -1273,11 +1283,11 @@ We also advise surrounding such operators with spaces, for readability.</p>
 <p>If <a href="writing-functions.html#writing-functions">Writing functions</a>, or using R in an interactive way with sourced scripts, then you may need to use this assignment operator <code><a href="https://rdrr.io/r/base/assignOps.html">&lt;&lt;-</a></code> (from <strong>base</strong> R). This operator is used to define an object in a higher ‘parent’ R Environment. See this <a href="https://stat.ethz.ch/R-manual/R-devel/library/base/html/assignOps.html">online reference</a>.</p>
 <p><strong><code>%&lt;&gt;%</code></strong></p>
 <p>This is an “assignment pipe” from the <strong>magrittr</strong> package, which pipes an object forward and <em>also re-defines the object</em>. It must be the first pipe operator in the chain. It is shorthand, as shown below in two equivalent examples:</p>
-<div class="sourceCode" id="cb86"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb87"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">linelist</span> <span class="op">&lt;-</span> <span class="va">linelist</span> <span class="op">%&gt;%</span> 
   <span class="fu">mutate</span><span class="op">(</span>age_months <span class="op">=</span> <span class="va">age_years</span> <span class="op">*</span> <span class="fl">12</span><span class="op">)</span></code></pre></div>
 <p>The above is equivalent to the below:</p>
-<div class="sourceCode" id="cb87"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb88"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">linelist</span> <span class="op">%&lt;&gt;%</span> <span class="fu">mutate</span><span class="op">(</span>age_months <span class="op">=</span> <span class="va">age_years</span> <span class="op">*</span> <span class="fl">12</span><span class="op">)</span></code></pre></div>
 <p><strong><code>%&lt;+%</code></strong></p>
 <p>This is used to add data to phylogenetic trees with the <strong>ggtree</strong> package. See the page on <a href="phylogenetic-trees.html#phylogenetic-trees">Phylogenetic trees</a> or this online <a href="https://yulab-smu.top/treedata-book/">resource book</a>.</p>
@@ -1382,7 +1392,7 @@ We also advise surrounding such operators with spaces, for readability.</p>
 </tbody>
 </table></div>
 <p>For example, below, we have a linelist with two variables we want to use to create our case definition, <code>hep_e_rdt</code>, a test result and <code>other_cases_in_hh</code>, which will tell us if there are other cases in the household. The command below uses the function <code>case_when()</code> to create the new variable <code>case_def</code> such that:</p>
-<div class="sourceCode" id="cb88"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb89"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">linelist_cleaned</span> <span class="op">&lt;-</span> <span class="va">linelist</span> <span class="op">%&gt;%</span>
   <span class="fu">mutate</span><span class="op">(</span>case_def <span class="op">=</span> <span class="fu">case_when</span><span class="op">(</span>
     <span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">rdt_result</span><span class="op">)</span> <span class="op">&amp;</span> <span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">other_case_in_home</span><span class="op">)</span>            <span class="op">~</span> <span class="cn">NA_character_</span>,
@@ -1427,7 +1437,7 @@ We also advise surrounding such operators with spaces, for readability.</p>
 </h3>
 <p>In R, missing values are represented by the special value <code>NA</code> (a “reserved” value) (capital letters N and A - not in quotation marks). If you import data that records missing data in another way (e.g. 99, “Missing”, or .), you may want to re-code those values to <code>NA</code>. How to do this is addressed in the <a href="import-and-export.html#import-and-export">Import and export</a> page.</p>
 <p><strong>To test whether a value is <code>NA</code>, use the special function <code><a href="https://rdrr.io/r/base/NA.html">is.na()</a></code></strong>, which returns <code>TRUE</code> or <code>FALSE</code>.</p>
-<div class="sourceCode" id="cb89"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb90"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">rdt_result</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Positive"</span>, <span class="st">"Suspected"</span>, <span class="st">"Positive"</span>, <span class="cn">NA</span><span class="op">)</span>   <span class="co"># two positive cases, one suspected, and one unknown</span>
 <span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">rdt_result</span><span class="op">)</span>  <span class="co"># Tests whether the value of rdt_result is NA</span></code></pre></div>
 <pre><code>## [1] FALSE FALSE FALSE  TRUE</code></pre>
@@ -1531,24 +1541,24 @@ We also advise surrounding such operators with spaces, for readability.</p>
 <h4>Scientific notation<a class="anchor" aria-label="anchor" href="#scientific-notation"><i class="fas fa-link"></i></a>
 </h4>
 <p>To turn off scientific notation in your R session, run this command:</p>
-<div class="sourceCode" id="cb91"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb92"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>scipen<span class="op">=</span><span class="fl">999</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="rounding" class="section level4 unnumbered">
 <h4>Rounding<a class="anchor" aria-label="anchor" href="#rounding"><i class="fas fa-link"></i></a>
 </h4>
 <p><span style="color: red;"><strong><em>DANGER:</em></strong> <code><a href="https://rdrr.io/r/base/Round.html">round()</a></code> uses “banker’s rounding” which rounds up from a .5 only if the upper number is even. Use <code>round_half_up()</code> from <strong>janitor</strong> to consistently round halves up to the nearest whole number. See <a href="https://cran.r-project.org/web/packages/janitor/vignettes/janitor.html#explore-records-with-duplicated-values-for-specific-combinations-of-variables-with-get_dupes">this explanation</a> </span></p>
-<div class="sourceCode" id="cb92"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb93"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># use the appropriate rounding function for your work</span>
 <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2.5</span>, <span class="fl">3.5</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] 2 4</code></pre>
-<div class="sourceCode" id="cb94"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb95"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">janitor</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/janitor/man/round_half_up.html">round_half_up</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2.5</span>, <span class="fl">3.5</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] 3 4</code></pre>
 </div>
-<div id="statistical-functions" class="section level4" number="3.12.0.1">
+<div id="statistical-functions" class="section level4" number="3.13.0.1">
 <h4>
-<span class="header-section-number">3.12.0.1</span> Statistical functions:<a class="anchor" aria-label="anchor" href="#statistical-functions"><i class="fas fa-link"></i></a>
+<span class="header-section-number">3.13.0.1</span> Statistical functions:<a class="anchor" aria-label="anchor" href="#statistical-functions"><i class="fas fa-link"></i></a>
 </h4>
 <p><span style="color: orange;"><strong><em>CAUTION:</em></strong> The functions below will by default include missing values in calculations. Missing values will result in an output of NA, unless the argument <code>na.rm=TRUE</code> is specified</span></p>
 <div class="inline-table"><table class="table table-sm">
@@ -1604,17 +1614,17 @@ We also advise surrounding such operators with spaces, for readability.</p>
 <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code>: gives a summary on a numeric vector including mean, median, and common percentiles</li>
 </ul>
 <p><span style="color: red;"><strong><em>DANGER:</em></strong> If providing a vector of numbers to one of the above functions, be sure to wrap the numbers within <code><a href="https://rdrr.io/r/base/c.html">c()</a></code> .</span></p>
-<div class="sourceCode" id="cb96"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb97"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># If supplying raw numbers to a function, wrap them in c()</span>
 <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">6</span>, <span class="fl">12</span>, <span class="fl">10</span>, <span class="fl">5</span>, <span class="fl">0</span><span class="op">)</span>    <span class="co"># !!! INCORRECT !!!  </span></code></pre></div>
 <pre><code>## [1] 1</code></pre>
-<div class="sourceCode" id="cb98"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb99"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">6</span>, <span class="fl">12</span>, <span class="fl">10</span>, <span class="fl">5</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span> <span class="co"># CORRECT</span></code></pre></div>
 <pre><code>## [1] 5.67</code></pre>
 </div>
-<div id="other-useful-functions" class="section level4" number="3.12.0.2">
+<div id="other-useful-functions" class="section level4" number="3.13.0.2">
 <h4>
-<span class="header-section-number">3.12.0.2</span> Other useful functions:<a class="anchor" aria-label="anchor" href="#other-useful-functions"><i class="fas fa-link"></i></a>
+<span class="header-section-number">3.13.0.2</span> Other useful functions:<a class="anchor" aria-label="anchor" href="#other-useful-functions"><i class="fas fa-link"></i></a>
 </h4>
 <div class="inline-table"><table class="table table-sm">
 <colgroup>
@@ -1660,24 +1670,24 @@ We also advise surrounding such operators with spaces, for readability.</p>
 <code>%in%</code><a class="anchor" aria-label="anchor" href="#in"><i class="fas fa-link"></i></a>
 </h3>
 <p>A very useful operator for matching values, and for quickly assessing if a value is within a vector or dataframe.</p>
-<div class="sourceCode" id="cb100"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">my_vector</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"c"</span>, <span class="st">"d"</span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb101"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">my_vector</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"c"</span>, <span class="st">"d"</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb102"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="st">"a"</span> <span class="op">%in%</span> <span class="va">my_vector</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb103"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb104"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="st">"h"</span> <span class="op">%in%</span> <span class="va">my_vector</span></code></pre></div>
 <pre><code>## [1] FALSE</code></pre>
 <p>To ask if a value is <strong>not</strong> <code><a href="https://rdrr.io/r/base/match.html">%in%</a></code> a vector, put an exclamation mark (!) <strong>in front</strong> of the logic statement:</p>
-<div class="sourceCode" id="cb105"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb106"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># to negate, put an exclamation in front</span>
 <span class="op">!</span><span class="st">"a"</span> <span class="op">%in%</span> <span class="va">my_vector</span></code></pre></div>
 <pre><code>## [1] FALSE</code></pre>
-<div class="sourceCode" id="cb107"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb108"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="op">!</span><span class="st">"h"</span> <span class="op">%in%</span> <span class="va">my_vector</span></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
 <p><code><a href="https://rdrr.io/r/base/match.html">%in%</a></code> is very useful when using the <strong>dplyr</strong> function <code>case_when()</code>. You can define a vector previously, and then reference it later. For example:</p>
-<div class="sourceCode" id="cb109"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb110"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">affirmative</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"1"</span>, <span class="st">"Yes"</span>, <span class="st">"YES"</span>, <span class="st">"yes"</span>, <span class="st">"y"</span>, <span class="st">"Y"</span>, <span class="st">"oui"</span>, <span class="st">"Oui"</span>, <span class="st">"Si"</span><span class="op">)</span>
 
 <span class="va">linelist</span> <span class="op">&lt;-</span> <span class="va">linelist</span> <span class="op">%&gt;%</span> 
@@ -1686,11 +1696,11 @@ We also advise surrounding such operators with spaces, for readability.</p>
     <span class="cn">TRUE</span>                                      <span class="op">~</span> <span class="st">"Not"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>Note: If you want to detect a partial string, perhaps using <code>str_detect()</code> from <strong>stringr</strong>, it will not accept a character vector like <code><a href="https://rdrr.io/r/base/c.html">c("1", "Yes", "yes", "y")</a></code>. Instead, it must be given a <em>regular expression</em> - one condensed string with OR bars, such as “1|Yes|yes|y”. For example, <code>str_detect(hospitalized, "1|Yes|yes|y")</code>. See the page on <a href="characters-and-strings.html#characters-and-strings">Characters and strings</a> for more information.</p>
 <p>You can convert a character vector to a named regular expression with this command:</p>
-<div class="sourceCode" id="cb110"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb111"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">affirmative</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"1"</span>, <span class="st">"Yes"</span>, <span class="st">"YES"</span>, <span class="st">"yes"</span>, <span class="st">"y"</span>, <span class="st">"Y"</span>, <span class="st">"oui"</span>, <span class="st">"Oui"</span>, <span class="st">"Si"</span><span class="op">)</span>
 <span class="va">affirmative</span></code></pre></div>
 <pre><code>## [1] "1"   "Yes" "YES" "yes" "y"   "Y"   "oui" "Oui" "Si"</code></pre>
-<div class="sourceCode" id="cb112"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb113"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># condense to </span>
 <span class="va">affirmative_str_search</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="va">affirmative</span>, collapse <span class="op">=</span> <span class="st">"|"</span><span class="op">)</span>  <span class="co"># option with base R</span>
 <span class="va">affirmative_str_search</span> <span class="op">&lt;-</span> <span class="fu">str_c</span><span class="op">(</span><span class="va">affirmative</span>, collapse <span class="op">=</span> <span class="st">"|"</span><span class="op">)</span>   <span class="co"># option with stringr package</span>
@@ -1702,9 +1712,9 @@ We also advise surrounding such operators with spaces, for readability.</p>
 <!-- ======================================================= -->
 </div>
 </div>
-<div id="errors-warnings" class="section level2" number="3.13">
+<div id="errors-warnings" class="section level2" number="3.14">
 <h2>
-<span class="header-section-number">3.13</span> Errors &amp; warnings<a class="anchor" aria-label="anchor" href="#errors-warnings"><i class="fas fa-link"></i></a>
+<span class="header-section-number">3.14</span> Errors &amp; warnings<a class="anchor" aria-label="anchor" href="#errors-warnings"><i class="fas fa-link"></i></a>
 </h2>
 <p>This section explains:</p>
 <ul>
@@ -1765,31 +1775,32 @@ We also advise surrounding such operators with spaces, for readability.</p>
 <li><a class="nav-link" href="#r-basics"><span class="header-section-number">3</span> R Basics</a></li>
 <li><a class="nav-link" href="#overview"><span class="header-section-number">3.1</span> Overview</a></li>
 <li><a class="nav-link" href="#why-use-r"><span class="header-section-number">3.2</span> Why use R?</a></li>
+<li><a class="nav-link" href="#key-terms"><span class="header-section-number">3.3</span> Key terms</a></li>
 <li>
-<a class="nav-link" href="#recommended-training"><span class="header-section-number">3.3</span> Recommended training</a><ul class="nav navbar-nav">
+<a class="nav-link" href="#recommended-training"><span class="header-section-number">3.4</span> Recommended training</a><ul class="nav navbar-nav">
 <li><a class="nav-link" href="#resources-within-rstudio">Resources within RStudio</a></li>
 <li><a class="nav-link" href="#cheatsheets">Cheatsheets</a></li>
 <li><a class="nav-link" href="#free-online-resources">Free online resources</a></li>
 </ul>
 </li>
 <li>
-<a class="nav-link" href="#installation"><span class="header-section-number">3.4</span> Installation</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#other-software-you-may-need-to-install">Other software you may need to install</a></li></ul>
+<a class="nav-link" href="#installation"><span class="header-section-number">3.5</span> Installation</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#other-software-you-may-need-to-install">Other software you may need to install</a></li></ul>
 </li>
 <li>
-<a class="nav-link" href="#rstudio"><span class="header-section-number">3.5</span> RStudio</a><ul class="nav navbar-nav">
+<a class="nav-link" href="#rstudio"><span class="header-section-number">3.6</span> RStudio</a><ul class="nav navbar-nav">
 <li><a class="nav-link" href="#rstudio-orientation">RStudio Orientation</a></li>
 <li><a class="nav-link" href="#rstudio-settings">RStudio settings</a></li>
 <li><a class="nav-link" href="#keyboard-shortcuts">Keyboard shortcuts</a></li>
 </ul>
 </li>
 <li>
-<a class="nav-link" href="#functions"><span class="header-section-number">3.6</span> Functions</a><ul class="nav navbar-nav">
+<a class="nav-link" href="#functions"><span class="header-section-number">3.7</span> Functions</a><ul class="nav navbar-nav">
 <li><a class="nav-link" href="#simple-functions">Simple functions</a></li>
 <li><a class="nav-link" href="#functions-with-multiple-arguments">Functions with multiple arguments</a></li>
 </ul>
 </li>
 <li>
-<a class="nav-link" href="#packages"><span class="header-section-number">3.7</span> Packages</a><ul class="nav navbar-nav">
+<a class="nav-link" href="#packages"><span class="header-section-number">3.8</span> Packages</a><ul class="nav navbar-nav">
 <li><a class="nav-link" href="#install-and-load">Install and load</a></li>
 <li><a class="nav-link" href="#code-syntax">Code syntax</a></li>
 <li><a class="nav-link" href="#function-help">Function help</a></li>
@@ -1803,7 +1814,7 @@ We also advise surrounding such operators with spaces, for readability.</p>
 </ul>
 </li>
 <li>
-<a class="nav-link" href="#scripts"><span class="header-section-number">3.8</span> Scripts</a><ul class="nav navbar-nav">
+<a class="nav-link" href="#scripts"><span class="header-section-number">3.9</span> Scripts</a><ul class="nav navbar-nav">
 <li><a class="nav-link" href="#commenting">Commenting</a></li>
 <li><a class="nav-link" href="#style">Style</a></li>
 <li><a class="nav-link" href="#example-script">Example Script</a></li>
@@ -1814,7 +1825,7 @@ We also advise surrounding such operators with spaces, for readability.</p>
 </ul>
 </li>
 <li>
-<a class="nav-link" href="#working-directory"><span class="header-section-number">3.9</span> Working directory</a><ul class="nav navbar-nav">
+<a class="nav-link" href="#working-directory"><span class="header-section-number">3.10</span> Working directory</a><ul class="nav navbar-nav">
 <li><a class="nav-link" href="#set-by-command">Set by command</a></li>
 <li><a class="nav-link" href="#set-manually">Set manually</a></li>
 <li><a class="nav-link" href="#within-an-r-project">Within an R project</a></li>
@@ -1823,7 +1834,7 @@ We also advise surrounding such operators with spaces, for readability.</p>
 </ul>
 </li>
 <li>
-<a class="nav-link" href="#objects"><span class="header-section-number">3.10</span> Objects</a><ul class="nav navbar-nav">
+<a class="nav-link" href="#objects"><span class="header-section-number">3.11</span> Objects</a><ul class="nav navbar-nav">
 <li><a class="nav-link" href="#everything-is-an-object">Everything is an object</a></li>
 <li><a class="nav-link" href="#defining-objects--">Defining objects (&lt;-)</a></li>
 <li><a class="nav-link" href="#object-structure">Object structure</a></li>
@@ -1834,13 +1845,13 @@ We also advise surrounding such operators with spaces, for readability.</p>
 </ul>
 </li>
 <li>
-<a class="nav-link" href="#piping"><span class="header-section-number">3.11</span> Piping (%&gt;%)</a><ul class="nav navbar-nav">
+<a class="nav-link" href="#piping"><span class="header-section-number">3.12</span> Piping (%&gt;%)</a><ul class="nav navbar-nav">
 <li><a class="nav-link" href="#pipes">Pipes</a></li>
 <li><a class="nav-link" href="#define-intermediate-objects">Define intermediate objects</a></li>
 </ul>
 </li>
 <li>
-<a class="nav-link" href="#operators"><span class="header-section-number">3.12</span> Key operators and functions</a><ul class="nav navbar-nav">
+<a class="nav-link" href="#operators"><span class="header-section-number">3.13</span> Key operators and functions</a><ul class="nav navbar-nav">
 <li><a class="nav-link" href="#assignment-operators">Assignment operators</a></li>
 <li><a class="nav-link" href="#relational-and-logical-operators">Relational and logical operators</a></li>
 <li><a class="nav-link" href="#missing-values">Missing values</a></li>
@@ -1849,7 +1860,7 @@ We also advise surrounding such operators with spaces, for readability.</p>
 </ul>
 </li>
 <li>
-<a class="nav-link" href="#errors-warnings"><span class="header-section-number">3.13</span> Errors &amp; warnings</a><ul class="nav navbar-nav">
+<a class="nav-link" href="#errors-warnings"><span class="header-section-number">3.14</span> Errors &amp; warnings</a><ul class="nav navbar-nav">
 <li><a class="nav-link" href="#error-versus-warning">Error versus Warning</a></li>
 <li><a class="nav-link" href="#general-syntax-tips">General syntax tips</a></li>
 <li><a class="nav-link" href="#code-assists">Code assists</a></li>
@@ -1871,7 +1882,7 @@ We also advise surrounding such operators with spaces, for readability.</p>
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>The Epidemiologist R Handbook</strong>" was written by the handbook team. It was last built on 2021-04-09.</p>
+    <p>"<strong>The Epidemiologist R Handbook</strong>" was written by the handbook team. It was last built on 2021-04-11.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
