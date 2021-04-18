@@ -1,10 +1,8 @@
-collaboration-with-github
-why-use-github
-github-basics
-set-up
-github-workflow
-advanced-github
-github-desktop
-git
-package-management-with-renv
+dashboards-with-r-markdown
+preparation
+new-r-markdown
+the-script
+attributes
+layout
+interactive
 resources
