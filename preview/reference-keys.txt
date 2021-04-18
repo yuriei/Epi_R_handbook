@@ -1,8 +1,0 @@
-dashboards-with-r-markdown
-preparation
-new-r-markdown
-the-script
-attributes
-layout
-interactive
-resources
