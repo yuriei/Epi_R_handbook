@@ -19,5 +19,8 @@ new-r-markdown
 the-script
 attributes
 layout
-interactive
+tabbed-panels
+adding-content
+interactive-figures
+sharing
 resources-1

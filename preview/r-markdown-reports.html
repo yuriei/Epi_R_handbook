@@ -52,7 +52,7 @@
 <h1>
 <span class="header-section-number">1</span> R Markdown reports<a class="anchor" aria-label="anchor" href="#r-markdown-reports"><i class="fas fa-link"></i></a>
 </h1>
-<p>R Markdown is a fantastic tool for creating automated, reproducible, and share-worthy outputs. It can generate static or interactive outputs, in the form of html, word, pdf, powerpoint, and others.</p>
+<p>R Markdown is a widely-used tool for creating automated, reproducible, and share-worthy outputs, such as report. It can generate static or interactive outputs, in the form of html, word, pdf, powerpoint, and others.</p>
 <!-- ======================================================= -->
 <div id="overview" class="section level2" number="1.1">
 <h2>
@@ -149,7 +149,7 @@
 <p>The YAML should begin with metadata for the document. The order of these primary YAML parameters (not indented) does not matter. For example:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb3-1"><a href="r-markdown-reports.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"My document"</span></span>
 <span id="cb3-2"><a href="r-markdown-reports.html#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">author</span><span class="kw">:</span><span class="at"> </span><span class="st">"Me"</span></span>
-<span id="cb3-3"><a href="r-markdown-reports.html#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">date</span><span class="kw">:</span><span class="at"> </span><span class="st">"2021-04-18"</span></span></code></pre></div>
+<span id="cb3-3"><a href="r-markdown-reports.html#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">date</span><span class="kw">:</span><span class="at"> </span><span class="st">"2021-04-19"</span></span></code></pre></div>
 <p>You can use R code in YAML values by writing it as in-line code (preceded by <code>r</code> within back-ticks) but also within quotes (see above example for <code>date:</code>).</p>
 <p>In the image above, because we clicked that our default output would be an html file, we can see that the YAML says <code>output: html_document</code>. However we can also change this to say <code>powerpoint_presentation</code> or <code>word_document</code> or even <code>pdf_document</code>.</p>
 </div>
@@ -205,17 +205,6 @@
 <span id="cb6-6"><a href="r-markdown-reports.html#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="ss">  * </span>Sub-bullet 2 (followed by two spaces and Enter/Return)  </span>
 <span id="cb6-7"><a href="r-markdown-reports.html#cb6-7" aria-hidden="true" tabindex="-1"></a>  </span></code></pre></div>
 </div>
-<div id="in-line-r-code" class="section level4 unnumbered">
-<h4>In-line R code<a class="anchor" aria-label="anchor" href="#in-line-r-code"><i class="fas fa-link"></i></a>
-</h4>
-<p>You can also include minimal R code within back-ticks. Within the back-ticks, begin the code with “r” and a space, so RStudio knows to evaluate the code as R code. See the example below.</p>
-</div>
-<div id="example" class="section level4 unnumbered">
-<h4>Example<a class="anchor" aria-label="anchor" href="#example"><i class="fas fa-link"></i></a>
-</h4>
-<p>The example below shows multiple heading levels, bullets, and uses R code for the current date (<code><a href="https://rdrr.io/r/base/Sys.time.html">Sys.Date()</a></code>) to evaluate into a printed date.</p>
-<div class="inline-figure"><img src="images/markdown/2_text.png" width="80%" style="display: block; margin: auto;"></div>
-</div>
 </div>
 <div id="code-chunks" class="section level3 unnumbered">
 <h3>Code chunks<a class="anchor" aria-label="anchor" href="#code-chunks"><i class="fas fa-link"></i></a>
@@ -265,13 +254,17 @@ These ‘chunks’ will appear to have a slightly different background colour fr
 <p>For global options to be applied to all chunks in the script, you can set this up within your very first R code chunk in the script. For instance, so that only the outputs are shown for each code chunk and not the code itself, you can include this command in the R code chunk:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">knitr</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/knitr/man/opts_chunk.html">opts_chunk</a></span><span class="op">$</span><span class="fu">set</span><span class="op">(</span>echo <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> </code></pre></div>
-</div>
-<div id="combining-code-and-text" class="section level3 unnumbered">
-<h3>Combining code and text<a class="anchor" aria-label="anchor" href="#combining-code-and-text"><i class="fas fa-link"></i></a>
-</h3>
-<p>Above we showed how you can integrate dynamic values such as today’s date into the text. You can also use short functions (e.g. to calculate the min, median, max of a column) in the text, or integrate objects created within code chunks.</p>
-<p>The following calculates the proportion of cases that are aged less than 18 years old, using tidyverse code, and feeds it into the text. We see how it looks when knitted to a word document.</p>
+<div id="in-text-r-code" class="section level4 unnumbered">
+<h4>In-text R code<a class="anchor" aria-label="anchor" href="#in-text-r-code"><i class="fas fa-link"></i></a>
+</h4>
+<p>You can also include minimal R code within back-ticks. Within the back-ticks, begin the code with “r” and a space, so RStudio knows to evaluate the code as R code. See the example below.</p>
+<p>The example below shows multiple heading levels, bullets, and uses R code for the current date (<code><a href="https://rdrr.io/r/base/Sys.time.html">Sys.Date()</a></code>) to evaluate into a printed date.</p>
+<div class="inline-figure">
+<img src="images/markdown/2_text.png" width="80%" style="display: block; margin: auto;">
+The example above is simple (showing the current date), but using the same syntax you can display values produced by more complex R code (e.g. to calculate the min, median, max of a column). You can also integrate R objects or values that were created in R code chunks earlier in the script.</div>
+<p>As an example, the script below calculates the proportion of cases that are aged less than 18 years old, using <strong>tidyverse</strong> functions, and creates the objects <code>less18</code>, <code>total</code>, and <code>less18prop</code>. This dynamic value is inserted into subsequent text. We see how it looks when knitted to a word document.</p>
 <div class="inline-figure"><img src="images/markdown/3_chunktext.png" width="100%" style="display: block; margin: auto;"></div>
+</div>
 </div>
 <div id="images" class="section level3 unnumbered">
 <h3>Images<a class="anchor" aria-label="anchor" href="#images"><i class="fas fa-link"></i></a>
@@ -560,7 +553,7 @@ These ‘chunks’ will appear to have a slightly different background colour fr
 <ul>
 <li>More informative error messages - these messages will be generated from the R script, not the R Markdown. R Markdown errors tend to tell you which chunk had a problem, but will not tell you which line.<br>
 </li>
-<li>If applicabel, you can run long processing steps in advance of the <code>render()</code> command - they will run only once.</li>
+<li>If applicable, you can run long processing steps in advance of the <code>render()</code> command - they will run only once.</li>
 </ul>
 <p>In the example below, we have a separate R script in which we pre-process a <code>data</code> object into the R Environment and then render the “create_output.Rmd” using <code>render()</code>.</p>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
@@ -679,7 +672,6 @@ These ‘chunks’ will appear to have a slightly different background colour fr
 <li><a class="nav-link" href="#yaml-metadata">YAML metadata</a></li>
 <li><a class="nav-link" href="#text">Text</a></li>
 <li><a class="nav-link" href="#code-chunks">Code chunks</a></li>
-<li><a class="nav-link" href="#combining-code-and-text">Combining code and text</a></li>
 <li><a class="nav-link" href="#images">Images</a></li>
 <li><a class="nav-link" href="#tables">Tables</a></li>
 </ul>
@@ -730,7 +722,7 @@ These ‘chunks’ will appear to have a slightly different background colour fr
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>The Epidemiologist R Handbook</strong>" was written by the handbook team. It was last built on 2021-04-18.</p>
+    <p>"<strong>The Epidemiologist R Handbook</strong>" was written by the handbook team. It was last built on 2021-04-19.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
