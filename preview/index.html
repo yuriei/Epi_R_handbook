@@ -15,7 +15,8 @@
 <script src="libs/dt-core-1.10.20/js/jquery.dataTables.min.js"></script><link href="libs/nouislider-7.0.10/jquery.nouislider.min.css" rel="stylesheet">
 <script src="libs/nouislider-7.0.10/jquery.nouislider.min.js"></script><link href="libs/selectize-0.12.0/selectize.bootstrap3.css" rel="stylesheet">
 <script src="libs/selectize-0.12.0/selectize.min.js"></script><link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet">
-<script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script><script src="https://cdn.jsdelivr.net/autocomplete.js/0/autocomplete.jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/mark.js@8.11.1/dist/mark.min.js"></script><!-- CSS --><link rel="stylesheet" href="style_bs4.css">
+<script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script><link href="libs/tabwid-1.0.0/tabwid.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/autocomplete.js/0/autocomplete.jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/mark.js@8.11.1/dist/mark.min.js"></script><!-- CSS --><link rel="stylesheet" href="style_bs4.css">
 </head>
 <body data-spy="scroll" data-target="#toc">
 
@@ -39,10 +40,8 @@
         <ul class="book-toc list-unstyled">
 <li><a class="active" href="index.html"></a></li>
 <li class="book-part">Preview pages</li>
-<li><a class="" href="plotting-with-ggplot.html"><span class="header-section-number">1</span> Plotting with ggplot</a></li>
-<li><a class="" href="plot-continuous-data.html"><span class="header-section-number">2</span> Plot continuous data</a></li>
-<li><a class="" href="plot-categorical-data.html"><span class="header-section-number">3</span> Plot categorical data</a></li>
-<li><a class="" href="ggplot-tips.html"><span class="header-section-number">4</span> ggplot tips</a></li>
+<li><a class="" href="descriptive-tables.html"><span class="header-section-number">1</span> Descriptive tables</a></li>
+<li><a class="" href="tables-for-presentation.html"><span class="header-section-number">2</span> Tables for presentation</a></li>
 </ul>
 
         <div class="book-extra">
@@ -57,7 +56,7 @@
 <p><span style="color: red;"><strong>THIS IS A DRAFT. REVIEWERS GIVE FEEDBACK AT THIS <a href="https://forms.gle/4RNdRRLGx67xW9yq9">LINK</a></strong>.</span></p>
 <p><span style="color: darkgreen;"><strong>DO YOU LIKE THIS HANDBOOK? SHOULD SOMETHING BE CHANGED? PLEASE TELL US!</strong></span></p>
 <form target="_blank" action="https://forms.gle/A5SnRVws7tPD15Js9">
-<input type="submit" value="FEEDBACK!">
+<input type="submit" value="FEEDBACK">
 </form>
 <!-- ======================================================= -->
 <div id="about-this-handbook" class="section level2 unnumbered">
@@ -72,13 +71,13 @@
 </li>
 <li>Assist epidemiologists transitioning to R from SAS, STATA, SPSS, and Excel<br>
 </li>
-<li>Be accessible in settings with low internet-connectivity via an <strong>offline version</strong> ([instructions here][Download book and data])</li>
+<li>Be accessible in settings with low internet-connectivity via an <strong>offline version</strong> ([instructions here][Download handbook and data])</li>
 </ul>
 <p><strong>How is this different than other R books?</strong></p>
 <ul>
 <li>It is written by epidemiologists, for epidemiologists - leveraging experience in local, national, academic, and emergency settings<br>
 </li>
-<li>It provides examples of epidemic curves, transmission chains, epidemic modeling and projections, age and sex pyramids and standardization, record matching, outbreak detection, survey analysis, causal diagrams, survival analysis, GIS basics, phylogenetic trees, automated reports, etc…</li>
+<li>It provides examples of epidemic curves, transmission chains, automated reports and dashboards, epidemic modeling and projections, demographic pyramids and standardization, record matching, outbreak detection, survey analysis, causal diagrams, survival analysis, GIS basics, phylogenetic trees, etc…</li>
 </ul>
 <!-- ======================================================= -->
 </div>
@@ -92,12 +91,12 @@
 </li>
 <li>See the “Resources” section of each page for further resources<br>
 </li>
-<li>To download data and “follow-along”, see the [Download book and data] page</li>
+<li>“Follow-along” by [downloading the example data][Download book and data]</li>
 </ul>
 <p><strong>Offline version</strong></p>
-<p>To download the offline version, follow step-by-step instructions in the [Download book and data] page.</p>
+<p>See instructions to download the offline version of the handbook in the [Download book and data] page.</p>
 <p><strong>Languages</strong></p>
-<p>We are actively seeking to translate this book into languages other than English. If you can help, please contact us.</p>
+<p>We are seeking to translate this book into languages other than English. If you can help, please contact us.</p>
 <!-- ======================================================= -->
 </div>
 <div id="edit-or-contribute" class="section level2 unnumbered">
@@ -112,18 +111,18 @@
 <div id="contributors" class="section level3 unnumbered">
 <h3>Contributors<a class="anchor" aria-label="anchor" href="#contributors"><i class="fas fa-link"></i></a>
 </h3>
-<p>This handbook is produced by a collaboration of epidemiologists from around the world, drawing upon experiences with organizations including local, state, provincial, and national health departments and ministries, the World Health Organization (WHO), MSF (Médecins Sans Frontières / Doctors without Borders), hospital systems, and academic institutions.</p>
+<p>This handbook is produced by a collaboration of epidemiologists from around the world, drawing upon experiences with organizations including local, state/provincial, and national health agencies, the World Health Organization (WHO), MSF (Médecins Sans Frontières / Doctors without Borders), hospital systems, and academic institutions.</p>
 <p><strong>Editor-in-Chief:</strong> Neale Batra</p>
-<p><strong>Core team:</strong> Neale Batra, Alex Spina, Amrish Baidjoe, Pat Keating, Henry Laurenson-Schafer, Finlay Campbell</p>
-<p><strong>Authors</strong>: Neale Batra, Alex Spina, Paula Blomquist, Finlay Campbell, Henry Laurenson-Schafer, Isaac Florence, Natalie Fischer, Aminata Ndiaye, Liza Coyer, Jonny Polonski, Yurie Izawa, Daniel Molling, Isha Berry, Chris Bailey, Wen Lin, Sara Hollis</p>
+<p><strong>Project core team:</strong> Neale Batra, Alex Spina, Amrish Baidjoe, Pat Keating, Henry Laurenson-Schafer, Finlay Campbell</p>
+<p><strong>Authors</strong>: Neale Batra, Alex Spina, Paula Blomquist, Finlay Campbell, Henry Laurenson-Schafer, Isaac Florence, Natalie Fischer, Aminata Ndiaye, Liza Coyer, Jonathan Polonsky, Yurie Izawa, Daniel Molling, Isha Berry, Chris Bailey, Wen Lin, Sara Hollis,</p>
 <p><strong>Reviewers</strong>: Pat Keating, Mathilde Mousset, Annick Lenglet, Margot Charette, Isha Berry, Paula Blomquist, Natalie Fischer, Daniely Xavier, Esther Kukielka, Michelle Sloan, Aybuke Koyuncu, Rachel Burke, Daniel Molling, Kate Kelsey, Wayne Enanoria, John Rossow, Berhe Etsay, Mackenzie Zendt, James Wright, Flavio Finger, Tim Taylor, Tim Lee, Manual Albela Miranda, Priscilla Spencer, Pattama Ulrich, Joseph Timothy, Olivia Varsaneux, Nienke Meeuwissen, Adam Vaughan, Lionel Monteiro, Joao Muianga.</p>
 </div>
-<div id="funding-and-programmatic-support" class="section level3 unnumbered">
-<h3>Funding and programmatic support<a class="anchor" aria-label="anchor" href="#funding-and-programmatic-support"><i class="fas fa-link"></i></a>
+<div id="funding-and-support" class="section level3 unnumbered">
+<h3>Funding and support<a class="anchor" aria-label="anchor" href="#funding-and-support"><i class="fas fa-link"></i></a>
 </h3>
 <p>This handbook is <strong>not</strong> an approved product of any specific organization. Although we strive for accuracy, we provide no guarantee of the content in this book.</p>
 <p>The handbook project received funding via a COVID-19 emergency capacity-building grant from Training Programs in Epidemiology and Public Health Interventions Network (<a href="https://www.tephinet.org/">TEPHINET</a>). <em>This handbook was supported by Cooperative Agreement number NU2GGH001873, funded by the Centers for Disease Control and Prevention through TEPHINET, a program of The Task Force for Global Health. Its contents are solely the responsibility of the authors and do not necessarily represent the official views of the Centers for Disease Control and Prevention, the Department of Health and Human Services, The Task Force for Global Health, Inc. or TEPHINET.</em></p>
-<p>Programmatic support was provided by the EPIET Alumni Network (<a href="https://epietalumni.net/">EAN</a>), with special thanks to Annika Wendland. EPIET is the European Programme for Intervention Epidemiology Training.</p>
+<p>Administrative support was provided by the EPIET Alumni Network (<a href="https://epietalumni.net/">EAN</a>), with special thanks to Annika Wendland. EPIET is the European Programme for Intervention Epidemiology Training.</p>
 </div>
 <div id="inspiration" class="section level3 unnumbered">
 <h3>Inspiration<a class="anchor" aria-label="anchor" href="#inspiration"><i class="fas fa-link"></i></a>
@@ -150,7 +149,7 @@
 
 <div class="chapter-nav">
 <div class="empty"></div>
-<div class="next"><a href="plotting-with-ggplot.html"><span class="header-section-number">1</span> Plotting with ggplot</a></div>
+<div class="next"><a href="descriptive-tables.html"><span class="header-section-number">1</span> Descriptive tables</a></div>
 </div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
     <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
       <ul class="nav navbar-nav">
@@ -161,7 +160,7 @@
 <li>
 <a class="nav-link" href="#acknowledgements">Acknowledgements</a><ul class="nav navbar-nav">
 <li><a class="nav-link" href="#contributors">Contributors</a></li>
-<li><a class="nav-link" href="#funding-and-programmatic-support">Funding and programmatic support</a></li>
+<li><a class="nav-link" href="#funding-and-support">Funding and support</a></li>
 <li><a class="nav-link" href="#inspiration">Inspiration</a></li>
 <li><a class="nav-link" href="#image-credits">Image credits</a></li>
 </ul>
@@ -187,7 +186,7 @@
 <footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
 
   <div class="col-12 col-md-6 mt-3">
-    <p>"<strong>The Epidemiologist R Handbook</strong>" was written by the handbook team. It was last built on 2021-04-21.</p>
+    <p>"<strong>The Epidemiologist R Handbook</strong>" was written by the handbook team. It was last built on 2021-04-23.</p>
   </div>
 
   <div class="col-12 col-md-6 mt-3">
