@@ -65,7 +65,7 @@ knitr::include_graphics(here::here("images", "R Handbook Logo.png"))
 * Search via the search box above the Table of Contents 
 * Click the "copy" icons to copy code  
 * See the "Resources" section of each page for further resources  
-* "Follow-along" by [downloading the example data][Download book and data]  
+* "Follow-along" by [downloading the example data][Download handbook and data]  
 
 **Offline version**  
 
@@ -79,31 +79,31 @@ We are seeking to translate this book into languages other than English. If you 
 <!-- ======================================================= -->
 ## Edit or contribute {-}
 
-We welcome your comments and suggestions at the feedback link above, by email to **epiRhandbook@gmail.com** or via issue/pull request at our [Github repository](https://github.com/nsbatra/R_epi_handbook).  
+We welcome your comments and suggestions at the [feedback link](https://forms.gle/A5SnRVws7tPD15Js9), by email to **epiRhandbook@gmail.com** or via issue/pull request at our [Github repository](https://github.com/nsbatra/R_epi_handbook).  
 
 
 
 <!-- ======================================================= -->
 ## Acknowledgements {-}  
 
+This handbook is produced by a collaboration of epidemiologists from around the world in their spare time, drawing upon experiences with organizations including local, state/provincial, and national health agencies, the World Health Organization (WHO), MSF (Médecins Sans Frontières / Doctors without Borders), hospital systems, and academic institutions.
+
+This handbook is **not** an approved product of any specific organization. Although we strive for accuracy, we provide no guarantee of the content in this book.  
+
 
 ### Contributors {-}  
-
-This handbook is produced by a collaboration of epidemiologists from around the world, drawing upon experiences with organizations including local, state/provincial, and national health agencies, the World Health Organization (WHO), MSF (Médecins Sans Frontières / Doctors without Borders), hospital systems, and academic institutions.
 
 **Editor-in-Chief:** Neale Batra 
 
 **Project core team:** Neale Batra, Alex Spina, Amrish Baidjoe, Pat Keating, Henry Laurenson-Schafer, Finlay Campbell  
 
-**Authors**: Neale Batra, Alex Spina, Paula Blomquist, Finlay Campbell, Henry Laurenson-Schafer, Isaac Florence, Natalie Fischer, Aminata Ndiaye, Liza Coyer, Jonathan Polonsky, Yurie Izawa, Daniel Molling, Isha Berry, Chris Bailey, Wen Lin, Sara Hollis,   
+**Authors**: Neale Batra, Alex Spina, Paula Blomquist, Finlay Campbell, Henry Laurenson-Schafer, Isaac Florence, Natalie Fischer, Aminata Ndiaye, Liza Coyer, Jonathan Polonsky, Yurie Izawa, Daniel Molling, Isha Berry, Emma Buajitti, Chris Bailey, Wen Lin, Sara Hollis  
 
-**Reviewers**: Pat Keating, Mathilde Mousset, Annick Lenglet, Margot Charette, Isha Berry, Paula Blomquist, Natalie Fischer, Daniely Xavier, Esther Kukielka, Michelle Sloan, Aybuke Koyuncu, Rachel Burke, Daniel Molling, Kate Kelsey, Wayne Enanoria, John Rossow, Berhe Etsay, Mackenzie Zendt, James Wright, Flavio Finger, Tim Taylor, Tim Lee, Manual Albela Miranda, Priscilla Spencer, Pattama Ulrich, Joseph Timothy, Olivia Varsaneux, Nienke Meeuwissen, Adam Vaughan, Lionel Monteiro, Joao Muianga.  
+**Reviewers**: Pat Keating, Mathilde Mousset, Annick Lenglet, Margot Charette, Isha Berry, Paula Blomquist, Natalie Fischer, Daniely Xavier, Esther Kukielka, Michelle Sloan, Aybüke Koyuncu, Rachel Burke, Daniel Molling, Kate Kelsey, Wayne Enanoria, John Rossow, Berhe Etsay, Mackenzie Zendt, James Wright, Flavio Finger, Tim Taylor, Tim Lee, Manual Albela Miranda, Priscilla Spencer, Pattama Ulrich, Joseph Timothy, Olivia Varsaneux, Nienke Meeuwissen, Adam Vaughan, Lionel Monteiro, Joao Muianga  
 
 ### Funding and support {-}  
 
-This handbook is **not** an approved product of any specific organization. Although we strive for accuracy, we provide no guarantee of the content in this book.  
-
-The handbook project received funding via a COVID-19 emergency capacity-building grant from Training Programs in Epidemiology and Public Health Interventions Network ([TEPHINET](https://www.tephinet.org/)). *This handbook was supported by Cooperative Agreement number NU2GGH001873, funded by the Centers for Disease Control and Prevention through TEPHINET, a program of The Task Force for Global Health. Its contents are solely the responsibility of the authors and do not necessarily represent the official views of the Centers for Disease Control and Prevention, the Department of Health and Human Services, The Task Force for Global Health, Inc. or TEPHINET.*
+The handbook project received supportive funding via a COVID-19 emergency capacity-building grant from Training Programs in Epidemiology and Public Health Interventions Network ([TEPHINET](https://www.tephinet.org/)). *This handbook was supported by Cooperative Agreement number NU2GGH001873, funded by the Centers for Disease Control and Prevention through TEPHINET, a program of The Task Force for Global Health. Its contents are solely the responsibility of the authors and do not necessarily represent the official views of the Centers for Disease Control and Prevention, the Department of Health and Human Services, The Task Force for Global Health, Inc. or TEPHINET.*
 
 Administrative support was provided by the EPIET Alumni Network ([EAN](https://epietalumni.net/)), with special thanks to Annika Wendland. EPIET is the European Programme for Intervention Epidemiology Training.  
 
@@ -1359,13 +1359,23 @@ Scripts are a fundamental part of programming. They are documents that hold your
 
 ### Commenting {-}  
 
-In a script you can also annotate ("comment") around your R code. Commenting is helpful to explain to yourself and other readers what you are doing. You can add a comment by typing the hash symbol (#) and writing your comment after it. The commented text should appear in a different color than the R code. Any code written after the # will not be run. Therefore, placing a # before code is a useful way to temporarily not run a line of code (perhaps you do not want to run the line, but also do not want to delete it).  
+In a script you can also annotate ("comment") around your R code. Commenting is helpful to explain to yourself and other readers what you are doing. You can add a comment by typing the hash symbol (#) and writing your comment after it. The commented text will appear in a different color than the R code.  
+
+Any code written after the # will not be run. Therefore, placing a # before code is also a useful way to temporarily block a line of code ("comment out") if you do not want to delete it). You can comment out/in multiple lines at once by highlighting them and pressing Ctrl+Shift+c (Cmd+Shift+c in Mac).  
+
 
 ```{r, eval = F}
 # A comment can be on a line by itself
 # import data
-linelist <- import("linelist_raw.xlsx")  # a comment can also come after code
+linelist <- import("linelist_raw.xlsx") %>%   # a comment can also come after code
+# filter(age > 50)                          # It can also be used to deactivate / remove a line of code
+  count()
+
 ```
+
+* Comment on *what* you are doing *and on **why** you are doing it*.  
+* Break your code into logical sections  
+* Accompany your code with a text step-by-step description of what you are doing (e.g. numbered steps)  
 
 ### Style {-}  
 
@@ -2841,11 +2851,12 @@ options(scipen=1, digits=7)
 # R projects {}  
 
 
-An R project enables your work to be bundled in a self-contained folder. Within the project, all the relevant scripts, data files, figures/outputs, and history are be stored in sub-folders and importantly - the *working directory* is the project's root folder.  
+An R project enables your work to be bundled in a portable, self-contained folder. Within the project, all the relevant scripts, data files, figures/outputs, and history are be stored in sub-folders and importantly - the *working directory* is the project's root folder.  
+
 
 ## Suggested use  
 
-A common, efficient, and trouble-free way to use R is to combine these 3 elements. Each is described in the sections below.  
+A common, efficient, and trouble-free way to use R is to combine these 3 elements. One discrete work project is hosted within one R project. Each element is described in the sections below.  
 
 1) An **R project**  
      - A self-contained working environment with folders for data, scripts, outputs, etc.  
@@ -3817,7 +3828,11 @@ Function       | Utility                               | Package
 `age_categories()` and `cut()`|to create categorical groups from a numeric column|**epikit** and **base** R  
 
 
-If you want to see how these functions compare to Stata or SAS, see the page on [Transition to R].  
+If you want to see how these functions compare to Stata or SAS, see the page on [Transition to R].
+
+This handbook emphasizes use of the above functions from the **tidyverse** R package for data management. However, you may encounter an alternative framework from the **data.table** R package. This approach and syntax is briefly explained in the [Data Table] page.  
+
+
 
 
 <!-- ======================================================= -->
@@ -11682,7 +11697,7 @@ pacman::p_load(
   gtsummary,    # summary statistics and tests
   janitor,      # adding totals and percents to tables
   scales,       # easily convert proportions to percents  
-  flextable     # converting tables to HTML
+  flextable     # converting tables to pretty images
   )
 ```
 
@@ -11760,19 +11775,26 @@ You can return individual statistics with **base** R functions like `max()`, `mi
 
 
 
-<!-- ======================================================= -->
+
+
+
 ## Descriptive tables {}
 
-You have several choices when producing tabulation and cross-tabulation summary tables. Some of the factors to consider include code simplicity and ease, the desired output (printed to R console, or as pretty HTML), and what you can do with the data afterward. Consider the points below as you choose the tool for your situation.  
+You have several choices when producing tabulation and cross-tabulation summary tables. Some of the factors to consider include code simplicity and ease, the desired output (printed to R console, or as "pretty" .png/.jpeg/.html image), and what you can do with the data afterward. Consider the points below as you choose the tool for your situation.
 
-* Use `tabyl()` from **janitor** to produce and "adorn" tabulations and cross-tabulations. 
-  * Cons: requires post-processing (e.g with **flextable**) for publication ready tables. Does not accept multiple variables (need to use **purrr** to iterate)
-* Use `summarise()` and `count()` from **dplyr** if calculating more complex statistics or preparing data for `ggplot()`  
+* Use `tabyl()` from **janitor** to produce and "adorn" tabulations and cross-tabulations.
+  * Cons: requires post-processing (e.g with **flextable**) for publication-ready tables. Does not accept multiple variables (need to use **purrr** to iterate)
+* Use `summarise()` and `count()` from **dplyr** if calculating more complex statistics or preparing data for `ggplot()`
   * Cons: similar to above but requires even more manipulation
-* Use `tbl_summary()` from **gtsummary** to produce detailed publication-ready tables  
-  * Cons: missings not automatically included in percentage calculations. To use for plotting need to extract tibble from list output. 
-* Use `table()` from **base** R if you do not have access to the above packages 
+* Use `tbl_summary()` from **gtsummary** to produce detailed publication-ready tables
+  * Cons: missings not automatically included in percentage calculations. To use for plotting need to extract tibble from list output.
+* Use `table()` from **base** R if you do not have access to the above packages
   * Cons: requires the most manipulation and post-processing
+
+
+
+
+
 
 
 ## **janitor** package  
@@ -11850,7 +11872,9 @@ linelist %>%                                  # case linelist
 
 ### Printing the tabyl {-}
 
-By default, the tabyl will print raw to your R console. Alternatively, you can pass the tabyl to **flextable**  or other package to print as HTML in the RStudio Viewer. Note that if using `adorn_titles()`, you must specify `placement = "combined"` in order to print in this manner.
+By default, the tabyl will print raw to your R console.  
+
+Alternatively, you can pass the tabyl to **flextable**  or similar package to print as a "pretty" image in the RStudio Viewer, which could be exported as .png, .jpeg, .html, etc. This is discussed in the page [Tables for presentation. Note that if printing in this manner and using `adorn_titles()`, you must specify `placement = "combined"`.
 
 ```{r}
 linelist %>%
@@ -11862,19 +11886,27 @@ linelist %>%
   adorn_title(
     row_name = "Age Category",
     col_name = "Gender",
-    placement = "combined") %>% # this is necessary to print to HTML 
-  flextable::flextable() %>%    # convert to HTML
+    placement = "combined") %>% # this is necessary to print as image
+  flextable::flextable() %>%    # convert to pretty image
   flextable::autofit()          # format to one line per row 
 
 ```
+
+
 ### Use on other tables {-}  
 
-You can use **janitor**'s `adorn_*()` functions on other tables, such as those created by `summarise()`, `count()`, or `table()`.  
+You can use **janitor**'s `adorn_*()` functions on other tables, such as those created by `summarise()`, `count()`, or `table()`. Simply pipe the table to the desired **janitor** function. For example:  
+
+```{r}
+linelist %>% 
+  count(hospital) %>%   # dplyr function
+  adorn_totals()        # janitor function
+```
 
 
 ### Saving the tabyl {-}  
 
-If you convert the table to HTML with a package like **flextable**, you can save with its functions `save_as_html()`, `save_as_word()`, `save_as_ppt()`, and `save_as_image()`, as discussed more extensively in the [Tables for presentation] page. Below, the table is saved as a Word document, in which it can be further hand-edited.  
+If you convert the table to a "pretty" image with a package like **flextable**, you can save with its functions `save_as_html()`, `save_as_word()`, `save_as_ppt()`, and `save_as_image()`, as discussed more extensively in the [Tables for presentation] page. Below, the table is saved as a Word document, in which it can be further hand-edited.  
 
 ```{r, eval=F}
 linelist %>%
@@ -11887,7 +11919,7 @@ linelist %>%
     row_name = "Age Category",
     col_name = "Gender",
     placement = "combined") %>% 
-  flextable::flextable() %>%                     # convert to HTML flextable
+  flextable::flextable() %>%                     # convert to image
   flextable::autofit() %>%                       # ensure only one line per row
   flextable::save_as_docx(path = "tabyl.docx")   # save as Word document
 ```
@@ -11935,6 +11967,7 @@ The most simple function to apply within `summarise()` is `n()`. Leave the paren
 linelist %>%                 # begin with linelist
   summarise(n_rows = n())    # return new summary dataframe with column n_rows
 ```
+
 This gets more interesting if we have grouped the data beforehand.  
 
 ```{r}
@@ -11942,12 +11975,14 @@ linelist %>%
   group_by(age_cat) %>%     # group data by unique values in column age_cat
   summarise(n_rows = n())   # return number of rows *per group*
 ```
+
 The above command can be shortened by using the `count()` function instead. `count()` groups the data by the columns provided to it, summarises them with `n()` (creating column `n`), and finishes by un-grouping the data.  
 
 ```{r}
 linelist %>% 
   count(age_cat)
 ```
+
 Tabulations of two or more columns in this manner are still returned in “long” format, with the counts in the `n` column.
 
 ```{r}
@@ -12033,19 +12068,23 @@ Some tips:
 * Use `sum()` with a logic statement to "count" rows that meet certain criteria (`==`)  
 * Note the use of `na.rm = TRUE` within mathematical functions like `sum()`, otherwise `NA` will be returned if there are any missing values  
 * Use the function `percent()` from the **scales** package to easily convert to percents  
+  * Set `accuracy = ` to 0.1 or 0.01 to ensure 1 or 2 decimal places respectively  
 * Use `round()` from **base** R to specify decimals  
 * To calculate these statistics on the entire dataset, use `summarise()` without `group_by()`  
+* You may have created column for the purposes of calculation (e.g. denominators) that you eventually drop from your final data frame (e.g. with `select()`).  
 
 
 #### Glueing together {-}  
 
-You can also use `str_glue()` from **stringr** to combine columns into one new column - typically used *after* the `summarise()` command.  
+The function `str_glue()` from **stringr** is useful to combine columns into one new column - typically used *after* the `summarise()` command.  
+
+In the [Characters and strings] page, various options for combining columns are discussed, including `unite()`, and `paste0()`. In this use case, we advocate for `str_glue()` because it is more flexible than `unite()` and has more simple syntax than `paste0()`.  
 
 Below, the `summary_table` data frame created above is mutated such that columns `delay_mean` and `delay_sd` are combined, parentheses formating is added to the new column, and their respective old columns are removed.  
 
 Then, to make the table more presentable, a total row is added with `adorn_totals()` from **janitor** (which ignores non-numeric columns). Lastly, we use `rename()` from **dplyr** to make the column names nicer.  
 
-Now you could pass to **flextable** and print the table to Word, HTML, Powerpoint, RMarkdown, etc.! (see the **janitor** section above and the [Tables for presentation] page).  
+Now you could pass to **flextable** and print the table to Word, .png, .jpeg, .html, Powerpoint, RMarkdown, etc.! (see the **janitor** section above and the [Tables for presentation] page).  
 
 ```{r}
 summary_table %>% 
@@ -12113,10 +12152,10 @@ linelist_agg %>%
 
 ### `across()` multiple columns {-}  
 
-You can use summarise across multiple columns using `across()`. This makes life easier when you want to calculate same statistics for many columns. To specify which columns to operate across, either:  
+You can use summarise across multiple columns using `across()`. This makes life easier when you want to calculate the same statistics for many columns. To specify which columns to operate across, either:  
 
-* provide `.cols = ` as either a vector of column names `c()` or `select()` semantic helper functions (explained below)  
-* provide `.fns = ` the function to perform (no parenthese) - you can provide multiple within a `list()`
+* provide `.cols = ` as either a vector of column names `c()` or "tidyselect" helper functions (explained below)  
+* provide `.fns = ` the function to perform (no parentheses) - you can provide multiple within a `list()`
 
 Below, `mean()` is applied to several numeric columns. A vector of columns are named explicitly and a single function `mean` is specified (no parentheses). Any additional arguments for the function (e.g. `na.rm=TRUE`) are provided afterwards.  
 
@@ -12140,7 +12179,7 @@ linelist %>%
                    na.rm=T))                                 # extra arguments
 ```
 
-Here are those `select()` helper functions that you can place *within* `across()`:  
+Here are those "tidyselect" helper functions that you can place *within* `across()`:  
 
 These are helper functions available to assist you in specifying columns:  
 
@@ -12171,7 +12210,20 @@ linelist %>%
 
 If you prefer your table in "wide" format you can transform it using the **tidyr** `pivot_wider()` function. You will likely need to re-name the columns with `rename()`. For more information see the page on [Pivoting data].  
 
-The example below begins with the "long" table `age_by_outcome` from above. The new column names are specified to `names_from = ` while the values are specified to come from column `n`. The only column not mentioned is `outcome`, which remains on the far left.  
+The example below begins with the "long" table `age_by_outcome` from above. We create it again and print, for clarity:  
+
+```{r}
+age_by_outcome <- linelist %>%                  # begin with linelist
+  group_by(outcome) %>%                         # group by outcome 
+  count(age_cat) %>%                            # group and count by age_cat, and then remove age_cat grouping
+  mutate(percent = scales::percent(n / sum(n))) # calculate percent - note the denominator is by outcome group
+```
+
+```{r, echo=F}
+DT::datatable(age_by_outcome, rownames = FALSE, options = list(pageLength = 5, scrollX=T), class = 'white-space: nowrap' )
+```
+
+In the wider version, the new column names are specified to `names_from = ` while the values are specified to come from column `n`. The columns not mentioned (`outcome` in this case) will remain unchanged on the far left.  
 
 ```{r}
 age_by_outcome %>% 
@@ -12258,9 +12310,9 @@ table_long %>%
     values_from = c(ct_value, N),                       # new values are from ct and count columns
     names_from = outcome) %>%                           # new column names are from outcomes
   mutate(                                              # Add new columns
-    N_Known = N_Death + N_Recover,                      # number with known outcome
-    Pct_Death = N_Death / N_Known * 100,               # percent cases who died
-    Pct_Recover = N_Recover/N_Known * 100) %>%         # percent who recovered
+    N_Known = N_Death + N_Recover,                               # number with known outcome
+    Pct_Death = scales::percent(N_Death / N_Known, 0.1),         # percent cases who died (to 1 decimal)
+    Pct_Recover = scales::percent(N_Recover / N_Known, 0.1)) %>% # percent who recovered (to 1 decimal)
   select(                                              # Re-order columns
     hospital, N_Known,                                   # Intro columns
     N_Recover, Pct_Recover, ct_value_Recover,            # Recovered columns
@@ -12269,7 +12321,7 @@ table_long %>%
 
 ```
 
-And then you can print this nicely with HTML - below is the output printed with **flextable**. You can read more in depth about this example and how to achieve this nice table in the [Tables for presentation] page.  
+And then you can print this nicely as an image - below is the output printed with **flextable**. You can read more in depth about this example and how to achieve this "pretty" table in the [Tables for presentation] page.  
 
 ```{r echo=FALSE, fig.show='hold', message=FALSE, warning=FALSE, out.width=c('50%', '50%')}
 
@@ -12280,14 +12332,14 @@ border_style = officer::fp_border(color="black", width=1)
 pacman::p_load(
   rio,            # import/export
   here,           # file pathways
-  flextable,      # make HTML tables 
+  flextable,      # make pretty images of tables 
   officer,        # helper functions for tables
   tidyverse)      # data management, summary, and visualization
 
 table <- linelist %>% 
   # filter
   ########
-  filter(!is.na(outcome) & hospital != "Missing") %>%  # Remove cases with missing outcome or hospital
+  #filter(!is.na(outcome) & hospital != "Missing") %>%  # Remove cases with missing outcome or hospital
   
   # Get summary values per hospital-outcome group
   ###############################################
@@ -12313,9 +12365,9 @@ table <- linelist %>%
     values_from = c(ct_value, N),                       # new values are from ct and count columns
     names_from = outcome) %>%                           # new column names are from outcomes
   mutate(                                              # Add new columns
-    N_Known = N_Death + N_Recover,                      # number with known outcome
-    Pct_Death = N_Death / N_Known * 100,               # percent cases who died
-    Pct_Recover = N_Recover/N_Known * 100) %>%         # percent who recovered
+    N_Known = N_Death + N_Recover,                               # number with known outcome
+    Pct_Death = scales::percent(N_Death / N_Known, 0.1),         # percent cases who died (to 1 decimal)
+    Pct_Recover = scales::percent(N_Recover / N_Known, 0.1)) %>% # percent who recovered (to 1 decimal)
   select(                                              # Re-order columns
     hospital, N_Known,                                   # Intro columns
     N_Recover, Pct_Recover, ct_value_Recover,            # Recovered columns
@@ -12369,7 +12421,7 @@ table
 
 ## **gtsummary** package   
 
-If you want to print your summary statistics in a pretty, publication-ready graphic, you can use the **gtsummary** package and its function `tbl_summary()`. The code can seem complex at first, but the outputs look very nice and print to your RStudio Viewer panel as HTML. Read a [vignette here](http://www.danieldsjoberg.com/gtsummary/articles/tbl_summary.html).    
+If you want to print your summary statistics in a pretty, publication-ready graphic, you can use the **gtsummary** package and its function `tbl_summary()`. The code can seem complex at first, but the outputs look very nice and print to your RStudio Viewer panel as an HTML image. Read a [vignette here](http://www.danieldsjoberg.com/gtsummary/articles/tbl_summary.html).    
 
 To introduce `tbl_summary()` we will show the most basic behavior first, which actually produces a large and beautiful table. Then, we will examine in detail how to make adjustments and more tailored tables. 
 
@@ -12524,7 +12576,7 @@ Converting a `table()` object directly to a data frame is not straight-forward. 
 2) Add totals (optional) by piping to `addmargins()`  
 3) Pipe to the **base** R function `as.data.frame.matrix()`  
 4) Pipe the table to the **tibble** function `rownames_to_column()`, specifying the name for the first column  
-5) Print, View, or export as desired. In this example we use `flextable()` from package **flextable** as described in the [Tables for presentation] page. This will print to the RStudio viewer pane as a pretty HTML.  
+5) Print, View, or export as desired. In this example we use `flextable()` from package **flextable** as described in the [Tables for presentation] page. This will print to the RStudio viewer pane as a pretty HTML image.  
 
 ```{r, warning=F, message=F}
 table(fct_explicit_na(linelist$age_cat), fct_explicit_na(linelist$outcome)) %>% 
@@ -18518,34 +18570,13 @@ Spatial aspects of your data can provide a lot of insights into the situation of
 In this section, we will explore basic spatial data visualization methods using **tmap** and **ggplot2** packages.
 We will also walk through some of the basic spatial data management and querying methods with the **sf** package.
 
-Here are some example outputs:  
-
-**Choropleth map**  
-
-```{r, fig.align = "center", fig.show='hold', echo=F}
-knitr::include_graphics(here::here("images", "gis_choropleth.png"))
-```
-
-**Case density heatmap**  
-
-```{r, fig.align = "center", echo=F}
-knitr::include_graphics(here::here("images", "gis_heatmap.png"))
-```
-
-**Health facility catchment areas**
-
-```{r, fig.align = "center", echo=F}
-knitr::include_graphics(here::here("images", "gis_hf_catchment.png"))
-```
-
-
 ## Key terms {}  
-
-THIS KEY TERMS SECTION IS UNDER CONSTRUCTION  
 
 Below we introduce some key terminology. For a thorough introduction to GIS and spatial analysis, we suggest that you review one of the longer tutorials or courses listed in the References section.  
 
-**Geographic Information System (GIS)** - A GIS is a framework or environment for gathering, managing, analyzing, and visualizing spatial data.   
+**Geographic Information System (GIS)** - A GIS is a framework or environment for gathering, managing, analyzing, and visualizing spatial data.
+
+### GIS software
 
 Some popular GIS software allow point-and-click interaction for map development and spatial analysis. These tools comes with advantages such as not needing to learn code and the ease of manually selecting and placing icons and features on a map. Here are two popular ones:  
 
@@ -18554,11 +18585,31 @@ Some popular GIS software allow point-and-click interaction for map development 
 
 Using R as a GIS can seem more intimidating at first because instead of "point-and-click", it has a "command-line interface" (you must code to acquire the desired outcome). However, this is a major advantage if you need to repetitively produce maps or have an analysis that is reproducible.  
 
+### Spatial data
+
+The two primary forms of spatial data used in GIS are vector and raster data:
+
+**Vector Data** - The most common format of spatial data used in GIS, vector data are comprised of geometric features of vertices and paths. Vector spatial data can be further divided into three widely-used types:
+
+  * *Points* - A point consists of a coordinate pair (x,y)  representing a specific location in a coordinate system. Points are the most basic form of spatial data, and may be used to denote a case (i.e. patient home) or a location (i.e. hospital) on a map.
+
+  * *Lines* - A line is composed of two connected points. Lines have a length, and may be used to denote things like roads or rivers.
+
+  * *Polygons* - A polygon is composed of at least three line segments connected by points. Polygon features have a length (i.e. the perimeter of the area) as well as an area measurement. Polygons may be used to note an area (i.e. a village) or a structure (i.e. the actual area of a hospital). 
+
+**Raster Data** - An alternative format for spatial data, raster data is a matrix of cells (e.g. pixels) with each cell containing information such as height, temperature, slope, forest cover, etc. These are often aerial photographs, satellite imagery, etc. Rasters can also be used as “base maps” below vector data.
+
+### Visualizing spatial data
+
+To visually represent spatial data on a map, GIS software requires you to provide sufficient information about where different features should be, in relation to one another. If you are using vector data, which will be true for most use cases, this information will typically be stored in a shapefile:
+
 **Shapefiles** - A shapefile is a common data format for storing "vector" spatial data consisting or lines, points, or polygons. A single shapefile is actually a collection of at least three files - .shp, .shx, and .dbf. All of these sub-component files must be present in a given directory (folder) for the shapefile to be readable. These associated files can be compressed into a ZIP folder to be sent via email or download from a website.  
+
+The shapefile will contain information about the features themselves, as well as where to locate them on the Earth’s surface. This is important because while the Earth is a globe, maps are typically two-dimensional; choices about how to “flatten” spatial data can have a big impact on the look and interpretation of the resulting map.
 
 **Coordinate Reference Systems (CRS)** - A CRS is a coordinate-based system used to locate geographical features on the Earth's surface. It has a few key components:  
 
-  * *Coordinate System** - There are many many different coordinate systems, so make sure you know which system your coordinates are from. Degrees of latitude/longitude are common, but you could also see [UTM](https://www.maptools.com/tutorials/utm/quick_guide) coordinates.  
+  * *Coordinate System* - There are many many different coordinate systems, so make sure you know which system your coordinates are from. Degrees of latitude/longitude are common, but you could also see [UTM](https://www.maptools.com/tutorials/utm/quick_guide) coordinates.  
   
   * *Units* - Know what the units are for your coordinate system (e.g. decimal degrees, meters)  
 
@@ -18566,11 +18617,52 @@ Using R as a GIS can seem more intimidating at first because instead of "point-a
 
   * *Projection* - A reference to the mathematical equation that was used to project the truly round earth onto a flat surface (map).  
 
-**Raster** - An alternative format for spatial data, raster data is a matrix of cells (e.g. pixels) with each cell containing information such as height, temperature, slope, forest cover, etc. These are often aerial photographs, satellite imagery, etc. Rasters can also be used as "base maps" below vector data.   
-
-
 Remember that you can summarise spatial data without using the mapping tools shown below. Sometimes a simple table by geography (e.g. district, country, etc.) is all that is needed!  
 
+## Getting started with GIS
+There are a couple of key items you will need to have and to think about to make a map. These include:
+
+  * A **dataset** -- this can be in a spatial data format (such as shapefiles, as noted above) or it may not be in a spatial format (for instance just as a csv).
+  
+  * If your dataset is not in a spatial format you will also need a **reference dataset**. Reference data consists of the spatial representation of the data and the related attribute table, which would include material containing the location and address information of specific features.
+  
+    + If you are working with pre-defined geographic boundaries (for example, administrative regions), reference shapefiles are often freely available to download from a government agency or data sharing organization. When in doubt, a good place to start is to Google “[regions] shapefile”
+    
+    + If you have address information, but no latitude and longitude, you may need to use a **geocoding engine** to get the spatial reference data for your records. 
+    
+  * An idea about **how you want to present** the information in your datasets to your target audience. There are many different types of maps, and it is important to think about which type of map best fits your needs.
+
+### Types of maps for visualizing your data
+
+**Choropleth map** - a type of thematic map where colors, shading, or patterns are used to represent geographic regions in relation to their value of an attribute. For instance a larger value could be indicated by a darker colour than a smaller value. This type of map is particularly useful when visualizing a variable and how it changes across defined regions or geopolitical areas.
+
+```{r, fig.align = "center", fig.show='hold', echo=F}
+knitr::include_graphics(here::here("images", "gis_choropleth.png"))
+```
+
+**Case density heatmap** - a type of thematic map where colours are used to represent intensity of a value, however, it does not use defined regions or geopolitical boundaries to group data. This type of map is typically used for showing ‘hot spots’ or areas with a high density or concentration of points. 
+
+```{r, fig.align = "center", echo=F}
+knitr::include_graphics(here::here("images", "gis_heatmap.png"))
+```
+
+**Dot density map** - a thematic map type that uses dots to represent attribute values in your data. This type of map is best used to visualize the scatter of your data and visually scan for clusters.
+
+```{r, fig.align = "center", echo=F}
+# dot density img here
+```
+
+**Proportional symbols map (graduated symbols map)** - a thematic map similar to a choropleth map, but instead of using colour to indicate the value of an attribute it uses a symbol (usually a circle) in relation to the value. For instance a larger value could be indicated by a larger symbol than a smaller value. This type of map is best used when you want to visualize the size or quantity of your data across geographic regions. 
+
+```{r, fig.align = "center", echo=F}
+# proportional symbols img here
+```
+
+You can also combine several different types of visualizations to show complex geographic patterns; for example, the map below shows **health facility catchment areas**:
+
+```{r, fig.align = "center", echo=F}
+knitr::include_graphics(here::here("images", "gis_hf_catchment.png"))
+```
 
 <!-- ======================================================= -->
 ## Preparation {  }
@@ -18581,13 +18673,14 @@ This code chunk shows the loading of packages required for the analyses. In this
 
 ```{r}
 pacman::p_load(
-  rio,          # to import data
-  here,         # to locate files
-  tidyverse,    # to clean, handle, and plot the data (includes ggplot2 package)
-  sf,           # to manage spatial data using a Simple Feature format
-  tmap,         # to produce simple maps, works for both interactive and static maps
-  janitor,      # to clean column names
-  OpenStreetMap # to add OSM basemap in ggplot map
+  rio,           # to import data
+  here,          # to locate files
+  tidyverse,     # to clean, handle, and plot the data (includes ggplot2 package)
+  sf,            # to manage spatial data using a Simple Feature format
+  tmap,          # to produce simple maps, works for both interactive and static maps
+  janitor,       # to clean column names
+  OpenStreetMap, # to add OSM basemap in ggplot map
+  spdep          # spatial statistics
   ) 
                   
 ```
@@ -18630,8 +18723,6 @@ We use the package **sf** (spatial features) and its function `st_as_sf()` to cr
 linelist_sf <- linelist %>%
      sf::st_as_sf(coords = c("lon", "lat"), crs = 4326)
 ```
-
-
 
 
 ### Admin boundary shapefiles {-}  
@@ -18689,9 +18780,6 @@ Here is what the population file looks like. Scroll to the right to see how each
 # display the population as a table
 DT::datatable(head(sle_adm3_pop, 50), rownames = FALSE, options = list(pageLength = 5, scrollX=T), class = 'white-space: nowrap' )
 ```
-
-
-
 
 
 ### Health Facilities {-}
@@ -19252,10 +19340,216 @@ autoplot.OpenStreetMap(map_latlon)+
 
 ```
 
+## Mapping with ggplot2
+If you are already familiar with using **ggplot2**, you can use that package instead to create static maps of your data. The `geom_sf()` function will draw different objects based on which features (points, lines, or polygons) are in your data. For example, you can use `geom_sf()` in a `ggplot()` using `sf` data with polygon geometry to create a choropleth map.
+
+To illustrate how this works, we can start with the ADM3 polygons shapefile that we used earlier. Recall that these are Admin Level 3 regions in Sierra Leone:
+
+```{r}
+sle_adm3
+```
+We can use the `left_join()` function from **dplyr** to add the data we would like to map to the shapefile object. In this case, we are going to use the `case_adm3` data frame that we created earlier to summarize case counts by administrative region; however, we can use this same approach to map any data stored in a data frame.
+```{r}
+sle_adm3_dat <- sle_adm3 %>% 
+  inner_join(case_adm3, by = "admin3pcod") # inner join = retain only if in both data objects
+
+select(sle_adm3_dat, admin3name.x, cases) # print selected variables to console
+```
+
+To make a column chart of case counts by region, using **ggplot2**, we could then call `geom_col()` as follows:
+
+```{r, fig.align = "center"}
+ggplot(data=sle_adm3_dat) +
+  geom_col(aes(x=fct_reorder(admin3name.x, cases, .desc=T),   # reorder x axis by descending 'cases'
+               y=cases)) +                                  # y axis is number of cases by region
+  theme_bw() +
+  labs(                                                     # set figure text
+    title="Number of cases, by administrative unit",
+    x="Admin level 3",
+    y="Number of cases"
+  ) + 
+  guides(x=guide_axis(angle=45))                            # angle x-axis labels 45 degrees to fit better
+
+```
+
+If we want to use **ggplot2** to instead make a choropleth map of case counts, we can use similar syntax to call the `geom_sf()` function:
+
+```{r, fig.align = "center"}
+ggplot(data=sle_adm3_dat) + 
+  geom_sf(aes(fill=cases))    # set fill to vary by case count variable
+
+```
+
+We can then customize the appearance of our map using grammar that is consistent across **ggplot2**, for example:
+```{r, fig.align = "center"}
+ggplot(data=sle_adm3_dat) +                           
+  geom_sf(aes(fill=cases)) +						
+  scale_fill_continuous(high="#54278f", low="#f2f0f7") +    # change color gradient
+  theme_bw() +
+  labs(title = "Number of cases, by administrative unit",   # set figure text
+       subtitle = "Admin level 3"
+  )
+```
+
+For R users who are comfortable working with **ggplot2**, `geom_sf()` offers a simple and direct implementation that is suitable for basic map visualizations. To learn more, read the [geom_sf() vignette](https://ggplot2.tidyverse.org/reference/ggsf.html) or the [ggplot2 book](https://ggplot2-book.org/maps.html). 
+
+<!-- SPATIAL STATISTICS SECTION IS UNDER DEVELOPMENT --> 
+## Spatial statistics
+Most of our discussion so far has focused on visualization of spatial data. In some cases, you may also be interested in using *spatial statistics* to quantify the spatial relationships of attributes in your data. This section will provide a very brief overview of some key concepts in spatial statistics, and suggest some resources that will be helpful to explore if you wish to do more comprehensive spatial analyses. 
+
+### Spatial relationships {-}  
+
+Before we can calculate any spatial statistics, we need to specify the relationships between features in our data. There are many ways to conceptualize spatial relationships, but a simple and commonly-applicable model to use is that of *adjacency* - specifically, that we expect a geographic relationship between areas that share a border or “neighbour” one another. 
+
+We can quantify adjacency relationships between administrative region polygons in the `sle_adm3` data we have been using with the **spdep** package. We will specify *queen* contiguity, which means that regions will be neighbors if they share at least one point along their borders. The alternative would be *rook* contiguity, which requires that regions share an edge - in our case, with irregular polygons, the distinction is trivial, but in some cases the choice between queen and rook can be influential.  
+ 
+```{r}
+sle_nb <- spdep::poly2nb(sle_adm3_dat, queen=T) # create neighbors 
+sle_adjmat <- spdep::nb2mat(sle_nb)    # create matrix summarizing neighbor relationships
+sle_listw <- spdep::nb2listw(sle_nb)   # create listw (list of weights) object -- we will need this later
+
+sle_nb
+round(sle_adjmat, digits = 2)
+```
+
+The matrix printed above shows the relationships between the 9 regions in our `sle_adm3` data. A score of 0 indicates two regions are not neighbors, while any value other than 0 indicates a neighbor relationship. The values in the matrix are scaled so that each region has a total row weight of 1.
+
+A better way to visualize these neighbor relationships is by plotting them:
+```{r, fig.align='center', results='hide'}
+plot(sle_adm3_dat$geometry) +                                           # plot region boundaries
+  spdep::plot.nb(sle_nb,as(sle_adm3_dat, 'Spatial'), col='grey', add=T) # add neighbor relationships
+```
+
+We have used an adjacency approach to identify neighboring polygons; the neighbors we identified are also sometimes called **contiguity-based neighbors**. But this is just one way of choosing which regions are expected to have a geographic relationship. The most common alternative approaches for identifying geographic relationships generate **distance-based neighbors**; briefly, these are:
+  
+  * **K-nearest neighbors** - Based on the distance between centroids (the geographically-weighted center of each polygon region), select the *n* closest regions as neighbors. A maximum-distance proximity threshold may also be specified. In **spdep**, you can use `knearneigh()` (see [documentation](https://r-spatial.github.io/spdep/reference/knearneigh.html)).
+  
+  * **Distance threshold neighbors** - Select all neighbors within a distance threshold. In **spdep**, these neighbor relationships can be identified using `dnearneigh()` (see [documentation](https://www.rdocumentation.org/packages/spdep/versions/1.1-7/topics/dnearneigh)).
+
+### Spatial autocorrelation {-}  
+
+Tobler's oft-cited first law of geography states that "everything is related to everything else, but near things are more related than distant things." In epidemiology, this often means that risk of a particular health outcome in a given region is more similar to its neighboring regions than to those far away. This concept has been formalized as **spatial autocorrelation** - the statistical property that geographic features with similar values are clustered together in space. Statistical measures of spatial autocorrelation can be used to *quantify the extent of spatial clustering* in your data, *locate where clustering occurs*, and *identify shared patterns of spatial autocorrelation* between distinct variables in your data. This section gives an overview of some common measures of spatial autocorrelation and how to calculate them in R.
+
+**Moran's I** - This is a global summary statistic of the correlation between the value of a variable in one region, and the values of the same variable in neighboring regions. The Moran's I statistic typically ranges from -1 to 1. A value of 0 indicates no pattern of spatial correlation, while values closer to 1 or -1 indicate stronger spatial autocorrelation (similar values close together) or spatial dispersion (dissimilar values close together), respectively.
+
+For an example, we will calculate a Moran's I statistic to quantify the spatial autocorrelation in Ebola cases we mapped earlier (remember, this is a subset of cases from the simulated epidemic `linelist` dataframe). The **spdep** package has a function, `moran.test`, that can do this calculation for us:
+
+```{r}
+moran_i <-spdep::moran.test(sle_adm3_dat$cases,    # numeric vector with variable of interest
+                            listw=sle_listw)       # listw object summarizing neighbor relationships
+
+moran_i                                            # print results of Moran's I test
+```
+The output from the `moran.test()` function shows us a Moran I statistic of `r round(moran_i$estimate[1],2)`. This indicates the presence of spatial autocorrelation in our data - specifically, that regions with similar numbers of Ebola cases are likely to be close together. The p-value provided by `moran.test()` is generated by comparison to the expectation under null hypothesis of no spatial autocorrelation, and can be used if you need to report the results of a formal hypothesis test.
+
+**Local Moran's I** - We can decompose the (global) Moran's I statistic calculated above to identify *localized* spatial autocorrelation; that is, to identify specific clusters in our data. This statistic, which is sometimes called a **Local Indicator of Spatial Association (LISA)** statistic, summarizes the extent of spatial autocorrelation around each individual region. It can be useful for finding "hot" and "cold" spots on the map.
+
+To show an example, we can calculate and map Local Moran's I for the Ebola case counts used above, with the `local_moran()` function from **spdep**:
+```{r, fig.align='center'}
+# calculate local Moran's I
+local_moran <- spdep::localmoran(                  
+  sle_adm3_dat$cases,                              # variable of interest
+  listw=sle_listw                                  # listw object with neighbor weights
+)
+
+# join results to sf data
+sle_adm3_dat<- cbind(sle_adm3_dat, local_moran)    
+
+# plot map
+ggplot(data=sle_adm3_dat) +
+  geom_sf(aes(fill=Ii)) +
+  theme_bw() +
+  scale_fill_gradient2(low="#2c7bb6", mid="#ffffbf", high="#d7191c",
+                       name="Local Moran's I") +
+  labs(title="Local Moran's I statistic for Ebola cases",
+       subtitle="Admin level 3 regions, Sierra Leone")
+
+```
+
+**Getis-Ord Gi\*** - This is another statistic that is commonly used for hotspot analysis; in large part, the popularity of this statistic relates to its use in the Hot Spot Analysis tool in ArcGIS. It is based on the assumption that typically, the difference in a variable's value between neighboring regions should follow a normal distribution. It uses a z-score approach to identify regions that have significantly higher (hot spot) or significantly lower (cold spot) values of a specified variable, compared to their neighbors. 
+
+We can calculate and map the Gi* statistic using the `localG()` function from **spdep**:  
+
+```{r}
+# Perform local G analysis
+getis_ord <- spdep::localG(
+  sle_adm3_dat$cases,
+  sle_listw
+)
+
+# join results to sf data
+sle_adm3_dat$getis_ord <- getis_ord
+
+# plot map
+ggplot(data=sle_adm3_dat) +
+  geom_sf(aes(fill=getis_ord)) +
+  theme_bw() +
+  scale_fill_gradient2(low="#2c7bb6", mid="#ffffbf", high="#d7191c",
+                       name="Gi*") +
+  labs(title="Getis-Ord Gi* statistic for Ebola cases",
+       subtitle="Admin level 3 regions, Sierra Leone")
+
+```
 
 
+As you can see, the map of Getis-Ord Gi* looks slightly different from the map of Local Moran's I produced earlier. This reflects that the method used to calculate these two statistics are slightly different; which one you should use depends on your specific use case and the research question of interest.
 
+**Lee's L test** - This is a statistical test for bivariate spatial correlation. It allows you to test whether the spatial pattern for a given variable *x* is similar to the spatial pattern of another variable, *y*, that is hypothesized to be related spatially to *x*. 
 
+To give an example, let's test whether the spatial pattern of Ebola cases from the simulated epidemic is correlated with the spatial pattern of population. To start, we need to have a `population` variable in our `sle_adm3` data. We can use the `total` variable from the `sle_adm3_pop` dataframe that we loaded earlier.
+
+```{r}
+sle_adm3_dat <- sle_adm3_dat %>% 
+  rename(population = total)                          # rename 'total' to 'population'
+```
+
+We can quickly visualize the spatial patterns of the two variables side by side, to see whether they look similar:
+```{r, fig.align='center', warning=F, message=F}
+tmap_mode("plot")
+
+cases_map <- tm_shape(sle_adm3_dat) + tm_polygons("cases") + tm_layout(main.title="Cases")
+pop_map <- tm_shape(sle_adm3_dat) + tm_polygons("population") + tm_layout(main.title="Population")
+
+tmap_arrange(cases_map, pop_map, ncol=2)   # arrange into 2x1 facets
+```
+
+Visually, the patterns seem dissimilar. We can use the `lee.test()` function in **spdep** to test statistically whether the pattern of spatial autocorrelation in the two variables is related. The L statistic will be close to 0 if there is no correlation between the patterns, close to 1 if there is a strong positive correlation (i.e. the patterns are similar), and close to -1 if there is a strong negative correlation (i.e. the patterns are inverse). 
+
+```{r, warning=F, message=F}
+lee_test <- spdep::lee.test(
+  x=sle_adm3_dat$cases,          # variable 1 to compare
+  y=sle_adm3_dat$population,     # variable 2 to compare
+  listw=sle_listw                # listw object with neighbor weights
+)
+
+lee_test
+```
+
+The output above shows that the Lee's L statistic for our two variables was `r round(lee_test$estimate[1],2)`, which indicates weak negative correlation. This confirms our visual assessment that the pattern of cases and population are not related to one another, and provides evidence that the spatial pattern of cases is not strictly a result of population density in high-risk areas.
+
+The Lee L statistic can be useful for making these kinds of inferences about the relationship between spatially distributed variables; however, to describe the nature of the relationship between two variables in more detail, or adjust for confounding, *spatial regression* techniques will be needed. These are described briefly in the following section.
+
+### Spatial regression {-}  
+
+You may wish to make statistical inferences about the relationships between variables in your spatial data. In these cases, it is useful to consider *spatial regression* techniques - that is, approaches to regression that explicitly consider the spatial organization of units in your data. Some reasons that you may need to consider spatial regression models, rather than standard regression models such as GLMs, include:
+
+  * Standard regression models assume that residuals are independent from one another. In the presence of strong *spatial autocorrelation*, the residuals of a standard regression model are likely to be spatially autocorrelated as well, thus violating this assumption. This can lead to problems with interpreting the model results, in which case a spatial model would be preferred.
+  
+  * Regression models also typically assume that the effect of a variable *x* is constant over all observations. In the case of *spatial heterogeneity*, the effects we wish to estimate may vary over space, and we may be interested in quantifying those differences. In this case, spatial regression models offer more flexibility for estimating and interpreting effects.
+  
+The details of spatial regression approaches are beyond the scope of this handbook. This section will instead provide an overview of the most common spatial regression models and their uses, and refer you to references that may of use if you wish to explore this area further.
+
+**Spatial error models** - These models assume that the error terms across spatial units are correlated, in which case the data would violate the assumptions of a standard OLS model. Spatial error models are also sometimes referred to as **simultaneous autoregressive (SAR) models**. They can be fit using the `errorsarlm()` function in the **spatialreg** package (spatial regression functions which used to be a part of **spdep**). 
+
+**Spatial lag models** - These models assume that the dependent variable for a region *i* is influenced not only by value of independent variables in *i*, but also by the values of those variables in regions neighboring *i*. Like spatial error models, spatial lag models are also sometimes described as **simultaneous autoregressive (SAR) models**.  They can be fit using the `lagsarlm()` function in the **spatialreg** package.
+
+The **spdep** package contains several useful diagnostic tests for deciding between standard OLS, spatial lag, and spatial error models. These tests, called *Lagrange Multiplier diagnostics*, can be used to identify the type of spatial dependence in your data and choose which model is most appropriate. The function `lm.LMtests()` can be used to calculate all of the Lagrange Multiplier tests. Anselin (1988) also provides a useful flow chart tool to decide which spatial regression model to use based on the results of the Lagrange Multiplier tests:
+
+```{r, fig.align='center', echo=F}
+knitr::include_graphics(here::here("images", "gis_lmflowchart.jpg"))
+```
+
+**Bayesian hierarchical models** - Bayesian approaches are commonly used for some applications in spatial analysis, most commonly for [disease mapping](https://pubmed.ncbi.nlm.nih.gov/15690999/). They are preferred in cases where case data are sparsely distributed (for example, in the case of a rare outcome) or statistically "noisy", as they can be used to generate "smoothed" estimates of disease risk by accounting for the underlying latent spatial process. This may improve the quality of estimates. They also allow investigator pre-specification (via choice of prior) of complex spatial correlation patterns that may exist in the data, which can account for spatially-dependent and -independent variation in both independent and dependent variables. In R, Bayesian hierarchical models can be fit using the **CARbayes** package (see [vignette](https://cran.r-project.org/web/packages/CARBayes/vignettes/CARBayes.pdf)) or R-INLA (see [website](https://www.r-inla.org/home) and [textbook](https://becarioprecario.bitbucket.io/inla-gitbook/)). R can also be used to call external software that does Bayesian estimation, such as JAGS or WinBUGS.
 
 <!-- ======================================================= -->
 ## Resources {  }
@@ -19271,7 +19565,11 @@ autoplot.OpenStreetMap(map_latlon)+
 
 * [Intro to making maps with R, overview of different packages](https://bookdown.org/nicohahn/making_maps_with_r5/docs/introduction.html)  
 
-* Spatial Data in R [(EarthLab course)](https://www.earthdatascience.org/courses/earth-analytics/spatial-data-r/)  
+* Spatial Data in R [(EarthLab course)](https://www.earthdatascience.org/courses/earth-analytics/spatial-data-r/)
+
+* Applied Spatial Data Analysis in R [textbook](https://link.springer.com/book/10.1007/978-1-4614-7618-4)
+
+* An Introduction to Spatial Econometrics in R [workshop](http://www.econ.uiuc.edu/~lab/workshop/Spatial_in_R.html)
 
 
 ```{r include=FALSE, cache=FALSE}
@@ -19745,7 +20043,7 @@ my_table %>%
 ## All code together  
 
 
-Below we show all the code from the above sections together in command.  
+Below we show all the code from the above sections together.  
 
 ```{r}  
 
@@ -19759,10 +20057,7 @@ pacman::p_load(
   tidyverse)      # data management, summary, and visualization
 
 table <- linelist %>% 
-  # filter
-  ########
-  #filter(!is.na(outcome) & hospital != "Missing") %>%  # Remove cases with missing outcome or hospital
-  
+
   # Get summary values per hospital-outcome group
   ###############################################
   group_by(hospital, outcome) %>%                      # Group data
@@ -19798,7 +20093,7 @@ table <- linelist %>%
 
   # formatting
   ############
-  flextable() %>% 
+  flextable() %>%              # table is piped in from above
   add_header_row(
     top = TRUE,                # New header goes on top of existing header row
     values = c("Hospital",     # Header values for each column below
@@ -20094,7 +20389,7 @@ A blank canvas is not sufficient! We need to create geometries from our data! Ba
 This is done by adding layers of geometry to the initial `ggplot()` command. There are many **ggplot2** functions that create "geoms". Each of these functions begins with "geom_", so we will refer to them generically as `geom_XXXX()`. There are over 40 geoms in **ggplot2** and many others created by fans. View them at the [ggplot2 gallery](https://exts.ggplot2.tidyverse.org/gallery/). Some common geoms are listed below:  
 
 * Histograms - `geom_histogram()`  
-* Bar charts - `geom_bar()`  
+* Bar charts - `geom_bar()` or `geom_col()`  
 * Box plots - `geom_boxplot()`  
 * Points (e.g. scatter plots) - `geom_point()`  
 * Line graphs - `geom_line()` or `geom_path()`  
@@ -20102,16 +20397,21 @@ This is done by adding layers of geometry to the initial `ggplot()` command. The
 
 In one plot you can display one or multiple geoms. Each is added with a `+`, and they are plotted sequentially such that later geoms are plotted on top of previous ones.  
 
+There are two bar plots functions - `geom_bar()` and `geom_col()` which are discussed in more depth in a later section.  
+
 But simply knowing these geom functions is not sufficient to produce a plot! We must also *map* the data to the plot...
+
 
 
 ## Mapping plot aesthetics to data  
 
-The next core component of a `ggplot()` object is how plot "aesthetics" are mapped to columns in the data. By a plot "aesthetic", we mean a visual property of an object in the plot. The two essential "aesthetics" are the x-axis, and (if necessary) the y-axis.  
+The next core component of a `ggplot()` object is how plot "aesthetics" are mapped to columns in the data. By a plot "aesthetic", we mean a visual property of an object in the plot. 
 
-For aesthetics that are "mapped" to columns of the data are given to the `mapping = ` argument, but the actual assignments are listed within `aes()`, as shown below. 
+For most geoms, the essential aesthetics that must be mapped to columns in the data are the x-axis, and (if necessary) the y-axis.  
 
-Below, in the `ggplot()` command the data are set as the case `linelist`, and then the column `age` is mapped to the x-axis, and the column `wt_kg` is mapped to the y-axis. A `+` continues the plotting command and leads to `geom_point()`. This geom *inherits* the mapped aesthetics from the `ggplot()` command - it know the axis-column assignments and proceeds to visualize those relationships as *points* on the canvas.  
+Aesthetics that are "mapped" to columns of the data are specified to the `mapping = ` argument. The exact assignments are made within `aes()`, which is provided as `mapping = aes()`, as shown below.  
+
+Below, in the `ggplot()` command the data are set as the case `linelist`, and then within `aes()` the column `age` is mapped to the x-axis, and the column `wt_kg` is mapped to the y-axis. A `+` continues the plotting command and leads to `geom_point()`. This geom *inherits* the mapped aesthetics from the `ggplot()` command - it know the axis-column assignments and proceeds to visualize those relationships as *points* on the canvas.  
 
 ```{r, warning=F, message=F}
 ggplot(data = linelist, mapping = aes(x = age, y = wt_kg))+
@@ -20135,7 +20435,7 @@ ggplot(data = linelist, mapping = aes(x = age))+
 
 Likewise, `data = ` specified in the top `ggplot()` will apply by default to any geom below, but you can also specify data for each geom, if desired (this is one way to create a plot that combines multiple datasets).  
 
-Thus, both of the following commands will create the same plot:  
+Thus, each of the following commands will create the same plot:  
 
 ```{r, eval=F, warning=F, message=F}
 # These commands will produce the exact same plot
@@ -20144,11 +20444,14 @@ ggplot(data = linelist, mapping = aes(x = age))+
 
 ggplot(data = linelist)+
   geom_histogram(mapping = aes(x = age))
+
+ggplot()+
+  geom_histogram(data = linelist, mapping = aes(x = age))
 ```
 
 ## Other aesthetics   
 
-There are other aesthetics, which can be specific to the type of geom. Some examples:  
+There are other aesthetics, which are often specific to the type of geom. Some examples:  
 
 * `shape =` Display of a point (`geom_point()`) as a dot, star, triangle, square, etc.  
 * `fill = ` The interior color (e.g. of a bar or boxplot)  
@@ -20158,7 +20461,9 @@ There are other aesthetics, which can be specific to the type of geom. Some exam
 * `binwidth = ` Width of histogram bins  
 * `linetype =` Line type (e.g. solid, dashed, dotted)  
 
-*Assignments for these kinds of aesthetics (non-axes) can be placed inside or outside the `aes()`.* This depends on whether you want their value to be static or to be scaled/depend on the values in each row of data.  
+*These non-axis aesthetics can be assigned static values (e.g. `size = 1`) or can be mapped to a column (e.g. `size = age`).* If you want the aesthetic to be assigned a static value, the assignment is placed *outside* the `mapping = aes()`. If you want the aesthetic to be scaled/depend on the value in each row of data, the assignment is made *inside* the `mapping = aes()`.  
+
+### Assigned a static value {-}  
 
 If you want the value to be static, you would write its assignment within the `geom_XXXX()` but *outside* of a `mapping = aes()` statement (there may not even be one in the geom). The assignment values would be unchanging - for example, `size = 1` or `color = "blue"`.  
 
@@ -20181,13 +20486,15 @@ ggplot(data = linelist)+       # set data
 ```
 
 
-But you can instead map these aesthetics to columns in the data. In this case, their display is scaled and depends on the value in each row of data. Essentially, the data are grouped by the values in that column. If the column is continuous, as in the examples below, the aesthetic scale is continuous. If the column you assign is discrete, then the groups/colors/sizes/etc. will display by group (read more in the [grouping](#ggplotgroups) section).      
+### Assigned to a column {-}  
+
+You can map non-axis aesthetics (size, color, fill, alpha...) to columns in the data. In this case, their display is scaled and depends on the value in each row of data. Essentially, the data are grouped by the values in the assigned column. If the column values are continuous, as in the examples below, the aesthetic scale used is continuous. If the column you assign is discrete, then the scaled colors/sizes/etc. will display in a discrete scale by group (read more in the [grouping](#ggplotgroups) section).      
 
 In this case, you assign these aesthetics *within* the `aes()`, alongside the axes assignments. The assignments are now made to column names, not to static values. And finally, like the axes assignments, if you choose to put these in an `aes()` in the top `ggplot()` command these assignments will apply by default to any geoms below.  
 
 Two examples are below.  
 
-Note in the first example how the color of each point reflects the age value - and a scale has appeared in a legend! For now just note that the scale exists - we will show how to modify it in later sections. The second example highlights two new mapped aesthetics (color *and* size), while shape and alpha remain mapped to static values outside of any `aes()`.  
+Note in the first example how the color of each point reflects the age value - and a scale has appeared in a legend! For now just note that the scale exists - we will show how to modify it in later sections. The second example highlights two new aesthetics mapped to columns (color *and* size), while shape and alpha remain mapped to static values outside of any `aes()`.  
 
 ```{r, out.width=c('50%', '50%'), fig.show='hold', warning=F, message=F}
 # scatterplot
@@ -20216,7 +20523,7 @@ It becomes important to track your layers and aesthetics when making more comple
 
 In the example below, the `size = ` aesthetic is assigned twice - once for `geom_point()` and once for `geom_smooth()` - both times as a static value.  
 
-```{r, warn=F, message=F}
+```{r, warning=F, message=F}
 ggplot(data = linelist,
        mapping = aes(x = age, y = wt_kg, color = age_years)) + # map aesthetics to columns
   geom_point(size = 1, alpha = 0.5) +  # add points for each row of data
@@ -20225,18 +20532,194 @@ ggplot(data = linelist,
 
 Note that propoerly aligning axes to plot from multiple dataset on top of one another can be difficult. Consider instead using **cowplot** or a similar package to combine two plots - as described in that section of the [ggplot tips] page.  
 
+
+
+## Groups {#ggplotgroups}  
+
+You can easily group the data and "plot by group". In fact, you have already done this! You simply assign the grouping column to the appropriate plot aesthetic, within `mapping = aes()`. Above, we demonstrated this using continuous values, but it works the same way for discrete/categorical values. 
+
+For example, if you want the groups to be represented by different color points by gender, you would have `color = gender` within the geom's `aes()`, as shown below. As before, a legend automatically appears.  
+
+```{r, warning=F, message=F}
+ggplot(data = linelist,
+       mapping = aes(x = age, y = wt_kg, color = gender))+
+  geom_point(alpha = 0.5)
+```
+
+
+Note that depending on the geom, you may need to use different arguments to group the data. For `geom_point()` you will most likely use `color =`, `shape = ` or `size = `. Whereas for `geom_bar()` you are more likely to use `fill = `.  
+
+For information - the most basic way of grouping the data is by adding only the `group = ` argument within the `mapping = aes()` and assigning it to a column. However, this by itself will not change the colors, fill, or shapes. Nor will it create a legend. Yet it is good to be aware of this argument in case you want to use it.  
+
+There are many examples of grouped plot in the pages on plotting continuous and categorical data. To adjust the order and presentation of groups in a plot, see the [ggplot tips] page or the page on [Working with factors].  
+
+
+## Facets / Small-multiples  
+
+Facets, or "small-multiples", are used to split one plot into a multi-panel figure, with one panel ("facet") per group. The same dataset is used for each facet, and the same type of plot is shown in each facet, but every facet is specific to a level of a variable. Faceting is a functionality that comes with **ggplot2**, and the legends and axes of panels are automatically aligned.
+
+There are other packages discussed in the [ggplot tips] page that are used to combine completely different plots (**cowplot** and **patchwork**) into one figure.  
+
+Faceting is done with one of two functions:
+
+  1. `facet_wrap()` To show a different facet for each level of a *single* variable. One example of this could be showing a different epidemic curve for each hospital in a region. Facets are ordered alphabetically, unless the variable has other factor order.  
+  * You can invoke certain options to determine the look of the facets, e.g. `nrow=1` or `ncol=1` to control the number of rows or columns that the faceted plots are arranged within.  
+  
+  2. `facet_grid()` This is used when you want to bring a second variable into the faceting arrangement. Here each element of a grid is shows the intersection between an x or y element of a grid. For example, this could involve showing a different epidemic curve for each hospital in a region, shown horizontally, for each age group, shown vertically.  
+  * `nrow` and `ncol` are not relevant, as the subgroups are presented in a grid  
+
+You can use a formala synatx for either function. You can stipulate up to two faceting variables, with a '~' between them. If only one faceting variable, a '.' is used as a placeholder for a non-used second faceting variable - see code examples.
+
+
+  
+This can quickly become an overwhelming amount of information - its good to ensure you don't have too many levels of each variable that you choose to facet by! Here are some quick examples with the malaria dataset (see [Download book and data]) which consists of daily case counts of malaria for facilities, by age group.  
+
+Below we import and do some quick modifications for simplicity:  
+
+```{r, eval = TRUE, warning=F, message=F}
+# These data are daily counts of malaria cases, by facility-day
+malaria_data <- import(here("data", "malaria_facility_count_data.rds")) %>%  # import
+  select(-submitted_date, -Province, -newid)# %>%                             # remove unneeded columns
+  # group_by(District, data_date) %>%
+  # summarise(                                                                 # summarise facility-counts up to District level
+  #   malaria_tot = sum(malaria_tot, na.rm=T),
+  #   malaria_0_4 = sum(`malaria_rdt_0-4`, na.rm=T),
+  #   malaria_5_14 = sum(`malaria_rdt_5-14`, na.rm=T),
+  #   malaria_15 = sum(`malaria_rdt_15`, na.rm=T)
+  # )
+```
+
+The first 50 rows of the malaria data are below. Note there is a column `malaria_tot`, but also columns for counts by age group (these will be used in the second, `facet_grid()` example).  
+
+```{r, message=FALSE, echo=F}
+DT::datatable(head(malaria_data, 50), rownames = FALSE, filter="top", options = list(pageLength = 5, scrollX=T), class = 'white-space: nowrap' )
+```
+
+### `facet_wrap()` {-}
+
+For the moment, let's focus on the columns `malaria_tot` and `District`. Ignore the age-specific count columns for now. We will plot epidemic curves with `geom_col()`, which produces a bar for each day at the specified y-axis height in column `malaria_tot` (we use `geom_col()` because the data are daily counts, not one row per case - see [Plot categorical data]).  
+
+When we add the command `facet_wrap()`, we specify a tilde and then the column to facet on (`District` in this case). You can place another column on the left side of the tilde, - this will create one facet for each combination - but we recommend you do this with `facet_grid()` instead. In this use case, one facet is created for each unique value of `District`.  
+
+```{r, warning=F, message=F}
+# A plot with facets by district
+ggplot(malaria_data, aes(x = data_date, y = malaria_tot)) +
+  geom_col(width = 1, fill = "darkred") +       # plot the count data as columns
+  theme_minimal()                               # simplify the background panels
+  labs(                                         # add plot labels, title, etc.
+    x = "Date of report",
+    y = "Malaria cases",
+    title = "Malaria cases by district") +
+  facet_wrap(~District)                       # the facets are created
+```
+
+### `facet_grid()` {-}  
+
+We can use a `facet_grid()` approach to cross two variables. Let's say we want to cross `District` and age. Well, we need to do some data transformations on the age columns to get these data into ggplot-preferred "long" format. The age groups all have their own columns - we want them in a single column called `age_group` and another called `num_cases`. See the page on [Pivoting data] for more information on this process.  
+
+```{r, message=F, warning=F}
+malaria_age <- malaria_data %>%
+  select(-malaria_tot) %>% 
+  pivot_longer(
+    cols = c(starts_with("malaria_rdt_")),  # choose columns to pivot longer
+    names_to = "age_group",      # column names become age group
+    values_to = "num_cases"      # values to a single column (num_cases)
+  ) %>%
+  mutate(
+    age_group = str_replace(age_group, "malaria_rdt_", ""),
+    age_group = forcats::fct_relevel(age_group, "5-14", after = 1))
+```
+
+Now the first 50 rows of data look like this:  
+
+```{r, message=FALSE, echo=F}
+DT::datatable(head(malaria_age, 50), rownames = FALSE, filter="top", options = list(pageLength = 5, scrollX=T), class = 'white-space: nowrap' )
+```
+
+
+When you pass the two variables to `facet_grid()`, easiest is to use formula notation (e.g. `x ~ y`) where x is rows and y is columns. Here is the plot, using `facet_grid()` to show the plots for each combination of the columns `age_group` and `District`.
+
+```{r, message=F, warning=F}
+ggplot(malaria_age, aes(x = data_date, y = num_cases)) +
+  geom_col(fill = "darkred", width = 1) +
+  theme_minimal()+
+  labs(
+    x = "Date of report",
+    y = "Malaria cases",
+    title = "Malaria cases by district and age group"
+  ) +
+  facet_grid(District ~ age_group)
+```
+
+### Free or fixed axes {-}  
+
+The axes scales displayed when faceting are by default the same (fixed) across all the facets. This is helpful for comparison, but not always appropriate or optimal.  
+
+When using `facet_wrap()` or `facet_grid()`, we can add `scales = "free_y"` (plot A) so that the heights of the faceted histograms are standardised and the shapes are easier to compare. This is particularly useful if the actual counts are small for one of the subcategories and trends are otherwise hard to see. Instead of `free_y` we can also write `free_x` to do the same for the x axis or `free` for both axes. Note that in `facet_grid`, the y scales will be the same for facets in the same row, and the x scales will be the same for facets in the same column.
+
+When using `facet_grid` only, we can add `space = "free_y"` or `space = "free_x"` so that the actual height or width of the facet is weighted to the values of the figure within. This only works if `scales = "free"` (y or x) already applies. 
+
+```{r fig.show='hold', message=FALSE, warning=FALSE, out.width=c('50%', '50%')}
+
+# Free y-axis
+ggplot(malaria_age, aes(x = data_date, y = num_cases)) +
+  geom_col(fill = "darkred", width = 1) +
+  theme_minimal()+
+  labs(
+    x = "Date of report",
+    y = "Malaria cases",
+    title = "Malaria cases by district and age group"
+  ) +
+  facet_grid(District ~ age_group, scales = "free_y")
+
+# Free x-axis (date axis)
+ggplot(malaria_age, aes(x = data_date, y = num_cases)) +
+  geom_col(fill = "darkred", width = 1) +
+  theme_minimal()+
+  labs(
+    x = "Date of report",
+    y = "Malaria cases",
+    title = "Malaria cases by district and age group"
+  ) +
+  facet_grid(District ~ age_group, scales = "free_x")
+
+```
+
+
+<!-- ```{r fig.show='hold', message=FALSE, warning=FALSE, out.width=c('50%', '50%')} -->
+<!-- # A) Facet hospitalsation date by hospital, free y axis -->
+<!-- ggplot(data = linelist %>% filter(hospital != "Missing"), # filter removes unknown hospital -->
+<!--        aes(x = date_hospitalisation ))+ -->
+<!--   geom_histogram(binwidth=7) + # Bindwidth = 7 days -->
+<!--   labs(title = "A) Histogram with free y axis scales")+ -->
+<!--   facet_grid(hospital~., # Facet with hospital as the row  -->
+<!--              scales = "free_y") # Free the y scale of each facet -->
+
+<!-- # B) Facet hospitalisation date by hospital, free y axis and vertical spacing -->
+<!-- ggplot(data = linelist %>% filter(hospital != "Missing"), # filter removes unknown hospital -->
+<!--        aes(x = date_hospitalisation ))+ -->
+<!--   geom_histogram(binwidth=7) + # Bindwidth = 7 days -->
+<!--   labs(title = "B) Histogram with free y axis scales and spacing")+ -->
+<!--   facet_grid(hospital~., # Facet with hospital as the row  -->
+<!--              scales = "free_y", # Free the y scale of each facet -->
+<!--              space = "free_y") # Free the vertical spacing of each facet to optimise space -->
+
+<!-- ``` -->
+
+
 ## Storing plots  
 
 ### Saving plots {-}
 
-Plots can be printed to the Plots RStudio pane, as we have done until now, by simply beginning the command with `ggplot()`. However, you can also save the plot as an object by using the assignment operator `<-` and giving it a name. It will not print unless the object name itself is run. You can also print it by wrapping the plot name with `print()`, but this is only necessary in certain circumstances like if the plot is created inside a *for loop*.  
+By default when you run a `ggplot()` command, the plot will be printed to the Plots RStudio pane. However, you can also save the plot as an object by using the assignment operator `<-` and giving it a name. It will not print unless the object name itself is run. You can also print it by wrapping the plot name with `print()`, but this is only necessary in certain circumstances such as if the plot is created inside a *for loop*.  
 
 ```{r, warning=F, message=F}
 # define plot
 age_by_wt <- ggplot(data = linelist, mapping = aes(x = age_years, y = wt_kg, color = age_years))+
   geom_point(alpha = 0.1)
 
-age_by_wt    # print
+# print
+age_by_wt    
 ```
 
 
@@ -20279,13 +20762,16 @@ age_by_wt <- ggplot(
     subtitle = "Fictional Ebola outbreak, 2014",
     x = "Age in years",
     y = "Weight in kilos",
+    color = "Age",
     caption = stringr::str_glue("Data as of {max(linelist$date_hospitalisation, na.rm=T)}"))
 
 age_by_wt
 ```
+
 Note how in the caption assignment we used `str_glue()` from the **stringr** package to implant dynamic R code within the string text. The caption will display the maximum hospitalization date in the linelist. Read more about this in the page on [Characters and strings].  
 
-You can also use `labs()` to adjust the legend title(s), but this is a bit more complicated. See the section on legends in the [ggplot tips] page.  
+To adjust the legend title, provide the argument that you used to create it to `labs()`. So for the example above we assigned `color = age` to create the legend. Therefore, we provide `color = ` to `labs()` and assigned the legend title desired ("Age" with capital A). If you create the legend with `aes(fill = COLUMN)`, then in `labs()` you would edit `fill = ` to adjust that legend title. See the section on legends in the [ggplot tips] page for more details on editing the legend.  
+
 
 
 ## Themes 
@@ -20296,21 +20782,21 @@ One of the best parts of **ggplot2** is the amount of control you have over the 
   * These include `theme_classic()`, `theme_minimal()`, `theme_dark()`, `theme_light()` `theme_grey()`, `theme_bw()` and others  
 * Adjusting each tiny aspect of the plot individually within `theme()`  
 
-We have mention the pre-defined `theme_XXXX()` functions above, will demonstrate them below, and will not describe them further here.  
+As they are quite straight-forward, we will demonstrate the pre-defined `theme_XXXX()` functions below and will not describe them further here.  
 
 The `theme()` function can take a large number of arguments, each of which edits a very specific aspects of the plot. We won't go through all examples, but will describe the general pattern and show you how to find the argument you need. The basic syntax is this:
 
 1. Add `theme()` as you would a geom or `labs()`  
-2. Within `theme()`, provide the specific argument name for the element you want to edit (e.g. `plot.title = ` for the plot title)  
+2. Within `theme()`, provide the specific argument name for the plot element you want to edit (e.g. `plot.title = ` for the plot title)  
 3. Supply the `element_XXXX()` function as the value for the argument  
   * Most of the time this is `element_text()`, but other versions include `element_rect()` for editing the plot canvas background colors, or even `element_blank()` to remove plot elements  
 4. Within the `element_XXXX()` give arguments to make fine adjustments  
 
-That was quite abstract and convoluted, so here are some examples.  
+That description was quite abstract and convoluted, so here are some examples.  
 
-The below plot looks quite silly, but it serves to show you a variety of the ways you can adjust your plot.  We begin with the plot `age_by_wt` (that we defined above), and add `+` `theme_classic()` (with empty parentheses) to enact several adjustments in one command. Then, for finer adjustments, we add a `theme()` command. Within it, we list the arguments for each aspect we want to adjust - in this case there are many. It can be nice to organize them into sub-grounds with new lines.  
+The below plot looks quite silly, but it serves to show you a variety of the ways you can adjust your plot.  We begin with the plot `age_by_wt` (that we defined above), and add `+` `theme_classic()` (with empty parentheses) to enact several adjustments in one command. Then, for finer adjustments, we add a `theme()` command. Within it, we list the arguments for each plot element we want to adjust - in this case there are many. It can be nice to organize them into sub-sections with new lines.  
 
-To describe just some of them: The `legend.position = ` is unique in that it accepts simple values like "bottom", but generally text-related arguements require that you place the details within `element_text()`. See how we adjust the title size with `size = `, the caption horizontal alignment with `hjust = 0` (from right to left), and make the subtitle italicized with `face = `.  
+To describe just some of them: The `legend.position = ` is unique in that it accepts simple values like "bottom", "top", "left", and "right". But generally, text-related arguments require that you place the details *within* `element_text()`. See how we adjust the title size with `element_text(size = 30)`, the caption horizontal alignment with `element_text(hjust = 0)` (from right to left), and make the subtitle italicized with `element_text(face = "italic")`.  
 
 ```{r, eval=TRUE, warning=F, message=F}
 age_by_wt + 
@@ -20340,6 +20826,7 @@ Here are some especially common `theme()` arguments. You will recognize some pat
 `axis.title = element_text()`      |Axis titles (both x and y) (size, face, angle, color...)
 `axis.title.x = element_text()`    |Axis title x-axis only (use `.y` for y-axis only)
 `axis.text = element_text()`       |Axis text (both x and y)
+`axis.text.x = element_text()`     |Axis text x-axis only (use `.y` for y-axis only)  
 `axis.ticks = element_blank()`     |Remove axis ticks
 `axis.line = element_line()`       |Axis lines (colour, size, linetype: solid dashed dotted etc)
 `strip.text = element_text()`      |Facet strip text (colour, face, size, angle...)
@@ -20354,100 +20841,105 @@ See the **tidyverse** documentation on [modifying theme](https://ggplot2.tidyver
 <span style="color: darkgreen;">**_TIP:_** If you ever want to remove an element of a plot, you can also do it through `theme()`! Just pass `element_blank()` to an argument to have it disappear completely!</span>  
 
 
-## Groups {#ggplotgroups}  
+## "Bar plot" geoms  
 
-You can easily group the data and "plot by group". This is demonstrated more extensively in the pages on [Plot continuous data] and [Plot discrete data], but we describe the mechanism briefly below.  
+Geoms for "bar plots" deserve special mention, as they are easily confused. 
+
+### `geom_bar()` {-}  
+
+Use `geom_bar()` if you want bar height (or stacked bar components) to reflect *the number of relevant rows in the data*.  
+
+* Provide only one axis column assignment (typically x-axis). If you provide x and y, you will get `Error: stat_count() can only have an x or y aesthetic.`  
+* You can create stacked bars by adding a `fill = ` column assignment, as explained below.  
+* The automatic title of the opposite axis will be "count", because it represents the number of rows  
+
+```{r, eval=F}
+ggplot(data = linelist)+
+  geom_bar(mapping = aes(y = hospital, fill = gender))
+```
 
 
-A very simple way to group the data is to add the `color = ` or `fill = ` arguments *within* the `mapping = aes()`, and assign the discrete column name to group the data by. Each unique value in the grouping column will be plotted separately (`NA` missing values will appear as a group).  
+### `geom_col()` {-}  
 
-In fact, you have already done this! Above, we moved the `color = ` argument within `aes()` and assigned it the column `age`. This effectively grouped the data by age, which was a continuous scale. In contrast, here we discuss grouping by discrete columns.  
+Use `geom_col()` if you want bar height (or stacked bar height) to reflect a pre-calculated *value* that exists in the data. Often, this is a proportion or summary count value.  
 
-Below we show the scatter plot of age and weight, but we have set `color = ` to the column `gender`. A legend automatically appears.  
+* Provide column assignments for *both* axes. Typically your x-axis is discrete and your y-axis is assigned to the column with the values. 
+* The automatic title of the opposite axis will be the assigned y-axis column  
 
 ```{r, warning=F, message=F}
-ggplot(data = linelist,
-       mapping = aes(x = age, y = wt_kg, color = gender))+
-  geom_point(alpha = 0.5)
 
+proportion_died <- linelist %>%
+  group_by(hospital) %>% 
+  summarise(
+    n_rows = n(),
+    n_died = sum(outcome == "Death", na.rm=TRUE),
+    p_died = n_died / n_rows
+  )
+
+proportion_died
 ```
-Note that depending on the geom, you may need to use different arguments to group the data. `fill = ` or `color = ` are appropriate for most cases, but you could also adjust by `shape = ` etc.  
 
-The most basic way of grouping the data is by adding the `group = ` argument within the `mapping = aes()` and assigning it to a discrete column. However, this by itself will not change the colors, fill, or shapes. Nor will it create a legend. Yet it is good to be aware of this argument in case you want to use it.  
+```{r, warning=F, message=F}
+ggplot(data = proportion_died)+
+  geom_col(mapping = aes(x = hospital, y = p_died))
+```
+If you want stacked bars using `geom_col()`, you must take additional steps (often, pivoting) to ensure that the data are in "long" format (see [Pivoting data]). There should be one column containing the categories (e.g. stacks) and another column with the heights.    
 
-There are many examples of grouped plot in the pages on plotting continuous and discrete variables.  
+```{r, warning=F, message=F}
+proportion_outcome <- linelist %>%
+  group_by(hospital) %>% 
+  summarise(
+    
+    # rows denominator per hospital
+    n_rows = n(),
+    
+    # counts per hospital
+    n_died = sum(outcome == "Death", na.rm=TRUE),
+    n_alive = sum(outcome == "Recover", na.rm=TRUE),
+    n_unk = sum(is.na(outcome), na.rm=TRUE),
 
-To adjust the order and presentaton of groups in a plot, see the [ggplot tips] page or the page on [Working with factors].  
-
-
-### Facets / Multiple plots {-}  
-
-Often its useful to show multiple graphs on one page, or one super-figure. There are a few ways to achieve this and a lot of packages that can help to facilitate it. However, while external packages are nice, it is often easier to use faceting as an alternative that is prebuilt into `ggplot2`. Faceting plots is extremely easy to do in terms of code, and produces plots with more predictable aesthetics - you wont have to wrangle legends and ensure that axes are aligned etc.
-
-Faceting is a very specific way to obtain multiple plots - by definition, to facet you have to show the same type of plot in each facet, where every plot is specific to a level of a variable. This is done with one of two functions:
-
-  1. `facet_wrap()` This is used when you want to show a different graph for each level of a *single* variable. One example of this could be showing a different epidemic curve for each hospital in a region. 
+    
+    # proportions per hospital
+    p_died = n_died / n_rows,
+    p_alive = n_alive / n_rows,
+    p_unk = n_unk / n_rows
+  ) %>% 
   
-  2. `facet_grid()` This is used when you want to bring a second variable into the faceting arrangement. Here each element of a grid is shows the intersection between an x or y element of a grid. For example, this could involve showing a different epidemic curve for each hospital in a region, shown horizontally, for each age group, shown vertically.
-  
-This can quickly become an overwhelming amount of information - its good to ensure you don't have too many levels of each variable that you choose to facet by! Here are some quick examples with the malaria dataset:
+  # pivot the proportions columns so that they are condensed to two columns (category and value)
+  pivot_longer(starts_with("p_"), names_to = "proportion_cat")
 
-```{r, eval = TRUE, warning=F, message=F}
-malaria_data <- rio::import(here::here("data", "malaria_facility_count_data.rds")) 
-
-# show a wrapped plot with facets by district
-
-ggplot(malaria_data, aes(x = data_date, y = malaria_tot, fill = District)) +
-  geom_bar(stat = "identity") +
-  labs(
-    x = "date of data collection",
-    y = "malaria cases",
-    title = "Malaria cases by district"
-  ) +
-  facet_wrap(~District) +
-  theme_minimal()
-
+proportion_outcome
 ```
 
-We can also use a `facet_grid()` approach with the different age groups - we need to do some data transformations first however, as the age groups all are in their own columns - we want them in a single column. When you pass the two variables to `facet_grid()`, you can use formula notation (e.g. `x ~ y`) or wrap the variables in `vars()`. For reference, this: `facet_grid(x ~ y)` is equivalent to `facet_grid(rows = vars(x), cols = vars(y))` Here's how we can do this:
-
-```{r, eval = T, warning=F, message=F}
-
-malaria_age <- malaria_data %>%
-  pivot_longer(
-    # choose all the columns that start with malaria rdt (age group specific)
-    cols = starts_with("malaria_rdt_"),
-    # column names become age group
-    names_to = "age_group",
-    # values to a single column (num_cases)
-    values_to = "num_cases"
-  ) %>%
-  # clean up age group column - replace "malaria_rdt_" to leave only age group
-  # then replace 15 with 15+
-  # then refactor the age groups so they are in order
-  mutate(age_group = str_replace(age_group, "malaria_rdt_", "") %>%
-           ifelse(. == "15", "15+", .) %>%
-           forcats::fct_relevel(., "5-14", after = 1))
+```{r, warning=F, message=F}
+ggplot(data = proportion_outcome)+
+  geom_col(mapping = aes(x = hospital, y = value, fill = proportion_cat))
+```
 
 
-# make the same plot as before, but show in a grid
-ggplot(malaria_age, aes(x = data_date, y = num_cases, fill = age_group)) +
-  geom_bar(stat = "identity") +
-  labs(
-    x = "date of data collection",
-    y = "malaria cases",
-    title = "Malaria cases by district and age group"
-  ) +
-  facet_grid(rows = vars(District), cols = vars(age_group)) +
-  theme_minimal()
 
+### `geom_histogram()` {-}  
 
+Histograms may look like bar charts, but are distinct because they measure distribution of a continuous variable. There are no spaces between the "bars", and only one column is provided to `geom_histogram()`. There are arguments specific to histograms such as `bin_width = ` and `breaks = ` to specify how the data should be binned. The page on [Epidemic curves] provides additional detail.  
+
+You can plot a traditional histogram with `geom_histogram()` (y-axis represents counts per bin) or the relative density with `geom_density()` (y-axis represents proportion of all rows with that value):  
+
+```{r, warning=F, message=F, out.width=c('50%', '50%'), fig.show='hold'}  
+# raw counts per bin
+ggplot(data = linelist)+
+  geom_histogram(mapping = aes(x = date_onset))
+
+# density plot
+ggplot(data = linelist)+
+  geom_density(mapping = aes(x = date_onset))
 
 ```
 
 
 
-### Piping into **ggplot2** {-}  
+
+
+## Piping into **ggplot2**   
 
 When using pipes to clean and transform your data, it is easy to pass the transformed data into `ggplot()`. The pipes that pass the dataset from function-to-function will transition to `+` once the `ggplot()` function is called. Note that in this case, there is no need to specify the `data = ` argument, as this is automatically defined as the piped-in dataset.  
 
@@ -20473,7 +20965,7 @@ linelist %>%                                                     # begin with li
 ```
 
 
-### Exporting plots {-}  
+## Exporting plots   
 
 Exporting ggplots is made easy with the `ggsave()` function from **ggplot2**. It can work in two ways, either:  
 
@@ -20534,17 +21026,20 @@ options(scipen=1, digits=7)
 
 # Plot continuous data { }  
 
-This page will discuss appropriate plotting of continuous data, such as age, clinical measurements, and distance. **ggplot2**, part of the **tidyverse** family of packages, is a fantastic and versatile package for visualising continuous data. As usual, R also has built-in **base** functions, which can be helpful for quick looks at the data.
+This page will discuss appropriate plotting of continuous data, such as age, clinical measurements, and distance. We focus on use of **ggplot2** (part of the **tidyverse** family of packages), but also brielfly describe **base** R plotting functions.  
 
 Visualisations covered here include:
 
-* Plots for one continuous variable: 
-  * **Histograms**, the classic graph to present the distribution of a continuous variable. 
-  * **Box plots** (also called box and whisker), in which the box represents the 25th, 50th, and 75th percentile of a continuous variable, and the line outside of this represent tail ends of distribution of the the continuous variable, and dots represent outliers.
-  * **Violin plots**, which are similar to histograms in that they show the distribution of a continuous variable based on the symettrical width of the 'violin'. 
-  * **Jitter plots**, which visualise the distribution of a continuous variable by showing all values as dots, rather than collectively as one larger shape. Each dot is 'jittered' so that they can all (mostly) be seen, even where two have the same value. 
-  * **Sina plots**, are a cross between jitter and violin plots, where the individual points can be seen but in the symmetrical shape of the distribution (note this brings in the `ggforce` package).
-* **Scatter plots** for two continuous variables.
+* Plots for one continuous variable:  
+  * **Histogram**, a classic graph to present the distribution of a continuous variable. 
+  * **Box plot** (also called box and whisker), to show the 25th, 50th, and 75th percentiles, tail ends of the distribution, and outliers ([important limitations](https://www.data-to-viz.com/caveat/boxplot.html)).  
+  * **Jitter plot**, to show all values as points that are 'jittered' so they can (mostly) all be seen, even where two have the same value.  
+  * **Violin plot**, show the distribution of a continuous variable based on the symmetrical width of the 'violin'. 
+  * **Sina plot**, are a combination of jitter and violin plots, where individual points are shown but in the symmetrical shape of the distribution (via **ggforce** package).  
+* **Scatter plot** for two continuous variables.  
+* **Heat plots** for three continuous variables (linked to [Heat plots] page)  
+
+
 
 ```{r echo=F, fig.show='hold', message=FALSE, warning=FALSE, out.width=c('50%', '50%')}
 pacman::p_load(ggplot2,
@@ -20555,30 +21050,33 @@ linelist <- rio::import(here::here("data", "case_linelists", "linelist_cleaned.r
          wt_kg = as.numeric(wt_kg)) # Converting age and weight to numeric value if needed
 
 # with the boxplot() function
-graphics::boxplot(age ~ outcome,
-                  data = linelist,
-                  col = c("gold", "darkgreen"),
-                  main = "A) BOX PLOT made using R's built in graphics boxplot")
+# graphics::boxplot(age ~ outcome,
+#                   data = linelist,
+#                   col = c("gold", "darkgreen"),
+#                   main = "A) BOX PLOT made using R's built in graphics boxplot")
 
 
-# with ggplot2  - boxplot
+
+# with ggplot2 historgram
 ggplot(data = linelist,
        mapping = aes(x = age))+
   geom_histogram(binwidth=2)+
-  labs(title = "B) HISTOGRAM made using ggplot2")
+  labs(title = "A) histogram of age")
 
 
-# with ggplot2 - violin plot
-ggplot(data = linelist,
-       mapping = aes(y = age, x = outcome))+
-  geom_violin(fill = "darkgreen")+
-  labs(title = "C) VIOLIN PLOT made using ggplot2")
+# with ggplot2 box plots
+ggplot(data = linelist %>% filter(!is.na(gender)), mapping = aes(y = age, x = gender, fill = gender))+
+  geom_violin()+
+  #ggforce::geom_sina(aes(color = gender), alpha = 0.5)+
+  geom_boxplot( fill = NA)+
+  labs(title = "B) Box and Violin plots of age by gender")
+
 
 # with ggplot2 - scatter plot
 ggplot(data = linelist,
-       mapping = aes(y = age, x = wt_kg))+
+       mapping = aes(y = wt_kg, x = age))+
   geom_point()+
-  labs(title = "D) SCATTER PLOT made using ggplot2")
+  labs(title = "C) Scatter plot of weight and age")
 
 
 
@@ -20589,21 +21087,25 @@ ggplot(data = linelist,
 <!-- ======================================================= -->
 ## Preparation {  }
 
+Preparation includes loading the relevant packages, here **ggplot2** and **dplyr** (both part of **tidyverse**), and ensuring your data columsn are of the correct class. 
 
 ### Load packages {-}
 
-Preparation includes loading the relevant packages, here `ggplot2` and `dplyr`, and ensuring your data is the correct class and format. 
-
 This code chunk shows the loading of packages required for the analyses. In this handbook we emphasize `p_load()` from **pacman**, which installs the package if necessary *and* loads it for use. You can also load installed packages with  `library()` from **base** R. See the page on [R basics] for more information on R packages.  
 
-Note: You could also only load **tidyverse**, which includes **ggplot2** and **dplyr** among other packages (e.g. **stringr**, **tidyr**, and **forcats** for instance). 
+Note: The mega-package **tidyverse** includes the pacakage **ggplot2** and **dplyr** among many others (e.g. **stringr**, **tidyr**, and **forcats**).  
 
 ```{r}
-pacman::p_load(ggplot2, dplyr)
+pacman::p_load(
+  rio,            # data import and export
+  here,           # relative file paths
+  tidyverse       # includes ggplot2 and dplyr
+  )
 ```
 
-### Import data {-}
 
+
+### Import data {-}
 
 For the examples in this section, we will use the dataset of cases from a simulated Ebola epidemic. If you want to download the data to follow step-by-step, see instructions in the [Download handbook and data] page. The dataset is imported using the `import()` function from the **rio** package. See the page on [Import and export] for various ways to import data.
 
@@ -20617,93 +21119,82 @@ linelist <- rio::import(here::here("data", "case_linelists", "linelist_cleaned.r
 linelist <- import("linelist_cleaned.xlsx")
 ```
 
-The first 50 rows of the linelist are displayed below. We will focus on the continuous variables `age`, `wt_kg` (weight in kilos), `ct_blood` (CT values), and `days_onset_hosp` (difference between onset date and hospitalisation).  
+The first 50 rows of the linelist are displayed below. We will focus on the continuous variables `age`, `wt_kg` (weight in kilos), `ct_blood` (CT, cycle-threshold values), and `days_onset_hosp` (difference between date of symptom onset and date of hospitalisation).  
 
 ```{r, message=FALSE, echo=F}
 # display the linelist data as a table
 DT::datatable(head(linelist, 50), rownames = FALSE, filter="top", options = list(pageLength = 5, scrollX=T), class = 'white-space: nowrap' )
 ```
 
+
+
+
+
 ### Column class {-}  
 
-Below we use `mutate()` to confirm the class of the columns that are important to our analysis.  
+Ensure that the continuous columns are correcly classified in R as class Numeric. Below we use `mutate()` and `as.numeric()`to ensure the class of the columns that are important to our analysis. The the page on [Cleaning data and core functions] for more detail.  
 
 ```{r}
 linelist <- linelist %>%  
-  mutate(age = as.numeric(age),       # Ensure vars are class numeric
-         ct_blood = as.numeric(ct_blood),
-         days_onset_hosp = as.numeric(days_onset_hosp),
-         wt_kg = as.numeric(wt_kg))  
+  mutate(                                          # Ensure vars are class numeric
+    age = as.numeric(age),       
+    ct_blood = as.numeric(ct_blood),
+    days_onset_hosp = as.numeric(days_onset_hosp),
+    wt_kg = as.numeric(wt_kg))  
 ```
 
-You should have conducted various data checks before this point, including checking the missingness of the data. 
+Note: You should have conducted various data checks before this point, including checking the missingness of the data. See the page [Missing data] for tips on these analyses.  
+
 
 
 
 
 ## One continuous variable  
 
-### Box plots {-}
 
-Below is code for creating **box plots**, to show the distribution of CT values of Ebola patients in an entire dataset and by sub group. Note that for the subgroup breakdowns, the 'NA' values are also removed using dplyr, otherwise ggplot plots the age distribution for 'NA' as a separate boxplot. 
-
-```{r fig.show='hold', message=FALSE, warning=FALSE, out.width=c('50%', '50%')}
-# A) Simple boxplot of one numeric variable
-ggplot(data = linelist, aes(y = ct_blood))+  # only y variable given (no x variable)
-  geom_boxplot()+
-  labs(title = "A) Simple ggplot2 boxplot")
-
-# B) Box plot by group
-ggplot(data = linelist %>% filter(!is.na(outcome)), 
-       aes(y = ct_blood,                            # Continous variable
-           x = outcome)) +                          # Grouping variable
-  geom_boxplot(fill = "gold")+                      # Create the boxplot and specify colour
-  labs(title = "B) ggplot2 boxplot by gender")      
-```
 
 ### Histograms {-}
 
-Below is code for generating **histograms**, to show the distribution of CT values of Ebola patients. Within the `aes()` bracket, you specify which variable you want to see the distribution of. You can supply either the x or the y, which will change the direction of the plot. The y or the x respectively will then show the count, represented by columns referred to as 'bins'. 
+Below is code for generating **histograms**, which group continuous data into ranges and display in adjacent bars of varying height. This is done using `geom_histogram()`. See the section in [Plot categorical data] to understand difference between `geom_histogram()`, `geom_bar()`, and `geom_col()`.  
 
-```{r fig.show='hold', message=FALSE, warning=FALSE, out.width=c('50%', '50%')}
-# A) Regular histogram
-ggplot(data = linelist, aes(x = ct_blood))+  # provide x variable
-  geom_histogram()+
-  labs(title = "A) Simple ggplot2 histogram")
+We will show the distribution of ages of cases. Within `aes()` specify which column you want to see the distribution of. You can assign this column to either the x or the y axis. 
 
-# B) Histogram with values across y axis
-ggplot(data = linelist, aes(y = ct_blood))+  # provide y variable 
-  geom_histogram()+
-  labs(title = "B) Simple ggplot2 histogram with axes swapped")
-```
-
-In the examples above, R has guessed the most appropriate way to present the data, and issues a message to tell you how many bins (columns) it went with, and to prompt you to customise it yourself:
+For the plot, the cases will be assigned to "bins" which will be represented by bars. If the number of bins (`bins = ` in `geom_histogram()`) is unspecified, R will guess an appropriate number of bins and print this message to let you know:  
 
 ```
 ## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
-```
+``` 
 
-It used 30 bins, and they look spaced out because some of them have 0 values. This relates to the way the values have been rounded.
-
-To change this, you can specify `binwidth` (e.g. the range of values that the bin is counting) or `bins` (the number of  bins) within the `geom_histogram` argument. These are then evenly grouped, between the minimum and maximum values of the histogram. 
+Alternatively, you can specify `binwidth = ` within `geom_histogram()` to specify the range of values that the bin includes. In contrast, if using `bins = ` the break points are evenly spaced between the minimum and maximum values of the histogram. We give a few examples showing different bins and bin widths. 
 
 ```{r fig.show='hold', message=FALSE, warning=FALSE, out.width=c('50%', '50%')}
-# A) Histogram with specified bin number
-ggplot(data = linelist, aes(x = ct_blood))+   # Provide x variable
-  geom_histogram(bins=10,                     # Add bin number
-                 color = "white")+            # Add white outline so bars can easily be distinguished
-  labs(title = "A) Ggplot histogram with 10 bins")
+# A) Regular histogram
+ggplot(data = linelist, aes(x = age))+  # provide x variable
+  geom_histogram()+
+  labs(title = "A) Default histogram (30 bins)")
 
-# B) Histogram with specified bin width
-ggplot(data = linelist, aes(x = ct_blood))+   # Provide y variable 
-  geom_histogram(binwidth = 1,                # Each bar includes a CT value range of 1
-                 color = "white")+            # Add white outline so bars can easily be distinguished
-  labs(title = "B) Ggplot histogram with bindwidth of 1")
+# B) More bins
+ggplot(data = linelist, aes(x = age))+  # provide x variable
+  geom_histogram(bins = 50)+
+  labs(title = "B) Set to 50 bins")
+
+# C) Fewer bins
+ggplot(data = linelist, aes(x = age))+  # provide x variable
+  geom_histogram(bins = 5)+
+  labs(title = "C) Set to 5 bins")
+
+
+# C) More bins
+ggplot(data = linelist, aes(x = age))+  # provide x variable
+  geom_histogram(binwidth = 1)+
+  labs(title = "D) binwidth of 1")
+
 ```
+
 
 Rather than counts, you can change the stats within the `aes()` bracket to specify proportions - see (plot A) below. You can also layer different histograms with different settings (plot B).
 
-```{r fig.show='hold', message=FALSE, warning=FALSE, out.width=c('50%', '50%')}
+```{r, fig.show='hold', message=FALSE, warning=FALSE, out.width=c('50%', '50%')}
 # A) Histogram with proportion
 ggplot(data = linelist, aes(x = ct_blood,           # provide x variable
                             y = stat(density)))+    # Calculate proportion
@@ -20720,35 +21211,107 @@ ggplot(data = linelist, aes(x = ct_blood))+         # provide x variable
   labs(title = "B) Layered ggplot histograms")
 ```
 
+To get a "stacked" histogram (of a continuous column of data), you can do one of the following:  
+
+1) Use `geom_histogram()` with the `fill = ` argument within `aes()` and assigned to the grouping column, or  
+2) Use `geom_freqpoly()`, which is likely easier to read than the above option. You can still set `binwidth = ` etc.  
+3) To see proportions of all values, , set the `y = after_stat(density)` (use this syntax exactly - not changed for your data)  
+  * Note these proportions will show *per group*  
+4) To get smoothed proportions, you can use `geom_density()`
+
+
+Each is shown below (*note use of `color = ` vs. `fill = ` in each):  
+
+```{r, fig.show='hold', message=FALSE, warning=FALSE, out.width=c('50%', '50%')}
+# "Stacked" histogram
+ggplot(data = linelist, mapping = aes(x = age, fill = gender)) +
+  geom_histogram(binwidth = 2)+
+  labs(title = "'Stacked' histogram")
+
+# Frequency 
+ggplot(data = linelist, mapping = aes(x = age, color = gender)) +
+  geom_freqpoly(binwidth = 2, size = 2)+
+  labs(title = "Freqpoly")
+
+# Frequency with proportion axis
+ggplot(data = linelist, mapping = aes(x = age, y = after_stat(density), color = gender)) +
+  geom_freqpoly(binwidth = 5, size = 2)+
+  labs(title = "Proportional freqpoly")
+
+# Frequency with proportion axis, smoothed
+ggplot(data = linelist, mapping = aes(x = age, y = after_stat(density), fill = gender)) +
+  geom_density(binwidth = 2, size = 2, alpha = 0.2)+
+  labs(title = "Proportional, smoothed with geom_density()")
+```
+
+If you want to have some fun, try `geom_density_ridges` from the **ggridges** package ([vignette here](https://cran.r-project.org/web/packages/ggridges/vignettes/introduction.html).  
+
+Read more in detail about histograms at the **tidyverse** [page on geom_histogram()](https://ggplot2.tidyverse.org/reference/geom_histogram.html).  
+
+
+
+### Box plots {-}
+
+Box plots are common, but have important limitations. They can obscure the actual distribution - e.g. a bi-modal distribution. See this [R graph gallery](https://www.r-graph-gallery.com/boxplot.html) and this [data-to-viz article](https://www.data-to-viz.com/caveat/boxplot.html) for more details. However, they do nicely display the inter-quartile range and outliers - so they can be overlaid on top of other types of plots that show the distribution in more detail.  
+
+Below is the box plot anatomy ([image source](https://www.leansigmacorporation.com/box-plot-with-minitab/)).  
+
+```{r, out.width = "100%", fig.align = "center", echo=F}
+knitr::include_graphics(here::here("images", "boxplot.png"))
+```
+
+
+When using `geom_boxplot()` to create a box plot, you generally map only one axis (x or y) within `aes()`. The axis specified determines if the plots are horizontal or vertical. 
+
+In most geoms, you create a plot per group by mapping an aesthetic like `color = ` or `fill = ` to a column within `aes()`. However, for box plots achieve this by assigning the grouping column to the un-assigned axis (x or y). Below is code for a boxplot of *all* age values in the dataset, and second is code to display one box plot for each (non-missing) gender in the dataset. Note that 'NA' (missing) values will appear as a separate box plot unless removed. In this example we also set the `fill` to the column `outcome` so each plot is a different color - but this is not necessary.  
+
+```{r fig.show='hold', message=FALSE, warning=FALSE, out.width=c('50%', '50%')}
+# A) Overall boxplot
+ggplot(data = linelist)+  
+  geom_boxplot(mapping = aes(y = age))+   # only y axis mapped (not x)
+  labs(title = "A) Overall boxplot")
+
+# B) Box plot by group
+ggplot(data = linelist, mapping = aes(y = age, x = gender, fill = gender)) + 
+  geom_boxplot()+                      
+  labs(title = "B) Boxplot by gender")      
+```
+
+For code to add a box plot to the edges of a scatter plot ("marginal" plots) see the page [ggplot tips].  
+
+
+
 
 
 ### Violin, jitter, and sina plots {-}
 
-Below is code for creating **violin plots** (`geom_violin`) and **jitter plots** (`geom_jitter`) to show age distributions. One can specify that the 'fill' or 'color'is also determined by the data, thereby inserting these options within the `aes` bracket. 
+Below is code for creating **violin plots** (`geom_violin`) and **jitter plots** (`geom_jitter`) to show age distributions. You can specify that the fill or color is also determined by the data, thereby inserting these options within `aes()`. 
 
 ```{r fig.show='hold', message=FALSE, warning=FALSE, out.width=c('50%', '50%')}
 
-# A) Violin plot by group
-ggplot(data = linelist %>% filter(!is.na(outcome)), 
-       aes(y = age,                                # Continuous variable
-           x = outcome,                            # Grouping variable
-           fill = outcome))+                       # fill variable (color of boxes)
-  geom_violin()+                                   # create the violin plot
-  labs(title = "A) ggplot2 violin plot by gender")    
 
-
-# B) Jitter plot by group
+# A) Jitter plot by group
 ggplot(data = linelist %>% filter(!is.na(outcome)), 
-       aes(y = age,                               # Continuous variable
+       mapping = aes(y = age,                     # Continuous variable
            x = outcome,                           # Grouping variable
-           color = outcome))+ # Color variable
+           color = outcome))+                     # Color variable
   geom_jitter()+                                  # Create the violin plot
-  labs(title = "B) ggplot2 jitter plot by gender")     
+  labs(title = "A) jitter plot by gender")     
+
+
+
+# B) Violin plot by group
+ggplot(data = linelist %>% filter(!is.na(outcome)), 
+       mapping = aes(y = age,                      # Continuous variable
+           x = outcome,                            # Grouping variable
+           fill = outcome))+                       # fill variable (color)
+  geom_violin()+                                   # create the violin plot
+  labs(title = "B) violin plot by gender")    
 
 
 ```
 
-One can combine the two using the `geom_sina` option, which is actually part of the `ggforce` package. This can be easier to visually interpret. A) on the left shows basic layering of both a `geom_violin` and `geom_sina`. B) shows slightly more effort put into the appearance of the ggplot (see in-line comments). 
+One can combine the two using the `geom_sina()` function from the **ggforce** package. This can be easier to visually interpret. A) on the left shows basic layering of both a `geom_violin()` and `geom_sina()`. B) shows slightly more effort put into the appearance of the ggplot (see in-line comments). 
 
 ```{r fig.show='hold', message=FALSE, warning=FALSE, out.width=c('50%', '50%')}
 
@@ -20760,7 +21323,7 @@ ggplot(data = linelist %>% filter(!is.na(outcome)),
            x = outcome)) +      # group variable
   geom_violin()+                # create the violin plot
   geom_sina()+
-  labs(title = "A) ggplot() violin and sina plot by gender")      
+  labs(title = "A) violin and sina plot by gender")      
 
 
 # A) Sina plot by group
@@ -20779,7 +21342,7 @@ ggplot(data = linelist %>% filter(!is.na(outcome)),
                          "Recover" = "#11118c")) + # Define colours for death/recover
   theme_minimal() +                                # Remove the gray background
   theme(legend.position = "none") +                # Remove unnecessary legend
-  labs(title = "B) ggplot() violin and sina plot by gender with formatting")      
+  labs(title = "B) violin and sina plot by gender, with extra formatting")      
 
 
 
@@ -20787,64 +21350,37 @@ ggplot(data = linelist %>% filter(!is.na(outcome)),
 
 
 
-### One continuous variable within facets {-}
+<!-- ### One continuous variable within facets {-} -->
 
-**Faceting basics** 
+<!-- **Faceting basics**  -->
 
-To examine further subgroups, one can 'facet' the graph. This means the plot will be recreated within specified subgroups. One can use:
+<!-- To examine further subgroups, one can 'facet' the graph. This means the plot will be recreated within specified subgroups. One can use: -->
 
-* `facet_wrap()` - this will recreate the sub-graphs and present them alphabetically (typically, unless stated otherwise). You can invoke certain options to determine the look of the facets, e.g. `nrow=1` or `ncol=1` to control the number of rows or columns that the faceted plots are arranged within. See plot A below. 
-* `facet_grid()` - this is suited to seeing subgroups for particular combinations of discrete variables. See plot B  below. `nrow` and `ncol` are not relevant, as the subgroups are presented in a grid, with the subgroups always in the x or y axis (see notes in code below)
+<!-- * `facet_wrap()` - this will recreate the sub-graphs and present them alphabetically (typically, unless stated otherwise). You can invoke certain options to determine the look of the facets, e.g. `nrow=1` or `ncol=1` to control the number of rows or columns that the faceted plots are arranged within. See plot A below.  -->
+<!-- * `facet_grid()` - this is suited to seeing subgroups for particular combinations of discrete variables. See plot B  below. `nrow` and `ncol` are not relevant, as the subgroups are presented in a grid, with the subgroups always in the x or y axis (see notes in code below) -->
 
-You can stipulate up to two faceting variables, with a '~' between them. If only one faceting variable, a '.' is used as a placeholder for a non-used second faceting variable - see code examples.
+<!-- You can stipulate up to two faceting variables, with a '~' between them. If only one faceting variable, a '.' is used as a placeholder for a non-used second faceting variable - see code examples. -->
 
-```{r fig.show='hold', message=FALSE, warning=FALSE, out.width=c('50%', '50%')}
-# A) Histogram of hospitalisation dates faceted by hospital
-ggplot(data = linelist %>% 
-         filter(hospital != "Missing"),               # filter removes unknown hospital
-       aes(x = date_hospitalisation ))+
-  geom_histogram(binwidth=7) +                        # Bindwidth = 7 days
-  labs(title = "A) Ggplot 2 histogram of hospitalisation dates by hospital")+
-  facet_wrap(hospital~.,                              # Facet by just hospital
-            ncol = 2)                                 # Facet in two columns
+<!-- ```{r fig.show='hold', message=FALSE, warning=FALSE, out.width=c('50%', '50%')} -->
+<!-- # A) Histogram of hospitalisation dates faceted by hospital -->
+<!-- ggplot(data = linelist %>%  -->
+<!--          filter(hospital != "Missing"),               # filter removes unknown hospital -->
+<!--        aes(x = date_hospitalisation ))+ -->
+<!--   geom_histogram(binwidth=7) +                        # Bindwidth = 7 days -->
+<!--   labs(title = "A) 2 histogram of hospitalisation dates by hospital")+ -->
+<!--   facet_wrap(hospital~.,                              # Facet by just hospital -->
+<!--             ncol = 2)                                 # Facet in two columns -->
 
-# B) Boxplot of age faceted in a grid with two variables, gender and outcome
-ggplot(data = linelist %>% 
-         filter(!is.na(gender) & !is.na(outcome)),    # filter retains non-missing gender/outcome
-       aes(y = age))+
-  geom_boxplot()+
-  labs(title = "A) A Ggplot2 boxplot by gender and outcome")+
-  facet_grid(outcome~gender)                          # Outcome is the row, gender is the column
+<!-- # B) Boxplot of age faceted in a grid with two variables, gender and outcome -->
+<!-- ggplot(data = linelist %>%  -->
+<!--          filter(!is.na(gender) & !is.na(outcome)),    # filter retains non-missing gender/outcome -->
+<!--        aes(y = age))+ -->
+<!--   geom_boxplot()+ -->
+<!--   labs(title = "A) A boxplot by gender and outcome")+ -->
+<!--   facet_grid(outcome~gender)                          # Outcome is the row, gender is the column -->
 
-```
+<!-- ``` -->
 
-**Further faceting options**
-
-The scales used when facetting are consistent across subgroups, which is helpful for comparisons, but not always appropriate or optimal. 
-
-When using `facet_wrap` or `facet_grid`, we can add `scales = "free_y"` (plot A) so that the heights of the faceted histograms are standardised and the shapes are easier to compare. This is particularly useful if the actual counts are small for one of the subcategories and trends are otherwise hard to see. Instead of `free_y` we can also write `free_x` to do the same for the x axis or `free` for both axes. Note that in `facet_grid`, the y scales will be the same for facets in the same row, and the x scales will be the same for facets in the same column.
-
-When using `facet_grid` only, we can add `space = "free_y"` or `space = "free_x"` so that the actual height or width of the facet is weighted to the values of the figure within. This only works if `scales = "free"` (y or x) already applies. 
-
-```{r fig.show='hold', message=FALSE, warning=FALSE, out.width=c('50%', '50%')}
-# A) Facet hospitalsation date by hospital, free y axis
-ggplot(data = linelist %>% filter(hospital != "Missing"), # filter removes unknown hospital
-       aes(x = date_hospitalisation ))+
-  geom_histogram(binwidth=7) + # Bindwidth = 7 days
-  labs(title = "A) Histogram with free y axis scales")+
-  facet_grid(hospital~., # Facet with hospital as the row 
-             scales = "free_y") # Free the y scale of each facet
-
-# B) Facet hospitalisation date by hospital, free y axis and vertical spacing
-ggplot(data = linelist %>% filter(hospital != "Missing"), # filter removes unknown hospital
-       aes(x = date_hospitalisation ))+
-  geom_histogram(binwidth=7) + # Bindwidth = 7 days
-  labs(title = "B) Histogram with free y axis scales and spacing")+
-  facet_grid(hospital~., # Facet with hospital as the row 
-             scales = "free_y", # Free the y scale of each facet
-             space = "free_y") # Free the vertical spacing of each facet to optimise space
-
-```
 
 ## Two continuous variables  
 
@@ -20871,7 +21407,7 @@ ggplot(data = linelist %>% filter(!is.na(gender) & !is.na(outcome)), # filter re
 
 ### Three continuous variables {-}  
 
-
+UNDER CONSTRUCTION
 
 
 
@@ -21386,7 +21922,7 @@ DT::datatable(head(linelist, 50), rownames = FALSE, filter="top", options = list
 <!-- ======================================================= -->
 ## Colour schemes {}
 
-One thing that can initially be difficult to understand with `ggplot2` is control of colour schemes when passing colour or fill as a variable rather than defining them explicitly within a geom. There are a few simple tricks that can be used to achieve this however. Remember that when setting colours, you can use colour names (as long as they are recognised) like `"red"`, or a specific hex colour such as `"#ff0505"`.
+One thing that can initially be difficult to understand with `ggplot2` is control of colour schemes when passing colour or fill as a variable rather than defining them explicitly within a geom. There are a few simple tricks that can be used to achieve this however. Remember that when setting colours, you can use colour names (as long as they are recognized) like `"red"`, or a specific hex colour such as `"#ff0505"`.
 
 One of the most useful tricks is using manual scaling functions to explicitly define colours. These are functions with the syntax `scale_xxx_manual()` (e.g. `scale_colour_manual()` or `scale_fill_manual()`). In this function you can explicitly define which colours map to which value using the `values =` argument. You can control the legend title with the `name =` argument, and the order of factors with `breaks =`. 
 
@@ -21807,7 +22343,7 @@ Now we align the plot using the function `align_plots()`, specifying horizontal 
 Then we draw the two plots together using `ggdraw()` (from **cowplot**) and referencing the two parts of the `aligned_plots` object.  
 
 ```{r, warning=F, message=F}
-aligned_plots <- align_plots(p1, p2, align="hv", axis="tblr")                  # align the two plots and save them as list
+aligned_plots <- cowplot::align_plots(p1, p2, align="hv", axis="tblr")         # align the two plots and save them as list
 aligned_plotted <- ggdraw(aligned_plots[[1]]) + draw_plot(aligned_plots[[2]])  # overlay them and save the visual plot
 aligned_plotted                                                                # print the overlayed plots
 
@@ -21863,13 +22399,146 @@ ggplot(malaria_facility_1, aes(x = data_date)) +
 
 UNDER CONSTRUCTION
 
-**cowplot**  
+Two packages that are very useful for combining plots are **cowplot** and **patchwork**. In this section we will mostly focus on **cowplot**, with occassional use of **patchwork**.  
 
-**patchwork**  
+Here is the online [introduction to cowplot](https://cran.r-project.org/web/packages/cowplot/vignettes/introduction.html). You can read the more extensive documentation for each function online [here](https://www.rdocumentation.org/packages/cowplot/versions/1.1.1). We will cover a few of the most common use cases and functions below.  
+
+The **cowplot** package works in tandem with **ggplot2** - essentially, you use it to arrange and combine ggplots and their legends into compound figures. It can also accept **base** R graphics.  
+
+```{r}
+pacman::p_load(
+  tidyverse,      # data manipulation and visualisation
+  cowplot,        # combine plots
+  patchwork       # combine plots
+)
+```
+
+
+### `plot_grid()`  {-}  
+
+A very useful function is `plot_grid()`, which arranges multiple plots into a grid. It can also align plot elements (e.g. axes) vertically and/or horizontally across the sub-plots.  
+
+First, 
+
+
+
+```{r}
+
+
+```
 
 
 
 
+
+### Combine legends {-}  
+
+If your plots have the same legend, combining is relatively straight-forward.
+
+UNDER CONSTRUCTION
+
+If your plots have different legends, you must use an alternative approach:  
+
+1) Create and save your plots *without legends* using `theme(legend.position = "none")`  
+2) Extract the legends from each plot using `get_legend()` as shown below - *but extract legends from the plots modified to actually show the legend*  
+3) Combine the legends into a legends panel  
+4) Combine the plots and legends panel  
+
+
+For demonstration we show the two plots arranged in a grid with their own legends showing (ugly and inefficient use of space):  
+
+```{r, out.width=c('50%'), fig.show='hold',}
+p1 <- linelist %>% 
+  mutate(hospital = recode(hospital, "St. Mark's Maternity Hospital (SMMH)" = "St. Marks")) %>% 
+  count(hospital, outcome) %>% 
+  ggplot()+
+  geom_col(mapping = aes(x = hospital, y = n, fill = outcome))+
+  coord_flip()+
+  theme_minimal()
+
+p2 <- linelist %>% 
+  mutate(hospital = recode(hospital, "St. Mark's Maternity Hospital (SMMH)" = "St. Marks")) %>% 
+  count(hospital, age_cat) %>% 
+  ggplot()+
+  geom_col(mapping = aes(x = hospital, y = n, fill = age_cat))+
+  coord_flip()+
+  theme_minimal()+
+    theme(
+    axis.text.y = element_blank()
+  )
+
+p1
+
+p2
+
+cowplot::plot_grid(p1, p2, rel_widths = c(0.3))
+```
+
+And now we show how to combine the legends:  
+
+```{r, out.width=c('50%'), fig.show='hold',}
+p1 <- linelist %>% 
+  mutate(hospital = recode(hospital, "St. Mark's Maternity Hospital (SMMH)" = "St. Marks")) %>% 
+  count(hospital, outcome) %>% 
+  ggplot()+
+  geom_col(mapping = aes(x = hospital, y = n, fill = outcome))+
+  coord_flip()+
+  theme_minimal()+
+  theme(
+    legend.position = "none")+
+  labs(title = "Cases by outcome")
+
+
+
+p2 <- linelist %>% 
+  mutate(hospital = recode(hospital, "St. Mark's Maternity Hospital (SMMH)" = "St. Marks")) %>% 
+  count(hospital, age_cat) %>% 
+  ggplot()+
+  geom_col(mapping = aes(x = hospital, y = n, fill = age_cat))+
+  coord_flip()+
+  theme_minimal()+
+  theme(
+    legend.position = "none",
+    axis.text.y = element_blank(),
+    axis.title.y = element_blank()
+  )+
+  labs(title = "Cases by age")
+
+
+# extract legend from p1
+leg_p1 <- cowplot::get_legend(p1 + theme(legend.position = "right",  # extract vertical legend
+                                         legend.justification = c(0,0.5))) # so legends align
+# extract legend from p2
+leg_p2 <- cowplot::get_legend(p2 + theme(legend.position = "right", # extract vertical legend   
+                                         legend.justification = c(0,0.5))) # so legends align
+
+# create a blank plot for legend alignment
+#blank_p <- patchwork::plot_spacer() + theme_void()
+
+# create legends panel, 3 rows one of which is empty
+legends <- cowplot::plot_grid(leg_p1, leg_p2, nrow = 2, rel_heights = c(.3, .7))
+
+# combine two plots and legends panel
+combined <- cowplot::plot_grid(p1, p2, legends, ncol = 3, rel_widths = c(.4, .4, .2))
+
+combined
+
+
+```
+
+
+
+
+This solution was learned from [this post](https://stackoverflow.com/questions/52060601/ggplot-multiple-legends-arrangement) with a minor fix to align legends from [this post](https://github.com/wilkelab/cowplot/issues/33).  
+
+
+<span style="color: darkgreen;">**_TIP:_** Fun note - the "cow" in **cowplot** comes from the creator's name - Claus O. Wilke.</span>  
+
+
+## Sparklines  
+
+UNDER CONSTRUCTION  
+(perhaps move to Tables for presentation page)
 
 
 
@@ -24152,7 +24821,7 @@ plot_deaths <- linelist %>%                        # begin with linelist
 Now use **cowplot** to overlay the two plots. Attention has been paid to the x-axis alignment, side of the y-axis, and use of `theme_cowplot()`.  
 
 ```{r, warning=F, message=F}
-aligned_plots <- align_plots(plot_cases, plot_deaths, align="hv", axis="tblr")
+aligned_plots <- cowplot::align_plots(plot_cases, plot_deaths, align="hv", axis="tblr")
 ggdraw(aligned_plots[[1]]) + draw_plot(aligned_plots[[2]])
 ```
 
@@ -24236,7 +24905,7 @@ plot_cumulative <- ggplot()+
 Now use **cowplot** to overlay the two plots. Attention has been paid to the x-axis alignment, side of the y-axis, and use of `theme_cowplot()`.  
 
 ```{r, warning=F, message=F}
-aligned_plots <- align_plots(plot_cases, plot_cumulative, align="hv", axis="tblr")
+aligned_plots <- cowplot::align_plots(plot_cases, plot_cumulative, align="hv", axis="tblr")
 ggdraw(aligned_plots[[1]]) + draw_plot(aligned_plots[[2]])
 ```
 
@@ -26062,10 +26731,10 @@ options(scipen=1, digits=7)
 <!--chapter:end:new_pages/combination_analysis.Rmd-->
 
 
-# Heat tiles { }  
+# Heat plots { }  
 
 
-Heat tiles ("heatmaps") can be useful visualizations when trying to display 3 variables (x-axis, y-axis, and fill). Below we demonstrate two examples:  
+Heat plots, also known as "heat maps" or "heat tiles", can be useful visualizations when trying to display 3 variables (x-axis, y-axis, and fill). Below we demonstrate two examples:  
 
 * A visual matrix of transmission events by age ("who infected whom")  
 * Tracking reporting metrics across many facilities/jurisdictions over time  
@@ -28346,7 +29015,7 @@ p <- p %>%          # re-define interactive plot without these buttons
 <!-- ======================================================= -->
 ## Heat tiles {  }
 
-You can make almost any `ggplot()` plot interactive, including heat tiles. In the page on [Heat tiles] you can read about how to make the below plot, which displays the proportion of days per week that certain facilities reported data to their province.  
+You can make almost any `ggplot()` plot interactive, including heat tiles. In the page on [Heat plots] you can read about how to make the below plot, which displays the proportion of days per week that certain facilities reported data to their province.  
 
 Here is the code, although we will not describe it in depth here.  
 
@@ -28415,74 +29084,74 @@ metrics_plot %>%
   plotly::config(displaylogo = FALSE, modeBarButtonsToRemove = plotly_buttons_remove)
 ```
 
-## Maps {-}  
+<!-- ## Maps {-}   -->
 
-You can also make `ggplot()` GIS maps interactive, although it makes a bit more care. 
+<!-- You can also make `ggplot()` GIS maps interactive, although it makes a bit more care.  -->
 
-THIS SECTION IS UNDER CONSTRUCTION 
+<!-- THIS SECTION IS UNDER CONSTRUCTION  -->
 
-Although **plotly** works well with `ggplot2::geom_sf` in RStudio, when you try to include its outputs in Rmarkdown HTML files (like this book), it doesn't work well.  
-  
-So instead you can use {**plotly**}'s own mapping tools which can be tricky but are easy when you know how. Read on...  
-  
-We're going to use Covid-19 incidence across African countries for this example. The data used can be found on the [World Health Organisation website](https://covid19.who.int/table).  
-  
-You'll also need a new type of file, a GeoJSON, which is sort of similar to a shp file for those familiar with GIS. For this book, we used one from [here](https://geojson-maps.ash.ms).  
-  
-GeoJSON files are stored in R as complex lists and you'll need to maipulate them a little.
+<!-- Although **plotly** works well with `ggplot2::geom_sf` in RStudio, when you try to include its outputs in Rmarkdown HTML files (like this book), it doesn't work well.   -->
 
-```{r, echo=T, eval=T}
-## You need two new packages: {rjson} and {purrr}
-pacman::p_load(plotly, rjson, purrr)
+<!-- So instead you can use {**plotly**}'s own mapping tools which can be tricky but are easy when you know how. Read on...   -->
 
-## This is a simplified version of the WHO data
-df <- rio::import(here::here("data", "gis", "covid_incidence.csv"))
+<!-- We're going to use Covid-19 incidence across African countries for this example. The data used can be found on the [World Health Organisation website](https://covid19.who.int/table).   -->
 
-## Load your geojson file
-geoJSON <- rjson::fromJSON(file=here::here("data", "gis", "africa_countries.geo.json"))
+<!-- You'll also need a new type of file, a GeoJSON, which is sort of similar to a shp file for those familiar with GIS. For this book, we used one from [here](https://geojson-maps.ash.ms).   -->
 
-## Here are some of the properties for each element of the object
-head(geoJSON$features[[1]]$properties)
+<!-- GeoJSON files are stored in R as complex lists and you'll need to maipulate them a little. -->
 
-```
+<!-- ```{r, echo=T, eval=T} -->
+<!-- ## You need two new packages: {rjson} and {purrr} -->
+<!-- pacman::p_load(plotly, rjson, purrr) -->
+
+<!-- ## This is a simplified version of the WHO data -->
+<!-- df <- rio::import(here::here("data", "gis", "covid_incidence.csv")) -->
+
+<!-- ## Load your geojson file -->
+<!-- geoJSON <- rjson::fromJSON(file=here::here("data", "gis", "africa_countries.geo.json")) -->
+
+<!-- ## Here are some of the properties for each element of the object -->
+<!-- head(geoJSON$features[[1]]$properties) -->
+
+<!-- ``` -->
 
 
-This is the tricky part. For {**plotly**} to match your incidence data to GeoJSON, the countries in the geoJSON need an id in a specific place in the list of lists. For this we need to build a basic function:
-```{r}
-## The property column we need to choose here is "sovereignt" as it is the names for each country
-give_id <- function(x){
-  
-  x$id <- x$properties$sovereignt  ## Take sovereignt from properties and set it as the id
-  
-  return(x)
-}
+<!-- This is the tricky part. For {**plotly**} to match your incidence data to GeoJSON, the countries in the geoJSON need an id in a specific place in the list of lists. For this we need to build a basic function: -->
+<!-- ```{r} -->
+<!-- ## The property column we need to choose here is "sovereignt" as it is the names for each country -->
+<!-- give_id <- function(x){ -->
 
-## Use {purrr} to apply this function to every element of the features list of the geoJSON object
-geoJSON$features <- purrr::map(.x = geoJSON$features, give_id)
-```
+<!--   x$id <- x$properties$sovereignt  ## Take sovereignt from properties and set it as the id -->
 
-<!-- ======================================================= -->
-### Maps - plot {  }
+<!--   return(x) -->
+<!-- } -->
 
-UNDER CONSTRUCTION
+<!-- ## Use {purrr} to apply this function to every element of the features list of the geoJSON object -->
+<!-- geoJSON$features <- purrr::map(.x = geoJSON$features, give_id) -->
+<!-- ``` -->
 
-```{r, echo=FALSE, eval=FALSE, out.width=c('95%'), out.height=c('500px'),warning=F}
-plotly::plot_ly() %>% 
-  plotly::add_trace(                    #The main plot mapping functionn
-    type="choropleth",
-    geojson=geoJSON,
-    locations=df$Name,          #The column with the names (must match id)
-    z=df$Cumulative_incidence,  #The column with the incidence values
-    zmin=0,
-    zmax=57008,
-    colorscale="Viridis",
-    marker=list(line=list(width=0))
-  ) %>%
-  colorbar(title = "Cases per million") %>%
-  layout(title = "Covid-19 cumulative incidence",
-                 geo = list(scope = 'africa')) %>% 
-  config(displaylogo = FALSE, modeBarButtonsToRemove = plotly_buttons_remove)
-```
+<!-- <!-- ======================================================= --> -->
+<!-- ### Maps - plot {  } -->
+
+<!-- UNDER CONSTRUCTION -->
+
+<!-- ```{r, echo=FALSE, eval=FALSE, out.width=c('95%'), out.height=c('500px'),warning=F} -->
+<!-- plotly::plot_ly() %>%  -->
+<!--   plotly::add_trace(                    #The main plot mapping functionn -->
+<!--     type="choropleth", -->
+<!--     geojson=geoJSON, -->
+<!--     locations=df$Name,          #The column with the names (must match id) -->
+<!--     z=df$Cumulative_incidence,  #The column with the incidence values -->
+<!--     zmin=0, -->
+<!--     zmax=57008, -->
+<!--     colorscale="Viridis", -->
+<!--     marker=list(line=list(width=0)) -->
+<!--   ) %>% -->
+<!--   colorbar(title = "Cases per million") %>% -->
+<!--   layout(title = "Covid-19 cumulative incidence", -->
+<!--                  geo = list(scope = 'africa')) %>%  -->
+<!--   config(displaylogo = FALSE, modeBarButtonsToRemove = plotly_buttons_remove) -->
+<!-- ``` -->
 
 <!-- ======================================================= -->
 ## Resources {  }
@@ -28576,14 +29245,13 @@ options(scipen=1, digits=7)
 knitr::include_graphics(here::here("images", "markdown/rmarkdown_overview.png"))
 ```
 
-R Markdown is a widely-used tool for creating automated, reproducible, and share-worthy outputs, such as report. It can generate static or interactive outputs, in word, pdf, html, powerpoint, and other formats. 
+R Markdown is a widely-used tool for creating automated, reproducible, and share-worthy outputs, such as reports. It can generate static or interactive outputs, in Word, pdf, html, powerpoint, and other formats. 
 
-<!-- ======================================================= -->
-## Overview {  }
+An R Markdown script intersperces R code and text such that the script actually  *becomes your output document*. You can create an entire formatted document, including narrative text (can be dynamic to change based on your data), tables, figures, bullets/numbers, bibliographies, etc. 
 
-Using R markdown will allow you easily recreate an entire formatted document, including tables/figures/text, using new data (e.g. daily surveillance reports) and/or subsets of data (e.g. reports for specific geographies). 
+Such documents can be produced to update on a routine basis (e.g. daily surveillance reports) and/or run on subsets of data (e.g. reports for each jurisdiction).  
 
-This guide will go through the basics. See Resources section for further info. Other pages in this handbook expand on this page:  
+Other pages in this handbook expand on this topic:  
 
 * The page [Organizing routine reports] demonstrates how to routinize your report production with auto-generated time-stamped folders.  
 * The page [Dashboards with M Markdown] explains how to format a R Markdown report as a dashboard.  
@@ -28597,13 +29265,13 @@ This guide will go through the basics. See Resources section for further info. O
 
 To explain some of the concepts and packages involved:
 
-* **Markdown** is a “language” which uses syntax that allows design of a document using plain text, so that it can be converted to html and other formats. It is not specific to R, and usually a markdown file has an ‘.md’ extension.
-* **R Markdown**: This is an extension of markdown that _is_ specific to R, with file extensions '.Rmd'. This allows R code to be embedded in 'chunks' so that the code itself can be run, rather than just having a text document. 
-* **rmarkdown - the package**: This is used by R to render the .Rmd file into the desire output. However its focus is the markdown (text) syntax, so we also need...
+* **Markdown** is a “language” that allows you to write a document using plain text, that can be converted to html and other formats. It is not specific to R. Files written in Markdown have a ‘.md’ extension.
+* **R Markdown**: is a variation on markdown that _is specific to R_ - it allows you to write a document using markdown to produce text *and to embed R code and display their outputs*. R Markdown files have '.Rmd' extension.  
+* **rmarkdown - the package**: This is used by R to render the .Rmd file into the desired output. It's focus is converting the markdown (text) syntax, so we also need...
 * **knitr**: This R package will read the code chunks, execute it, and 'knit' it back into the document. This is how tables and graphs are included alongside the text.
-* **Pandoc**: Finally, pandoc is needed to actually convert documents into e.g. word/pdf/powerpoint etc. It is a software separate from R.  
+* **Pandoc**: Finally, pandoc actually convert the output into word/pdf/powerpoint etc. It is a software separate from R but is installed automatically with RStudio.  
 
-In sum, the process involves feeding the .Rmd file to **knitr**, which executes the R code chunks and creates a new .md (markdown) file which includes the R code and its rendered output. The .md file is the processed by pandoc to create the finished product: a Microsoft Word document, HTML file, powerpoint document, pdf, etc.  
+In sum, the process involves feeding the .Rmd file to **knitr**, which executes the R code chunks and creates a new .md (markdown) file which includes the R code and its rendered output. The .md file is then processed by pandoc to create the finished product: a Microsoft Word document, HTML file, powerpoint document, pdf, etc.  
 
 ```{r out.width = "100%", fig.align = "center", echo=F}
 knitr::include_graphics(here::here("images", "markdown/0_rmd.png"))
@@ -28615,7 +29283,7 @@ knitr::include_graphics(here::here("images", "markdown/0_rmd.png"))
 
 To create a R Markdown output, you need to have the following installed:
 
-* The **rmarkdown** package, as described above  
+* The **rmarkdown** package (**knitr** will also be installed automatically)  
 * Pandoc, which should come installed with RStudio. If you are not using RStudio, you can download it here: http://pandoc.org. 
 * If you want to generate PDF output (a bit trickier), you will need to install LaTeX. For R Markdown users who have not installed LaTeX before, we recommend that you install TinyTeX (https://yihui.name/tinytex/). You can use the following commands: 
 
@@ -31327,6 +31995,9 @@ git commit
 
 ## Package management with **renv**  
 
+UNDER CONSTRUCTION  
+
+[Introduction to **renv**](https://rstudio.github.io/renv/articles/renv.html)
 
 
 
@@ -32309,6 +32980,274 @@ options(scipen=1, digits=7)
 ```
 
 <!--chapter:end:new_pages/network_drives.Rmd-->
+
+
+# Data Table { }  
+     
+The handbook focusses on the **dplyr** “verb” functions and the **magrittr** pipe operator `%>%` as a method to clean and group data, but the **data.table** package offers an alternative method that you may encounter in your R career.  
+
+
+
+<!-- ======================================================= -->
+## Intro to data tables {  }
+
+A data table is a 2-dimensional data structure like a data frame that allows complex grouping operations to be performed. The data.table syntax is structured so that operations can be performed on rows, columns and groups. 
+
+The structure is **DT[i, j, by]**, separated by 3 parts; the **i, j** and **by** arguments. The **i** argument allows for subsetting of required rows, the **j** argument allows you to operate on columns and the **by** argument allows you operate on columns by groups.
+  
+This page will address the following topics:  
+
+* Importing data and use of `fread()` and `fwrite()`
+* Selecting and filtering rows using the **i** argument
+* Using helper functions `%like%`, `%chin%`, `%between%` 
+* Selecting and computing on columns using the **j** argument
+* Computing by groups using the **by** argument
+* Adding and updating data to data tables using `:=`
+
+<!-- ======================================================= -->
+## Load packages and import data { }
+
+### Load packages {-}  
+
+Using the `p_load()` function from **pacman**, we load (and install if necessary) packages required for this analysis.
+     
+     
+```{r}
+pacman::p_load(
+  rio,        # to import data
+  data.table, # to group and clean data
+  tidyverse,  # allows use of pipe (%>%) function in this chapter
+  here 
+  ) 
+```
+
+
+### Import data {-}
+
+This page will explore some of the core functions of **data.table** using the case linelist referenced throughout the handbook.
+
+We import the dataset of cases from a simulated Ebola epidemic. If you want to download the data to follow step-by-step, see instructions in the [Download book and data] page. The dataset is imported using the `import()` function from the **rio** package. See the page on [Import and export] for various ways to import data. From here we use `data.table()` to convert the data frame to a data table.
+
+```{r}
+linelist <- rio::import(here("data", "linelist_cleaned.xlsx")) %>% data.table()
+```
+
+The `fread()` function is used to directly import regular delimited files, such as .csv files, directly to a data table format. This function, and its counterpart, `fwrite()`, used for writing data.tables as regular delimited files are very fast and computationally efficient options for large databases.
+
+
+The first 20 rows of `linelist`:  
+
+```{r message=FALSE, echo=F, eval=FALSE}
+DT::datatable(head(linelist,20), rownames = FALSE, filter="top", options = list(pageLength = 5, scrollX=T), class = 'white-space: nowrap' )
+```
+
+Base R commands such as `dim()` that are used for data frames can also be used for data tables
+
+```{r}
+dim(linelist) #gives the number of rows and columns in the data table
+```
+
+
+<!-- ======================================================= -->
+## The i argument: selecting and filtering rows{ }
+     
+Recalling the **DT[i, j, by]** structure, we can filter rows using either row numbers or logical expressions. The i argument is first; therefore, the syntax **DT[i]** or **DT[i,]** can be used. 
+
+The first example retrieves the first 5 rows of the data table, the second example subsets cases are 18 years or over, and the third example subsets cases 18 years old or over but not diagnosed at the Central Hospital:
+
+
+```{r, eval=F}
+linelist[1:5] #returns the 1st to 5th row
+linelist[age >= 18] #subsets cases are equal to or over 18 years
+linelist[age >= 18 & hospital != "Central Hospital"] #subsets cases equal to or over 18 years old but not diagnosed at the Central Hospital
+
+```
+
+Using .N in the i argument represents the total number of rows in the data table. This can be used to subset on the row numbers: 
+
+```{r, eval=F}
+linelist[.N] #returns the last row
+linelist[15:.N] #returns the 15th to the last row
+```
+
+
+### Using helper functions for filtering {-}  
+
+Data table uses helper functions that make subsetting rows easy. The `%like%` function is used to match a pattern in a column, `%chin%` is used to match a specific character, and the `%between%` helper function is used to match numeric columns within a prespecified range.
+
+In the following examples we:
+*  filter rows where the hospital variable contains “Hospital”
+*  filter rows where the outcome is “Recover” or “Death”
+*  filter rows in the age range 40-60
+
+```{r, eval=F}
+linelist[hospital %like% "Hospital"] #filter rows where the hospital variable contains “Hospital”
+linelist[outcome %chin% c("Recover", "Death")] #filter rows where the outcome is “Recover” or “Death”
+linelist[age %between% c(40, 60)] #filter rows in the age range 40-60
+
+#%between% must take a vector of length 2, whereas %chin% can take vectors of length >= 1
+
+```
+
+## The j argument: selecting and computing on columns{ }
+
+Using the **DT[i, j, by]** structure, we can select columns using numbers or names. The **j** argument is second; therefore, the syntax **DT[, j]** is used. To facilitate computations on the **j** argument, the column is wrapped using either `list()` or `.()`. 
+
+
+### Selecting columns {-} 
+
+The first example retrieves the first, third and fifth columns of the data table, the second example selects all columns except the height, weight and gender columns. The third example uses the `.()` wrap to select the **case_id** and **outcome** columns.
+
+
+```{r, eval=F}
+linelist[ , c(1,3,5)]
+linelist[ , -c("gender", "age", "wt_kg", "ht_cm")]
+linelist[ , list(case_id, outcome)] #linelist[ , .(case_id, outcome)] works just as well
+
+```
+
+### Computing on columns {-} 
+
+By combining the **i** and **j** arguments it is possible to filter rows and compute on the columns. Using **.N** in the **j** argument also represents the total number of rows in the data table and can be useful to return the number of rows after row filtering.
+
+In the following examples we:
+* Count the number of cases that stayed over 7 days in hospital
+* Calculate the mean age of the cases that died at the military hospital
+* Calculate the standard deviation, median, mean age of the cases that recovered at the central hospital
+
+```{r}
+linelist[days_onset_hosp > 7 , .N]
+linelist[hospital %like% "Military" & outcome %chin% "Death", .(mean(age, na.rm = T))] #na.rm = T removes N/A values
+linelist[hospital == "Central Hospital" & outcome == "Recover", 
+                 .(mean_age = mean(age, na.rm = T),
+                   median_age = median(age, na.rm = T),
+                   sd_age = sd(age, na.rm = T))] #this syntax does not use the helper functions but works just as well
+
+```
+
+Remember using the .() wrap in the j argument facilitates computation, returns a data table and allows for column naming.
+
+## The by argument: computing by groups{ }
+
+The **by** argument is the third argument in the **DT[i, j, by]** structure. The **by** argument accepts both a character vector and the `list()` or `.()` syntax. Using the `.()` syntax in the **by** argument allows column renaming on the fly.
+
+In the following examples we:	
+* group the number of cases by hospital
+* in cases 18 years old or over, calculate the mean height and weight of cases according to gender and whether they recovered or died
+* in admissions that lasted over 7 days, count the number of cases according to the month they were admitted and the hospital they were admitted to
+
+
+````{r}
+linelist[, .N, .(hospital)] #the number of cases by hospital
+linelist[age > 18, .(mean_wt = mean(wt_kg, na.rm = T),
+                             mean_ht = mean(ht_cm, na.rm = T)), .(gender, outcome)] #NAs represent the categories where the data is missing
+linelist[days_onset_hosp > 7, .N, .(month = month(date_hospitalisation), hospital)]
+
+```
+
+Data.table also allows the chaining expressions as follows:
+
+````{r}
+
+linelist[, .N, .(hospital)][order(-N)][1:3] #1st selects all cases by hospital, 2nd orders the cases in descending order, 3rd subsets the 3 hospitals with the largest caseload
+
+
+```
+
+In these examples we are following the assumption that a row in the data table is equal to a new case, and so we can use the **.N** to represent the number of rows in the data table. Another useful function to represent the number of unique cases is `uniqueN()`, which returns the number of unique values in a given input. This is illustrated here:
+
+````{r}
+
+linelist[, .(uniqueN(gender))] #remember .() in the j argument returns a data table
+
+```
+
+The answer is 3, as the unique values in the gender column are m, f and N/A. Compare with the base R function `unique()`, which returns all the unique values in a given input:
+
+````{r}
+
+linelist[, .(unique(gender))]
+```
+
+To find the number of unique cases in a given month we would write the following:
+
+````{r}
+
+linelist[, .(uniqueN(case_id)), .(month = month(date_hospitalisation))]
+
+```
+
+## Adding and updating to data tables { }
+
+The `:=` operator is used to add or update data in a data table. Adding columns to your data table can be done in the following ways:
+
+````{r}
+
+linelist[, adult := age >= 18] #adds one column
+linelist[, c("child", "wt_lbs") := .(age < 18, wt_kg*2.204)] #to add multiple columns requires c("") and list() or .() syntax
+linelist[, `:=` (bmi_in_range = (bmi > 16 & bmi < 40),
+                         no_infector_source_data = is.na(infector) | is.na(source))] #this method uses := as a functional operator `:=`
+linelist[, adult := NULL] #deletes the column
+
+```
+
+
+Further complex aggregations are beyond the scope of this introductory chapter, but the idea is to provide a popular and viable alternative to **dplyr** for grouping and cleaning data. The **data.table** package is a great package that allows for neat and readable code.
+
+
+## Resources {  }
+
+Here are some useful resources for more information:
+* https://cran.r-project.org/web/packages/data.table/vignettes/datatable-intro.html
+* https://github.com/Rdatatable/data.table
+* https://s3.amazonaws.com/assets.datacamp.com/img/blog/data+table+cheat+sheet.pdf
+* https://www.machinelearningplus.com/data-manipulation/datatable-in-r-complete-guide/
+* https://www.datacamp.com/community/tutorials/data-table-r-tutorial
+
+You can perform any summary function on grouped data; see the Cheat Sheet here for more info:
+https://s3.amazonaws.com/assets.datacamp.com/blog_assets/datatable_Cheat_Sheet_R.pdf
+
+
+
+
+```{r include=FALSE, cache=FALSE}
+
+# clear workspace
+rm(list = ls(all = TRUE))
+
+# clear all packages except base
+#lapply(names(sessionInfo()$loadedOnly), require, character.only = TRUE)
+#invisible(lapply(paste0('package:', names(sessionInfo()$otherPkgs)), detach, character.only=TRUE, unload=TRUE, force=TRUE))
+
+# to ensure that tidyverse packages prevail
+filter <- dplyr::filter
+select <- dplyr::select
+summarise <- dplyr::summarise
+summary <- base::summary
+incidence <- incidence2::incidence
+
+#load core packages
+pacman::p_load(
+     rio,
+     here,
+     DT,
+     stringr,
+     lubridate,
+     tidyverse
+)
+
+# import the cleaned ebola linelist
+linelist <- rio::import(here::here("data", "case_linelists", "linelist_cleaned.rds"))
+
+# import the count data - facility level
+#count_data <- rio::import(here::here("data", "facility_count_data.rds"))
+
+# Settings
+
+options(scipen=1, digits=7)
+```
+
+<!--chapter:end:new_pages/data_table.Rmd-->
 
 
 # Advanced RStudio { }  
