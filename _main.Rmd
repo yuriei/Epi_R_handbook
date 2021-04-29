@@ -214,1306 +214,776 @@ options(scipen=1, digits=7)
 <!--chapter:end:new_pages/cat_preview.Rmd-->
 
 
-# Shiny and dashboards { }  
+# R Markdown reports { }  
 
-One of the largest drawbacks of `R` is its usability for people who are new to or have no experience with programming languages. While these skills are very valuable, most people will find that this represents a barrier to sharing analyses, especially in multidisciplinary environments. It requires some work to maintain an `R` installation, and not everyone will be comfortable running shared code, even if it's well documented and easy to read. This is *especially* true when users have to change parameters of code! For this reason dashboards are often a great way to share results from analyses with others without having to interface with code itself. 
+```{r out.width = "100%", fig.align = "center", echo=F}
+knitr::include_graphics(here::here("images", "markdown/rmarkdown_overview.png"))
+```
 
-R based dashboards are also advantageous in that they centralise how code is run - when the same code is run on different machines, often people will have to deal with differing file paths, different R versions, and different package installations. For this reason, dashboards are a great way to share code with others in a user friendly way!
+R Markdown is a widely-used tool for creating automated, reproducible, and share-worthy outputs, such as reports. It can generate static or interactive outputs, in Word, pdf, html, powerpoint, and other formats. 
 
-Despite this, making dashboards in `R` requires a relatively advanced knowledge of the language. For this reason, it is recommended that someone learning dashboards has good knowledge of data transformation and visualisation, and is comfortable debugging code, and writing functions. Working with dashboards is not intuitive when you're starting, and is difficult to understand at times, but is a great skill to learn and gets much easier with practice!
+An R Markdown script intersperces R code and text such that the script actually  *becomes your output document*. You can create an entire formatted document, including narrative text (can be dynamic to change based on your data), tables, figures, bullets/numbers, bibliographies, etc. 
 
-This section will give a short overview of how you can use `R` to make dashboards, primarily by using the excellent `shiny` package, and its extensions.
+Such documents can be produced to update on a routine basis (e.g. daily surveillance reports) and/or run on subsets of data (e.g. reports for each jurisdiction).  
+
+Other pages in this handbook expand on this topic:  
+
+* The page [Organizing routine reports] demonstrates how to routinize your report production with auto-generated time-stamped folders.  
+* The page [Dashboards with M Markdown] explains how to format a R Markdown report as a dashboard.  
+
+
 
 <!-- ======================================================= -->
-## The structure of a shiny app {  }
+## Preparation {  }
 
-### Basic file structures
-To understand `shiny`, we first need to understand the file structure of an app works! We should make a brand new directory before we start. This can actually be made easier by choosing _New project_ in _Rstudio_, and choosing _Shiny Web Application_. This will create the basic structure of a shiny app for you.
+**Background to R Markdown**
 
-Lets also install shiny before we go any further:
+To explain some of the concepts and packages involved:
 
-```{r, eval = FALSE}
-install.packages("shiny")
+* **Markdown** is a “language” that allows you to write a document using plain text, that can be converted to html and other formats. It is not specific to R. Files written in Markdown have a ‘.md’ extension.
+* **R Markdown**: is a variation on markdown that _is specific to R_ - it allows you to write a document using markdown to produce text *and to embed R code and display their outputs*. R Markdown files have '.Rmd' extension.  
+* **rmarkdown - the package**: This is used by R to render the .Rmd file into the desired output. It's focus is converting the markdown (text) syntax, so we also need...
+* **knitr**: This R package will read the code chunks, execute it, and 'knit' it back into the document. This is how tables and graphs are included alongside the text.
+* **Pandoc**: Finally, pandoc actually convert the output into word/pdf/powerpoint etc. It is a software separate from R but is installed automatically with RStudio.  
+
+In sum, the process involves feeding the .Rmd file to **knitr**, which executes the R code chunks and creates a new .md (markdown) file which includes the R code and its rendered output. The .md file is then processed by pandoc to create the finished product: a Microsoft Word document, HTML file, powerpoint document, pdf, etc.  
+
+```{r out.width = "100%", fig.align = "center", echo=F}
+knitr::include_graphics(here::here("images", "markdown/0_rmd.png"))
 ```
 
-When opening this project, you'll notice there is a `.R` file already present called _app.R_. It is *essential* that we either have one of two basic file structures in our file structure:
+(source: https://rmarkdown.rstudio.com/authoring_quick_tour.html):
 
-1. A file called _app.R_
-2. Two files called _ui.R_ and _server.R_
+**Installation**
 
-```{r, eval = FALSE}
+To create a R Markdown output, you need to have the following installed:
 
-# an example of app.R
+* The **rmarkdown** package (**knitr** will also be installed automatically)  
+* Pandoc, which should come installed with RStudio. If you are not using RStudio, you can download it here: http://pandoc.org. 
+* If you want to generate PDF output (a bit trickier), you will need to install LaTeX. For R Markdown users who have not installed LaTeX before, we recommend that you install TinyTeX (https://yihui.name/tinytex/). You can use the following commands: 
 
-ui <- fluidPage(
-
-    # Application title
-    titlePanel("My app"),
-
-    # Sidebar with a slider input widget
-    sidebarLayout(
-        sidebarPanel(
-            sliderInput("input_1")
-        ),
-
-        # Show a plot 
-        mainPanel(
-           plotOutput("my_plot")
-        )
-    )
-)
-
-# Define server logic required to draw a histogram
-server <- function(input, output) {
-     
-     plot_1 <- reactive({
-          plot_func(param = input_1)
-     })
-     
-    output$my_plot <- renderPlot({
-       plot_1()
-    })
-}
-
-
-# Run the application 
-shinyApp(ui = ui, server = server)
-
-
+```{r, eval=F}
+pacman::p_load(tinytex)     # install tinytex package
+tinytex::install_tinytex()  # R command to install TinyTeX software
 ```
 
+<!-- ======================================================= -->
+## Getting started {  }
 
-If you open this file, you'll notice that two different objects are defined one called `ui` and another called `server`. These objects *must* be defined in *every* shiny app and are central to the structure of the app itself! The only difference between the two structures above is that in structure 1, both `ui` and `server` are defined in one file, while they are defined in separate files in structure 2. We can also (and we should if we have a larger app) have other .R files in our structure that we can `source()` into our app, but we need these core files at all times.
+### Install rmarkdown R package {-}
 
+Install the **rmarkdown** R package. In this handbook we emphasize `p_load()` from **pacman**, which installs the package if necessary *and* loads it for use. You can also load installed packages with  `library()` from **base** R. See the page on [R basics] for more information on R packages.  
 
-
-### The server and the ui
-
-We next need to understand what the server and ui objects actually _do_. Put simply, these are two objects that are interacting with each other whenever the user interacts with the shiny app.
-
-The UI element of a shiny app is, on a basic level, R code that creates an HTML interface. This means that everything that is *displayed* in the UI of an app. This largely includes:
-
-* "Widgets" - dropdown menus, check boxes, sliders, etc that can be interacted with by the user
-* Plots, tables, etc - outputs that are generated with R code
-* Navigation aspects of an app - tabs, panes, etc. 
-* Generic text, hyperlinks, etc
-* HTML and CSS elements (addressed later)
-
-The most important thing to understand about the UI is that it *receives inputs* from the user and *displays outputs* from the server. There is no *active* code running in the ui *at any time* - all changes seen in the UI are passed through the server (more or less). So we have to make our plots, downloads, etc in the server
-
-The server of the shiny app is where all code is being run once the app starts up. The way this works is a little confusing. The server function will effectively _react_ to the user interfacing with the UI, and run chunks of code in response. If things change in the server, these will be passed back up to the ui, where the changes can be seen. Importantly, the code in the server will be executed *non-consecutively* (or it's best to think of it this way). Basically, whenever a ui input affects a chunk of code in the server, it will run automatically, and the output will be produced.
-
-This all probably sounds very abstract for now, so we'll have to dive into some examples to get a clear idea of how this actually works. 
-
-
-### Before you start to build an app
-
-Before you begin to build an app, its immensely helpful to know *what* you want to build. Since your UI will be written in code, you can't really visualise what you're building unless you are aiming for something specific. For this reason, it is immensely helpful to look at lots of examples of shiny apps to get an idea of what you can make - even better if you can look at the source code behind these apps! Some great resources for this are:
-
-- [Rstudio app gallery](https://shiny.rstudio.com/gallery/)
-- 
-
-Once you get an idea for what is possible, it's also helpful to map out what you want yours to look like - you can do this in any drawing software (PowerPoint, MS paint, etc.). It's helpful to start simple for your first app! There's also no shame in using code you find online of a nice app as a template for your work - its much easier than building something from scratch!
-
-
-
-## Building a UI 
-
-When building our app, its easier to work on the UI first so we can see what we're making, and not risk the app failing because of any server errors. As mentioned previously, its often good to use a template when working on the UI. There are a number of standard layouts that can be used with shiny that are available from the base shiny package, but it's worth noting that there are also a number of package extensions such as `shinydashboard`. We'll use an example from base shiny to start with. 
-
-A shiny UI is generally defined as a series of nested functions, in the following order
-
-1. A function defining the general layout (the most basic is `fluidPage()`, but more are available)
-2. Panels within the layout such as:
-     - a sidebar (`sidebarPanel()`)
-     - a "main" panel (`mainPanel()`)
-     - a tab (`tabPanel()`)
-     - a generic "column" (`column()`)
-3. Widgets and outputs - these can confer inputs to the server (widgets) or outputs from the server (outputs)
-     - Widgets generally are styled as `xxxInput()` e.g. `selectInput()`
-     - Outputs are generally styled as `xxxOutput()` e.g. `plotOutput()`
-
-It's worth stating again that these can't be visualised easily in an abstract way, so it's best to look at an example! Lets consider making a basic app that visualises our malaria facility count data by district. This data has a lot of differnet parameters, so it would be great if the end user could apply some filters to see the data by age group/district as they see fit! We can use a very simple shiny layout to start - the sidebar layout. This is a layout where widgets are placed in a sidebar on the left, and the plot is placed on the right.
-
-Lets plan our app - we can start with a selector that lets us choose the district where we want to visualise data, and another to let us visualise the age group we are interested in. We'll aim to use these filters to show an epicurve that reflects these parameters. So for this we need:
-
-1. Two dropdown menus that let us choose the district we want, and the age group we're interested in. 
-2. An area where we can show our resulting epicurve.
-
-This might look something like this:
-
-```{r, eval = FALSE}
-
-ui <- fluidPage(
-
-  titlePanel("Malaria facility visualisation app"),
-
-  sidebarLayout(
-
-    sidebarPanel(
-         # selector for district
-         selectInput(
-              inputId = "select_district",
-              label = "Select district",
-              choices = c(
-                   "All",
-                   "Spring",
-                   "Bolo",
-                   "Dingo",
-                   "Barnard"
-              ),
-              selected = "All",
-              multiple = TRUE
-         ),
-         # selector for age group
-         selectInput(
-              inputId = "select_agegroup",
-              label = "Select age group",
-              choices = c(
-                   "All ages" = "malaria_tot",
-                   "0-4 yrs" = "malaria_rdt_0-4",
-                   "5-14 yrs" = "malaria_rdt_5-14",
-                   "15+ yrs" = "malaria_rdt_15"
-              ), 
-              selected = "All",
-              multiple = FALSE
-         )
-
-    ),
-
-    mainPanel(
-      # epicurve goes here
-      plotOutput("malaria_epicurve")
-    )
-    
-  )
-)
-
-
+```{r, eval=F}
+pacman::p_load(rmarkdown)
 ```
 
+### Starting a new Rmd file {-}
 
-This layout looks something like this - note that there will be no plot if there is no server to render it, but our inputs are working!
+In RStudio, open a new R markdown file, starting with ‘File’, then ‘New file’ then ‘R markdown…’. 
 
-
-
-This is a good opportunity to discuss how widgets work - note that each widget is accepting an `inputId`, a `label`, and a series of other options that are specific to the widget type. This `inputId` is extremely important - these are the IDs that are used to pass information from the UI to the server. For this reason, they *must be unique*. You should make an effort to name them something sensible, and specific to what they are interacting with in cases of larger apps.
-
-You should read documentation carefully for full details on what each of these widgets do. Widgets will pass specific types of data to the server depending on the widget type, and this needs to be fully understood. For example, `selectInput()` will pass a character type to the server:
-
-- If we select _Spring_ for the first widget here, it will pass the character object `"Spring"` to the server. 
-- If we select two items from the dropdown menu, they will come through as a vector (e.g. `c("Spring", "Bolo")`).
-
-Other widgets will pass different types of object to the server! For example:
-
-- `numericInput()` will pass a numeric type object to the server
-- `checkboxInput()` will pass a logical type object to the server
-
-It's also worth noting the named vector used for the age data here. For many widgets, using a named vector as the choices will display the names of the objects, but pass the contents of the vector to the server. I.e. here we can select _15+_ and it will pass `"malaria_rdt_15"` to the server - which happens to be the name of the column we're interested in!
-
-
-There are loads of widgets that you can use to do lots of things with your app. Widgets also allow you to upload files into your app, and download outputs. There are also some excellent shiny extensions that give you access to more widgets than base shiny - `shinyWidgets` is a great example of this. To look at some examples you can look at the following links:
-
-- [base shiny widget gallery](https://shiny.rstudio.com/gallery/widget-gallery.html)
-- [shinyWidgets gallery](https://github.com/dreamRs/shinyWidgets)
-
-
-
-## Loading data into our app
-
-The next step in our development is getting a server up and running. To do this however, we need to get some data into our app, and figure out all the calculations we're going to do. A shiny app is not straightforward to debug, as it's often not clear where errors are coming from, so it's ideal to get all our data processing and visualisation code working before we start making the server itself.
-
-So given we want to make an app that shows epi curves that change based on user input, we should think about what code we would need to run this in a normal R script. We'll need to:
-
-1. Load our packages
-2. Load our data
-3. Transform our data
-4. Develop a _function_ to visualise our data based on user inputs
-
-This list is pretty straightforward, and shouldn't be too hard to do. It's now important to think about which parts of this process need to *be done only once* and which parts need to *run in response to user inputs*. This is because shiny apps generally run some code before running, which is only performed once. It will help our app's performance if as much of our code can be moved to this section. For this example, we only need to load our data/packages and do basic transformations once, so we can put that code *outside the server*. This means the only thing we'll need in the server is the code to visualise our data. Lets develop all of these componenets in a script first. However, since we're visualising our data with a function, we can also put the code _for the function_ outside the server so our function is in the environment when the app runs!
-
-First lets load our data. Since we're working with a new project, and we want to make it clean, we can create a new directory called data, and add our malaria data in there. We can run this code below in a testing script we will eventually delete when we clean up the structure of our app.
-
-```{r, echo = TRUE}
-pacman::p_load("tidyverse", "lubridate")
-
-# read data
-malaria_data <- rio::import(here::here("data", "malaria_facility_count_data.rds")) %>% 
-  as_tibble()
-
-print(malaria_data)
-
-
-```
-It will be easier to work with this data if we use tidy data standards, so we should also transform into a longer data format, where age group is a column, and cases is another column. We can do this easily using what we've learned in the xxx section:
-
-
-```{r, echo = TRUE}
-
-malaria_data <- malaria_data %>%
-  select(-newid) %>%
-  pivot_longer(cols = starts_with("malaria_"), names_to = "age_group", values_to = "cases_reported")
-
-print(malaria_data)
-
+```{r out.width = "50%", fig.align = "center", echo=F}
+knitr::include_graphics(here::here("images", "markdown/1_gettingstarted.png"))
 ```
 
-And with that we've finished preparing our data! This crosses items 1, 2, and 3 off our list of things to develop for our "testing R script". The last, and most difficult task will be building a function to produce an epicurve based on user defined parameters. As mentioned previously, it's *highly recommended* that anyone learning shiny first look at the section on functional programming to understand how this works!
+R Studio will give you some output options to pick from. In the example below we select "HTML" because we want to create an html document. The title and the author names are not important. If the output document type you want is not one of these, don't worry - you can just pick any one and change it in the script later. 
 
-When defining out function, it might be hard to think about what parameters we want to include. For functional programming with shiny, every relevent parameter will generally have a widget associated with it, so thinking about this is usually quite easy! For example in our current app, we want to be able to filter by province, and have a widget for this, so we can add a province parameter to reflect this. We *don't* have any app functionality to filter by facility (for now), so we don't need to add this as a parameter. Lets start by making a function with three parameters:
-
-1. The core dataset
-2. The district of choice
-3. The age group of choice
-
-```{r}
-
-plot_epicurve <- function(data, district = "All", agegroup = "malaria_tot") {
-  
-  if (!("All" %in% district)) {
-    data <- data %>%
-      filter(District %in% district)
-    
-    plot_title_district <- stringr::str_glue("{paste0(district, collapse = ",")} districts")
-    
-  } else {
-    
-    plot_title_district <- "all districts"
-    
-  }
-  
-  # if no remaining data, return NULL
-  if (nrow(data) == 0) {
-    
-    return(NULL)
-  }
-  
-  data <- data %>%
-    filter(age_group == agegroup)
-  
-  
-  # if no remaining data, return NULL
-  if (nrow(data) == 0) {
-    
-    return(NULL)
-  }
-  
-  if (agegroup == "malaria_tot") {
-      agegroup_title <- "All ages"
-  } else {
-    agegroup_title <- stringr::str_glue("{str_remove(agegroup, 'malaria_rdt')} years")
-  }
-  
-  
-  ggplot(data, aes(x = data_date, y = cases_reported)) +
-    geom_bar(stat = "identity", fill = "darkred") +
-    theme_minimal() +
-    labs(
-      x = "date",
-      y = "number of cases",
-      title = stringr::str_glue("Malaria cases - {plot_title_district}"),
-      subtitle = agegroup_title
-    )
-  
-  
-  
-}
-
+```{r out.width = "50%", fig.align = "center", echo=F}
+knitr::include_graphics(here::here("images", "markdown/1_gettingstartedB.png"))
 ```
 
+This will open up a new .Rmd script.
 
-We won't go into great detail about this function, as it's relatively simple in how it works. One thing to note however, is we handle errors by returning `NULL` when it would otherwise give an error. This is because when a shiny server produces a `NULL` object instead of a plot object, nothing will be shown in the ui! This is important, as otherwise errors will often cause your app to stop working.
-
-Let's test our function!
-
-```{r, echo = TRUE, warning = FALSE}
-
-plot_epicurve(malaria_data, district = "Bolo", agegroup = "malaria_rdt_0-4")
-
-```
-
-With our function working, we now have to understand how this all is going to fit into our shiny app. We mentioned the concept of _startup code_ before, but lets look at how we can actually incorporate this into the structure of our app. There are two ways we can do this!
-
-1. Put this code in your _app.R_ file at the start of the script
-2. Create a new file in your directory called _global.R_, and put the startup code in this file.
-
-It's worth noting at this point that it's generally easier, especially with bigger apps, to use the second file structure, as it lets you separate your file structure in a simple way. Lets fully develop a this global.R script now. Here is what it could look like:
-
-
-```{r, eval = F}
-# global.R script
-
-pacman::p_load("tidyverse", "lubridate", "shiny")
-
-# read data
-malaria_data <- rio::import(here::here("data", "malaria_facility_count_data.rds")) %>% 
-  as_tibble()
-
-
-malaria_data <- malaria_data %>%
-  select(-newid) %>%
-  pivot_longer(cols = starts_with("malaria_"), names_to = "age_group", values_to = "cases_reported")
-
-
-
-plot_epicurve <- function(data, district = "All", agegroup = "malaria_tot") {
-  
-  if (!("All" %in% district)) {
-    data <- data %>%
-      filter(District %in% district)
-    
-    plot_title_district <- stringr::str_glue("{paste0(district, collapse = ",")} districts")
-    
-  } else {
-    
-    plot_title_district <- "all districts"
-    
-  }
-  
-  # if no remaining data, return NULL
-  if (nrow(data) == 0) {
-    
-    return(NULL)
-  }
-  
-  data <- data %>%
-    filter(age_group == agegroup)
-  
-  
-  # if no remaining data, return NULL
-  if (nrow(data) == 0) {
-    
-    return(NULL)
-  }
-  
-  if (agegroup == "malaria_tot") {
-      agegroup_title <- "All ages"
-  } else {
-    agegroup_title <- stringr::str_glue("{str_remove(agegroup, 'malaria_rdt')} years")
-  }
-  
-  
-  ggplot(data, aes(x = data_date, y = cases_reported)) +
-    geom_bar(stat = "identity", fill = "darkred") +
-    theme_minimal() +
-    labs(
-      x = "date",
-      y = "number of cases",
-      title = stringr::str_glue("Malaria cases - {plot_title_district}"),
-      subtitle = 
-    )
-  
-  
-  
-}
-
-
-
-```
-
-
-Easy! One great feature of shiny is that it will understand what files named _app.R_, _server.R_, _ui.R_, and _global.R_ are for, so there is no need to connect them to each other via any code. So just by having this code in _global.R_ it will run before we start our app!. We should also note that it would improve our apps organisation if we moved this function to its own file - this will be especially helpful as apps become larger. To do this, we could make another directory called _funcs_, and put this function in as a file called _plot_epicurve.R_. We could then read this function in via the following command in _global.R_
-
-```{r, eval = F}
-
-
-
-```
-
-Note that you should *always* specify `local = TRUE` in shiny apps, since it will affect sourcing when/if the app is published on a server. 
-
-## Developing an app server
-
-Now that we have most of our code, we just have to develop our server. This is the final piece of our app, and is probably the hardest to understand. The server is a large R function, but its helpful to think of it as a series of smaller functions, or tasks that the app can perform. It's important to understand that these functions are not executed in a linear order. There is an order to them, but it's not fully necessary to understand when starting out with shiny. At a very basic level, these tasks or functions will activate when there is a change in user inputs that affects them, *unless the developer has set them up so they behave differently*. Again, this is all quite abstract, but lets first go through the three basic types of shiny _objects_
-
-1. Reactive sources - this is another term for user inputs. The shiny server has access to the outputs from the UI through the widgets we've programmed. Every time the values for these are changed, this is passed down to the server.
-
-2. Reactive conductors - these are objects that exist *only* inside the shiny server. We don't actually need these for simple apps, but they produce objects that can only be seen inside the server, and used in other operations. They generally depend on reactive sources.
-
-3. Endpoints - these are outputs that are passed from the server to the UI. In our example, this would be the epi curve we are producing. 
-
-With this in mind lets construct our server step by step. We'll show our UI code again here just for reference:
-
-```{r, eval = FALSE}
-
-ui <- fluidPage(
-
-  titlePanel("Malaria facility visualisation app"),
-
-  sidebarLayout(
-
-    sidebarPanel(
-         # selector for district
-         selectInput(
-              inputId = "select_district",
-              label = "Select district",
-              choices = c(
-                   "All",
-                   "Spring",
-                   "Bolo",
-                   "Dingo",
-                   "Barnard"
-              ),
-              selected = "All",
-              multiple = TRUE
-         ),
-         # selector for age group
-         selectInput(
-              inputId = "select_agegroup",
-              label = "Select age group",
-              choices = c(
-                   "All ages" = "malaria_tot",
-                   "0-4 yrs" = "malaria_rdt_0-4",
-                   "5-14 yrs" = "malaria_rdt_5-14",
-                   "15+ yrs" = "malaria_rdt_15"
-              ), 
-              selected = "All",
-              multiple = FALSE
-         )
-
-    ),
-
-    mainPanel(
-      # epicurve goes here
-      plotOutput("malaria_epicurve")
-    )
-    
-  )
-)
-
-
-```
-
-From this code UI we have:
-
-- Two inputs:
-  - District selector (with an inputId of `select_district`)
-  - Age group selector (with an inputId of `select_agegroup`)
-- One output:
-  - The epicurve (with an outputId of `malaria_epicurve`)
-
-As stated previously, these unique names we have assigned to our inputs and outputs are crucial. They *must be unique* and are used to pass information between the ui and server. In our server, we access our inputs via the syntax `input$input_name` and outputs and passed to the ui through the syntax `output$output_name` Lets have a look at an example, because again this is hard to understand otherwise!
-
-```{r, eval = FALSE}
-
-server <- function(input, output, session) {
-  
-  output$malaria_epicurve <- renderPlot(
-    plot_epicurve(malaria_data, district = input$select_district, agegroup = input$select_agegroup)
-  )
-  
-}
-
-
-```
-
-
-The server for a simple app like this is actually quite straightforward! You'll notice that the server is a function with three parameters - `input`, `output`, and `session` - this isn't that important to understand for now, but its important to stick to this setup! In our server we only have one task - this renders a plot based on our function we made earlier, and the inputs from the server. Notice how the names of the input and output objects correspond exactly to those in the ui.
-
-To understand the basics of how the server reacts to user inputs, you should note that the output will know (through the underlying package) when inputs change, and rerun this function to create a plot every time they change. Note that we also use the `renderPlot()` function here - this is one of a family of class specific functions that pass those objects to an output. There are a number of functions that behave similar, but you need to ensure the function matches the class of object you're passing to the ui! For example:
-
-- `renderText()` - send text to the ui
-- `renderDataTable` - send an interactive table to the ui.
-
-Remember that these need to match the output function used in the ui - so `renderPlot()` is paired with `plotOutput()`, and `renderText()` is matched with `textOutput()`. 
-
-So we've finally made a functioning app! We can run this by pressing the Run App button on the top right of the script window in Rstudio. You should note that you can choose to run your app in your default browser (rather than Rstudio) which will more accurately reflect what the app will look like for other users. *ADD SOMETHING ON DOWNLOADING A ZIP FILE OF THE APP MAYBE?* 
-
-## Adding more functionality
-
-At this point we've finally got a running app, but we have very little functionality. We also haven't really scratched the surface of what shiny can do, so there's a lot more to learn about! Lets continue to build our existing app by adding some extra features. Some things that could be nice to add could be: 
-
-1. Some explanatory text 
-2. A download button for our plot - this would provide the user with a high quality version of the image that they're generating in the app
-3. A selector for specific facilities
-4. Another dashboard page - this could show a table of our data.
-
-This is a lot to add, but we can use it to learn about a bunch of different shiny featues on the way. There is so much to learn about shiny (it can get *very* advanced, but its hopefully the case that once users have a better idea of how to use it they can become more comfortable using external learning sources as well).
-
-
-### Adding static text
-
-Lets first discuss adding static text to our shiny app. Adding text to our app is extremely easy, once you have a basic grasp of it. Since static text doesn't in the shiny app (If you'd like it to change, you can use *text rendering* functions in the server!), all of shiny's static text is generally added in the ui of the app. We wont go through this in great detail, but you can add a number of different elements to your ui (and even custom ones) by interfacing R with *HTML* and *css*.
-
-HTML and css are languages that are explicitly involved in user interface design. We don't need to understand these too well, but *HTML* creates objects in UI (like a text box, or a table), and *css* is generally used to change the style and aesthetics of those objects. Shiny has access to a large array of _HTML tags_ - these are present objects that behave in a specific way, such as headers, paragraphs of text, line breaks, tables, etc. We can use some of these examples like this:
-
-- `h1()` - this a a *header* tag, which will make enclosed text automatically larger, and change defaults as they pertain to the font face, colour etc (depending on the overall theme of your app). You can access _smaller and smaller_ sub-heading with `h2()` down to `h6()` as well. Usage looks like:
-  * `h1("my header - section 1")`
-
-- `p()` - this is a *paragraph* tag, which will make enclosed text similar to text in a body of text. This text will automatically wrap, and be of a relatively small size (footers could be smaller for example.) Think of it as the text body of a word document. Usage looks like:
-  *`p("This is a larger body of text where I am explaining the function of my app")`
-  
-- `tags$b()` and `tags$i()` - these are used to create bold `tags$b()` and italicised `tags$i()` with whichever text is enclosed!
-
-- `tags$ul()`, `tags$ol()` and `tags$li()` - these are tags used in creating *lists*. These are all used within the syntax below, and allow the user to create either an ordered list (`tags$ol()`; i.e. numbered) or unordered list (`tags$ul()`, i.e. bullet points). `tags$li()` is used to denote items in the list, regardless of which type of list is used. e.g.:
-
-```{r, eval = F}
-
-tags$ol(
-  
-  tags$li("Item 1"),
-  
-  tags$li("Item 2"),
-  
-  tags$li("Item 3")
-  
-)
-
-```
-
-- `br()` and `hr()` - these tags create *linebreaks* and *horizontal lines* (with a linebreak) respectively. Use them to separate out the sections of your app and text! There is no need to pass any items to these tags.
-
-
-- `div()` - this is a *generic* tag that can *contain anything*, and can be *named anything*. Once you progress with ui design, you can use these to compartmentalize your ui, give specific sections specific styles, and create interactions between the server and UI elements. We won't go into these in detail, but they're worth being aware of!
-
-Note that every one of these objects can be accessed through `tags$...` or for some, just the function. These are effectively synonymous, but it may help to use the `tags$...` style if you'd rather be more explicit and not overwrite the functions accidentally. This is also by no means an exhaustive list of tags available. There is a full list of all tags available in shiny  [here](https://shiny.rstudio.com/articles/tag-glossary.html) and even more can be used by inserting HTML directly into your ui!
-
-
-If you're feeling confident, you can also add any *css styling elements* to your HTML tags with the `style` argument in any of them. We won't go into how this works in detail, but one tip for testing aesthetic changes to a UI is using the HTML inspector mode in chrome (of your shiny app you are running in browser), and editing the style of objects yourself!
-
-Lets add some text to our app
-
-```{r, eval = F}
-
-ui <- fluidPage(
-
-  titlePanel("Malaria facility visualisation app"),
-
-  sidebarLayout(
-
-    sidebarPanel(
-         h4("Options"),
-         # selector for district
-         selectInput(
-              inputId = "select_district",
-              label = "Select district",
-              choices = c(
-                   "All",
-                   "Spring",
-                   "Bolo",
-                   "Dingo",
-                   "Barnard"
-              ),
-              selected = "All",
-              multiple = TRUE
-         ),
-         # selector for age group
-         selectInput(
-              inputId = "select_agegroup",
-              label = "Select age group",
-              choices = c(
-                   "All ages" = "malaria_tot",
-                   "0-4 yrs" = "malaria_rdt_0-4",
-                   "5-14 yrs" = "malaria_rdt_5-14",
-                   "15+ yrs" = "malaria_rdt_15"
-              ), 
-              selected = "All",
-              multiple = FALSE
-         ),
-         # horizontal line
-         hr(),
-         downloadButton(
-           inputId = "download_epicurve",
-           label = "Download plot"
-         )
-
-    ),
-
-    mainPanel(
-      # epicurve goes here
-      plotOutput("malaria_epicurve"),
-      br(),
-      hr(),
-      p("Welcome to the malaria facility visualisation app! To use this app, manipulate the widgets on the side to change the epidemic curve according to your preferences! To download a high quality image of the plot you've created, you can also download it with the download button. To see the raw data, use the raw data tab for an interactive form of the table. The data dictionary is as follows:"),
-    tags$ul(
-      tags$li(tags$b("location_name"), " - the facility that the data were collected at"),
-      tags$li(tags$b("data_date"), " - the date the data were collected at"),
-      tags$li(tags$b("submitted_daate"), " - the date the data were submitted at"),
-      tags$li(tags$b("Province"), " - the province the data were collected at (all 'North' for this dataset)"),
-      tags$li(tags$b("District"), " - the district the data were collected at"),
-      tags$li(tags$b("age_group"), " - the age group the data were collected for (0-5, 5-14, 15+, and all ages)"),
-      tags$li(tags$b("cases_reported"), " - the number of cases reported for the facility/age group on the given date")
-    )
-    
-  )
-)
-
-
-
-```
-
-
-
-
-### Adding a download button
-
-Lets move on to the second of the three features. A download button is a fairly common thing to add to an app and is fairly easy to make. We need to add another Widget to our ui, and we need to add another output to our server to attach to it. We can also introduce *reactive conductors* in this example!
-
-
-
-Lets update our ui first - this is easy as shiny comes with a widget called `downloadButton()` - lets give it an inputId and a label.
-
-```{r, eval = FALSE}
-
-ui <- fluidPage(
-
-  titlePanel("Malaria facility visualisation app"),
-
-  sidebarLayout(
-
-    sidebarPanel(
-         # selector for district
-         selectInput(
-              inputId = "select_district",
-              label = "Select district",
-              choices = c(
-                   "All",
-                   "Spring",
-                   "Bolo",
-                   "Dingo",
-                   "Barnard"
-              ),
-              selected = "All",
-              multiple = FALSE
-         ),
-         # selector for age group
-         selectInput(
-              inputId = "select_agegroup",
-              label = "Select age group",
-              choices = c(
-                   "All ages" = "malaria_tot",
-                   "0-4 yrs" = "malaria_rdt_0-4",
-                   "5-14 yrs" = "malaria_rdt_5-14",
-                   "15+ yrs" = "malaria_rdt_15"
-              ), 
-              selected = "All",
-              multiple = FALSE
-         ),
-         # horizontal line
-         hr(),
-         downloadButton(
-           inputId = "download_epicurve",
-           label = "Download plot"
-         )
-
-    ),
-
-    mainPanel(
-      # epicurve goes here
-      plotOutput("malaria_epicurve"),
-      br(),
-      hr(),
-      p("Welcome to the malaria facility visualisation app! To use this app, manipulate the widgets on the side to change the epidemic curve according to your preferences! To download a high quality image of the plot you've created, you can also download it with the download button. To see the raw data, use the raw data tab for an interactive form of the table. The data dictionary is as follows:"),
-      tags$ul(
-        tags$li(tags$b("location_name"), " - the facility that the data were collected at"),
-        tags$li(tags$b("data_date"), " - the date the data were collected at"),
-        tags$li(tags$b("submitted_daate"), " - the date the data were submitted at"),
-        tags$li(tags$b("Province"), " - the province the data were collected at (all 'North' for this dataset)"),
-        tags$li(tags$b("District"), " - the district the data were collected at"),
-        tags$li(tags$b("age_group"), " - the age group the data were collected for (0-5, 5-14, 15+, and all ages)"),
-        tags$li(tags$b("cases_reported"), " - the number of cases reported for the facility/age group on the given date")
-      )
-      
-    )
-    
-  )
-)
-
-
-```
+### Important to know {-}
  
-Note that we've also added in a `hr()` tag - this adds a horizontal line separating our control widgets from our download widgets. This is another one of the HTML tags that we discussed previously.
+**The working directory**
 
-Now that we have our ui ready, we need to add the server component. Downloads are done in the server with the `downloadHandler()` function. Similar to our plot, we need to attach it to an output that has the same inputId as the download button. This function takes two arguments - `filename` and `content` - these are both functions. As you might be able to guess, `filename` is used to specify the name of the downloaded file, and `content` is used to specify what should be downloaded. `content` contain a function that you would use to save data locally - so if you were downloading a csv file you could use `rio::export()`. Since we're downloading a plot, we'll use `ggplot2::ggsave()`. Lets look at how we would program this (we won't add it to the server yet). 
+The working directory of a markdown file is wherever the Rmd file itself is saved. For instance, if the R project is within `~/Documents/projectX ` and the Rmd file itself is in a subfolder `~/Documents/projectX/markdownfiles/markdown.Rmd`, the code `read.csv(“data.csv”)` within the markdown will look for a csv file in the `markdownfiles` folder, and not the root project folder where scripts within projects would normally automatically look.
 
-```{r, eval = FALSE}
+To refer to files elsewhere, you will either need to use the full file path or use the **here** package. The **here** package sets the working directory to the root folder of the R project and is explained in detail in the [R projects] and [Import and export] pages of this handbook. For instance, to import a file called "data.csv" from within the `projectX` folder, the code would be `import(here(“data.csv”))`. 
 
-server <- function(input, output, session) {
+Note that use of `setwd()` in R Markdown scripts is not recommended – it only applies to the code chunk that it is written in. 
+
+**Working on a drive vs your computer**
+
+Because R Markdown can run into pandoc issues when running on a shared network drive, it is recommended that your folder is on your local machine, e.g. in a project within ‘My Documents’. If you use Git (much recommended!), this will be familiar. For more details, see the handbook pages on [R on network drives] and [Errors and help].  
+
+
+<!-- ======================================================= -->
+## R Markdown components {  }
+
+An R Markdown document can be edited in RStudio just like a standard R script. When you start a new R Markdown script, RStudio tries to be helpful by showing a template which explains the different section of an R Markdown script. 
+
+The below is what appears when starting a new Rmd script intended to produce an html output (as per previous section). 
+
+```{r out.width = "100%", fig.align = "center", echo=F}
+knitr::include_graphics(here::here("images", "markdown/2_defaultRMD.png"))
+```
+
+As you can see, there are three basic components to an Rmd file: YAML, Markdown text, and R code chunks.  
+
+These will *create and become your document output*. See the diagram below:  
+
+```{r out.width = "100%", out.height="150%", fig.align = "center", echo=F}
+knitr::include_graphics(here::here("images", "markdown/rmarkdown_translation.png"))
+```
+
+
+
+### YAML metadata {-}
+
+Referred to as the ‘YAML metadata’ or just ‘YAML’, this is at the top of the R Markdown document. This section of the script will tell your Rmd file what type of output to produce, formatting preferences, and other metadata such as document title, author, and date. There are other uses not mentioned here (but referred to in ‘Producing an output’). Note that indentation matters; tabs are not accepted but spaces are. 
+
+This section must begin with a line containing just three dashes `---` and must close with a line containing just three dashes `---`. YAML parameters comes in `key:value` pairs. The placement of colons in YAML is important - the `key:value` pairs are separated by colons (not equals signs!).  
+
+The YAML should begin with metadata for the document. The order of these primary YAML parameters (not indented) does not matter. For example:  
+
+```yaml
+title: "My document"
+author: "Me"
+date: "`r Sys.Date()`"
+```
+
+You can use R code in YAML values by writing it as in-line code (preceded by `r` within back-ticks) but also within quotes (see above example for `date: `).  
+
+In the image above, because we clicked that our default output would be an html file, we can see that the YAML says `output: html_document`. However we can also change this to say `powerpoint_presentation` or `word_document` or even `pdf_document`.  
+
+
+### Text {-}
+
+This is the narrative of your document, including the titles and headings. It is written in the "markdown" language, which is used across many different software.  
+
+Below are the core ways to write this text. See more extensive documentation available on R Markdown "cheatsheet" at the [RStudio website](https://rstudio.com/resources/cheatsheets/).  
+
+#### New lines {-}  
+
+Uniquely in R Markdown, to initiate a new line, enter *two spaces** at the end of the previous line and then Enter/Return.  
+
+
+
+#### Case {-}  
+
+Surround your normal text with these character to change how it appears in the output.  
+
+* Underscores (`_text_`) or single asterisk (`*text*`) to _italicise_
+* Double asterisks (`**text**`) for **bold text**
+* Back-ticks (````text````) to display text as code  
+
+The actual appearance of the font can be set by using specific templates (specified in the YAML metadata; see example tabs).  
+
+#### Color {-}  
+
+There is no simple mechanism to change the color of text in R Markdown. One work-around, *IF your output is an HTML file*, is to add an HTML line into the markdown text. The below HTML code will print a line of text in bold red.  
+
+```md
+<span style="color: red;">**_DANGER:_** This is a warning.</span>  
+```
+
+#### Titles and headings {-}  
+
+A hash symbol in a text portion of a R Markdown script creates a heading. This is different than in a chunk of R code in the script, in which a hash symbol is a mechanism to comment/annotate/de-activate, as in a normal R script.  
+
+Different heading levels are established with different numbers of hash symbols at the start of a new line. One hash symbol is a title or primary heading. Two hash symbols are a second-level heading. Third- and fourth-level headings can be made with successively more hash symbols.
+
+```md
+# First-level heading / title
+
+## Second level heading  
+
+### Third-level heading
+```
+
+
+#### Bullets and numbering {-}  
+
+Use asterisks (`*`) to created a bullets list. Finish the previous sentence, enter two spaces, Enter/Return *twice*, and then start your bullets. Include a space between the asterisk and your bullet text. After each bullet enter two spaces and then Enter/Return. Sub-bullets work the same way but are indented. Numbers work the same way but instead of an asterisk, write 1), 2), etc. Below is how your R Markdown script text might look.  
+
+
+```md
+Here are my bullets (there are two spaces after this colon):  
+
+* Bullet 1 (followed by two spaces and Enter/Return)  
+* Bullet 2 (followed by two spaces and Enter/Return)  
+  * Sub-bullet 1 (followed by two spaces and Enter/Return)  
+  * Sub-bullet 2 (followed by two spaces and Enter/Return)  
   
-  output$malaria_epicurve <- renderPlot(
-    plot_epicurve(malaria_data, district = input$select_district, agegroup = input$select_agegroup)
-  )
-  
-  output$download_epicurve <- downloadHandler(
-    filename = function() {
-      stringr::str_glue("malaria_epicurve_{input$select_district}.png")
-    },
-    
-    content = function(file) {
-      ggsave(file, 
-             plot_epicurve(malaria_data, district = input$select_district, agegroup = input$select_agegroup),
-             width = 8, height = 5, dpi = 300)
-    }
-    
-  )
-  
-}
+```
 
+
+#### Comment out text {-}
+
+You can "comment out" R Markdown text just as you can use the "#" to comment out a line of R code in an R chunk. Simply highlight the text and press Ctrl+Shift+c (Cmd+Shift+c for Mac). The text will be surrounded by arrows and turn green. It will not appear in your output.  
+
+
+```{r out.width = "100%", fig.align = "center", echo=F}
+knitr::include_graphics(here::here("images", "markdown/rmarkdown_hide_text.png"))
+```
+
+
+### Code chunks {-}
+
+Sections of the script that are dedicated to running R code are called "chunks". This is where you may load packages, import data, and perform the actual data management and visualisation. There may be many code chunks, so they can help you organize your R code into parts, perhaps interspersed with text. To note:
+These ‘chunks’ will appear to have a slightly different background colour from the narrative part of the document.  
+
+Each chunk is opened with a line that starts with three back-ticks, and curly brackets that contain parameters for the chunk (`{ }`). The chunk ends with three more back-ticks.  
+
+You can create a new chunk by typing it out yourself, by using the keyboard shortcut "Ctrl + Alt + i" (or Cmd + Shift + r in Mac), or by clicking the green 'insert a new code chunk' icon at the top of your script editor.
+
+Some notes about the contents of the curly brackets `{ }`:
+
+*	They start with ‘r’ to indicate that the language name within the chunk is R
+*	After the r you can optionally write a chunk "name" – these are not necessary but can help you organise your work. Note that if you name your chunks, you should ALWAYS use unique names or else R will complain when you try to render.  
+*	The curly brackets can include other options too, written as `tag=value`, such as:  
+  * `eval = FALSE` to not run the R code  
+  * `echo = FALSE` to not print the chunk's R source code in the output document  
+  * `warning = FALSE` to not print warnings produced by the R code  
+  * `message = FALSE` to not print any messages produced by the R code  
+  * `include =` either TRUE/FALSE whether to include chunk outputs (e.g. plots) in the document
+  * `out.width = ` and `out.height =` - provide in style `out.width = "75%"`  
+  * `fig.align = "center"` adjust how a figure is aligned across the page  
+  * `fig.show='hold'` if your chunk prints multiple figures and you want them printed next to each other (pair with `out.width = c("33%", "67%")`. Can also set as `fig.show='asis'` to show them below the code that generates them, `'hide'` to hide, or `'animate'` to concatenate multiple into an animation.  
+* A chunk header must be written in *one line*  
+* Try to avoid periods, underscores, and spaces. Use hyphens ( - ) instead if you need a separator.  
+
+Read more extensively about the **knitr** options [here](https://yihui.org/knitr/options/).  
+
+Some of the above options can be configured with point-and-click using the setting buttons at the top right of the chunk. Here, you can specify which parts of the chunk you want the rendered document to include, namely the code, the outputs, and the warnings. This will come out as written preferences within the curly brackets, e.g. ‘echo=FALSE’ if you specify you want to ‘Show output only’.  
+
+
+```{r out.width = "80%", fig.align = "center", echo=F}
+knitr::include_graphics(here::here("images", "markdown/3_chunk.png"))
+```
+
+There are also two arrows at the top right of each chunk, which are useful to run code within a chunk, or all code in prior chunks. Hover over them to see what they do.
+
+
+For global options to be applied to all chunks in the script, you can set this up within your very first R code chunk in the script. For instance, so that only the outputs are shown for each code chunk and not the code itself, you can include this command in the R code chunk:  
+
+```{r, eval=F}
+knitr::opts_chunk$set(echo = FALSE) 
+```
+
+
+
+#### In-text R code {-}  
+
+You can also include minimal R code within back-ticks. Within the back-ticks, begin the code with "r" and a space, so RStudio knows to evaluate the code as R code. See the example below.  
+
+The example below shows multiple heading levels, bullets, and uses R code for the current date (`Sys.Date()`) to evaluate into a printed date.
+
+```{r out.width = "80%", fig.align = "center", echo=F}
+knitr::include_graphics(here::here("images", "markdown/2_text.png"))
+```
+The example above is simple (showing the current date), but using the same syntax you can display values produced by more complex R code (e.g. to calculate the min, median, max of a column). You can also integrate R objects or values that were created in R code chunks earlier in the script.  
+
+As an example, the script below calculates the proportion of cases that are aged less than 18 years old, using **tidyverse** functions, and creates the objects `less18`, `total`, and `less18prop`. This dynamic value is inserted into subsequent text. We see how it looks when knitted to a word document.
+
+```{r out.width = "100%", fig.align = "center", echo=F}
+knitr::include_graphics(here::here("images", "markdown/3_chunktext.png"))
+```
+
+
+### Images {-}  
+
+You can include images in your R Markdown one of two ways:  
+
+```{r, eval=F}
+![]("path/to/image.png")  
+```
+
+If the above does not work, try using `knitr::include_graphics()`  
+
+```{r, eval=F}
+knitr::include_graphics("path/to/image.png")
+```
+
+(remember, your file path could be written using the **here** package)
+
+```{r, eval=F}
+knitr::include_graphics(here::here("path", "to", "image.png"))
+```
+
+
+### Tables {-}  
+
+Create a table using hyphens ( - ) and bars ( | ). The number of hyphens before/between bars allow the number of spaces in the cell before the text begins to wrap.  
+
+
+```md
+Column 1 |Column  2 |Column 3
+---------|----------|--------
+Cell A   |Cell B    |Cell C
+Cell D   |Cell E    |Cell F
+```
+
+The above code produces the table below:  
+
+Column 1 |Column  2 |Column 3
+---------|----------|--------
+Cell A   |Cell B    |Cell C
+Cell D   |Cell E    |Cell F
+
+
+### Tabbed sections {-}  
+
+For HTML outputs, you can arrange the sections into "tabs". Simply add `.tabset` in the curly brackets `{ }` that are placed *after a heading*. Any sub-headings beneath that heading (until another heading of the same level) will appear as tabs that the user can click through. Read more [here](https://bookdown.org/yihui/rmarkdown-cookbook/html-tabs.html)  
+
+
+
+```{r out.width = "100%", fig.align = "center", echo=F}
+knitr::include_graphics(here::here("images", "markdown/tabbed_script.png"))
+knitr::include_graphics(here::here("images", "markdown/tabbed_view.gif"))
 
 ```
 
 
-Note that the `content` function always takes a `file` argument, which we put where the output file name is specified. You might also notice that we're repeating code here - we are using our `plot_epicurve()` function twice in this server, once for the download and once for the image displayed in the app. While this wont massively affect performance, this means that the code to generate this plot will have to be run when the user changes the widgets specifying the district and age group, *and* again when you want to download the plot. In larger apps, suboptimal decisions like this one will slow things down more and more, so it's good to learn how to make our app more efficient in this sense. What would make more sense is if we had a way to run the epicurve code when the districts/age groups are changes, *and let that be used by* the renderPlot() and downloadHandler() functions. This is where reactive conductors come in! 
-
-Reactive conductors are objects that are created in the shiny server in a *reactive* way, but are not outputted - they can just be used by other parts of the server. There are a number of different kinds of *reactive conductors*, but we'll go through the basic two.
-
-1.`reactive()` - this is the most basic reactive conductor - it will react whenever any inputs used inside of it change (so our district/age group widgets)
-2. `eventReactive()`- this rective conductor works the same as `reactive()`, except that the user can specify which inputs cause it to rerun. This is useful if your reactive conductor takes a long time to process, but this will be explained more later.
-
-Lets look at the two examples:
-
-```{r, eval = FALSE}
-
-malaria_plot_r <- reactive({
-  
-  plot_epicurve(malaria_data, district = input$select_district, agegroup = input$select_agegroup)
-  
-})
-
-
-# only runs when the district selector changes!
-malaria_plot_er <- eventReactive(input$select_district, {
-  
-  plot_epicurve(malaria_data, district = input$select_district, agegroup = input$select_agegroup)
-  
-})
+You can add an additional option `.tabset-pills` after `.tabset` to give the tabs themselves a "pilled" appearance. Be aware that when viewing the tabbed HTML output, the Ctrl+f search functionality will only search "active" tabs, not hidden tabs.  
 
 
 
+
+
+<!-- ======================================================= -->
+## File structure {}
+
+There are several ways to structure your R Markdown and any associated R scripts. Each has advantages and disadvantages:  
+
+* Self-contained R Markdown - everything needed for the report is imported or created within the R Markdown  
+  * Source other files - You can run external R scripts with the `source()` command and use their outputs in the Rmd  
+  * Child scripts - an alternate mechanism for `source()`  
+* Utilize a "runfile" - Run commands in an R script *prior to* rendering the R Markdown  
+
+
+### Self-contained Rmd {-}  
+
+For a relatively simple report, you may elect to organize your R Markdown script such that it is "self-contained" and does not involve any external scripts.  
+
+Everything you need to run the R markdown is imported or created within the Rmd file, including all the code chunks and package loading. This "self-contained" approach is appropriate when you do not need to do much data processing (e.g. it brings in a clean or semi-clean data file) and the rendering of the R Markdown will not take too long.
+
+In this scenario, one logical organization of the R Markdown script might be:  
+
+1) Set global **knitr** options  
+2) Load packages  
+3) Import data  
+4) Process data  
+5) Produce outputs (tables, plots, etc.)  
+6) Save outputs, if applicable (.csv, .png, etc.)  
+
+#### Source other files {-}
+
+One variation of the "self-contained" approach is to have R Markdown code chunks "source" (run) other R scripts. This can make your R Markdown script less cluttered, more simple, and easier to organize. It can also help if you want to display final figures at the beginning of the report. In this approach, the final R Markdown script simply combines pre-processed outputs into a document.  
+
+One way to do this is by providing the R scripts (file path and name with extension) to the **base** R command `source()`.  
+
+```{r, eval=F}
+source("your-script.R", local = knitr::knit_global())
+# or sys.source("your-script.R", envir = knitr::knit_global())
 ```
 
-When we use the `eventReactive()` setup, we can specify which inputs cause this chunk of code to run - this isn't very useful to us at the moment, so we can leave it for now. Note that you can include multiple inputs with `c()`
+Note that when using `source()` *within* the R Markdown, the external files will still be run *during the course of rendering your Rmd file*. Therefore, each script is run every time you render the report. Thus, having these `source()` commands *within* the R Markdown does not speed up your run time, nor does it greatly assist with de-bugging, as error produced will still be printed when producing the R Markdown.  
 
-Lets look at how we can integrate this into our server code:
+An alternative is to utilize the `child = ` **knitr** option. EXPLAIN MORE TO DO
 
-
-```{r, eval = FALSE}
-
-server <- function(input, output, session) {
-  
-  malaria_plot <- reactive({
-    plot_epicurve(malaria_data, district = input$select_district, agegroup = input$select_agegroup)
-  })
-  
-  
-  
-  output$malaria_epicurve <- renderPlot(
-    malaria_plot()
-  )
-  
-  output$download_epicurve <- downloadHandler(
-    
-    filename = function() {
-      stringr::str_glue("malaria_epicurve_{input$select_district}.png")
-    },
-    
-    content = function(file) {
-      ggsave(file, 
-             malaria_plot(),
-             width = 8, height = 5, dpi = 300)
-    }
-    
-  )
-  
-}
+You must be aware of various R *environments*. Objects created within an environment will not necessarily be available to the environment used by the R Markdown.  
 
 
-```
 
-You can see we're just calling on the output of our reactive we've defined in both our download and plot rendering functions. One thing to note that often trips people up is you have to use the outputs of reactives as if they were functions - so you *must add empty brackets at the end of them* (i.e. `malaria_plot()` is correct, and `malaria_plot` is not). Now that we've added this solution our app is a little tidyer, faster, and easier to change since all our code that runs the epicurve function is in one place.
+### Runfile {-}  
 
-### Adding a facility selector
+This approach involves utilizing the R script that contains the `render()` command(s) to pre-process objects that feed into the R markdown.  
 
-Lets move on to our next feature - a selector for specific facilities. We'll implement another parameter into our function so we can pass this as an argument from our code. Lets look at doing this first - it just operates off the same principles as the other parameters we've set up. Lets update and test our function.
+For instance, you can load the packages, load and clean the data, and even create the graphs of interest prior to `render()`. These steps can occur in the R script, or in other scripts that are sourced. As long as these commands occur in the same RStudio session and objects are saved to the environment, the objects can then be called within the Rmd content. Then the R markdown itself will only be used for the final step - to produce the output with all the pre-processed objects. This is much easier to de-bug if something goes wrong.
 
+This approach is helpful for the following reasons:  
 
-```{r, echo = TRUE}
-
-plot_epicurve <- function(data, district = "All", agegroup = "malaria_tot", facility = "All") {
-  
-  if (!("All" %in% district)) {
-    data <- data %>%
-      filter(District %in% district)
-    
-    plot_title_district <- stringr::str_glue("{paste0(district, collapse = ",")} districts")
-    
-  } else {
-    
-    plot_title_district <- "all districts"
-    
-  }
-  
-  # if no remaining data, return NULL
-  if (nrow(data) == 0) {
-    
-    return(NULL)
-  }
-  
-  data <- data %>%
-    filter(age_group == agegroup)
-  
-  
-  # if no remaining data, return NULL
-  if (nrow(data) == 0) {
-    
-    return(NULL)
-  }
-  
-  if (agegroup == "malaria_tot") {
-      agegroup_title <- "All ages"
-  } else {
-    agegroup_title <- stringr::str_glue("{str_remove(agegroup, 'malaria_rdt')} years")
-  }
-  
-    if (!("All" %in% facility)) {
-    data <- data %>%
-      filter(location_name == facility)
-    
-    plot_title_facility <- facility
-    
-  } else {
-    
-    plot_title_facility <- "all facilities"
-    
-  }
-  
-  # if no remaining data, return NULL
-  if (nrow(data) == 0) {
-    
-    return(NULL)
-  }
-
-  
-  
-  ggplot(data, aes(x = data_date, y = cases_reported)) +
-    geom_bar(stat = "identity", fill = "darkred") +
-    theme_minimal() +
-    labs(
-      x = "date",
-      y = "number of cases",
-      title = stringr::str_glue("Malaria cases - {plot_title_district}; {plot_title_facility}"),
-      subtitle = agegroup_title
-    )
-  
-  
-  
-}
+* More informative error messages - these messages will be generated from the R script, not the R Markdown. R Markdown errors tend to tell you which chunk had a problem, but will not tell you which line.  
+* If applicable, you can run long processing steps in advance of the `render()` command - they will run only once. 
 
 
-plot_epicurve(malaria_data, district = "Spring", agegroup = "malaria_rdt_0-4", facility = "Facility 1")
+In the example below, we have a separate R script in which we pre-process a `data` object into the R Environment and then render the "create_output.Rmd" using `render()`.  
 
+```{r, eval=F}
+data <- import("datafile.csv") %>%       # Load data and save to environment
+  select(age, hospital, weight)          # Select limited columns
+
+rmarkdown::render(input = "create_output.Rmd")   # Create Rmd file
 ```
 
 
-With all the facilites in our data, it isn't very clear which facilities correspond to which districts - and the end user won't know either. This might make using the app quite unintuitive. For this reason, should make the facility options in the UI change dynamically as the user changes the district - so one filters the other! Since we have so many variables that we're using in the options, we might also want to generate some of our options for the ui our _global.R_ file _from the data_. For example, we can add this code chunk to _global.R_ after we've read our data in:
 
 
 
-```{r, eval = FALSE, message =  FALSE}
+### Folder strucutre {-}  
 
-all_districts <- c("All", unique(malaria_data$District))
+Workflow also concerns the overall folder structure, such as having an 'output' folder for created documents and figures, and 'data' or 'inputs' folders for cleaned data. We do not go into further detail here, but check out the [Organizing routine reports] page.  
 
-# data frame of location names by district
-facility_list <- malaria_data %>%
-  group_by(location_name, District) %>%
-  summarise() %>% 
-  ungroup()
 
+
+
+
+
+
+## Producing the document  
+
+You can produce the document in the following ways:  
+
+* By command via the `render()` function from the **rmarkdown** package (executed outside the R Markdown script)  
+* Manually by pressing the "Knit" button at the top of the RStudio script editor  
+
+
+
+### Option 1: `render()` command {-}
+
+One way to produce your R Markdown output is to run the `render()` function from the **rmarkdown** package. You must execute this command *outside* the R Markdown script - so either in a separate R script (often called a "run file"), or as a stand-alone command in the R Console. 
+
+```{r, eval=F}
+rmarkdown::render(input = "my_report.Rmd")
 ```
 
-We can pass these new variables to the ui without any issue, since they are globally visible by both the server and the ui! Lets update our UI:
+With its default settings, running this command will save the Rmd output to the same folder as the Rmd script, with the same file name (aside from the file extension). For instance “my_report.Rmd” when knitted will create “my_report.docx” if you are knitting to a word document. 
+
+`render()` can accept other optional arguments, including:  
+
+* `output_format = ` This is the output format to convert to (e.g. `"html_document"`, `"pdf_document"`, `"word_document"`, or `"all"`). You can also specify this in the YAML inside the R Markdown script.  
+* `output_file = ` This is the name of the output file (and file path). This can be created via R functions like `here()` or `str_glue()` as demonstrated below.  
+* `output_dir = ` This is an output directory (folder) to save the file. This allows you to chose an alternative other than the directory the Rmd file is saved to.  
+* `output_options = ` You can provide a list of options that will override those in the script YAML (e.g. )
+* `output_yaml = ` You can provide path to a .yml file that contains YAML specifications  
+* `params = ` See the section on parameters below  
+* See the complete list [](https://pkgs.rstudio.com/rmarkdown/reference/render.html)  
+
+As one example, to improve version control, the following command will save the output file within an ‘outputs’ sub-folder, with the current date in the file name. To create the file name, the function `str_glue()` from the **stringr** package is use to 'glue' together static strings (written plainly) with dynamic R code (written in curly brackets). For instance if it is April 10th 2021, the file name from below will be “Report_2021-04-10.docx”. See the page on [Characters and strings] for more details on `str_glue()`.  
+
+```{r, eval=F}
+rmarkdown::render(
+  input = "create_output.Rmd",
+  output_file = stringr::str_glue("outputs/Report_{Sys.Date()}.docx")) 
+```
+
+As the file renders, the RStudio Console will show you the rendering progress up to 100%, and a final message to indicate that the rendering is complete. 
 
 
-```{r, eval = FALSE}
 
+### Option 2: "Knit" button {-}  
 
-ui <- fluidPage(
+When you have the Rmd file open, press the 'Knit' icon/button at the top of the file. This is RStudio’s shortcut button for the `render()` function of **rmarkdown**. This is only compatible with a self-contained R markdown, where all the needed components exist or are sourced within the file.  
 
-  titlePanel("Malaria facility visualisation app"),
+Just like knitting with a separate script, R Studio will you show the progress of the Rmd file. Except this time, this will appear within an ‘R Markdown’ tab in the same panel as your console. A complete document will automatically open when complete and this document will be saved in the same folder as your markdown, and with the same file name aside from the file extension. This is obviously not ideal for version control, as you will then need to rename the file yourself.
 
-  sidebarLayout(
-
-    sidebarPanel(
-         # selector for district
-         selectInput(
-              inputId = "select_district",
-              label = "Select district",
-              choices = all_districts,
-              selected = "All",
-              multiple = FALSE
-         ),
-         # selector for age group
-         selectInput(
-              inputId = "select_agegroup",
-              label = "Select age group",
-              choices = c(
-                   "All ages" = "malaria_tot",
-                   "0-4 yrs" = "malaria_rdt_0-4",
-                   "5-14 yrs" = "malaria_rdt_5-14",
-                   "15+ yrs" = "malaria_rdt_15"
-              ), 
-              selected = "All",
-              multiple = FALSE
-         ),
-         # selector for facility
-         selectInput(
-           inputId = "select_facility",
-           label = "Select Facility",
-           choices = c("All", facility_list$location_name),
-           selected = "All"
-         ),
-         
-         # horizontal line
-         hr(),
-         downloadButton(
-           inputId = "download_epicurve",
-           label = "Download plot"
-         )
-
-    ),
-
-    mainPanel(
-      # epicurve goes here
-      plotOutput("malaria_epicurve"),
-      br(),
-      hr(),
-      p("Welcome to the malaria facility visualisation app! To use this app, manipulate the widgets on the side to change the epidemic curve according to your preferences! To download a high quality image of the plot you've created, you can also download it with the download button. To see the raw data, use the raw data tab for an interactive form of the table. The data dictionary is as follows:"),
-      tags$ul(
-        tags$li(tags$b("location_name"), " - the facility that the data were collected at"),
-        tags$li(tags$b("data_date"), " - the date the data were collected at"),
-        tags$li(tags$b("submitted_daate"), " - the date the data were submitted at"),
-        tags$li(tags$b("Province"), " - the province the data were collected at (all 'North' for this dataset)"),
-        tags$li(tags$b("District"), " - the district the data were collected at"),
-        tags$li(tags$b("age_group"), " - the age group the data were collected for (0-5, 5-14, 15+, and all ages)"),
-        tags$li(tags$b("cases_reported"), " - the number of cases reported for the facility/age group on the given date")
-      )
-      
-    )
-    
-  )
-)
-
-
+```{r out.width = "90%", fig.align = "center", echo=F}
+knitr::include_graphics(here::here("images", "markdown/4_progress.png"))
 ```
 
 
-Notice how we're now passing variables for our choices instead of hard coding them in the ui! This might make our code more compact as well! Lastly, we'll have to update the server. It will be easy to update our function to incorporate our new input (we just have to pass it as an argument to our new parameter), but we should remember we also want the ui dynamically when the user changes the selected district. It is important to understand here that we *can change the parameters and behaviour of widgets* while the app is running, but this needs to be done *in the server*. We need to understand a new way to output to the server to learn how to do this.
 
-The functions we need to understand how to do this are known as *observer* functions, and are similar to *reactive* functions in how they behave. They have one key difference though:
+###  Options 3: **reportfactory**  package {-}  
 
-- Reactive functions do not directly affect outputs, and produce objects that can be seen in other locations in the server
-- Observer functions *can* affect server outputs, but do so via side effects of other functions. (They can also do other things, but this is their main function in practice)
+The R package **reportfactory** offers an alternative method of organising and compiling R Markdown reports *catered to scenarios where you run reports routinely (e.g. daily, weekly...).* It eases the compilation of multiple R Markdown files and the organization of their outputs. In essence, it provides a "factory" from which you can run the R Markdown reports, get automatically date- and time-stamped folders for the outputs, and have "light" version control.  
 
-Similar to reactive functions, there are two flavours of observer functions, and they are divided by the same logic that divides reactive functions:
-
-1. `observe()` - this function runs whenever any inputs used inside of it change
-2. `observeEvent()` - this function runs when a *user specified* input changes
-
-We also need to understand the shiny-provided functions that update widgets. These are fairly straightforward to run -they first take the `session` object from the server function (this doesn't need to be understood for now), and then the `inputId` of the function to be changed. We then pass new versions of all parameters that are already taken by `selectInput()` - these will be automatically updated in the widget. 
-
-Lets look at an isolated example of how we could use this in our server. When the user changes the district, we want to filter our tibble of facilities by district, and update the choices to *only reflect those that are available in that district* (and an option for all facilities)
-
-```{r, eval = FALSE}
-
-observe({
-  
-  if (input$select_district == "All") {
-    new_choices <- facility_list$location_name
-  } else {
-    new_choices <- facility_list %>%
-      filter(District == input$select_district) %>%
-      pull(location_name)
-  }
-  
-  new_choices <- c("All", new_choices)
-  
-  updateSelectInput(session, inputId = "select_facility",
-                    choices = new_choices)
-  
-})
+Read more about this work flow in the page on [Organizing routine reports].  
 
 
+
+<!-- ======================================================= -->
+## Parameterised reports {  }
+
+You can use parameterisation to make a report dynamic, such that it can be run with specific setting (e.g. a specific date or place or with certain knitting options). Below, we focus on the basics, but there is more [detail online](https://bookdown.org/yihui/rmarkdown/parameterized-reports.html) about parameterized reports.
+
+Using the Ebola linelist as an example, let’s say we want to run a standard surveillance report for each hospital each day. We show how one can do this using parameters.
+
+*Important: dynamic reports are also possible without the formal parameter structure (without `params:`), using simple R objects in an adjacent R script. This is explained at the end of this section.*
+
+
+
+### Setting parameters {-}
+
+You have several options for specifying parameter values for your R Markdown output.  
+
+#### Option 1: Set parameters within YAML {-}
+
+Edit the YAML to include a `params: ` option, with indented statements for each parameter you want to define. In this example we create parameters `date` and `hospital`, for which we specify values. These values are subject to change each time the report is run. If you use the "Knit" button to produce the output, the parameters will have these default values. Likewise, if you use `render()` the parameters will have these default values unless otherwise specified in the `render()` command.  
+
+
+```yaml
+---
+title: Surveillance report
+output: html_document
+params:
+ date: 2021-04-10
+ hospital: Central Hospital
+---
 ```
 
-And that's it! we can add it into our server, and that behaviour will now work. Here's what our new server should look like:
+In the background, these parameter values are contained within a read-only list called `params`. Thus, you can insert the parameter values in R code as you would another R object/value in your environment. Simply type `params$` followed by the parameter name. For example `params$hospital` to represent the hospital name ("Central Hospital" by default).  
 
-```{r, eval = FALSE}
-server <- function(input, output, session) {
-  
-  malaria_plot <- reactive({
-    plot_epicurve(malaria_data, district = input$select_district, agegroup = input$select_agegroup, facility = input$select_facility)
-  })
-  
-  
-  
-  observe({
-    
-    if (input$select_district == "All") {
-      new_choices <- facility_list$location_name
-    } else {
-      new_choices <- facility_list %>%
-        filter(District == input$select_district) %>%
-        pull(location_name)
-    }
-    
-    new_choices <- c("All", new_choices)
-    
-    updateSelectInput(session, inputId = "select_facility",
-                      choices = new_choices)
-    
-  })
-  
-  
-  output$malaria_epicurve <- renderPlot(
-    malaria_plot()
-  )
-  
-  output$download_epicurve <- downloadHandler(
-    
-    filename = function() {
-      stringr::str_glue("malaria_epicurve_{input$select_district}.png")
-    },
-    
-    content = function(file) {
-      ggsave(file, 
-             malaria_plot(),
-             width = 8, height = 5, dpi = 300)
-    }
-    
-  )
-  
-  
-  
-}
+Note that parameters can also hold values `true` or `false`, and so these can be included in your **knitr** options for a R chunk. For example, you can set `{r, eval=params$run}` instead of `{r, eval=FALSE}`, and now whether the chunk runs or not depends on the value of a parameter `run:`.  
 
-```
-
-### Adding another tab with a table
-
-Now we'll move on to the last component we want to add to our app. We'll want to separate our ui into two tabs, one of which will have an interactive table where the user can see the data they are making the epidemic curve with. To do this, we can use the packaged ui elements that come with shiny relevant to tabs. On a basic level, we can enclose most of our main panel in this general structure:
-
-```{r, eval = FALSE}
+Note that for parameters that are dates, they will be input as a string. So for `params$date` to be interpreted in R code it will likely need to be wrapped with `as.Date()` or a similar function to convert to class Date.  
 
 
-# ... the rest of ui
-
-mainPanel(
-  
-  tabsetPanel(
-    type = "tabs",
-    tabPanel(
-      "Epidemic Curves",
-      ...
-    ),
-    tabPanel(
-      "Data",
-      ...
-    )
-  )
-)
 
 
-```
+#### Option 2: Set parameters within `render()` {-}  
 
-Lets apply this to our ui. We also will want to use the `DT` package here - this is a great package for making interactive tables from pre-existing data. We can see it being used for `DT::datatableOutput()` in this example.
+As mentioned above, as alternative to pressing the "Knit" button to produce the output is to execute the `render()` function from a separate script. In this later case, you can specify the parameters to be used in that rendering to the `params = ` argument of `render()`. 
 
-```{r, echo = FALSE}
-library(DT)
-```
+Note than any parameter values provided here will *overwrite* their default values if written within the YAML. We write the values in quotation marks as in this case they should be defined as character/string values.  
 
-```{r, eval = FALSE}
-ui <- fluidPage(
-     
-     titlePanel("Malaria facility visualisation app"),
-     
-     sidebarLayout(
-          
-          sidebarPanel(
-               # selector for district
-               selectInput(
-                    inputId = "select_district",
-                    label = "Select district",
-                    choices = all_districts,
-                    selected = "All",
-                    multiple = FALSE
-               ),
-               # selector for age group
-               selectInput(
-                    inputId = "select_agegroup",
-                    label = "Select age group",
-                    choices = c(
-                         "All ages" = "malaria_tot",
-                         "0-4 yrs" = "malaria_rdt_0-4",
-                         "5-14 yrs" = "malaria_rdt_5-14",
-                         "15+ yrs" = "malaria_rdt_15"
-                    ), 
-                    selected = "All",
-                    multiple = FALSE
-               ),
-               # selector for facility
-               selectInput(
-                    inputId = "select_facility",
-                    label = "Select Facility",
-                    choices = c("All", facility_list$location_name),
-                    selected = "All"
-               ),
-               
-               # horizontal line
-               hr(),
-               downloadButton(
-                    outputId = "download_epicurve",
-                    label = "Download plot"
-               )
-               
-          ),
-          
-          mainPanel(
-               tabsetPanel(
-                    type = "tabs",
-                    tabPanel(
-                         "Epidemic Curves",
-                         plotOutput("malaria_epicurve")
-                    ),
-                    tabPanel(
-                         "Data",
-                         DT::dataTableOutput("raw_data")
-                    )
-               ),
-               br(),
-               hr(),
-               p("Welcome to the malaria facility visualisation app! To use this app, manipulate the widgets on the side to change the epidemic curve according to your preferences! To download a high quality image of the plot you've created, you can also download it with the download button. To see the raw data, use the raw data tab for an interactive form of the table. The data dictionary is as follows:"),
-               tags$ul(
-                    tags$li(tags$b("location_name"), " - the facility that the data were collected at"),
-                    tags$li(tags$b("data_date"), " - the date the data were collected at"),
-                    tags$li(tags$b("submitted_daate"), " - the date the data were submitted at"),
-                    tags$li(tags$b("Province"), " - the province the data were collected at (all 'North' for this dataset)"),
-                    tags$li(tags$b("District"), " - the district the data were collected at"),
-                    tags$li(tags$b("age_group"), " - the age group the data were collected for (0-5, 5-14, 15+, and all ages)"),
-                    tags$li(tags$b("cases_reported"), " - the number of cases reported for the facility/age group on the given date")
-               )
-               
-               
-          )
-     )
-)
+The below command renders "surveillance_report.Rmd", specifies a dynamic output file name and folder, and provides a `list()` of two parameters and their values to the argument `params = `.  
 
-
+```{r, eval=F}
+rmarkdown::render(
+  input = "surveillance_report.Rmd",  
+  output_file = stringr::str_glue("outputs/Report_{Sys.Date()}.docx"),
+  params = list(date = "2021-04-10", hospital  = "Central Hospital"))
 ```
 
 
-Now our app is arranged into tabs! Lets make the necessary edits to the server as well. Since we dont need to manipulate our dataset at all before we render it this is actually very simple - we just render the malaria_data dataset via DT::renderDT() to the ui!
+#### Option 3: Set parameters using a Graphical User Interface {-}  
 
+For a more interactive feel, you can also use the Graphical User Interface (GUI) to manually select values for parameters. To do this we can click the drop-down menu next to the ‘Knit’ button and choose ‘Knit with parameters’. 
 
-```{r, echo = FALSE}
-server <- function(input, output, session) {
-  
-  malaria_plot <- reactive({
-    plot_epicurve(malaria_data, district = input$select_district, agegroup = input$select_agegroup, facility = input$select_facility)
-  })
-  
-  
-  
-  observe({
-    
-    if (input$select_district == "All") {
-      new_choices <- facility_list$location_name
-    } else {
-      new_choices <- facility_list %>%
-        filter(District == input$select_district) %>%
-        pull(location_name)
-    }
-    
-    new_choices <- c("All", new_choices)
-    
-    updateSelectInput(session, inputId = "select_facility",
-                      choices = new_choices)
-    
-  })
-  
-  
-  output$malaria_epicurve <- renderPlot(
-    malaria_plot()
-  )
-  
-  output$download_epicurve <- downloadHandler(
-    
-    filename = function() {
-      stringr::str_glue("malaria_epicurve_{input$select_district}.png")
-    },
-    
-    content = function(file) {
-      ggsave(file, 
-             malaria_plot(),
-             width = 8, height = 5, dpi = 300)
-    }
-    
-  )
-  
-  # render data table to ui
-  output$raw_data <- DT::renderDT(
-    malaria_data
-  )
-  
-  
-}
+A pop-up will appear allowing you to type in values for the parameters that are established in the document's YAML. 
 
+```{r out.width = "50%", fig.align = "center", echo=F}
+knitr::include_graphics(here::here("images", "markdown/5_parametersGUI.png"))
+```
 
+You can achieve the same through a `render()` command by specifying `params = "ask"`, as demonstrated below.  
+
+```{r, eval=F}
+rmarkdown::render(
+  input = "surveillance_report.Rmd",  
+  output_file = stringr::str_glue("outputs/Report_{Sys.Date()}.docx"),
+  params = “ask”)
 ```
 
 
-## Sharing shiny apps
+However, typing values into this pop-up window is subject to error and spelling mistakes. You may prefer to add restrictions to the values that can be entered through drop-down menus. You can do this by adding in the YAML several specifications for each `params: ` entry. 
 
-Now that you've developed your app, you probably want to share it with others - this is the main advantage of shiny after all! We can do this by sharing the code directly, or we could publish on a server. If we share the code, others will be able to see what you've done and build on it, but this will negate one of the main advantages of shiny - *it can eliminate the need for end-users to maintain an R installation*. For this reason, if you're sharing your app with users who are not comfortable with R, it is much easier to share an app that has been published on a server. 
+* `label: ` is how the title for that particular drop-down menu  
+* `value: ` is the default (starting) value  
+* `input: ` set to `select` for drop-down menu  
+* `choices: ` Give the eligible values in the drop-down menu  
 
-If you'd rather share the code, you could make a .zip file of the app, or better yet, *publish your app on github and add collaborators.* You can refer to the section on github for further information here.
+Below, these specifications are written for the `hospital` parameter.  
 
-However, if we're publishing the app online, we need to do a little more work. Ultimately, we want your app to be able to be accessed via a web URL so others can get quick and easy access to it. Unfortunately, to publish you app on a server, you need to have access to a server to publish it on! There are a number of hosting options when it comes to this:
+```yaml
+---
+title: Surveillance report
+output: html_document
+params:
+ date: 2021-04-10
+ hospital: 
+  label: “Town:”
+  value: Central Hospital
+  input: select
+  choices: [Central Hospital, Military Hospital, Port Hospital, St. Mark's Maternity Hospital (SMMH)]
+---
+```
 
-- _shinyapps.io_: this is the easiest place to publish shiny apps, as it has the smallest amount of configuration work needed, and has some free, but limited licenses.
+When knitting (either via the 'knit with parameters' button or by `render()`), the pop-up window will have drop-down options to select from.  
 
-- _RStudio Connect_: this is a far more powerful version of an R server, that can perform many operations, including publishing shiny apps. It is however, harder to use, and less recommended for first-time users.
-
-For the purposes of this document, we will use _shinyapps.io_, since it is easier for first time users. You can make a free account here to start - there are also different price plans for server licesnses if needed. The more users you expect to have, the more expensive your price plan may have to be, so keep this under consideration. If you're looking to create something for a small set of individuals to use, a free license may be perfectly suitable, but a public facing app may need more licenses.
-
-First we should make sure our app is suitable for publishing on a server. In your app, you should restart your R session, and ensure that it runs without running any extra code. This is important, as an app that requires package loading, or data reading not defined in your app code won't run on a server. Also note that you can't have any *explicit* file paths in your app - these will be invalid in the server setting - using the `here` package solves this issue very well. Finally, if you're reading data from a source that requires user-authentication, such as your organisation's servers, this will not generally work on a server. You will need to liase with your IT department to figure out how to whitelist the shiny server here.
-
-*signing up for account*
-
-Once you have your account, you can navigate to the tokens page under _Accounts_. Here you will want to add a new token - this will be used to deploy your app. 
-
-From here, you should note that the url of your account will reflect the name of your app - so if your app is called _my_app_, the url will be appended as _xxx.io/my_app/_. Choose your app name wisely! Now that you are all ready, click deploy - if successful this will run your app on the web url you chose!
-
-*something on making apps in documents?*
-
-## Further reading
-
-So far, we've covered a lot of aspects of shiny, and have barely scratched the surface of what is on offer for shiny. While this guide serves as an introduction, there is loads more to learn to fully understand shiny. You should start making apps and gradually add more and more functionality
-
-
-# Recommended extension packages
-
-The following represents a selection of high quality shiny extensions that can help you get a lot more out of shiny. In no particular order:
-
-- `shinyWidgets` - this package gives you many many more widgets that can be used in your app. Run `shinyWidgets::shinyWidgetsGallery()` to see a selection of available widgets with this package. See examples [here](https://github.com/dreamRs/shinyWidgets)  
-
-- `shinyjs` - this is an excellent package that gives the user the ability to greatly extend shiny's utility via a series of javascript. The applications of this package range from very simple to highly advanced, but you might want to first use it to manipulate the ui in simple ways, like hiding/showing elements, or enabling/disabling buttons. Find out more [here](https://deanattali.com/shinyjs/basic)
-
-- `shinydashboard` - this package massively expands the available ui that can be used in shiny, specifically letting the user create a complex dashboard with a variety of complex layouts. See more [here](https://rstudio.github.io/shinydashboard/)
-
-- `shinydashboardPlus` - get even more features out of the `shinydashboard` framework! See more [here](https://rinterface.github.io/shinydashboardPlus/articles/shinydashboardPlus.html)
-
-- `shinythemes` - change the default css theme for your shiny app with a wide range of preset templates! See more [here](https://rstudio.github.io/shinythemes/)
+```{r out.width = "50%", fig.align = "center", echo=F}
+knitr::include_graphics(here::here("images", "markdown/5_parametersGUIB.png"))
+```
 
 
-There are also a number of packages that can be used to create interactive outputs that are shiny compatible. 
-
-- `DT` is semi-incorporated into base-shiny, but provides a great set of functions to create interactive tables.
-
-- `plotly` is a package for creating interactive plots that the user can manipulate in app. You can also convert your plot to interactive versions via `plotly::ggplotly()`! As alternatives, `dygraphs` and `highcharter` are also excellent.
 
 
-# Recommended resources
+### Parameterized example {-} 
 
+The following code creates parameters for `date` and `hospital`, which are used in the R Markdown as `params$date` and `params$hospital`, respectively.  
+
+In the resulting report output, see how the data are filtered to the specific hospital, and the plot title refers to the correct hospital and date. We use the "linelist_cleaned.rds" file here, but it would be particularly appropriate if the linelist itself also had a datestamp within it to align with parameterised date. 
+
+```{r out.width = "100%", fig.align = "center", echo=F}
+knitr::include_graphics(here::here("images", "markdown/6_Rmdexample.png"))
+```
+
+Knitting this produces the final output with the default font and layout.
+
+```{r out.width = "80%", fig.align = "center", echo=F}
+knitr::include_graphics(here::here("images", "markdown/6_RmdexampleB.png"))
+```
+
+
+### Parameterisation without `params` {-}
+
+If you are rendering a R Markdown file with `render()` from a separate script, you can actually create the impact of parameterization without using the `params:` functionality.  
+
+For instance, in the *R script* that contains the `render()` command, you can simply define `hospital` and `date` as two R objects (values) before the `render()` command. In the R Markdown, you would not need to have a `params:` section in the YAML, and we would refer to the `date` object rather than `params$date` and `hospital` rather than `params$hospital`. 
+
+```{r, eval=F}
+# This is a R script that is separate from the R Markdown
+
+# define R objects
+hospital <- "Central Hospital"
+date <- "2021-04-10"
+
+# Render the R markdown
+rmarkdown::render(input = "create_output.Rmd") 
+```
+
+Following this approach means means you can not “knit with parameters”, use the GUI, or include knitting options within the parameters. However it allows for simpler code, which may be advantageous.  
+
+
+<!-- ======================================================= -->
+
+## Looping reports  {  }
+
+We may want to run a report multiple times, varying the input parameters, to produce a report for each jurisdictions/unit. This can be done using tools for *iteration*, which are explained in detail in thepage on [Loops, iteration, and lists]. Options include the **purrr** package, or use of a *for loop* as explained below.  
+
+Below, we use a simple *for loop* to generate a surveillance report for all hospitals of interest. This is done with one command (instead of manually changing the hospital parameter one-at-a-time). The command to render the reports must exist in a separate script *outside* the report Rmd. This script will also contain defined objects to "loop through" - today’s date, and a vector of hospital names to loop through.  
+
+
+
+```{r, eval=F}
+hospitals <- c("Central Hospital",
+                "Military Hospital", 
+                "Port Hospital",
+                "St. Mark's Maternity Hospital (SMMH)") 
+```
+
+We then feed these values one-at-a-time into the `render()` command using a loop, which runs the command once for each value in the `hospitals` vector. The letter `i` represents the index position (1 through 4) of the hospital currently being used in that iteration, such that `hospital_list[1]` would be “Central Hospital”. This information is supplied in two places in the `render()` command:  
+
+1) To the file name, such that the file name of the first iteration if produced on 10th April 2021 would be “Report_Central Hospital_2021-04-10.docx”, saved in the ‘output’ subfolder of the working directory.  
+2) To `params = ` such that the Rmd uses the hospital name internally whenever the `params$hospital` value is called (e.g. to filter the dataset to the particular hospital only). In this example, four files would be created - one for each hospital.
+
+```{r, eval=F}
+for(i in 1:length(hospitals)){
+  rmarkdown::render(
+    input = "surveillance_report.Rmd",
+    output_file = str_glue("output/Report_{hospitals[i]}_{Sys.Date()}.docx"),
+    params = list(hospital  = hospitals[i]))
+}       
+```
+
+
+
+<!-- In the scenario where you are f not using this strict form of parameterisation but saving objects to the environment, as discussed at the end of the parameterisation section, the render function would look like this: -->
+
+<!-- ```md -->
+<!-- for(i in 1:length(hospital_list)){ -->
+<!-- rmarkdown::render("surveillance_report.Rmd", -->
+<!--                   output_file = paste0("output/Report_", hospital_list[i], refdate, ".docx") -->
+<!-- }        -->
+<!-- ``` -->
+<!-- The text within the markdown would then need to refer to `hospital_list[i]` and `refdate`.  -->
+
+
+
+
+
+
+<!-- ======================================================= -->
+## Templates  
+
+By using a template document that contains any desired formatting, you can adjust the aesthetics of how the Rmd output will look. You can create for instance an MS Word or Powerpoint file that contains pages/slides with the desired dimensions, watermarks, backgrounds, and fonts. 
+
+### Word documents {-}
+
+To create a template, start a new word document (or use an existing output with  formatting the suits you), and edit fonts by defining the Styles. In Style,Headings 1, 2, and 3 refer to the various markdown header levels (`# Header 1`, `## Header 2` and `### Header 3` respectively). Right click on the style and click 'modify' to change the font formatting as well as the paragraph (e.g. you can introduce page breaks before certain styles which can help with spacing). Other aspects of the word document such as margins, page size, headers etc, can be changed like a usual word document you are working directly within. 
+
+```{r out.width = "100%", fig.align = "center", echo=F}
+knitr::include_graphics(here::here("images", "markdown/7_template.png"))
+```
+
+### Powerpoint documents {-}
+
+As above, create a new slideset or use an existing powerpoint file with the desired formatting. For further editing, click on 'View' and 'Slide Master'. From here you can change the 'master' slide appearance by editing the text formatting in the text boxes, as well as the background/page dimensions for the overall page. 
+
+```{r out.width = "100%", fig.align = "center", echo=F}
+knitr::include_graphics(here::here("images", "markdown/8_ppttemplate.png"))
+```
+
+Unfortunately, editing powerpoint files is slightly less flexible:
+
+* A first level header (`# Header 1`) will automatically become the title of a new slide,
+* A `## Header 2` text will not come up as a subtitle but text within the slide's main textbox (unless you find a way to maniuplate the Master view). 
+* Outputted plots and tables will automatically go into new slides. You will need to combine them, for instance the the **patchwork** function to combine ggplots, so that they show up on the same page.
+
+See the [**officer** package](https://davidgohel.github.io/officer/) for a tool to work more in-depth with powerpoint presentations.  
+
+### Integrating templates into the YAML {-}
+
+Once a template is prepared, the detail of this can be added in the YAML of the Rmd underneath the 'output' line and underneath where the document type is specified (which goes to a separate line itself). Note `reference_doc` can be used for powerpoint slide templates.
+
+It is easiest to save the template in the same folder as where the Rmd file is (as in the example below), or in a subfolder within. 
+
+```yaml
+---
+title: Surveillance report
+output: 
+ word_document:
+  reference_docx: "template.docx"
+params:
+ date: 2021-04-10
+ hospital: Central Hospital
+template:
+ 
+---
+```
+
+### Formatting HTML files {-}
+
+HTML files do not use templates, but can have the styles configured within the YAML. HTMLs are interactive documents, and are particularly flexible. We cover some basic options here. 
+
+* Table of contents: We can add a table of contents with `toc: true` below, and also specify that it remains viewable ("floats") as you scroll, with `toc_float: true`.
+
+* Themes: We can refer to some pre-made themes, which come from a Bootswatch theme library. In the below example we use cerulean. Other options include: journal, flatly, darkly, readable, spacelab, united, cosmo, lumen, paper, sandstone, simplex, and yeti. 
+
+* Highlight: Configuring this changes the look of highlighted text (e.g. code within chunks that are shown). Supported styles include default, tango, pygments, kate, monochrome, espresso, zenburn, haddock, breezedark, and textmate.  
+
+Here is an example of how to integrate the above options into the YAML.
+
+```yaml
+---
+title: "HTML example"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    theme: cerulean
+    highlight: kate
+    
+---
+```
+
+Below are two examples of HTML outputs which both have floating tables of contents, but different theme and highlight styles selected:
+
+
+```{r out.width = "100%", fig.align = "center", echo=F}
+knitr::include_graphics(here::here("images", "markdown/9_html.png"))
+```
+
+
+## Dynamic content  
+
+### Tables {-}  
+
+In an HTML report, you can print data frame / tibbles such that the content is dynamic, with filters and scroll bars. There are several packages that offer this capability.  
+
+To do this with the **DT** package, as is used throughout this handbook, you can insert a code chunk like this:  
+
+```{r out.width = "100%", fig.align = "center", echo=F}
+knitr::include_graphics(here::here("images", "markdown/10_dynamictable.png"))
+```
+
+The function `datatable()` will print the provided data frame as a dynamic table for the reader. You can set `rownames = FALSE` to simplify the far left-side of the table. `filter = "top"` provides a filter over each column. In the `option()` argument provide a list of other specifications. Below we include two: `pageLength = 5` set the number of rows that appear as 5 (the remaining rows can be viewed by paging through arrows), and `scrollX=TRUE` enables a scrollbar on the bottom of the table (for columns that extend too far to the right).  
+
+If your dataset is very large, consider only showing the top X rows by wrapping the data frame in `head()`.  
+
+
+<!-- ======================================================= -->
+## Resources {  }
+
+Further information can be found via:
+
+* https://bookdown.org/yihui/rmarkdown/
+* https://rmarkdown.rstudio.com/articles_intro.html
+
+A good explainer of markdown vs knitr vs Rmarkdown is here: https://stackoverflow.com/questions/40563479/relationship-between-r-markdown-knitr-pandoc-and-bookdown
 
 
 ```{r include=FALSE, cache=FALSE}
@@ -1553,5 +1023,5 @@ linelist <- rio::import(here::here("data", "case_linelists", "linelist_cleaned.r
 options(scipen=1, digits=7)
 ```
 
-<!--chapter:end:new_pages/shiny_basics.Rmd-->
+<!--chapter:end:new_pages/rmarkdown.Rmd-->
 
