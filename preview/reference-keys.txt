@@ -1,7 +1,9 @@
-contact-tracing
+factors
 preparation
-descriptive-analyses
-contact-follow-up
-kpi-tables
-transmission-matrices
+convert-to-factor
+add-or-drop-levels
+adjust-level-order
+fct_missing
+combine-levels
+epiweeks
 resources
